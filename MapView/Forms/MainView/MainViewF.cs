@@ -2869,29 +2869,28 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Checks that the group-type is configured so that the TilesetEditor
-		/// doesn't explode. Shows an error if not configured.
+		/// Checks that the group-type is configured so that
+		/// <c><see cref="TilesetEditor"/></c> doesn't explode. Shows an error
+		/// if not configured.
 		/// </summary>
 		/// <param name="labelGroup">the label of the group</param>
-		/// <returns>true if okay to proceed</returns>
+		/// <returns><c>true</c> if okay to proceed</returns>
 		private bool isGrouptypeConfigured(string labelGroup)
 		{
-			var @group = TileGroupManager.TileGroups[labelGroup];
+			TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 
-			string key = null;
-			switch (@group.GroupType)
-			{
-				case GameType.Ufo:  key = SharedSpace.ResourceDirectoryUfo;  break;
-				case GameType.Tftd: key = SharedSpace.ResourceDirectoryTftd; break;
-			}
+			string key;
+			if (@group.GroupType == GameType.Tftd)
+				key = SharedSpace.ResourceDirectoryTftd;
+			else
+				key = SharedSpace.ResourceDirectoryUfo;
 
 			if (SharedSpace.GetShareString(key) == null)
 			{
-				switch (@group.GroupType)
-				{
-					case GameType.Ufo:  key = "UFO";  break;
-					case GameType.Tftd: key = "TFTD"; break;
-				}
+				if (@group.GroupType == GameType.Tftd)
+					key = "TFTD";
+				else
+					key = "UFO";
 
 				using (var f = new Infobox(
 										"Error",

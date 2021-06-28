@@ -13,8 +13,8 @@ namespace XCom
 	#region Enums
 	public enum GameType
 	{
-		Ufo,
-		Tftd
+		Ufo,	// 0
+		Tftd	// 1
 	}
 	#endregion Enums
 
@@ -225,18 +225,13 @@ namespace XCom
 						{
 							basepath = keyvals[keyBasepath].ToString();
 						}
-						else // assign the Configurator's basepath to the tileset's Descriptor ->
+						else if (@group.GroupType == GameType.Tftd) // assign the Configurator's basepath to the tileset's Descriptor ->
 						{
-							switch (@group.GroupType)
-							{
-								default: // case GameType.Ufo
-									basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
-									break;
-
-								case GameType.Tftd:
-									basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
-									break;
-							}
+							basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
+						}
+						else // default GameType.Ufo
+						{
+							basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
 						}
 						//Logfile.Log(". basepath= " + basepath);
 
@@ -249,7 +244,7 @@ namespace XCom
 													bypassRe);
 
 						@group.AddTileset(descriptor, labelCategory);
-						//or, TileGroups[labelGroup].Categories[labelCategory][keyvals[keyLabel].ToString().ToUpperInvariant()] = descriptor;
+//						TileGroups[labelGroup].Categories[labelCategory][keyvals[keyLabel].ToString().ToUpperInvariant()] = descriptor;
 
 						progress.Step();
 					}
@@ -375,14 +370,14 @@ namespace XCom
 											sw.WriteLine("    " + GlobalsXC.CATEGORY + ": " + labelCategory);
 											sw.WriteLine("    " + GlobalsXC.GROUP + ": " + labelGroup);
 
-											string keyConfigPath = String.Empty;
-											switch (@group.GroupType)
-											{
-												case GameType.Ufo:  keyConfigPath = SharedSpace.ResourceDirectoryUfo;  break;
-												case GameType.Tftd: keyConfigPath = SharedSpace.ResourceDirectoryTftd; break;
-											}
+											string keyConfigPath;
+											if (@group.GroupType == GameType.Tftd)
+												keyConfigPath = SharedSpace.ResourceDirectoryTftd;
+											else
+												keyConfigPath = SharedSpace.ResourceDirectoryUfo;
+
 											string basepath = descriptor.Basepath;
-											if (basepath != SharedSpace.GetShareString(keyConfigPath)) // don't write basepath if it's the (default) Configurator's basepath
+											if (basepath != SharedSpace.GetShareString(keyConfigPath)) // don't write basepath if it's the Configurator's basepath
 												sw.WriteLine("    " + GlobalsXC.BASEPATH + ": " + basepath);
 
 

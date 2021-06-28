@@ -222,12 +222,12 @@ namespace MapView
 
 			TileGroup = TileGroupManager.TileGroups[GroupLabel];
 
-			string key = null;
-			switch (TileGroup.GroupType)
-			{
-				case GameType.Ufo:  key = SharedSpace.ResourceDirectoryUfo;  break;
-				case GameType.Tftd: key = SharedSpace.ResourceDirectoryTftd; break;
-			}
+			string key;
+			if (TileGroup.GroupType == GameType.Tftd)
+				key = SharedSpace.ResourceDirectoryTftd;
+			else
+				key = SharedSpace.ResourceDirectoryUfo;
+
 			Basepath = SharedSpace.GetShareString(key);
 			rb_ConfigBasepath.Checked = true;
 
