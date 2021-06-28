@@ -216,6 +216,8 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				PartType partType)
 		{
+			if (MainViewF.Dontdrawyougits) return;
+
 			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
 			{
 				_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
