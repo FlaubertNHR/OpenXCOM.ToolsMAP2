@@ -431,31 +431,23 @@ namespace MapView
 		/// </summary>
 		private void ReloadScanGfile()
 		{
-			string title, head; InfoboxType bt;
+			bool error = false;
 
 			if (_file.Descriptor.GroupType == GameType.Tftd)
 			{
 				if (SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
-				{
 					_icons = SpritesetManager.GetScanGtftd();
-
-					title = "Info";
-					head  = "SCANG.DAT reloaded.";
-					bt    = InfoboxType.Info;
-				}
 				else
-				{
-					_icons = null;
-
-					title = "Error";
-					head  = "SCANG.DAT failed to reload. Take the red pill.";
-					bt    = InfoboxType.Error;
-				}
+					error = true;
 			}
 			else if (SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
-			{
 				_icons = SpritesetManager.GetScanGufo();
+			else
+				error = true;
 
+			string title, head; InfoboxType bt;
+			if (!error)
+			{
 				title = "Info";
 				head  = "SCANG.DAT reloaded.";
 				bt    = InfoboxType.Info;
@@ -469,15 +461,8 @@ namespace MapView
 				bt    = InfoboxType.Error;
 			}
 
-			using (var f = new Infobox(
-									title,
-									head,
-									null,
-									bt))
-			{
+			using (var f = new Infobox(title, head, null, bt))
 				f.ShowDialog(this);
-			}
-			// NOTE: Invalidate/refresh is not needed apparently.
 		}
 		#endregion Methods
 
