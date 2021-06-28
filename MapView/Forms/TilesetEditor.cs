@@ -34,7 +34,9 @@ namespace MapView
 		private const string AddTileset  = "Add Tileset";
 		private const string EditTileset = "Edit Tileset";
 
-		private static string _lastTerrainFolder = String.Empty;
+		private static string _lastBasepathFolder = String.Empty;
+		private static string _lastTilesetFolder  = String.Empty;
+		private static string _lastTerrainFolder  = String.Empty;
 
 		/// <summary>
 		/// Is static to grant access to subsequent instantiations.
@@ -262,7 +264,7 @@ namespace MapView
 
 					TilesetLabel_0 = String.Copy(TilesetLabel);
 
-					var descriptor = TileGroup.Categories[CategoryLabel][TilesetLabel];
+					Descriptor descriptor = TileGroup.Categories[CategoryLabel][TilesetLabel];
 
 					int records = 0;
 
@@ -367,13 +369,20 @@ namespace MapView
 				fbd.Description = "Browse to a basepath folder. A valid basepath"
 								+ " folder has the subfolders MAPS and ROUTES.";
 
-				if (Directory.Exists(TilesetBasepath))
+				if (_lastBasepathFolder.Length != 0
+					&& Directory.Exists(_lastBasepathFolder))
+				{
+					fbd.SelectedPath = _lastBasepathFolder;
+				}
+				else if (Directory.Exists(TilesetBasepath))
+				{
 					fbd.SelectedPath = TilesetBasepath;
+				}
 
 
 				if (fbd.ShowDialog(this) == DialogResult.OK)
 				{
-					TilesetBasepath = fbd.SelectedPath;
+					_lastBasepathFolder = TilesetBasepath = fbd.SelectedPath;
 					OnTilesetTextboxChanged(null, EventArgs.Empty);
 				}
 			}
@@ -391,20 +400,32 @@ namespace MapView
 				ofd.Title  = "Select a Map file";
 				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
 
-				string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
-				if (Directory.Exists(dir))
+				if (_lastTilesetFolder.Length != 0
+					&& Directory.Exists(_lastTilesetFolder))
 				{
-					ofd.InitialDirectory = dir;
+					ofd.InitialDirectory = _lastTilesetFolder;
 				}
-				else if (Directory.Exists(TilesetBasepath))
-					ofd.InitialDirectory = TilesetBasepath;
+				else
+				{
+					string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
+					if (Directory.Exists(dir))
+					{
+						ofd.InitialDirectory = dir;
+					}
+					else if (Directory.Exists(TilesetBasepath))
+					{
+						ofd.InitialDirectory = TilesetBasepath;
+					}
+				}
 
 
 				if (ofd.ShowDialog(this) == DialogResult.OK)
 				{
 					string pfe = ofd.FileName;
+					string dir = Path.GetDirectoryName(pfe);
 
-					dir = Path.GetDirectoryName(pfe);
+					_lastTilesetFolder = dir;
+
 					if (dir.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
 					{
 						TilesetBasepath = Path.GetDirectoryName(dir);
