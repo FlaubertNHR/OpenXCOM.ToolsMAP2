@@ -137,24 +137,30 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTick(object sender, EventArgs e)
 		{
-			_l = Location;
-			_l.X += _rand.Next() % 3 - 1;
-			_l.Y += _rand.Next() % 3 - 1;
+			// NOTE: Although the dialog doesn't have Minimize or Maximize
+			// buttons it can be minimized if user does ShowDesktop per the OS.
 
-			bool isInsideBounds = false;
-			foreach (var screen in Screen.AllScreens)
+			if (WindowState == FormWindowState.Normal)
 			{
-				if (isInsideBounds = screen.Bounds.Contains(_l)
-								  && screen.Bounds.Contains(_l + Size))
+				_l = Location;
+				_l.X += _rand.Next() % 3 - 1;
+				_l.Y += _rand.Next() % 3 - 1;
+
+				bool isInsideBounds = false;
+				foreach (var screen in Screen.AllScreens)
 				{
-					break;
+					if (isInsideBounds = screen.Bounds.Contains(_l)
+									  && screen.Bounds.Contains(_l + Size))
+					{
+						break;
+					}
 				}
+
+				if (!isInsideBounds)
+					_l = _lBase;
+
+				Location = _l;
 			}
-
-			if (!isInsideBounds)
-				_l = _lBase;
-
-			Location = _l;
 		}
 		#endregion Events
 	}
