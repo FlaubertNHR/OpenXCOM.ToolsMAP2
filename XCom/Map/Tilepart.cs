@@ -20,6 +20,10 @@ namespace XCom
 
 
 		#region Fields (static)
+		/// <summary>
+		/// The count of animation-phases aka the count of
+		/// <c><see cref="_sprites"/></c> required.
+		/// </summary>
 		public const int PHASES = 8;
 
 		private static Spriteset CrippledSprites;
@@ -127,7 +131,7 @@ namespace XCom
 		private XCImage[] _sprites;
 
 		/// <summary>
-		/// Gets the sprite at a specified animation phase.
+		/// Gets the sprite at a specified animation-phase.
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
@@ -171,7 +175,7 @@ namespace XCom
 			{
 				_terId = terid;
 
-				_sprites = new XCImage[PHASES]; // for MapView each part contains its own pointers to 8 sprites.
+				_sprites = new XCImage[PHASES]; // for MapView each tilepart contains its own pointers to 8 sprites.
 
 //				Spriteset spriteset = SpritesetManager.Spritesets[_terId];
 //				string info = ". valid sprites PRE= "
