@@ -11,10 +11,12 @@ namespace XCom
 	/// A <c>Descriptor</c> describes a tileset: a Map, its route-nodes, and
 	/// terrain(s). It also holds the path to its files' parent directory.
 	/// </summary>
-	/// <remarks>A <c>Descriptor</c> is accessed *only* through a Group and
-	/// Category and is identified by its <c><see cref="Label"/></c>. This
-	/// allows multiple tilesets - ie. with the same <c>Label</c> - to be
-	/// configured differently according to Category and Group.</remarks>
+	/// <remarks>A <c>Descriptor</c> is accessed *only* through a
+	/// <c><see cref="TileGroup"/></c> and
+	/// <c><see cref="TileGroup.Categories">TileGroup.Category</see></c> and is
+	/// identified by its <c><see cref="Label"/></c>. This allows multiple
+	/// tilesets - ie. with the same <c>Label</c> - to be configured differently
+	/// according to <c>Category</c> and <c>TileGroup</c>.</remarks>
 	public sealed class Descriptor // *snap*
 	{
 		#region Fields
@@ -123,10 +125,9 @@ namespace XCom
 		/// <returns><c>true</c> if the Mapfile exists on the hardrive</returns>
 		private bool CheckMapfilePath()
 		{
-			string path = Basepath;
-			if (!String.IsNullOrEmpty(path)) // the BasePath can be null if resource-type is notconfigured.
+			if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
 			{
-				path = Path.Combine(path, GlobalsXC.MapsDir);
+				string path = Path.Combine(Basepath, GlobalsXC.MapsDir);
 				path = Path.Combine(path, Label + GlobalsXC.MapExt);
 
 				return File.Exists(path);
@@ -140,14 +141,13 @@ namespace XCom
 		/// <returns>the path to the Mapfile else <c>null</c></returns>
 		public string GetMapfilePath()
 		{
-			string dir = Basepath;
-			if (!String.IsNullOrEmpty(dir)) // -> the BasePath can be null if resource-type is notconfigured.
+			if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
 			{
-					   dir = Path.Combine(dir, GlobalsXC.MapsDir);
-				string pfe = Path.Combine(dir, Label + GlobalsXC.MapExt);
+				string path = Path.Combine(Basepath, GlobalsXC.MapsDir);
+				path = Path.Combine(path, Label + GlobalsXC.MapExt);
 
-				if (File.Exists(pfe))
-					return pfe;
+				if (File.Exists(path))
+					return path;
 			}
 			return null;
 		}
