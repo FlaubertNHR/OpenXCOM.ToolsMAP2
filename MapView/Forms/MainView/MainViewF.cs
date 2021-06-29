@@ -1334,7 +1334,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeDrawNode(object sender, DrawTreeNodeEventArgs e)
 		{
-			if (e.Node != null)
+			TreeNode node = e.Node;
+			if (node != null)
 			{
 				Graphics graphics = e.Graphics;
 
@@ -1351,7 +1352,7 @@ namespace MapView
 					fillbrush = Brushes.AntiqueWhite;
 					border    = Pens.SlateBlue;
 				}
-				else if (e.Node == Searched)
+				else if (node == Searched)
 				{
 					border = Pens.SlateBlue;
 
@@ -1366,7 +1367,7 @@ namespace MapView
 					border    = SystemPens.Control;
 				}
 
-				if (e.Node.Tag == null || (e.Node.Tag as Descriptor).FileValid)
+				if (node.Tag == null || (node.Tag as Descriptor).FileValid)
 					textcolor = SystemColors.ControlText;
 				else
 					textcolor = Color.MediumVioletRed;
@@ -1374,7 +1375,7 @@ namespace MapView
 
 				Rectangle rect = e.Bounds;
 
-				int width = TextRenderer.MeasureText(e.Node.Text, e.Node.TreeView.Font).Width;
+				int width = TextRenderer.MeasureText(node.Text, node.TreeView.Font).Width;
 				while (width / 70 != 0)
 				{
 					width -= 70;
@@ -1390,8 +1391,8 @@ namespace MapView
 				rect.X += 2;							// re-align text due to .NET glitch.
 				TextRenderer.DrawText(
 									graphics,
-									e.Node.Text,
-									e.Node.TreeView.Font,
+									node.Text,
+									node.TreeView.Font,
 									rect,
 									textcolor);
 			}
