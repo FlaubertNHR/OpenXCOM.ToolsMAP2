@@ -21,13 +21,15 @@ namespace XCom
 		/// <c>MainViewF.LoadSelectedDescriptor()</c>.
 		/// </summary>
 		/// <param name="descriptor">a <c><see cref="Descriptor"/></c></param>
-		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
-		/// dialog - returns <c>true</c> if the Maptree changes</param>
+		/// <param name="browseMapfile"><c>true</c> to force a MapBrowserDialog
+		/// - returns <c>true</c> if the Maptree changes</param>
 		/// <param name="ignoreRecordsExceeded"><c>true</c> to bypass a
 		/// potential RecordsExceeded warning dialog</param>
-		/// <param name="routes">current Routes - use this only when reloading
-		/// the current Mapfile and want to keep the route-collection as is</param>
-		/// <param name="selected">for MapBrowserDialog info only</param>
+		/// <param name="routes"><c><see cref="RouteNodes"/></c> - use
+		/// this only when reloading a Mapfile and want to keep the
+		/// <c><see cref="MapFile.Routes">MapFile.Routes</see></c> intact</param>
+		/// <param name="selected">a <c>TreeNode</c> for MapBrowserDialog info
+		/// only</param>
 		/// <returns><c>null</c> if things go south</returns>
 		/// <remarks>Check that <paramref name="descriptor"/> is valid before
 		/// call.</remarks>
