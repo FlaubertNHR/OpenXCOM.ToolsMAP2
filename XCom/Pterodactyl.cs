@@ -4,7 +4,7 @@ namespace XCom
 	/// A struct that associates any object with a readable label.
 	/// </summary>
 	/// <remarks>This could be deleted and done w/ Tuple or Dictionary or
-	/// HashTable or SortedSet or whatever. Hence 'Pterodactyl'. Because it
+	/// HashTable or SortedSet or whatever. Hence <c>Pterodactyl</c>. Because it
 	/// should go the way of the dinosaurs.</remarks>
 	public class Pterodactyl
 	{

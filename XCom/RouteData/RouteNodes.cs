@@ -33,9 +33,9 @@ namespace XCom
 		private const string ter2      = "8 : Terrorist2";
 
 		/// <summary>
-		/// Workaround for several bugged Route-files in TftD.
+		/// Workaround for several bugged Routefiles in TftD.
 		/// </summary>
-		/// <remarks>TODO: Repeat this pattern for the other Route-file vars.</remarks>
+		/// <remarks>TODO: Repeat this pattern for the other Routefile vars.</remarks>
 		private const string RankInvalid = "INVALID";
 
 		private const string none0 =  "0 : None";
@@ -52,7 +52,7 @@ namespace XCom
 		private const string hi10  = "10 : Hi";
 
 		/// <summary>
-		/// RankUfo <see cref="Pterodactyl">Pterodactyls</see>.
+		/// RankUfo <c><see cref="Pterodactyl">Pterodactyls</see></c>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] RankUfo =
@@ -70,7 +70,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// RankTftd <see cref="Pterodactyl">Pterodactyls</see>.
+		/// RankTftd <c><see cref="Pterodactyl">Pterodactyls</see></c>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] RankTftd =
@@ -88,7 +88,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// Spawn <see cref="Pterodactyl">Pterodactyls</see>.
+		/// Spawn <c><see cref="Pterodactyl">Pterodactyls</see></c>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Spawn =
@@ -107,7 +107,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// Patrol <see cref="Pterodactyl">Pterodactyls</see>.
+		/// Patrol <c><see cref="Pterodactyl">Pterodactyls</see></c>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Patrol =
@@ -126,7 +126,7 @@ namespace XCom
 		};
 
 		/// <summary>
-		/// Attack <see cref="Pterodactyl">Pterodactyls</see>.
+		/// Attack <c><see cref="Pterodactyl">Pterodactyls</see></c>.
 		/// </summary>
 		/// <remarks>treat as readonly - ca2105</remarks>
 		public static readonly object[] Attack =
@@ -158,29 +158,42 @@ namespace XCom
 
 
 		#region Properties
+		/// <summary>
+		/// <c>true</c> if <c><see cref="LoadNodes()">LoadNodes()</see></c>
+		/// fails.
+		/// </summary>
+		public bool Fail
+		{ get; internal set; }
+
+
 		private readonly IList<RouteNode> _nodes = new List<RouteNode>();
+
+		/// <summary>
+		/// Gets the <c><see cref="RouteNode">RouteNodes</see></c>.
+		/// </summary>
 		public IList<RouteNode> Nodes
 		{
 			get { return _nodes; }
 		}
+		#endregion Properties
 
+
+		#region Indexers
 		/// <summary>
 		/// Gets the <c><see cref="RouteNode"/></c> at <paramref name="id"/>.
 		/// </summary>
+		/// <remarks><c>null</c> if <paramref name="id"/> is out of bounds.</remarks>
 		public RouteNode this[int id]
 		{
 			get
 			{
-				if (id > -1 && id < Nodes.Count) // TODO: Get rid of that.
+				if (id > -1 && id < Nodes.Count)
 					return Nodes[id];
 
 				return null;
 			}
 		}
-
-		public bool Fail
-		{ get; internal set; }
-		#endregion Properties
+		#endregion Indexers
 
 
 		#region cTor
@@ -196,8 +209,7 @@ namespace XCom
 			string dir = Path.Combine(basepath, GlobalsXC.RoutesDir);
 			PfeRoutes  = Path.Combine(dir, label + GlobalsXC.RouteExt);
 
-			if (!LoadNodes(PfeRoutes))
-				Fail = true;
+			Fail = !LoadNodes(PfeRoutes);
 		}
 
 		/// <summary>
@@ -209,8 +221,7 @@ namespace XCom
 		/// import.</remarks>
 		public RouteNodes(string pfe)
 		{
-			if (!LoadNodes(pfe))
-				Fail = true;
+			Fail = !LoadNodes(pfe);
 		}
 
 		/// <summary>
