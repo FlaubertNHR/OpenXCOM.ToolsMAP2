@@ -8,9 +8,6 @@ namespace MapView
 	internal sealed partial class TilesetEditor
 	{
 		#region Designer
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
 		private IContainer components;
 
 		private Panel pnl_Top;
@@ -226,7 +223,7 @@ namespace MapView
 			// btn_TerrainClear
 			// 
 			this.btn_TerrainClear.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.btn_TerrainClear.Location = new System.Drawing.Point(5, 160);
+			this.btn_TerrainClear.Location = new System.Drawing.Point(5, 165);
 			this.btn_TerrainClear.Margin = new System.Windows.Forms.Padding(0);
 			this.btn_TerrainClear.Name = "btn_TerrainClear";
 			this.btn_TerrainClear.Size = new System.Drawing.Size(45, 25);
