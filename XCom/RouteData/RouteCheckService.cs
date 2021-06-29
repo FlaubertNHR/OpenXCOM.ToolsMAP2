@@ -35,15 +35,6 @@ namespace XCom
 		{ get { return _base1_xy; } }
 
 		/// <summary>
-		/// Sets <c><see cref="Base1_xy"/></c>.
-		/// </summary>
-		/// <param name="base1"><c>MainViewOptionables.Base1_xy</c></param>
-		public static void SetBase1_xy(bool base1)
-		{
-			_base1_xy = base1;
-		}
-
-		/// <summary>
 		/// Caches <c>MainViewOptionables.Base1_z</c> for use here.
 		/// </summary>
 		private static bool _base1_z;
@@ -55,12 +46,16 @@ namespace XCom
 		{ get { return _base1_z; } }
 
 		/// <summary>
-		/// Sets <c><see cref="Base1_z"/></c>.
+		/// Sets <c><see cref="Base1_xy"/></c> and <c><see cref="Base1_z"/></c>.
 		/// </summary>
-		/// <param name="base1"><c>MainViewOptionables.Base1_z</c></param>
-		public static void SetBase1_z(bool base1)
+		/// <param name="base1_xy"><c>MainViewOptionables.Base1_xy</c></param>
+		/// <param name="base1_z"><c>MainViewOptionables.Base1_z</c></param>
+		/// <remarks>Used when printing the positions of out-of-bounds
+		/// <c><see cref="RouteNode">RouteNodes</see></c>.</remarks>
+		public static void SetBase1(bool base1_xy, bool base1_z)
 		{
-			_base1_z = base1;
+			_base1_xy = base1_xy;
+			_base1_z  = base1_z;
 		}
 		#endregion Properties (static)
 

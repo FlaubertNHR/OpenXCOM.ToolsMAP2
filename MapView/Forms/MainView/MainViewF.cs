@@ -1774,8 +1774,9 @@ namespace MapView
 							TopView._fpartslots = null;
 						}
 
-						RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
-						RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
+						RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
+												MainViewF.Optionables.Base1_xy,
+												MainViewF.Optionables.Base1_z);
 
 						int changes = file.MapResize(
 													f.Cols,
@@ -3264,8 +3265,9 @@ namespace MapView
 
 						ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
 
-						RouteCheckService.SetBase1_xy(MainViewF.Optionables.Base1_xy); // send the base1-count options to 'XCom' ->
-						RouteCheckService.SetBase1_z( MainViewF.Optionables.Base1_z);
+						RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
+												MainViewF.Optionables.Base1_xy,
+												MainViewF.Optionables.Base1_z);
 
 						if (RouteCheckService.CheckNodeBounds(file) == DialogResult.Yes)
 						{
