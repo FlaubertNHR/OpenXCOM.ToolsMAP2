@@ -808,6 +808,7 @@ namespace MapView.Forms.Observers
 					RoutesChangedCoordinator = true;
 					node = _file.AddRouteNode(args.Location);
 					ConnectNode(node);
+					InvalidatePanels(); // not sure why but that's needed after adding the "ReduceDraws" option
 				}
 				NodeSelected = node;
 				updateinfo = true;
