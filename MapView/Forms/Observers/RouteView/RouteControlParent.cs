@@ -146,6 +146,7 @@ namespace MapView.Forms.Observers
 		}
 		#endregion Properties
 
+
 		#region cTor
 		/// <summary>
 		/// cTor. Instantiated only as the parent of
