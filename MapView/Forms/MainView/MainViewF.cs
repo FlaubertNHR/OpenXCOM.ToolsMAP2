@@ -949,7 +949,7 @@ namespace MapView
 		/// <param name="e"></param>
 		protected override void OnDeactivate(EventArgs e)
 		{
-			_overlay._targeterForced = false;
+			_overlay.ReleaseTargeter();
 			Invalidate();
 
 //			base.OnDeactivate(e);

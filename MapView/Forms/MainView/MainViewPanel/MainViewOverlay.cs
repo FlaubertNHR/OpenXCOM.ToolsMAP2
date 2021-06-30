@@ -58,15 +58,20 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Suppresses display of the targeter sprite when the panel loses
 		/// focus or the mouse-cursor leaves the clientarea. This gets overruled
-		/// by '_targeterForced'.
+		/// by <c><see cref="_targeterForced"/></c>.
 		/// </summary>
 		private bool _targeterSuppressed;
 
 		/// <summary>
 		/// Forces display of the targeter sprite at the DragEnd position when
-		/// tiles are selected by keyboard. This overrules '_targeterSuppressed'.
+		/// tiles are selected by keyboard. This overrules
+		/// <c><see cref="_targeterSuppressed"/></c>.
 		/// </summary>
-		internal bool _targeterForced;
+		private bool _targeterForced;
+		internal void ReleaseTargeter()
+		{
+			_targeterForced = false;
+		}
 
 		/// <summary>
 		/// Tracks the mouseover location col.
