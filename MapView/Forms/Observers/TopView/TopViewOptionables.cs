@@ -306,12 +306,12 @@ namespace MapView.Forms.Observers
 
 
 		private const string str_SelectedQuadColor = "SelectedQuadColor";
-		private static Color def_SelectedQuadColor = Color.LightBlue;
+		private static Color def_SelectedQuadColor = Color.PowderBlue;
 
 		private Color _selectedQuadColor = def_SelectedQuadColor;
 		[Category(cat_Selects)]
-		[Description("Background color of the selected parttype (default LightBlue)")]
-		[DefaultValue(typeof(Color), "LightBlue")]
+		[Description("Background color of the selected parttype (default PowderBlue)")]
+		[DefaultValue(typeof(Color), "PowderBlue")]
 		public Color SelectedQuadColor
 		{
 			get { return _selectedQuadColor; }
