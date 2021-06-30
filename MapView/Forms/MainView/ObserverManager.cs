@@ -83,8 +83,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="file"></param>
 		/// <remarks>Note that
-		/// <c><see cref="MainViewUnderlay.MapFile">MainViewUnderlay.MapFile</see></c>
-		/// and
+		/// <c><see cref="MainViewF.MapFile">MainViewF.MapFile</see></c> and
 		/// <c><see cref="RouteControlParent">RouteControlParent</see>.MapFile</c>
 		/// also contain pointers to the currently loaded <c>MapFile</c>.</remarks>
 		internal static void AssignMapfile(MapFile file)

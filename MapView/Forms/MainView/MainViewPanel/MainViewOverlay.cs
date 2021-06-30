@@ -53,7 +53,7 @@ namespace MapView.Forms.MainView
 
 
 		#region Fields
-		private MainViewF _mainView;
+		private MapFile _file;
 
 		/// <summary>
 		/// Suppresses display of the targeter sprite when the panel loses
@@ -91,13 +91,6 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		/// <summary>
-		/// <c>MapFile</c> is set only by
-		/// <c><see cref="MainViewUnderlay.MapFile">MainViewUnderlay.MapFile</see></c>.
-		/// </summary>
-		internal MapFile MapFile
-		{ get; set; }
-
 		private Point _origin = new Point(0,0);
 		internal Point Origin
 		{
@@ -177,8 +170,6 @@ namespace MapView.Forms.MainView
 		{
 			that = this;
 
-			_mainView = MainViewF.that;
-
 			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;
 			TabIndex = 4; // TODO: Check that.
@@ -193,6 +184,33 @@ namespace MapView.Forms.MainView
 		#endregion cTor
 
 
+		#region Methods
+		/// <summary>
+		/// Sets <c><see cref="_file"/></c> and subscribes to events.
+		/// </summary>
+		/// <param name="file">a <c><see cref="MapFile"/></c></param>
+		/// <remarks>I don't believe it is necessary to unsubscribe the handlers
+		/// here from events in the old <c>MapFile</c>. The old <c>MapFile</c>
+		/// held the references and it goes poof, which ought release these
+		/// handlers and this <c>MainViewOverlay</c> from any further
+		/// obligations.</remarks>
+		internal void SetMapFile(MapFile file)
+		{
+			if (_file != null)
+			{
+				_file.LocationSelected -= OnLocationSelectedMain;
+				_file.LevelSelected    -= OnLevelSelectedMain;
+			}
+
+			if ((_file = file) != null)
+			{
+				_file.LocationSelected += OnLocationSelectedMain;
+				_file.LevelSelected    += OnLevelSelectedMain;
+			}
+		}
+		#endregion Methods
+
+
 		#region Events and Methods for targeter-suppression
 		/// <summary>
 		/// Handles the focusgained event.
@@ -201,7 +219,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnFocusGained(object sender, EventArgs e)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				ResetMouseoverTracker();
 				Invalidate();
@@ -215,7 +233,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnFocusLost(object sender, EventArgs e)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				_targeterForced = false;
 				Invalidate();
@@ -230,7 +248,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
-			if (Focused && MapFile != null && !_targeterForced && SuppressTargeter())
+			if (Focused && _file != null && !_targeterForced && SuppressTargeter())
 				Invalidate();
 		}
 
@@ -247,10 +265,10 @@ namespace MapView.Forms.MainView
 			ToolStripContentPanel centerpanel = MainViewF.that.tscPanel.ContentPanel;
 
 			Rectangle allowablearea = centerpanel.ClientRectangle;
-			if (underlay.IsVertbarVisible)
+			if (underlay.VertbarVisible)
 				allowablearea.Width -= underlay.WidthVertbar;
 
-			if (underlay.IsHoribarVisible)
+			if (underlay.HoribarVisible)
 				allowablearea.Height -= underlay.HeightHoribar;
 
 			return !allowablearea.Contains(centerpanel.PointToClient(Control.MousePosition));
@@ -259,24 +277,52 @@ namespace MapView.Forms.MainView
 
 
 		#region Events and Methods for the edit-functions
-		// The following functs are for subscription to toolstrip Editor buttons.
+		/// <summary>
+		/// For subscription to toolstrip Editor button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnCut(object sender, EventArgs e)
 		{
 			Copy();
 			ClearSelection();
 		}
+
+		/// <summary>
+		/// For subscription to toolstrip Editor button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnCopy(object sender, EventArgs e)
 		{
 			Copy();
 		}
+
+		/// <summary>
+		/// For subscription to toolstrip Editor button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnPaste(object sender, EventArgs e)
 		{
 			Paste();
 		}
+
+		/// <summary>
+		/// For subscription to toolstrip Editor button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnDelete(object sender, EventArgs e)
 		{
 			ClearSelection();
 		}
+
+		/// <summary>
+		/// For subscription to toolstrip Editor button.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		internal void OnFill(object sender, EventArgs e)
 		{
 			FillSelectedQuads();
@@ -288,7 +334,7 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>Navigation keys etc. are handled by 'KeyPreview' in
+		/// <remarks>Navigation keys etc. are handled by <c>KeyPreview</c> in
 		/// <c><see cref="MainViewF"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
@@ -307,7 +353,7 @@ namespace MapView.Forms.MainView
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
-					if (MapFile != null)
+					if (_file != null)
 					{
 						_targeterForced = false;
 
@@ -329,7 +375,7 @@ namespace MapView.Forms.MainView
 					break;
 
 				case Keys.Control | Keys.S:
-					_mainView.OnSaveMapClick(null, EventArgs.Empty);
+					MainViewF.that.OnSaveMapClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.X:
@@ -367,9 +413,9 @@ namespace MapView.Forms.MainView
 		/// <remarks>Respects parttype visibility.</remarks>
 		private void ClearSelection()
 		{
-			if (MapFile != null && FirstClick)
+			if (_file != null && FirstClick)
 			{
-				_mainView.MapChanged = true;
+				MainViewF.that.MapChanged = true;
 
 				MapTile tile;
 
@@ -381,7 +427,7 @@ namespace MapView.Forms.MainView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapFile.GetTile(col, row);
+					tile = _file.GetTile(col, row);
 
 					if ((visible & TopView.Vis_FLOOR)   != 0) tile.Floor   = null;
 					if ((visible & TopView.Vis_WEST)    != 0) tile.West    = null;
@@ -391,7 +437,7 @@ namespace MapView.Forms.MainView
 					tile.Vacancy();
 				}
 
-				MapFile.CalculateOccultations();
+				_file.CalculateOccultations();
 
 				InvalidateObservers();
 			}
@@ -407,11 +453,11 @@ namespace MapView.Forms.MainView
 		/// <remarks>Disrespects parttype visibility.</remarks>
 		private void Copy()
 		{
-			if (MapFile != null && FirstClick)
+			if (_file != null && FirstClick)
 			{
 				ObserverManager.ToolFactory.EnablePasters();
 
-				_copiedTerrains = MapFile.Descriptor.Terrains;
+				_copiedTerrains = _file.Descriptor.Terrains;
 
 				Point a = GetDragBeg_abs();
 				Point b = GetDragEnd_abs();
@@ -424,7 +470,7 @@ namespace MapView.Forms.MainView
 				for (int col = a.X; col <= b.X; ++col)
 				for (int row = a.Y; row <= b.Y; ++row)
 				{
-					tile = MapFile.GetTile(col, row);
+					tile = _file.GetTile(col, row);
 					_copied[col - a.X,
 							row - a.Y] = new MapTile(
 												tile.Floor,
@@ -445,11 +491,11 @@ namespace MapView.Forms.MainView
 		/// this respects parttype visibility.</remarks>
 		private void Paste()
 		{
-			if (MapFile != null && FirstClick && _copied != null)
+			if (_file != null && FirstClick && _copied != null)
 			{
-				if (AllowPaste(_copiedTerrains, MapFile.Descriptor.Terrains))
+				if (AllowPaste(_copiedTerrains, _file.Descriptor.Terrains))
 				{
-					_mainView.MapChanged = true;
+					MainViewF.that.MapChanged = true;
 
 					MapTile tile, copy;
 
@@ -457,15 +503,15 @@ namespace MapView.Forms.MainView
 
 					for (int
 							row = DragBeg.Y;
-							row != MapFile.Rows && (row - DragBeg.Y) < _copied.GetLength(1);
+							row != _file.Rows && (row - DragBeg.Y) < _copied.GetLength(1);
 							++row)
 					{
 						for (int
 								col = DragBeg.X;
-								col != MapFile.Cols && (col - DragBeg.X) < _copied.GetLength(0);
+								col != _file.Cols && (col - DragBeg.X) < _copied.GetLength(0);
 								++col)
 						{
-							if ((tile = MapFile.GetTile(col, row)) != null
+							if ((tile = _file.GetTile(col, row)) != null
 								&& (copy = _copied[col - DragBeg.X,
 												   row - DragBeg.Y]) != null)
 							{
@@ -479,7 +525,7 @@ namespace MapView.Forms.MainView
 						}
 					}
 
-					MapFile.CalculateOccultations();
+					_file.CalculateOccultations();
 
 					InvalidateObservers();
 				}
@@ -494,7 +540,7 @@ namespace MapView.Forms.MainView
 
 					copyable += Environment.NewLine + Environment.NewLine
 							  + "currently allocated:";
-					foreach (var key in MapFile.Descriptor.Terrains)
+					foreach (var key in _file.Descriptor.Terrains)
 					{
 						copyable += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
 								  + GetBasepathDescript(key.Value.Item2);
@@ -562,13 +608,13 @@ namespace MapView.Forms.MainView
 		/// ignores parttype visibility.</remarks>
 		internal void FillSelectedQuads()
 		{
-			if (MapFile != null && FirstClick)
+			if (_file != null && FirstClick)
 			{
 				Tilepart part = ObserverManager.TileView.Control.SelectedTilepart;
 				if (part == null
 					|| part.SetId <= MapFile.MaxTerrainId)
 				{
-					_mainView.MapChanged = true;
+					MainViewF.that.MapChanged = true;
 
 					Point a = GetDragBeg_abs();
 					Point b = GetDragEnd_abs();
@@ -579,11 +625,11 @@ namespace MapView.Forms.MainView
 					for (int col = a.X; col <= b.X; ++col)
 					for (int row = a.Y; row <= b.Y; ++row)
 					{
-						(tile = MapFile.GetTile(col, row))[slot] = part;
+						(tile = _file.GetTile(col, row))[slot] = part;
 						tile.Vacancy();
 					}
 
-					MapFile.CalculateOccultations();
+					_file.CalculateOccultations();
 
 					InvalidateObservers();
 				}
@@ -611,7 +657,7 @@ namespace MapView.Forms.MainView
 		/// ignores quadtype visibility.</remarks>
 		internal void ClearSelectedQuads()
 		{
-			_mainView.MapChanged = true;
+			MainViewF.that.MapChanged = true;
 
 			Point a = GetDragBeg_abs();
 			Point b = GetDragEnd_abs();
@@ -622,12 +668,12 @@ namespace MapView.Forms.MainView
 			for (int col = a.X; col <= b.X; ++col)
 			for (int row = a.Y; row <= b.Y; ++row)
 			{
-				tile = MapFile.GetTile(col, row);
+				tile = _file.GetTile(col, row);
 				tile[slot] = null;
 				tile.Vacancy();
 			}
 
-			MapFile.CalculateOccultations();
+			_file.CalculateOccultations();
 
 			InvalidateObservers();
 		}
@@ -646,19 +692,19 @@ namespace MapView.Forms.MainView
 				int dst,
 				int shift)
 		{
-			_mainView.MapChanged = true;
+			MainViewF.that.MapChanged = true;
 
 			MapTile tile;
 			Tilepart part;
 			int id;
 
-			int records = Math.Min(MapFile.Parts.Count, MapFile.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
-																					// dialog else the Accept button does not enable.
-			for (int lev = 0; lev != MapFile.Levs; ++lev)
-			for (int row = 0; row != MapFile.Rows; ++row)
-			for (int col = 0; col != MapFile.Cols; ++col)
+			int records = Math.Min(_file.Parts.Count, MapFile.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
+																				// dialog else the Accept button does not enable.
+			for (int lev = 0; lev != _file.Levs; ++lev)
+			for (int row = 0; row != _file.Rows; ++row)
+			for (int col = 0; col != _file.Cols; ++col)
 			{
-				tile = MapFile.GetTile(col, row, lev);
+				tile = _file.GetTile(col, row, lev);
 
 				if ((part = tile.Floor) != null
 					&& (id = part.SetId) >= src0 && id <= src1)
@@ -666,12 +712,12 @@ namespace MapView.Forms.MainView
 					if (dst != Int32.MaxValue)
 					{
 						if (dst < records) // safety. i hope
-							tile.Floor = MapFile.Parts[dst];
+							tile.Floor = _file.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
 						if ((id += shift) > -1 && id < records) // safety. i hope
-							tile.Floor = MapFile.Parts[id];
+							tile.Floor = _file.Parts[id];
 					}
 					else
 						tile.Floor = null;
@@ -683,12 +729,12 @@ namespace MapView.Forms.MainView
 					if (dst != Int32.MaxValue)
 					{
 						if (dst < records) // safety. i hope
-							tile.West = MapFile.Parts[dst];
+							tile.West = _file.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
 						if ((id += shift) > -1 && id < records) // safety. i hope
-							tile.West = MapFile.Parts[id];
+							tile.West = _file.Parts[id];
 					}
 					else
 						tile.West = null;
@@ -700,12 +746,12 @@ namespace MapView.Forms.MainView
 					if (dst != Int32.MaxValue)
 					{
 						if (dst < records) // safety. i hope
-							tile.North = MapFile.Parts[dst];
+							tile.North = _file.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
 						if ((id += shift) > -1 && id < records) // safety. i hope
-							tile.North = MapFile.Parts[id];
+							tile.North = _file.Parts[id];
 					}
 					else
 						tile.North = null;
@@ -717,19 +763,19 @@ namespace MapView.Forms.MainView
 					if (dst != Int32.MaxValue)
 					{
 						if (dst < records) // safety. i hope
-							tile.Content = MapFile.Parts[dst];
+							tile.Content = _file.Parts[dst];
 					}
 					else if (shift != Int32.MaxValue)
 					{
 						if ((id += shift) > -1 && id < records) // safety. i hope
-							tile.Content = MapFile.Parts[id];
+							tile.Content = _file.Parts[id];
 					}
 					else
 						tile.Content = null;
 				}
 			}
 
-			MapFile.CalculateOccultations();
+			_file.CalculateOccultations();
 
 			InvalidateObservers();
 		}
@@ -766,14 +812,14 @@ namespace MapView.Forms.MainView
 		/// <param name="top"><c>true</c> if <c>TopView</c> is the active viewer</param>
 		internal void Navigate(Keys keyData, bool top = false)
 		{
-			if (MapFile != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None)
+			if (_file != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None)
 			{
 				if (!FirstClick) // allow Shift
 				{
 					_keyDeltaX =
 					_keyDeltaY = 0;
 
-					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire LocationSelected
+					_file.Location = new MapLocation(0,0, _file.Level); // fire LocationSelected
 
 					var loc = new Point(0,0);
 					ProcessSelection(loc,loc);
@@ -801,11 +847,11 @@ namespace MapView.Forms.MainView
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						int c = MapFile.Location.Col + loc.X;
-						if (c > -1 && c < MapFile.Cols)
+						int c = _file.Location.Col + loc.X;
+						if (c > -1 && c < _file.Cols)
 						{
-							int r = MapFile.Location.Row + loc.Y;
-							if (r > -1 && r < MapFile.Rows)
+							int r = _file.Location.Row + loc.Y;
+							if (r > -1 && r < _file.Rows)
 							{
 								ObserverManager.RouteView   .Control     .DeselectNode(false);
 								ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
@@ -813,7 +859,7 @@ namespace MapView.Forms.MainView
 								_keyDeltaX =
 								_keyDeltaY = 0;
 
-								MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected
+								_file.Location = new MapLocation(c,r, _file.Level); // fire LocationSelected
 
 								loc.X = _col = c;
 								loc.Y = _row = r;
@@ -823,8 +869,8 @@ namespace MapView.Forms.MainView
 					}
 					else if (vert != MapFile.LEVEL_no)
 					{
-						int level = MapFile.Location.Lev + vert;
-						if (level > -1 && level < MapFile.Levs) // safety.
+						int level = _file.Location.Lev + vert;
+						if (level > -1 && level < _file.Levs) // safety.
 						{
 							OnMouseWheel(new MouseEventArgs(
 														MouseButtons.None,
@@ -858,15 +904,15 @@ namespace MapView.Forms.MainView
 						_targeterForced = !top;
 
 						int pos = DragBeg.X + _keyDeltaX + loc.X;
-						if (pos > -1 && pos < MapFile.Cols)
+						if (pos > -1 && pos < _file.Cols)
 							_keyDeltaX += loc.X;
 
 						pos = DragBeg.Y + _keyDeltaY + loc.Y;
-						if (pos > -1 && pos < MapFile.Rows)
+						if (pos > -1 && pos < _file.Rows)
 							_keyDeltaY += loc.Y;
 
-						loc.X = _col = MapFile.Location.Col + _keyDeltaX;
-						loc.Y = _row = MapFile.Location.Row + _keyDeltaY;
+						loc.X = _col = _file.Location.Col + _keyDeltaX;
+						loc.Y = _row = _file.Location.Row + _keyDeltaY;
 						ProcessSelection(DragBeg, loc);
 					}
 				}
@@ -896,7 +942,7 @@ namespace MapView.Forms.MainView
 		{
 			base.OnMouseWheel(e);
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				int delta;
 				if (MainViewF.Optionables.InvertMousewheel)
@@ -907,7 +953,7 @@ namespace MapView.Forms.MainView
 				int dir = MapFile.LEVEL_no;
 				if      (delta < 0) dir = MapFile.LEVEL_Up;
 				else if (delta > 0) dir = MapFile.LEVEL_Dn;
-				MapFile.ChangeLevel(dir);
+				_file.ChangeLevel(dir);
 
 				if (e.Clicks == TARGETER_MOUSE)
 				{
@@ -925,7 +971,7 @@ namespace MapView.Forms.MainView
 					_row = DragEnd.Y;
 				}
 
-				ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.Levs);
+				ObserverManager.ToolFactory.EnableLevelers(_file.Level, _file.Levs);
 			}
 		}
 
@@ -942,14 +988,14 @@ namespace MapView.Forms.MainView
 		{
 			Select();
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
 					{
-						if (   _col > -1 && _col < MapFile.Cols
-							&& _row > -1 && _row < MapFile.Rows)
+						if (   _col > -1 && _col < _file.Cols
+							&& _row > -1 && _row < _file.Rows)
 						{
 							ObserverManager.RouteView   .Control     .DeselectNode(false);
 							ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
@@ -959,9 +1005,9 @@ namespace MapView.Forms.MainView
 
 							var loc = new Point(_col, _row);
 
-							MapFile.Location = new MapLocation( // fire LocationSelected
-															loc.X, loc.Y,
-															MapFile.Level);
+							_file.Location = new MapLocation( // fire LocationSelected
+														loc.X, loc.Y,
+														_file.Level);
 							_isMouseDragL = true;
 							ProcessSelection(loc,loc);
 						}
@@ -997,7 +1043,7 @@ namespace MapView.Forms.MainView
 		/// luck with that. Workaround: '_x' and '_y'.</remarks>
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				if (e.Button == MouseButtons.Right)
 				{
@@ -1055,9 +1101,9 @@ namespace MapView.Forms.MainView
 
 				Point a = GetDragBeg_abs(); // update SelectionSize on statusbar ->
 				Point b = GetDragEnd_abs();
-				_mainView.sb_PrintSelectionSize(
-											b.X - a.X + 1,
-											b.Y - a.Y + 1);
+				MainViewF.that.sb_PrintSelectionSize(
+												b.X - a.X + 1,
+												b.Y - a.Y + 1);
 			}
 		}
 
@@ -1099,11 +1145,11 @@ namespace MapView.Forms.MainView
 			{
 				_dragBeg = value;
 
-				if      (_dragBeg.Y < 0)             _dragBeg.Y = 0;
-				else if (_dragBeg.Y >= MapFile.Rows) _dragBeg.Y = MapFile.Rows - 1;
+				if      (_dragBeg.Y < 0)           _dragBeg.Y = 0;
+				else if (_dragBeg.Y >= _file.Rows) _dragBeg.Y = _file.Rows - 1;
 
-				if      (_dragBeg.X < 0)             _dragBeg.X = 0;
-				else if (_dragBeg.X >= MapFile.Cols) _dragBeg.X = MapFile.Cols - 1;
+				if      (_dragBeg.X < 0)           _dragBeg.X = 0;
+				else if (_dragBeg.X >= _file.Cols) _dragBeg.X = _file.Cols - 1;
 			}
 		}
 
@@ -1117,11 +1163,11 @@ namespace MapView.Forms.MainView
 			{
 				_dragEnd = value;
 
-				if      (_dragEnd.Y < 0)             _dragEnd.Y = 0;
-				else if (_dragEnd.Y >= MapFile.Rows) _dragEnd.Y = MapFile.Rows - 1;
+				if      (_dragEnd.Y < 0)           _dragEnd.Y = 0;
+				else if (_dragEnd.Y >= _file.Rows) _dragEnd.Y = _file.Rows - 1;
 
-				if      (_dragEnd.X < 0)             _dragEnd.X = 0;
-				else if (_dragEnd.X >= MapFile.Cols) _dragEnd.X = MapFile.Cols - 1;
+				if      (_dragEnd.X < 0)           _dragEnd.X = 0;
+				else if (_dragEnd.X >= _file.Cols) _dragEnd.X = _file.Cols - 1;
 			}
 		}
 		#endregion Mouse & drag-points
@@ -1137,7 +1183,7 @@ namespace MapView.Forms.MainView
 			//Logfile.Log("MainViewOverlay.OnLocationSelectedMain");
 
 			FirstClick = true;
-			_mainView.sb_PrintPosition();
+			MainViewF.that.sb_PrintPosition();
 		}
 
 		/// <summary>
@@ -1148,7 +1194,7 @@ namespace MapView.Forms.MainView
 		{
 			//Logfile.Log("MainViewOverlay.OnLevelSelectedMain");
 
-			_mainView.sb_PrintPosition();
+			MainViewF.that.sb_PrintPosition();
 			Invalidate();
 		}
 		#endregion Events
@@ -1180,7 +1226,7 @@ namespace MapView.Forms.MainView
 			if (MainViewF.Dontdrawyougits) return;
 
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				_targeterSuppressed = !_targeterForced && (!Focused || SuppressTargeter());
 
@@ -1202,8 +1248,8 @@ namespace MapView.Forms.MainView
 				ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
 
-				_cols = MapFile.Cols;
-				_rows = MapFile.Rows;
+				_cols = _file.Cols;
+				_rows = _file.Rows;
 
 				_phase = MainViewUnderlay.Phase;
 
@@ -1245,8 +1291,8 @@ namespace MapView.Forms.MainView
 			string loc = Globals.GetLocationString(
 												_col,
 												_row,
-												MapFile.Level,
-												MapFile.Levs);
+												_file.Level,
+												_file.Levs);
 
 			int x = Width - TextRenderer.MeasureText(loc, LocationFont).Width;
 			int y = Height - 20;
@@ -1260,10 +1306,10 @@ namespace MapView.Forms.MainView
 #if !LOCKBITS
 		/// <summary>
 		/// Draws the panel using the standard algorithm.
-		/// @note This is nearly identical to DrawPicasso; they are separated
-		/// only because they'd cause multiple calls to DrawTile() conditioned
-		/// on the setting of 'UseMono' inside the lev/row/col loops.
 		/// </summary>
+		/// <remarks>This is nearly identical to DrawPicasso; they are separated
+		/// only because they'd cause multiple calls to DrawTile() conditioned
+		/// on the setting of 'UseMono' inside the lev/row/col loops.</remarks>
 		private void DrawRembrandt()
 		{
 			var rect = new Rectangle(-1,-1, 0,0); // This is different between REMBRANDT and PICASSO ->
@@ -1288,11 +1334,11 @@ namespace MapView.Forms.MainView
 			int offsetVert;
 
 			for (int
-				lev  = MapFile.Levs - 1;
-				lev >= MapFile.Level;
+				lev  = _file.Levs - 1;
+				lev >= _file.Level;
 				--lev)
 			{
-				isLevel = (lev == MapFile.Level);
+				isLevel = (lev == _file.Level);
 
 				if (isLevel && MainViewF.Optionables.GridVisible)
 					DrawGrid();
@@ -1328,7 +1374,7 @@ namespace MapView.Forms.MainView
 														isLevel);
 						}
 
-						if (!(tile = MapFile.GetTile(col, row, lev)).Vacant
+						if (!(tile = _file.GetTile(col, row, lev)).Vacant
 							&& (isLevel || !tile.Occulted))
 						{
 							// This is different between REMBRANDT and PICASSO ->
@@ -1372,13 +1418,13 @@ namespace MapView.Forms.MainView
 			}
 
 /*			if (!_targeterSuppressed // draw Targeter after selection-border ->
-				&& _col > -1 && _col < MapFile.MapSize.Cols
-				&& _row > -1 && _row < MapFile.MapSize.Rows)
+				&& _col > -1 && _col < _file.MapSize.Cols
+				&& _row > -1 && _row < _file.MapSize.Rows)
 			{
 				CuboidSprite.DrawTargeter_Rembrandt(
 											_graphics,
 											_col * HalfWidth  + Origin.X - (_row * HalfWidth),
-											_col * HalfHeight + Origin.Y + (_row * HalfHeight) + (MapFile.Level * heightfactor),
+											_col * HalfHeight + Origin.Y + (_row * HalfHeight) + (_file.Level * heightfactor),
 											HalfWidth,
 											HalfHeight);
 			} */
@@ -1386,10 +1432,10 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Draws the panel using the Mono algorithm.
-		/// @note This is nearly identical to DrawRembrandt; they are separated
-		/// only because they'd cause multiple calls to DrawTile() conditioned
-		/// on the setting of 'UseMono' inside the lev/row/col loops.
 		/// </summary>
+		/// <remarks>This is nearly identical to DrawRembrandt; they are separated
+		/// only because they'd cause multiple calls to DrawTile() conditioned
+		/// on the setting of 'UseMono' inside the lev/row/col loops.</remarks>
 		private void DrawPicasso()
 		{
 			MapTile tile;
@@ -1401,11 +1447,11 @@ namespace MapView.Forms.MainView
 			int offsetVert;
 
 			for (int
-				lev  = MapFile.Levs - 1;
-				lev >= MapFile.Level;
+				lev  = _file.Levs - 1;
+				lev >= _file.Level;
 				--lev)
 			{
-				isLevel = (lev == MapFile.Level);
+				isLevel = (lev == _file.Level);
 
 				if (isLevel && MainViewF.Optionables.GridVisible)
 					DrawGrid();
@@ -1439,7 +1485,7 @@ namespace MapView.Forms.MainView
 														isLevel);
 						}
 
-						if (!(tile = MapFile.GetTile(col, row, lev)).Vacant
+						if (!(tile = _file.GetTile(col, row, lev)).Vacant
 							&& (isLevel || !tile.Occulted))
 						{
 							// This is different between REMBRANDT and PICASSO ->
@@ -1486,13 +1532,13 @@ namespace MapView.Forms.MainView
 			}
 
 /*			if (!_targeterSuppressed // draw Targeter after selection-border ->
-				&& _col > -1 && _col < MapFile.MapSize.Cols
-				&& _row > -1 && _row < MapFile.MapSize.Rows)
+				&& _col > -1 && _col < _file.MapSize.Cols
+				&& _row > -1 && _row < _file.MapSize.Rows)
 			{
 				CuboidSprite.DrawTargeter_Picasso(
 											_graphics,
 											_col * HalfWidth  + Origin.X - (_row * HalfWidth),
-											_col * HalfHeight + Origin.Y + (_row * HalfHeight) + (MapFile.Level * heightfactor));
+											_col * HalfHeight + Origin.Y + (_row * HalfHeight) + (_file.Level * heightfactor));
 			} */
 		}
 
@@ -1517,11 +1563,11 @@ namespace MapView.Forms.MainView
 //						   && ClientRectangle.Contains(PointToClient(Control.MousePosition));
 
 			for (int
-				lev = MapFile.MapSize.Levs - 1;
-				lev >= MapFile.Level && lev != -1;
+				lev = _file.MapSize.Levs - 1;
+				lev >= _file.Level && lev != -1;
 				--lev)
 			{
-//				if (_showGrid && lev == MapFile.Level)
+//				if (_showGrid && lev == _file.Level)
 //					DrawGrid(graphics);
 
 				for (int
@@ -1554,11 +1600,11 @@ namespace MapView.Forms.MainView
 //											HalfWidth,
 //											HalfHeight,
 //											false,
-//											lev == MapFile.Level);
+//											lev == _file.Level);
 //						}
 
-						tile = MapFile[row, col, lev];
-						if (lev == MapFile.Level || !tile.Occulted)
+						tile = _file[row, col, lev];
+						if (lev == _file.Level || !tile.Occulted)
 						{
 							DrawTile(tile, x, y);
 						}
@@ -1571,12 +1617,12 @@ namespace MapView.Forms.MainView
 //											HalfWidth,
 //											HalfHeight,
 //											true,
-//											lev == MapFile.Level);
+//											lev == _file.Level);
 //						}
 //						else if (isTargeted
 //							&& col == _col
 //							&& row == _row
-//							&& lev == MapFile.Level)
+//							&& lev == _file.Level)
 //						{
 //							Cuboid.DrawTargeter(
 //											graphics,
@@ -1618,7 +1664,7 @@ namespace MapView.Forms.MainView
 		private void DrawGrid()
 		{
 			int x = Origin.X + HalfWidth;
-			int y = Origin.Y + HalfHeight * (MapFile.Level + 1) * 3;
+			int y = Origin.Y + HalfHeight * (_file.Level + 1) * 3;
 
 			int x1 = _rows * HalfWidth;
 			int y1 = _rows * HalfHeight;
@@ -1676,7 +1722,7 @@ namespace MapView.Forms.MainView
 		private void DrawGrid(Graphics graphics)
 		{
 			int x = Origin.X + HalfWidth;
-			int y = Origin.Y + HalfHeight * (MapFile.Level + 1) * 3;
+			int y = Origin.Y + HalfHeight * (_file.Level + 1) * 3;
 
 			int x1 = _rows * HalfWidth;
 			int y1 = _rows * HalfHeight;
@@ -2063,7 +2109,7 @@ namespace MapView.Forms.MainView
 		/// <returns></returns>
 		private Point GetClientCoordinates(Point point)
 		{
-			int verticalOffset = HalfHeight * (MapFile.Level + 1) * 3;
+			int verticalOffset = HalfHeight * (_file.Level + 1) * 3;
 			return new Point(
 							Origin.X + (point.X - point.Y) * HalfWidth,
 							Origin.Y + (point.X + point.Y) * HalfHeight + verticalOffset);
@@ -2083,7 +2129,7 @@ namespace MapView.Forms.MainView
 			double halfWidth  = (double)HalfWidth;
 			double halfHeight = (double)HalfHeight;
 
-			double verticalOffset = (MapFile.Level + 1) * 3;
+			double verticalOffset = (_file.Level + 1) * 3;
 
 			double xd = Math.Floor(x - halfWidth);						// x=0 is the axis from the top to the bottom of the map-lozenge.
 			double yd = Math.Floor(y - halfHeight * verticalOffset);	// y=0 is measured from the top of the map-lozenge downward.

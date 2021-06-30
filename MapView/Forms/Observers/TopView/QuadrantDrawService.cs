@@ -280,7 +280,7 @@ namespace MapView.Forms.Observers
 
 			if (MainViewF.Optionables.UseMono)
 			{
-				if (MainViewUnderlay.that.MapFile.Descriptor.GroupType == GameType.Tftd)
+				if (MainViewF.that.MapFile.Descriptor.GroupType == GameType.Tftd)
 					_brushes = Palette.BrushesTftdBattle;
 				else
 					_brushes = Palette.BrushesUfoBattle;
@@ -485,7 +485,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>This is called by <see cref="QuadrantControl"/>.</remarks>
 		internal static void PrintSelectedLocation(MapLocation location, int panelwidth)
 		{
-			MapFile file = MainViewUnderlay.that.MapFile;
+			MapFile file = MainViewF.that.MapFile;
 
 			string loc = Globals.GetLocationString(
 												location.Col,

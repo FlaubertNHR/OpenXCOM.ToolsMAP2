@@ -481,7 +481,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnDownClick(object sender, EventArgs e)
 		{
-			MapFile file = MainViewOverlay.that.MapFile;
+			MapFile file = MainViewF.that.MapFile;
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Dn);
@@ -496,7 +496,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnUpClick(object sender, EventArgs e)
 		{
-			MapFile file = MainViewOverlay.that.MapFile;
+			MapFile file = MainViewF.that.MapFile;
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Up);

@@ -39,6 +39,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
+		protected MapFile _file;
+
 		/// <summary>
 		/// <c>_col</c> and <c>_row</c> track the location of the last
 		/// mouse-overed tile; <c>_col</c> needs to be set to <c>-1</c> when the
@@ -93,26 +95,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		private MapFile _file;
-		protected MapFile MapFile
-		{
-			get { return _file; }
-			private set
-			{
-				_file = value; OnResize(EventArgs.Empty);
-			}
-		}
-
-		/// <summary>
-		/// Sets the current <c><see cref="MapFile"/></c>.
-		/// </summary>
-		/// <param name="file">a <c><see cref="XCom.MapFile"/></c></param>
-		internal void SetMapfile(MapFile file)
-		{
-			MapFile = file;
-		}
-
-
 		/// <summary>
 		/// The top-left point of the panel.
 		/// </summary>
@@ -203,14 +185,14 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			if (MapFile != null) // safety.
+			if (_file != null) // safety.
 			{
 				int width  = Width  - OffsetX * 2;
 				int height = Height - OffsetY * 2;
 
 				if (height > width / 2) // use width
 				{
-					HalfWidth = width / (MapFile.Rows + MapFile.Cols);
+					HalfWidth = width / (_file.Rows + _file.Cols);
 
 					if (HalfWidth % 2 != 0)
 						--HalfWidth;
@@ -219,12 +201,12 @@ namespace MapView.Forms.Observers
 				}
 				else // use height
 				{
-					HalfHeight = height / (MapFile.Rows + MapFile.Cols);
+					HalfHeight = height / (_file.Rows + _file.Cols);
 					HalfWidth  = HalfHeight * 2;
 				}
 
 				Origin = new Point( // offset the left and top edges to account for the 3d panel border
-								OffsetX + MapFile.Rows * HalfWidth,
+								OffsetX + _file.Rows * HalfWidth,
 								OffsetY);
 
 				BlobService.HalfWidth  = HalfWidth;
@@ -255,16 +237,16 @@ namespace MapView.Forms.Observers
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
-				MapFile.Location = new MapLocation( // fire LocationSelected
-												_col, _row,
-												MapFile.Level);
+				_file.Location = new MapLocation( // fire LocationSelected
+											_col, _row,
+											_file.Level);
 
 				MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
 																	// NOTE: drag-selection is not allowed here.
 				var args = new RouteControlEventArgs(
 												e.Button,
-												MapFile.GetTile(_col, _row),
-												MapFile.Location);
+												_file.GetTile(_col, _row),
+												_file.Location);
 				RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 			}
 		}
@@ -281,14 +263,14 @@ namespace MapView.Forms.Observers
 		{
 			if (_col != -1)
 			{
-				MapFile.Location = new MapLocation( // fire LocationSelected
-												_col, _row,
-												MapFile.Level);
+				_file.Location = new MapLocation( // fire LocationSelected
+											_col, _row,
+											_file.Level);
 
 				var args = new RouteControlEventArgs(
 												e.Button,
-												MapFile.GetTile(_col, _row),
-												MapFile.Location);
+												_file.GetTile(_col, _row),
+												_file.Location);
 				RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 			}
 		}
@@ -323,13 +305,23 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
+		/// Sets <c><see cref="_file"/></c>.
+		/// </summary>
+		/// <param name="file">a <c><see cref="MapFile"/></c></param>
+		internal void SetMapFile(MapFile file)
+		{
+			_file = file;
+			OnResize(EventArgs.Empty);
+		}
+
+		/// <summary>
 		/// Keyboard navigation called by <c><see cref="RouteViewForm"/></c> key
 		/// events <c>OnKeyDown()</c> and <c>ProcessCmdKey()</c>.
 		/// </summary>
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			if (MapFile != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None) // safety.
+			if (_file != null && (keyData & (Keys.Control | Keys.Alt)) == Keys.None) // safety.
 			{
 				bool invalidate = false;
 
@@ -338,15 +330,15 @@ namespace MapView.Forms.Observers
 
 				if (!MainViewOverlay.that.FirstClick) // allow Shift
 				{
-					MapFile.Location = new MapLocation(0,0, MapFile.Level); // fire LocationSelected event
+					_file.Location = new MapLocation(0,0, _file.Level); // fire LocationSelected event
 
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
 
 					var args = new RouteControlEventArgs(
 													MouseButtons.Left,
-													MapFile.GetTile(0,0),
-													MapFile.Location);
+													_file.GetTile(0,0),
+													_file.Location);
 					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
 				}
@@ -354,9 +346,9 @@ namespace MapView.Forms.Observers
 				{
 					var args = new RouteControlEventArgs(
 													MouseButtons.Right,
-													MapFile.GetTile(MapFile.Location.Col,
-																	MapFile.Location.Row),
-													MapFile.Location);
+													_file.GetTile(_file.Location.Col,
+																  _file.Location.Row),
+													_file.Location);
 					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
 				}
@@ -383,34 +375,34 @@ namespace MapView.Forms.Observers
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						int c = MapFile.Location.Col + loc.X;
-						int r = MapFile.Location.Row + loc.Y;
-						if (   c > -1 && c < MapFile.Cols
-							&& r > -1 && r < MapFile.Rows)
+						int c = _file.Location.Col + loc.X;
+						int r = _file.Location.Row + loc.Y;
+						if (   c > -1 && c < _file.Cols
+							&& r > -1 && r < _file.Rows)
 						{
-							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected event
+							_file.Location = new MapLocation(c,r, _file.Level); // fire LocationSelected event
 
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.Left,
-															MapFile.GetTile(c,r),
-															MapFile.Location);
+															_file.GetTile(c,r),
+															_file.Location);
 							RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
 							invalidate = true;
 						}
 					}
 					else if (vert != MapFile.LEVEL_no)
 					{
-						int level = MapFile.Level + vert;
-						if (level > -1 && level < MapFile.Levs)
+						int level = _file.Level + vert;
+						if (level > -1 && level < _file.Levs)
 						{
-							MapFile.ChangeLevel(vert);			// fire LevelSelected event
-							MapFile.Location = new MapLocation(	// fire LocationSelected event
-															MapFile.Location.Col,
-															MapFile.Location.Row,
-															level);
+							_file.ChangeLevel(vert);			// fire LevelSelected event
+							_file.Location = new MapLocation(	// fire LocationSelected event
+														_file.Location.Col,
+														_file.Location.Row,
+														level);
 						}
 					}
 				}
@@ -437,20 +429,20 @@ namespace MapView.Forms.Observers
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						int c = MapFile.Location.Col + loc.X;
-						int r = MapFile.Location.Row + loc.Y;
-						if (   c > -1 && c < MapFile.Cols
-							&& r > -1 && r < MapFile.Rows
-							&& MapFile.GetTile(c,r).Node == null)
+						int c = _file.Location.Col + loc.X;
+						int r = _file.Location.Row + loc.Y;
+						if (   c > -1 && c < _file.Cols
+							&& r > -1 && r < _file.Rows
+							&& _file.GetTile(c,r).Node == null)
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							MapFile.Location = new MapLocation(c,r, MapFile.Level); // fire LocationSelected event
+							_file.Location = new MapLocation(c,r, _file.Level); // fire LocationSelected event
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.None,
-															MapFile.GetTile(c,r),
-															MapFile.Location);
+															_file.GetTile(c,r),
+															_file.Location);
 							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
@@ -459,25 +451,25 @@ namespace MapView.Forms.Observers
 					}
 					else if (vert != MapFile.LEVEL_no)
 					{
-						int level = MapFile.Level + vert;
-						if (level > -1 && level < MapFile.Levs
-							&& MapFile.GetTile(MapFile.Location.Col,
-											   MapFile.Location.Row,
-											   level).Node == null)
+						int level = _file.Level + vert;
+						if (level > -1 && level < _file.Levs
+							&& _file.GetTile(_file.Location.Col,
+											 _file.Location.Row,
+											 level).Node == null)
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							MapFile.ChangeLevel(vert);			// fire LevelSelected event
-							MapFile.Location = new MapLocation(	// fire LocationSelected event
-															MapFile.Location.Col,
-															MapFile.Location.Row,
-															level);
+							_file.ChangeLevel(vert);			// fire LevelSelected event
+							_file.Location = new MapLocation(	// fire LocationSelected event
+														_file.Location.Col,
+														_file.Location.Row,
+														level);
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.None,
-															MapFile.GetTile(MapFile.Location.Col,
-																			MapFile.Location.Row),
-															MapFile.Location);
+															_file.GetTile(_file.Location.Col,
+																		  _file.Location.Row),
+															_file.Location);
 							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
@@ -507,7 +499,7 @@ namespace MapView.Forms.Observers
 		/// is invalid</returns>
 		private Point GetTileLocation(int x, int y)
 		{
-			if (MapFile != null) // safety.
+			if (_file != null) // safety.
 			{
 				x -= Origin.X;
 				y -= Origin.Y;
@@ -520,8 +512,8 @@ namespace MapView.Forms.Observers
 								(int)Math.Floor(xd),
 								(int)Math.Floor(yd));
 
-				if (   loc.X > -1 && loc.X < MapFile.Cols
-					&& loc.Y > -1 && loc.Y < MapFile.Rows)
+				if (   loc.X > -1 && loc.X < _file.Cols
+					&& loc.Y > -1 && loc.Y < _file.Rows)
 				{
 					return loc;
 				}

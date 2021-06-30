@@ -657,10 +657,10 @@ namespace MapView.Forms.Observers
 		#region Methods
 		/// <summary>
 		/// Sets <c><see cref="_file"/></c> and populates
-		/// <c>TileView</c> <c><see cref="TilePanel">TilePanels</see></c> with
+		/// <c>TileView's</c> <c><see cref="TilePanel">TilePanels</see></c> with
 		/// <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
-		/// <param name="file"></param>
+		/// <param name="file">a <c><see cref="MapFile"/></c></param>
 		internal void SetMapfile(MapFile file)
 		{
 			IList<Tilepart> parts = (_file = file).Parts;
@@ -677,6 +677,7 @@ namespace MapView.Forms.Observers
 
 			OnResize(null);
 		}
+
 
 		/// <summary>
 		/// Sets the title-text to a string that's appropriate for the currently

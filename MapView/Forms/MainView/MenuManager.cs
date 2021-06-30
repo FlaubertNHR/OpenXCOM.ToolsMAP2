@@ -12,7 +12,8 @@ namespace MapView.Forms.MainView
 	/// TopView, RouteView, TopRouteView, and the ScanG viewer. As well as
 	/// minimize/restore all.
 	/// </summary>
-	/// <remarks>See <c><see cref="ObserverManager"/></c> for instantiation of the viewers.</remarks>
+	/// <remarks>See <c><see cref="ObserverManager"/></c> for instantiation of
+	/// the viewers.</remarks>
 	internal static class MenuManager
 	{
 		#region Fields (static)
@@ -142,7 +143,7 @@ namespace MapView.Forms.MainView
 		/// loads.
 		/// </summary>
 		/// <remarks>Called by <c>MainViewF.LoadSelectedDescriptor()</c>.</remarks>
-		internal static void StartSecondaryStageBoosters()
+		internal static void StartSecondStageBoosters()
 		{
 			Viewers.Enabled = true;
 
@@ -368,14 +369,14 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		internal static void OnScanGClick(object sender, EventArgs e)
 		{
-			if (MainViewUnderlay.that.MapFile != null)
+			if (MainViewF.that.MapFile != null)
 			{
 				MenuItem it = Viewers.MenuItems[MI_SCANG];
 				if (!it.Checked)
 				{
 					it.Checked = true;
 
-					MainViewF.ScanG = new ScanGViewer(MainViewUnderlay.that.MapFile);
+					MainViewF.ScanG = new ScanGViewer(MainViewF.that.MapFile);
 				}
 				else
 					MainViewF.ScanG.BringToFront();

@@ -205,7 +205,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			if (MapFile != null)
+			if (_file != null)
 			{
 				base.OnResize(e);
 				PathSelectedLozenge();
@@ -227,7 +227,7 @@ namespace MapView.Forms.Observers
 
 			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				BlobService.HalfWidth  = HalfWidth;
 				BlobService.HalfHeight = HalfHeight;
@@ -310,7 +310,7 @@ namespace MapView.Forms.Observers
 					r = 0,
 						startX = Origin.X,
 						startY = Origin.Y;
-					r != MapFile.Rows;
+					r != _file.Rows;
 					++r,
 						startX -= HalfWidth,
 						startY += HalfHeight)
@@ -319,12 +319,12 @@ namespace MapView.Forms.Observers
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.Cols;
+						c != _file.Cols;
 						++c,
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if (!(tile = MapFile.GetTile(c,r)).Vacant)
+					if (!(tile = _file.GetTile(c,r)).Vacant)
 					{
 						if (tile.Content != null)
 							BlobService.Draw(_graphics, ToolContent, x,y, tile.Content);
@@ -350,7 +350,7 @@ namespace MapView.Forms.Observers
 					rSrc = 0,
 						x = Origin.X,
 						y = Origin.Y;
-					rSrc != MapFile.Rows;
+					rSrc != _file.Rows;
 					++rSrc,
 						x -= HalfWidth,
 						y += HalfHeight)
@@ -359,12 +359,12 @@ namespace MapView.Forms.Observers
 						cSrc = 0,
 							xSrc = x,
 							ySrc = y;
-						cSrc != MapFile.Cols;
+						cSrc != _file.Cols;
 						++cSrc,
 							xSrc += HalfWidth,
 							ySrc += HalfHeight)
 				{
-					if ((node = MapFile.GetTile(cSrc, rSrc).Node) != null
+					if ((node = _file.GetTile(cSrc, rSrc).Node) != null
 						&& (NodeSelected == null || node != NodeSelected))
 					{
 						DrawLinkLines(xSrc, ySrc, node);
@@ -398,7 +398,7 @@ namespace MapView.Forms.Observers
 					switch (destId)
 					{
 						case Link.ExitWest:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != _file.Level)
 								continue;
 
 							xDst = OffsetX + 1;
@@ -407,7 +407,7 @@ namespace MapView.Forms.Observers
 							break;
 
 						case Link.ExitNorth:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != _file.Level)
 								continue;
 
 							xDst = Width - OffsetX * 2;
@@ -416,7 +416,7 @@ namespace MapView.Forms.Observers
 							break;
 
 						case Link.ExitEast:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != _file.Level)
 								continue;
 
 							xDst = Width  - OffsetX * 2;
@@ -425,7 +425,7 @@ namespace MapView.Forms.Observers
 							break;
 
 						case Link.ExitSouth:
-							if (node.Lev != MapFile.Level)
+							if (node.Lev != _file.Level)
 								continue;
 
 							xDst =          OffsetX + 1;
@@ -434,10 +434,10 @@ namespace MapView.Forms.Observers
 							break;
 
 						default:
-							if ((dest = MapFile.Routes[destId]) == null
-								|| dest.Lev != MapFile.Level
+							if ((dest = _file.Routes[destId]) == null
+								|| dest.Lev != _file.Level
 								|| (NodeSelected != null && dest == NodeSelected)
-								|| RouteCheckService.OutsideBounds(dest, MapFile))
+								|| RouteCheckService.OutsideBounds(dest, _file))
 							{
 								continue;
 							}
@@ -502,18 +502,18 @@ namespace MapView.Forms.Observers
 			RouteNode node, dest;
 			Link link;
 
-			for (int r = 0; r != MapFile.Rows; ++r)
+			for (int r = 0; r != _file.Rows; ++r)
 			{
 				for (int
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.Cols;
+						c != _file.Cols;
 						++c,
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((node = MapFile.GetTile(c,r).Node) != null)	// NOTE: MapFile has the current level stored and uses
+					if ((node = _file.GetTile(c,r).Node) != null)	// NOTE: MapFile has the current level stored and uses
 					{												// it to return only tiles on the correct level here.
 						_nodeFill.Reset();
 						_nodeFill.AddLine(
@@ -528,7 +528,7 @@ namespace MapView.Forms.Observers
 						_nodeFill.CloseFigure();
 
 						Brush brush;
-						if (NodeSelected != null && MapFile.Level == NodeSelected.Lev
+						if (NodeSelected != null && _file.Level == NodeSelected.Lev
 							&& c == NodeSelected.Col
 							&& r == NodeSelected.Row)
 						{
@@ -547,10 +547,10 @@ namespace MapView.Forms.Observers
 						for (int i = 0; i != RouteNode.LinkSlots; ++i) // check for and if applicable draw the up/down indicators.
 						{
 							if ((link = node[i]).IsNodelink()
-								&& link.Destination < MapFile.Routes.Nodes.Count
-								&& (dest = MapFile.Routes[link.Destination]) != null)
+								&& link.Destination < _file.Routes.Nodes.Count
+								&& (dest = _file.Routes[link.Destination]) != null)
 							{
-								if (dest.Lev < MapFile.Level) // draw arrow up.
+								if (dest.Lev < _file.Level) // draw arrow up.
 								{
 									_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
 													PenLink,
@@ -565,7 +565,7 @@ namespace MapView.Forms.Observers
 													x - 1,             y + 1,
 													x - 3 + HalfWidth, y + 0 + HalfHeight);
 								}
-								else if (dest.Lev > MapFile.Level) // draw arrow down.
+								else if (dest.Lev > _file.Level) // draw arrow down.
 								{
 									_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
 													PenLink,
@@ -595,7 +595,7 @@ namespace MapView.Forms.Observers
 		private void DrawGridLines()
 		{
 			Pen pen;
-			for (int i = 0; i <= MapFile.Rows; ++i)
+			for (int i = 0; i <= _file.Rows; ++i)
 			{
 				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
 				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
@@ -604,11 +604,11 @@ namespace MapView.Forms.Observers
 								pen,
 								Origin.X - i * HalfWidth,
 								Origin.Y + i * HalfHeight,
-								Origin.X + (MapFile.Cols - i) * HalfWidth,
-								Origin.Y + (MapFile.Cols + i) * HalfHeight);
+								Origin.X + (_file.Cols - i) * HalfWidth,
+								Origin.Y + (_file.Cols + i) * HalfHeight);
 			}
 
-			for (int i = 0; i <= MapFile.Cols; ++i)
+			for (int i = 0; i <= _file.Cols; ++i)
 			{
 				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
 				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
@@ -617,8 +617,8 @@ namespace MapView.Forms.Observers
 								pen,
 								Origin.X + i * HalfWidth,
 								Origin.Y + i * HalfHeight,
-							   (Origin.X + i * HalfWidth)  - MapFile.Rows * HalfWidth,
-							   (Origin.Y + i * HalfHeight) + MapFile.Rows * HalfHeight);
+							   (Origin.X + i * HalfWidth)  - _file.Rows * HalfWidth,
+							   (Origin.Y + i * HalfHeight) + _file.Rows * HalfHeight);
 			}
 		}
 
@@ -632,18 +632,18 @@ namespace MapView.Forms.Observers
 
 			RouteNode node;
 
-			for (int r = 0; r != MapFile.Rows; ++r)
+			for (int r = 0; r != _file.Rows; ++r)
 			{
 				for (int
 						c = 0,
 							x = startX,
 							y = startY;
-						c != MapFile.Cols;
+						c != _file.Cols;
 						++c,
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((node = MapFile.GetTile(c,r).Node) != null)
+					if ((node = _file.GetTile(c,r).Node) != null)
 					{
 						int infoboxX = x - HalfWidth / 2 - 2;				// -2 to prevent drawing over the link-going-up vertical
 						int infoboxY = y + HalfHeight - NodeValHeight / 2;	//    line indicator when panel-size is fairly small.
@@ -741,14 +741,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawInfoOverlay()
 		{
-			MapTile tile = MapFile.GetTile(_col, _row);
+			MapTile tile = _file.GetTile(_col, _row);
 			if (tile != null) // safety.
 			{
 				string textLoc = Globals.GetLocationString(
 														_col,
 														_row,
-														MapFile.Level,
-														MapFile.Levs);
+														_file.Level,
+														_file.Levs);
 
 				int textWidth = (int)_graphics.MeasureString(textLoc, FontOverlay).Width;
 
@@ -766,7 +766,7 @@ namespace MapView.Forms.Observers
 					textOver = node.Id.ToString();
 					textUnit = Enum.GetName(typeof(UnitType), node.Unit);
 
-					if (MapFile.Descriptor.GroupType == GameType.Tftd)
+					if (_file.Descriptor.GroupType == GameType.Tftd)
 						textRank = RouteNodes.RankTftd[node.Rank].ToString();
 					else
 						textRank = RouteNodes.RankUfo [node.Rank].ToString();

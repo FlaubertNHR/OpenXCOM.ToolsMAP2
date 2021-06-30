@@ -578,7 +578,7 @@ namespace MapView.Forms.Observers
 				IList<Brush> brushes; // TODO: set these when the Mapfile loads
 				if (MainViewF.Optionables.UseMono)
 				{
-					if (MainViewUnderlay.that.MapFile.Descriptor.GroupType == GameType.Tftd)
+					if (MainViewF.that.MapFile.Descriptor.GroupType == GameType.Tftd)
 						brushes = Palette.BrushesTftdBattle;
 					else
 						brushes = Palette.BrushesUfoBattle;
@@ -699,7 +699,7 @@ namespace MapView.Forms.Observers
 		/// Assigns <c><see cref="Tilepart">Tileparts</see></c> to this
 		/// <c>TilePanel</c>.
 		/// </summary>
-		/// <param name="parts"></param>
+		/// <param name="parts">a list of <c>Tileparts</c></param>
 		internal void PopulatePanel(IList<Tilepart> parts)
 		{
 			if (_partType == PartType.Invalid)

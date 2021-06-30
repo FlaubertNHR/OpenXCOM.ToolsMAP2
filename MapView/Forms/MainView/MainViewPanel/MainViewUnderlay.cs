@@ -34,6 +34,10 @@ namespace MapView.Forms.MainView
 		#region Fields
 		private readonly VScrollBar _scrollBarV = new VScrollBar();
 		private readonly HScrollBar _scrollBarH = new HScrollBar();
+
+		private MainViewOverlay _overlay;
+
+		private MapFile _file;
 		#endregion Fields
 
 
@@ -44,39 +48,10 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		private MainViewOverlay _overlay;
-
-		private MapFile _file;
-		internal MapFile MapFile
-		{
-			get { return _file; }
-			set
-			{
-				_overlay.MapFile = value;
-
-				if (_file != null)
-				{
-					_file.LocationSelected -= _overlay.OnLocationSelectedMain;
-					_file.LevelSelected    -= _overlay.OnLevelSelectedMain;
-				}
-
-				if ((_file = value) != null)
-				{
-					_file.LocationSelected += _overlay.OnLocationSelectedMain;
-					_file.LevelSelected    += _overlay.OnLevelSelectedMain;
-
-					SetOverlaySize();
-				}
-
-				OnResize(EventArgs.Empty);
-			}
-		}
-
-
-		internal bool IsVertbarVisible
+		internal bool VertbarVisible
 		{ get { return _scrollBarV.Visible; } }
 
-		internal bool IsHoribarVisible
+		internal bool HoribarVisible
 		{ get { return _scrollBarH.Visible; } }
 
 		internal int WidthVertbar
@@ -181,7 +156,7 @@ namespace MapView.Forms.MainView
 
 			base.OnResize(eventargs);
 
-			if (MapFile != null && Globals.AutoScale)
+			if (_file != null && Globals.AutoScale)
 			{
 				SetScale();
 				SetOverlaySize();
@@ -236,6 +211,18 @@ namespace MapView.Forms.MainView
 
 
 		#region Methods
+		/// <summary>
+		/// Sets <c><see cref="_file"/></c>.
+		/// </summary>
+		/// <param name="file">a <c><see cref="MapFile"/></c></param>
+		internal void SetMapFile(MapFile file)
+		{
+			if ((_file = file) != null)
+				SetOverlaySize();
+
+			OnResize(EventArgs.Empty);
+		}
+
 		/// <summary>
 		/// Mousegrab pan horizontal.
 		/// </summary>
@@ -385,7 +372,7 @@ namespace MapView.Forms.MainView
 			//DSShared.Logfile.Log("");
 			//DSShared.Logfile.Log("MainViewUnderlay.SetOverlaySize");
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				//DSShared.Logfile.Log(". scale= " + Globals.Scale);
 				Size size = GetRequiredOverlaySize(Globals.Scale);
@@ -409,7 +396,7 @@ namespace MapView.Forms.MainView
 			//DSShared.Logfile.Log("");
 			//DSShared.Logfile.Log("MainViewUnderlay.GetRequiredOverlaySize");
 
-			if (MapFile != null)
+			if (_file != null)
 			{
 				//DSShared.Logfile.Log(". scale= " + Globals.Scale);
 
@@ -437,12 +424,12 @@ namespace MapView.Forms.MainView
 
 
 				_overlay.Origin = new Point(
-										OffsetX + (MapFile.Rows - 1) * halfWidth,
+										OffsetX + (_file.Rows - 1) * halfWidth,
 										OffsetY);
 
-				int width  = (MapFile.Rows + MapFile.Cols) * halfWidth;
-				int height = (MapFile.Rows + MapFile.Cols) * halfHeight
-						   +  MapFile.Levs * halfHeight * 3;
+				int width  = (_file.Rows + _file.Cols) * halfWidth;
+				int height = (_file.Rows + _file.Cols) * halfHeight
+						   +  _file.Levs * halfHeight * 3;
 
 				//DSShared.Logfile.Log(". width= " + width);
 				//DSShared.Logfile.Log(". height= " + height);

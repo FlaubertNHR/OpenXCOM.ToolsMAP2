@@ -363,9 +363,13 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Sets the current <c><see cref="MapFile"/></c>
+		/// Sets <c><see cref="_file"/></c>.
 		/// </summary>
-		/// <param name="file"></param>
+		/// <param name="file">a <c><see cref="MapFile"/></c></param>
+		/// <remarks>I don't believe it is necessary to unsubscribe the handlers
+		/// here from events in the old <c>MapFile</c>. The old <c>MapFile</c>
+		/// held the references and it goes poof, which ought release these
+		/// handlers and this <c>TopView</c> from any further obligations.</remarks>
 		internal void SetMapfile(MapFile file)
 		{
 			if (_file != null)
