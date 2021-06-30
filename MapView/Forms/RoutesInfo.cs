@@ -41,7 +41,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates a RoutesInfo screen.
+		/// cTor. Instantiates this <c>RoutesInfo</c> dialog.
 		/// </summary>
 		/// <param name="file"></param>
 		internal RoutesInfo(MapFile file)
@@ -56,7 +56,8 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Nulls <c><see cref="RouteView.RoutesInfo">RouteView.RoutesInfo</see></c>
+		/// Nulls
+		/// <c><see cref="RouteView.RoutesInfo">RouteView.RoutesInfo</see></c>
 		/// after this dialog closes.
 		/// </summary>
 		/// <param name="e"></param>
@@ -72,7 +73,7 @@ namespace MapView
 
 		#region Events
 		/// <summary>
-		/// Closes this form on [Esc].
+		/// Closes this <c>RoutesInfo</c> dialog on <c>[Esc]</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)
@@ -85,7 +86,8 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Initializes this RoutesInfo with a MapFile.
+		/// Initializes this <c>RoutesInfo</c> with a specified
+		/// <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="file"></param>
 		internal void Initialize(MapFile file)
@@ -115,7 +117,7 @@ namespace MapView
 			lbl_Group   .Text = _group;
 			lbl_Category.Text = _category;
 
-			thisLayout();
+			LayoutRoutesInfo();
 		}
 
 		/// <summary>
@@ -133,7 +135,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Initializes the ranks for the Tileset.
+		/// Initializes the <c><see cref="NodeRankUfo">NodeRank*s</see></c> for
+		/// the Tileset.
 		/// </summary>
 		private void InitRanks()
 		{
@@ -174,19 +177,20 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Initializes the ranks for the Category.
+		/// Initializes the <c><see cref="NodeRankUfo">NodeRank*s</see></c> for
+		/// the Category in
+		/// <c><see cref="TileGroup">TileGroup</see>.Categories</c>.
 		/// </summary>
 		private void InitRanksCategory()
 		{
-			KeyValuePair<string, Dictionary<string, Descriptor>> cat = getCategory();
-			if (!cat.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
+			KeyValuePair<string, Dictionary<string, Descriptor>> category = GetCategory();
+			if (!category.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
 			{
-				RouteNodes routes;
-				foreach (var descriptor in cat.Value)
-				{
-					Descriptor tileset = descriptor.Value;
+				Descriptor tileset; RouteNodes routes;
 
-					if (tileset == _file.Descriptor)
+				foreach (var descriptor in category.Value)
+				{
+					if ((tileset = descriptor.Value) == _file.Descriptor)
 					{
 						routes = _file.Routes; // -> not only efficient, is req'd when importing Routes
 					}
@@ -233,17 +237,19 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets the current tileset's Category and sets the group and category
+		/// Gets the current <c><see cref="_file">_file's</see></c> Category in
+		/// <c><see cref="TileGroup"></see>.Categories</c> and sets the current
+		/// <c><see cref="_group"/></c> and <c><see cref="_category"/></c>
 		/// strings.
 		/// </summary>
 		/// <returns></returns>
-		private KeyValuePair<string, Dictionary<string, Descriptor>> getCategory()
+		private KeyValuePair<string, Dictionary<string, Descriptor>> GetCategory()
 		{
 			Dictionary<string, Dictionary<string, Descriptor>> categories;
 			Dictionary<string, Descriptor> descriptors;
 
-			Dictionary<string, TileGroup> tileGroups = TileGroupManager.TileGroups;
-			foreach (var @group in tileGroups)
+			Dictionary<string, TileGroup> groups = TileGroupManager.TileGroups;
+			foreach (var @group in groups)
 			{
 				categories = @group.Value.Categories;
 				foreach (var category in categories)
@@ -265,9 +271,9 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Lays out this dialog.
+		/// Lays out this <c>RoutesInfo</c> dialog.
 		/// </summary>
-		private void thisLayout()
+		private void LayoutRoutesInfo()
 		{
 			int widthLeft = lbl_Tileset_.Left + lbl_Tileset_.Width;
 			lbl_Tileset.Left  = widthLeft;
@@ -316,7 +322,8 @@ namespace MapView
 
 
 		/// <summary>
-		/// de-Tallies a node on its deletion in RouteView.
+		/// de-Tallies a <c><see cref="RouteNode"/></c> on its deletion in
+		/// RouteView.
 		/// </summary>
 		/// <param name="node"></param>
 		internal void DeleteNode(RouteNode node)
@@ -358,11 +365,13 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Updates texts when noderank gets changed.
+		/// Updates texts when <c><see cref="NodeRankUfo">NodeRank*</see></c>
+		/// gets changed.
 		/// </summary>
 		/// <param name="rankPre"></param>
 		/// <param name="rankPos"></param>
-		/// <remarks>Check that node is SpawnWeight.None before call.</remarks>
+		/// <remarks>Check that node is
+		/// <c><see cref="SpawnWeight"></see>.None</c> before call.</remarks>
 		internal void UpdateNoderank(byte rankPre, byte rankPos)
 		{
 			switch (rankPre)
