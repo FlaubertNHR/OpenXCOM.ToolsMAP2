@@ -643,7 +643,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Checks/Unchecks the <c><see cref="tsb_Colorhelp">colorhelp button</see></c>.
+		/// Checks/Unchecks the
+		/// <c><see cref="tsb_Colorhelp">colorhelp button</see></c>.
 		/// </summary>
 		/// <param name="checked"></param>
 		internal void CheckColorhelp(bool @checked)
