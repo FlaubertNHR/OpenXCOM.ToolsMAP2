@@ -170,8 +170,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private static Pen PenSelectedPartBorder = new Pen(Color.Red, 3);
 
-		private const string Door = "door";
-		private static int TextWidth;
+		internal const string Door = "door";
+		internal static int TextWidth;
 
 		private const int TableOffset = 2;
 		#endregion Fields (static)
@@ -564,13 +564,6 @@ namespace MapView.Forms.Observers
 				int x = 0;
 				int y = 0;
 				int L,T; // left,top
-
-				if (TextWidth == 0) // init.
-				{
-//					TextWidth = TextRenderer.MeasureText(Door, Font).Width;		// =30
-					TextWidth = (int)graphics.MeasureString(Door, Font).Width;	// =24
-				}
-
 
 				XCImage sprite;
 

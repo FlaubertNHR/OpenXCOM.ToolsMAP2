@@ -197,6 +197,9 @@ namespace MapView.Forms.Observers
 				contents
 			};
 
+//			TilePanel.TextWidth = TextRenderer.MeasureText(TilePanel.Door, TilePanel.Font).Width;						// =30
+			TilePanel.TextWidth = (int)_allTiles.CreateGraphics().MeasureString(TilePanel.Door, _allTiles.Font).Width;	// =24
+
 			ssStatus.Renderer = new CustomToolStripRenderer();
 
 			CreateContext();
