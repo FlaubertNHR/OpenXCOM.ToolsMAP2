@@ -35,6 +35,7 @@ namespace MapView.Forms.MainView
 			_tsbDelete     .Dispose();
 			_tsbDown       .Dispose();
 			_tsbFill       .Dispose();
+			_tsbOptions    .Dispose();
 			_tsbPaste      .Dispose();
 			_tsbScale      .Dispose();
 			_tsbScaleIn    .Dispose();
@@ -109,15 +110,37 @@ namespace MapView.Forms.MainView
 		private readonly ToolStripButton    _tsbFill        = new ToolStripButton();
 
 		private readonly ToolStripSeparator _tss4           = new ToolStripSeparator();
+
+		private readonly ToolStripButton    _tsbOptions     = new ToolStripButton();
 		#endregion Fields
 
 
 		#region Methods
 		/// <summary>
-		/// Adds a textfield for search to the specified toolstrip.
+		/// Adds an Options-button to the specified <c>ToolStrip</c>.
 		/// </summary>
 		/// <param name="ts"></param>
-		/// <remarks>Appears only in MainView.</remarks>
+		/// <remarks>The Options-button appears only in MainView.</remarks>
+		internal void AddOptionsTool(ToolStrip ts)
+		{
+			ts.Items.Add(_tsbOptions);
+
+			_tsbOptions.Name = "tsbOptions";
+			_tsbOptions.Text = "&Options";
+			_tsbOptions.Alignment = ToolStripItemAlignment.Right;
+			_tsbOptions.Click += OnOptionsClick;
+		}
+
+		private void OnOptionsClick(object sender, EventArgs e)
+		{
+		}
+
+
+		/// <summary>
+		/// Adds a textfield for search to the specified <c>ToolStrip</c>.
+		/// </summary>
+		/// <param name="ts"></param>
+		/// <remarks>These its appear only in MainView.</remarks>
 		internal void AddSearchTools(ToolStrip ts)
 		{
 			ts.Items.Add(_tstbSearch);
@@ -155,10 +178,11 @@ namespace MapView.Forms.MainView
 
 
 		/// <summary>
-		/// Adds buttons for zooming the map-scale to the specified toolstrip.
+		/// Adds buttons for zooming the map-scale to the specified
+		/// <c>ToolStrip</c>.
 		/// </summary>
 		/// <param name="ts"></param>
-		/// <remarks>Appears only in MainView.</remarks>
+		/// <remarks>These its appear only in MainView.</remarks>
 		internal void AddScalerTools(ToolStrip ts)
 		{
 			ts.Items.Add(_tss0);
@@ -241,7 +265,7 @@ namespace MapView.Forms.MainView
 		/// specified toolstrip in MainView as well as TopView and
 		/// TopRouteView(Top).
 		/// </summary>
-		/// <param name="ts">a toolstrip to put the buttons in</param>
+		/// <param name="ts">a <c>ToolStrip</c> to put the buttons in</param>
 		/// <param name="observer"><c>false</c> for MainView's toolstrip,
 		/// <c>true</c> for TopView's and TopRouteView's toolstrips</param>
 		internal void AddEditorTools(
@@ -405,7 +429,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Dis/enables all level up/down buttons on the toolstrips.
+		/// Dis/enables all level up/down buttons on the <c>ToolStrips</c>.
 		/// </summary>
 		/// <param name="level"></param>
 		/// <param name="levels"></param>
@@ -421,7 +445,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Dis/enables all edit buttons on the toolstrips.
+		/// Dis/enables all edit buttons on the <c>ToolStrips</c>.
 		/// </summary>
 		/// <param name="enabled"></param>
 		internal void EnableEditors(bool enabled)
@@ -431,7 +455,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Dis/enables all paste buttons on the toolstrips.
+		/// Dis/enables all paste buttons on the <c>ToolStrips</c>.
 		/// </summary>
 		/// <param name="enabled"></param>
 		internal void EnablePasters(bool enabled = true)
@@ -477,7 +501,7 @@ namespace MapView.Forms.MainView
 
 		#region Events (search)
 		/// <summary>
-		/// Handler for pressing the Enter-key when the search-textbox is
+		/// Handler for pressing <c>[Enter]</c> when the search-textbox is
 		/// focused.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -493,7 +517,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Clears the searched, found, and highlighted Treenode.
+		/// Clears the searched, found, and highlighted <c>TreeNode</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

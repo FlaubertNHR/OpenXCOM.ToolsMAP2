@@ -434,6 +434,7 @@ namespace MapView
 			ObserverManager.ToolFactory.AddSearchTools(tsTools);
 			ObserverManager.ToolFactory.AddScalerTools(tsTools);
 			ObserverManager.ToolFactory.AddEditorTools(tsTools);
+			ObserverManager.ToolFactory.AddOptionsTool(tsTools);
 			tsTools.ResumeLayout();
 			Logfile.Log("MainView toolstrip created.");
 
@@ -2064,10 +2065,11 @@ namespace MapView
 
 		/// <summary>
 		/// Selects a selected-tile toner color. It does this by changing the
-		/// option and firing MainViewOptionables.OnOptionChanged() which calls
-		/// SetTileToner() which sets an alternate set of sprites with the
-		/// toner-palette and also checks the item in MainView's Toner menu.
-		/// so bite
+		/// option and firing
+		/// <c><see cref="MainViewOptionables.OnOptionChanged()">MainViewOptionables.OnOptionChanged()</see></c>
+		/// which calls <c><see cref="SetTileToner()">SetTileToner()</see></c>
+		/// which sets an alternate set of sprites with the toner-palette and
+		/// also checks the it in MainView's Toner menu. so bite
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2106,7 +2108,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Opens the ColorsHelp dialog.
+		/// Opens the <c><see cref="ColorHelp"/></c> dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2126,7 +2128,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Dechecks the Colors item when the Colors dialog closes.
+		/// Dechecks the Colors it when the <c><see cref="ColorHelp"/></c>
+		/// dialog closes.
 		/// </summary>
 		internal void DecheckColors()
 		{
@@ -2138,7 +2141,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Opens the About dialog
+		/// Opens the <c><see cref="About"/></c> dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2158,7 +2161,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Dechecks the About item when the About dialog closes.
+		/// Dechecks the About it when the <c><see cref="About"/></c> dialog
+		/// closes.
 		/// </summary>
 		internal void DecheckAbout()
 		{
@@ -2168,7 +2172,7 @@ namespace MapView
 
 
 		/// <summary>
-		/// Opens the MapInfo dialog.
+		/// Opens the <c><see cref="MapInfoDialog"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2189,7 +2193,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Dechecks the MapInfo item when the MapInfo dialog closes.
+		/// Dechecks the MapInfo it when the <c><see cref="MapInfoDialog"/></c>
+		/// closes.
 		/// </summary>
 		internal void DecheckMapInfo()
 		{
