@@ -47,27 +47,11 @@ namespace MapView.Forms.MainView
 		#endregion Properties (static)
 
 
-		#region Properties
-		internal bool VertbarVisible
-		{ get { return _scrollBarV.Visible; } }
-
-		internal bool HoribarVisible
-		{ get { return _scrollBarH.Visible; } }
-
-		internal int WidthVertbar
-		{ get { return _scrollBarV.Width; } }
-
-		internal int HeightHoribar
-		{ get { return _scrollBarH.Height; } }
-		#endregion Properties
-
-
 		#region cTor
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="mainView"></param>
-		internal MainViewUnderlay(MainViewF mainView)
+		internal MainViewUnderlay()
 		{
 			that = this;
 			_overlay = new MainViewOverlay();
@@ -221,6 +205,26 @@ namespace MapView.Forms.MainView
 				SetOverlaySize();
 
 			OnResize(EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Gets the width of the vertical scrollbar.
+		/// </summary>
+		/// <returns></returns>
+		internal int GetVertbarWidth()
+		{
+			if (_scrollBarV.Visible) return _scrollBarV.Width;
+			return 0;
+		}
+
+		/// <summary>
+		/// Gets the height of the horizontal scrollbar.
+		/// </summary>
+		/// <returns></returns>
+		internal int GetHoribarHeight()
+		{
+			if (_scrollBarH.Visible) return _scrollBarH.Height;
+			return 0;
 		}
 
 		/// <summary>

@@ -398,7 +398,7 @@ namespace MapView
 
 			that = this;
 
-			_underlay = new MainViewUnderlay(this);
+			_underlay = new MainViewUnderlay();
 			_overlay  = MainViewOverlay.that;
 			Logfile.Log("MainView panels instantiated.");
 

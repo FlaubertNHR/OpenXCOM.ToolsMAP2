@@ -270,11 +270,8 @@ namespace MapView.Forms.MainView
 			ToolStripContentPanel centerpanel = MainViewF.that.tscPanel.ContentPanel;
 
 			Rectangle allowablearea = centerpanel.ClientRectangle;
-			if (underlay.VertbarVisible)
-				allowablearea.Width -= underlay.WidthVertbar;
-
-			if (underlay.HoribarVisible)
-				allowablearea.Height -= underlay.HeightHoribar;
+			allowablearea.Width  -= underlay.GetVertbarWidth();
+			allowablearea.Height -= underlay.GetHoribarHeight();
 
 			return !allowablearea.Contains(centerpanel.PointToClient(Control.MousePosition));
 		}
