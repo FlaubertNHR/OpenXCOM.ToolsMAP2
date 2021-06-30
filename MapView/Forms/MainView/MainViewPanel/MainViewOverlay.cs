@@ -173,11 +173,11 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="mainView"></param>
-		internal MainViewOverlay(MainViewF mainView)
+		internal MainViewOverlay()
 		{
-			_mainView = mainView;
-			_mainView.SetMainViewOverlay(that = this);
+			that = this;
+
+			_mainView = MainViewF.that;
 
 			SetStyle(ControlStyles.Selectable, true);
 			TabStop = true;

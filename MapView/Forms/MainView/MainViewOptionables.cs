@@ -46,10 +46,9 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// cTor.
 		/// </summary>
-		/// <param name="overlay"></param>
-		internal MainViewOptionables(MainViewOverlay overlay)
+		internal MainViewOptionables()
 		{
-			_overlay = overlay;
+			_overlay = MainViewOverlay.that;
 		}
 		#endregion cTor
 

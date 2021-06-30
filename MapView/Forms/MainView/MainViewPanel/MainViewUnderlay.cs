@@ -34,8 +34,6 @@ namespace MapView.Forms.MainView
 		#region Fields
 		private readonly VScrollBar _scrollBarV = new VScrollBar();
 		private readonly HScrollBar _scrollBarH = new HScrollBar();
-
-		private MainViewF _mainView;
 		#endregion Fields
 
 
@@ -46,8 +44,7 @@ namespace MapView.Forms.MainView
 
 
 		#region Properties
-		private MainViewOverlay MainViewOverlay
-		{ get; set; }
+		private MainViewOverlay _overlay;
 
 		private MapFile _file;
 		internal MapFile MapFile
@@ -55,18 +52,18 @@ namespace MapView.Forms.MainView
 			get { return _file; }
 			set
 			{
-				MainViewOverlay.MapFile = value;
+				_overlay.MapFile = value;
 
 				if (_file != null)
 				{
-					_file.LocationSelected -= MainViewOverlay.OnLocationSelectedMain;
-					_file.LevelSelected    -= MainViewOverlay.OnLevelSelectedMain;
+					_file.LocationSelected -= _overlay.OnLocationSelectedMain;
+					_file.LevelSelected    -= _overlay.OnLevelSelectedMain;
 				}
 
 				if ((_file = value) != null)
 				{
-					_file.LocationSelected += MainViewOverlay.OnLocationSelectedMain;
-					_file.LevelSelected    += MainViewOverlay.OnLevelSelectedMain;
+					_file.LocationSelected += _overlay.OnLocationSelectedMain;
+					_file.LevelSelected    += _overlay.OnLevelSelectedMain;
 
 					SetOverlaySize();
 				}
@@ -97,10 +94,8 @@ namespace MapView.Forms.MainView
 		/// <param name="mainView"></param>
 		internal MainViewUnderlay(MainViewF mainView)
 		{
-			_mainView = mainView;
-
 			that = this;
-			MainViewOverlay = new MainViewOverlay(_mainView);
+			_overlay = new MainViewOverlay();
 
 			Dock = DockStyle.Fill;
 			BorderStyle = BorderStyle.Fixed3D;
@@ -117,7 +112,7 @@ namespace MapView.Forms.MainView
 			{
 				_scrollBarV,
 				_scrollBarH,
-				MainViewOverlay
+				_overlay
 			});
 
 
@@ -177,11 +172,11 @@ namespace MapView.Forms.MainView
 //			DSShared.Logfile.Log("underlay client.Width= " + ClientSize.Width);
 //			DSShared.Logfile.Log("underlay client.Height= " + ClientSize.Height);
 //
-//			DSShared.Logfile.Log("overlay.Width= " + MainViewOverlay.Width);
-//			DSShared.Logfile.Log("overlay.Height= " + MainViewOverlay.Height);
+//			DSShared.Logfile.Log("overlay.Width= " + _overlay.Width);
+//			DSShared.Logfile.Log("overlay.Height= " + _overlay.Height);
 //
-//			DSShared.Logfile.Log("overlay client.Width= " + MainViewOverlay.ClientSize.Width);
-//			DSShared.Logfile.Log("overlay client.Height= " + MainViewOverlay.ClientSize.Height);
+//			DSShared.Logfile.Log("overlay client.Width= " + _overlay.ClientSize.Width);
+//			DSShared.Logfile.Log("overlay client.Height= " + _overlay.ClientSize.Height);
 
 
 			base.OnResize(eventargs);
@@ -208,11 +203,11 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnScrollVert(object sender, ScrollEventArgs e)
 		{
-			//DSShared.Logfile.Log("OnVerticalScroll overlay.Left= " + MainViewOverlay.Left);
-			MainViewOverlay.Location = new Point(
-											MainViewOverlay.Left,
-											-_scrollBarV.Value);
-			MainViewOverlay.Invalidate();
+			//DSShared.Logfile.Log("OnVerticalScroll overlay.Left= " + _overlay.Left);
+			_overlay.Location = new Point(
+										_overlay.Left,
+										-_scrollBarV.Value);
+			_overlay.Invalidate();
 		}
 
 		/// <summary>
@@ -222,19 +217,20 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		private void OnScrollHori(object sender, ScrollEventArgs e)
 		{
-			//DSShared.Logfile.Log("OnVerticalScroll overlay.Top= " + MainViewOverlay.Top);
-			MainViewOverlay.Location = new Point(
-											-_scrollBarH.Value,
-											MainViewOverlay.Top);
-			MainViewOverlay.Invalidate();
+			//DSShared.Logfile.Log("OnVerticalScroll overlay.Top= " + _overlay.Top);
+			_overlay.Location = new Point(
+										-_scrollBarH.Value,
+										_overlay.Top);
+			_overlay.Invalidate();
 		}
 
 		/// <summary>
-		/// Invalidates MainViewOverlay if tileparts are being animated.
+		/// Invalidates <c><see cref="_overlay"/></c> if tileparts are being
+		/// animated.
 		/// </summary>
 		private void OnPhaseEvent()
 		{
-			MainViewOverlay.Invalidate();
+			_overlay.Invalidate();
 		}
 		#endregion Events
 
@@ -297,7 +293,7 @@ namespace MapView.Forms.MainView
 //			_scrollBarV.Value =
 //			_scrollBarH.Value = 0;
 //
-//			MainViewOverlay.Location = new Point(0, 0);
+//			_overlay.Location = new Point(0, 0);
 //		}
 
 		/// <summary>
@@ -313,16 +309,16 @@ namespace MapView.Forms.MainView
 				_scrollBarV.Value =
 				_scrollBarH.Value = 0;
 
-				MainViewOverlay.Location = new Point(0,0);
+				_overlay.Location = new Point(0,0);
 			}
 			else
 			{
 				// TODO: scrollbars jiggery-pokery needed.
-				_scrollBarV.Visible = (MainViewOverlay.Height > ClientSize.Height + OffsetY);
+				_scrollBarV.Visible = (_overlay.Height > ClientSize.Height + OffsetY);
 				if (_scrollBarV.Visible)
 				{
 					_scrollBarV.Maximum = Math.Max(
-												MainViewOverlay.Height
+												_overlay.Height
 													- ClientSize.Height
 													+ _scrollBarH.Height
 													+ OffsetY * 4, // <- top & bottom Underlay + top & bottom Overlay borders
@@ -335,14 +331,14 @@ namespace MapView.Forms.MainView
 				else
 				{
 					_scrollBarV.Value = 0;
-					MainViewOverlay.Location = new Point(Left, 0);
+					_overlay.Location = new Point(Left, 0);
 				}
 
-				_scrollBarH.Visible = (MainViewOverlay.Width > ClientSize.Width + OffsetX);
+				_scrollBarH.Visible = (_overlay.Width > ClientSize.Width + OffsetX);
 				if (_scrollBarH.Visible)
 				{
 					_scrollBarH.Maximum = Math.Max(
-												MainViewOverlay.Width
+												_overlay.Width
 													- ClientSize.Width
 													+ _scrollBarV.Width
 													+ OffsetX * 4, // <- left & right Underlay + left & right Overlay borders
@@ -355,11 +351,11 @@ namespace MapView.Forms.MainView
 				else
 				{
 					_scrollBarH.Value = 0;
-					MainViewOverlay.Location = new Point(0, Top);
+					_overlay.Location = new Point(0, Top);
 				}
 			}
 
-			MainViewOverlay.Refresh();
+			_overlay.Refresh();
 		}
 
 		/// <summary>
@@ -394,11 +390,11 @@ namespace MapView.Forms.MainView
 				//DSShared.Logfile.Log(". scale= " + Globals.Scale);
 				Size size = GetRequiredOverlaySize(Globals.Scale);
 
-				MainViewOverlay.Width  = size.Width;
-				MainViewOverlay.Height = size.Height;
+				_overlay.Width  = size.Width;
+				_overlay.Height = size.Height;
 
-				//DSShared.Logfile.Log(". set overlay.Width= " + MainViewOverlay.Width);
-				//DSShared.Logfile.Log(". set overlay.Height= " + MainViewOverlay.Height);
+				//DSShared.Logfile.Log(". set overlay.Width= " + _overlay.Width);
+				//DSShared.Logfile.Log(". set overlay.Height= " + _overlay.Height);
 			}
 		}
 
@@ -436,13 +432,13 @@ namespace MapView.Forms.MainView
 					halfWidth = halfHeight * 2;
 				}
 
-				MainViewOverlay.HalfWidth  = halfWidth; // set half-width/height for the Overlay.
-				MainViewOverlay.HalfHeight = halfHeight;
+				_overlay.HalfWidth  = halfWidth; // set half-width/height for the Overlay.
+				_overlay.HalfHeight = halfHeight;
 
 
-				MainViewOverlay.Origin = new Point(
-												OffsetX + (MapFile.Rows - 1) * halfWidth,
-												OffsetY);
+				_overlay.Origin = new Point(
+										OffsetX + (MapFile.Rows - 1) * halfWidth,
+										OffsetY);
 
 				int width  = (MapFile.Rows + MapFile.Cols) * halfWidth;
 				int height = (MapFile.Rows + MapFile.Cols) * halfHeight
@@ -452,7 +448,7 @@ namespace MapView.Forms.MainView
 				//DSShared.Logfile.Log(". height= " + height);
 
 				Globals.Scale = (float)halfWidth / MainViewOverlay.HalfWidthConst;
-				_mainView.sb_PrintScale();
+				MainViewF.that.sb_PrintScale();
 				//DSShared.Logfile.Log(". set scale= " + Globals.Scale);
 
 				return new Size(
