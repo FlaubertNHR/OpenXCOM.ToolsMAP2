@@ -806,9 +806,10 @@ namespace MapView
 		/// <param name="e"></param>
 		internal void OnOptionsClick(object sender, EventArgs e)
 		{
-			var it = sender as MenuItem;
-			if (it.Checked = !it.Checked)
+			if (miOptions.Checked = !miOptions.Checked)
 			{
+				ObserverManager.ToolFactory.GetOptionsButton().Checked = true;
+
 				if (_foptions == null)
 				{
 					_foptions = new OptionsForm(
@@ -823,7 +824,8 @@ namespace MapView
 					{
 						if (!MainViewF.Quit)
 						{
-							it.Checked = false;
+							ObserverManager.ToolFactory.GetOptionsButton().Checked =
+							miOptions.Checked = false;
 
 							e1.Cancel = true;
 							_foptions.Hide();

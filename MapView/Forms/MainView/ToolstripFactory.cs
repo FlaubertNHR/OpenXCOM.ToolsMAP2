@@ -128,11 +128,18 @@ namespace MapView.Forms.MainView
 			_tsbOptions.Name = "tsbOptions";
 			_tsbOptions.Text = "&Options";
 			_tsbOptions.Alignment = ToolStripItemAlignment.Right;
-			_tsbOptions.Click += OnOptionsClick;
+			_tsbOptions.Margin = new Padding(0,0,2,1);
+			_tsbOptions.AutoToolTip = false;
+			_tsbOptions.Click += MainViewF.that.OnOptionsClick;
 		}
 
-		private void OnOptionsClick(object sender, EventArgs e)
+		/// <summary>
+		/// Gets the Options-button for MainView to toggle.
+		/// </summary>
+		/// <returns></returns>
+		internal ToolStripButton GetOptionsButton()
 		{
+			return _tsbOptions;
 		}
 
 
