@@ -142,7 +142,7 @@ namespace DSShared
 
 				switch (bt)
 				{
-					case InfoboxType.Info:  lbl_Head.BackColor = Color.PowderBlue; break;
+					case InfoboxType.Info:  lbl_Head.BackColor = Color.Lavender;   break;
 					case InfoboxType.Warn:  lbl_Head.BackColor = Color.Moccasin;   break;
 					case InfoboxType.Error: lbl_Head.BackColor = Color.SandyBrown; break;
 				}
