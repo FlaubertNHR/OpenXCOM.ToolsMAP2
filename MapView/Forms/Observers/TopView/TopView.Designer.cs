@@ -46,7 +46,7 @@ namespace MapView.Forms.Observers
 			// tscPanel.ContentPanel
 			// 
 			this.tscPanel.ContentPanel.Controls.Add(this.pnlMain);
-			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(615, 430);
+			this.tscPanel.ContentPanel.Size = new System.Drawing.Size(640, 430);
 			this.tscPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			// 
 			// tscPanel.LeftToolStripPanel
@@ -70,7 +70,7 @@ namespace MapView.Forms.Observers
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlMain.Location = new System.Drawing.Point(0, 0);
 			this.pnlMain.Name = "pnlMain";
-			this.pnlMain.Size = new System.Drawing.Size(615, 430);
+			this.pnlMain.Size = new System.Drawing.Size(640, 430);
 			this.pnlMain.TabIndex = 0;
 			// 
 			// tsTools
@@ -81,8 +81,8 @@ namespace MapView.Forms.Observers
 			this.tsTools.Padding = new System.Windows.Forms.Padding(0);
 			this.tsTools.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tsTools.Size = new System.Drawing.Size(25, 111);
+			this.tsTools.Stretch = true;
 			this.tsTools.TabIndex = 0;
-			this.tsTools.Text = "tsTools";
 			// 
 			// tsMain
 			// 
@@ -97,7 +97,6 @@ namespace MapView.Forms.Observers
 			this.tsMain.Size = new System.Drawing.Size(640, 25);
 			this.tsMain.TabIndex = 0;
 			this.tsMain.TabStop = true;
-			this.tsMain.Text = "tsMain";
 			// 
 			// tsddbVisibleQuads
 			// 

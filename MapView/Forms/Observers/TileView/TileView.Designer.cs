@@ -181,7 +181,7 @@ namespace MapView.Forms.Observers
 			this.tsb_Colorhelp.Margin = new System.Windows.Forms.Padding(0);
 			this.tsb_Colorhelp.Name = "tsb_Colorhelp";
 			this.tsb_Colorhelp.Size = new System.Drawing.Size(62, 25);
-			this.tsb_Colorhelp.Text = "Colorhelp";
+			this.tsb_Colorhelp.Text = "&Colorhelp";
 			this.tsb_Colorhelp.Click += new System.EventHandler(this.OnColorhelpClick);
 			// 
 			// tsb_Options
