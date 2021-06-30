@@ -580,6 +580,8 @@ namespace MapView.Forms.Observers
 					brushes = null;
 
 
+				int phase = MainViewUnderlay.Phase;
+
 				foreach (var part in _parts)
 				{
 					rectOuter.X = (L = SpriteWidth  * x + TableOffset);
@@ -591,7 +593,7 @@ namespace MapView.Forms.Observers
 						if (SpecialBrushes.ContainsKey(special))
 							graphics.FillRectangle(SpecialBrushes[special], rectOuter);
 
-						if ((sprite = part[MainViewUnderlay.Phase]) != null)
+						if ((sprite = part[phase]) != null)
 						{
 							if (MainViewF.Optionables.UseMono)
 							{
@@ -643,9 +645,7 @@ namespace MapView.Forms.Observers
 										L,T);
 					}
 
-					x = (x + 1) % _tilesX;
-					if (x == 0)
-						y++;
+					if ((x = (x + 1) % _tilesX) == 0) ++y;
 				}
 
 				if (!_scrollBar.Visible) // indicate the reserved width for scrollbar.
