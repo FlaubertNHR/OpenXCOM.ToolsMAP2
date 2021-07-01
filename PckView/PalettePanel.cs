@@ -126,12 +126,16 @@ namespace PckView
 		/// panel can be forced to take a mousewheel-message anyway.</remarks>
 		protected override void OnMouseWheel(MouseEventArgs e)
 		{
-			if (e.Delta > 0)
+			if (Palid == -1)
 			{
-				if (Palid < Byte.MaxValue)
+				SelectPalid((byte)0);
+			}
+			else if (e.Delta > 0)
+			{
+				if (Palid != Byte.MaxValue)
 					SelectPalid((byte)(Palid + 1));
 			}
-			else if (e.Delta < 0 && Palid > Byte.MinValue)
+			else if (e.Delta < 0 && Palid != Byte.MinValue)
 			{
 				SelectPalid((byte)(Palid - 1));
 			}
