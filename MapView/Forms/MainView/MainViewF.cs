@@ -1328,7 +1328,7 @@ namespace MapView
 					e.SuppressKeyPress = true;
 					ObserverManager.TopView.Control.OnQuadrantVisibilityClick(it, EventArgs.Empty);
 				}
-				else if (id != -1)
+				else if (id != MenuManager.MI_non)
 				{
 					e.SuppressKeyPress = true;
 					MenuManager.OnMenuItemClick(menuViewers.MenuItems[id], EventArgs.Empty);
@@ -2459,10 +2459,10 @@ namespace MapView
 		/// Bypasses ornery system-beeps that can happen on keydown events.
 		/// <list type="bullet">
 		/// <item><c>[Space]</c> opens the Context menu</item>
-		/// <item><c>[Enter]</c> loads a Descriptor</item>
+		/// <item><c>[Enter]</c> loads a <c><see cref="Descriptor"/></c></item>
 		/// <item><c>[Shift+Enter]</c> opens the MapBrowserDialog if a tileset's
-		/// files are invalid; will also load a <c><see cref="Descriptor"/></c>
-		/// if the files are valid.</item>
+		/// files are invalid; will also load a <c>Descriptor</c> if the files
+		/// are valid.</item>
 		/// </list>
 		/// </summary>
 		private void FireContext()
@@ -2613,7 +2613,8 @@ namespace MapView
 					break;
 
 				case MouseButtons.Left:
-					_loadReady = LOADREADY_STAGE_1;
+					if (MapTree.SelectedNode.Level == TREELEVEL_TILESET)
+						_loadReady = LOADREADY_STAGE_1;
 					break;
 			}
 		}
