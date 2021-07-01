@@ -136,7 +136,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Invalidates the <c><see cref="QuadrantControl">QuadrantControls</see></c>
+		/// Invalidates the
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c>
 		/// in <c>TopView</c> and <c>TopRouteView(Top)</c>.
 		/// </summary>
 		internal static void InvalidateQuadrantControls()
