@@ -116,6 +116,29 @@ namespace PckView
 		}
 
 		/// <summary>
+		/// Scrolls the selected <c><see cref="Palid"/></c>.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <remarks>This <c>PalettePanel</c> cannot have focus because it is a
+		/// <c>Panel</c> which would require <c>SetControlStyle()</c> to make it
+		/// selectable - which could create issues in Win10 - but by calling
+		/// <c>Application.AddMessageFilter()</c> in the app-constructor the
+		/// panel can be forced to take a mousewheel-message anyway.</remarks>
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			if (e.Delta > 0)
+			{
+				if (Palid < Byte.MaxValue)
+					SelectPalid((byte)(Palid + 1));
+			}
+			else if (e.Delta < 0 && Palid > Byte.MinValue)
+			{
+				SelectPalid((byte)(Palid - 1));
+			}
+//			base.OnMouseWheel(e);
+		}
+
+		/// <summary>
 		/// Draws the palette viewer.
 		/// </summary>
 		/// <param name="e"></param>
@@ -192,6 +215,44 @@ namespace PckView
 
 
 		#region Methods
+		/// <summary>
+		/// Navigates this <c>PalettePanel</c> by keyboard.
+		/// </summary>
+		/// <param name="keys"></param>
+		/// <remarks>Called by <c><see cref="PaletteF"/>.OnKeyDown()</c>.</remarks>
+		internal void Navigate(Keys keys)
+		{
+			if (Palid == -1)
+			{
+				SelectPalid((byte)0);
+			}
+			else
+			{
+				switch (keys)
+				{
+					case Keys.Up:
+						if (Palid >= Sqrt)
+							SelectPalid((byte)(Palid - Sqrt));
+						break;
+
+					case Keys.Down:
+						if (Palid <= Byte.MaxValue - Sqrt)
+							SelectPalid((byte)(Palid + Sqrt));
+						break;
+
+					case Keys.Left:
+						if (Palid % Sqrt > 0)
+							SelectPalid((byte)(Palid - 1));
+						break;
+
+					case Keys.Right:
+						if (Palid % Sqrt < Sqrt - 1)
+							SelectPalid((byte)(Palid + 1));
+						break;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Forces selection of a specific palette-id.
 		/// </summary>

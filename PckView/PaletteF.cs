@@ -68,17 +68,27 @@ namespace PckView
 		/// Handles the keydown event.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>Does not require KeyPreview TRUE because there's not really
-		/// a child-control to pass the keydown to. But do KeyPreview TRUE
-		/// anyway.</remarks>
+		/// <remarks>Does not require <c>KeyPreview</c> because there's not
+		/// really a child-control to pass the keydown to. But do
+		/// <c>KeyPreview</c> anyway.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (e.KeyData == Keys.Escape)
+			switch (e.KeyData)
 			{
-				e.Handled = e.SuppressKeyPress = true;
-				Close();
+				case Keys.Escape:
+					e.Handled = e.SuppressKeyPress = true;
+					Close();
+					break;
+
+				case Keys.Up:
+				case Keys.Down:
+				case Keys.Left:
+				case Keys.Right:
+					e.Handled = e.SuppressKeyPress = true;
+					PalPanel.Navigate(e.KeyData);
+					break;
 			}
-			base.OnKeyDown(e);
+//			base.OnKeyDown(e);
 		}
 
 		/// <summary>
