@@ -314,6 +314,7 @@ namespace McdView
 
 			isRunT = true;
 			InitializeComponent();
+			pnl_IsoLoft.MouseWheel += OnMouseWheel_IsoLoft;
 
 			MaximumSize = new Size(0,0);
 

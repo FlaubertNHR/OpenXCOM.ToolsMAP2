@@ -686,8 +686,40 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// A rightclick on the <c><see cref="bar_IsoLoft">IsoLoFT trackbar</see></c>
-		/// resets its value to full.
+		/// Changes the value of the
+		/// <c><see cref="bar_IsoLoft">IsoLoFT trackbar</see></c> when the
+		/// <c><see cref="pnl_IsoLoft">IsoLoFT panel</see></c> has focus.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		/// <remarks>The <c>IsoLoFT panel</c> cannot have focus because it is a
+		/// <c>Panel</c> which would require <c>SetControlStyle()</c> to make it
+		/// selectable - which could create issues in Win10 - but by calling
+		/// <c>Application.AddMessageFilter()</c> in the constructor the panel
+		/// can be forced to take the mousewheel-message anyway. Without
+		/// <c>Application.AddMessageFilter()</c> <c>bar_IsoLoft.Select()</c>
+		/// can be called in
+		/// <c><see cref="OnMouseClick_IsoLoft()">OnMouseClick_IsoLoft()</see></c>
+		/// to focus the <c>IsoLoFT trackbar</c> which will handle the
+		/// mousewheel auto.</remarks>
+		private void OnMouseWheel_IsoLoft(object sender, MouseEventArgs e)
+		{
+			if (e.Delta > 0)
+			{
+				if (bar_IsoLoft.Value != bar_IsoLoft.Maximum)
+					++bar_IsoLoft.Value;
+			}
+			else if (e.Delta < 0)
+			{
+				if (bar_IsoLoft.Value != bar_IsoLoft.Minimum)
+					--bar_IsoLoft.Value;
+			}
+		}
+
+		/// <summary>
+		/// A rightclick on the
+		/// <c><see cref="bar_IsoLoft">IsoLoFT trackbar</see></c> resets its
+		/// value to full.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
