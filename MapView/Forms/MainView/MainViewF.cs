@@ -449,8 +449,8 @@ namespace MapView
 			tsTools.ResumeLayout();
 			Logfile.Log("MainView toolstrip created.");
 
-			MenuManager.Initialize(menuViewers);
-			MenuManager.PopulateMenu();
+			ViewersMenuManager.Initialize(menuViewers);
+			ViewersMenuManager.PopulateMenu();
 			Logfile.Log("Viewers menu populated.");
 
 
@@ -607,7 +607,7 @@ namespace MapView
 			Logfile.Log("Tilesets loaded/Descriptors created.");
 
 
-			if (piOptions.FileExists()) // NOTE: load user-options before MenuManager.StartSecondaryStageBoosters() in LoadSelectedDescriptor()
+			if (piOptions.FileExists()) // NOTE: load user-options before ViewersMenuManager.StartSecondStageBoosters() in LoadSelectedDescriptor()
 			{
 				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
 					Logfile.Log("User options loaded.");
@@ -1160,7 +1160,7 @@ namespace MapView
 		/// <c><see cref="TileViewForm"/></c>, <c><see cref="TopViewForm"/></c>,
 		/// <c><see cref="RouteViewForm"/></c>, and
 		/// <c><see cref="TopRouteViewForm"/></c> ->
-		/// <c><see cref="MenuManager.ViewerKeyDown()">MenuManager.ViewerKeyDown()</see></c>.
+		/// <c><see cref="ViewersMenuManager.ViewerKeyDown()">ViewersMenuManager.ViewerKeyDown()</see></c>.
 		/// 
 		/// 
 		/// Edit/Save keys are handled by
@@ -1171,7 +1171,7 @@ namespace MapView
 
 			string key; object val = null;
 			ToolStripMenuItem it = null;
-			int id = MenuManager.MI_non;
+			int id = ViewersMenuManager.MI_non;
 
 			switch (e.KeyData)
 			{
@@ -1291,10 +1291,10 @@ namespace MapView
 					break;
 
 				// focus viewer (show/hide shortcuts are handled by menuitems directly) ->
-				case Keys.Control | Keys.F5: id = MenuManager.MI_TILE;     break;
-				case Keys.Control | Keys.F6: id = MenuManager.MI_TOP;      break;
-				case Keys.Control | Keys.F7: id = MenuManager.MI_ROUTE;    break;
-				case Keys.Control | Keys.F8: id = MenuManager.MI_TOPROUTE; break;
+				case Keys.Control | Keys.F5: id = ViewersMenuManager.MI_TILE;     break;
+				case Keys.Control | Keys.F6: id = ViewersMenuManager.MI_TOP;      break;
+				case Keys.Control | Keys.F7: id = ViewersMenuManager.MI_ROUTE;    break;
+				case Keys.Control | Keys.F8: id = ViewersMenuManager.MI_TOPROUTE; break;
 
 				case Keys.Subtract:
 				case Keys.Add:
@@ -1328,10 +1328,10 @@ namespace MapView
 					e.SuppressKeyPress = true;
 					ObserverManager.TopView.Control.OnQuadrantVisibilityClick(it, EventArgs.Empty);
 				}
-				else if (id != MenuManager.MI_non)
+				else if (id != ViewersMenuManager.MI_non)
 				{
 					e.SuppressKeyPress = true;
-					MenuManager.OnMenuItemClick(menuViewers.MenuItems[id], EventArgs.Empty);
+					ViewersMenuManager.OnMenuItemClick(menuViewers.MenuItems[id], EventArgs.Empty);
 				}
 			}
 
@@ -3243,12 +3243,12 @@ namespace MapView
 
 						if (descriptor.GroupType == GameType.Tftd)
 						{
-							MenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
+							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
 							_overlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
 						}
 						else // default to ufo-battle palette
 						{
-							MenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
+							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
 							_overlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
 						}
 
@@ -3281,7 +3281,7 @@ namespace MapView
 						SetTileToner(Optionables.SelectedTileToner); // create toned spriteset(s) for selected-tile(s)
 
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-							MenuManager.StartSecondStageBoosters();
+							ViewersMenuManager.StartSecondStageBoosters();
 
 						ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
 

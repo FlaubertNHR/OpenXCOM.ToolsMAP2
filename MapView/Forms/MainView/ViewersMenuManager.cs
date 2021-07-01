@@ -14,7 +14,7 @@ namespace MapView.Forms.MainView
 	/// </summary>
 	/// <remarks>See <c><see cref="ObserverManager"/></c> for instantiation of
 	/// the viewers.</remarks>
-	internal static class MenuManager
+	internal static class ViewersMenuManager
 	{
 		#region Fields (static)
 		private const string PropertyStartObserver = "Start";
@@ -163,7 +163,7 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Processes keydown events that shall be captured and abused at the
-		/// Form level.
+		/// <c>Form</c> level.
 		/// <list type="bullet">
 		/// <item>shows/hides/minimizes/restores viewers on F-key events</item>
 		/// <item>handles activity by <c><see cref="Observers.TileViewForm"/></c>,

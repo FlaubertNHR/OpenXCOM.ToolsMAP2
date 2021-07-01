@@ -128,7 +128,7 @@
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\MainView\MainViewOptionables.cs" />
-    <Compile Include="Forms\MainView\MenuManager.cs" />
+    <Compile Include="Forms\MainView\ViewersMenuManager.cs" />
     <Compile Include="Forms\MainView\ObserverManager.cs" />
     <Compile Include="Forms\MainView\OptionsManager.cs" />
     <Compile Include="Forms\MainView\ShowHideManager.cs" />

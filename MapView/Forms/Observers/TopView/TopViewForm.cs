@@ -160,7 +160,7 @@ namespace MapView.Forms.Observers
 				case Keys.D4: slot = PartType.Content; break;
 
 				default:
-					MenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
+					ViewersMenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
 					break;
 			}
 

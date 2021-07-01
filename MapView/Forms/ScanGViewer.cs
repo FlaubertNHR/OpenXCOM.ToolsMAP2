@@ -93,7 +93,7 @@ namespace MapView
 
 				_file.LevelSelected -= OnLevelSelected;
 
-				MenuManager.DecheckScanG();
+				ViewersMenuManager.DecheckScanG();
 				MainViewF.ScanG = null;
 			}
 			base.OnFormClosing(e);

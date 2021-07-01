@@ -92,8 +92,8 @@ namespace MapView.Forms.MainView
 //		[Editor(...)]
 
 		// NOTE: Observers are added to MainView's Options by
-		// MenuManager.PopulateMenu(). They are used by
-		// MenuManager.StartSecondaryStageBoosters().
+		// ViewersMenuManager.PopulateMenu(). They are used by
+		// ViewersMenuManager.StartSecondStageBoosters().
 		private const string cat_Observers = "Observers";			// category in the PropertyPanel
 
 		private  const string str_StartTileView = "StartTileView";	// const string key of the Property
@@ -929,27 +929,27 @@ namespace MapView.Forms.MainView
 			switch (key)
 			{
 				case str_StartTileView:
-					MenuManager.setMenuChecked(
-											MenuManager.MI_TILE,
-											(StartTileView = (bool)val));
+					ViewersMenuManager.setMenuChecked(
+												ViewersMenuManager.MI_TILE,
+												(StartTileView = (bool)val));
 					break;
 
 				case str_StartTopView:
-					MenuManager.setMenuChecked(
-											MenuManager.MI_TOP,
-											(StartTopView = (bool)val));
+					ViewersMenuManager.setMenuChecked(
+												ViewersMenuManager.MI_TOP,
+												(StartTopView = (bool)val));
 					break;
 
 				case str_StartRouteView:
-					MenuManager.setMenuChecked(
-											MenuManager.MI_ROUTE,
-											(StartRouteView = (bool)val));
+					ViewersMenuManager.setMenuChecked(
+												ViewersMenuManager.MI_ROUTE,
+												(StartRouteView = (bool)val));
 					break;
 
 				case str_StartTopRouteView:
-					MenuManager.setMenuChecked(
-											MenuManager.MI_TOPROUTE,
-											(StartTopRouteView = (bool)val));
+					ViewersMenuManager.setMenuChecked(
+												ViewersMenuManager.MI_TOPROUTE,
+												(StartTopRouteView = (bool)val));
 					break;
 
 				case str_StartTopRoutePage:
