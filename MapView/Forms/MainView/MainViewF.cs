@@ -2613,9 +2613,12 @@ namespace MapView
 					break;
 
 				case MouseButtons.Left:
-					if (MapTree.SelectedNode.Level == TREELEVEL_TILESET)
+				{
+					TreeNode node = MapTree.GetNodeAt(e.Location);
+					if (node != null && node.Level == TREELEVEL_TILESET)
 						_loadReady = LOADREADY_STAGE_1;
 					break;
+				}
 			}
 		}
 
