@@ -695,8 +695,8 @@ namespace McdView
 		/// <remarks>The <c>IsoLoFT panel</c> cannot have focus because it is a
 		/// <c>Panel</c> which would require <c>SetControlStyle()</c> to make it
 		/// selectable - which could create issues in Win10 - but by calling
-		/// <c>Application.AddMessageFilter()</c> in the constructor the panel
-		/// can be forced to take the mousewheel-message anyway. Without
+		/// <c>Application.AddMessageFilter()</c> in the app-constructor the
+		/// panel can be forced to take a mousewheel-message anyway. Without
 		/// <c>Application.AddMessageFilter()</c> <c>bar_IsoLoft.Select()</c>
 		/// can be called in
 		/// <c><see cref="OnMouseClick_IsoLoft()">OnMouseClick_IsoLoft()</see></c>
