@@ -511,19 +511,19 @@ namespace MapView.Forms.MainView
 
 
 		private const string str_Interpolation = "Interpolation";
-		private const int    def_Interpolation = 0;
+		private const int    def_Interpolation = 5;
 
 		// NOTE: Options don't like enums, hence this workaround w/ 'Interpolation' and 'InterpolationE' ->
 
 		private int _interpolation = def_Interpolation;
 		[Category(cat_Sprites)]
-		[Description(@"The technique used for resizing sprites (0..7 default 0)
+		[Description(@"The technique used for resizing sprites (0..7 default 5)
 0 - default
 1 - low (default)
 2 - high (recommended)
 3 - bilinear (defaultiest)
 4 - bicubic (very slow fullscreen)
-5 - nearest neighbor (fastest)
+5 - nearest neighbor (fastest - this is really the MapView2 default)
 6 - high quality bilinear (smoothest)
 7 - high quality bicubic (best in a pig's eye)
 (only if UseMono is false)")]
@@ -547,7 +547,7 @@ namespace MapView.Forms.MainView
 			}
 		}
 
-		private InterpolationMode _interpolationE = InterpolationMode.Default;
+		private InterpolationMode _interpolationE = InterpolationMode.NearestNeighbor;
 		internal InterpolationMode InterpolationE
 		{
 			get { return _interpolationE; }
