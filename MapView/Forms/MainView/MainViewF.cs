@@ -450,8 +450,7 @@ namespace MapView
 			Logfile.Log("MainView toolstrip created.");
 
 			ViewersMenuManager.Initialize(menuViewers);
-			ViewersMenuManager.PopulateMenu();
-			Logfile.Log("Viewers menu populated.");
+			Logfile.Log("Viewers menu created.");
 
 
 			PathInfo piScanGufo  = null;

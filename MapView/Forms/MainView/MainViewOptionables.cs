@@ -837,8 +837,8 @@ namespace MapView.Forms.MainView
 
 		#region Events
 		/// <summary>
-		/// Sets the value of an optionable property and invalidates the
-		/// <see cref="MainViewOverlay"/> panel.
+		/// Sets the value of an optionable property and invalidates
+		/// <c><see cref="MainViewOverlay"/></c>.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
@@ -929,27 +929,27 @@ namespace MapView.Forms.MainView
 			switch (key)
 			{
 				case str_StartTileView:
-					ViewersMenuManager.setMenuChecked(
-												ViewersMenuManager.MI_TILE,
-												(StartTileView = (bool)val));
+					ViewersMenuManager.SetChecked(
+											ViewersMenuManager.MI_TILE,
+											(StartTileView = (bool)val));
 					break;
 
 				case str_StartTopView:
-					ViewersMenuManager.setMenuChecked(
-												ViewersMenuManager.MI_TOP,
-												(StartTopView = (bool)val));
+					ViewersMenuManager.SetChecked(
+											ViewersMenuManager.MI_TOP,
+											(StartTopView = (bool)val));
 					break;
 
 				case str_StartRouteView:
-					ViewersMenuManager.setMenuChecked(
-												ViewersMenuManager.MI_ROUTE,
-												(StartRouteView = (bool)val));
+					ViewersMenuManager.SetChecked(
+											ViewersMenuManager.MI_ROUTE,
+											(StartRouteView = (bool)val));
 					break;
 
 				case str_StartTopRouteView:
-					ViewersMenuManager.setMenuChecked(
-												ViewersMenuManager.MI_TOPROUTE,
-												(StartTopRouteView = (bool)val));
+					ViewersMenuManager.SetChecked(
+											ViewersMenuManager.MI_TOPROUTE,
+											(StartTopRouteView = (bool)val));
 					break;
 
 				case str_StartTopRoutePage:
@@ -992,11 +992,11 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets the value of an optionable property and invalidates the
-		/// <see cref="MainViewOverlay"/> panel as well as the current
-		/// <see cref="TileView"/> panel and the
-		/// <see cref="QuadrantControl">QuadrantControls</see> in TopView and
-		/// TopRouteView.
+		/// Sets the value of an optionable property and invalidates
+		/// <c><see cref="MainViewOverlay"/></c> as well as the current
+		/// <c><see cref="TilePanel"/></c> and the
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c> in
+		/// <c>TopView</c> and <c>TopRouteView</c>.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
@@ -1046,12 +1046,12 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets the value of an optionable property and invalidates the
-		/// <see cref="MainViewOverlay"/> panel as well as the current
-		/// <see cref="TileView"/> panel and the
-		/// <see cref="QuadrantControl">QuadrantControls</see> in TopView and
-		/// TopRouteView(Top). Also invalidates the <see cref="ScanGViewer"/>
-		/// panel.
+		/// Sets the value of an optionable property and invalidates
+		/// <c><see cref="MainViewOverlay"/></c> as well as the current
+		/// <c><see cref="TilePanel"/></c> and the
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c> in
+		/// <c>TopView</c> and <c>TopRouteView(Top)</c>. Also invalidates
+		/// <c><see cref="ScanGViewer"/></c>.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
@@ -1070,8 +1070,8 @@ namespace MapView.Forms.MainView
 		/// Changes the format of printed location strings between base-0 and
 		/// base-1 counttypes.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void OnBaseCounttypeChanged(string key, object val)
 		{
 			switch (key)
@@ -1105,8 +1105,8 @@ namespace MapView.Forms.MainView
 
 
 		/// <summary>
-		/// Stores the property panel's Description area's height when the user
-		/// changes it.
+		/// Stores the property panel's <c>Description</c> area's height when
+		/// the user changes it.
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="val"></param>
@@ -1116,8 +1116,10 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Invalidates the visible panel in <see cref="TileView"/> and both
-		/// <see cref="QuadrantControl">QuadrantControls</see>.
+		/// Invalidates the current <c><see cref="TilePanel"/></c> in
+		/// <c><see cref="TileView"/></c> and the
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c> in
+		/// <c>TopView</c> and <c>TopRouteView(Top)</c>.
 		/// </summary>
 		private static void InvalidateSecondaryPanels()
 		{

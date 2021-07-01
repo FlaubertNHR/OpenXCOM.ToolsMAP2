@@ -28,62 +28,53 @@ namespace MapView.Forms.MainView
 		internal const int MI_TOPROUTE =  4;
 		private  const int MI_cutoff   =  5;
 		private  const int MI_SCANG    =  9;
-		#endregion Fields (static)
 
-
-		#region Properties (static)
 		/// <summary>
 		/// The "Viewers" <c>MenuItem</c> is assigned as
 		/// <c>(MenuItem)MainViewF.menuViewers</c> which is added to
 		/// <c>(MainMenu)MainViewF.mmMain</c> which is assigned as
 		/// <c>(MainMenu)MainViewF.Menu</c>. Is the <c>Menu</c> of a Form
 		/// disposed auto when the form closes - note that it is *not* added to
-		/// <c>(IContainer)components</c> so let's assume it is disposed auto.
+		/// <c>(IContainer)components</c> so let's assume that it is disposed
+		/// auto.
 		/// </summary>
-		private static MenuItem Viewers
-		{ get; set; }
-		#endregion Properties (static)
+		private static MenuItem _it;
+		#endregion Fields (static)
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes MainView's menuitem "Viewers".
+		/// Initializes MainView's menuitem "Viewers" and adds menuitems to its
+		/// dropdown list.
 		/// </summary>
-		/// <param name="viewers"></param>
-		internal static void Initialize(MenuItem viewers)
+		/// <param name="it"><c><see cref="MainViewF"/>.menuViewers</c></param>
+		internal static void Initialize(MenuItem it)
 		{
-			Viewers = viewers;
-		}
+			_it = it;
 
-		/// <summary>
-		/// Adds menuitems to MapView's "Viewers" dropdown list.
-		/// </summary>
-		internal static void PopulateMenu()
-		{
 			Options options = MainViewF.that.Options;
 			OptionChangedEvent changer = MainViewF.Optionables.OnFlagChanged;
 
-			CreateSecondaryViewerMenuitem(ObserverManager.TileView,     Shortcut.F5, options, MainViewOptionables.def_StartTileView,     changer);	// id #0
+			Create(ObserverManager.TileView,     Shortcut.F5, options, MainViewOptionables.def_StartTileView,     changer);	// id #0
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));																							// id #1
+			_it.MenuItems.Add(new MenuItem(Separator));																		// id #1
 
-			CreateSecondaryViewerMenuitem(ObserverManager.TopView,      Shortcut.F6, options, MainViewOptionables.def_StartTopView,      changer);	// id #2
-			CreateSecondaryViewerMenuitem(ObserverManager.RouteView,    Shortcut.F7, options, MainViewOptionables.def_StartRouteView,    changer);	// id #3
-			CreateSecondaryViewerMenuitem(ObserverManager.TopRouteView, Shortcut.F8, options, MainViewOptionables.def_StartTopRouteView, changer);	// id #4
+			Create(ObserverManager.TopView,      Shortcut.F6, options, MainViewOptionables.def_StartTopView,      changer);	// id #2
+			Create(ObserverManager.RouteView,    Shortcut.F7, options, MainViewOptionables.def_StartRouteView,    changer);	// id #3
+			Create(ObserverManager.TopRouteView, Shortcut.F8, options, MainViewOptionables.def_StartTopRouteView, changer);	// id #4
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));							// id #5
+			_it.MenuItems.Add(new MenuItem(Separator));								// id #5
 
-			MenuItem it;
 			it = new MenuItem("&minimize all", OnMinimizeAllClick, Shortcut.F11);	// id #6
-			Viewers.MenuItems.Add(it);
+			_it.MenuItems.Add(it);
 			it = new MenuItem("&restore all",  OnRestoreAllClick,  Shortcut.F12);	// id #7
-			Viewers.MenuItems.Add(it);
+			_it.MenuItems.Add(it);
 
-			Viewers.MenuItems.Add(new MenuItem(Separator));							// id #8
+			_it.MenuItems.Add(new MenuItem(Separator));								// id #8
 
 			it = new MenuItem("Scan&G view", OnScanGClick, Shortcut.CtrlG);			// id #9
 			it.Enabled = false;
-			Viewers.MenuItems.Add(it);
+			_it.MenuItems.Add(it);
 		}
 
 		/// <summary>
@@ -96,7 +87,7 @@ namespace MapView.Forms.MainView
 		/// <param name="default"><c>true</c> to have the viewer open on 1st run</param>
 		/// <param name="changer"></param>
 		/// <remarks>These forms never actually close until MapView closes.</remarks>
-		private static void CreateSecondaryViewerMenuitem(
+		private static void Create(
 				Form f,
 				Shortcut shortcut,
 				Options options,
@@ -106,7 +97,7 @@ namespace MapView.Forms.MainView
 			var it = new MenuItem(f.Text, OnMenuItemClick, shortcut);
 			it.Tag = f; // TODO: nice doc not
 
-			Viewers.MenuItems.Add(it);
+			_it.MenuItems.Add(it);
 
 			RegistryInfo.RegisterProperties(f);
 
@@ -145,14 +136,14 @@ namespace MapView.Forms.MainView
 		/// <remarks>Called by <c>MainViewF.LoadSelectedDescriptor()</c>.</remarks>
 		internal static void StartSecondStageBoosters()
 		{
-			Viewers.Enabled = true;
+			_it.Enabled = true;
 
 			Options options = MainViewF.that.Options;
 			for (int id = MI_TILE; id != MI_cutoff; ++id)
 			{
 				if (id == MI_sep1) ++id; // skip the separator
 
-				MenuItem it = Viewers.MenuItems[id];
+				MenuItem it = _it.MenuItems[id];
 				if (options[PropertyStartObserver + RegistryInfo.GetRegistryLabel(it.Tag as Form)].IsTrue)
 				{
 					OnMenuItemClick(it, EventArgs.Empty);
@@ -225,7 +216,7 @@ namespace MapView.Forms.MainView
 			if (id != MI_non)
 			{
 				e.SuppressKeyPress = true;
-				OnMenuItemClick(Viewers.MenuItems[id], EventArgs.Empty);
+				OnMenuItemClick(_it.MenuItems[id], EventArgs.Empty);
 			}
 		}
 		#endregion Methods (static)
@@ -275,11 +266,11 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="val"></param>
-		internal static void setMenuChecked(int id, bool val)
+		internal static void SetChecked(int id, bool val)
 		{
-			if (Viewers.Enabled)
+			if (_it.Enabled)
 			{
-				MenuItem it = Viewers.MenuItems[id];
+				MenuItem it = _it.MenuItems[id];
 				var f = it.Tag as Form;
 
 				if (it.Checked = val)
@@ -359,7 +350,7 @@ namespace MapView.Forms.MainView
 		/// <param name="enabled"></param>
 		internal static void EnableScanG(bool enabled)
 		{
-			Viewers.MenuItems[MI_SCANG].Enabled = enabled;
+			_it.MenuItems[MI_SCANG].Enabled = enabled;
 		}
 
 		/// <summary>
@@ -371,7 +362,7 @@ namespace MapView.Forms.MainView
 		{
 			if (MainViewF.that.MapFile != null)
 			{
-				MenuItem it = Viewers.MenuItems[MI_SCANG];
+				MenuItem it = _it.MenuItems[MI_SCANG];
 				if (!it.Checked)
 				{
 					it.Checked = true;
@@ -388,7 +379,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void DecheckScanG()
 		{
-			Viewers.MenuItems[MI_SCANG].Checked = false;
+			_it.MenuItems[MI_SCANG].Checked = false;
 		}
 		#endregion Events (static)
 	}
