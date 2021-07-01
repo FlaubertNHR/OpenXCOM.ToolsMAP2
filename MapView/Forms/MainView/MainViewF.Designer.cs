@@ -39,8 +39,8 @@ namespace MapView
 		private MenuItem miSeparator8;
 		private MenuItem miClearRecordsExceeded;
 		private MenuItem miSeparator6;
-		private MenuItem miConfigurator;
 		private MenuItem miOptions;
+		private MenuItem miConfigurator;
 
 		private MenuItem menuViewers;
 
@@ -113,8 +113,8 @@ namespace MapView
 			this.miSeparator8 = new System.Windows.Forms.MenuItem();
 			this.miClearRecordsExceeded = new System.Windows.Forms.MenuItem();
 			this.miSeparator6 = new System.Windows.Forms.MenuItem();
-			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.miOptions = new System.Windows.Forms.MenuItem();
+			this.miConfigurator = new System.Windows.Forms.MenuItem();
 			this.menuViewers = new System.Windows.Forms.MenuItem();
 			this.menuToner = new System.Windows.Forms.MenuItem();
 			this.miNone = new System.Windows.Forms.MenuItem();
@@ -266,8 +266,8 @@ namespace MapView
 			this.miSeparator8,
 			this.miClearRecordsExceeded,
 			this.miSeparator6,
-			this.miConfigurator,
-			this.miOptions});
+			this.miOptions,
+			this.miConfigurator});
 			this.menuEdit.Text = "&Edit";
 			// 
 			// miModifySize
@@ -302,18 +302,18 @@ namespace MapView
 			this.miSeparator6.Index = 4;
 			this.miSeparator6.Text = "-";
 			// 
-			// miConfigurator
-			// 
-			this.miConfigurator.Index = 5;
-			this.miConfigurator.Text = "&Configurator";
-			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
-			// 
 			// miOptions
 			// 
-			this.miOptions.Index = 6;
+			this.miOptions.Index = 5;
 			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOptions.Text = "&Options";
 			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
+			// 
+			// miConfigurator
+			// 
+			this.miConfigurator.Index = 6;
+			this.miConfigurator.Text = "&Configurator";
+			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
 			// 
 			// menuViewers
 			// 
