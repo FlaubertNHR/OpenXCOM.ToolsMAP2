@@ -168,7 +168,8 @@ namespace XCom
 		/// cTor[1]. Parses a PCK-file into a collection of sprites according to
 		/// its TAB-file.
 		/// </summary>
-		/// <param name="label">file w/out path or extension</param>
+		/// <param name="label">usually the file w/out path or extension but
+		/// it's arbitrary here</param>
 		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
 		/// <c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c> for
 		/// UFO-sprites or <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c>
@@ -236,9 +237,18 @@ namespace XCom
 		{
 			//Logfile.Log("Spriteset label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
-			Label         = label;
 			Pal           = pal;
 			TabwordLength = tabwordLength;
+
+			if (label == SharedSpace.CursorFilePrefix)
+			{
+				if (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_4) // are you sure ...
+					Label = "TargeterTftd";
+				else
+					Label = "TargeterUfo";
+			}
+			else
+				Label = label;
 
 
 			bool le = BitConverter.IsLittleEndian; // computer architecture
@@ -271,7 +281,7 @@ namespace XCom
 					pos += TabwordLength;
 				}
 			}
-			else //if (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2)
+			else // (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2)
 			{
 				while (pos != bytesTab.Length)
 				{

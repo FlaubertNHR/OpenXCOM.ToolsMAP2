@@ -9,15 +9,26 @@ namespace MapView
 {
 	/// <summary>
 	/// Draws sprites (the cuboid and targeter) from standard resource
-	/// UFOGRAPH/CURSOR.PCK+TAB.
+	/// <c>UFOGRAPH/CURSOR.PCK+TAB</c>.
 	/// </summary>
 	internal static class CuboidSprite
 	{
 		public static void DisposeCursorset()
 		{
 			DSShared.Logfile.Log("CuboidSprite.DisposeCursorset() static");
-			if (Cursorset != null)
-				Cursorset.Dispose();
+			if (Ufoset != null)
+			{
+				Ufoset.Dispose();
+				Ufoset = null;
+			}
+
+			if (Tftdset != null)
+			{
+				Tftdset.Dispose();
+				Tftdset = null;
+			}
+
+			Cursorset = null;
 		}
 
 
@@ -34,21 +45,56 @@ namespace MapView
 
 
 		#region Properties (static)
-		private static Spriteset Cursorset
+		internal static Spriteset Cursorset
+		{ get; private set; }
+
+		internal static Spriteset Ufoset
 		{ get; set; }
 
-		/// <summary>
-		/// Sets the <see cref="Cursorset"/> property.
-		/// </summary>
-		/// <param name="cursorset"></param>
-		internal static void SetCursorset(Spriteset cursorset)
-		{
-			Cursorset = cursorset;
-		}
+		internal static Spriteset Tftdset
+		{ get; set; }
 		#endregion Properties (static)
 
 
 		#region Methods (static)
+		/// <summary>
+		/// Assigns the targeter-sprite(s)/cursorset of UFO or TFTD respecting
+		/// <c><see cref="Forms.MainView.MainViewOptionables.PreferTftdTargeter">MainViewOptionables.PreferTftdTargeter</see></c>.
+		/// </summary>
+		/// <returns><c>true</c> if a valid cursorset gets assigned</returns>
+		/// <remarks>Used only in
+		/// <c><see cref="MainViewF()">MainViewF()</see></c> for cases (1)
+		/// <c>PreferUfoTargeter</c> has not been registered in
+		/// "settings/MapOptions.cfg" yet or (2) the user's
+		/// <c>UFOGRAPH/CURSOR.PCK+TAB</c> disappeared for whatever reason.</remarks>
+		internal static bool AssignCursorset()
+		{
+			//DSShared.Logfile.Log("CuboidSprite.AssignCursorset()");
+			if (Tftdset != null
+				&& (MainViewF.Optionables.PreferTftdTargeter || Ufoset == null))
+			{
+				Cursorset = Tftdset;
+			}
+			else if (Ufoset != null)
+			{
+				Cursorset = Ufoset;
+			}
+			return (Cursorset != null);
+		}
+
+		/// <summary>
+		/// Changes <c><see cref="Cursorset"/></c> when user changes
+		/// <c><see cref="Forms.MainView.MainViewOptionables.PreferTftdTargeter"/></c>.
+		/// </summary>
+		/// <param name="val"><c>true</c> to prefer the TFTD cursorset</param>
+		internal static void PreferTftdTargeter(bool val)
+		{
+			//DSShared.Logfile.Log("CuboidSprite.PreferTftdTargeter() val= " + val);
+			if (Tftdset != null && (val || Ufoset == null)) Cursorset = Tftdset;
+			else if (Ufoset != null) Cursorset = Ufoset;
+		}
+
+
 		/// <summary>
 		/// Draws the cuboid-cursor.
 		/// </summary>
@@ -57,8 +103,8 @@ namespace MapView
 		/// <param name="y"></param>
 		/// <param name="halfWidth"></param>
 		/// <param name="halfHeight"></param>
-		/// <param name="front">true to draw the front sprite, else back</param>
-		/// <param name="toplevel">true to draw the red sprite, else blue</param>
+		/// <param name="front"><c>true</c> to draw the front sprite, else back</param>
+		/// <param name="toplevel"><c>true</c> to draw the red sprite, else blue</param>
 		internal static void DrawCuboid_Rembrandt(
 				Graphics graphics,
 				int x, int y,
@@ -73,10 +119,19 @@ namespace MapView
 
 			graphics.DrawImage(
 							Cursorset[id].Sprite,
-							x, y,
+							x,y,
 							halfWidth  * widthfactor,
 							halfHeight * heightfactor);
 		}
+//			if (MainViewF.Optionables.SpriteShadeEnabled)
+//				_graphics.DrawImage(
+//								sprite,
+//								rect,
+//								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+//								GraphicsUnit.Pixel,
+//								_ia);
+//			else
+//				_graphics.DrawImage(sprite, rect);
 
 		/// <summary>
 		/// Draws the cuboid-cursor w/ Mono-style.
@@ -84,8 +139,8 @@ namespace MapView
 		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		/// <param name="front">true to draw the front sprite, else back</param>
-		/// <param name="toplevel">true to draw the red sprite, else blue</param>
+		/// <param name="front"><c>true</c> to draw the front sprite, else back</param>
+		/// <param name="toplevel"><c>true</c> to draw the red sprite, else blue</param>
 		internal static void DrawCuboid_Picasso(
 				Graphics graphics,
 				int x, int y,
@@ -114,7 +169,7 @@ namespace MapView
 										brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
-										d, d);
+										d,d);
 				}
 			}
 		}
@@ -135,10 +190,19 @@ namespace MapView
 		{
 			graphics.DrawImage(
 							Cursorset[TARGETER].Sprite,
-							x, y,
+							x,y,
 							halfWidth  * widthfactor,
 							halfHeight * heightfactor);
 		}
+//			if (MainViewF.Optionables.SpriteShadeEnabled)
+//				_graphics.DrawImage(
+//								sprite,
+//								rect,
+//								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+//								GraphicsUnit.Pixel,
+//								_ia);
+//			else
+//				_graphics.DrawImage(sprite, rect);
 
 		/// <summary>
 		/// Draws the target-cursor w/ Mono.
@@ -152,7 +216,7 @@ namespace MapView
 		{
 			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
 
-			byte[] bindata = Cursorset[7].GetBindata();
+			byte[] bindata = Cursorset[TARGETER].GetBindata();
 
 			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;
@@ -168,7 +232,7 @@ namespace MapView
 										brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
-										d, d);
+										d,d);
 				}
 			}
 		}

@@ -503,26 +503,21 @@ namespace MapView
 			// Setup an XCOM cursor-sprite.
 			// NOTE: This is the only stock XCOM resource that is required for
 			// MapView to start. See ConfigurationForm ...
-			// TODO: give user the option to choose which cursor-spriteset to use.
-			Spriteset cuboidufo  = null;
-			Spriteset cuboidtftd = null;
-			string label = SharedSpace.CursorFilePrefix;
 			string dir;
 
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				cuboidufo = SpritesetManager.LoadSpriteset(
-														label,
-														dir,
-														SpritesetManager.TAB_WORD_LENGTH_2,
-														Palette.UfoBattle);
-
-				if (cuboidufo != null)
+				CuboidSprite.Ufoset = SpritesetManager.LoadSpriteset(
+																SharedSpace.CursorFilePrefix,
+																dir,
+																SpritesetManager.TAB_WORD_LENGTH_2,
+																Palette.UfoBattle);
+				if (CuboidSprite.Ufoset != null)
 				{
-					if (cuboidufo.Fail != Spriteset.FAIL_non)
+					if (CuboidSprite.Ufoset.Fail != Spriteset.FAIL_non)
 					{
-						cuboidufo = null;
+						CuboidSprite.Ufoset = null;
 						Logfile.Log("UFO Cursor failed to load.");
 					}
 					else
@@ -535,17 +530,16 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				cuboidtftd = SpritesetManager.LoadSpriteset(
-														label,
-														dir,
-														SpritesetManager.TAB_WORD_LENGTH_4,
-														Palette.TftdBattle);
-
-				if (cuboidtftd != null)
+				CuboidSprite.Tftdset = SpritesetManager.LoadSpriteset(
+																SharedSpace.CursorFilePrefix,
+																dir,
+																SpritesetManager.TAB_WORD_LENGTH_4,
+																Palette.TftdBattle);
+				if (CuboidSprite.Tftdset != null)
 				{
-					if (cuboidtftd.Fail != Spriteset.FAIL_non)
+					if (CuboidSprite.Tftdset.Fail != Spriteset.FAIL_non)
 					{
-						cuboidtftd = null;
+						CuboidSprite.Tftdset = null;
 						Logfile.Log("TFTD Cursor failed to load.");
 					}
 					else
@@ -554,34 +548,6 @@ namespace MapView
 			}
 			else
 				Logfile.Log("TFTD Cursor directory not found.");
-
-			// Exit app if a cuboid-targeter did not get instantiated
-			if (cuboidtftd != null) // NOTE: The TFTD cursorsprite takes precedence over the UFO cursorsprite.
-			{
-				CuboidSprite.SetCursorset(cuboidtftd);
-			}
-			else if (cuboidufo != null)
-			{
-				CuboidSprite.SetCursorset(cuboidufo);
-			}
-			else
-			{
-				Logfile.Log("Targeter not instantiated: quit MapView.");
-
-				string copyable = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt
-								+ Environment.NewLine
-								+ SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
-
-				using (var dialog = new Infobox(
-											"Error",
-											"Cannot find CURSOR spriteset. The application will exit.",
-											copyable,
-											InfoboxType.Error))
-				{
-					dialog.ShowDialog(this);
-				}
-				Process.GetCurrentProcess().Kill();
-			}
 
 
 			// NOTE: ScanG's are conditional loads iff File exists.
@@ -617,9 +583,28 @@ namespace MapView
 				Logfile.Log("User options NOT loaded - no options file to load.");
 
 
+			if (CuboidSprite.Cursorset == null && !CuboidSprite.AssignCursorset()) // exit app if a cuboid-targeter is not instantiated
+			{
+				Logfile.Log("Targeter not instantiated: quit MapView.");
+
+				string copyable = Path.Combine("[basepath]", SharedSpace.CursorFilePrefix);
+					   copyable = copyable + GlobalsXC.PckExt + Environment.NewLine
+								+ copyable + GlobalsXC.TabExt;
+
+				using (var dialog = new Infobox(
+											"Error",
+											"Cannot find CURSOR spriteset. The application will exit.",
+											copyable,
+											InfoboxType.Error))
+				{
+					dialog.ShowDialog(MainViewF.that);
+				}
+				Process.GetCurrentProcess().Kill();
+			}
+
+
 			CreateTree();
 			Logfile.Log("Maptree instantiated.");
-
 
 			splitter.SetClickableRectangle();
 			ShiftSplitter();

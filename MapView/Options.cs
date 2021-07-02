@@ -111,7 +111,7 @@ namespace MapView
 		/// <param name="key">property key</param>
 		/// <param name="default">default value of the property</param>
 		/// <param name="changer">pointer to a handler that subscribes to the
-		/// <c><see cref="OptionChangedEvent"/></c></param>
+		/// <c><see cref="OptionChangedEvent"/></c> - do not pass <c>null</c></param>
 		/// <remarks>There is no error-handling so don't foff it.</remarks>
 		internal void CreateOptionDefault(
 				string key,
@@ -125,7 +125,7 @@ namespace MapView
 
 			var option = new Option(@default);
 
-//			if (changer != null) // safety. I don't think this will ever be null.
+//			if (changer != null) // safety.
 			option.OptionChanged += changer;
 
 			_options[key] = option;

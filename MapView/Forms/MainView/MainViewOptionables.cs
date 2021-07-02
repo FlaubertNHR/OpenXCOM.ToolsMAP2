@@ -453,7 +453,7 @@ namespace MapView.Forms.MainView
 
 
 
-		private const string cat_Sprites = "Sprites";
+		private const string cat_Sprites_render = "Sprites - render";
 
 #if !LOCKBITS
 		private bool _spriteShadeEnabled = true;
@@ -469,7 +469,7 @@ namespace MapView.Forms.MainView
 		// NOTE: Options don't like floats, hence this workaround w/ 'SpriteShade' and 'SpriteShadeFloat' ->
 
 		private int _spriteShade = def_SpriteShade;
-		[Category(cat_Sprites)]
+		[Category(cat_Sprites_render)]
 		[Description(@"The darkness of the tile sprites (0..100 default 0 off, 33 is unity)
 (only if UseMono is false)")]
 		[DefaultValue(def_SpriteShade)]
@@ -516,7 +516,7 @@ namespace MapView.Forms.MainView
 		// NOTE: Options don't like enums, hence this workaround w/ 'Interpolation' and 'InterpolationE' ->
 
 		private int _interpolation = def_Interpolation;
-		[Category(cat_Sprites)]
+		[Category(cat_Sprites_render)]
 		[Description(@"The technique used for resizing sprites (0..7 default 5)
 0 - default
 1 - low (default)
@@ -555,14 +555,32 @@ namespace MapView.Forms.MainView
 		}
 
 
+		private const string str_UseMono = "UseMono";
+		private const bool   def_UseMono = false;
 
-		private const string cat_General = "General";
+		private bool _useMono = def_UseMono;
+		[Category(cat_Sprites_render)]
+		[Description("If true use sprite-drawing algorithms that are designed for Mono."
+			+ " This fixes an issue on non-Windows systems where non-transparent"
+			+ " black boxes appear around sprites but it bypasses Interpolation"
+			+ " and SpriteShade routines. Also selected tiles will not be toned"
+			+ " (default False)")]
+		[DefaultValue(def_UseMono)]
+		public bool UseMono
+		{
+			get { return _useMono; }
+			set { _useMono = value; }
+		}
+
+
+
+		private const string cat_Sprites = "Sprites";
 
 		internal const string str_AnimateSprites = "AnimateSprites";
 		private  const bool   def_AnimateSprites = false;
 
 		private bool _animateSprites = def_AnimateSprites;
-		[Category(cat_General)]
+		[Category(cat_Sprites)]
 		[Description(@"If true the sprites will animate (F2 - On/Off)
 (default False)")]
 		[DefaultValue(def_AnimateSprites)]
@@ -577,7 +595,7 @@ namespace MapView.Forms.MainView
 		private  const bool   def_OpenDoors = false;
 
 		private bool _openDoors = def_OpenDoors;
-		[Category(cat_General)]
+		[Category(cat_Sprites)]
 		[Description("If true the doors will animate if Animate is also on - if"
 			+ " Animate is false the doors will show their alternate tile. This"
 			+ @" setting may need to be re-toggled if Animate changes (F3 - On/Off)
@@ -590,39 +608,20 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_BringAllToFront = "BringAllToFront";
-		private const bool   def_BringAllToFront = false;
+		internal const string str_PreferTftdTargeter = "PreferTftdTargeter";
+		private  const bool   def_PreferTftdTargeter = false;
 
-		private bool _bringAllToFront = def_BringAllToFront;
-		[Category(cat_General)]
-		[Description("If true any open subsidiary viewers will be brought to the"
-			+ " top of the desktop whenever MainView takes focus - this implements"
-			+ " a workaround that might help circumvent an issue in post Windows 7"
-			+ " OS, in which focus refuses to switch to MainView unless the"
-			+ " secondary viewers are closed (default False)")]
-		[DefaultValue(def_BringAllToFront)]
-		public bool BringAllToFront
+		private bool _preferTftdTargeter = def_PreferTftdTargeter;
+		[Category(cat_Sprites)]
+		[Description("If true MainView will use the TftD targeter sprites for"
+			+ " its cursor if both Ufo and TftD are configured in resources and"
+			+ @" both spritesets are found.
+(default False)")]
+		[DefaultValue(def_PreferTftdTargeter)]
+		public bool PreferTftdTargeter
 		{
-			get { return _bringAllToFront; }
-			set { _bringAllToFront = value; }
-		}
-
-
-		private const string str_UseMono = "UseMono";
-		private const bool   def_UseMono = false;
-
-		private bool _useMono = def_UseMono;
-		[Category(cat_General)]
-		[Description("If true use sprite-drawing algorithms that are designed for Mono."
-			+ " This fixes an issue on non-Windows systems where non-transparent"
-			+ " black boxes appear around sprites but it bypasses Interpolation"
-			+ " and SpriteShade routines. Also selected tiles will not be toned"
-			+ " (default False)")]
-		[DefaultValue(def_UseMono)]
-		public bool UseMono
-		{
-			get { return _useMono; }
-			set { _useMono = value; }
+			get { return _preferTftdTargeter; }
+			set { _preferTftdTargeter = value; }
 		}
 
 
@@ -676,6 +675,24 @@ namespace MapView.Forms.MainView
 
 
 		private const string cat_Global = "Global";
+
+
+		private const string str_BringAllToFront = "BringAllToFront";
+		private const bool   def_BringAllToFront = false;
+
+		private bool _bringAllToFront = def_BringAllToFront;
+		[Category(cat_Global)]
+		[Description("If true any open subsidiary viewers will be brought to the"
+			+ " top of the desktop whenever MainView takes focus - this implements"
+			+ " a workaround that might help circumvent an issue in post Windows 7"
+			+ " OS, in which focus refuses to switch to MainView unless the"
+			+ " secondary viewers are closed (default False)")]
+		[DefaultValue(def_BringAllToFront)]
+		public bool BringAllToFront
+		{
+			get { return _bringAllToFront; }
+			set { _bringAllToFront = value; }
+		}
 
 		private const string str_Base1_xy = "Base1_xy";
 		private const bool   def_Base1_xy = false;
@@ -829,6 +846,8 @@ namespace MapView.Forms.MainView
 			options.CreateOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
 			options.CreateOptionDefault(str_IgnoreRecordsExceeded,  def_IgnoreRecordsExceeded,  changer1);
 			options.CreateOptionDefault(str_InvertMousewheel,       def_InvertMousewheel,       changer1);
+
+			options.CreateOptionDefault(str_PreferTftdTargeter,     def_PreferTftdTargeter,     changer1);
 
 			options.CreateOptionDefault(str_DescriptionHeight,      def_DescriptionHeight,      changer5);
 		}
@@ -988,6 +1007,12 @@ namespace MapView.Forms.MainView
 				case str_InvertMousewheel:
 					InvertMousewheel = (bool)val;
 					break;
+
+
+				case str_PreferTftdTargeter:
+					CuboidSprite.PreferTftdTargeter(PreferTftdTargeter = (bool)val);
+					_overlay.Invalidate();
+					break;
 			}
 		}
 
@@ -1041,8 +1066,7 @@ namespace MapView.Forms.MainView
 					break;
 			}
 
-			_overlay.Invalidate();
-			InvalidateSecondaryPanels();
+			Invalidate();
 		}
 
 		/// <summary>
@@ -1059,8 +1083,7 @@ namespace MapView.Forms.MainView
 		{
 			SpriteShade = (int)val;
 
-			_overlay.Invalidate();
-			InvalidateSecondaryPanels();
+			Invalidate();
 
 			if (MainViewF.ScanG != null)
 				MainViewF.ScanG.InvalidatePanel();
@@ -1116,13 +1139,16 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Invalidates the current <c><see cref="TilePanel"/></c> in
+		/// Invalidates <c><see cref="MainViewOverlay"/></c> along with the
+		/// current <c><see cref="TilePanel"/></c> in
 		/// <c><see cref="TileView"/></c> and the
 		/// <c><see cref="QuadrantControl">QuadrantControls</see></c> in
 		/// <c>TopView</c> and <c>TopRouteView(Top)</c>.
 		/// </summary>
-		private static void InvalidateSecondaryPanels()
+		private void Invalidate()
 		{
+			_overlay.Invalidate();
+
 			ObserverManager.TileView.Control.GetSelectedPanel().Invalidate();
 			ObserverManager.InvalidateQuadrantControls();
 		}

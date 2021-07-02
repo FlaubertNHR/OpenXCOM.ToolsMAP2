@@ -26,12 +26,15 @@ namespace XCom
 		/// </summary>
 		public static void Dispose()
 		{
-			Logfile.Log("SpritesetManager.Dispose() static");
-			for (int i = 0; i != Spritesets.Count; ++i)
+			if (Spritesets.Count != 0)
 			{
-				Spritesets[i].Dispose();
+				Logfile.Log("SpritesetManager.Dispose() static");
+				for (int i = 0; i != Spritesets.Count; ++i)
+				{
+					Spritesets[i].Dispose();
+				}
+				Spritesets.Clear();
 			}
-			Spritesets.Clear();
 		}
 		#endregion Methods (disposable)
 
