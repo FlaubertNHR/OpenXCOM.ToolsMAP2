@@ -116,13 +116,6 @@ namespace MapView.Forms.Observers
 			_spot = spot;
 		}
 
-		private int _widthover; // these are for the translucent overlay box ->
-		private int _widthunit;
-		private int _widthrank;
-		private int _widthspawn;
-		private int _widthpatrol;
-		private int _widthattack;
-
 		private int _widthoverlayleft;
 		private int _heightoverlaytext;
 
@@ -163,37 +156,32 @@ namespace MapView.Forms.Observers
 			Dock = DockStyle.Fill;
 			MainViewOverlay.that.MouseDrag += PathSelectedLozenge;
 
-			Graphics graphics = CreateGraphics();
-			_widthover   = (int)graphics.MeasureString(Over,   FontOverlay).Width;
-			_widthunit   = (int)graphics.MeasureString(Unit,   FontOverlay).Width;
-			_widthrank   = (int)graphics.MeasureString(Rank,   FontOverlay).Width;
-			_widthspawn  = (int)graphics.MeasureString(Spawn,  FontOverlay).Width;
-			_widthpatrol = (int)graphics.MeasureString(Patrol, FontOverlay).Width;
-			_widthattack = (int)graphics.MeasureString(Attack, FontOverlay).Width;
-
-			int w;
-			w = (int)graphics.MeasureString(Over,   FontOverlay).Width;
-			if (w > _widthoverlayleft) _widthoverlayleft = w;
-
-			w = (int)graphics.MeasureString(Unit,   FontOverlay).Width;
-			if (w > _widthoverlayleft) _widthoverlayleft = w;
-
-			w = (int)graphics.MeasureString(Rank,   FontOverlay).Width;
-			if (w > _widthoverlayleft) _widthoverlayleft = w;
-
-			w = (int)graphics.MeasureString(Spawn,  FontOverlay).Width;
-			if (w > _widthoverlayleft) _widthoverlayleft = w;
-
-			w = (int)graphics.MeasureString(Patrol, FontOverlay).Width;
-			if (w > _widthoverlayleft) _widthoverlayleft = w;
-
-			w = (int)graphics.MeasureString(Attack, FontOverlay).Width;
-			if (w > _widthoverlayleft) _widthoverlayleft = w;
-
-			_heightoverlaytext = (int)graphics.MeasureString(TextNorth, FontOverlay).Height + 1;
-
-			_widthNorth = (int)graphics.MeasureString(TextNorth, FontRose).Width;
-			_widthEast  = (int)graphics.MeasureString(TextEast,  FontRose).Width;
+			using (Graphics graphics = CreateGraphics())
+			{
+				int w;
+				w = (int)graphics.MeasureString(Over,   FontOverlay).Width;
+				if (w > _widthoverlayleft) _widthoverlayleft = w;
+	
+				w = (int)graphics.MeasureString(Unit,   FontOverlay).Width;
+				if (w > _widthoverlayleft) _widthoverlayleft = w;
+	
+				w = (int)graphics.MeasureString(Rank,   FontOverlay).Width;
+				if (w > _widthoverlayleft) _widthoverlayleft = w;
+	
+				w = (int)graphics.MeasureString(Spawn,  FontOverlay).Width;
+				if (w > _widthoverlayleft) _widthoverlayleft = w;
+	
+				w = (int)graphics.MeasureString(Patrol, FontOverlay).Width;
+				if (w > _widthoverlayleft) _widthoverlayleft = w;
+	
+				w = (int)graphics.MeasureString(Attack, FontOverlay).Width;
+				if (w > _widthoverlayleft) _widthoverlayleft = w;
+	
+				_heightoverlaytext = (int)graphics.MeasureString(TextNorth, FontOverlay).Height + 1;
+	
+				_widthNorth = (int)graphics.MeasureString(TextNorth, FontRose).Width;
+				_widthEast  = (int)graphics.MeasureString(TextEast,  FontRose).Width;
+			}
 		}
 		#endregion cTor
 
