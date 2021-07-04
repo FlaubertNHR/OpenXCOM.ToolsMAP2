@@ -1999,8 +1999,6 @@ namespace PckView
 
 					if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non) // pck vs tab mismatch counts
 					{
-						spriteset.Dispose();
-
 						XCImage.SpriteWidth  = pre_width;
 						XCImage.SpriteHeight = pre_height;
 
@@ -2018,8 +2016,6 @@ namespace PckView
 					}
 					else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non) // too many bytes for a sprite
 					{
-						spriteset.Dispose();
-
 						XCImage.SpriteWidth  = pre_width;
 						XCImage.SpriteHeight = pre_height;
 
