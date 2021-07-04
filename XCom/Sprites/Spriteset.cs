@@ -336,12 +336,13 @@ namespace XCom
 				// You just don't need Tabfiles if you follow a few rules ....
 				// a) a sprite is a minimum of 2 bytes
 				// b) the first byte in a sprite shall not be FE or FF
-				// c) the first byte shall always be a quantity of transparent fullrows
-				// c) the final byte of a sprite shall be FF
-				// d) FE shall be followed by a byte that is a quantity of
+				// c) the first byte shall always be a quantity of transparent
+				//    fullrows
+				// d) the final byte of a sprite shall be FF
+				// e) FE shall be followed by a byte that is a quantity of
 				//    transparent pixels (FF is allowed as a quantity)
 				// f) do not allow FE or FF to be used as a palette-color
-				// e) a decoding program shall initialize the entire buffer of a
+				// g) a decoding program shall initialize the entire buffer of a
 				//    sprite with transparent pixels first. Hence a contiguous
 				//    sequence of transparent pixels that hit the final FF do
 				//    not need to be written.
