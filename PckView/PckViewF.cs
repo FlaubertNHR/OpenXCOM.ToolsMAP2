@@ -1955,14 +1955,14 @@ namespace PckView
 
 		#region Methods (load)
 		/// <summary>
-		/// Loads PCK+TAB spriteset files.
+		/// Loads <c>PCK+TAB</c> <c><see cref="Spriteset"/></c> files.
 		/// </summary>
-		/// <param name="pfePck">path-file-extension of a PCK file</param>
+		/// <param name="pfePck">path-file-extension of a <c>PCK</c> file</param>
 		/// <param name="isBigobs"><c>true</c> if Bigobs, <c>false</c> if
 		/// terrain or unit Pck</param>
-		/// <remarks>Pckfiles require their corresponding Tabfile. That is, the
+		/// <remarks>Pckfiles require their corresponding Tabfile. The
 		/// load-routine does not handle Pckfiles that do not use a Tabfile -
-		/// eg. single-image Bigobs in the UFOGRAPH directory.
+		/// eg. single-image Bigobs in the <c>UFOGRAPH</c> directory.
 		/// 
 		/// 
 		/// May be called from
@@ -1978,18 +1978,6 @@ namespace PckView
 				byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
 				if (bytesTab != null)
 				{
-					int pre_width  = XCImage.SpriteWidth;
-					int pre_height = XCImage.SpriteHeight;
-
-					XCImage.SpriteWidth = XCImage.SpriteWidth32;
-
-					if (isBigobs)
-					{
-						XCImage.SpriteHeight = XCImage.SpriteHeight48;
-					}
-					else
-						XCImage.SpriteHeight = XCImage.SpriteHeight40;
-
 					var spriteset = new Spriteset(
 												label,
 												Pal, // user can change the palette with the Palette menu
@@ -1999,9 +1987,6 @@ namespace PckView
 
 					if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non) // pck vs tab mismatch counts
 					{
-						XCImage.SpriteWidth  = pre_width;
-						XCImage.SpriteHeight = pre_height;
-
 						using (var f = new Infobox(
 												"Load error",
 												Infobox.SplitString("The count of sprites in the PCK file ["
@@ -2016,9 +2001,6 @@ namespace PckView
 					}
 					else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non) // too many bytes for a sprite
 					{
-						XCImage.SpriteWidth  = pre_width;
-						XCImage.SpriteHeight = pre_height;
-
 						string head;
 						if (isBigobs)
 							head = "Bigobs : "; // won't happen unless a file is corrupt.
@@ -2038,8 +2020,18 @@ namespace PckView
 					}
 					else
 					{
-						if (isBigobs) SetType = SpritesetType.Bigobs;
-						else          SetType = SpritesetType.Pck;
+						XCImage.SpriteWidth = XCImage.SpriteWidth32;
+
+						if (isBigobs)
+						{
+							XCImage.SpriteHeight = XCImage.SpriteHeight48;
+							SetType = SpritesetType.Bigobs;
+						}
+						else
+						{
+							XCImage.SpriteHeight = XCImage.SpriteHeight40;
+							SetType = SpritesetType.Pck;
+						}
 
 						if (TilePanel.Spriteset != null)
 							TilePanel.Spriteset.Dispose();
