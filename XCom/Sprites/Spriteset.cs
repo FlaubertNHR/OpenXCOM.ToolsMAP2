@@ -61,24 +61,26 @@ namespace XCom
 
 
 		/// <summary>
-		/// A bitflagged int containing Fail states - "0" on a successful load.
+		/// A bit-flagged <c>int</c> containing <c>Fail</c> states -
+		/// <c><see cref="FAIL_non"/></c> on a successful load.
 		/// </summary>
-		/// <remarks>The caller shall set this spriteset to null if any bits are
-		/// flagged.</remarks>
+		/// <remarks>The caller shall set this <c>Spriteset</c> to <c>null</c>
+		/// if any bits are flagged. Only <c><see cref="FAIL_OF_SPRITE"/></c>
+		/// needs to call <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
 		public int Fail
 		{ get; internal set; }
 
 		/// <summary>
-		/// Count of sprites detected in a Pckfile. Is used only if the
-		/// spriteset fails to load due to a PCK/TAB mismatch error. It's
+		/// Count of sprites detected in a Pckfile. Is used only if this
+		/// <c>Spriteset</c> fails to load due to a PCK/TAB mismatch error. It's
 		/// printed in the errorbox as an aid for debugging.
 		/// </summary>
 		public int CountSprites
 		{ get; private set; }
 
 		/// <summary>
-		/// Count of offsets detected in a Tabfile. Is used only if the
-		/// spriteset fails to load due to a PCK/TAB mismatch error. It's
+		/// Count of offsets detected in a Tabfile. Is used only if this
+		/// <c>Spriteset</c> fails to load due to a PCK/TAB mismatch error. It's
 		/// printed in the errorbox as an aid for debugging.
 		/// </summary>
 		public int CountOffsets
@@ -87,11 +89,11 @@ namespace XCom
 
 		private Palette _pal;
 		/// <summary>
-		/// This Spriteset's reference to a <c><see cref="Palette"/></c>.
+		/// This <c>Spriteset's</c> reference to a <c><see cref="Palette"/></c>.
 		/// </summary>
 		/// <remarks>Changing the palette requires re-assigning the changed
 		/// <c><see cref="System.Drawing.Imaging.ColorPalette"/></c> to all
-		/// sprites in this spriteset.</remarks>
+		/// sprites in this <c>Spriteset</c>.</remarks>
 		public Palette Pal
 		{
 			get { return _pal; }
@@ -110,9 +112,9 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets/Sets the <c><see cref="XCImage"/></c> at a specified id. Adds a
-		/// sprite to the end of the set if the specified id falls outside the
-		/// bounds of the list.
+		/// Gets/Sets the <c><see cref="XCImage"/></c> at a specified id in
+		/// <c><see cref="Sprites"/></c>. Adds a sprite to the end of the set
+		/// if the specified id falls outside the bounds of the list.
 		/// </summary>
 		public XCImage this[int id]
 		{
@@ -139,7 +141,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Creates a quick and dirty blank spriteset.
+		/// cTor[0]. Creates a quick and dirty blank <c>Spriteset</c>.
 		/// </summary>
 		/// <param name="label">file w/out path or extension</param>
 		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
@@ -375,8 +377,8 @@ namespace XCom
 												this,
 												createToned);
 
-						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckSprite above can set the Fail_Overflo flag
-						{											// which shall be handled by the caller; ie. set the spriteset to null.
+						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)
+						{
 							Dispose();
 							return;
 						}
@@ -385,7 +387,7 @@ namespace XCom
 				}
 				else
 				{
-					Fail |= FAIL_COUNT_MISMATCH; // NOTE: Shall be handled by the caller; ie. set the spriteset to null.
+					Fail |= FAIL_COUNT_MISMATCH;
 
 /*					if (true) // rewrite the Tabfile ->
 					{
