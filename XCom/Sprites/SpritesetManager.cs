@@ -94,8 +94,8 @@ namespace XCom
 		/// although that's done differently in
 		/// <c>MainViewF.LoadMonotoneSprites()</c>.
 		/// </summary>
-		/// <param name="label">the file w/out extension</param>
-		/// <param name="dir">path to the directory of the file</param>
+		/// <param name="label">the filelabel(s) w/out extension</param>
+		/// <param name="dir">path to the directory of the <c>PCK+TAB</c> files</param>
 		/// <param name="pal">a freakin <c><see cref="Palette"/></c></param>
 		/// <param name="createToned"><c>true</c> to create
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
@@ -158,7 +158,7 @@ namespace XCom
 						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
-							if (createToned)
+							if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
 								Spritesets.Add(spriteset);
 
 							return spriteset;
