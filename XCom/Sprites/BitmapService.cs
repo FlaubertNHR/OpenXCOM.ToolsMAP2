@@ -4,27 +4,23 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-// now why did I just *know* that the nutcase who writes the low-level code for
-// image-handling was going to cram everything together ...
-// because I'm the nutcase who just went through the whole thing adding
-// whitespace.
-
 
 namespace XCom
 {
 	/// <summary>
-	/// Static methods for dealing with Bitmaps and sprites.
+	/// Static methods for dealing with <c>Bitmaps</c> and sprites.
 	/// </summary>
 	public static class BitmapService
 	{
 		/// <summary>
-		/// Creates an 8-bit indexed bitmap from the specified byte-array.
+		/// Creates an 8-bit indexed <c>Bitmap</c> from the specified
+		/// byte-array.
 		/// </summary>
-		/// <param name="width">width of final Bitmap</param>
-		/// <param name="height">height of final Bitmap</param>
+		/// <param name="width">width of final <c>Bitmap</c></param>
+		/// <param name="height">height of final <c>Bitmap</c></param>
 		/// <param name="bindata">image data</param>
-		/// <param name="pal">palette to color the image with</param>
-		/// <returns>a .net Bitmap image</returns>
+		/// <param name="pal"><c>ColorPalette</c> to color the image with</param>
+		/// <returns>a .net <c>Bitmap</c> image</returns>
 		public static Bitmap CreateSprite(
 				int width,
 				int height,
