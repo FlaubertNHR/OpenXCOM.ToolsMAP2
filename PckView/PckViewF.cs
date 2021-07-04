@@ -188,9 +188,10 @@ namespace PckView
 
 
 		/// <summary>
-		/// The fullpath of the spriteset. Shall not contain the file-extension
-		/// for terrain/unit/bigobs files (since it's easier to add .PCK and.TAB
-		/// strings later) but ScanG and LoFT files retain their .DAT extension.
+		/// The fullpath of the loaded spriteset. Shall not contain the
+		/// file-extension for terrain/unit/bigobs files (since it's easier to
+		/// add <c>.PCK</c> and <c>.TAB</c> strings later) but ScanG and LoFT
+		/// files retain their <c>.DAT</c> extension.
 		/// </summary>
 		private string _path
 		{ get; set; }
@@ -1969,89 +1970,79 @@ namespace PckView
 		/// <c>MapView.Forms.Observers.TileView.OnPckEditorClick()</c>.</remarks>
 		public void LoadSpriteset(string pfePck, bool isBigobs = false)
 		{
-			byte[] bytesPck = FileService.ReadFile(pfePck);
-			if (bytesPck != null)
+			string label = Path.GetFileNameWithoutExtension(pfePck);
+			string dir   = Path.GetDirectoryName(pfePck);
+
+			var spriteset = SpritesetManager.CreateSpriteset(
+														label,
+														dir,
+														Pal); // user can change the palette with the Palette menu
+
+			if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non) // pck vs tab mismatch counts
 			{
-				string label = Path.GetFileNameWithoutExtension(pfePck);
-				string pf    = Path.Combine(Path.GetDirectoryName(pfePck), label);
-
-				byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
-				if (bytesTab != null)
+				using (var f = new Infobox(
+										"Load error",
+										Infobox.SplitString("The count of sprites in the PCK file ["
+												+ spriteset.CountSprites + "] does not match"
+												+ " the count of sprites expected by the TAB file ["
+												+ spriteset.CountOffsets + "]."),
+										null,
+										InfoboxType.Error))
 				{
-					var spriteset = new Spriteset(
-												label,
-												Pal, // user can change the palette with the Palette menu
-												SpritesetManager.GetTabwordLength(bytesTab),
-												bytesPck,
-												bytesTab);
-
-					if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non) // pck vs tab mismatch counts
-					{
-						using (var f = new Infobox(
-												"Load error",
-												Infobox.SplitString("The count of sprites in the PCK file ["
-														+ spriteset.CountSprites + "] does not match"
-														+ " the count of sprites expected by the TAB file ["
-														+ spriteset.CountOffsets + "]."),
-												null,
-												InfoboxType.Error))
-						{
-							f.ShowDialog(this);
-						}
-					}
-					else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non) // too many bytes for a sprite
-					{
-						string head;
-						if (isBigobs)
-							head = "Bigobs : "; // won't happen unless a file is corrupt.
-						else
-							head = String.Empty; // possibly trying to load a Bigobs to 32x40
-
-						head += "File data overflowed the sprite's count of pixels.";
-
-						using (var f = new Infobox(
-												"Load error",
-												head,
-												null,
-												InfoboxType.Error))
-						{
-							f.ShowDialog(this);
-						}
-					}
-					else
-					{
-						XCImage.SpriteWidth = XCImage.SpriteWidth32;
-
-						if (isBigobs)
-						{
-							XCImage.SpriteHeight = XCImage.SpriteHeight48;
-							SetType = SpritesetType.Bigobs;
-						}
-						else
-						{
-							XCImage.SpriteHeight = XCImage.SpriteHeight40;
-							SetType = SpritesetType.Pck;
-						}
-
-						if (TilePanel.Spriteset != null)
-							TilePanel.Spriteset.Dispose();
-
-						TilePanel.Spriteset = spriteset;
-
-//						if (!_itPalettes[pal].Checked)
-//						{
-//							miTransparent.Checked = true;
-//							OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
-//						}
-//						else if (!miTransparent.Checked)
-//						{
-//							OnTransparencyClick(null, EventArgs.Empty);
-//						}
-
-						_path = pf;
-						Changed = false;
-					}
+					f.ShowDialog(this);
 				}
+			}
+			else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non) // too many bytes for a sprite
+			{
+				string head;
+				if (isBigobs)
+					head = "Bigobs : "; // won't happen unless a file is corrupt.
+				else
+					head = String.Empty; // possibly trying to load a Bigobs to 32x40
+
+				head += "File data overflowed the sprite's count of pixels.";
+
+				using (var f = new Infobox(
+										"Load error",
+										head,
+										null,
+										InfoboxType.Error))
+				{
+					f.ShowDialog(this);
+				}
+			}
+			else
+			{
+				XCImage.SpriteWidth = XCImage.SpriteWidth32;
+
+				if (isBigobs)
+				{
+					XCImage.SpriteHeight = XCImage.SpriteHeight48;
+					SetType = SpritesetType.Bigobs;
+				}
+				else
+				{
+					XCImage.SpriteHeight = XCImage.SpriteHeight40;
+					SetType = SpritesetType.Pck;
+				}
+
+				if (TilePanel.Spriteset != null)
+					TilePanel.Spriteset.Dispose();
+
+				TilePanel.Spriteset = spriteset;
+
+//				if (!_itPalettes[pal].Checked)
+//				{
+//					miTransparent.Checked = true;
+//					OnPaletteClick(_itPalettes[pal], EventArgs.Empty);
+//				}
+//				else if (!miTransparent.Checked)
+//				{
+//					OnTransparencyClick(null, EventArgs.Empty);
+//				}
+
+				_path = Path.Combine(dir, label);
+				Changed = false;
 			}
 		}
 
