@@ -9,13 +9,13 @@ namespace XCom
 	public static class EmbeddedService
 	{
 		/// <summary>
-		/// Creates a monotone spriteset from the embedded MONOTONE.PCK/TAB
-		/// files.
+		/// Creates a monotone <c><see cref="Spriteset"/></c> from the embedded
+		/// <c>MONOTONE.PCK/TAB</c> files.
 		/// </summary>
 		/// <param name="label">"Monotone" is the label of the spriteset for
 		/// TopView's blank quads/TileView's eraser and "Monotone_crippled" is
 		/// the label for MainView's crippled tileparts.</param>
-		/// <returns>a monotone spriteset</returns>
+		/// <returns>a monotone <c>Spriteset</c></returns>
 		public static Spriteset CreateMonotoneSpriteset(string label)
 		{
 			var ass = Assembly.GetExecutingAssembly();
