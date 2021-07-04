@@ -189,7 +189,6 @@ namespace XCom
 			Spriteset spriteset = SpritesetManager.LoadSpriteset( // a pointer to the spriteset shall be stored in 'SpriteManager.Spritesets'
 															terr,
 															path,
-															SpritesetManager.TAB_WORD_LENGTH_2,
 															Pal,
 															true);
 			if (spriteset != null)

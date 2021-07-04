@@ -96,9 +96,6 @@ namespace XCom
 		/// </summary>
 		/// <param name="label">the file w/out extension</param>
 		/// <param name="dir">path to the directory of the file</param>
-		/// <param name="tabwordLength">one of the
-		/// <c><see cref="TAB_WORD_LENGTH_0">TAB_WORD_LENGTH_*</see></c>
-		/// constants</param>
 		/// <param name="pal">a freakin <c><see cref="Palette"/></c></param>
 		/// <param name="createToned"><c>true</c> to create
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
@@ -119,7 +116,6 @@ namespace XCom
 		public static Spriteset LoadSpriteset(
 				string label,
 				string dir,
-				int tabwordLength,
 				Palette pal,
 				bool createToned = false)
 		{
@@ -141,7 +137,7 @@ namespace XCom
 						var spriteset = new Spriteset(
 													label,
 													pal,
-													tabwordLength,
+													GetTabwordLength(bytesTab),
 													bytesPck,
 													bytesTab,
 													createToned);
@@ -194,7 +190,7 @@ namespace XCom
 		///
 		/// <c>TAB_WORD_LENGTH_4 : 00 00 00 00</c>
 		/// </remarks>
-		private static int GetTabwordLength(byte[] bytesTab)
+		public static int GetTabwordLength(byte[] bytesTab)
 		{
 			// NOTE: This can throw if the Tabfile is malformed.
 			if (bytesTab.Length % 2 != 0)

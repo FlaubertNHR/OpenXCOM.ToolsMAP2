@@ -342,9 +342,10 @@ namespace McdView
 		/// <summary>
 		/// cTor. Instantiates the McdView app.
 		/// </summary>
-		/// <param name="isInvoked">true if invoked via TileView</param>
-		/// <param name="spriteshade">if 'isInvoked' is true you can pass in a
-		/// SpriteShade value from MapView</param>
+		/// <param name="isInvoked"><c>true</c> if invoked via TileView</param>
+		/// <param name="spriteshade">if <paramref name="isInvoked"/> is
+		/// <c>true</c> you can pass in a <paramref name="spriteshade"/> value
+		/// from MapView</param>
 		public McdviewF(bool isInvoked = false, int spriteshade = -1)
 		{
 			IsInvoked = isInvoked;
@@ -565,8 +566,8 @@ namespace McdView
 
 
 		/// <summary>
-		/// Assigns MapView's Configurator's basepath(s) to 'pathufo' and
-		/// 'pathtftd'.
+		/// Assigns MapView's Configurator's basepath(s) to
+		/// <paramref name="pathufo"/> and <paramref name="pathtftd"/>.
 		/// </summary>
 		/// <param name="pathufo"></param>
 		/// <param name="pathtftd"></param>
@@ -590,8 +591,8 @@ namespace McdView
 				{
 					switch (node.Key.ToString())
 					{
-						// NOTE: Use 'PathInfo.NotConfigured' to bypass warn in cTor
-						// then set the path back to null there.
+						// NOTE: Use 'PathInfo.NotConfigured' to bypass warn in
+						// cTor then set the path back to null there.
 
 						case "ufo":
 							pathufo = node.Value.ToString();
@@ -608,10 +609,11 @@ namespace McdView
 
 
 		/// <summary>
-		/// Checks if either or both 'Changed' and/or 'SpritesetChanged' has
-		/// been flagged.
+		/// Checks if either or both <c><see cref="Changed"/></c> and/or
+		/// <c><see cref="TerrainPanel_main.SpritesChanged">TerrainPanel_main.SpritesChanged</see></c>
+		/// has been flagged.
 		/// </summary>
-		/// <returns>true if okay to proceed</returns>
+		/// <returns><c>true</c> if okay to proceed</returns>
 		private bool closeTerrain()
 		{
 			if (Changed)
@@ -660,7 +662,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles this form's FormClosing event.
+		/// Handles this form's <c>FormClosing</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -707,7 +709,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles this form's Resize event.
+		/// Handles this form's <c>Resize</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -873,7 +875,6 @@ namespace McdView
 								Spriteset = SpritesetManager.LoadSpriteset(
 																		Label,
 																		Path.GetDirectoryName(PfeMcd),
-																		SpritesetManager.TAB_WORD_LENGTH_2,
 																		Pal);
 							}
 							else
@@ -962,7 +963,6 @@ namespace McdView
 					Spriteset = SpritesetManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															SpritesetManager.TAB_WORD_LENGTH_2,
 															Pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -1043,7 +1043,6 @@ namespace McdView
 					Spriteset = SpritesetManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															SpritesetManager.TAB_WORD_LENGTH_2,
 															Pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -1124,7 +1123,6 @@ namespace McdView
 					Spriteset = SpritesetManager.LoadSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
-															SpritesetManager.TAB_WORD_LENGTH_2,
 															pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
@@ -1494,7 +1492,6 @@ namespace McdView
 						Copier.Spriteset = SpritesetManager.LoadSpriteset(
 																		Copier.Label,
 																		Path.GetDirectoryName(Copier.PfeMcd),
-																		SpritesetManager.TAB_WORD_LENGTH_2,
 																		Pal);
 
 						for (int id = 0; id != parts.Length; ++id)

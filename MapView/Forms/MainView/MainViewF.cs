@@ -511,7 +511,6 @@ namespace MapView
 				CuboidSprite.Ufoset = SpritesetManager.LoadSpriteset(
 																SharedSpace.CursorFilePrefix,
 																dir,
-																SpritesetManager.TAB_WORD_LENGTH_2,
 																Palette.UfoBattle);
 				if (CuboidSprite.Ufoset != null)
 				{
@@ -533,7 +532,6 @@ namespace MapView
 				CuboidSprite.Tftdset = SpritesetManager.LoadSpriteset(
 																SharedSpace.CursorFilePrefix,
 																dir,
-																SpritesetManager.TAB_WORD_LENGTH_4,
 																Palette.TftdBattle);
 				if (CuboidSprite.Tftdset != null)
 				{
