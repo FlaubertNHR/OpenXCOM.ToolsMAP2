@@ -42,7 +42,7 @@ namespace XCom
 
 
 		#region Properties
-		private IList<XCImage> _sprites = new List<XCImage>();
+		private readonly IList<XCImage> _sprites = new List<XCImage>();
 		public IList<XCImage> Sprites
 		{
 			get { return _sprites; }
@@ -376,8 +376,10 @@ namespace XCom
 												createToned);
 
 						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)	// NOTE: Instantiating the PckSprite above can set the Fail_Overflo flag
-							return;									// which shall be handled by the caller; ie. set the spriteset to null.
-
+						{											// which shall be handled by the caller; ie. set the spriteset to null.
+							Dispose();
+							return;
+						}
 						Sprites.Add(sprite);
 					}
 				}
