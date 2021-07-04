@@ -186,11 +186,11 @@ namespace XCom
 			string terr = terrain.Item1;
 			string path = GetTerrainDirectory(terrain.Item2);
 
-			Spriteset spriteset = SpritesetManager.LoadSpriteset( // a pointer to the spriteset shall be stored in 'SpriteManager.Spritesets'
-															terr,
-															path,
-															Pal,
-															true);
+			Spriteset spriteset = SpritesetManager.CreateSpriteset( // a pointer to the spriteset shall be stored in 'SpriteManager.Spritesets'
+																terr,
+																path,
+																Pal,
+																true);
 			if (spriteset != null)
 			{
 				//Logfile.Log(". spriteset Valid - create tileparts");

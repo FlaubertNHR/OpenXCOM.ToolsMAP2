@@ -197,16 +197,16 @@ namespace XCom
 		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c> partype icons</item>
 		/// <item><c>MapView.MainViewF()</c>
 		/// 
-		/// > <c><see cref="SpritesetManager.LoadSpriteset(string, string, int, Palette, bool)">SpritesetManager.LoadSpriteset()</see></c> ufo-cursor
+		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c> ufo-cursor
 		/// 
-		/// > <c><see cref="SpritesetManager.LoadSpriteset(string, string, int, Palette, bool)">SpritesetManager.LoadSpriteset()</see></c> tftd-cursor</item>
+		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c> tftd-cursor</item>
 		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
 		/// 
 		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
 		/// 
 		/// > <c><see cref="Descriptor.CreateTerrain(int)">Descriptor.CreateTerrain()</see></c>
 		/// 
-		/// > <c><see cref="SpritesetManager.LoadSpriteset(string, string, int, Palette, bool)">SpritesetManager.LoadSpriteset()</see></c> tilepart sprites</item>
+		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c> tilepart sprites</item>
 		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
 		/// 
 		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>

@@ -872,7 +872,7 @@ namespace McdView
 							if (   File.Exists(pf + GlobalsXC.PckExt)
 								&& File.Exists(pf + GlobalsXC.TabExt))
 							{
-								Spriteset = SpritesetManager.LoadSpriteset(
+								Spriteset = SpritesetManager.CreateSpriteset(
 																		Label,
 																		Path.GetDirectoryName(PfeMcd),
 																		Pal);
@@ -960,7 +960,7 @@ namespace McdView
 					if (Spriteset != null)
 						Spriteset.Dispose();
 
-					Spriteset = SpritesetManager.LoadSpriteset(
+					Spriteset = SpritesetManager.CreateSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															Pal);
@@ -1040,7 +1040,7 @@ namespace McdView
 					if (Spriteset != null)
 						Spriteset.Dispose();
 
-					Spriteset = SpritesetManager.LoadSpriteset(
+					Spriteset = SpritesetManager.CreateSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															Pal);
@@ -1120,7 +1120,7 @@ namespace McdView
 //					if (Spriteset != null)
 //						Spriteset.Dispose(); // not needed when invoked via TileView
 
-					Spriteset = SpritesetManager.LoadSpriteset(
+					Spriteset = SpritesetManager.CreateSpriteset(
 															Label,
 															Path.GetDirectoryName(PfeMcd),
 															pal);
@@ -1489,7 +1489,7 @@ namespace McdView
 					{
 						var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
 
-						Copier.Spriteset = SpritesetManager.LoadSpriteset(
+						Copier.Spriteset = SpritesetManager.CreateSpriteset(
 																		Copier.Label,
 																		Path.GetDirectoryName(Copier.PfeMcd),
 																		Pal);

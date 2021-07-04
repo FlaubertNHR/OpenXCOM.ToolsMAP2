@@ -12,10 +12,10 @@ namespace XCom
 	/// Creates <c><see cref="Spriteset">Spritesets</see></c> that are required
 	/// to display <c><see cref="Tilepart">Tileparts</see></c> in MapView and
 	/// maintains them in the <c><see cref="Spritesets"/></c> list.
-	/// <c><see cref="LoadSpriteset()">LoadSpriteset()</see></c> is also used to
-	/// create the Cursor-sprites in MapView and to load <c>Spritesets</c> in
-	/// McdView but pointers to such <c>Spritesets</c> are not stored in the
-	/// <c>Spritesets</c> list.
+	/// <c><see cref="CreateSpriteset()">CreateSpriteset()</see></c> is also
+	/// used to create the Cursor-sprites in MapView and to load
+	/// <c>Spritesets</c> in McdView but pointers to such <c>Spritesets</c> are
+	/// not stored in the <c>Spritesets</c> list.
 	/// </summary>
 	/// <remarks>This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public static class SpritesetManager
@@ -113,7 +113,7 @@ namespace XCom
 		/// <item>TFTD unit-sprites use 4-byte TabwordLengths</item>
 		/// <item>the UFO cursor uses 2-byte but the TFTD cursor uses 4-byte</item>
 		/// </list></remarks>
-		public static Spriteset LoadSpriteset(
+		public static Spriteset CreateSpriteset(
 				string label,
 				string dir,
 				Palette pal,

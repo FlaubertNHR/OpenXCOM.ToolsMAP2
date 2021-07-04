@@ -126,7 +126,7 @@ namespace XCom
 				for (int terid = 0; terid != descriptor.Terrains.Count; ++terid) // push together the tileparts of all allocated terrains
 				{
 					Tilepart[] records = descriptor.CreateTerrain(terid);	// -> TilepartFactory.CreateTileparts()
-					if (records == null)									// -> SpritesetManager.LoadSpriteset()
+					if (records == null)									// -> SpritesetManager.CreateSpriteset()
 					{
 						//Logfile.Log(". . . . no records ABORT");
 						// TODO: dispose any created spritesets
