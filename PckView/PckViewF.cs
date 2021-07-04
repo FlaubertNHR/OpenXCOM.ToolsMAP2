@@ -1956,13 +1956,17 @@ namespace PckView
 		#region Methods (load)
 		/// <summary>
 		/// Loads PCK+TAB spriteset files.
-		/// @note Pck files require their corresponding Tab file. That is, the
-		/// load-routine does not handle Pck files that do not use a Tab file -
-		/// eg. single-image Bigobs in the UFOGRAPH directory.
-		/// @note May be called from MapView.Forms.Observers.TileView.OnPckEditorClick()
 		/// </summary>
 		/// <param name="pfePck">path-file-extension of a PCK file</param>
-		/// <param name="isBigobs">true if Bigobs, false if terrain or unit Pck</param>
+		/// <param name="isBigobs"><c>true</c> if Bigobs, <c>false</c> if
+		/// terrain or unit Pck</param>
+		/// <remarks>Pckfiles require their corresponding Tabfile. That is, the
+		/// load-routine does not handle Pckfiles that do not use a Tabfile -
+		/// eg. single-image Bigobs in the UFOGRAPH directory.
+		/// 
+		/// 
+		/// May be called from
+		/// <c>MapView.Forms.Observers.TileView.OnPckEditorClick()</c>.</remarks>
 		public void LoadSpriteset(string pfePck, bool isBigobs = false)
 		{
 			byte[] bytesPck = FileService.ReadFile(pfePck);
@@ -1979,30 +1983,17 @@ namespace PckView
 
 					XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
-					int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2;
-//					Palette pal = Palette.UfoBattle; // User can change this but for now I need a palette ...
-
 					if (isBigobs)
 					{
 						XCImage.SpriteHeight = XCImage.SpriteHeight48;
 					}
 					else
-					{
 						XCImage.SpriteHeight = XCImage.SpriteHeight40;
-
-						if (bytesTab.Length >= SpritesetManager.TAB_WORD_LENGTH_4
-							&& bytesTab[2] == 0
-							&& bytesTab[3] == 0) // if both the 3rd or 4th bytes are zero ... it's a TFTD set.
-						{
-							tabwordLength = SpritesetManager.TAB_WORD_LENGTH_4;
-//							pal = Palette.TftdBattle;
-						}
-					}
 
 					var spriteset = new Spriteset(
 												label,
-												Pal, //pal
-												tabwordLength,
+												Pal, // user can change the palette with the Palette menu
+												SpritesetManager.GetTabwordLength(bytesTab),
 												bytesPck,
 												bytesTab);
 
