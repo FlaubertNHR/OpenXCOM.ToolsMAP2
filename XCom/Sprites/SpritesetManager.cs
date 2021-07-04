@@ -175,6 +175,43 @@ namespace XCom
 
 
 		/// <summary>
+		/// Gets whether the array of bytes of a Tabfile has 2-byte or 4-byte
+		/// TabwordLength.
+		/// </summary>
+		/// <param name="bytesTab">a little-endian array of bytes</param>
+		/// <returns>its TabwordLength</returns>
+		/// <remarks>The Tabfile uses little-endian words. If an array of bytes
+		/// has more than 2 bytes and the values of the 3rd and 4th bytes is
+		/// <c>0</c> the TabwordLength is <c><see cref="TAB_WORD_LENGTH_4"/></c>
+		/// else if an array of bytes does not have a 3rd byte or value of the
+		/// 3rd or 4th byte is nonzero the TabwordLength is
+		/// <c><see cref="TAB_WORD_LENGTH_2"/></c>. The first sprite in the
+		/// corresponding Pckfile always has an offset of <c>0</c> - but the
+		/// second sprite always has a nonzero offset.
+		/// 
+		/// 
+		/// <c>TAB_WORD_LENGTH_2 : 00 00 01 00</c>
+		///
+		/// <c>TAB_WORD_LENGTH_4 : 00 00 00 00</c>
+		/// </remarks>
+		private static int GetTabwordLength(byte[] bytesTab)
+		{
+			// NOTE: This can throw if the Tabfile is malformed.
+			if (bytesTab.Length % 2 != 0)
+				return TAB_WORD_LENGTH_0; // <- ERROR
+
+
+			if (bytesTab.Length > TAB_WORD_LENGTH_2
+				&& bytesTab[2] == (byte)0
+				&& bytesTab[3] == (byte)0)
+			{
+				return TAB_WORD_LENGTH_4;
+			}
+			return TAB_WORD_LENGTH_2;
+		}
+
+
+		/// <summary>
 		/// Loads a ScanG.dat file for UFO.
 		/// </summary>
 		/// <param name="dirUfo"></param>
