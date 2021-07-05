@@ -104,8 +104,11 @@ namespace XCom
 		/// <c>TileView.OnMcdViewClick()</c>. Also <c>true</c> if the sprites
 		/// should be tallied for recognition in <c>MapView.MapInfoDialog</c> -
 		/// which is only for terrain-sprites in the currently loaded terrainset</param>
-		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
-		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
+		/// <returns>a <c>Spriteset</c> containing all the sprites, or
+		/// <c>null</c> if
+		/// <c><see cref="Spriteset.Failr">Spriteset.Failr</see></c> gets set to
+		/// one of the <c><see cref="Spriteset.Fail">Spriteset.Fail</see></c>
+		/// values</returns>
 		/// <remarks>
 		/// <list type="bullet">
 		/// <item>both UFO and TFTD use 2-byte TabwordLengths for 32x40
@@ -144,7 +147,7 @@ namespace XCom
 
 						switch (spriteset.Failr)
 						{
-							case Spriteset.Fail.non:
+							default: // case Spriteset.Fail.non
 								if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
 									Spritesets.Add(spriteset);
 
@@ -168,11 +171,6 @@ namespace XCom
 								spriteset.Dispose();
 								head = "File data overflowed a sprite's length.";
 								copy = pf + GlobalsXC.PckExt;
-								break;
-
-							default: // shall not happen.
-								head = null;
-								copy = null;
 								break;
 						}
 					}
@@ -214,16 +212,15 @@ namespace XCom
 		/// <remarks>The Tabfile uses little-endian words. If an array of bytes
 		/// has more than 2 bytes and the values of the 3rd and 4th bytes is
 		/// <c>0</c> the TabwordLength is <c><see cref="TAB_WORD_LENGTH_4"/></c>
-		/// else if an array of bytes does not have a 3rd byte or value of the
-		/// 3rd or 4th byte is nonzero the TabwordLength is
+		/// else if an array of bytes does not have a 3rd byte or the value of
+		/// the 3rd or 4th byte is nonzero the TabwordLength is
 		/// <c><see cref="TAB_WORD_LENGTH_2"/></c>. The first sprite in the
 		/// corresponding Pckfile always has an offset of <c>0</c> - but the
-		/// second sprite always has a nonzero offset.
-		/// 
-		/// 
-		/// <c>TAB_WORD_LENGTH_2 : 00 00 01 00</c>
-		///
-		/// <c>TAB_WORD_LENGTH_4 : 00 00 00 00</c>
+		/// second sprite if it exists always has a nonzero offset.
+		/// <code>
+		/// TAB_WORD_LENGTH_2 : 00 00 01 00
+		/// TAB_WORD_LENGTH_4 : 00 00 00 00
+		/// </code>
 		/// </remarks>
 		public static int GetTabwordLength(byte[] bytesTab)
 		{
