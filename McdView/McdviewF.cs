@@ -453,21 +453,21 @@ namespace McdView
 					if (File.Exists(pfe))
 						SpritesetManager.LoadScanGufo(pathufo);	// -> SpritesetManager.ScanGufo
 					else
-						files.Add("ufo\t- " + pfe);
+						files.Add("ufo - " + pfe);
 
 					pfe = Path.Combine(pathufo, SharedSpace.LoftfileUfo);
 					if (File.Exists(pfe))
 						SpritesetManager.LoadLoFTufo(pathufo);	// -> SpritesetManager.LoFTufo
 					else
-						files.Add("ufo\t- " + pfe);
+						files.Add("ufo - " + pfe);
 				}
 				else
 					pathufo = null;
 			}
 			else
 			{
-				files.Add("ufo\t- " + SharedSpace.ScanGfile);
-				files.Add("ufo\t- " + SharedSpace.LoftfileUfo);
+				files.Add("ufo - " + SharedSpace.ScanGfile);
+				files.Add("ufo - " + SharedSpace.LoftfileUfo);
 			}
 
 			if (pathtftd != null)
@@ -478,36 +478,36 @@ namespace McdView
 					if (File.Exists(pfe))
 						SpritesetManager.LoadScanGtftd(pathtftd);	// -> SpritesetManager.ScanGtftd
 					else
-						files.Add("tftd\t- " + pfe);
+						files.Add("tftd - " + pfe);
 
 					pfe = Path.Combine(pathtftd, SharedSpace.LoftfileTftd);
 					if (File.Exists(pfe))
 						SpritesetManager.LoadLoFTtftd(pathtftd);	// -> SpritesetManager.LoFTtftd
 					else
-						files.Add("tftd\t- " + pfe);
+						files.Add("tftd - " + pfe);
 				}
 				else
 					pathtftd = null;
 			}
 			else
 			{
-				files.Add("tftd\t- " + SharedSpace.ScanGfile);
-				files.Add("tftd\t- " + SharedSpace.LoftfileTftd);
+				files.Add("tftd - " + SharedSpace.ScanGfile);
+				files.Add("tftd - " + SharedSpace.LoftfileTftd);
 			}
 
 			if (files.Count != 0)
 			{
-				string copyable = String.Empty;
+				string copy = String.Empty;
 				foreach (var file in files)
 				{
-					if (copyable.Length != 0) copyable += Environment.NewLine;
-					copyable += file;
+					if (copy.Length != 0) copy += Environment.NewLine;
+					copy += file;
 				}
 
 				using (var f = new Infobox(
 										"Warning",
 										"Resource files not found.",
-										copyable,
+										copy,
 										InfoboxType.Warn))
 				{
 					f.ShowDialog(this);
