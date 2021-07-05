@@ -121,6 +121,8 @@ namespace XCom
 		{
 			//Logfile.Log("SpritesetManager.LoadSpriteSet()");
 
+			string head, copy;
+
 			if (Directory.Exists(dir))
 			{
 				// TODO: If files not found provide hint to assign a basepath to
@@ -142,50 +144,64 @@ namespace XCom
 													bytesTab,
 													createToned);
 
-						if (spriteset.Failr != Spriteset.Fail.non)
+						switch (spriteset.Failr)
 						{
-							string head;
-							switch (spriteset.Failr)
-							{
-								case Spriteset.Fail.tab:
-									head = "File data overflowed the TabwordLength.";
-									break;
+							case Spriteset.Fail.non:
+								if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
+									Spritesets.Add(spriteset);
 
-								case Spriteset.Fail.qty:
-									head = Infobox.SplitString("The count of sprites in the PCK file ["
-																+ spriteset.CountSprites + "] does not match"
-																+ " the count of sprites expected by the TAB file ["
-																+ spriteset.CountOffsets + "].");
-									break;
+								return spriteset;
 
-								case Spriteset.Fail.pck:
-									spriteset.Dispose();
-									head = "File data overflowed a sprite's length.";
-									break;
+							case Spriteset.Fail.tab:
+								head = "File data overflowed the TabwordLength.";
+								copy = pf + GlobalsXC.TabExt;
+								break;
 
-								default: // shall not happen.
-									head = null;
-									break;
-							}
+							case Spriteset.Fail.qty:
+								head = Infobox.SplitString("The count of sprites in the PCK file ["
+															+ spriteset.CountSprites + "] does not match"
+															+ " the count of sprites expected by the TAB file ["
+															+ spriteset.CountOffsets + "].");
+								copy = pf + GlobalsXC.PckExt + Environment.NewLine
+									 + pf + GlobalsXC.TabExt;
+								break;
 
-							using (var f = new Infobox(
-													"Spriteset load error",
-													head,
-													null, // TODO: print filepaths
-													InfoboxType.Error))
-							{
-								f.ShowDialog();
-							}
-						}
-						else
-						{
-							if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
-								Spritesets.Add(spriteset);
+							case Spriteset.Fail.pck:
+								spriteset.Dispose();
+								head = "File data overflowed a sprite's length.";
+								copy = pf + GlobalsXC.PckExt;
+								break;
 
-							return spriteset;
+							default: // shall not happen.
+								head = null;
+								copy = null;
+								break;
 						}
 					}
+					else
+					{
+						head = "Tab file not valid.";
+						copy = pf + GlobalsXC.TabExt;
+					}
 				}
+				else
+				{
+					head = "Pck file not valid.";
+					copy = pf + GlobalsXC.PckExt;
+				}
+			}
+			else
+			{
+				head = "TERRAIN directory not found.";
+				copy = dir;
+			}
+
+			using (var f = new Infobox(
+									"Spriteset load error",
+									head, copy,
+									InfoboxType.Error))
+			{
+				f.ShowDialog();
 			}
 			return null;
 		}
