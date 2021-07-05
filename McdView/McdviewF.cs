@@ -874,22 +874,6 @@ namespace McdView
 							PfeMcd = pfe; // sets 'Label' also.
 							Selid = -1;
 
-							if (Spriteset != null)
-								Spriteset.Dispose();
-
-							string dir = Path.GetDirectoryName(PfeMcd);
-							string pf  = Path.Combine(dir, Label);
-							if (   File.Exists(pf + GlobalsXC.PckExt)
-								&& File.Exists(pf + GlobalsXC.TabExt))
-							{
-								Spriteset = SpritesetManager.CreateSpriteset(
-																		Label,
-																		Path.GetDirectoryName(PfeMcd),
-																		Pal);
-							}
-							else
-								Spriteset = null;
-
 							Parts = new Tilepart[0];
 							CacheLoad.SetCacheSaved(Parts);
 
@@ -901,6 +885,17 @@ namespace McdView
 							miReload.Enabled = true;
 
 							PartsPanel.Select();
+
+
+							string dir = Path.GetDirectoryName(PfeMcd);
+							string pf  = Path.Combine(dir, Label);
+							if (   File.Exists(pf + GlobalsXC.PckExt)
+								&& File.Exists(pf + GlobalsXC.TabExt))
+							{
+								Spriteset = SpritesetManager.CreateSpriteset(Label, dir, Pal);
+							}
+							else
+								Spriteset = null;
 						}
 					}
 				}
