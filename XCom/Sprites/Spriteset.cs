@@ -498,7 +498,8 @@ namespace XCom
 						}
 					}
 
-					// convert and store the data to a byte-array in 'XCImage' ->
+					// convert to binary palette-ids and store the data to a
+					// byte-array in 'XCImage' ->
 					var bytes = new byte[icondata.Length];
 					for (int i = 0; i != icondata.Length; ++i)
 					{

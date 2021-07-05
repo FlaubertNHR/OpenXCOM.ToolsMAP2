@@ -435,14 +435,15 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Crops a bitmap to a specified rectangle. The rectangular area must
-		/// fit inside the source's area; if not the source image is returned
-		/// unchanged.
-		/// @note Called by MainViewF.Screenshot().
+		/// Crops a <c>Bitmap</c> to a specified rectangle. The rectangular area
+		/// must fit inside the source's area; if not the source image is
+		/// returned unchanged.
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="rect"></param>
-		/// <returns>a cropped bitmap or the source image itself</returns>
+		/// <returns>the <c>Bitmap</c> cropped or the unchanged <c>Bitmap</c>
+		/// itself</returns>
+		/// <remarks>Called by <c>MainViewF.Screenshot()</c>.</remarks>
 		public static Bitmap CropToRectangle(Bitmap src, Rectangle rect)
 		{
 			if (   rect.X + rect.Width  <= src.Width

@@ -16,7 +16,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// Instantiates a ScanG icon, based on an XCImage.
+		/// Instantiates a ScanG icon derived on <c><see cref="XCImage"/></c>.
 		/// </summary>
 		/// <param name="bindata">the ScanG.Dat source data per ScanGicon</param>
 		/// <param name="id"></param>

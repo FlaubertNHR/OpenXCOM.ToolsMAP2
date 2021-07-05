@@ -15,7 +15,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// Instantiates a LoFT icon, based on an XCImage.
+		/// Instantiates a LoFT icon derived on <c><see cref="XCImage"/></c>.
 		/// </summary>
 		/// <param name="bindata">the LoFTemps.Dat source data per LoFTicon</param>
 		/// <param name="id"></param>
