@@ -227,6 +227,7 @@ namespace PckView
 		private void popup_Palette(object sender, EventArgs e)
 		{
 			miPalette.Enabled = (_f.SetType != SpritesetType.LoFT);
+			miPalette.Checked = _fpalette.Visible;
 		}
 
 		/// <summary>
