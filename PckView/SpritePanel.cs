@@ -100,7 +100,7 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Clears <see cref="Palid"/> when the cursor leaves this panel.
+		/// Clears <c><see cref="Palid"/></c> when the cursor leaves this panel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
@@ -109,16 +109,16 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles a mousedown event on the editor-panel.
-		/// 
-		/// <see cref="EditMode.Enabled">EditMode.Enabled</see>: changes a
-		/// clicked pixel's palette-id (color) to whatever the current
-		/// 'PaletteId' is in PalettePanel.
-		/// <see cref="EditMode.Locked">EditMode.Locked</see>: changes the
-		/// 'PaletteId' in the PalettePanel to whatever a clicked pixel's
-		/// palette-id (color) is.
+		/// Handles a <c>MouseDown</c> event on this <c>SpritePanel</c>.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks><c><see cref="EditMode.Enabled">EditMode.Enabled</see></c>:
+		/// changes a clicked pixel's palette-id (color) to whatever the current
+		/// <c><see cref="PalettePanel.Palid">PalettePanel.Palid</see></c>.
+		/// 
+		/// <c><see cref="EditMode.Locked">EditMode.Locked</see></c>: changes
+		/// the <c><see cref="PalettePanel.Palid">PalettePanel.Palid</see></c>
+		/// to whatever a clicked pixel's palette-id (color) is.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			base.OnMouseDown(e);
