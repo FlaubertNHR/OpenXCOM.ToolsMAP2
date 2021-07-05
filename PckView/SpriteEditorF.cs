@@ -11,13 +11,6 @@ using XCom;
 
 namespace PckView
 {
-	internal enum EditMode
-	{
-		Locked,
-		Enabled
-	}
-
-
 	internal sealed class SpriteEditorF
 		:
 			Form
@@ -60,6 +53,8 @@ namespace PckView
 		internal SpriteEditorF(PckViewF f)
 		{
 			InitializeComponent();
+
+			bar_Scale.MouseWheel += trackbar_OnMouseWheel;
 
 			// WORKAROUND: See note in MainViewF cTor.
 			MaximumSize = new Size(0,0); // fu.net
@@ -112,9 +107,10 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// @note Requires KeyPreview TRUE.
+		/// 
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires <c>KeyPreview</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyData == Keys.Escape)
@@ -126,7 +122,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles form closing event.
+		/// Handles the <c>FormClosing</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -152,10 +148,11 @@ namespace PckView
 		#region Events
 		/// <summary>
 		/// Sets the *proper* ClientSize.
-		/// @note Also called by <see cref="PckViewF.EnableInterface"/>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Also called by
+		/// <c><see cref="PckViewF.EnableInterface()">PckViewF.EnableInterface()</see></c>.</remarks>
 		internal void OnLoad(object sender, EventArgs e)
 		{
 			ClientSize = new Size(
@@ -171,8 +168,30 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnTrackScroll(object sender, EventArgs e)
+		private void trackbar_OnScroll(object sender, EventArgs e)
 		{
+			SpritePanel.ScaleFactor = bar_Scale.Value;
+		}
+
+		/// <summary>
+		/// Reverses mousewheel direction on the trackbar.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void trackbar_OnMouseWheel(object sender, MouseEventArgs e)
+		{
+			(e as HandledMouseEventArgs).Handled = true;
+
+			if (e.Delta > 0)
+			{
+				if (bar_Scale.Value != bar_Scale.Minimum)
+					--bar_Scale.Value;
+			}
+			else if (e.Delta < 0)
+			{
+				if (bar_Scale.Value != bar_Scale.Maximum)
+					++bar_Scale.Value;
+			}
 			SpritePanel.ScaleFactor = bar_Scale.Value;
 		}
 
@@ -231,10 +250,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// @note This fires after the palette's FormClosing event.
+		/// 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This fires after the palette's <c>FormClosing</c> event.</remarks>
 		private void OnPaletteFormClosing(object sender, CancelEventArgs e)
 		{
 			miPalette.Checked = false;
@@ -250,7 +270,7 @@ namespace PckView
 			if ((miGridDark.Checked = !miGridDark.Checked))
 			{
 				miGridLight.Checked = false;
-				SpritePanel.PenGrid = Pens.Black;
+				SpritePanel.PenGrid = Pens.DarkGray;
 			}
 			else
 				SpritePanel.PenGrid = null;
@@ -266,7 +286,7 @@ namespace PckView
 			if ((miGridLight.Checked = !miGridLight.Checked))
 			{
 				miGridDark.Checked = false;
-				SpritePanel.PenGrid = Pens.White;
+				SpritePanel.PenGrid = Pens.LightGray;
 			}
 			else
 				SpritePanel.PenGrid = null;
@@ -421,7 +441,7 @@ namespace PckView
 			this.bar_Scale.TabIndex = 0;
 			this.bar_Scale.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.bar_Scale.Value = 10;
-			this.bar_Scale.Scroll += new System.EventHandler(this.OnTrackScroll);
+			this.bar_Scale.Scroll += new System.EventHandler(this.trackbar_OnScroll);
 			// 
 			// la_EditMode
 			// 
@@ -462,5 +482,12 @@ namespace PckView
 
 		}
 		#endregion Designer
+	}
+
+
+	internal enum EditMode
+	{
+		Locked,
+		Enabled
 	}
 }
