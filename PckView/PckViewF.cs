@@ -98,7 +98,7 @@ namespace PckView
 
 		#region Fields
 		/// <summary>
-		/// True if PckView has been invoked via TileView.
+		/// <c>true</c> if PckView has been invoked via TileView.
 		/// </summary>
 		private bool IsInvoked;
 
@@ -147,7 +147,8 @@ namespace PckView
 		{ get; private set; }
 
 		/// <summary>
-		/// Sets the <see cref="SetType"/> externally if invoked via TileView.
+		/// Sets the <c><see cref="SetType"/></c> externally if invoked via
+		/// TileView.
 		/// </summary>
 		/// <param name="setType"></param>
 		public void SetSpritesetType(SpritesetType setType)
@@ -156,10 +157,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// The current palette per the Palette menu.
+		/// The current <c><see cref="Palette"/></c> per the Palette menu.
 		/// </summary>
-		/// <remarks>Use <see cref="GetCurrentPalette"/> as appropriate since
-		/// LoFTsets don't have a standard palette.</remarks>
+		/// <remarks>Use
+		/// <c><see cref="GetCurrentPalette()">GetCurrentPalette()</see></c> as
+		/// appropriate since LoFTsets don't have a standard <c>Palette</c>.</remarks>
 		internal Palette Pal
 		{ get; private set; }
 
@@ -180,8 +182,8 @@ namespace PckView
 		/// <summary>
 		/// For reloading the Map when PckView is invoked via TileView.
 		/// </summary>
-		/// <remarks>Reload MapView's Map even if the PCK+TAB is saved as a
-		/// different file; any modified terrain (etc) could be in the Map's
+		/// <remarks>Reload MapView's Map even if the <c>PCK+TAB</c> is saved as
+		/// a different file; any modified terrain (etc) could be in the Map's
 		/// terrainset or other resources.</remarks>
 		public bool RequestReload
 		{ get; private set; }
@@ -2118,8 +2120,8 @@ namespace PckView
 
 		#region Methods
 		/// <summary>
-		/// Sets the current palette. Called only from TileView to set the
-		/// palette externally.
+		/// Sets the current <c><see cref="Palette"/></c>. Called only from
+		/// TileView to set the <c>Palette</c> externally.
 		/// </summary>
 		/// <param name="pal"></param>
 		public void SetPalette(Palette pal)
@@ -2128,11 +2130,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets the currently selected palette unless a LoFTset is loaded, in
-		/// which case return 'Palette.Binary'.
+		/// Gets the currently selected <c><see cref="Palette"/></c> unless a
+		/// LoFTset is loaded in which case return <c>Palette.Binary</c>.
 		/// </summary>
-		/// <returns>the current palette or the binary palette if a LoFTset is
-		/// loaded</returns>
+		/// <returns>the current <c>Palette</c> or the <c>Palette.Binary</c> if
+		/// a LoFTset is loaded</returns>
 		internal Palette GetCurrentPalette()
 		{
 			if (SetType == SpritesetType.LoFT)
