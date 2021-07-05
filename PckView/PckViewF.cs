@@ -1314,7 +1314,6 @@ namespace PckView
 							XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
 							int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2;
-//							Palette pal = Palette.UfoBattle;
 
 							if (sender == miCreateBigobs)
 							{
@@ -1329,7 +1328,6 @@ namespace PckView
 								if (sender == miCreateUnitTftd)
 								{
 									tabwordLength = SpritesetManager.TAB_WORD_LENGTH_4;
-//									pal = Palette.TftdBattle;
 								}
 							}
 
@@ -1343,12 +1341,9 @@ namespace PckView
 //								OnTransparencyClick(null, EventArgs.Empty);
 //							}
 
-							if (TilePanel.Spriteset != null)
-								TilePanel.Spriteset.Dispose();
-
 							TilePanel.Spriteset = new Spriteset(
 															label,
-															Pal, //pal
+															Pal,
 															tabwordLength);
 
 							_path = pf;
@@ -2039,9 +2034,6 @@ namespace PckView
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.ScanGside;
 
-					if (TilePanel.Spriteset != null)
-						TilePanel.Spriteset.Dispose();
-
 					TilePanel.Spriteset = new Spriteset(Path.GetFileNameWithoutExtension(pfeScanG), fs, false);
 
 //					if (!_itPalettes[Palette.UfoBattle].Checked)
@@ -2089,9 +2081,6 @@ namespace PckView
 
 					XCImage.SpriteWidth  =
 					XCImage.SpriteHeight = XCImage.LoFTside;
-
-					if (TilePanel.Spriteset != null)
-						TilePanel.Spriteset.Dispose();
 
 					TilePanel.Spriteset = new Spriteset(Path.GetFileNameWithoutExtension(pfeLoFT), fs, true);
 
