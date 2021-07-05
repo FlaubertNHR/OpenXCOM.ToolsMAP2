@@ -119,8 +119,6 @@ namespace XCom
 				Palette pal,
 				bool createToned = false)
 		{
-			//Logfile.Log("SpritesetManager.LoadSpriteSet()");
-
 			string head, copy;
 
 			if (Directory.Exists(dir))
