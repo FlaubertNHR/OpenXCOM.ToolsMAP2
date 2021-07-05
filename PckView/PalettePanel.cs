@@ -132,12 +132,13 @@ namespace PckView
 			}
 			else if (e.Delta > 0)
 			{
+				if (Palid != Byte.MinValue)
+					SelectPalid((byte)(Palid - 1));
+			}
+			else if (e.Delta < 0)
+			{
 				if (Palid != Byte.MaxValue)
 					SelectPalid((byte)(Palid + 1));
-			}
-			else if (e.Delta < 0 && Palid != Byte.MinValue)
-			{
-				SelectPalid((byte)(Palid - 1));
 			}
 //			base.OnMouseWheel(e);
 		}
@@ -209,7 +210,9 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Handles the PaletteChanged event.
+		/// Handles the
+		/// <c><see cref="PckViewF.PaletteChanged">PckViewF.PaletteChanged</see></c>
+		/// event.
 		/// </summary>
 		private void OnPaletteChanged()
 		{
