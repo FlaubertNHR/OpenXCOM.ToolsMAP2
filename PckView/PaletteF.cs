@@ -65,7 +65,7 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles the keydown event.
+		/// Handles the <c>KeyDown</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Does not require <c>KeyPreview</c> because there's not
@@ -76,6 +76,7 @@ namespace PckView
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
+				case Keys.Control | Keys.P:
 					e.Handled = e.SuppressKeyPress = true;
 					Close();
 					break;
@@ -92,7 +93,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles the FormClosing event. Closes this form if PckView is
+		/// Handles the <c>FormClosing</c> event. Closes this form if PckView is
 		/// quitting - else hide.
 		/// </summary>
 		/// <param name="e"></param>
