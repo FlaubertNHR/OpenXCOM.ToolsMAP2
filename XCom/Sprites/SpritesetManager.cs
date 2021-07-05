@@ -246,7 +246,7 @@ namespace XCom
 		/// <returns></returns>
 		/// <remarks>cf
 		/// <list type="bullet">
-		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset()</see></c></item>
 		/// <item><c>McdviewF.LoadScanGufo()</c></item>
 		/// </list></remarks>
 		public static bool LoadScanGufo(string dirUfo)
@@ -281,7 +281,7 @@ namespace XCom
 		/// <returns></returns>
 		/// <remarks>cf
 		/// <list type="bullet">
-		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset()</see></c></item>
 		/// <item><c>McdviewF.LoadScanGtftd()</c></item>
 		/// </list></remarks>
 		public static bool LoadScanGtftd(string dirTftd)
@@ -317,7 +317,7 @@ namespace XCom
 		/// <param name="dirUfo"></param>
 		/// <remarks>cf
 		/// <list type="bullet">
-		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset()</see></c></item>
 		/// <item><c>McdviewF.LoadLoFTufo()</c></item>
 		/// </list></remarks>
 		public static void LoadLoFTufo(string dirUfo)
@@ -363,7 +363,7 @@ namespace XCom
 		/// <param name="dirTftd"></param>
 		/// <remarks>cf
 		/// <list type="bullet">
-		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset(string, Stream, bool)</see></c></item>
+		/// <item><c><see cref="Spriteset(string, Stream, bool)">Spriteset()</see></c></item>
 		/// <item><c>McdviewF.LoadLoFTtftd()</c></item>
 		/// </list></remarks>
 		public static void LoadLoFTtftd(string dirTftd)
