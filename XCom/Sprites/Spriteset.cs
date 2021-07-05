@@ -15,6 +15,15 @@ namespace XCom
 	/// <remarks>This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public sealed class Spriteset
 	{
+		public enum Fail
+		{
+			non, // successful
+			pck, // overflow in the Pckfile
+			tab, // overflow in the Tabfile
+			qty  // Pck vs Tab count mismatch
+		}
+
+
 		#region Methods (disposable)
 		/// <summary>
 		/// Disposes all <c><see cref="XCImage">XCImages</see></c> in
@@ -31,14 +40,6 @@ namespace XCom
 			Sprites.Clear();
 		}
 		#endregion Methods (disposable)
-
-
-		#region Fields (static)
-		public const int FAIL_non = 0x0; // bitflags for Fail states ->
-		public const int FAIL_pck = 0x1; // overflow in Pckfile
-		public const int FAIL_tab = 0x2; // overflow in Tabfile
-		public const int FAIL_qty = 0x4; // Pck vs Tab counts-mismatch error
-		#endregion Fields (static)
 
 
 		#region Properties
@@ -61,27 +62,31 @@ namespace XCom
 
 
 		/// <summary>
-		/// A bit-flagged <c>int</c> containing <c>Fail</c> states -
-		/// <c><see cref="FAIL_non"/></c> on a successful load.
+		/// Stores a possible <c><see cref="Fail"/></c> state when loading this
+		/// <c>Spriteset</c>.
 		/// </summary>
+		/// <c><see cref="Fail.non">Fail.non</see></c> if loading is successful.
 		/// <remarks>The caller shall set this <c>Spriteset</c> to <c>null</c>
-		/// if any bits are flagged. Only <c><see cref="FAIL_pck"/></c>
-		/// needs to call <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
-		public int Fail
+		/// if not <c>Fail.non</c>. Only
+		/// <c><see cref="Fail.pck">Fail.pck</see></c> needs to call
+		/// <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
+		public Fail Failr
 		{ get; internal set; }
 
 		/// <summary>
 		/// Count of sprites detected in a Pckfile. Is used only if this
-		/// <c>Spriteset</c> fails to load due to a PCK/TAB mismatch error. It's
-		/// printed in the errorbox as an aid for debugging.
+		/// <c>Spriteset</c> fails to load due to a <c>PCK</c> vs <c>TAB</c>
+		/// mismatch error. It's printed in the errorbox as an aid for
+		/// debugging.
 		/// </summary>
 		public int CountSprites
 		{ get; private set; }
 
 		/// <summary>
 		/// Count of offsets detected in a Tabfile. Is used only if this
-		/// <c>Spriteset</c> fails to load due to a PCK/TAB mismatch error. It's
-		/// printed in the errorbox as an aid for debugging.
+		/// <c>Spriteset</c> fails to load due to a <c>PCK</c> vs <c>TAB</c>
+		/// mismatch error. It's printed in the errorbox as an aid for
+		/// debugging.
 		/// </summary>
 		public int CountOffsets
 		{ get; private set; }
@@ -255,7 +260,7 @@ namespace XCom
 
 			if (bytesTab.Length % TabwordLength != 0)
 			{
-				Fail |= FAIL_tab;
+				Failr = Fail.tab;
 				return;
 			}
 
@@ -351,7 +356,7 @@ namespace XCom
 
 				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
-					Fail |= FAIL_qty;
+					Failr = Fail.qty;
 
 //					if (true) // rewrite the Tabfile ->
 //					{
@@ -406,7 +411,7 @@ namespace XCom
 												this,
 												createToned);
 
-						if ((Fail & FAIL_pck) != FAIL_non)
+						if (Failr == Fail.pck)
 							return;
 
 						Sprites.Add(sprite);
@@ -630,7 +635,7 @@ namespace XCom
 						   + "Failed at position " + pos;
 					return false;
 				}
-				pos += PckSprite.Write(spriteset[id]);
+				pos += PckSprite.Write(spriteset[id]); // test only.
 			}
 
 			result = "Sprite offsets are valid.";
@@ -671,11 +676,11 @@ namespace XCom
 
 
 		/// <summary>
-		/// Saves a specified iconset to SCANG.DAT.
+		/// Saves a specified iconset to <c>SCANG.DAT</c>.
 		/// </summary>
 		/// <param name="pfe">the directory to save to</param>
 		/// <param name="iconset">pointer to the iconset</param>
-		/// <returns>true if mission was successful</returns>
+		/// <returns><c>true</c> if mission was successful</returns>
 		public static bool WriteScanG(
 				string pfe,
 				Spriteset iconset)
@@ -707,11 +712,11 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves a specified iconset to LOFTEMPS.DAT.
+		/// Saves a specified iconset to <c>LOFTEMPS.DAT</c>.
 		/// </summary>
 		/// <param name="pfe">the directory to save to</param>
 		/// <param name="iconset">pointer to the iconset</param>
-		/// <returns>true if mission was successful</returns>
+		/// <returns><c>true</c> if mission was successful</returns>
 		public static bool WriteLoFT(
 				string pfe,
 				Spriteset iconset)
@@ -778,7 +783,7 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// Returns 'Label'.
+		/// Returns <c><see cref="Label"/></c>.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()

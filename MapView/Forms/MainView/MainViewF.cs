@@ -514,7 +514,7 @@ namespace MapView
 																	Palette.UfoBattle);
 				if (CuboidSprite.Ufoset != null)
 				{
-					if (CuboidSprite.Ufoset.Fail != Spriteset.FAIL_non)
+					if (CuboidSprite.Ufoset.Failr != Spriteset.Fail.non)
 					{
 						CuboidSprite.Ufoset = null;
 						Logfile.Log("UFO Cursor failed to load.");
@@ -535,7 +535,7 @@ namespace MapView
 																	Palette.TftdBattle);
 				if (CuboidSprite.Tftdset != null)
 				{
-					if (CuboidSprite.Tftdset.Fail != Spriteset.FAIL_non)
+					if (CuboidSprite.Tftdset.Failr != Spriteset.Fail.non)
 					{
 						CuboidSprite.Tftdset = null;
 						Logfile.Log("TFTD Cursor failed to load.");

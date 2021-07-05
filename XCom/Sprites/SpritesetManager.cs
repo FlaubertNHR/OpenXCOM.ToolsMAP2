@@ -142,31 +142,34 @@ namespace XCom
 													bytesTab,
 													createToned);
 
-						if (spriteset.Fail != Spriteset.FAIL_non)
+						if (spriteset.Failr != Spriteset.Fail.non)
 						{
 							string head;
+							switch (spriteset.Failr)
+							{
+								case Spriteset.Fail.tab:
+									head = "File data overflowed the TabwordLength.";
+									break;
 
-							if ((spriteset.Fail & Spriteset.FAIL_tab) != Spriteset.FAIL_non)
-							{
-								head = "File data overflowed the TabwordLength.";
+								case Spriteset.Fail.qty:
+									head = Infobox.SplitString("The count of sprites in the PCK file ["
+																+ spriteset.CountSprites + "] does not match"
+																+ " the count of sprites expected by the TAB file ["
+																+ spriteset.CountOffsets + "].");
+									break;
+
+								case Spriteset.Fail.pck:
+									spriteset.Dispose();
+									head = "File data overflowed a sprite's length.";
+									break;
+
+								default: // shall not happen.
+									head = null;
+									break;
 							}
-							else if ((spriteset.Fail & Spriteset.FAIL_qty) != Spriteset.FAIL_non)
-							{
-								head = Infobox.SplitString("The count of sprites in the PCK file ["
-															+ spriteset.CountSprites + "] does not match"
-															+ " the count of sprites expected by the TAB file ["
-															+ spriteset.CountOffsets + "].");
-							}
-							else if ((spriteset.Fail & Spriteset.FAIL_pck) != Spriteset.FAIL_non)
-							{
-								spriteset.Dispose();
-								head = "File data overflowed a sprite's length.";
-							}
-							else
-								head = null; // shall not happen.
 
 							using (var f = new Infobox(
-													"Load error",
+													"Spriteset load error",
 													head,
 													null, // TODO: print filepaths
 													InfoboxType.Error))

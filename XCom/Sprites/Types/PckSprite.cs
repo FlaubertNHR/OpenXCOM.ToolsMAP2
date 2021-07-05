@@ -130,7 +130,7 @@ namespace XCom
 						if (dst >= GetBindata().Length)
 						{
 							//Logfile.Log(". . FAIL dst= " + dst);
-							_spriteset.Fail |= Spriteset.FAIL_pck;
+							_spriteset.Failr = Spriteset.Fail.pck;
 							return;
 						}
 
