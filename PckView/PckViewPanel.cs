@@ -58,6 +58,9 @@ namespace PckView
 			get { return _spriteset; }
 			set
 			{
+				if (_spriteset != null)
+					_spriteset.Dispose();
+
 				if ((_spriteset = value) != null
 					&& _f.SetType != SpritesetType.LoFT)
 				{
@@ -638,8 +641,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Disposes the ContextMenuStrip and the Spriteset, and unsubscribes
-		/// from static event.
+		/// Disposes the Spriteset the ContextMenuStrip and unsubscribes from
+		/// static event.
 		/// </summary>
 		internal void Destroy()
 		{

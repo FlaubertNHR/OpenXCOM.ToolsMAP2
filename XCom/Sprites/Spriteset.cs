@@ -34,10 +34,10 @@ namespace XCom
 
 
 		#region Fields (static)
-		public const int FAIL_non            = 0x0; // bitflags for Fail states ->
-		public const int FAIL_OF_SPRITE      = 0x1; // overflow
-		public const int FAIL_OF_OFFSET      = 0x2; // overflow
-		public const int FAIL_COUNT_MISMATCH = 0x4; // Pck vs Tab counts-mismatch error
+		public const int FAIL_non = 0x0; // bitflags for Fail states ->
+		public const int FAIL_pck = 0x1; // overflow in Pckfile
+		public const int FAIL_tab = 0x2; // overflow in Tabfile
+		public const int FAIL_qty = 0x4; // Pck vs Tab counts-mismatch error
 		#endregion Fields (static)
 
 
@@ -65,7 +65,7 @@ namespace XCom
 		/// <c><see cref="FAIL_non"/></c> on a successful load.
 		/// </summary>
 		/// <remarks>The caller shall set this <c>Spriteset</c> to <c>null</c>
-		/// if any bits are flagged. Only <c><see cref="FAIL_OF_SPRITE"/></c>
+		/// if any bits are flagged. Only <c><see cref="FAIL_pck"/></c>
 		/// needs to call <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
 		public int Fail
 		{ get; internal set; }
@@ -253,29 +253,27 @@ namespace XCom
 				Label = label;
 
 
-			bool le = BitConverter.IsLittleEndian; // computer architecture
+			if (bytesTab.Length % TabwordLength != 0)
+			{
+				Fail |= FAIL_tab;
+				return;
+			}
 
-			CountOffsets = (int)bytesTab.Length / TabwordLength;
+			CountOffsets = bytesTab.Length / TabwordLength;
 			var offsets = new uint[CountOffsets + 1];	// NOTE: the last entry will be set to the total length of
 														// the input-bindata to deter the length of the final sprite.
 			var buffer = new byte[TabwordLength];
 			uint b;
 			int pos = 0;
 
+			bool le = BitConverter.IsLittleEndian; // computer architecture. But nobody expects the BigEndian anymore.
+
 			if (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_4)
 			{
 				while (pos != bytesTab.Length)
 				{
 					for (b = 0; b != TabwordLength; ++b)
-					{
-						if (bytesTab.Length > pos + b)
-							buffer[b] = bytesTab[pos + b];
-						else
-						{
-							Fail |= FAIL_OF_OFFSET;
-							return;
-						}
-					}
+						buffer[b] = bytesTab[pos + b];
 
 					if (!le) Array.Reverse(buffer);
 					offsets[pos / TabwordLength] = BitConverter.ToUInt32(buffer, 0);
@@ -288,15 +286,7 @@ namespace XCom
 				while (pos != bytesTab.Length)
 				{
 					for (b = 0; b != TabwordLength; ++b)
-					{
-						if (bytesTab.Length > pos + b)
-							buffer[b] = bytesTab[pos + b];
-						else
-						{
-							Fail |= FAIL_OF_OFFSET;
-							return;
-						}
-					}
+						buffer[b] = bytesTab[pos + b];
 
 					if (!le) Array.Reverse(buffer);
 					offsets[pos / TabwordLength] = BitConverter.ToUInt16(buffer, 0);
@@ -307,7 +297,7 @@ namespace XCom
 
 
 			// TODO: Apparently MCDEdit can and will output a 1-byte Pck sprite
-			// w/ only "255" if a blank sprite is in its internal spriteset when
+			// w/ only "FF" if a blank sprite is in its internal spriteset when
 			// a save happens.
 //			if (bytesPck.Length == 1)
 //			{}
@@ -359,13 +349,51 @@ namespace XCom
 				// - End_of_Sprite marker
 				// - let the decoding algo fill the sprite with palette-id #0 as default
 
-				if (CountSprites == CountOffsets) // avoid throwing 1 or 15000 exceptions ...
+				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
+				{
+					Fail |= FAIL_qty;
+
+//					if (true) // rewrite the Tabfile ->
+//					{
+//						string dir = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+//						string pfe = Path.Combine(dir, "tabfile.TAB");
+//
+//						using (var fsTab = FileService.CreateFile(pfe))
+//						if (fsTab != null)
+//						using (var bwTab = new BinaryWriter(fsTab))
+//						{
+//							pos = 0;
+//
+//							uint u = 0;
+//							for (int id = 0; id != CountSprites; ++id)
+//							{
+//								if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+//								{
+//									// "The size of the encoded sprite-data has grown too large to
+//									// be stored correctly in a Tab file. Try deleting sprite(s)
+//									// or (less effective) using more transparency in the sprites."
+//									return;
+//								}
+//
+//								bwTab.Write((ushort)u);
+//
+//								while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
+//									++u;
+//
+//								++u;
+//							}
+//						}
+//					}
+				}
+				else
 				{
 					offsets[offsets.Length - 1] = (uint)bytesPck.Length;
 
+					byte[] bindata;
+
 					for (int i = 0; i != offsets.Length - 1; ++i)
 					{
-						var bindata = new byte[offsets[i + 1] - offsets[i]];
+						bindata = new byte[offsets[i + 1] - offsets[i]];
 
 						for (int j = 0; j != bindata.Length; ++j)
 							bindata[j] = bytesPck[offsets[i] + j];
@@ -378,49 +406,11 @@ namespace XCom
 												this,
 												createToned);
 
-						if ((Fail & FAIL_OF_SPRITE) != FAIL_non)
-						{
-							Dispose();
+						if ((Fail & FAIL_pck) != FAIL_non)
 							return;
-						}
+
 						Sprites.Add(sprite);
 					}
-				}
-				else
-				{
-					Fail |= FAIL_COUNT_MISMATCH;
-
-/*					if (true) // rewrite the Tabfile ->
-					{
-						string dir = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
-						string pfe = Path.Combine(dir, "tabfile.TAB");
-
-						using (var fsTab = FileService.CreateFile(pfe))
-						if (fsTab != null)
-						using (var bwTab = new BinaryWriter(fsTab))
-						{
-							pos = 0;
-
-							uint u = 0;
-							for (int id = 0; id != CountSprites; ++id)
-							{
-								if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
-								{
-									// "The size of the encoded sprite-data has grown too large to
-									// be stored correctly in a Tab file. Try deleting sprite(s)
-									// or (less effective) using more transparency in the sprites."
-									return;
-								}
-
-								bwTab.Write((ushort)u);
-
-								while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
-									++u;
-
-								++u;
-							}
-						}
-					} */
 				}
 			}
 			// else malformed pck file (a proper sprite needs at least 2 bytes:
@@ -620,11 +610,11 @@ namespace XCom
 
 		/// <summary>
 		/// Tests a specified 2-byte TabwordLength spriteset for validity of its
-		/// TAB-file.
+		/// Tabfile.
 		/// </summary>
-		/// <param name="spriteset">the Spriteset to test</param>
+		/// <param name="spriteset">the <c>Spriteset</c> to test</param>
 		/// <param name="result">a ref to hold the result as a string</param>
-		/// <returns>true if mission was successful</returns>
+		/// <returns><c>true</c> if mission was successful</returns>
 		public static bool TestTabOffsets(
 				Spriteset spriteset,
 				out string result)
@@ -655,8 +645,8 @@ namespace XCom
 		/// <param name="last">ref for the TabOffset of 'spriteId'</param>
 		/// <param name="aftr">ref for the TabOffset of the next sprite</param>
 		/// <param name="id">default -1 to test the final sprite in the set</param>
-		/// <remarks>Ensure that 'id' is less than the spriteset count before
-		/// call.</remarks>
+		/// <remarks>Ensure that <paramref name="id"/> is less than the
+		/// spriteset count before call.</remarks>
 		public static void TestTabOffsets(
 				Spriteset spriteset,
 				out uint last,

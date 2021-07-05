@@ -28,7 +28,7 @@ namespace XCom
 				strPck.Read(bytesPck, 0, (int)strPck.Length);
 				strTab.Read(bytesTab, 0, (int)strTab.Length);
 
-				return new Spriteset(
+				return new Spriteset( // bypass error-checking
 								label,
 								Palette.UfoBattle,
 								SpritesetManager.TAB_WORD_LENGTH_2,

@@ -129,10 +129,10 @@ namespace XCom
 				string pf = Path.Combine(dir, label);
 
 				byte[] bytesPck = FileService.ReadFile(pf + GlobalsXC.PckExt);
-				if (bytesPck != null)
+				if (bytesPck != null && bytesPck.Length != 0)
 				{
 					byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
-					if (bytesTab != null)
+					if (bytesTab != null && bytesTab.Length != 0)
 					{
 						var spriteset = new Spriteset(
 													label,
@@ -142,20 +142,38 @@ namespace XCom
 													bytesTab,
 													createToned);
 
-						if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non)
+						if (spriteset.Fail != Spriteset.FAIL_non)
 						{
+							string head;
+
+							if ((spriteset.Fail & Spriteset.FAIL_tab) != Spriteset.FAIL_non)
+							{
+								head = "File data overflowed the TabwordLength.";
+							}
+							else if ((spriteset.Fail & Spriteset.FAIL_qty) != Spriteset.FAIL_non)
+							{
+								head = Infobox.SplitString("The count of sprites in the PCK file ["
+															+ spriteset.CountSprites + "] does not match"
+															+ " the count of sprites expected by the TAB file ["
+															+ spriteset.CountOffsets + "].");
+							}
+							else if ((spriteset.Fail & Spriteset.FAIL_pck) != Spriteset.FAIL_non)
+							{
+								spriteset.Dispose();
+								head = "File data overflowed a sprite's length.";
+							}
+							else
+								head = null; // shall not happen.
+
 							using (var f = new Infobox(
-													"Error",
-													Infobox.SplitString("The count of sprites in the PCK file does not"
-															+ " match the count of sprites expected by the TAB file."),
-													null,
+													"Load error",
+													head,
+													null, // TODO: print filepaths
 													InfoboxType.Error))
 							{
 								f.ShowDialog();
 							}
 						}
-						// else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non)
-						// {} // too many bytes for a nonbigob sprite - better not happen here.
 						else
 						{
 							if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.

@@ -1973,46 +1973,14 @@ namespace PckView
 			string label = Path.GetFileNameWithoutExtension(pfePck);
 			string dir   = Path.GetDirectoryName(pfePck);
 
-			var spriteset = SpritesetManager.CreateSpriteset(
-														label,
-														dir,
-														Pal); // user can change the palette with the Palette menu
-
-			if ((spriteset.Fail & Spriteset.FAIL_COUNT_MISMATCH) != Spriteset.FAIL_non) // pck vs tab mismatch counts
+			Spriteset spriteset = SpritesetManager.CreateSpriteset(
+																label,
+																dir,
+																Pal); // user can change the palette with the Palette menu
+			if (spriteset != null)
 			{
-				using (var f = new Infobox(
-										"Load error",
-										Infobox.SplitString("The count of sprites in the PCK file ["
-												+ spriteset.CountSprites + "] does not match"
-												+ " the count of sprites expected by the TAB file ["
-												+ spriteset.CountOffsets + "]."),
-										null,
-										InfoboxType.Error))
-				{
-					f.ShowDialog(this);
-				}
-			}
-			else if ((spriteset.Fail & Spriteset.FAIL_OF_SPRITE) != Spriteset.FAIL_non) // too many bytes for a sprite
-			{
-				string head;
-				if (isBigobs)
-					head = "Bigobs : "; // won't happen unless a file is corrupt.
-				else
-					head = String.Empty; // possibly trying to load a Bigobs to 32x40
+				TilePanel.Spriteset = spriteset;
 
-				head += "File data overflowed the sprite's count of pixels.";
-
-				using (var f = new Infobox(
-										"Load error",
-										head,
-										null,
-										InfoboxType.Error))
-				{
-					f.ShowDialog(this);
-				}
-			}
-			else
-			{
 				XCImage.SpriteWidth = XCImage.SpriteWidth32;
 
 				if (isBigobs)
@@ -2025,11 +1993,6 @@ namespace PckView
 					XCImage.SpriteHeight = XCImage.SpriteHeight40;
 					SetType = SpritesetType.Pck;
 				}
-
-				if (TilePanel.Spriteset != null)
-					TilePanel.Spriteset.Dispose();
-
-				TilePanel.Spriteset = spriteset;
 
 //				if (!_itPalettes[pal].Checked)
 //				{

@@ -163,6 +163,9 @@ namespace McdView
 			get { return _spriteset; }
 			set
 			{
+				if (_spriteset != null)
+					_spriteset.Dispose();
+
 				PartsPanel.SetSpriteset(_spriteset = value);
 				statusbar_PrintSpriteInfo();
 
@@ -815,11 +818,16 @@ namespace McdView
 
 		#region Events (menu)
 		/// <summary>
-		/// Handles clicking the File|Create menuitem.
-		/// Creates an MCD file. See also OnClick_Open() and OnClick_Reload().
+		/// Handles clicking the File|Create it. Creates an Mcdfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>See also
+		/// <list type="bullet">
+		/// <item><c><see cref="OnClick_Open()">OnClick_Open()</see></c></item>
+		/// <item><c><see cref="OnClick_Reload()">OnClick_Reload()</see></c></item>
+		/// <item><c><see cref="LoadRecords()">LoadRecords()</see></c></item>
+		/// </list></remarks>
 		private void OnClick_Create(object sender, EventArgs e)
 		{
 			if (closeTerrain())
@@ -844,6 +852,8 @@ namespace McdView
 					{
 						string pfe = sfd.FileName;
 						_lastCreateDirectory = Path.GetDirectoryName(pfe);
+
+						// TODO: Do not write the file unless/until user saves it.
 
 						string pfeT;
 						if (File.Exists(pfe))
@@ -898,11 +908,16 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles clicking the File|Open menuitem.
-		/// Loads an MCD file. See also OnClick_Create() and OnClick_Reload().
+		/// Handles clicking the File|Open it. Loads an Mcdfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>See also
+		/// <list type="bullet">
+		/// <item><c><see cref="OnClick_Create()">OnClick_Create()</see></c></item>
+		/// <item><c><see cref="OnClick_Reload()">OnClick_Reload()</see></c></item>
+		/// <item><c><see cref="LoadRecords()">LoadRecords()</see></c></item>
+		/// </list></remarks>
 		private void OnClick_Open(object sender, EventArgs e)
 		{
 			if (closeTerrain())
@@ -911,8 +926,6 @@ namespace McdView
 				{
 					ofd.Title      = "Open an MCD file";
 					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
-//					ofd.DefaultExt = GlobalsXC.McdExt;
-//					ofd.FileName   = ;
 
 					if (!String.IsNullOrEmpty(PfeMcd))
 					{
@@ -931,7 +944,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Loads a terrain from either the File|Open menu or by Explorer's
+		/// Loads a terrain from either the File|Open it or by Explorer
 		/// file-association.
 		/// </summary>
 		/// <param name="pfeMcd">path-file-extension of a file to load</param>
@@ -940,7 +953,7 @@ namespace McdView
 			using (var fs = FileService.OpenFile(pfeMcd))
 			if (fs != null)
 			{
-				if (((int)fs.Length % McdRecord.Length) != 0)
+				if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
 				{
 					using (var f = new Infobox(
 											"Load error",
@@ -956,14 +969,6 @@ namespace McdView
 				{
 					PfeMcd = pfeMcd;
 					Selid = -1;
-
-					if (Spriteset != null)
-						Spriteset.Dispose();
-
-					Spriteset = SpritesetManager.CreateSpriteset(
-															Label,
-															Path.GetDirectoryName(PfeMcd),
-															Pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1004,24 +1009,34 @@ namespace McdView
 					miReload.Enabled = true;
 
 					PartsPanel.Select();
+
+
+					Spriteset = SpritesetManager.CreateSpriteset(
+															Label,
+															Path.GetDirectoryName(PfeMcd),
+															Pal);
 				}
 			}
 		}
 
 
 		/// <summary>
-		/// Handles clicking the File|Reload menuitem.
-		/// Reloads the currently loaded MCD file. See also OnClick_Create() and
-		/// OnClick_Open().
+		/// Handles clicking the File|Reload it. Reloads the current Mcdfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>See also
+		/// <list type="bullet">
+		/// <item><c><see cref="OnClick_Create()">OnClick_Create()</see></c></item>
+		/// <item><c><see cref="OnClick_Open()">OnClick_Open()</see></c></item>
+		/// <item><c><see cref="LoadRecords()">LoadRecords()</see></c></item>
+		/// </list></remarks>
 		private void OnClick_Reload(object sender, EventArgs e)
 		{
 			using (var fs = FileService.OpenFile(PfeMcd))
 			if (fs != null)
 			{
-				if (((int)fs.Length % McdRecord.Length) != 0)
+				if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
 				{
 					using (var f = new Infobox(
 											"Load error",
@@ -1036,14 +1051,6 @@ namespace McdView
 				else
 				{
 					Selid = -1;
-
-					if (Spriteset != null)
-						Spriteset.Dispose();
-
-					Spriteset = SpritesetManager.CreateSpriteset(
-															Label,
-															Path.GetDirectoryName(PfeMcd),
-															Pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1080,6 +1087,12 @@ namespace McdView
 					PartsPanel.SpritesChanged = false;
 
 					PartsPanel.Select();
+
+
+					Spriteset = SpritesetManager.CreateSpriteset(
+															Label,
+															Path.GetDirectoryName(PfeMcd),
+															Pal);
 				}
 			}
 		}
@@ -1087,9 +1100,15 @@ namespace McdView
 		/// <summary>
 		/// Loads a specified Mcdfile as called from TileView.
 		/// </summary>
-		/// <param name="pfeMcd">path-file-extension of an MCD file</param>
+		/// <param name="pfeMcd">path-file-extension of an Mcdfile</param>
 		/// <param name="pal">ufo- or tftd-battle palette</param>
 		/// <param name="selid">the record to select</param>
+		/// <remarks>See also
+		/// <list type="bullet">
+		/// <item><c><see cref="OnClick_Create()">OnClick_Create()</see></c></item>
+		/// <item><c><see cref="OnClick_Open()">OnClick_Open()</see></c></item>
+		/// <item><c><see cref="OnClick_Reload()">OnClick_Reload()</see></c></item>
+		/// </list></remarks>
 		public void LoadRecords(
 				string pfeMcd,
 				Palette pal,
@@ -1098,13 +1117,13 @@ namespace McdView
 			using (var fs = FileService.OpenFile(pfeMcd))
 			if (fs != null)
 			{
-				if (((int)fs.Length % McdRecord.Length) != 0)
+				if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
 				{
 					using (var f = new Infobox(
 											"Load error",
 											Infobox.SplitString("The file appears to be corrupted. The length of the"
 													+ " file is not exactly divisible by the length of a record."),
-											PfeMcd,
+											pfeMcd,
 											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
@@ -1116,14 +1135,6 @@ namespace McdView
 
 					if (pal == Palette.TftdBattle) // else is 'Palette.UfoBattle'
 						OnClick_PaletteTftd(null, EventArgs.Empty);
-
-//					if (Spriteset != null)
-//						Spriteset.Dispose(); // not needed when invoked via TileView
-
-					Spriteset = SpritesetManager.CreateSpriteset(
-															Label,
-															Path.GetDirectoryName(PfeMcd),
-															pal);
 
 					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
@@ -1167,6 +1178,12 @@ namespace McdView
 					miReload.Enabled = true;
 
 					PartsPanel.Select();
+
+
+					Spriteset = SpritesetManager.CreateSpriteset(
+															Label,
+															Path.GetDirectoryName(PfeMcd),
+															pal);
 				}
 			}
 		}
@@ -1279,12 +1296,12 @@ namespace McdView
 				if (sfd.ShowDialog(this) == DialogResult.OK
 					&& CheckRecordCount())
 				{
-					string pfe = sfd.FileName;
-					_lastBrowserDirectory = Path.GetDirectoryName(pfe);
+					string pfeMcd = sfd.FileName;
+					_lastBrowserDirectory = Path.GetDirectoryName(pfeMcd);
 
-					if (McdRecord.WriteRecords(pfe, Parts))
+					if (McdRecord.WriteRecords(pfeMcd, Parts))
 					{
-						PfeMcd = pfe;
+						PfeMcd = pfeMcd;
 
 						CacheLoad.SetCacheSaved(Parts);
 
@@ -1460,8 +1477,6 @@ namespace McdView
 			{
 				ofd.Title      = "Open an MCD file";
 				ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
-//				ofd.DefaultExt = GlobalsXC.McdExt;
-//				ofd.FileName   = ;
 
 				if (!String.IsNullOrEmpty(PfeMcd))
 				{
@@ -1487,40 +1502,56 @@ namespace McdView
 					using (var fs = FileService.OpenFile(Copier.PfeMcd))
 					if (fs != null)
 					{
-						var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
-
-						Copier.Spriteset = SpritesetManager.CreateSpriteset(
-																		Copier.Label,
-																		Path.GetDirectoryName(Copier.PfeMcd),
-																		Pal);
-
-						for (int id = 0; id != parts.Length; ++id)
+						if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
 						{
-							var bindata = new byte[McdRecord.Length];
-							fs.Read(bindata, 0, McdRecord.Length);
-
-							parts[id] = new Tilepart(
-												id,
-												new McdRecord(bindata));
+							using (var f = new Infobox(
+													"Load error",
+													Infobox.SplitString("The file appears to be corrupted. The length of the"
+															+ " file is not exactly divisible by the length of a record."),
+													Copier.PfeMcd,
+													InfoboxType.Error))
+							{
+								f.ShowDialog(this);
+							}
 						}
-
-						Tilepart part;
-						for (int id = 0; id != parts.Length; ++id)
+						else
 						{
-							part = parts[id];
-							part.Dead = TilepartFactory.GetDeadPart(
-																part.Record,
-																parts,
-																Copier.Label,
-																id);
-							part.Altr = TilepartFactory.GetAltrPart(
-																part.Record,
-																parts,
-																Copier.Label,
-																id);
-						}
+							var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
 
-						Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.
+							for (int id = 0; id != parts.Length; ++id)
+							{
+								var bindata = new byte[McdRecord.Length];
+								fs.Read(bindata, 0, McdRecord.Length);
+
+								parts[id] = new Tilepart(
+													id,
+													new McdRecord(bindata));
+							}
+
+							Tilepart part;
+							for (int id = 0; id != parts.Length; ++id)
+							{
+								part = parts[id];
+								part.Dead = TilepartFactory.GetDeadPart(
+																	part.Record,
+																	parts,
+																	Copier.Label,
+																	id);
+								part.Altr = TilepartFactory.GetAltrPart(
+																	part.Record,
+																	parts,
+																	Copier.Label,
+																	id);
+							}
+
+							Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.
+
+
+							Copier.Spriteset = SpritesetManager.CreateSpriteset(
+																			Copier.Label,
+																			Path.GetDirectoryName(Copier.PfeMcd),
+																			Pal);
+						}
 					}
 
 					Copier.cb_IalSprites.Enabled = (Copier.Spriteset != null);
@@ -1529,7 +1560,7 @@ namespace McdView
 				{
 					if (it && Copier != null)
 					{
-						Copier.Close();
+						Copier.Close(); // TODO: this will close the Copier which calls CloseCopyPanel() no need to null 'Copier' twice.
 						Copier = null;
 					}
 					miCopier.Checked = (Copier != null);

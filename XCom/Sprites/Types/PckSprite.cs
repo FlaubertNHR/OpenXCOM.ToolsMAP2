@@ -130,7 +130,7 @@ namespace XCom
 						if (dst >= GetBindata().Length)
 						{
 							//Logfile.Log(". . FAIL dst= " + dst);
-							_spriteset.Fail |= Spriteset.FAIL_OF_SPRITE;
+							_spriteset.Fail |= Spriteset.FAIL_pck;
 							return;
 						}
 
@@ -172,7 +172,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="sprite">an <c><see cref="XCImage"/></c> sprite</param>
 		/// <param name="bw"><c>null</c> for test only</param>
-		/// <returns>the length of the sprite (in bytes) after compression</returns>
+		/// <returns>the length of the sprite in <c>bytes</c> after compression</returns>
 		internal static uint Write(XCImage sprite, BinaryWriter bw = null)
 		{
 			var binlist = new List<byte>();
