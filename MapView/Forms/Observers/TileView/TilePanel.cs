@@ -561,13 +561,6 @@ namespace MapView.Forms.Observers
 					rectInner.Height = XCImage.SpriteHeight40;
 				}
 
-				int x = 0;
-				int y = 0;
-				int L,T; // left,top
-
-				XCImage sprite;
-
-				byte[] bindata;
 				IList<Brush> brushes; // TODO: set these when the Mapfile loads
 				if (MainViewF.Optionables.UseMono)
 				{
@@ -579,8 +572,14 @@ namespace MapView.Forms.Observers
 				else
 					brushes = null;
 
+				int x = 0;
+				int y = 0;
+				int L,T; // left,top
 
 				int phase = MainViewUnderlay.Phase;
+
+				XCImage sprite;
+				byte[] bindata;
 
 				foreach (var part in _parts)
 				{
