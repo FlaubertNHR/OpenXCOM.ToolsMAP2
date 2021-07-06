@@ -1970,6 +1970,16 @@ namespace PckView
 			string label = Path.GetFileNameWithoutExtension(pfePck);
 			string dir   = Path.GetDirectoryName(pfePck);
 
+			int pre_width  = XCImage.SpriteWidth;
+			int pre_height = XCImage.SpriteHeight;
+
+			XCImage.SpriteWidth = XCImage.SpriteWidth32;
+
+			if (isBigobs)
+				XCImage.SpriteHeight = XCImage.SpriteHeight48;
+			else
+				XCImage.SpriteHeight = XCImage.SpriteHeight40;
+
 			Spriteset spriteset = SpritesetManager.CreateSpriteset(
 																label,
 																dir,
@@ -1978,18 +1988,10 @@ namespace PckView
 			{
 				TilePanel.Spriteset = spriteset;
 
-				XCImage.SpriteWidth = XCImage.SpriteWidth32;
-
 				if (isBigobs)
-				{
-					XCImage.SpriteHeight = XCImage.SpriteHeight48;
 					SetType = SpritesetType.Bigobs;
-				}
 				else
-				{
-					XCImage.SpriteHeight = XCImage.SpriteHeight40;
 					SetType = SpritesetType.Pck;
-				}
 
 //				if (!_itPalettes[pal].Checked)
 //				{
@@ -2003,6 +2005,11 @@ namespace PckView
 
 				_path = Path.Combine(dir, label);
 				Changed = false;
+			}
+			else
+			{
+				XCImage.SpriteWidth  = pre_width;
+				XCImage.SpriteHeight = pre_height;
 			}
 		}
 
@@ -2018,9 +2025,9 @@ namespace PckView
 				if (((int)fs.Length % ScanGicon.Length_ScanG) != 0)
 				{
 					using (var f = new Infobox(
-											"Load error",
-											Infobox.SplitString("The file appears to be corrupted. The length of the"
-													+ " file is not exactly divisible by the length of an icon."),
+											"ScanG load error",
+											Infobox.SplitString("The file appears to be corrupted." 
+													+ " Its length is not consistent with ScanG data."),
 											pfeScanG,
 											InfoboxType.Error))
 					{
@@ -2066,9 +2073,9 @@ namespace PckView
 				if (((int)fs.Length % LoFTicon.Length_LoFT) != 0)
 				{
 					using (var f = new Infobox(
-											"Load error",
-											Infobox.SplitString("The file appears to be corrupted. The length of the"
-													+ " file is not exactly divisible by the length of an icon."),
+											"LoFT load error",
+											Infobox.SplitString("The file appears to be corrupted."
+													+ " Its length is not consistent with LoFT data."),
 											pfeLoFT,
 											InfoboxType.Error))
 					{
