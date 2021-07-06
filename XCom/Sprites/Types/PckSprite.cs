@@ -166,26 +166,24 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Compresses and optionally writes a specified sprite to a specified
-		/// stream.
+		/// Compresses and optionally writes this <c>PckSprite</c> to a
+		/// specified stream.
 		/// </summary>
-		/// <param name="sprite">an <c><see cref="XCImage"/></c> sprite</param>
 		/// <param name="bw"><c>null</c> for test only</param>
 		/// <returns>the length of the sprite in <c>bytes</c> after compression</returns>
-		internal static uint Write(XCImage sprite, BinaryWriter bw = null)
+		internal uint Write(BinaryWriter bw = null)
 		{
 			var binlist = new List<byte>();
 
 			int tran = 0;
 			bool first = true;
 
-			byte[] bindata = sprite.GetBindata();
+			byte[] bindata = GetBindata();
+			byte b;
 
-			for (int id = 0; id != bindata.Length; ++id)
+			for (int id = 0; id != _bindata.Length; ++id)
 			{
-				byte b = bindata[id];
-
-				if (b == Palette.Tid)
+				if ((b = _bindata[id]) == Palette.Tid)
 				{
 					++tran;
 				}
@@ -195,8 +193,8 @@ namespace XCom
 					{
 						if (first)
 						{
-							binlist.Add((byte)(tran / sprite.Sprite.Width));	// qty of initial transparent rows
-							tran      = (byte)(tran % sprite.Sprite.Width);		// qty of transparent pixels starting on the next row
+							binlist.Add((byte)(tran / Sprite.Width));	// qty of initial transparent rows
+							tran      = (byte)(tran % Sprite.Width);	// qty of transparent pixels starting on the next row
 						}
 
 						while (tran >= Byte.MaxValue)

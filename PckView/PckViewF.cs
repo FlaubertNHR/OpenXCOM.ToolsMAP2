@@ -1474,7 +1474,7 @@ namespace PckView
 				{
 					case SpritesetType.Pck: // save Pck+Tab terrain/unit/bigobs ->
 					case SpritesetType.Bigobs:
-						if (Spriteset.WriteSpriteset(_path, TilePanel.Spriteset))
+						if (TilePanel.Spriteset.WriteSpriteset(_path))
 						{
 							Changed = false;
 							RequestReload = true;
@@ -1482,7 +1482,7 @@ namespace PckView
 						break;
 
 					case SpritesetType.ScanG:
-						if (Spriteset.WriteScanG(_path, TilePanel.Spriteset))
+						if (TilePanel.Spriteset.WriteScanG(_path))
 						{
 							Changed = false;
 							// TODO: FireMvReloadScanG file
@@ -1490,7 +1490,7 @@ namespace PckView
 						break;
 
 					case SpritesetType.LoFT:
-						if (Spriteset.WriteLoFT(_path, TilePanel.Spriteset))
+						if (TilePanel.Spriteset.WriteLoFT(_path))
 						{
 							Changed = false;
 						}
@@ -1562,7 +1562,7 @@ namespace PckView
 								string label = Path.GetFileNameWithoutExtension(pfe);
 								string pf    = Path.Combine(dir, label);
 
-								if (Spriteset.WriteSpriteset(pf, TilePanel.Spriteset))
+								if (TilePanel.Spriteset.WriteSpriteset(pf))
 								{
 									_path = pf;
 									Changed = false;
@@ -1572,7 +1572,7 @@ namespace PckView
 							}
 
 							case SpritesetType.ScanG:
-								if (Spriteset.WriteScanG(pfe, TilePanel.Spriteset))
+								if (TilePanel.Spriteset.WriteScanG(pfe))
 								{
 									_path = pfe;
 									Changed = false;
@@ -1581,7 +1581,7 @@ namespace PckView
 								break;
 
 							case SpritesetType.LoFT:
-								if (Spriteset.WriteLoFT(pfe, TilePanel.Spriteset))
+								if (TilePanel.Spriteset.WriteLoFT(pfe))
 								{
 									_path = pfe;
 									Changed = false;
@@ -2257,7 +2257,7 @@ namespace PckView
 				else                       id = TilePanel.Spriteset.Count - 1;
 
 				uint last, aftr;
-				Spriteset.TestTabOffsets(TilePanel.Spriteset, out last, out aftr, id);
+				TilePanel.Spriteset.GetTabOffsets(out last, out aftr, id);
 
 				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;

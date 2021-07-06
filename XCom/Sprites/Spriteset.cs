@@ -522,18 +522,15 @@ namespace XCom
 		#endregion cTor
 
 
-		#region Methods (static)
+		#region Methods
 		/// <summary>
-		/// Saves a specified <c><see cref="Spriteset"/></c> to PCK+TAB.
+		/// Saves this <c>Spriteset</c> to <c>PCK+TAB</c>.
 		/// </summary>
-		/// <param name="pf">the directory to save to</param>
-		/// <param name="spriteset">pointer to the <c>Spriteset</c></param>
+		/// <param name="pf">the directory and label w/out extension to save to</param>
 		/// <returns><c>true</c> if mission was successful; <c>false</c> if a
 		/// 2-byte tabword-length offset exceeds <c>UInt16.MaxValue</c>. Also
 		/// <c>false</c> if the Pck or Tab file could not be created.</returns>
-		public static bool WriteSpriteset(
-				string pf,
-				Spriteset spriteset)
+		public bool WriteSpriteset(string pf)
 		{
 			string pfePck = pf + GlobalsXC.PckExt;
 			string pfeTab = pf + GlobalsXC.TabExt;
@@ -562,12 +559,12 @@ namespace XCom
 				using (var bwPck = new BinaryWriter(fsPck))
 				using (var bwTab = new BinaryWriter(fsTab))
 				{
-					switch (spriteset.TabwordLength)
+					switch (TabwordLength)
 					{
 						case SpritesetManager.TAB_WORD_LENGTH_2:
 						{
 							uint pos = 0;
-							for (int id = 0; id != spriteset.Count; ++id)
+							for (int id = 0; id != Count; ++id)
 							{
 								if (pos > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
 								{
@@ -578,7 +575,7 @@ namespace XCom
 								}
 
 								bwTab.Write((ushort)pos);
-								pos += PckSprite.Write(spriteset[id], bwPck);
+								pos += (Sprites[id] as PckSprite).Write(bwPck);
 							}
 							break;
 						}
@@ -586,10 +583,10 @@ namespace XCom
 						case SpritesetManager.TAB_WORD_LENGTH_4:
 						{
 							uint pos = 0;
-							for (int id = 0; id != spriteset.Count; ++id)
+							for (int id = 0; id != Count; ++id)
 							{
 								bwTab.Write(pos);
-								pos += PckSprite.Write(spriteset[id], bwPck);
+								pos += (Sprites[id] as PckSprite).Write(bwPck);
 							}
 							break;
 						}
@@ -621,28 +618,27 @@ namespace XCom
 		// also (2-byte TabwordLength).
 
 		/// <summary>
-		/// Tests a specified 2-byte TabwordLength spriteset for validity of its
-		/// Tabfile.
+		/// Tests this <c>Spriteset</c> for validity of its Tabfile.
 		/// </summary>
-		/// <param name="spriteset">the <c>Spriteset</c> to test</param>
 		/// <param name="result">a ref to hold the result as a string</param>
 		/// <returns><c>true</c> if mission was successful</returns>
-		public static bool TestTabOffsets(
-				Spriteset spriteset,
-				out string result)
+		/// <remarks>Test only <c>Spritesets</c> with a
+		/// <c><see cref="TabwordLength"/></c> of
+		/// <c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>.</remarks>
+		public bool TestTabOffsets(out string result)
 		{
 			uint pos = 0;
-			for (int id = 0; id != spriteset.Count; ++id)
+			for (int id = 0; id != Count; ++id)
 			{
 				if (pos > UInt16.MaxValue)
 				{
-					result = "Only " + id + " of " + spriteset.Count
+					result = "Only " + id + " of " + Count
 						   + " sprites can be indexed in the TAB file."
 						   + Environment.NewLine
 						   + "Failed at position " + pos;
 					return false;
 				}
-				pos += PckSprite.Write(spriteset[id]); // test only.
+				pos += (Sprites[id] as PckSprite).Write(); // test only.
 			}
 
 			result = "Sprite offsets are valid.";
@@ -650,30 +646,25 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Deters a specified sprite-id's 2-byte TabOffset for a specified
-		/// spriteset as well as the TabOffset of the next sprite.
+		/// Deters a specified sprite-id's 2-byte TabOffset as well as the
+		/// TabOffset of the next sprite.
 		/// </summary>
-		/// <param name="spriteset">the Spriteset to test</param>
-		/// <param name="last">ref for the TabOffset of 'spriteId'</param>
+		/// <param name="last">ref for the TabOffset of <paramref name="id"/></param>
 		/// <param name="aftr">ref for the TabOffset of the next sprite</param>
-		/// <param name="id">default -1 to test the final sprite in the set</param>
-		/// <remarks>Ensure that <paramref name="id"/> is less than the
-		/// spriteset count before call.</remarks>
-		public static void TestTabOffsets(
-				Spriteset spriteset,
+		/// <param name="id"></param>
+		/// <remarks>Check that <paramref name="id"/> is less than
+		/// <c><see cref="Count"/></c> before call.</remarks>
+		public void GetTabOffsets(
 				out uint last,
 				out uint aftr,
-				int id = -1)
+				int id)
 		{
-			if (id == -1)
-				id = spriteset.Count - 1;
-
 			last = aftr = 0;
 
 			uint len;
 			for (int i = 0; i <= id; ++i)
 			{
-				len = PckSprite.Write(spriteset[i]); // test only.
+				len = (Sprites[i] as PckSprite).Write(); // test only.
 				if (i != id)
 					last += len;
 				else
@@ -683,14 +674,11 @@ namespace XCom
 
 
 		/// <summary>
-		/// Saves a specified iconset to <c>SCANG.DAT</c>.
+		/// Saves this <c>Spriteset</c> to <c>SCANG.DAT</c>.
 		/// </summary>
 		/// <param name="pfe">the directory to save to</param>
-		/// <param name="iconset">pointer to the iconset</param>
 		/// <returns><c>true</c> if mission was successful</returns>
-		public static bool WriteScanG(
-				string pfe,
-				Spriteset iconset)
+		public bool WriteScanG(string pfe)
 		{
 			string pfeT;
 			if (File.Exists(pfe))
@@ -705,9 +693,9 @@ namespace XCom
 				fail = false;
 
 				byte[] bindata;
-				for (int id = 0; id != iconset.Count; ++id)
+				for (int id = 0; id != Count; ++id)
 				{
-					bindata = iconset[id].GetBindata();
+					bindata = Sprites[id].GetBindata();
 					fs.Write(bindata, 0, bindata.Length);
 				}
 			}
@@ -719,14 +707,11 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Saves a specified iconset to <c>LOFTEMPS.DAT</c>.
+		/// Saves this <c>Spriteset</c> to <c>LOFTEMPS.DAT</c>.
 		/// </summary>
 		/// <param name="pfe">the directory to save to</param>
-		/// <param name="iconset">pointer to the iconset</param>
 		/// <returns><c>true</c> if mission was successful</returns>
-		public static bool WriteLoFT(
-				string pfe,
-				Spriteset iconset)
+		public bool WriteLoFT(string pfe)
 		{
 			string pfeT;
 			if (File.Exists(pfe))
@@ -741,13 +726,13 @@ namespace XCom
 				fail = false;
 
 				byte[] bindata;
-				for (int id = 0; id != iconset.Count; ++id)
+				for (int id = 0; id != Count; ++id)
 				{
 					var buffer = new byte[1];
 					BitArray bits;
 					int b;
 
-					bindata = iconset[id].GetBindata();
+					bindata = Sprites[id].GetBindata();
 					for (int i = 0; i != bindata.Length; i += 16)
 					{
 						// Look don't ask it appears to work ...
@@ -784,7 +769,7 @@ namespace XCom
 
 			return !fail;
 		}
-		#endregion Methods (static)
+		#endregion Methods
 
 
 		#region Methods (override)

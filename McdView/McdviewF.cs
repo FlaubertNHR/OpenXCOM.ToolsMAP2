@@ -1112,10 +1112,10 @@ namespace McdView
 			{
 				SaveSpritesetFailed = true;
 
-				string dir = Path.GetDirectoryName(PfeMcd);
-				string pf  = Path.Combine(dir, Label);
+				string pf = Path.GetDirectoryName(PfeMcd);
+					   pf = Path.Combine(pf, Label);
 
-				if (Spriteset.WriteSpriteset(pf, Spriteset))
+				if (Spriteset.WriteSpriteset(pf))
 				{
 					SaveSpritesetFailed = false;
 					PartsPanel.SpritesChanged = false;
@@ -1268,16 +1268,16 @@ namespace McdView
 				}
 			}
 
-			if (Spriteset != null)
+			if (Spriteset != null && Spriteset.TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2)
 			{
-				string copy;
-				if (!Spriteset.TestTabOffsets(Spriteset, out copy))
+				string result;
+				if (!Spriteset.TestTabOffsets(out result))
 				{
 					verified = false;
 					using (var f = new Infobox(
 											"Strict test",
 											"Sprite offset is invalid.",
-											copy,
+											result,
 											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
@@ -2094,7 +2094,7 @@ namespace McdView
 				tssl_Sprites.Text = "Sprites: " + Spriteset.Count;
 
 				uint last, aftr;
-				Spriteset.TestTabOffsets(Spriteset, out last, out aftr);
+				Spriteset.GetTabOffsets(out last, out aftr, Spriteset.Count - 1);
 
 				tssl_OffsetLast.ForeColor = (last > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
 				tssl_OffsetAftr.ForeColor = (aftr > UInt16.MaxValue) ? Color.Crimson : SystemColors.ControlText;
