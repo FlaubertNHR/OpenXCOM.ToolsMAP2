@@ -529,7 +529,7 @@ namespace XCom
 		/// <param name="pf">the directory and label w/out extension to save to</param>
 		/// <returns><c>true</c> if mission was successful; <c>false</c> if a
 		/// 2-byte tabword-length offset exceeds <c>UInt16.MaxValue</c>. Also
-		/// <c>false</c> if the Pck or Tab file could not be created.</returns>
+		/// <c>false</c> if the Pck- or Tab-file could not be created.</returns>
 		public bool WriteSpriteset(string pf)
 		{
 			string pfePck = pf + GlobalsXC.PckExt;
