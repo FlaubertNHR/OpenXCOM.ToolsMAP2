@@ -34,7 +34,20 @@ namespace MapView
 		// TODO: Consider inheriting from IObserver.
 
 		private enum Layer
-		{ @default, single, locked }
+		{
+			/// <summary>
+			/// renders the current layer and those under it (per XCOM)
+			/// </summary>
+			@default,
+			/// <summary>
+			/// renders only the current layer
+			/// </summary>
+			single,
+			/// <summary>
+			/// renders all layers of the Map
+			/// </summary>
+			locked
+		}
 
 
 		#region Fields (static)
