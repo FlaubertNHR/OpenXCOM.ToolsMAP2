@@ -36,15 +36,15 @@ namespace McdView
 			get { return _spritesChanged; }
 			set
 			{
-				if (!_spritesChanged)
+				if (_spritesChanged != value)
 				{
-					if (value)
+					if (_spritesChanged = value)
+					{
 						_f.gb_Sprites.Text = " Sprites * ";
+					}
+					else
+						_f.gb_Sprites.Text = " Sprites ";
 				}
-				else if (!value)
-					_f.gb_Sprites.Text = " Sprites ";
-
-				_spritesChanged = value;
 			}
 		}
 		#endregion Properties

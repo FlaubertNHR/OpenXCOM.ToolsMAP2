@@ -49,9 +49,10 @@ namespace McdView
 
 		private Tilepart[] _parts;
 		/// <summary>
-		/// An array of <see cref="Tilepart">Tileparts</see>.
+		/// An array of <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
-		/// <remarks>Each entry's record is referenced w/ Tilepart.Record.</remarks>
+		/// <remarks>Each entry's record is referenced by
+		/// <c>Tilepart.Record</c>.</remarks>
 		internal Tilepart[] Parts
 		{
 			get { return _parts; }
@@ -125,17 +126,14 @@ namespace McdView
 			}
 		}
 
-		private string _pfeMcd;
+		private string _pfeMcd = String.Empty;
 		/// <summary>
-		/// The fullpath of the currently loaded MCD-file.
+		/// The fullpath of the currently loaded Mcdfile.
 		/// </summary>
 		internal string PfeMcd
 		{
 			get { return _pfeMcd; }
-			set
-			{
-				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
-			}
+			set { _pfeMcd = value; }
 		}
 		#endregion Properties
 
@@ -225,6 +223,8 @@ namespace McdView
 						}
 				}
 			}
+
+			Show();
 		}
 		#endregion cTor
 

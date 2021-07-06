@@ -16,12 +16,14 @@ namespace XCom
 		/// <param name="terrain">the terrain label</param>
 		/// <param name="dirTerrain">path to the directory of the Mcdfile</param>
 		/// <param name="terid">the id of this <c>Tilepart's</c> terrain in
-		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c></param>
+		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>; default
+		/// <c>-1</c> if McdView is going to handle the
+		/// sprites itself and this <c>Tilepart</c> is not part of a terrainset</param>
 		/// <returns>an array of <c>Tileparts</c></returns>
-		internal static Tilepart[] CreateTileparts(
+		public static Tilepart[] CreateTileparts(
 				string terrain,
 				string dirTerrain,
-				int terid)
+				int terid = -1)
 		{
 			string pfeMcd = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
 

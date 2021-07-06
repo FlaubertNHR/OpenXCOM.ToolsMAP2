@@ -153,9 +153,8 @@ namespace XCom
 		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c> and to
 		/// track this <c>Tilepart's</c> ID and sprites per
 		/// <c><see cref="SetId"/></c> and <c><see cref="_sprites"/></c>
-		/// respectively in MapView; default <c>-1</c> if McdView is going to
-		/// handle the sprites itself and this <c>Tilepart</c> is not part of a
-		/// terrainset</param>
+		/// respectively in MapView; <c>-1</c> if McdView is going to handle the
+		/// sprites itself and this <c>Tilepart</c> is not part of a terrainset</param>
 		public Tilepart(
 				int id,
 				McdRecord record,

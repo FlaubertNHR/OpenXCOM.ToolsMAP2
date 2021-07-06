@@ -278,7 +278,8 @@ namespace McdView
 
 		private bool _changed;
 		/// <summary>
-		/// Tracks if state has changed.
+		/// Tracks if state has changed. Also sets the title-text to
+		/// <c><see cref="PfeMcd"/></c>.
 		/// </summary>
 		internal bool Changed
 		{
@@ -296,10 +297,10 @@ namespace McdView
 
 		/// <summary>
 		/// For reloading the Map when McdView is invoked via TileView.
-		/// @note Reload MapView's Map even if the MCD/PCK+TAB is saved as a
-		/// different file; the new terrain-label might also be in the Map's
-		/// terrainset.
 		/// </summary>
+		/// <remarks>Reload MapView's Map even if the <c>MCD/PCK+TAB</c> is
+		/// saved as a different file; the new terrain-label might also be in
+		/// the Map's terrainset.</remarks>
 		public bool FireMvReload
 		{ get; private set; }
 
@@ -321,15 +322,12 @@ namespace McdView
 
 		private string _pfeMcd = String.Empty;
 		/// <summary>
-		/// The fullpath of the currently loaded MCD-file.
+		/// The fullpath of the currently loaded Mcdfile.
 		/// </summary>
 		internal string PfeMcd
 		{
 			get { return _pfeMcd; }
-			set
-			{
-				Label = Path.GetFileNameWithoutExtension(_pfeMcd = value);
-			}
+			set { _pfeMcd = value; }
 		}
 
 		/// <summary>
@@ -840,7 +838,7 @@ namespace McdView
 
 					if (Directory.Exists(_lastCreateDirectory))
 						sfd.InitialDirectory = _lastCreateDirectory;
-					else if (!String.IsNullOrEmpty(PfeMcd))
+					else if (PfeMcd.Length != 0)
 					{
 						string dir = Path.GetDirectoryName(PfeMcd);
 						if (Directory.Exists(dir))
@@ -850,42 +848,38 @@ namespace McdView
 
 					if (sfd.ShowDialog(this) == DialogResult.OK)
 					{
-						string pfe = sfd.FileName;
-						_lastCreateDirectory = Path.GetDirectoryName(pfe);
+						string pfeMcd = sfd.FileName;
+						_lastCreateDirectory = Path.GetDirectoryName(pfeMcd);
 
 						// TODO: Do not write the file unless/until user saves it.
 
 						string pfeT;
-						if (File.Exists(pfe))
-							pfeT = pfe + GlobalsXC.TEMPExt;
+						if (File.Exists(pfeMcd))
+							pfeT = pfeMcd + GlobalsXC.TEMPExt;
 						else
-							pfeT = pfe;
+							pfeT = pfeMcd;
 
 						bool fail = true;
 						using (var fs = FileService.CreateFile(pfeT)) // create 0-byte file
 						if (fs != null)
 							fail = false;
 
-						if (!fail && pfeT != pfe)
-							fail = !FileService.ReplaceFile(pfe);
+						if (!fail && pfeT != pfeMcd)
+							fail = !FileService.ReplaceFile(pfeMcd);
 
 						if (!fail)
 						{
-							PfeMcd = pfe; // sets 'Label' also.
-							Selid = -1;
+							CacheLoad.SetCacheSaved(Parts = new Tilepart[0]);
 
-							Parts = new Tilepart[0];
-							CacheLoad.SetCacheSaved(Parts);
+							Label = Path.GetFileNameWithoutExtension(PfeMcd = pfeMcd);
 
-							Changed =
-							PartsPanel.SpritesChanged = false;
+							Changed = PartsPanel.SpritesChanged = false;
+
+							PartsPanel.Select();
 
 							miSave  .Enabled =
 							miSaveas.Enabled =
 							miReload.Enabled = true;
-
-							PartsPanel.Select();
-
 
 							string dir = Path.GetDirectoryName(PfeMcd);
 							string pf  = Path.Combine(dir, Label);
@@ -896,6 +890,8 @@ namespace McdView
 							}
 							else
 								Spriteset = null;
+
+							Selid = -1;
 						}
 					}
 				}
@@ -945,57 +941,28 @@ namespace McdView
 		/// <param name="pfeMcd">path-file-extension of a file to load</param>
 		private void LoadTerrain(string pfeMcd)
 		{
-			using (var fs = FileService.OpenFile(pfeMcd))
-			if (fs != null && TilepartFactory.CheckMcdLength(fs, pfeMcd))
+			string label = Path.GetFileNameWithoutExtension(pfeMcd);
+			string dir   = Path.GetDirectoryName(pfeMcd);
+
+			Tilepart[] parts = TilepartFactory.CreateTileparts(label, dir);
+			if (parts != null)
 			{
+				CacheLoad.SetCacheSaved(Parts = parts);
+
+				Label = label;
 				PfeMcd = pfeMcd;
-				Selid = -1;
 
-				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
+				Changed = PartsPanel.SpritesChanged = false;
 
-				for (int id = 0; id != parts.Length; ++id)
-				{
-					var bindata = new byte[McdRecord.Length];
-					fs.Read(bindata, 0, McdRecord.Length);
-
-					parts[id] = new Tilepart(
-										id,
-										new McdRecord(bindata));
-				}
-
-				Tilepart part;
-				for (int id = 0; id != parts.Length; ++id)
-				{
-					part = parts[id];
-					part.Dead = TilepartFactory.GetDeadPart(
-														part.Record,
-														parts,
-														Label,
-														id);
-					part.Altr = TilepartFactory.GetAltrPart(
-														part.Record,
-														parts,
-														Label,
-														id);
-				}
-
-				Parts = parts; // do not assign to 'Parts' until the array is gtg.
-				CacheLoad.SetCacheSaved(Parts);
-
-				Changed =
-				PartsPanel.SpritesChanged = false;
+				PartsPanel.Select();
 
 				miSave  .Enabled =
 				miSaveas.Enabled =
 				miReload.Enabled = true;
 
-				PartsPanel.Select();
+				Spriteset = SpritesetManager.CreateSpriteset(Label, dir, Pal);
 
-
-				Spriteset = SpritesetManager.CreateSpriteset(
-														Label,
-														Path.GetDirectoryName(PfeMcd),
-														Pal);
+				Selid = -1;
 			}
 		}
 
@@ -1013,52 +980,20 @@ namespace McdView
 		/// </list></remarks>
 		private void OnClick_Reload(object sender, EventArgs e)
 		{
-			using (var fs = FileService.OpenFile(PfeMcd))
-			if (fs != null && TilepartFactory.CheckMcdLength(fs, PfeMcd))
+			string dir = Path.GetDirectoryName(PfeMcd);
+
+			Tilepart[] parts = TilepartFactory.CreateTileparts(Label, dir);
+			if (parts != null)
 			{
-				Selid = -1;
+				CacheLoad.SetCacheSaved(Parts = parts);
 
-				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-				for (int id = 0; id != parts.Length; ++id)
-				{
-					var bindata = new byte[McdRecord.Length];
-					fs.Read(bindata, 0, McdRecord.Length);
-
-					parts[id] = new Tilepart(
-										id,
-										new McdRecord(bindata));
-				}
-
-				Tilepart part;
-				for (int id = 0; id != parts.Length; ++id)
-				{
-					part = parts[id];
-					part.Dead = TilepartFactory.GetDeadPart(
-														part.Record,
-														parts,
-														Label,
-														id);
-					part.Altr = TilepartFactory.GetAltrPart(
-														part.Record,
-														parts,
-														Label,
-														id);
-				}
-
-				Parts = parts; // do not assign to 'Parts' until the array is gtg.
-				CacheLoad.SetCacheSaved(Parts);
-
-				Changed =
-				PartsPanel.SpritesChanged = false;
+				Changed = PartsPanel.SpritesChanged = false;
 
 				PartsPanel.Select();
 
+				Spriteset = SpritesetManager.CreateSpriteset(Label, dir, Pal);
 
-				Spriteset = SpritesetManager.CreateSpriteset(
-														Label,
-														Path.GetDirectoryName(PfeMcd),
-														Pal);
+				Selid = -1;
 			}
 		}
 
@@ -1066,7 +1001,8 @@ namespace McdView
 		/// Loads a specified Mcdfile as called from TileView.
 		/// </summary>
 		/// <param name="pfeMcd">path-file-extension of an Mcdfile</param>
-		/// <param name="pal">ufo- or tftd-battle palette</param>
+		/// <param name="pal"><c><see cref="Palette"/>.UfoBattle</c> or
+		/// <c><see cref="Palette"/>.TftdBattle</c></param>
 		/// <param name="selid">the record to select</param>
 		/// <remarks>See also
 		/// <list type="bullet">
@@ -1079,62 +1015,33 @@ namespace McdView
 				Palette pal,
 				int selid)
 		{
-			using (var fs = FileService.OpenFile(pfeMcd))
-			if (fs != null && TilepartFactory.CheckMcdLength(fs, pfeMcd))
+			string label = Path.GetFileNameWithoutExtension(pfeMcd);
+			string dir   = Path.GetDirectoryName(pfeMcd);
+
+			Tilepart[] parts = TilepartFactory.CreateTileparts(label, dir);
+			if (parts != null)
 			{
+				CacheLoad.SetCacheSaved(Parts = parts);
+
+				Label = label;
 				PfeMcd = pfeMcd;
 
-				if (pal == Palette.TftdBattle) // else is 'Palette.UfoBattle'
-					OnClick_PaletteTftd(null, EventArgs.Empty);
+				Changed = PartsPanel.SpritesChanged = false;
 
-				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-				for (int id = 0; id != parts.Length; ++id)
-				{
-					var bindata = new byte[McdRecord.Length];
-					fs.Read(bindata, 0, McdRecord.Length);
-
-					parts[id] = new Tilepart(
-										id,
-										new McdRecord(bindata));
-				}
-
-				Tilepart part;
-				for (int id = 0; id != parts.Length; ++id)
-				{
-					part = parts[id];
-					part.Dead = TilepartFactory.GetDeadPart(
-														part.Record,
-														parts,
-														Label,
-														id);
-					part.Altr = TilepartFactory.GetAltrPart(
-														part.Record,
-														parts,
-														Label,
-														id);
-				}
-
-				Parts = parts; // do not assign to 'Parts' until the array is gtg.
-				CacheLoad.SetCacheSaved(Parts);
-
-				if (selid < Parts.Length) Selid = selid;
-				else                      Selid = -1;
-
-				Changed =
-				PartsPanel.SpritesChanged = false;
+				PartsPanel.Select();
 
 				miSave  .Enabled =
 				miSaveas.Enabled =
 				miReload.Enabled = true;
 
-				PartsPanel.Select();
+				Spriteset = SpritesetManager.CreateSpriteset(Label, dir, pal);
 
+				if (selid < Parts.Length) Selid = selid;
+				else                      Selid = -1;
 
-				Spriteset = SpritesetManager.CreateSpriteset(
-														Label,
-														Path.GetDirectoryName(PfeMcd),
-														pal);
+				if (pal == Palette.TftdBattle)
+					OnClick_PaletteTftd(null, EventArgs.Empty);
+				// else 'Palette.UfoBattle' has already loaded by default.
 			}
 		}
 
@@ -1188,10 +1095,8 @@ namespace McdView
 			if (CheckRecordCount() && McdRecord.WriteRecords(PfeMcd, Parts))
 			{
 				SaveRecordsetFailed = false;
-
 				CacheLoad.SetCacheSaved(Parts);
 				Changed = false;
-
 				FireMvReload = true;
 			}
 		}
@@ -1252,13 +1157,9 @@ namespace McdView
 					if (McdRecord.WriteRecords(pfeMcd, Parts))
 					{
 						PfeMcd = pfeMcd;
-
 						CacheLoad.SetCacheSaved(Parts);
-
 						Changed = false;
-
 						FireMvReload = true;
-
 
 						if (Spriteset != null)
 						{
@@ -1350,17 +1251,17 @@ namespace McdView
 			{
 				verified = false;
 
-				string copyable = String.Empty;
+				string copy = String.Empty;
 				foreach (var bork in borks)
 				{
-					if (copyable.Length != 0) copyable += Environment.NewLine;
-					copyable += bork;
+					if (copy.Length != 0) copy += Environment.NewLine;
+					copy += bork;
 				}
 
 				using (var f = new Infobox(
 										"Strict test",
 										"The following items exhibit anomalies.",
-										copyable,
+										copy,
 										InfoboxType.Warn))
 				{
 					f.ShowDialog(this);
@@ -1369,14 +1270,14 @@ namespace McdView
 
 			if (Spriteset != null)
 			{
-				string result;
-				if (!Spriteset.TestTabOffsets(Spriteset, out result))
+				string copy;
+				if (!Spriteset.TestTabOffsets(Spriteset, out copy))
 				{
 					verified = false;
 					using (var f = new Infobox(
 											"Strict test",
 											"Sprite offset is invalid.",
-											result,
+											copy,
 											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
@@ -1441,55 +1342,26 @@ namespace McdView
 					if (Copier == null)
 					{
 						Copier = new CopierF(this);
-						Copier.Show();
-
 						Copier.LoadIalOptions();
 					}
-					Copier.SelId = -1;
 
-					Copier.PfeMcd = ofd.FileName;
+					Copier.Label = Path.GetFileNameWithoutExtension(Copier.PfeMcd = ofd.FileName);
 
-					using (var fs = FileService.OpenFile(Copier.PfeMcd))
-					if (fs != null && TilepartFactory.CheckMcdLength(fs, Copier.PfeMcd))
+					string dir = Path.GetDirectoryName(Copier.PfeMcd);
+
+					Tilepart[] parts = TilepartFactory.CreateTileparts(Copier.Label, dir);
+					if (parts != null)
 					{
-						var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-						for (int id = 0; id != parts.Length; ++id)
-						{
-							var bindata = new byte[McdRecord.Length];
-							fs.Read(bindata, 0, McdRecord.Length);
-
-							parts[id] = new Tilepart(
-												id,
-												new McdRecord(bindata));
-						}
-
-						Tilepart part;
-						for (int id = 0; id != parts.Length; ++id)
-						{
-							part = parts[id];
-							part.Dead = TilepartFactory.GetDeadPart(
-																part.Record,
-																parts,
-																Copier.Label,
-																id);
-							part.Altr = TilepartFactory.GetAltrPart(
-																part.Record,
-																parts,
-																Copier.Label,
-																id);
-						}
-
-						Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.
-
+						Copier.Parts = parts;
 
 						Copier.Spriteset = SpritesetManager.CreateSpriteset(
 																		Copier.Label,
-																		Path.GetDirectoryName(Copier.PfeMcd),
+																		dir,
 																		Pal);
 					}
-
 					Copier.cb_IalSprites.Enabled = (Copier.Spriteset != null);
+
+					Copier.SelId = -1;
 				}
 				else
 				{
@@ -1576,8 +1448,8 @@ namespace McdView
 		{
 			if (!miResourcesTftd.Checked)
 			{
-				miResourcesTftd.Checked = true;
 				miResourcesUfo .Checked = false;
+				miResourcesTftd.Checked = true;
 
 				if (Spriteset != null)
 					Spriteset.Pal = Pal;
