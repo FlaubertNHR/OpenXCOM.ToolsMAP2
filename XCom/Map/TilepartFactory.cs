@@ -14,7 +14,7 @@ namespace XCom
 		/// for a given terrain.
 		/// </summary>
 		/// <param name="terrain">the terrain label</param>
-		/// <param name="dirTerrain">path to the directory of the MCD-file</param>
+		/// <param name="dirTerrain">path to the directory of the Mcdfile</param>
 		/// <param name="terid">the id of this <c>Tilepart's</c> terrain in
 		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c></param>
 		/// <returns>an array of <c>Tileparts</c></returns>
@@ -23,18 +23,18 @@ namespace XCom
 				string dirTerrain,
 				int terid)
 		{
-			//Logfile.Log("TilepartFactory.CreateTileparts()");
+			string pfeMcd = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
 
-			string pfe = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
-
-			using (var fs = FileService.OpenFile(pfe))
-			if (fs != null)
+			using (var fs = FileService.OpenFile(pfeMcd))
+			if (fs != null && CheckMcdLength(fs, pfeMcd))
 			{
-				var parts = new Tilepart[(int)fs.Length / McdRecord.Length]; // TODO: Error if this don't work out right.
+				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
+
+				byte[] bindata;
 
 				for (int id = 0; id != parts.Length; ++id)
 				{
-					var bindata = new byte[McdRecord.Length];
+					bindata = new byte[McdRecord.Length];
 					fs.Read(bindata, 0, McdRecord.Length);
 
 					parts[id] = new Tilepart(
@@ -54,10 +54,35 @@ namespace XCom
 				//Logfile.Log(". ret parts array");
 				return parts;
 			}
-
 			//Logfile.Log(". ret EMPTY parts array");
-			return new Tilepart[0];
+			return null;
 		}
+
+		/// <summary>
+		/// Checks if the length of specified filestream is an even multiple of
+		/// <c><see cref="McdRecord.Length">McdRecord.Length</see></c>.
+		/// </summary>
+		/// <param name="fs"></param>
+		/// <param name="pfeMcd"></param>
+		/// <returns><c>true</c> if the records do not overflow</returns>
+		public static bool CheckMcdLength(Stream fs, string pfeMcd)
+		{
+			if (((int)fs.Length % McdRecord.Length) != 0)
+			{
+				using (var f = new Infobox(
+										"MCD load error",
+										Infobox.SplitString("The file appears to be corrupted."
+												+ " Its length is not consistent with MCD data."),
+										pfeMcd,
+										InfoboxType.Error))
+				{
+					f.ShowDialog();
+				}
+				return false;
+			}
+			return true;
+		}
+
 
 		/// <summary>
 		/// Gets the dead-part of a given <c><see cref="McdRecord"/></c>.
@@ -85,7 +110,7 @@ namespace XCom
 
 				using (var f = new Infobox(
 										"Warning",
-										"Invalid death part",
+										"Invalid dead part",
 										Infobox.SplitString(warn),
 										InfoboxType.Warn))
 				{

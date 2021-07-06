@@ -946,71 +946,56 @@ namespace McdView
 		private void LoadTerrain(string pfeMcd)
 		{
 			using (var fs = FileService.OpenFile(pfeMcd))
-			if (fs != null)
+			if (fs != null && TilepartFactory.CheckMcdLength(fs, pfeMcd))
 			{
-				if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
+				PfeMcd = pfeMcd;
+				Selid = -1;
+
+				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
+
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					using (var f = new Infobox(
-											"Load error",
-											Infobox.SplitString("The file appears to be corrupted. The length of the"
-													+ " file is not exactly divisible by the length of a record."),
-											pfeMcd,
-											InfoboxType.Error))
-					{
-						f.ShowDialog(this);
-					}
+					var bindata = new byte[McdRecord.Length];
+					fs.Read(bindata, 0, McdRecord.Length);
+
+					parts[id] = new Tilepart(
+										id,
+										new McdRecord(bindata));
 				}
-				else
+
+				Tilepart part;
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					PfeMcd = pfeMcd;
-					Selid = -1;
-
-					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						var bindata = new byte[McdRecord.Length];
-						fs.Read(bindata, 0, McdRecord.Length);
-
-						parts[id] = new Tilepart(
-											id,
-											new McdRecord(bindata));
-					}
-
-					Tilepart part;
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						part = parts[id];
-						part.Dead = TilepartFactory.GetDeadPart(
-															part.Record,
-															parts,
-															Label,
-															id);
-						part.Altr = TilepartFactory.GetAltrPart(
-															part.Record,
-															parts,
-															Label,
-															id);
-					}
-
-					Parts = parts; // do not assign to 'Parts' until the array is gtg.
-					CacheLoad.SetCacheSaved(Parts);
-
-					Changed =
-					PartsPanel.SpritesChanged = false;
-
-					miSave  .Enabled =
-					miSaveas.Enabled =
-					miReload.Enabled = true;
-
-					PartsPanel.Select();
-
-
-					Spriteset = SpritesetManager.CreateSpriteset(
-															Label,
-															Path.GetDirectoryName(PfeMcd),
-															Pal);
+					part = parts[id];
+					part.Dead = TilepartFactory.GetDeadPart(
+														part.Record,
+														parts,
+														Label,
+														id);
+					part.Altr = TilepartFactory.GetAltrPart(
+														part.Record,
+														parts,
+														Label,
+														id);
 				}
+
+				Parts = parts; // do not assign to 'Parts' until the array is gtg.
+				CacheLoad.SetCacheSaved(Parts);
+
+				Changed =
+				PartsPanel.SpritesChanged = false;
+
+				miSave  .Enabled =
+				miSaveas.Enabled =
+				miReload.Enabled = true;
+
+				PartsPanel.Select();
+
+
+				Spriteset = SpritesetManager.CreateSpriteset(
+														Label,
+														Path.GetDirectoryName(PfeMcd),
+														Pal);
 			}
 		}
 
@@ -1029,66 +1014,51 @@ namespace McdView
 		private void OnClick_Reload(object sender, EventArgs e)
 		{
 			using (var fs = FileService.OpenFile(PfeMcd))
-			if (fs != null)
+			if (fs != null && TilepartFactory.CheckMcdLength(fs, PfeMcd))
 			{
-				if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
+				Selid = -1;
+
+				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
+
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					using (var f = new Infobox(
-											"Load error",
-											Infobox.SplitString("The file appears to be corrupted. The length of the"
-													+ " file is not exactly divisible by the length of a record."),
-											PfeMcd,
-											InfoboxType.Error))
-					{
-						f.ShowDialog(this);
-					}
+					var bindata = new byte[McdRecord.Length];
+					fs.Read(bindata, 0, McdRecord.Length);
+
+					parts[id] = new Tilepart(
+										id,
+										new McdRecord(bindata));
 				}
-				else
+
+				Tilepart part;
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					Selid = -1;
-
-					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						var bindata = new byte[McdRecord.Length];
-						fs.Read(bindata, 0, McdRecord.Length);
-
-						parts[id] = new Tilepart(
-											id,
-											new McdRecord(bindata));
-					}
-
-					Tilepart part;
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						part = parts[id];
-						part.Dead = TilepartFactory.GetDeadPart(
-															part.Record,
-															parts,
-															Label,
-															id);
-						part.Altr = TilepartFactory.GetAltrPart(
-															part.Record,
-															parts,
-															Label,
-															id);
-					}
-
-					Parts = parts; // do not assign to 'Parts' until the array is gtg.
-					CacheLoad.SetCacheSaved(Parts);
-
-					Changed =
-					PartsPanel.SpritesChanged = false;
-
-					PartsPanel.Select();
-
-
-					Spriteset = SpritesetManager.CreateSpriteset(
-															Label,
-															Path.GetDirectoryName(PfeMcd),
-															Pal);
+					part = parts[id];
+					part.Dead = TilepartFactory.GetDeadPart(
+														part.Record,
+														parts,
+														Label,
+														id);
+					part.Altr = TilepartFactory.GetAltrPart(
+														part.Record,
+														parts,
+														Label,
+														id);
 				}
+
+				Parts = parts; // do not assign to 'Parts' until the array is gtg.
+				CacheLoad.SetCacheSaved(Parts);
+
+				Changed =
+				PartsPanel.SpritesChanged = false;
+
+				PartsPanel.Select();
+
+
+				Spriteset = SpritesetManager.CreateSpriteset(
+														Label,
+														Path.GetDirectoryName(PfeMcd),
+														Pal);
 			}
 		}
 
@@ -1110,76 +1080,61 @@ namespace McdView
 				int selid)
 		{
 			using (var fs = FileService.OpenFile(pfeMcd))
-			if (fs != null)
+			if (fs != null && TilepartFactory.CheckMcdLength(fs, pfeMcd))
 			{
-				if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
+				PfeMcd = pfeMcd;
+
+				if (pal == Palette.TftdBattle) // else is 'Palette.UfoBattle'
+					OnClick_PaletteTftd(null, EventArgs.Empty);
+
+				var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
+
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					using (var f = new Infobox(
-											"Load error",
-											Infobox.SplitString("The file appears to be corrupted. The length of the"
-													+ " file is not exactly divisible by the length of a record."),
-											pfeMcd,
-											InfoboxType.Error))
-					{
-						f.ShowDialog(this);
-					}
+					var bindata = new byte[McdRecord.Length];
+					fs.Read(bindata, 0, McdRecord.Length);
+
+					parts[id] = new Tilepart(
+										id,
+										new McdRecord(bindata));
 				}
-				else
+
+				Tilepart part;
+				for (int id = 0; id != parts.Length; ++id)
 				{
-					PfeMcd = pfeMcd;
-
-					if (pal == Palette.TftdBattle) // else is 'Palette.UfoBattle'
-						OnClick_PaletteTftd(null, EventArgs.Empty);
-
-					var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						var bindata = new byte[McdRecord.Length];
-						fs.Read(bindata, 0, McdRecord.Length);
-
-						parts[id] = new Tilepart(
-											id,
-											new McdRecord(bindata));
-					}
-
-					Tilepart part;
-					for (int id = 0; id != parts.Length; ++id)
-					{
-						part = parts[id];
-						part.Dead = TilepartFactory.GetDeadPart(
-															part.Record,
-															parts,
-															Label,
-															id);
-						part.Altr = TilepartFactory.GetAltrPart(
-															part.Record,
-															parts,
-															Label,
-															id);
-					}
-
-					Parts = parts; // do not assign to 'Parts' until the array is gtg.
-					CacheLoad.SetCacheSaved(Parts);
-
-					if (selid < Parts.Length) Selid = selid;
-					else                      Selid = -1;
-
-					Changed =
-					PartsPanel.SpritesChanged = false;
-
-					miSave  .Enabled =
-					miSaveas.Enabled =
-					miReload.Enabled = true;
-
-					PartsPanel.Select();
-
-
-					Spriteset = SpritesetManager.CreateSpriteset(
-															Label,
-															Path.GetDirectoryName(PfeMcd),
-															pal);
+					part = parts[id];
+					part.Dead = TilepartFactory.GetDeadPart(
+														part.Record,
+														parts,
+														Label,
+														id);
+					part.Altr = TilepartFactory.GetAltrPart(
+														part.Record,
+														parts,
+														Label,
+														id);
 				}
+
+				Parts = parts; // do not assign to 'Parts' until the array is gtg.
+				CacheLoad.SetCacheSaved(Parts);
+
+				if (selid < Parts.Length) Selid = selid;
+				else                      Selid = -1;
+
+				Changed =
+				PartsPanel.SpritesChanged = false;
+
+				miSave  .Enabled =
+				miSaveas.Enabled =
+				miReload.Enabled = true;
+
+				PartsPanel.Select();
+
+
+				Spriteset = SpritesetManager.CreateSpriteset(
+														Label,
+														Path.GetDirectoryName(PfeMcd),
+														pal);
 			}
 		}
 
@@ -1495,58 +1450,43 @@ namespace McdView
 					Copier.PfeMcd = ofd.FileName;
 
 					using (var fs = FileService.OpenFile(Copier.PfeMcd))
-					if (fs != null)
+					if (fs != null && TilepartFactory.CheckMcdLength(fs, Copier.PfeMcd))
 					{
-						if (((int)fs.Length % McdRecord.Length) != 0) // TODO: move this routine to XCom ...
+						var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
+
+						for (int id = 0; id != parts.Length; ++id)
 						{
-							using (var f = new Infobox(
-													"Load error",
-													Infobox.SplitString("The file appears to be corrupted. The length of the"
-															+ " file is not exactly divisible by the length of a record."),
-													Copier.PfeMcd,
-													InfoboxType.Error))
-							{
-								f.ShowDialog(this);
-							}
+							var bindata = new byte[McdRecord.Length];
+							fs.Read(bindata, 0, McdRecord.Length);
+
+							parts[id] = new Tilepart(
+												id,
+												new McdRecord(bindata));
 						}
-						else
+
+						Tilepart part;
+						for (int id = 0; id != parts.Length; ++id)
 						{
-							var parts = new Tilepart[(int)fs.Length / McdRecord.Length];
-
-							for (int id = 0; id != parts.Length; ++id)
-							{
-								var bindata = new byte[McdRecord.Length];
-								fs.Read(bindata, 0, McdRecord.Length);
-
-								parts[id] = new Tilepart(
-													id,
-													new McdRecord(bindata));
-							}
-
-							Tilepart part;
-							for (int id = 0; id != parts.Length; ++id)
-							{
-								part = parts[id];
-								part.Dead = TilepartFactory.GetDeadPart(
-																	part.Record,
-																	parts,
-																	Copier.Label,
-																	id);
-								part.Altr = TilepartFactory.GetAltrPart(
-																	part.Record,
-																	parts,
-																	Copier.Label,
-																	id);
-							}
-
-							Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.
-
-
-							Copier.Spriteset = SpritesetManager.CreateSpriteset(
-																			Copier.Label,
-																			Path.GetDirectoryName(Copier.PfeMcd),
-																			Pal);
+							part = parts[id];
+							part.Dead = TilepartFactory.GetDeadPart(
+																part.Record,
+																parts,
+																Copier.Label,
+																id);
+							part.Altr = TilepartFactory.GetAltrPart(
+																part.Record,
+																parts,
+																Copier.Label,
+																id);
 						}
+
+						Copier.Parts = parts; // do not assign to 'Parts' until the array is gtg.
+
+
+						Copier.Spriteset = SpritesetManager.CreateSpriteset(
+																		Copier.Label,
+																		Path.GetDirectoryName(Copier.PfeMcd),
+																		Pal);
 					}
 
 					Copier.cb_IalSprites.Enabled = (Copier.Spriteset != null);
