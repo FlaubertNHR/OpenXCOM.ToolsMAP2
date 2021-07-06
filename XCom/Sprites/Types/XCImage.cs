@@ -57,7 +57,7 @@ namespace XCom
 		/// palette-indices.
 		/// </summary>
 		/// <remarks>Byte arrays get initialized w/ "0" by default.</remarks>
-		private byte[] _bindata;
+		protected byte[] _bindata;
 		#endregion Fields
 
 
@@ -133,13 +133,13 @@ namespace XCom
 
 			Pal = pal;
 
-			if (Pal != null)									// NOTE: this is to check for a call by BitmapService.CreateSprite()
-				Sprite = BitmapService.CreateSprite(			// which is called by
-												width,			// BitmapService.CreateSpriteset() and
-												height,			// several PckViewF contextmenu events
-												GetBindata(),	// BUT: the call by PckSprite..cTor initializer needs to decode
-												Pal.Table);		// the file-data first, then it creates its own 'Image'.
-		}														// that's why i prefer pizza.
+			if (Pal != null)								// NOTE: this is to check for a call by BitmapService.CreateSprite()
+				Sprite = BitmapService.CreateSprite(		// which is called by
+												width,		// BitmapService.CreateSpriteset() and
+												height,		// several PckViewF contextmenu events
+												_bindata,	// BUT: the call by PckSprite..cTor initializer needs to decode
+												Pal.Table);	// the file-data first, then it creates its own 'Image'.
+		}													// that's why i prefer pizza.
 
 		/// <summary>
 		/// cTor[1]. For clone.
@@ -152,17 +152,6 @@ namespace XCom
 
 
 		#region Methods
-		/// <summary>
-		/// Sets bindata.
-		/// </summary>
-		/// <param name="bindata"></param>
-		/// <remarks>Don't use a property setter - ca1044 - fxCop doesn't like
-		/// writeonly properties.</remarks>
-		protected void SetBindata(byte[] bindata)
-		{
-			_bindata = bindata;
-		}
-
 		/// <summary>
 		/// Gets bindata.
 		/// </summary>
@@ -181,9 +170,10 @@ namespace XCom
 		/// <returns>true if all palette refs are tid</returns>
 		public bool Istid()
 		{
-			for (int i = 0; i != GetBindata().Length; ++i)
+			byte[] bindata = GetBindata();
+			for (int i = 0; i != bindata.Length; ++i)
 			{
-				if (GetBindata()[i] != Palette.Tid)
+				if (_bindata[i] != Palette.Tid)
 					return false;
 			}
 			return true;

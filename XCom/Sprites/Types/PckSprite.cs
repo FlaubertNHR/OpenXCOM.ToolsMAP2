@@ -101,7 +101,7 @@ namespace XCom
 					null, // do *not* pass 'pal' in here. See XCImage..cTor
 					id)
 		{
-			_spriteset = spriteset; // only for ToString() and 'Fail'.
+			_spriteset = spriteset; // only for ToString(), 'Fail', and Duplicate().
 
 			if (createToned)
 				Ordinal = ++_ordinal; // only for 'MapInfoDialog'.
@@ -109,8 +109,7 @@ namespace XCom
 			Pal = pal;
 
 			//Logfile.Log("PckSprite spriteset= " + spriteset.Label + " Pal= " + Pal + " Id= " + Id + " Ordinal= " + Ordinal);
-
-			//Logfile.Log("PckSprite..cTor id= " + id + " bindata.Length= " + bindata.Length);
+			//Logfile.Log(". bindata.Length= " + bindata.Length);
 
 			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is count of transparent rows
 			for (int src = 1; src != bindata.Length; ++src)
@@ -127,14 +126,14 @@ namespace XCom
 						break;
 
 					default:
-						if (dst >= GetBindata().Length)
+						if (dst >= _bindata.Length)
 						{
 							//Logfile.Log(". . FAIL dst= " + dst);
 							_spriteset.Failr = Spriteset.Fail.pck;
 							return;
 						}
 
-						GetBindata()[dst++] = bindata[src];
+						_bindata[dst++] = bindata[src];
 						//Logfile.Log(". dst= " + dst);
 						break;
 				}
@@ -143,7 +142,7 @@ namespace XCom
 			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
-											GetBindata(),
+											_bindata,
 											Pal.Table);
 
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
@@ -152,7 +151,7 @@ namespace XCom
 				SpriteToned = BitmapService.CreateSprite(
 													XCImage.SpriteWidth,
 													XCImage.SpriteHeight,
-													GetBindata(),
+													_bindata,
 													Pal.GrayScale.Table); // default to grayscale.
 		}
 
@@ -180,9 +179,11 @@ namespace XCom
 			int tran = 0;
 			bool first = true;
 
-			for (int id = 0; id != sprite.GetBindata().Length; ++id)
+			byte[] bindata = sprite.GetBindata();
+
+			for (int id = 0; id != bindata.Length; ++id)
 			{
-				byte b = sprite.GetBindata()[id];
+				byte b = bindata[id];
 
 				if (b == Palette.Tid)
 				{
@@ -263,11 +264,11 @@ namespace XCom
 
 			ret += Id + Environment.NewLine;
 
-			for (int i = 0; i != GetBindata().Length; ++i)
+			for (int i = 0; i != _bindata.Length; ++i)
 			{
-				ret += GetBindata()[i];
+				ret += _bindata[i];
 
-				switch (GetBindata()[i])
+				switch (_bindata[i])
 				{
 					case MarkerEos:
 						ret += Environment.NewLine;
@@ -304,7 +305,7 @@ namespace XCom
 //			sprite.Ordinal = -1; // not used.
 
 			// XCImage vars
-			sprite.SetBindata(GetBindata().Clone() as byte[]);
+			sprite._bindata = _bindata.Clone() as byte[];
 
 			sprite.Sprite      = ObjectCopier.Clone<Bitmap>(Sprite);		// workaround for Bitmap's clone/copy/new shenanigans
 			sprite.SpriteToned = ObjectCopier.Clone<Bitmap>(SpriteToned);	// workaround for Bitmap's clone/copy/new shenanigans

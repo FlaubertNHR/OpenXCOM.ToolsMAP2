@@ -131,9 +131,11 @@ namespace PckView
 				int pixelX = e.X / _scale;
 				int pixelY = e.Y / _scale;
 
-				int binid = pixelY * (Sprite.GetBindata().Length / XCImage.SpriteHeight) + pixelX;
+				byte[] bindata = Sprite.GetBindata();
 
-				if (binid > -1 && binid < Sprite.GetBindata().Length) // safety.
+				int binid = pixelY * (bindata.Length / XCImage.SpriteHeight) + pixelX;
+
+				if (binid > -1 && binid < bindata.Length) // safety.
 				{
 					switch (SpriteEditorF.Mode)
 					{
@@ -146,13 +148,13 @@ namespace PckView
 									if (palid < PckSprite.MarkerRle
 										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetManager.TAB_WORD_LENGTH_0)
 									{
-										if (palid != (int)Sprite.GetBindata()[binid])
+										if (palid != (int)bindata[binid])
 										{
-											Sprite.GetBindata()[binid] = (byte)palid;
+											bindata[binid] = (byte)palid;
 											Bitmap sprite = BitmapService.CreateSprite(
 																					XCImage.SpriteWidth,
 																					XCImage.SpriteHeight,
-																					Sprite.GetBindata(),
+																					bindata,
 																					Sprite.Pal.Table); //_feditor._f.Pal.Table
 											Sprite.Dispose();
 											Sprite.Sprite = sprite;
@@ -188,15 +190,15 @@ namespace PckView
 							}
 							else // is LoFT
 							{
-								if (Sprite.GetBindata()[binid] != Palette.LoFTclear)
-									Sprite.GetBindata()[binid]  = Palette.LoFTclear;
+								if (bindata[binid] != Palette.LoFTclear)
+									bindata[binid]  = Palette.LoFTclear;
 								else
-									Sprite.GetBindata()[binid]  = Palette.LoFTSolid;
+									bindata[binid]  = Palette.LoFTSolid;
 
 								Bitmap sprite = BitmapService.CreateSprite(
 																		XCImage.SpriteWidth,
 																		XCImage.SpriteHeight,
-																		Sprite.GetBindata(),
+																		bindata,
 																		Sprite.Pal.Table); //Palette.Binary.Table
 								Sprite.Dispose();
 								Sprite.Sprite = sprite;
@@ -211,7 +213,7 @@ namespace PckView
 							break;
 
 						case EditMode.Locked: // eye-dropper ->
-							_feditor._fpalette.PalPanel.SelectPalid(Sprite.GetBindata()[binid]);
+							_feditor._fpalette.PalPanel.SelectPalid(bindata[binid]);
 							break;
 					}
 				}
@@ -232,11 +234,13 @@ namespace PckView
 					int pixelX = e.X / _scale;
 					int pixelY = e.Y / _scale;
 
-					int binid = pixelY * (Sprite.GetBindata().Length / XCImage.SpriteHeight) + pixelX;
+					byte[] bindata = Sprite.GetBindata();
 
-					if (binid > -1 && binid < Sprite.GetBindata().Length) // safety.
+					int binid = pixelY * (bindata.Length / XCImage.SpriteHeight) + pixelX;
+
+					if (binid > -1 && binid < bindata.Length) // safety.
 					{
-						int palid = Sprite.GetBindata()[binid];
+						int palid = bindata[binid];
 						if (palid != Palid)
 							Palid = palid;
 
@@ -259,13 +263,15 @@ namespace PckView
 
 			if (Sprite != null)
 			{
+				byte[] bindata = Sprite.GetBindata();
+
 				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON
 					&& _feditor._f.SetType != SpritesetType.LoFT)
 				{
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
 					{
-						int palid = Sprite.GetBindata()[y * XCImage.SpriteWidth + x];
+						int palid = bindata[y * XCImage.SpriteWidth + x];
 						using (var brush = new SolidBrush(Shade(Sprite.Pal.Table.Entries[palid])))
 						{
 							graphics.FillRectangle(
@@ -282,7 +288,7 @@ namespace PckView
 					for (int y = 0; y != XCImage.SpriteHeight; ++y)
 					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
 					{
-						int palid = Sprite.GetBindata()[y * XCImage.SpriteWidth + x];
+						int palid = bindata[y * XCImage.SpriteWidth + x];
 						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
 						{
 							graphics.FillRectangle(

@@ -9,18 +9,24 @@ using DSShared;
 namespace XCom
 {
 	/// <summary>
-	/// a SPRITESET. A collection of images that is usually created of PCK/TAB
-	/// terrain file data but can also be bigobs or a ScanG iconset.
+	/// a <c>Spriteset</c>. A collection of images that is usually created of
+	/// <c>PCK+TAB</c> terrain file data but can also be bigobs or a ScanG or
+	/// LoFT iconset.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
+	/// <remarks>This object is disposable but eff their
+	/// <c>IDisposable crap</c>.</remarks>
+	/// <remarks>Only PckView maintains ScanG and/or LoFT iconsets as
+	/// <c>Spritesets</c>. MapView and McdView use ScanG and LoFT icons in
+	/// nonjagged 2d-arrays of color-indices which are used to instantiate
+	/// <c>Bitmaps</c> to be drawn on-the-fly.</remarks>
 	public sealed class Spriteset
 	{
 		public enum Fail
 		{
-			non, // successful
-			pck, // overflow in the Pckfile
-			tab, // overflow in the Tabfile
-			qty  // Pck vs Tab count mismatch
+			non, // 0 - successful
+			pck, // 1 - overflow in the Pckfile
+			tab, // 2 - overflow in the Tabfile
+			qty  // 3 - Pck vs Tab count mismatch
 		}
 
 
@@ -698,11 +704,11 @@ namespace XCom
 			{
 				fail = false;
 
-				XCImage icon;
+				byte[] bindata;
 				for (int id = 0; id != iconset.Count; ++id)
 				{
-					icon = iconset[id];
-					fs.Write(icon.GetBindata(), 0, icon.GetBindata().Length);
+					bindata = iconset[id].GetBindata();
+					fs.Write(bindata, 0, bindata.Length);
 				}
 			}
 
@@ -734,16 +740,15 @@ namespace XCom
 			{
 				fail = false;
 
-				XCImage icon;
+				byte[] bindata;
 				for (int id = 0; id != iconset.Count; ++id)
 				{
-					icon = iconset[id];
-
 					var buffer = new byte[1];
 					BitArray bits;
 					int b;
 
-					for (int i = 0; i != icon.GetBindata().Length; i += 16)
+					bindata = iconset[id].GetBindata();
+					for (int i = 0; i != bindata.Length; i += 16)
 					{
 						// Look don't ask it appears to work ...
 
@@ -751,7 +756,7 @@ namespace XCom
 						bits = new BitArray(8);
 						for (int j = 15; j != 7; --j, ++b)
 						{
-							if (icon.GetBindata()[i + j] != 0)
+							if (bindata[i + j] != 0)
 								bits[b] = true;
 							else
 								bits[b] = false;
@@ -763,7 +768,7 @@ namespace XCom
 						bits = new BitArray(8);
 						for (int j = 7; j != -1; --j, ++b)
 						{
-							if (icon.GetBindata()[i + j] != 0)
+							if (bindata[i + j] != 0)
 								bits[b] = true;
 							else
 								bits[b] = false;

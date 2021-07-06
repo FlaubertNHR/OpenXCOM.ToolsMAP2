@@ -18,7 +18,8 @@ namespace XCom
 		/// <summary>
 		/// Instantiates a ScanG icon derived on <c><see cref="XCImage"/></c>.
 		/// </summary>
-		/// <param name="bindata">the ScanG.Dat source data per ScanGicon</param>
+		/// <param name="bindata">the ScanG.Dat source data for this
+		/// <c>ScanGicon</c></param>
 		/// <param name="id"></param>
 		internal ScanGicon(
 				byte[] bindata,
@@ -36,7 +37,7 @@ namespace XCom
 			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
-											GetBindata(),
+											_bindata,
 											Pal.Table);
 		}
 		#endregion cTor

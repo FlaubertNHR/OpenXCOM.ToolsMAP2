@@ -17,7 +17,8 @@ namespace XCom
 		/// <summary>
 		/// Instantiates a LoFT icon derived on <c><see cref="XCImage"/></c>.
 		/// </summary>
-		/// <param name="bindata">the LoFTemps.Dat source data per LoFTicon</param>
+		/// <param name="bindata">the LoFTemps.Dat source data for this
+		/// <c>LoFTicon</c></param>
 		/// <param name="id"></param>
 		internal LoFTicon(
 				byte[] bindata,
@@ -35,7 +36,7 @@ namespace XCom
 			Sprite = BitmapService.CreateSprite(
 											XCImage.SpriteWidth,
 											XCImage.SpriteHeight,
-											GetBindata(),
+											_bindata,
 											Pal.Table);
 		}
 		#endregion cTor
