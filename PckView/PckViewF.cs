@@ -839,19 +839,14 @@ namespace PckView
 		/// Displays an errorbox to the user about incorrect Bitmap dimensions
 		/// and/or pixel-format.
 		/// </summary>
-		/// <param name="hint">true to suggest proper dimensions/format</param>
-		private void ShowBitmapError(bool hint = true)
+		/// <param name="spritesheet"><c>true</c> if the error occured when
+		/// importing a spritesheet</param>
+		private void ShowBitmapError(bool spritesheet = false)
 		{
-			string copyable;
-			if (hint)
-				copyable = FileDialogStrings.GetError(SetType);
-			else
-				copyable = null;
-
 			using (var f = new Infobox(
 									"Image error",
 									"Detected incorrect Dimensions and/or PixelFormat.",
-									copyable,
+									FileDialogStrings.GetError(SetType, spritesheet),
 									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
@@ -1771,10 +1766,11 @@ namespace PckView
 										|| b.Height % SpriteHeight != 0
 										|| b.PixelFormat != PixelFormat.Format8bppIndexed)
 									{
-										ShowBitmapError(false);
+										ShowBitmapError(true);
 									}
 									else
 									{
+										// TODO: user-choice to Add a spritesheet ... instead of replacing the current one.
 										TilePanel.Spriteset.Dispose();
 
 										SpriteService.ImportSpritesheet(
@@ -1784,9 +1780,6 @@ namespace PckView
 																	SpriteWidth,
 																	SpriteHeight,
 																	SetType);
-
-										// TODO: error-checking on the new Spriteset before Disposing the old one and changing things over.
-										// TODO: user-choice to Add a spritesheet ... instead of replacing the current one.
 
 										SpritesetCountChanged(-1);
 									}

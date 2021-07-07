@@ -76,15 +76,20 @@ namespace PckView
 		/// Gets error hint.
 		/// </summary>
 		/// <param name="setType"></param>
+		/// <param name="spritesheet"><c>true</c> if the error occured when
+		/// importing a spritesheet</param>
 		/// <returns></returns>
-		internal static string GetError(Spriteset.SsType setType)
+		internal static string GetError(Spriteset.SsType setType, bool spritesheet = false)
 		{
+			string error = "Image needs to be ";
+			if (spritesheet) error += "divisible by ";
+
 			switch (setType)
 			{
-				case Spriteset.SsType.Pck:    return "Image needs to be 32x40 8-bpp";
-				case Spriteset.SsType.Bigobs: return "Image needs to be 32x48 8-bpp";
-				case Spriteset.SsType.ScanG:  return "Image needs to be 4x4 8-bpp";
-				case Spriteset.SsType.LoFT:   return "Image needs to be 16x16 8-bpp";
+				case Spriteset.SsType.Pck:    return error + "32x40 8-bpp";
+				case Spriteset.SsType.Bigobs: return error + "32x48 8-bpp";
+				case Spriteset.SsType.ScanG:  return error + "4x4 8-bpp";
+				case Spriteset.SsType.LoFT:   return error + "16x16 8-bpp";
 			}
 			return String.Empty;
 		}
