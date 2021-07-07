@@ -127,7 +127,7 @@ namespace MapView
 //				_graphics.DrawImage(
 //								sprite,
 //								rect,
-//								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+//								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 //								GraphicsUnit.Pixel,
 //								_ia);
 //			else
@@ -159,8 +159,8 @@ namespace MapView
 			int palid;
 
 			int i = -1, h,w;
-			for (h = 0; h != XCImage.SpriteHeight40; ++h)
-			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
+			for (h = 0; h != Spriteset.SpriteHeight40; ++h)
+			for (w = 0; w != Spriteset.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
 				if (palid != Palette.Tid)
@@ -198,7 +198,7 @@ namespace MapView
 //				_graphics.DrawImage(
 //								sprite,
 //								rect,
-//								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+//								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 //								GraphicsUnit.Pixel,
 //								_ia);
 //			else
@@ -222,8 +222,8 @@ namespace MapView
 			int palid;
 
 			int i = -1, h,w;
-			for (h = 0; h != XCImage.SpriteHeight40; ++h)
-			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
+			for (h = 0; h != Spriteset.SpriteHeight40; ++h)
+			for (w = 0; w != Spriteset.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
 				if (palid != Palette.Tid)

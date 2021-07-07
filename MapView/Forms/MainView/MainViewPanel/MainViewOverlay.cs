@@ -1565,7 +1565,7 @@ namespace MapView.Forms.MainView
 //						   && ClientRectangle.Contains(PointToClient(Control.MousePosition));
 
 			for (int
-				lev = _file.MapSize.Levs - 1;
+				lev = _file.Levs - 1;
 				lev >= _file.Level && lev != -1;
 				--lev)
 			{
@@ -1605,7 +1605,7 @@ namespace MapView.Forms.MainView
 //											lev == _file.Level);
 //						}
 
-						tile = _file[row, col, lev];
+						tile = _file.GetTile(row, col, lev);
 						if (lev == _file.Level || !tile.Occulted)
 						{
 							DrawTile(tile, x, y);
@@ -1936,8 +1936,8 @@ namespace MapView.Forms.MainView
 			int palid;
 
 			int i = -1, w,h;
-			for (h = 0; h != XCImage.SpriteHeight40; ++h)
-			for (w = 0; w != XCImage.SpriteWidth32;  ++w)
+			for (h = 0; h != Spriteset.SpriteHeight40; ++h)
+			for (w = 0; w != Spriteset.SpriteWidth32;  ++w)
 			{
 				palid = bindata[++i];
 				if (palid != Palette.Tid) // <- this is the fix for Mono.
@@ -1962,7 +1962,7 @@ namespace MapView.Forms.MainView
 				_graphics.DrawImage(
 								sprite,
 								rect,
-								0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 								GraphicsUnit.Pixel,
 								_ia);
 			else
@@ -2006,8 +2006,8 @@ namespace MapView.Forms.MainView
 //_d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value.
 
 				uint x, y, offset;
-				for (y = 0; y != XCImage.SpriteHeight40; ++y)
-				for (x = 0; x != XCImage.SpriteWidth;    ++x)
+				for (y = 0; y != Spriteset.SpriteHeight40; ++y)
+				for (x = 0; x != Spriteset.SpriteWidth32;  ++x)
 				{
 					palid = bindata[++i];
 

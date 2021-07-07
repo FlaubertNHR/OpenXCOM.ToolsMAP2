@@ -447,8 +447,8 @@ namespace XCom
 
 				(sprite as PckSprite).SpriteToned =
 				 sprite.Sprite = SpriteService.CreateSprite(
-														XCImage.SpriteWidth32,
-														XCImage.SpriteHeight40,
+														Spriteset.SpriteWidth32,
+														Spriteset.SpriteHeight40,
 														bindata,
 														sprite.Pal.Table);
 			}

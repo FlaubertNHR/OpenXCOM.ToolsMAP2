@@ -25,7 +25,7 @@ namespace XCom
 			Id  = id;
 			Pal = Palette.Binary;
 
-			_width = _height = XCImage.LoFTside;
+			_width = _height = Spriteset.LoFTside;
 			_bindata = bindata;
 
 			Sprite = SpriteService.CreateSprite(

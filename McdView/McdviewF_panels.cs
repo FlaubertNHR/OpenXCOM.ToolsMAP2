@@ -38,7 +38,7 @@ namespace McdView
 			pnl_Sprites.Width = (gb_Sprites.Width - 10);
 
 			int left = pnl_Sprites.Left;
-			int offset = XCImage.SpriteWidth32 - (tb00_phase0.Width / 2);
+			int offset = Spriteset.SpriteWidth32 - (tb00_phase0.Width / 2);
 
 			tb00_phase0.Left = left + SPRITE_ORIGIN_X + offset;
 			tb01_phase1.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
@@ -99,8 +99,8 @@ namespace McdView
 					var rect = new Rectangle(
 										0,
 										SPRITE_ORIGIN_Y,
-										XCImage.SpriteWidth32  * 2,
-										XCImage.SpriteHeight40 * 2);
+										Spriteset.SpriteWidth32  * 2,
+										Spriteset.SpriteHeight40 * 2);
 
 					for (int i = 0; i != 8; ++i)
 					{
@@ -129,9 +129,9 @@ namespace McdView
 										Spriteset[id].Sprite,
 										new Rectangle(
 													SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i, y,
-													XCImage.SpriteWidth32  * 2,
-													XCImage.SpriteHeight40 * 2),
-										0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+													Spriteset.SpriteWidth32  * 2,
+													Spriteset.SpriteHeight40 * 2),
+										0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 										GraphicsUnit.Pixel,
 										Ia);
 					else
@@ -139,8 +139,8 @@ namespace McdView
 											Colors.BrushInvalid,
 											SPRITE_ORIGIN_X + SPRITE_OFFSET_X * i,
 											SPRITE_ORIGIN_Y,
-											XCImage.SpriteWidth32  * 2,
-											XCImage.SpriteHeight40 * 2);
+											Spriteset.SpriteWidth32  * 2,
+											Spriteset.SpriteHeight40 * 2);
 				}
 			}
 			else // draw blank rectanges ->
@@ -148,8 +148,8 @@ namespace McdView
 				var rect = new Rectangle(
 									0,
 									SPRITE_ORIGIN_Y + 1,
-									XCImage.SpriteWidth32  * 2 - 2,
-									XCImage.SpriteHeight40 * 2 - 2);
+									Spriteset.SpriteWidth32  * 2 - 2,
+									Spriteset.SpriteHeight40 * 2 - 2);
 
 				for (int i = 0; i != 8; ++i)
 				{
@@ -184,7 +184,7 @@ namespace McdView
 						{
 							left = SPRITE_ORIGIN_X + phase * SPRITE_OFFSET_X;
 							if (   e.X > left
-								&& e.X < left + XCImage.SpriteWidth32 * 2)
+								&& e.X < left + Spriteset.SpriteWidth32 * 2)
 							{
 								break;
 							}

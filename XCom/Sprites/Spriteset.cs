@@ -18,30 +18,68 @@ namespace XCom
 	/// <remarks>Only PckView maintains ScanG and/or LoFT iconsets as
 	/// <c>Spritesets</c>. MapView and McdView use ScanG and LoFT icons in
 	/// nonjagged 2d-arrays of color-indices which are used to instantiate
-	/// <c>Bitmaps</c> to be drawn on-the-fly.</remarks>
+	/// <c>Bitmaps</c> that will be drawn on-the-fly.</remarks>
 	public sealed class Spriteset
 	{
 		#region Enums (public)
-		public enum SpritesetType
+		/// <summary>
+		/// The spriteset-type is based on the x/y dimensions of the sprites in
+		/// a <c>Spriteset's</c> <c><see cref="Sprites"/></c>.
+		/// </summary>
+		public enum SsType
 		{
-			non,	// default
-	
-			Pck,	// a terrain or unit PCK+TAB set is currently loaded.
-					// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
-			Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
-					// Bigobs are 32x48 w/ 2-byte Tabword.
-			ScanG,	// a ScanG iconset is currently loaded.
-					// ScanGs are 4x4 w/ 0-byte Tabword.
-			LoFT	// a LoFT iconset is currently loaded.
-					// LoFTs are 16x16 w/ 0-byte Tabword.
+			/// <summary>
+			/// default
+			/// </summary>
+			non,
+
+			/// <summary>
+			/// a terrain or unit PCK+TAB set is currently loaded. These are
+			/// 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword
+			/// (tftd-unit).
+			/// </summary>
+			Pck,
+
+			/// <summary>
+			/// a Bigobs PCK+TAB set is currently loaded. Bigobs are 32x48 w/
+			/// 2-byte Tabword.
+			/// </summary>
+			Bigobs,
+
+			/// <summary>
+			/// a ScanG iconset is currently loaded. ScanGs are 4x4 w/ 0-byte
+			/// Tabword.
+			/// </summary>
+			ScanG,
+
+			/// <summary>
+			/// a LoFT iconset is currently loaded. LoFTs are 16x16 w/ 0-byte
+			/// Tabword.
+			/// </summary>
+			LoFT
 		}
 
 		public enum Fail
 		{
-			non, // 0 - successful
-			pck, // 1 - overflow in the Pckfile
-			tab, // 2 - overflow in the Tabfile
-			qty  // 3 - Pck vs Tab count mismatch
+			/// <summary>
+			/// successful
+			/// </summary>
+			non,
+
+			/// <summary>
+			/// overflow in the Pckfile
+			/// </summary>
+			pck,
+
+			/// <summary>
+			/// overflow in the Tabfile
+			/// </summary>
+			tab,
+
+			/// <summary>
+			/// Pck vs Tab count mismatch
+			/// </summary>
+			qty
 		}
 		#endregion Enums (public)
 
@@ -62,6 +100,17 @@ namespace XCom
 			Sprites.Clear();
 		}
 		#endregion Methods (disposable)
+
+
+		#region Fields (static)
+		public const int SpriteWidth32  = 32; // terrain, units, bigobs
+		public const int SpriteHeight40 = 40; // terrain, units
+
+		public const int SpriteHeight48 = 48; // bigobs
+
+		public const int ScanGside      =  4;
+		public const int LoFTside       = 16;
+		#endregion Fields (static)
 
 
 		#region Properties
@@ -204,8 +253,8 @@ namespace XCom
 		public Spriteset(
 				string label,
 				Palette pal,
-				int spritewidth   = XCImage.SpriteWidth32,
-				int spriteheight  = XCImage.SpriteHeight40,
+				int spritewidth   = SpriteWidth32,
+				int spriteheight  = SpriteHeight40,
 				int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2)
 		{
 			Label = label;
@@ -290,8 +339,8 @@ namespace XCom
 				Palette pal,
 				byte[] bytesPck,
 				byte[] bytesTab,
-				int spritewidth   = XCImage.SpriteWidth32,
-				int spriteheight  = XCImage.SpriteHeight40,
+				int spritewidth   = SpriteWidth32,
+				int spriteheight  = SpriteHeight40,
 				int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2,
 				bool createToned  = false)
 		{
@@ -490,9 +539,9 @@ namespace XCom
 		/// <param name="label"></param>
 		/// <param name="fs">a <c>Stream</c> of the SCANG.DAT or LOFTEMPS.DAT
 		/// file</param>
-		/// <param name="setType"><c><see cref="SpritesetType.LoFT"></see></c>
+		/// <param name="setType"><c><see cref="SsType.LoFT"></see></c>
 		/// if LoFT data,
-		/// <c><see cref="SpritesetType.ScanG">SpritesetType.ScanG</see></c>
+		/// <c><see cref="SsType.ScanG">SsType.ScanG</see></c>
 		/// if ScanG</param>
 		/// <remarks>cf
 		/// <list type="bullet">
@@ -505,7 +554,7 @@ namespace XCom
 		/// <item><c>McdviewF.LoadLoFTufo()</c></item>
 		/// <item><c>McdviewF.LoadLoFTtftd()</c></item>
 		/// </list></remarks>
-		public Spriteset(string label, Stream fs, SpritesetType setType)
+		public Spriteset(string label, Stream fs, SsType setType)
 		{
 			Label         = label;
 			TabwordLength = SpritesetManager.TAB_WORD_LENGTH_0;
@@ -514,8 +563,8 @@ namespace XCom
 
 			switch (setType)
 			{
-				case SpritesetType.ScanG:
-					SpriteWidth = SpriteHeight = XCImage.ScanGside;
+				case SsType.ScanG:
+					SpriteWidth = SpriteHeight = ScanGside;
 
 					bindata = new byte[(int)fs.Length];
 					fs.Read(bindata, 0, bindata.Length);
@@ -533,8 +582,8 @@ namespace XCom
 					Pal = Palette.UfoBattle; // <- default
 					break;
 
-				case SpritesetType.LoFT:
-					SpriteWidth = SpriteHeight = XCImage.LoFTside;
+				case SsType.LoFT:
+					SpriteWidth = SpriteHeight = LoFTside;
 
 					bindata = new byte[(int)fs.Length];
 					fs.Read(bindata, 0, bindata.Length);

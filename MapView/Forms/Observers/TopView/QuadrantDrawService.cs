@@ -40,7 +40,7 @@ namespace MapView.Forms.Observers
 		private const int MarginHori = 10;
 		private const int MarginVert =  3;
 
-		internal const int Quadwidth = XCImage.SpriteWidth32 + MarginHori;
+		internal const int Quadwidth = Spriteset.SpriteWidth32 + MarginHori;
 
 		internal const int StartX = 26;
 		private  const int StartY =  3;
@@ -127,14 +127,14 @@ namespace MapView.Forms.Observers
 							StartX + Quadwidth * quad - 1,
 							StartY);
 				p1 = new Point(
-							StartX + Quadwidth * quad + XCImage.SpriteWidth32 + 1,
+							StartX + Quadwidth * quad + Spriteset.SpriteWidth32 + 1,
 							StartY);
 				p2 = new Point(
-							StartX + Quadwidth * quad + XCImage.SpriteWidth32 + 1,
-							StartY + XCImage.SpriteHeight40 + 1);
+							StartX + Quadwidth * quad + Spriteset.SpriteWidth32 + 1,
+							StartY + Spriteset.SpriteHeight40 + 1);
 				p3 = new Point(
 							StartX + Quadwidth * quad,
-							StartY + XCImage.SpriteHeight40 + 1);
+							StartY + Spriteset.SpriteHeight40 + 1);
 				p4 = new Point(
 							StartX + Quadwidth * quad,
 							StartY);
@@ -158,14 +158,14 @@ namespace MapView.Forms.Observers
 						StartX + Quadwidth * QuadrantPart - 1,
 						StartY);
 			p1 = new Point(
-						StartX + Quadwidth * QuadrantPart + XCImage.SpriteWidth32 + 1,
+						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32 + 1,
 						StartY);
 			p2 = new Point(
-						StartX + Quadwidth * QuadrantPart + XCImage.SpriteWidth32 + 1,
-						StartY + XCImage.SpriteHeight40 + 1);
+						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32 + 1,
+						StartY + Spriteset.SpriteHeight40 + 1);
 			p3 = new Point(
 						StartX + Quadwidth * QuadrantPart,
-						StartY + XCImage.SpriteHeight40 + 1);
+						StartY + Spriteset.SpriteHeight40 + 1);
 			p4 = new Point(
 						StartX + Quadwidth * QuadrantPart,
 						StartY);
@@ -369,8 +369,8 @@ namespace MapView.Forms.Observers
 
 				int palid;
 				int i = -1;
-				for (int y = 0; y != XCImage.SpriteHeight40; ++y)
-				for (int x = 0; x != XCImage.SpriteWidth32;  ++x)
+				for (int y = 0; y != Spriteset.SpriteHeight40; ++y)
+				for (int x = 0; x != Spriteset.SpriteWidth32;  ++x)
 				{
 					if ((palid = bindata[++i]) != Palette.Tid)
 					{
@@ -411,8 +411,8 @@ namespace MapView.Forms.Observers
 
 				int palid;
 				int i = -1;
-				for (int y = 0; y != XCImage.SpriteHeight40; ++y)
-				for (int x = 0; x != XCImage.SpriteWidth32;  ++x)
+				for (int y = 0; y != Spriteset.SpriteHeight40; ++y)
+				for (int x = 0; x != Spriteset.SpriteWidth32;  ++x)
 				{
 					if ((palid = bindata[++i]) != Palette.Tid)
 					{
@@ -441,8 +441,8 @@ namespace MapView.Forms.Observers
 							Door,
 							Font,
 							Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - TextWidth_door) / 2 + Quadwidth * quad + 1,
-							StartY +  XCImage.SpriteHeight40 - Font.Height + PrintOffsetY);
+							StartX + (Spriteset.SpriteWidth32 - TextWidth_door) / 2 + Quadwidth * quad + 1,
+							StartY +  Spriteset.SpriteHeight40 - Font.Height + PrintOffsetY);
 		}
 
 		/// <summary>
@@ -457,8 +457,8 @@ namespace MapView.Forms.Observers
 							type,
 							Font,
 							Brushes.Black,
-							StartX + (XCImage.SpriteWidth32 - width) / 2 + Quadwidth * slot + 1,
-							StartY +  XCImage.SpriteHeight40 + MarginVert);
+							StartX + (Spriteset.SpriteWidth32 - width) / 2 + Quadwidth * slot + 1,
+							StartY +  Spriteset.SpriteHeight40 + MarginVert);
 		}
 
 		/// <summary>
@@ -472,8 +472,8 @@ namespace MapView.Forms.Observers
 								brush,
 								new RectangleF(
 											StartX + Quadwidth * (int)slot,
-											StartY + XCImage.SpriteHeight40 + MarginVert + Font.Height + 1,
-											XCImage.SpriteWidth32,
+											StartY + Spriteset.SpriteHeight40 + MarginVert + Font.Height + 1,
+											Spriteset.SpriteWidth32,
 											SwatchHeight));
 		}
 

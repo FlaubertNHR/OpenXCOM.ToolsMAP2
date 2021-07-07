@@ -123,8 +123,8 @@ namespace XCom
 				string dir,
 				Palette pal,
 				bool createToned = false,
-				int spritewidth  = XCImage.SpriteWidth32,
-				int spriteheight = XCImage.SpriteHeight40)
+				int spritewidth  = Spriteset.SpriteWidth32,
+				int spriteheight = Spriteset.SpriteHeight40)
 		{
 			string head, copy;
 

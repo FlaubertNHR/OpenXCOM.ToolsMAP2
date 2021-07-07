@@ -61,9 +61,9 @@ namespace McdView
 			else
 				w = COLS;
 
-			w *= XCImage.SpriteWidth32;
+			w *= Spriteset.SpriteWidth32;
 
-			int h = (_f.Spriteset.Count + COLS - 1) / COLS * (XCImage.SpriteHeight40 + VERT_TEXT_PAD);
+			int h = (_f.Spriteset.Count + COLS - 1) / COLS * (Spriteset.SpriteHeight40 + VERT_TEXT_PAD);
 
 			ClientSize = new Size(w, h);
 
@@ -113,23 +113,23 @@ namespace McdView
 			int x, y;
 			for (int i = 0; i != _f.Spriteset.Count; ++i)
 			{
-				x = (i % COLS) *  XCImage.SpriteWidth32;
-				y = (i / COLS) * (XCImage.SpriteHeight40 + VERT_TEXT_PAD);
+				x = (i % COLS) *  Spriteset.SpriteWidth32;
+				y = (i / COLS) * (Spriteset.SpriteHeight40 + VERT_TEXT_PAD);
 
 				graphics.DrawImage(
 								_f.Spriteset[i].Sprite,
 								new Rectangle(
 											x, y,
-											XCImage.SpriteWidth32,
-											XCImage.SpriteHeight40),
-								0, 0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+											Spriteset.SpriteWidth32,
+											Spriteset.SpriteHeight40),
+								0, 0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 								GraphicsUnit.Pixel,
 								_f.Ia);
 
 				rect = new Rectangle(
 								x,
-								y + XCImage.SpriteHeight40,
-								XCImage.SpriteWidth32,
+								y + Spriteset.SpriteHeight40,
+								Spriteset.SpriteWidth32,
 								VERT_TEXT_PAD);
 
 				if (i == _id)
@@ -163,8 +163,8 @@ namespace McdView
 //					if (   e.X > -1 && e.X < ClientSize.Width	// NOTE: Bypass event if cursor moves off the clientarea before released.
 //						&& e.Y > -1 && e.Y < ClientSize.Height)	// - required only if MouseUp
 				{
-					int id = e.Y / (XCImage.SpriteHeight40 + VERT_TEXT_PAD) * COLS
-						   + e.X /  XCImage.SpriteWidth32;
+					int id = e.Y / (Spriteset.SpriteHeight40 + VERT_TEXT_PAD) * COLS
+						   + e.X /  Spriteset.SpriteWidth32;
 
 					if (id < _f.Spriteset.Count)
 					{

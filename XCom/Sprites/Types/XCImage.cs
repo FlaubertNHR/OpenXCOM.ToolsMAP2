@@ -40,20 +40,6 @@ namespace XCom
 		#endregion Methods (disposable)
 
 
-		#region Fields (static)
-		public const int SpriteWidth32  = 32; // for MapView, so I don't have to recode a bunch of crap there.
-		public const int SpriteHeight40 = 40; // for MapView, so I don't have to recode a bunch of crap there.
-
-		// terrain & units 40px / bigobs 48px / scang 4px / loft 16px
-		// NOTE: Bigobs, ScanG, and LoFT shall be supported only by PckView.
-
-		public const int SpriteHeight48 = 48; // for Bigobs in PckView
-
-		public const int ScanGside      =  4; // for ScanG icon dimensions in PckView
-		public const int LoFTside       = 16; // for LoFT  icon dimensions in PckView
-		#endregion Fields (static)
-
-
 		#region Fields
 		/// <summary>
 		/// A byte array containing the (uncompressed) sprite-pixels as

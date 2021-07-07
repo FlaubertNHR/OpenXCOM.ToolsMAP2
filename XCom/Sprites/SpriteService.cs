@@ -76,14 +76,14 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of a sprite in the spritesheet</param>
 		/// <param name="height">the height of a sprite in the spritesheet</param>
-		/// <param name="spritesettype"><c><see cref="Spriteset.SpritesetType">Spriteset.SpritesetType</see></c></param>
+		/// <param name="spritesettype"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c></param>
 		public static void ImportSpritesheet(
 				IList<XCImage> sprites,
 				Bitmap b,
 				Palette pal,
 				int width,
 				int height,
-				Spriteset.SpritesetType spritesettype)
+				Spriteset.SsType spritesettype)
 		{
 			int cols = b.Width  / width;
 			int rows = b.Height / height;
@@ -118,7 +118,7 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of the image</param>
 		/// <param name="height">the height of the image</param>
-		/// <param name="setType"><c><see cref="Spriteset.SpritesetType">Spriteset.SpritesetType</see></c></param>
+		/// <param name="setType"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c></param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
 		/// <returns>an XCImage-object (base of PckSprite)</returns>
@@ -128,7 +128,7 @@ namespace XCom
 				Palette pal,
 				int width,
 				int height,
-				Spriteset.SpritesetType setType,
+				Spriteset.SsType setType,
 				int x = 0,
 				int y = 0)
 		{
@@ -157,8 +157,8 @@ namespace XCom
 
 				switch (setType)
 				{
-					case Spriteset.SpritesetType.Pck:
-					case Spriteset.SpritesetType.Bigobs:
+					case Spriteset.SsType.Pck:
+					case Spriteset.SsType.Bigobs:
 					{
 						byte palid;
 						for (uint row = 0; row != height; ++row)
@@ -178,8 +178,8 @@ namespace XCom
 						break;
 					}
 
-					case Spriteset.SpritesetType.ScanG:
-					case Spriteset.SpritesetType.LoFT:
+					case Spriteset.SsType.ScanG:
+					case Spriteset.SsType.LoFT:
 						for (uint row = 0; row != height; ++row)
 						for (uint col = 0; col != width;  ++col)
 						{
@@ -188,7 +188,7 @@ namespace XCom
 						break;
 
 					default:
-					case Spriteset.SpritesetType.non: // TODO: error out
+					case Spriteset.SsType.non: // TODO: error out
 						break;
 				}
 			}
@@ -199,8 +199,8 @@ namespace XCom
 
 			switch (setType)
 			{
-				case Spriteset.SpritesetType.Pck:
-				case Spriteset.SpritesetType.Bigobs:
+				case Spriteset.SsType.Pck:
+				case Spriteset.SsType.Bigobs:
 					sprite = new PckSprite(
 										bindata,
 										width,
@@ -209,16 +209,16 @@ namespace XCom
 										pal);
 					break;
 
-				case Spriteset.SpritesetType.ScanG:
+				case Spriteset.SsType.ScanG:
 					sprite = new ScanGicon(bindata, id);
 					break;
 
-				case Spriteset.SpritesetType.LoFT:
+				case Spriteset.SsType.LoFT:
 					sprite = new LoFTicon(bindata, id);
 					break;
 
 				default:
-				case Spriteset.SpritesetType.non: // TODO: error out
+				case Spriteset.SsType.non: // TODO: error out
 					sprite = null;
 					break;
 			}

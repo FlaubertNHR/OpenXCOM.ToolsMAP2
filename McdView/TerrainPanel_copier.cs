@@ -204,7 +204,7 @@ namespace McdView
 								SubIds.Clear();
 								if (SelId != 0)
 								{
-									int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
+									int id = SelId - (Width / (Spriteset.SpriteWidth32 + 1));
 									if (id < 0) id = 0;
 
 									SelId = id;
@@ -216,7 +216,7 @@ namespace McdView
 							case Keys.Control | Keys.PageUp:
 								if (SelId != 0)
 								{
-									int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
+									int id = SelId - (Width / (Spriteset.SpriteWidth32 + 1));
 									if (id < 0) id = 0;
 
 									for (int i = SelId; i != id; --i)
@@ -229,7 +229,7 @@ namespace McdView
 							case Keys.Shift | Keys.PageUp:
 								if (SelId != 0)
 								{
-									int id = SelId - (Width / (XCImage.SpriteWidth32 + 1));
+									int id = SelId - (Width / (Spriteset.SpriteWidth32 + 1));
 									if (id < 0) id = 0;
 
 									for (int i = SelId; i != id; --i)
@@ -244,7 +244,7 @@ namespace McdView
 								SubIds.Clear();
 								if (SelId != Parts.Length - 1)
 								{
-									int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
+									int id = SelId + (Width / (Spriteset.SpriteWidth32 + 1));
 									if (id > Parts.Length - 1) id = Parts.Length - 1;
 
 									SelId = id;
@@ -256,7 +256,7 @@ namespace McdView
 							case Keys.Control | Keys.PageDown:
 								if (SelId != Parts.Length - 1)
 								{
-									int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
+									int id = SelId + (Width / (Spriteset.SpriteWidth32 + 1));
 									if (id > Parts.Length - 1) id = Parts.Length - 1;
 
 									for (int i = SelId; i != id; ++i)
@@ -269,7 +269,7 @@ namespace McdView
 							case Keys.Shift | Keys.PageDown:
 								if (SelId != Parts.Length - 1)
 								{
-									int id = SelId + (Width / (XCImage.SpriteWidth32 + 1));
+									int id = SelId + (Width / (Spriteset.SpriteWidth32 + 1));
 									if (id > Parts.Length - 1) id = Parts.Length - 1;
 
 									for (int i = SelId; i != id; ++i)

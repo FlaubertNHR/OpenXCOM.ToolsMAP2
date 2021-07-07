@@ -131,7 +131,7 @@ namespace MapView.Forms.Observers
 			if (!isKeyInput)
 			{
 				int x = (e.X - QuadrantDrawService.StartX);
-				if (x > -1 && x % QuadrantDrawService.Quadwidth < XCImage.SpriteWidth32) // ignore spaces between sprites
+				if (x > -1 && x % QuadrantDrawService.Quadwidth < Spriteset.SpriteWidth32) // ignore spaces between sprites
 					_keyslot = (PartType)(x / QuadrantDrawService.Quadwidth);
 			}
 

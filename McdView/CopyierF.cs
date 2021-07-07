@@ -343,7 +343,7 @@ namespace McdView
 			if (SPRITE_ORIGIN_X < 0) SPRITE_ORIGIN_X = 0;
 
 			const int left = 5;
-			int offset = XCImage.SpriteWidth32 - (tb00_phase0.Width / 2);
+			int offset = Spriteset.SpriteWidth32 - (tb00_phase0.Width / 2);
 
 			tb00_phase0.Left = left + SPRITE_ORIGIN_X + offset;
 			tb01_phase1.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X;

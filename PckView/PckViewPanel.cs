@@ -62,7 +62,7 @@ namespace PckView
 					_spriteset.Dispose();
 
 				if ((_spriteset = value) != null
-					&& _f.SetType != Spriteset.SpritesetType.LoFT)
+					&& _f.SetType != Spriteset.SsType.LoFT)
 				{
 					_spriteset.Pal = _f.Pal;
 				}
@@ -70,7 +70,7 @@ namespace PckView
 				TileWidth  = _f.SpriteWidth;
 				TileHeight = _f.SpriteHeight;
 
-				if (_f.SetType == Spriteset.SpritesetType.ScanG)
+				if (_f.SetType == Spriteset.SsType.ScanG)
 				{
 					TileWidth  *= 4;
 					TileHeight *= 4;
@@ -270,10 +270,10 @@ namespace PckView
 
 				switch (_f.SetType) // draw sprites
 				{
-					case Spriteset.SpritesetType.Pck:    DrawPck();    break;
-					case Spriteset.SpritesetType.Bigobs: DrawBigobs(); break;
-					case Spriteset.SpritesetType.ScanG:  DrawScanG();  break;
-					case Spriteset.SpritesetType.LoFT:   DrawLoFT();   break;
+					case Spriteset.SsType.Pck:    DrawPck();    break;
+					case Spriteset.SsType.Bigobs: DrawBigobs(); break;
+					case Spriteset.SsType.ScanG:  DrawScanG();  break;
+					case Spriteset.SsType.LoFT:   DrawLoFT();   break;
 				}
 
 				_graphics.FillRectangle(
@@ -379,7 +379,7 @@ namespace PckView
 									_f.BlankSprite,
 									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-									XCImage.SpriteWidth32, XCImage.SpriteHeight48);
+									Spriteset.SpriteWidth32, Spriteset.SpriteHeight48);
 				}
 				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 				{
@@ -436,7 +436,7 @@ namespace PckView
 												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
 												_f.SpriteWidth * 4, _f.SpriteHeight * 4),
-									0,0, XCImage.ScanGside, XCImage.ScanGside,
+									0,0, Spriteset.ScanGside, Spriteset.ScanGside,
 									GraphicsUnit.Pixel,
 									_f.Ia);
 				}

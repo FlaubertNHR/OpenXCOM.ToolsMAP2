@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 		internal static void DisposePanels()
 		{
 			DSShared.Logfile.Log("TilePanel.DisposePanels() static");
-			if (PenSelectedPartBorder != null) // static object
+			if (PenSelectedPartBorder != null)
 			{
 				PenSelectedPartBorder.Dispose();
 				PenSelectedPartBorder = null;
@@ -155,8 +155,8 @@ namespace MapView.Forms.Observers
 		internal static TileView TileView;
 
 		private const int SpriteMargin = 2;
-		private const int SpriteWidth  = XCImage.SpriteWidth32  + SpriteMargin * 2;
-		private const int SpriteHeight = XCImage.SpriteHeight40 + SpriteMargin * 2;
+		private const int SpriteWidth  = Spriteset.SpriteWidth32  + SpriteMargin * 2;
+		private const int SpriteHeight = Spriteset.SpriteHeight40 + SpriteMargin * 2;
 
 		private const int _largeChange = SpriteHeight;	// apparently .NET won't return an accurate value
 														// for LargeChange unless the scrollbar is visible.
@@ -557,8 +557,8 @@ namespace MapView.Forms.Observers
 						ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 					}
 
-					rectInner.Width  = XCImage.SpriteWidth32;
-					rectInner.Height = XCImage.SpriteHeight40;
+					rectInner.Width  = Spriteset.SpriteWidth32;
+					rectInner.Height = Spriteset.SpriteHeight40;
 				}
 
 				IList<Brush> brushes; // TODO: set these when the Mapfile loads
@@ -600,8 +600,8 @@ namespace MapView.Forms.Observers
 
 								int palid;
 								int i = -1;
-								for (int h = 0; h != XCImage.SpriteHeight40; ++h)
-								for (int w = 0; w != XCImage.SpriteWidth32;  ++w)
+								for (int h = 0; h != Spriteset.SpriteHeight40; ++h)
+								for (int w = 0; w != Spriteset.SpriteWidth32;  ++w)
 								{
 									if ((palid = bindata[++i]) != Palette.Tid)
 									{
@@ -620,7 +620,7 @@ namespace MapView.Forms.Observers
 								graphics.DrawImage(								// then draw the sprite itself
 												sprite.Sprite,
 												rectInner,
-												0,0, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+												0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 												GraphicsUnit.Pixel,
 												ia);
 							}

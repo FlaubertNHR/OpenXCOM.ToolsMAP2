@@ -26,7 +26,7 @@ namespace XCom
 			Id  = id;
 			Pal = Palette.UfoBattle; // default: icons have no integral palette.
 
-			_width = _height = XCImage.ScanGside;
+			_width = _height = Spriteset.ScanGside;
 			_bindata = bindata;
 
 			Sprite = SpriteService.CreateSprite(

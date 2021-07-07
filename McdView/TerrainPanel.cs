@@ -26,7 +26,7 @@ namespace McdView
 		protected static readonly IList<Tilepart> _partsCopied = new List<Tilepart>();
 		protected static string _partsCopiedLabel;
 
-		private const int LargeChange = XCImage.SpriteWidth32 + 1;
+		private const int LargeChange = Spriteset.SpriteWidth32 + 1;
 		#endregion Fields (static)
 
 
@@ -62,7 +62,7 @@ namespace McdView
 			{
 				_parts = value;
 
-				TableWidth = _parts.Length * (XCImage.SpriteWidth32 + 1) - 1;
+				TableWidth = _parts.Length * (Spriteset.SpriteWidth32 + 1) - 1;
 
 				OnResize(null);
 
@@ -131,7 +131,7 @@ namespace McdView
 			Scroller.ValueChanged += OnValueChanged_Scroll;
 			Controls.Add(Scroller);
 
-			Height = y3_sprite + XCImage.SpriteHeight40 + Scroller.Height;
+			Height = y3_sprite + Spriteset.SpriteHeight40 + Scroller.Height;
 		}
 		#endregion cTor
 
@@ -223,10 +223,10 @@ namespace McdView
 		#region Events (override)
 		// constants for vertical align ->
 		const int y1_sprite = 0;
-		const int y1_fill   = XCImage.SpriteHeight40;
+		const int y1_fill   = Spriteset.SpriteHeight40;
 		const int y1_fill_h = 18;
 		const int y2_sprite = y1_fill + y1_fill_h;
-		const int y2_line   = y2_sprite + XCImage.SpriteHeight40 + 1;
+		const int y2_line   = y2_sprite + Spriteset.SpriteHeight40 + 1;
 		const int y3_sprite = y2_line;
 
 		private Graphics _graphics;
@@ -251,7 +251,7 @@ namespace McdView
 				int i, spriteId, x;
 				for (i = 0; i != Parts.Length; ++i)
 				{
-					x = i * XCImage.SpriteWidth32 + i + offset;
+					x = i * Spriteset.SpriteWidth32 + i + offset;
 
 					if (i != 0)
 						_graphics.DrawLine( // draw vertical line before each sprite except the first sprite
@@ -277,8 +277,8 @@ namespace McdView
 												Colors.BrushInvalid,
 												x,
 												y1_sprite,
-												XCImage.SpriteWidth32,
-												XCImage.SpriteHeight40);
+												Spriteset.SpriteWidth32,
+												Spriteset.SpriteHeight40);
 					}
 				}
 
@@ -291,26 +291,26 @@ namespace McdView
 				{
 					_graphics.FillRectangle(
 										Colors.BrushHilight,
-										SelId * (XCImage.SpriteWidth32 + 1) + offset,
+										SelId * (Spriteset.SpriteWidth32 + 1) + offset,
 										y1_fill,
-										XCImage.SpriteWidth32,
+										Spriteset.SpriteWidth32,
 										y1_fill_h);
 
 					foreach (int id in SubIds)
 						_graphics.FillRectangle(
 											Colors.BrushHilightsubsel,
-											id * (XCImage.SpriteWidth32 + 1) + offset,
+											id * (Spriteset.SpriteWidth32 + 1) + offset,
 											y1_fill,
-											XCImage.SpriteWidth32,
+											Spriteset.SpriteWidth32,
 											y1_fill_h);
 				}
 
 				for (i = 0; i != Parts.Length; ++i)
 				{
 					rect = new Rectangle(
-									i * XCImage.SpriteWidth32 + i + offset,
+									i * Spriteset.SpriteWidth32 + i + offset,
 									y1_fill,
-									XCImage.SpriteWidth32,
+									Spriteset.SpriteWidth32,
 									y1_fill_h);
 
 					TextRenderer.DrawText(
@@ -335,17 +335,17 @@ namespace McdView
 							{
 								DrawSprite(
 										sprite,
-										i * XCImage.SpriteWidth32 + i + offset,
+										i * Spriteset.SpriteWidth32 + i + offset,
 										y2_sprite,
 										part.Dead.Record.TileOffset);
 							}
 							else
 								_graphics.FillRectangle(
 													Colors.BrushInvalid,
-													i * XCImage.SpriteWidth32 + i + offset,
+													i * Spriteset.SpriteWidth32 + i + offset,
 													y2_sprite,
-													XCImage.SpriteWidth32,
-													XCImage.SpriteHeight40);
+													Spriteset.SpriteWidth32,
+													Spriteset.SpriteHeight40);
 						}
 					}
 				}
@@ -368,17 +368,17 @@ namespace McdView
 							{
 								DrawSprite(
 										sprite,
-										i * XCImage.SpriteWidth32 + i + offset,
+										i * Spriteset.SpriteWidth32 + i + offset,
 										y3_sprite,
 										part.Altr.Record.TileOffset);
 							}
 							else
 								_graphics.FillRectangle(
 													Colors.BrushInvalid,
-													i * XCImage.SpriteWidth32 + i + offset,
+													i * Spriteset.SpriteWidth32 + i + offset,
 													y3_sprite,
-													XCImage.SpriteWidth32,
-													XCImage.SpriteHeight40);
+													Spriteset.SpriteWidth32,
+													Spriteset.SpriteHeight40);
 						}
 					}
 				}
@@ -402,9 +402,9 @@ namespace McdView
 							sprite,
 							new Rectangle(
 										x, y,
-										XCImage.SpriteWidth32,
-										XCImage.SpriteHeight40),
-							0, topcrop, XCImage.SpriteWidth32, XCImage.SpriteHeight40,
+										Spriteset.SpriteWidth32,
+										Spriteset.SpriteHeight40),
+							0, topcrop, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 							GraphicsUnit.Pixel,
 							_f.Ia);
 		}
@@ -481,7 +481,7 @@ namespace McdView
 				&& Parts != null && Parts.Length != 0
 				&& e.Y < Height - Scroller.Height)
 			{
-				int id = (e.X + Scroller.Value) / (XCImage.SpriteWidth32 + 1);
+				int id = (e.X + Scroller.Value) / (Spriteset.SpriteWidth32 + 1);
 
 				if (id < Parts.Length)
 				{
@@ -595,12 +595,12 @@ namespace McdView
 		{
 			if (SelId != -1 && Scroller.Enabled)
 			{
-				int x = SelId * (XCImage.SpriteWidth32 + 1);
+				int x = SelId * (Spriteset.SpriteWidth32 + 1);
 				if (x < Scroller.Value)
 				{
 					Scroller.Value = x;
 				}
-				else if ((x += XCImage.SpriteWidth32) > Width + Scroller.Value)
+				else if ((x += Spriteset.SpriteWidth32) > Width + Scroller.Value)
 				{
 					Scroller.Value = x - Width;
 				}
@@ -613,7 +613,7 @@ namespace McdView
 		/// <returns></returns>
 		private int GetTileLeft()
 		{
-			return SelId * (XCImage.SpriteWidth32 + 1);
+			return SelId * (Spriteset.SpriteWidth32 + 1);
 		}
 		/// <summary>
 		/// Gets the loc+width of the currently selected tile relative to the table.
@@ -621,7 +621,7 @@ namespace McdView
 		/// <returns></returns>
 		private int GetTileRight()
 		{
-			return SelId * (XCImage.SpriteWidth32 + 1) + XCImage.SpriteWidth32;
+			return SelId * (Spriteset.SpriteWidth32 + 1) + Spriteset.SpriteWidth32;
 		} */
 		#endregion Methods
 	}
