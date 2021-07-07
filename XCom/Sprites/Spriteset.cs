@@ -148,11 +148,6 @@ namespace XCom
 
 				foreach (XCImage sprite in Sprites)
 					sprite.Pal = Pal;
-
-				// rant
-				// why is the dang palette in every god-dang XCImage.
-				// why is 'Palette' EVERYWHERE: For indexed images
-				// the palette ought be merely a peripheral.
 			}
 		}
 
