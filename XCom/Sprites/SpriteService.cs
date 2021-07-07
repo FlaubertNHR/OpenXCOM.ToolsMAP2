@@ -412,9 +412,7 @@ namespace XCom
 		public static Bitmap CropTransparentEdges(Bitmap src)
 		{
 			Rectangle rect = GetRectangle(src);
-
-			if (   rect.X + rect.Width  <= src.Width
-				&& rect.Y + rect.Height <= src.Height)
+			if (rect.Width < src.Width || rect.Height < src.Height)
 			{
 				var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
 
@@ -483,7 +481,7 @@ namespace XCom
 								PixelFormat.Format8bppIndexed);
 			var start = locked.Scan0;
 
-			int r,c, rMin, rMax, cMin, cMax;
+			int x,y, x0,y0, x1,y1;
 			unsafe
 			{
 				byte* pos;
@@ -494,45 +492,45 @@ namespace XCom
 				
 				uint stride = (uint)Math.Abs(locked.Stride);
 
-
-				for (rMin = 0; rMin != b.Height; ++rMin)
-				for (   c = 0;    c != b.Width;  ++c)
+//			find_y0:
+				for (y0 = 0; y0 != b.Height; ++y0)
+				for ( x = 0;  x != b.Width;  ++x)
 				{
-					if (*(pos + rMin * stride + c) != Palette.Tid)
-						goto outLoop1; // got 'rMin'
+					if (*(pos + y0 * stride + x) != Palette.Tid)
+						goto find_x0;
 				}
 
-			outLoop1:
-				for (cMin = 0; cMin != b.Width;  ++cMin)
-				for (   r = rMin; r != b.Height; ++r)
+			find_x0:
+				for (x0 = 0; x0 != b.Width;  ++x0)
+				for ( y = y0; y != b.Height; ++y)
 				{
-					if (*(pos + r * stride + cMin) != Palette.Tid)
-						goto outLoop2; // got 'cMin'
+					if (*(pos + y * stride + x0) != Palette.Tid)
+						goto find_y1;
 				}
 
-			outLoop2:
-				for (rMax = b.Height - 1; rMax != rMin; --rMax)
-				for (   c = b.Width  - 1;    c != cMin; --c)
+			find_y1:
+				for (y1 = b.Height - 1; y1 != y0; --y1)
+				for ( x = b.Width  - 1;  x != x0; --x)
 				{
-					if (*(pos + rMax * stride + c) != Palette.Tid)
-						goto outLoop3; // got 'rMax'
+					if (*(pos + y1 * stride + x) != Palette.Tid)
+						goto find_x1;
 				}
 
-			outLoop3:
-				for (cMax = b.Width - 1; cMax != cMin; --cMax)
-				for (   r = rMax;           r != rMin; --r)
+			find_x1:
+				for (x1 = b.Width - 1; x1 != x0; --x1)
+				for ( y = y1;           y != y0; --y)
 				{
-					if (*(pos + r * stride + cMax) != Palette.Tid)
-						goto outLoop4; // got 'cMax'
+					if (*(pos + y * stride + x1) != Palette.Tid)
+						goto finished;
 				}
 			}
-			outLoop4:
+			finished:
 			b.UnlockBits(locked);
 
 
 			return new Rectangle(
-							cMin, rMin,
-							cMax - cMin + 1, rMax - rMin + 1);
+							x0,          y0,
+							x1 - x0 + 1, y1 - y0 + 1);
 		}
 	}
 }
