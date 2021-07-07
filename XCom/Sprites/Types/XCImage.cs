@@ -60,16 +60,16 @@ namespace XCom
 		public Bitmap Sprite
 		{ get; set; }
 
-		private Palette _palette;
+		private Palette _pal;
 		public Palette Pal
 		{
-			get { return _palette; }
+			get { return _pal; }
 			set
 			{
-				_palette = value;
+				_pal = value;
 
 				if (Sprite != null)
-					Sprite.Palette = _palette.Table;
+					Sprite.Palette = _pal.Table;
 			}
 		}
 		#endregion Properties
