@@ -67,7 +67,9 @@ namespace XCom
 
 
 		/// <summary>
-		/// Creates a list of sprites from a spritesheet.
+		/// Extracts sprites from a specified spritesheet and adds them to a
+		/// list of <c><see cref="XCImage">XCImages</see></c> according to a
+		/// specified <c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>.
 		/// </summary>
 		/// <param name="sprites">the
 		/// <c><see cref="Spriteset.Sprites">Spriteset.Sprites</see></c> list of
@@ -75,8 +77,8 @@ namespace XCom
 		/// <c><see cref="Spriteset"/></c></param>
 		/// <param name="b">an 8-bpp <c>Bitmap</c> of a spritesheet</param>
 		/// <param name="pal">a <c><see cref="Palette"/></c></param>
-		/// <param name="width">the width of a sprite in the spritesheet</param>
-		/// <param name="height">the height of a sprite in the spritesheet</param>
+		/// <param name="width">the width of one sprite in the spritesheet</param>
+		/// <param name="height">the height of one sprite in the spritesheet</param>
 		/// <param name="setType"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>
 		/// to pass to
 		/// <c><see cref="CreateSanitarySprite()">CreateSanitarySprite()</see></c></param>
