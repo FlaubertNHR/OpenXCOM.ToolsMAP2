@@ -1698,11 +1698,11 @@ namespace MapView
 									for (int i = 0; i != MapTile.QUADS; ++i)
 									if ((part = tile[(PartType)i]) != null)
 									{
-										SpriteService.Insert(
-															part[0].Sprite,
-															b,
-															x,
-															y - part.Record.TileOffset);
+										SpriteService.InsertSprite(
+																part[0].Sprite,
+																b,
+																x,
+																y - part.Record.TileOffset);
 									}
 								}
 							}

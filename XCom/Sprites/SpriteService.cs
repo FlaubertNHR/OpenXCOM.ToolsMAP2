@@ -13,14 +13,13 @@ namespace XCom
 	public static class SpriteService
 	{
 		/// <summary>
-		/// Creates an 8-bit indexed <c>Bitmap</c> from the specified
-		/// byte-array.
+		/// Creates an 8-bpp indexed <c>Bitmap</c> from a specified byte-array.
 		/// </summary>
-		/// <param name="width">width of final <c>Bitmap</c></param>
-		/// <param name="height">height of final <c>Bitmap</c></param>
-		/// <param name="bindata">image data</param>
+		/// <param name="width">width of output <c>Bitmap</c></param>
+		/// <param name="height">height of output <c>Bitmap</c></param>
+		/// <param name="bindata">uncompressed image data</param>
 		/// <param name="pal"><c>ColorPalette</c> to color the image with</param>
-		/// <returns>a .net <c>Bitmap</c> image</returns>
+		/// <returns>a <c>Bitmap</c> image</returns>
 		public static Bitmap CreateSprite(
 				int width,
 				int height,
@@ -68,22 +67,27 @@ namespace XCom
 
 
 		/// <summary>
-		/// Creates a list of sprites from a spritesheet. Called by
-		/// <c>PckViewF.OnImportSpritesheetClick()</c>.
+		/// Creates a list of sprites from a spritesheet.
 		/// </summary>
-		/// <param name="sprites">the blank XCImage list of a spriteset</param>
+		/// <param name="sprites">the
+		/// <c><see cref="Spriteset.Sprites">Spriteset.Sprites</see></c> list of
+		/// <c><see cref="XCImage">XCImages</see></c> of a
+		/// <c><see cref="Spriteset"/></c></param>
 		/// <param name="b">an 8-bpp <c>Bitmap</c> of a spritesheet</param>
-		/// <param name="pal">an XCOM Palette-object</param>
+		/// <param name="pal">a <c><see cref="Palette"/></c></param>
 		/// <param name="width">the width of a sprite in the spritesheet</param>
 		/// <param name="height">the height of a sprite in the spritesheet</param>
-		/// <param name="spritesettype"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c></param>
+		/// <param name="setType"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>
+		/// to pass to
+		/// <c><see cref="CreateSanitarySprite()">CreateSanitarySprite()</see></c></param>
+		/// <remarks>Called by <c>PckViewF.OnImportSpritesheetClick()</c>.</remarks>
 		public static void ImportSpritesheet(
 				IList<XCImage> sprites,
 				Bitmap b,
 				Palette pal,
 				int width,
 				int height,
-				Spriteset.SsType spritesettype)
+				Spriteset.SsType setType)
 		{
 			int cols = b.Width  / width;
 			int rows = b.Height / height;
@@ -98,30 +102,38 @@ namespace XCom
 											++id,
 											pal,
 											width, height,
-											spritesettype,
+											setType,
 											(i % cols) * width,
 											(i / cols) * height));
 			}
 		}
 
 		/// <summary>
-		/// Ensures there aren't any End_of_Sprite or RLE markers in the
-		/// returned <see cref="XCImage"/>.
-		/// Helper for CreateSpriteset().
-		/// Also called by PckViewF's contextmenu:
-		/// - OnAddSpritesClick()
-		/// - OnReplaceSpriteClick()
-		/// - InsertSprites()
+		/// Creates a sprite as a derivative of <c><see cref="XCImage"/></c>
+		/// after ensuring there aren't any
+		/// <c><see cref="PckSprite.MarkerEos">PckSprite.MarkerEos</see></c> or
+		/// <c><see cref="PckSprite.MarkerEos">PckSprite.MarkerRle</see></c>
+		/// entries in the ColorTable of rle-encoded terrain-sprites,
+		/// unit-sprites, or bigobs-sprites per
+		/// <c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>.
 		/// </summary>
-		/// <param name="b">an indexed Bitmap</param>
-		/// <param name="id">an appropriate set-id</param>
-		/// <param name="pal">an XCOM Palette-object</param>
-		/// <param name="width">the width of the image</param>
-		/// <param name="height">the height of the image</param>
+		/// <param name="b">an 8-bpp indexed <c>Bitmap</c></param>
+		/// <param name="id">an appropriate <c><see cref="Spriteset"/></c> id</param>
+		/// <param name="pal">a <c><see cref="Palette"/></c></param>
+		/// <param name="width">the width of the output sprite</param>
+		/// <param name="height">the height of the output sprite</param>
 		/// <param name="setType"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c></param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
-		/// <returns>an XCImage-object (base of PckSprite)</returns>
+		/// <returns>a sprite derived from <c>XCImage</c></returns>
+		/// <remarks>Helper for
+		/// <c><see cref="ImportSpritesheet()">ImportSpritesheet()</see></c>.
+		/// Also called by <c>PckViewF's</c> contextmenu
+		/// <list type="bullet">
+		/// <item><c>OnAddSpritesClick()</c></item>
+		/// <item><c>OnReplaceSpriteClick()</c></item>
+		/// <item><c>InsertSprites()</c></item>
+		/// </list></remarks>
 		public static XCImage CreateSanitarySprite(
 				Bitmap b,
 				int id,
@@ -140,7 +152,7 @@ namespace XCom
 								PixelFormat.Format8bppIndexed);
 			var start = locked.Scan0;
 
-			unsafe // change any palette-indices 0xFF or 0xFE to 0xFD if *not* a ScanG or LoFT icon ->
+			unsafe
 			{
 				// kL_note: I suspect any of this negative-stride stuff is redundant.
 
@@ -166,13 +178,9 @@ namespace XCom
 						{
 							palid = *(pos + row * stride + col);
 
-							switch (palid)
-							{
-								case PckSprite.MarkerRle:		// #254
-								case PckSprite.MarkerEos:		// #255
-									palid = PckSprite.MaxId;	// #253
-									break;
-							}
+							if (palid > PckSprite.MaxId) // change any palette-indices 0xFF or 0xFE
+								palid = PckSprite.MaxId; // to 0xFD if *not* a ScanG or LoFT icon
+
 							bindata[++i] = palid;
 						}
 						break;
@@ -227,7 +235,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Saves a sprite.
+		/// Saves a sprite to a specified Pngfile.
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
 		/// <param name="b">the <c>(Image)Bitmap</c> to export</param>
@@ -265,7 +273,7 @@ namespace XCom
 			{
 				for (int i = 0; i != spriteset.Count; ++i)
 				{
-					Insert(
+					InsertSprite(
 						spriteset[i].Sprite,
 						b,
 						i % cols * spriteset.SpriteWidth,
@@ -277,15 +285,20 @@ namespace XCom
 
 
 		/// <summary>
-		/// @note Called by
-		/// - ExportSpritesheet()
-		/// - CropToRectangle()
-		/// - MainViewF.Screenshot()
+		/// Creates a transparent <c>Bitmap</c> of specified width/height with
+		/// a specified <c>ColorPalette</c>.
 		/// </summary>
-		/// <param name="width">width of final Bitmap</param>
-		/// <param name="height">height of final Bitmap</param>
-		/// <param name="pal">palette to color the image with</param>
-		/// <returns>pointer to Bitmap</returns>
+		/// <param name="width">width of output <c>Bitmap</c></param>
+		/// <param name="height">height of output <c>Bitmap</c></param>
+		/// <param name="pal">a <c>ColorPalette</c> to color the <c>Bitmap</c>
+		/// with</param>
+		/// <returns>pointer to a <c>Bitmap</c></returns>
+		/// <remarks>Called by
+		/// <list type="bullet">
+		/// <item><c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c></item>
+		/// <item><c><see cref="CropToRectangle()">CropToRectangle()</see></c></item>
+		/// <item><c>MainViewF.Screenshot()</c></item>
+		/// </list></remarks>
 		public static Bitmap CreateTransparent(
 				int width,
 				int height,
@@ -326,16 +339,18 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// 
+		/// Blits a sprite into another sprite.
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="dst"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <remarks>Called by
-		/// <c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c> and
-		/// <c>MainViewF.Screenshot()</c>.</remarks>
-		public static void Insert(
+		/// <list type="bullet">
+		/// <item><c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c></item>
+		/// <item><c>MainViewF.Screenshot()</c></item>
+		/// </list></remarks>
+		public static void InsertSprite(
 				Bitmap src,
 				Bitmap dst,
 				int x,
