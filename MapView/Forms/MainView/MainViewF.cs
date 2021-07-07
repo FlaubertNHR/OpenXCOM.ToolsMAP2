@@ -1662,75 +1662,71 @@ namespace MapView
 														width * ConstHalfHeight + (MapFile.Levs - level) * Layers,
 														MapFile.Descriptor.Pal.Table))
 			{
-				if (b != null)
+				var start = new Point(
+									(MapFile.Rows - 1) * ConstHalfWidth,
+								   -(level * Layers));
+
+				MapTileArray tiles = MapFile.Tiles;
+				if (tiles != null)
 				{
-					var start = new Point(
-										(MapFile.Rows - 1) * ConstHalfWidth,
-									   -(level * Layers));
+					Tilepart part;
+					MapTile tile;
 
-					MapTileArray tiles = MapFile.Tiles;
-					if (tiles != null)
+					for (int l = MapFile.Levs - 1; l >= level; --l)
 					{
-						Tilepart part;
-						MapTile tile;
-
-						for (int l = MapFile.Levs - 1; l >= level; --l)
+						for (int
+								r = 0,
+									startX = start.X,
+									startY = start.Y + l * Layers;
+								r != MapFile.Rows;
+								++r,
+									startX -= ConstHalfWidth,
+									startY += ConstHalfHeight)
 						{
 							for (int
-									r = 0,
-										startX = start.X,
-										startY = start.Y + l * Layers;
-									r != MapFile.Rows;
-									++r,
-										startX -= ConstHalfWidth,
-										startY += ConstHalfHeight)
+									c = 0,
+										x = startX,
+										y = startY;
+									c != MapFile.Cols;
+									++c,
+										x += ConstHalfWidth,
+										y += ConstHalfHeight)
 							{
-								for (int
-										c = 0,
-											x = startX,
-											y = startY;
-										c != MapFile.Cols;
-										++c,
-											x += ConstHalfWidth,
-											y += ConstHalfHeight)
+								if (!(tile = tiles.GetTile(c,r,l)).Vacant)
+								for (int i = 0; i != MapTile.QUADS; ++i)
+								if ((part = tile[(PartType)i]) != null)
 								{
-									if (!(tile = tiles.GetTile(c,r,l)).Vacant)
-									for (int i = 0; i != MapTile.QUADS; ++i)
-									if ((part = tile[(PartType)i]) != null)
-									{
-										SpriteService.InsertSprite(
-																part[0].Sprite,
-																b,
-																x,
-																y - part.Record.TileOffset);
-									}
+									SpriteService.BlitSprite(
+															part[0].Sprite,
+															b,
+															x,
+															y - part.Record.TileOffset);
 								}
 							}
 						}
 					}
+				}
 
 
-					Bitmap bout;
-					if (Optionables.CropBackground)
-					{
-						Rectangle rect = SpriteService.GetNontransparentRectangle(b);
-						bout           = SpriteService.CropToRectangle(b, rect);
-					}
-					else
-						bout = b;
+				Bitmap b2; // workaround the inability to re-assign a using-variable inside a using-statement ->
+				if (Optionables.CropBackground)
+				{
+					b2 = SpriteService.CropTransparentEdges(b);
+				}
+				else
+					b2 = b;
 
-					using (bout) // -> workaround the inability to re-assign a using-variable inside a using-statement.
-					{
-						ColorPalette pal = bout.Palette;
-						pal.Entries[Palette.Tid] = Optionables.BackgroundColor;
-						bout.Palette = pal;
+				using (b2)
+				{
+					ColorPalette pal = b2.Palette;
+					pal.Entries[Palette.Tid] = Optionables.BackgroundColor;
+					b2.Palette = pal;
 
-						ImageFormat format;
-						if (Optionables.Png_notGif) format = ImageFormat.Png;
-						else                        format = ImageFormat.Gif;
+					ImageFormat format;
+					if (Optionables.Png_notGif) format = ImageFormat.Png;
+					else                        format = ImageFormat.Gif;
 
-						bout.Save(fullpath, format);
-					}
+					b2.Save(fullpath, format);
 				}
 			}
 		}

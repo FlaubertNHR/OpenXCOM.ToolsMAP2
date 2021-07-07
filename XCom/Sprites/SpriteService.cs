@@ -273,7 +273,7 @@ namespace XCom
 			{
 				for (int i = 0; i != spriteset.Count; ++i)
 				{
-					InsertSprite(
+					BlitSprite(
 						spriteset[i].Sprite,
 						b,
 						i % cols * spriteset.SpriteWidth,
@@ -292,11 +292,11 @@ namespace XCom
 		/// <param name="height">height of output <c>Bitmap</c></param>
 		/// <param name="pal">a <c>ColorPalette</c> to color the <c>Bitmap</c>
 		/// with</param>
-		/// <returns>pointer to a <c>Bitmap</c></returns>
+		/// <returns>a transparent <c>Bitmap</c></returns>
 		/// <remarks>Called by
 		/// <list type="bullet">
 		/// <item><c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c></item>
-		/// <item><c><see cref="CropToRectangle()">CropToRectangle()</see></c></item>
+		/// <item><c><see cref="CropTransparentEdges()">CropTransparentEdges()</see></c></item>
 		/// <item><c>MainViewF.Screenshot()</c></item>
 		/// </list></remarks>
 		public static Bitmap CreateTransparent(
@@ -350,7 +350,7 @@ namespace XCom
 		/// <item><c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c></item>
 		/// <item><c>MainViewF.Screenshot()</c></item>
 		/// </list></remarks>
-		public static void InsertSprite(
+		public static void BlitSprite(
 				Bitmap src,
 				Bitmap dst,
 				int x,
@@ -401,13 +401,81 @@ namespace XCom
 			dst.UnlockBits(dstLocked);
 		}
 
+
 		/// <summary>
-		/// Chews off any transparent edges.
+		/// Crops any transparent edges around a specified <c>Bitmap</c>.
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns>the <c>Bitmap</c> cropped or the unchanged <c>Bitmap</c>
+		/// itself</returns>
+		/// <remarks>Called by <c>MainViewF.Screenshot()</c>.</remarks>
+		public static Bitmap CropTransparentEdges(Bitmap src)
+		{
+			Rectangle rect = GetRectangle(src);
+
+			if (   rect.X + rect.Width  <= src.Width
+				&& rect.Y + rect.Height <= src.Height)
+			{
+				var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
+
+				var srcLocked = src.LockBits(
+										new Rectangle(0,0, src.Width, src.Height),
+										ImageLockMode.ReadOnly,
+										PixelFormat.Format8bppIndexed);
+				var srcStart = srcLocked.Scan0;
+
+				var dstLocked = dst.LockBits(
+										new Rectangle(0,0, dst.Width, dst.Height),
+										ImageLockMode.WriteOnly,
+										PixelFormat.Format8bppIndexed);
+				var dstStart = dstLocked.Scan0;
+
+				unsafe
+				{
+					byte* srcPos;
+					if (srcLocked.Stride > 0)
+						srcPos = (byte*)srcStart.ToPointer();
+					else
+						srcPos = (byte*)srcStart.ToPointer() + srcLocked.Stride * (src.Height - 1);
+
+					uint srcStride = (uint)Math.Abs(srcLocked.Stride);
+
+					byte* dstPos;
+					if (dstLocked.Stride > 0)
+						dstPos = (byte*)dstStart.ToPointer();
+					else
+						dstPos = (byte*)dstStart.ToPointer() + dstLocked.Stride * (dst.Height - 1);
+
+					uint dstStride = (uint)Math.Abs(dstLocked.Stride);
+
+
+					for (uint row = 0; row != dst.Height; ++row) // row + rect.Y < src.Height &&
+					for (uint col = 0; col != dst.Width;  ++col) // col + rect.X < src.Width  &&
+					{
+						byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
+						byte* dstPixel = dstPos +  row           * dstStride +  col;
+
+						if (*srcPixel != Palette.Tid)
+							*dstPixel = *srcPixel;
+					}
+				}
+				src.UnlockBits(srcLocked);
+				dst.UnlockBits(dstLocked);
+
+				return dst;
+			}
+			return src;
+		}
+
+		/// <summary>
+		/// Gets the largest nontransparent rectangle inside a specified
+		/// <c>Bitmap</c>.
 		/// </summary>
 		/// <param name="b"></param>
 		/// <returns></returns>
-		/// <remarks>Called by <c>MainViewF.Screenshot()</c>.</remarks>
-		public static Rectangle GetNontransparentRectangle(Bitmap b)
+		/// <remarks>Called by
+		/// <c><see cref="CropTransparentEdges()">CropTransparentEdges()</see></c>.</remarks>
+		private static Rectangle GetRectangle(Bitmap b)
 		{
 			var locked = b.LockBits(
 								new Rectangle(0,0, b.Width, b.Height),
@@ -462,80 +530,9 @@ namespace XCom
 			b.UnlockBits(locked);
 
 
-			// NOTE: Setting a border can cause CropToRectangle() to return a
-			// source-image uncropped if and when the cropped-image becomes
-			// larger than the source (in either of the x- or y-axes).
-			const int border = 0;
-
 			return new Rectangle(
-							cMin - border, rMin - border,
-							cMax - cMin + 1 + border * 2, rMax - rMin + 1 + border * 2);
-		}
-
-		/// <summary>
-		/// Crops a <c>Bitmap</c> to a specified rectangle. The rectangular area
-		/// must fit inside the source's area; if not the source image is
-		/// returned unchanged.
-		/// </summary>
-		/// <param name="src"></param>
-		/// <param name="rect"></param>
-		/// <returns>the <c>Bitmap</c> cropped or the unchanged <c>Bitmap</c>
-		/// itself</returns>
-		/// <remarks>Called by <c>MainViewF.Screenshot()</c>.</remarks>
-		public static Bitmap CropToRectangle(Bitmap src, Rectangle rect)
-		{
-			if (   rect.X + rect.Width  <= src.Width
-				&& rect.Y + rect.Height <= src.Height)
-			{
-				var dst = CreateTransparent(rect.Width, rect.Height, src.Palette);
-
-				var srcLocked = src.LockBits(
-										new Rectangle(0,0, src.Width, src.Height),
-										ImageLockMode.ReadOnly,
-										PixelFormat.Format8bppIndexed);
-				var srcStart = srcLocked.Scan0;
-
-				var dstLocked = dst.LockBits(
-										new Rectangle(0,0, dst.Width, dst.Height),
-										ImageLockMode.WriteOnly,
-										PixelFormat.Format8bppIndexed);
-				var dstStart = dstLocked.Scan0;
-
-				unsafe
-				{
-					byte* srcPos;
-					if (srcLocked.Stride > 0)
-						srcPos = (byte*)srcStart.ToPointer();
-					else
-						srcPos = (byte*)srcStart.ToPointer() + srcLocked.Stride * (src.Height - 1);
-
-					uint srcStride = (uint)Math.Abs(srcLocked.Stride);
-
-					byte* dstPos;
-					if (dstLocked.Stride > 0)
-						dstPos = (byte*)dstStart.ToPointer();
-					else
-						dstPos = (byte*)dstStart.ToPointer() + dstLocked.Stride * (dst.Height - 1);
-
-					uint dstStride = (uint)Math.Abs(dstLocked.Stride);
-
-
-					for (uint row = 0; row != dst.Height; ++row) // row + rect.Y < src.Height &&
-					for (uint col = 0; col != dst.Width;  ++col) // col + rect.X < src.Width  &&
-					{
-						byte* srcPixel = srcPos + (row + rect.Y) * srcStride + (col + rect.X);
-						byte* dstPixel = dstPos +  row           * dstStride +  col;
-
-						if (*srcPixel != Palette.Tid)
-							*dstPixel = *srcPixel;
-					}
-				}
-				src.UnlockBits(srcLocked);
-				dst.UnlockBits(dstLocked);
-
-				return dst;
-			}
-			return src;
+							cMin, rMin,
+							cMax - cMin + 1, rMax - rMin + 1);
 		}
 	}
 }
