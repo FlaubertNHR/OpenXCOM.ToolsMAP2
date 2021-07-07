@@ -474,7 +474,7 @@ namespace MapView.Forms.Observers
 				{
 					using (var fPckView = new PckViewF(true, GetSpriteshade()))
 					{
-						fPckView.SetSpritesetType(PckView.SpritesetType.Pck);
+						fPckView.SetSpritesetType(Spriteset.SpritesetType.Pck);
 						fPckView.LoadSpriteset(pfePck);
 						fPckView.SetPalette(_file.Descriptor.Pal);
 						fPckView.SetSelected(SelectedTilepart[0].Id);
@@ -485,9 +485,6 @@ namespace MapView.Forms.Observers
 
 						Palette.UfoBattle .SetTransparent(true); // ensure that transparency is turned on after returning
 						Palette.TftdBattle.SetTransparent(true); // from PckView
-
-						XCImage.SpriteWidth  = XCImage.SpriteWidth32;  // ensure that sprite width and height return
-						XCImage.SpriteHeight = XCImage.SpriteHeight40; // to MapView defaults
 
 
 						if (fPckView.RequestReload					// the Descriptor needs to reload

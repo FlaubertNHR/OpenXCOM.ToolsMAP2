@@ -62,15 +62,15 @@ namespace PckView
 					_spriteset.Dispose();
 
 				if ((_spriteset = value) != null
-					&& _f.SetType != SpritesetType.LoFT)
+					&& _f.SetType != Spriteset.SpritesetType.LoFT)
 				{
 					_spriteset.Pal = _f.Pal;
 				}
 
-				TileWidth  = XCImage.SpriteWidth;
-				TileHeight = XCImage.SpriteHeight;
+				TileWidth  = _f.SpriteWidth;
+				TileHeight = _f.SpriteHeight;
 
-				if (_f.SetType == SpritesetType.ScanG)
+				if (_f.SetType == Spriteset.SpritesetType.ScanG)
 				{
 					TileWidth  *= 4;
 					TileHeight *= 4;
@@ -270,10 +270,10 @@ namespace PckView
 
 				switch (_f.SetType) // draw sprites
 				{
-					case SpritesetType.Pck:    DrawPck();    break;
-					case SpritesetType.Bigobs: DrawBigobs(); break;
-					case SpritesetType.ScanG:  DrawScanG();  break;
-					case SpritesetType.LoFT:   DrawLoFT();   break;
+					case Spriteset.SpritesetType.Pck:    DrawPck();    break;
+					case Spriteset.SpritesetType.Bigobs: DrawBigobs(); break;
+					case Spriteset.SpritesetType.ScanG:  DrawScanG();  break;
+					case Spriteset.SpritesetType.LoFT:   DrawLoFT();   break;
 				}
 
 				_graphics.FillRectangle(
@@ -341,8 +341,8 @@ namespace PckView
 									new Rectangle(
 												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-												XCImage.SpriteWidth, XCImage.SpriteHeight),
-									0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
+												_f.SpriteWidth, _f.SpriteHeight),
+									0,0, _f.SpriteWidth, _f.SpriteHeight,
 									GraphicsUnit.Pixel,
 									_f.Ia);
 				}
@@ -388,8 +388,8 @@ namespace PckView
 									new Rectangle(
 												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-												XCImage.SpriteWidth, XCImage.SpriteHeight),
-									0,0, XCImage.SpriteWidth, XCImage.SpriteHeight,
+												_f.SpriteWidth, _f.SpriteHeight),
+									0,0, _f.SpriteWidth, _f.SpriteHeight,
 									GraphicsUnit.Pixel,
 									_f.Ia);
 				}
@@ -426,7 +426,7 @@ namespace PckView
 									_f.BlankIcon,
 									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-									XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4);
+									_f.SpriteWidth * 4, _f.SpriteHeight * 4);
 				}
 				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
 				{
@@ -435,7 +435,7 @@ namespace PckView
 									new Rectangle(
 												TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 												TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-												XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4),
+												_f.SpriteWidth * 4, _f.SpriteHeight * 4),
 									0,0, XCImage.ScanGside, XCImage.ScanGside,
 									GraphicsUnit.Pixel,
 									_f.Ia);
@@ -446,7 +446,7 @@ namespace PckView
 									Spriteset[id].Sprite,
 									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
-									XCImage.SpriteWidth * 4, XCImage.SpriteHeight * 4);
+									_f.SpriteWidth * 4, _f.SpriteHeight * 4);
 				}
 			}
 		}

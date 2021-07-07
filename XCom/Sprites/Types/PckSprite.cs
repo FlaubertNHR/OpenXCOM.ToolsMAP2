@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 using DSShared;
@@ -59,14 +60,14 @@ namespace XCom
 
 		#region Properties
 		/// <summary>
-		/// A copy of the image but toned according to the currently selected
-		/// tile toner.
+		/// A copy of the sprite but toned according to the currently selected
+		/// tile-toner.
 		/// </summary>
 		public Bitmap SpriteToned
 		{ get; internal set; }
 
 		/// <summary>
-		/// The ID of a sprite across all loaded terrainsets.
+		/// The ID of this <c>PckSprite</c> across all loaded terrainsets.
 		/// </summary>
 		/// <remarks>Used only by <c>MapView.MapInfoDialog</c>.</remarks>
 		public int Ordinal
@@ -76,11 +77,15 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Instantiates a <c><see cref="PckSprite"/></c>.
+		/// cTor[0]. Instantiates a <c>PckSprite</c>.
 		/// </summary>
 		/// <param name="bindata">the COMPRESSED source-data</param>
-		/// <param name="pal">the <c><see cref="Palette"/></c></param>
-		/// <param name="id">the id of this sprite in its <c>Spriteset</c></param>
+		/// <param name="width">the width of the <c><see cref="Sprite"/></c></param>
+		/// <param name="height">the height of the <c><see cref="Sprite"/></c></param>
+		/// <param name="pal">a pointer to its initial
+		/// <c><see cref="Palette"/></c></param>
+		/// <param name="id">the id of this <c>PckSprite</c> in its
+		/// <c><see cref="Spriteset"/></c></param>
 		/// <param name="spriteset">the <c><see cref="Spriteset"/></c> this
 		/// belongs to</param>
 		/// <param name="createToned"><c>true</c> to create
@@ -88,18 +93,12 @@ namespace XCom
 		/// sprites for MapView</param>
 		internal PckSprite(
 				byte[] bindata,
+				int width,
+				int height,
 				Palette pal,
 				int id,
 				Spriteset spriteset,
 				bool createToned = false)
-			:
-				base(
-					new byte[XCImage.SpriteWidth
-						   * XCImage.SpriteHeight],
-					XCImage.SpriteWidth,
-					XCImage.SpriteHeight,
-					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					id)
 		{
 			_spriteset = spriteset; // only for ToString(), 'Fail', and Duplicate().
 
@@ -107,11 +106,16 @@ namespace XCom
 				Ordinal = ++_ordinal; // only for 'MapInfoDialog'.
 
 			Pal = pal;
+			Id  = id;
 
 			//Logfile.Log("PckSprite spriteset= " + spriteset.Label + " Pal= " + Pal + " Id= " + Id + " Ordinal= " + Ordinal);
 			//Logfile.Log(". bindata.Length= " + bindata.Length);
 
-			int dst = bindata[0] * XCImage.SpriteWidth; // first byte is count of transparent rows
+			_width   = width;
+			_height  = height;
+			_bindata = new byte[_width * _height];
+
+			int dst = bindata[0] * _width; // first byte is count of transparent rows
 			for (int src = 1; src != bindata.Length; ++src)
 			{
 				switch (bindata[src])
@@ -139,24 +143,60 @@ namespace XCom
 				}
 			}
 
-			Sprite = BitmapService.CreateSprite(
-											XCImage.SpriteWidth,
-											XCImage.SpriteHeight,
+			Sprite = SpriteService.CreateSprite(
+											_width,
+											_height,
 											_bindata,
 											Pal.Table);
 
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
 			// MapView's MonotoneSprites or UFO/TFTD cursor-sprites
 			if (createToned)
-				SpriteToned = BitmapService.CreateSprite(
-													XCImage.SpriteWidth,
-													XCImage.SpriteHeight,
+				SpriteToned = SpriteService.CreateSprite(
+													_width,
+													_height,
 													_bindata,
 													Pal.GrayScale.Table); // default to grayscale.
 		}
 
+
 		/// <summary>
-		/// cTor[1]. Creates a blank sprite for
+		/// cTor[1]. Instantiates a <c>PckSprite</c>.
+		/// </summary>
+		/// <param name="bindata">the UNCOMPRESSED source-data</param>
+		/// <param name="width">the width of the <c><see cref="Sprite"/></c></param>
+		/// <param name="height">the height of the <c><see cref="Sprite"/></c></param>
+		/// <param name="id">the id of this <c>PckSprite</c> in its
+		/// <c><see cref="Spriteset"/></c></param>
+		/// <param name="pal">a pointer to its initial
+		/// <c><see cref="Palette"/></c></param>
+		/// <remarks>Used only by PckView - although this <c>PckSprite</c> is
+		/// added to a <c><see cref="Spriteset"/></c>
+		/// <c><see cref="_spriteset"/></c> can remain <c>null</c>.</remarks>
+		internal PckSprite(
+				byte[] bindata,
+				int width,
+				int height,
+				int id,
+				Palette pal)
+		{
+			_bindata = bindata;
+			_width   = width;
+			_height  = height;
+
+			Id  = id;
+			Pal = pal;
+
+			Sprite = SpriteService.CreateSprite(
+											_width,
+											_height,
+											_bindata,
+											Pal.Table);
+		}
+
+
+		/// <summary>
+		/// cTor[2]. Creates a blank sprite for
 		/// <c><see cref="Duplicate()">Duplicate()</see></c>.
 		/// </summary>
 		private PckSprite()

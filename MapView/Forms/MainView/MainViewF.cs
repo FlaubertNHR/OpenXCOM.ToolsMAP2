@@ -1657,7 +1657,7 @@ namespace MapView
 			int level = MapFile.Level;
 
 			int width = MapFile.Rows + MapFile.Cols;
-			using (var b = BitmapService.CreateTransparent(
+			using (var b = SpriteService.CreateTransparent(
 														width * ConstHalfWidth,
 														width * ConstHalfHeight + (MapFile.Levs - level) * Layers,
 														MapFile.Descriptor.Pal.Table))
@@ -1698,7 +1698,7 @@ namespace MapView
 									for (int i = 0; i != MapTile.QUADS; ++i)
 									if ((part = tile[(PartType)i]) != null)
 									{
-										BitmapService.Insert(
+										SpriteService.Insert(
 															part[0].Sprite,
 															b,
 															x,
@@ -1713,8 +1713,8 @@ namespace MapView
 					Bitmap bout;
 					if (Optionables.CropBackground)
 					{
-						Rectangle rect = BitmapService.GetNontransparentRectangle(b);
-						bout           = BitmapService.CropToRectangle(b, rect);
+						Rectangle rect = SpriteService.GetNontransparentRectangle(b);
+						bout           = SpriteService.CropToRectangle(b, rect);
 					}
 					else
 						bout = b;

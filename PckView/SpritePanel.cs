@@ -125,22 +125,22 @@ namespace PckView
 
 			if (e.Button == MouseButtons.Left
 				&& Sprite != null
-				&& e.X > 0 && e.X < XCImage.SpriteWidth  * _scale
-				&& e.Y > 0 && e.Y < XCImage.SpriteHeight * _scale)
+				&& e.X > 0 && e.X < _feditor._f.SpriteWidth  * _scale
+				&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * _scale)
 			{
 				int pixelX = e.X / _scale;
 				int pixelY = e.Y / _scale;
 
 				byte[] bindata = Sprite.GetBindata();
 
-				int binid = pixelY * (bindata.Length / XCImage.SpriteHeight) + pixelX;
+				int binid = pixelY * (bindata.Length / _feditor._f.SpriteHeight) + pixelX;
 
 				if (binid > -1 && binid < bindata.Length) // safety.
 				{
 					switch (SpriteEditorF.Mode)
 					{
 						case EditMode.Enabled: // paint ->
-							if (_feditor._f.SetType != SpritesetType.LoFT)
+							if (_feditor._f.SetType != Spriteset.SpritesetType.LoFT)
 							{
 								int palid = _feditor._fpalette.PalPanel.Palid;
 								if (palid > -1)
@@ -151,9 +151,9 @@ namespace PckView
 										if (palid != (int)bindata[binid])
 										{
 											bindata[binid] = (byte)palid;
-											Bitmap sprite = BitmapService.CreateSprite(
-																					XCImage.SpriteWidth,
-																					XCImage.SpriteHeight,
+											Bitmap sprite = SpriteService.CreateSprite(
+																					_feditor._f.SpriteWidth,
+																					_feditor._f.SpriteHeight,
 																					bindata,
 																					Sprite.Pal.Table); //_feditor._f.Pal.Table
 											Sprite.Dispose();
@@ -195,9 +195,9 @@ namespace PckView
 								else
 									bindata[binid]  = Palette.LoFTSolid;
 
-								Bitmap sprite = BitmapService.CreateSprite(
-																		XCImage.SpriteWidth,
-																		XCImage.SpriteHeight,
+								Bitmap sprite = SpriteService.CreateSprite(
+																		_feditor._f.SpriteWidth,
+																		_feditor._f.SpriteHeight,
 																		bindata,
 																		Sprite.Pal.Table); //Palette.Binary.Table
 								Sprite.Dispose();
@@ -228,15 +228,15 @@ namespace PckView
 		{
 			if (Sprite != null)
 			{
-				if (   e.X > 0 && e.X < XCImage.SpriteWidth  * _scale
-					&& e.Y > 0 && e.Y < XCImage.SpriteHeight * _scale)
+				if (   e.X > 0 && e.X < _feditor._f.SpriteWidth  * _scale
+					&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * _scale)
 				{
 					int pixelX = e.X / _scale;
 					int pixelY = e.Y / _scale;
 
 					byte[] bindata = Sprite.GetBindata();
 
-					int binid = pixelY * (bindata.Length / XCImage.SpriteHeight) + pixelX;
+					int binid = pixelY * (bindata.Length / _feditor._f.SpriteHeight) + pixelX;
 
 					if (binid > -1 && binid < bindata.Length) // safety.
 					{
@@ -266,12 +266,12 @@ namespace PckView
 				byte[] bindata = Sprite.GetBindata();
 
 				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON
-					&& _feditor._f.SetType != SpritesetType.LoFT)
+					&& _feditor._f.SetType != Spriteset.SpritesetType.LoFT)
 				{
-					for (int y = 0; y != XCImage.SpriteHeight; ++y)
-					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
+					for (int y = 0; y != _feditor._f.SpriteHeight; ++y)
+					for (int x = 0; x != _feditor._f.SpriteWidth;  ++x)
 					{
-						int palid = bindata[y * XCImage.SpriteWidth + x];
+						int palid = bindata[y * _feditor._f.SpriteWidth + x];
 						using (var brush = new SolidBrush(Shade(Sprite.Pal.Table.Entries[palid])))
 						{
 							graphics.FillRectangle(
@@ -285,10 +285,10 @@ namespace PckView
 				}
 				else
 				{
-					for (int y = 0; y != XCImage.SpriteHeight; ++y)
-					for (int x = 0; x != XCImage.SpriteWidth;  ++x)
+					for (int y = 0; y != _feditor._f.SpriteHeight; ++y)
+					for (int x = 0; x != _feditor._f.SpriteWidth;  ++x)
 					{
-						int palid = bindata[y * XCImage.SpriteWidth + x];
+						int palid = bindata[y * _feditor._f.SpriteWidth + x];
 						using (var brush = new SolidBrush(Sprite.Pal.Table.Entries[palid]))
 						{
 							graphics.FillRectangle(
@@ -305,20 +305,20 @@ namespace PckView
 
 			if (_penGrid != null && _scale > 2)
 			{
-				for (int x = 0; x != XCImage.SpriteWidth; ++x) // vertical lines
+				for (int x = 0; x != _feditor._f.SpriteWidth; ++x) // vertical lines
 					graphics.DrawLine(
 									_penGrid,
 									x * _scale + Pad,
 									0,
 									x * _scale + Pad,
-									XCImage.SpriteHeight * _scale);
+									_feditor._f.SpriteHeight * _scale);
 
-				for (int y = 0; y != XCImage.SpriteHeight; ++y) // horizontal lines
+				for (int y = 0; y != _feditor._f.SpriteHeight; ++y) // horizontal lines
 					graphics.DrawLine(
 									_penGrid,
 									0,
 									y * _scale + Pad,
-									XCImage.SpriteWidth * _scale,
+									_feditor._f.SpriteWidth * _scale,
 									y * _scale + Pad);
 			}
 
@@ -327,14 +327,14 @@ namespace PckView
 							0,
 							1);
 			var p1 = new Point(
-							XCImage.SpriteWidth  * _scale + Pad,
+							_feditor._f.SpriteWidth  * _scale + Pad,
 							1);
 			var p2 = new Point(
-							XCImage.SpriteWidth  * _scale + Pad,
-							XCImage.SpriteHeight * _scale + Pad);
+							_feditor._f.SpriteWidth  * _scale + Pad,
+							_feditor._f.SpriteHeight * _scale + Pad);
 			var p3 = new Point(
 							1,
-							XCImage.SpriteHeight * _scale + Pad);
+							_feditor._f.SpriteHeight * _scale + Pad);
 			var p4 = new Point(
 							1,
 							1);

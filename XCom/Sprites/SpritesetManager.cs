@@ -98,6 +98,8 @@ namespace XCom
 		/// <param name="dir">path to the directory of the <c>PCK+TAB</c> files</param>
 		/// <param name="pal">a freakin <c><see cref="Palette"/></c></param>
 		/// <param name="createToned"><c>true</c> to create
+		/// <param name="spritewidth"></param>
+		/// <param name="spriteheight"></param>
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
 		/// sprites for MapView - <c>false</c> to not screw with
 		/// <c><see cref="Spritesets"/></c> when McdView is invoked by
@@ -120,7 +122,9 @@ namespace XCom
 				string label,
 				string dir,
 				Palette pal,
-				bool createToned = false)
+				bool createToned = false,
+				int spritewidth  = XCImage.SpriteWidth32,
+				int spriteheight = XCImage.SpriteHeight40)
 		{
 			string head, copy;
 
@@ -140,9 +144,11 @@ namespace XCom
 						var spriteset = new Spriteset(
 													label,
 													pal,
-													GetTabwordLength(bytesTab),
 													bytesPck,
 													bytesTab,
+													spritewidth,
+													spriteheight,
+													GetTabwordLength(bytesTab),
 													createToned);
 
 						switch (spriteset.Failr)

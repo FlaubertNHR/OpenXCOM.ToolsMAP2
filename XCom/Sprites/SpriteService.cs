@@ -10,7 +10,7 @@ namespace XCom
 	/// <summary>
 	/// Static methods for dealing with <c>Bitmaps</c> and sprites.
 	/// </summary>
-	public static class BitmapService
+	public static class SpriteService
 	{
 		/// <summary>
 		/// Creates an 8-bit indexed <c>Bitmap</c> from the specified
@@ -68,6 +68,43 @@ namespace XCom
 
 
 		/// <summary>
+		/// Creates a list of sprites from a spritesheet. Called by
+		/// <c>PckViewF.OnImportSpritesheetClick()</c>.
+		/// </summary>
+		/// <param name="sprites">the blank XCImage list of a spriteset</param>
+		/// <param name="b">an 8-bpp <c>Bitmap</c> of a spritesheet</param>
+		/// <param name="pal">an XCOM Palette-object</param>
+		/// <param name="width">the width of a sprite in the spritesheet</param>
+		/// <param name="height">the height of a sprite in the spritesheet</param>
+		/// <param name="spritesettype"><c><see cref="Spriteset.SpritesetType">Spriteset.SpritesetType</see></c></param>
+		public static void ImportSpritesheet(
+				IList<XCImage> sprites,
+				Bitmap b,
+				Palette pal,
+				int width,
+				int height,
+				Spriteset.SpritesetType spritesettype)
+		{
+			int cols = b.Width  / width;
+			int rows = b.Height / height;
+
+			int totalpixels = cols * rows;
+
+			int id = -1;
+			for (int i = 0; i != totalpixels; ++i)
+			{
+				sprites.Add(CreateSanitarySprite(
+											b,
+											++id,
+											pal,
+											width, height,
+											spritesettype,
+											(i % cols) * width,
+											(i / cols) * height));
+			}
+		}
+
+		/// <summary>
 		/// Ensures there aren't any End_of_Sprite or RLE markers in the
 		/// returned <see cref="XCImage"/>.
 		/// Helper for CreateSpriteset().
@@ -81,18 +118,17 @@ namespace XCom
 		/// <param name="pal">an XCOM Palette-object</param>
 		/// <param name="width">the width of the image</param>
 		/// <param name="height">the height of the image</param>
-		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset
-		/// - disregard End_of_Sprite and RLE markers</param>
+		/// <param name="setType"><c><see cref="Spriteset.SpritesetType">Spriteset.SpritesetType</see></c></param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
 		/// <returns>an XCImage-object (base of PckSprite)</returns>
-		public static XCImage CreateSprite(
+		public static XCImage CreateSanitarySprite(
 				Bitmap b,
 				int id,
 				Palette pal,
 				int width,
 				int height,
-				bool bypassMarkers,
+				Spriteset.SpritesetType setType,
 				int x = 0,
 				int y = 0)
 		{
@@ -118,140 +154,124 @@ namespace XCom
 
 
 				int i = -1;
-				for (uint row = 0; row != height; ++row)
-				for (uint col = 0; col != width;  ++col)
-				{
-					byte palid = *(pos + row * stride + col);
 
-					if (!bypassMarkers)
+				switch (setType)
+				{
+					case Spriteset.SpritesetType.Pck:
+					case Spriteset.SpritesetType.Bigobs:
 					{
-						switch (palid)
+						byte palid;
+						for (uint row = 0; row != height; ++row)
+						for (uint col = 0; col != width;  ++col)
 						{
-							case PckSprite.MarkerRle:		// #254
-							case PckSprite.MarkerEos:		// #255
-								palid = PckSprite.MaxId;	// #253
-								break;
+							palid = *(pos + row * stride + col);
+
+							switch (palid)
+							{
+								case PckSprite.MarkerRle:		// #254
+								case PckSprite.MarkerEos:		// #255
+									palid = PckSprite.MaxId;	// #253
+									break;
+							}
+							bindata[++i] = palid;
 						}
+						break;
 					}
-					bindata[++i] = palid;
+
+					case Spriteset.SpritesetType.ScanG:
+					case Spriteset.SpritesetType.LoFT:
+						for (uint row = 0; row != height; ++row)
+						for (uint col = 0; col != width;  ++col)
+						{
+							bindata[++i] = *(pos + row * stride + col);
+						}
+						break;
+
+					default:
+					case Spriteset.SpritesetType.non: // TODO: error out
+						break;
 				}
 			}
 			b.UnlockBits(locked);
 
-			return new XCImage(bindata, width, height, pal, id); // note: XCImage..cTor calls CreateSprite() above.
-		}
 
-		/// <summary>
-		/// Creates a list of sprites from a spritesheet. Called by
-		/// PckViewF.OnImportSpritesheetClick().
-		/// </summary>
-		/// <param name="sprites">the blank XCImage list of a spriteset</param>
-		/// <param name="b">an indexed (Image)Bitmap of a spritesheet</param>
-		/// <param name="pal">an XCOM Palette-object</param>
-		/// <param name="width">the width of a sprite in the spritesheet</param>
-		/// <param name="height">the height of a sprite in the spritesheet</param>
-		/// <param name="bypassMarkers">true if creating a ScanG or LoFT iconset
-		/// - disregard End_of_Sprite and RLE markers</param>
-		/// <param name="pad">padding between sprites</param>
-		public static void CreateSprites(
-				IList<XCImage> sprites,
-				Image b,
-				Palette pal,
-				int width,
-				int height,
-				bool bypassMarkers,
-				int pad = 0)
-		{
-			int cols = (b.Width  + pad) / (width  + pad);
-			int rows = (b.Height + pad) / (height + pad);
+			XCImage sprite;
 
-			int id = -1, x,y;
-			for (int i = 0; i != cols * rows; ++i)
+			switch (setType)
 			{
-				x = (i % cols) * (width  + pad);
-				y = (i / cols) * (height + pad);
-				sprites.Add(CreateSprite(
-										b as Bitmap,
-										++id,
-										pal,
-										width, height,
-										bypassMarkers,
-										x,y));
+				case Spriteset.SpritesetType.Pck:
+				case Spriteset.SpritesetType.Bigobs:
+					sprite = new PckSprite(
+										bindata,
+										width,
+										height,
+										id,
+										pal);
+					break;
+
+				case Spriteset.SpritesetType.ScanG:
+					sprite = new ScanGicon(bindata, id);
+					break;
+
+				case Spriteset.SpritesetType.LoFT:
+					sprite = new LoFTicon(bindata, id);
+					break;
+
+				default:
+				case Spriteset.SpritesetType.non: // TODO: error out
+					sprite = null;
+					break;
 			}
+			return sprite;
 		}
 
 
 		/// <summary>
-		/// Saves a sprite. Forces black/white for LoFTs.
+		/// Saves a sprite.
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
-		/// <param name="b">the Bitmap to export</param>
-//		/// <param name="bilevel">true to force palid #0 black and #1 white for
-//		/// LoFTs</param>
+		/// <param name="b">the <c>(Image)Bitmap</c> to export</param>
 		public static void ExportSprite(
 				string fullpath,
 				Image b)
-//				bool bilevel = false
 		{
-			// NOTE: LoFT icons are created as bilevel images and shall remain
-			// bilevel 8-bpp images throughout the operation of this program.
-			// Palette id #0 shall be black and the rest of the colortable shall
-			// be white.
-
-//			ColorPalette pal0 = null; // workaround for the fact that ColorPalette is copied
-//			if (bilevel)
-//			{
-//				pal0 = b.Palette; // don't screw up the sprite's palette; use a copy ->
-//
-//				ColorPalette pal = b.Palette;
-//				pal.Entries[Palette.LoFTclear] = Color.Black;
-//				pal.Entries[Palette.LoFTSolid] = Color.White;
-//				b.Palette = pal;
-//			}
-
 			Directory.CreateDirectory(Path.GetDirectoryName(fullpath));
 			b.Save(fullpath, ImageFormat.Png);
-
-//			if (bilevel) // revert sprite's palette ->
-//				b.Palette = pal0;
 		}
 
 		/// <summary>
-		/// Saves a spriteset as a PNG spritesheet.
+		/// Saves a specified <c><see cref="Spriteset"/></c> as a <c>PNG</c>
+		/// spritesheet.
 		/// </summary>
 		/// <param name="fullpath">fullpath of the output file</param>
-		/// <param name="spriteset">spriteset</param>
-		/// <param name="pal">palette</param>
-		/// <param name="cols">quantity of cols</param>
-//		/// <param name="bilevel">true to force palid #0 black and #1 white for
-//		/// LoFTs</param>
-		/// <param name="pad">padding between sprites in the spritesheet</param>
-		/// <remarks>Check that spriteset is not null or blank before call. DO
-		/// NOT PASS IN 0 COLS idiot.</remarks>
+		/// <param name="spriteset">a <c>Spriteset</c></param>
+		/// <param name="pal">a <c><see cref="Palette"/></c></param>
+		/// <param name="cols">width in sprites</param>
+		/// <remarks>Check that spriteset is not <c>null</c> or blank before
+		/// call. DO NOT PASS IN <c>0</c> COLS idiot.</remarks>
 		public static void ExportSpritesheet(
 				string fullpath,
 				Spriteset spriteset,
 				Palette pal,
-				int cols = 8,
-//				bool bilevel = false,
-				int pad = 0)
+				int cols = 8)
 		{
 			if (spriteset.Count < cols)
 				cols = spriteset.Count;
 
 			using (var b = CreateTransparent(
-										cols * (XCImage.SpriteWidth + pad) - pad,
-										((spriteset.Count + (cols - 1)) / cols) * (XCImage.SpriteHeight + pad) - pad,
+										cols * spriteset.SpriteWidth,
+										((spriteset.Count + (cols - 1)) / cols) * spriteset.SpriteHeight,
 										pal.Table))
 			{
 				for (int i = 0; i != spriteset.Count; ++i)
 				{
-					int x = i % cols * (XCImage.SpriteWidth  + pad);
-					int y = i / cols * (XCImage.SpriteHeight + pad);
-
-					Insert(spriteset[i].Sprite, b, x,y);
+					Insert(
+						spriteset[i].Sprite,
+						b,
+						i % cols * spriteset.SpriteWidth,
+						i / cols * spriteset.SpriteHeight);
 				}
-				ExportSprite(fullpath, b); // bilevel
+				ExportSprite(fullpath, b);
 			}
 		}
 
@@ -306,12 +326,15 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// @note Called by ExportSpritesheet() and MainViewF.Screenshot().
+		/// 
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="dst"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
+		/// <remarks>Called by
+		/// <c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c> and
+		/// <c>MainViewF.Screenshot()</c>.</remarks>
 		public static void Insert(
 				Bitmap src,
 				Bitmap dst,
@@ -365,10 +388,10 @@ namespace XCom
 
 		/// <summary>
 		/// Chews off any transparent edges.
-		/// @note Called by MainViewF.Screenshot().
 		/// </summary>
 		/// <param name="b"></param>
 		/// <returns></returns>
+		/// <remarks>Called by <c>MainViewF.Screenshot()</c>.</remarks>
 		public static Rectangle GetNontransparentRectangle(Bitmap b)
 		{
 			var locked = b.LockBits(

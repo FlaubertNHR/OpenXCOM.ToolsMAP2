@@ -157,7 +157,7 @@ namespace PckView
 		{
 			ClientSize = new Size(
 								XCImage.SpriteWidth32 * 10 + SpritePanel.Pad, // <- keep the statusbar at 32px sprite-width
-								XCImage.SpriteHeight  * 10 + SpritePanel.Pad
+								_f.SpriteHeight       * 10 + SpritePanel.Pad
 														   + bar_Scale  .Height
 														   + la_EditMode.Height
 														   + ss_Status  .Height);
@@ -226,7 +226,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void popup_Palette(object sender, EventArgs e)
 		{
-			miPalette.Enabled = (_f.SetType != SpritesetType.LoFT);
+			miPalette.Enabled = (_f.SetType != Spriteset.SpritesetType.LoFT);
 			miPalette.Checked = _fpalette.Visible;
 		}
 
@@ -238,7 +238,7 @@ namespace PckView
 		/// <remarks>Has no effect if a LoFTset is loaded.</remarks>
 		private void OnShowPaletteClick(object sender, EventArgs e)
 		{
-			if (_f.SetType != SpritesetType.LoFT) // don't allow the Palette to show if editing LoFTs
+			if (_f.SetType != Spriteset.SpritesetType.LoFT) // don't allow the Palette to show if editing LoFTs
 			{
 				if (!miPalette.Checked)
 				{

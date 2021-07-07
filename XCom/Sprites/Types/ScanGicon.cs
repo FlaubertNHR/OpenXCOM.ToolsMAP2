@@ -21,22 +21,17 @@ namespace XCom
 		/// <param name="bindata">the ScanG.Dat source data for this
 		/// <c>ScanGicon</c></param>
 		/// <param name="id"></param>
-		internal ScanGicon(
-				byte[] bindata,
-				int id)
-			:
-				base(
-					bindata,
-					XCImage.SpriteWidth,
-					XCImage.SpriteHeight,
-					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					id)
+		internal ScanGicon(byte[] bindata, int id)
 		{
+			Id  = id;
 			Pal = Palette.UfoBattle; // default: icons have no integral palette.
 
-			Sprite = BitmapService.CreateSprite(
-											XCImage.SpriteWidth,
-											XCImage.SpriteHeight,
+			_width = _height = XCImage.ScanGside;
+			_bindata = bindata;
+
+			Sprite = SpriteService.CreateSprite(
+											_width,
+											_height,
 											_bindata,
 											Pal.Table);
 		}

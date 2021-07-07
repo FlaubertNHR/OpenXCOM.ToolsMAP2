@@ -31,7 +31,6 @@ namespace XCom
 				return new Spriteset( // bypass error-checking
 								label,
 								Palette.UfoBattle,
-								SpritesetManager.TAB_WORD_LENGTH_2,
 								bytesPck,
 								bytesTab);
 			}

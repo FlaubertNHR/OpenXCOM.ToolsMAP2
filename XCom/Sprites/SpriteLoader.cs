@@ -17,7 +17,7 @@ namespace XCom
 	/// paletted PNG images with transparency from being loaded as paletted.
 	/// </summary>
 	/// <remarks>Handles 8-bpp PNG,GIF,BMP (tested).</remarks>
-	public static class BitmapLoader
+	public static class SpriteLoader
 	{
 		private static byte[] PNG_IDENTIFIER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
 

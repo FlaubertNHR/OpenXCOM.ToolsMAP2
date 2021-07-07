@@ -93,8 +93,8 @@
     </Compile>
     <Compile Include="McdRecords\McdRecordsExceeded.cs" />
     <Compile Include="McdRecords\SpecialType.cs" />
-    <Compile Include="Sprites\BitmapLoader.cs" />
-    <Compile Include="Sprites\BitmapService.cs">
+    <Compile Include="Sprites\SpriteLoader.cs" />
+    <Compile Include="Sprites\SpriteService.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sprites\Palette.cs">

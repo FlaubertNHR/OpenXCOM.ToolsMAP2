@@ -21,6 +21,21 @@ namespace XCom
 	/// <c>Bitmaps</c> to be drawn on-the-fly.</remarks>
 	public sealed class Spriteset
 	{
+		#region Enums (public)
+		public enum SpritesetType
+		{
+			non,	// default
+	
+			Pck,	// a terrain or unit PCK+TAB set is currently loaded.
+					// These are 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword (tftd-unit)
+			Bigobs,	// a Bigobs PCK+TAB set is currently loaded.
+					// Bigobs are 32x48 w/ 2-byte Tabword.
+			ScanG,	// a ScanG iconset is currently loaded.
+					// ScanGs are 4x4 w/ 0-byte Tabword.
+			LoFT	// a LoFT iconset is currently loaded.
+					// LoFTs are 16x16 w/ 0-byte Tabword.
+		}
+
 		public enum Fail
 		{
 			non, // 0 - successful
@@ -28,6 +43,7 @@ namespace XCom
 			tab, // 2 - overflow in the Tabfile
 			qty  // 3 - Pck vs Tab count mismatch
 		}
+		#endregion Enums (public)
 
 
 		#region Methods (disposable)
@@ -67,6 +83,44 @@ namespace XCom
 		{ get; private set; }
 
 
+		private Palette _pal;
+		/// <summary>
+		/// This <c>Spriteset's</c> reference to a <c><see cref="Palette"/></c>.
+		/// </summary>
+		/// <remarks>Changing the palette requires re-assigning the changed
+		/// <c><see cref="System.Drawing.Imaging.ColorPalette"/></c> to all
+		/// sprites in this <c>Spriteset</c>.</remarks>
+		public Palette Pal
+		{
+			get { return _pal; }
+			set
+			{
+				_pal = value;
+
+				foreach (XCImage sprite in Sprites)
+					sprite.Pal = Pal;
+
+				// rant
+				// why is the dang palette in every god-dang XCImage.
+				// why is 'Palette' EVERYWHERE: For indexed images
+				// the palette ought be merely a peripheral.
+			}
+		}
+
+
+		/// <summary>
+		/// The width of the sprites in this <c>Spriteset</c>.
+		/// </summary>
+		internal int SpriteWidth
+		{ get; private set; }
+
+		/// <summary>
+		/// The height of the sprites in this <c>Spriteset</c>.
+		/// </summary>
+		internal int SpriteHeight
+		{ get; private set; }
+
+
 		/// <summary>
 		/// Stores a possible <c><see cref="Fail"/></c> state when loading this
 		/// <c>Spriteset</c>.
@@ -96,32 +150,10 @@ namespace XCom
 		/// </summary>
 		public int CountOffsets
 		{ get; private set; }
+		#endregion Properties
 
 
-		private Palette _pal;
-		/// <summary>
-		/// This <c>Spriteset's</c> reference to a <c><see cref="Palette"/></c>.
-		/// </summary>
-		/// <remarks>Changing the palette requires re-assigning the changed
-		/// <c><see cref="System.Drawing.Imaging.ColorPalette"/></c> to all
-		/// sprites in this <c>Spriteset</c>.</remarks>
-		public Palette Pal
-		{
-			get { return _pal; }
-			set
-			{
-				_pal = value;
-
-				foreach (XCImage sprite in Sprites)
-					sprite.Pal = Pal;
-
-				// rant
-				// why is the dang palette in every god-dang XCImage.
-				// why is 'Palette' EVERYWHERE: For indexed images
-				// the palette ought be merely a peripheral.
-			}
-		}
-
+		#region Indexers
 		/// <summary>
 		/// Gets/Sets the <c><see cref="XCImage"/></c> at a specified id in
 		/// <c><see cref="Sprites"/></c>. Adds a sprite to the end of the set
@@ -147,7 +179,7 @@ namespace XCom
 				}
 			}
 		}
-		#endregion Properties
+		#endregion Indexers
 
 
 		#region cTor
@@ -162,6 +194,8 @@ namespace XCom
 		/// <param name="tabwordLength"><c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>
 		/// for terrains/bigobs/ufo-units, <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
 		/// for tftd-units</param>
+		/// <param name="spritewidth"></param>
+		/// <param name="spriteheight"></param>
 		/// <remarks>A spriteset is created by
 		/// <list type="number">
 		/// <item><c>PckView.PckViewF.OnCreateClick()</c></item>
@@ -170,38 +204,49 @@ namespace XCom
 		public Spriteset(
 				string label,
 				Palette pal,
+				int spritewidth   = XCImage.SpriteWidth32,
+				int spriteheight  = XCImage.SpriteHeight40,
 				int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2)
 		{
-			Label         = label;
-			Pal           = pal;
+			Label = label;
+			Pal   = pal;
+
+			SpriteWidth  = spritewidth;
+			SpriteHeight = spriteheight;
+
 			TabwordLength = tabwordLength;
 		}
 
 		/// <summary>
-		/// cTor[1]. Parses a PCK-file into a collection of sprites according to
-		/// its TAB-file.
+		/// cTor[1]. Parses a Pckfile into a collection of sprites according to
+		/// its Tabfile.
 		/// </summary>
 		/// <param name="label">usually the file w/out path or extension but
 		/// it's arbitrary here</param>
 		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
 		/// <c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c> for
-		/// UFO-sprites or <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c>
-		/// for TFTD-sprites)</param>
+		/// UFO-sprites or
+		/// <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c> for
+		/// TFTD-sprites)</param>
 		/// <param name="tabwordLength"><c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>
-		/// for terrains/bigobs/ufo-units, <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
+		/// for terrains/bigobs/ufo-units,
+		/// <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
 		/// for tftd-units</param>
-		/// <param name="bytesPck">byte array of the PCK file</param>
-		/// <param name="bytesTab">byte array of the TAB file</param>
+		/// <param name="bytesPck">byte array of the Pckfile</param>
+		/// <param name="bytesTab">byte array of the Tabfile</param>
+		/// <param name="spritewidth"></param>
+		/// <param name="spriteheight"></param>
 		/// <param name="createToned"><c>true</c> to create
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
 		/// sprites for MapView</param>
-		/// <returns>a <c>Spriteset</c> containing all the sprites, or null if
-		/// the quantity of sprites in the PCK vs TAB files aren't equal</returns>
-		/// <remarks>Ensure that <paramref name="bytesPck"/> and <paramref name="bytesTab"/>
-		/// are valid before call.
+		/// <returns>a <c>Spriteset</c> containing all the sprites, or
+		/// <c>null</c> if the quantity of sprites in the Pck- vs Tab-files
+		/// aren't equal</returns>
+		/// <remarks>Check that <paramref name="bytesPck"/> and
+		/// <paramref name="bytesTab"/> are valid before call.
 		/// 
 		/// 
-		/// A spriteset is loaded by
+		/// A <c>Spriteset</c> is loaded by
 		/// <list type="number">
 		/// <item><c>MapView.MainViewF()</c>
 		/// 
@@ -243,14 +288,20 @@ namespace XCom
 		public Spriteset(
 				string label,
 				Palette pal,
-				int tabwordLength,
 				byte[] bytesPck,
 				byte[] bytesTab,
-				bool createToned = false)
+				int spritewidth   = XCImage.SpriteWidth32,
+				int spriteheight  = XCImage.SpriteHeight40,
+				int tabwordLength = SpritesetManager.TAB_WORD_LENGTH_2,
+				bool createToned  = false)
 		{
 			//Logfile.Log("Spriteset label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
 			Pal           = pal;
+
+			SpriteWidth  = spritewidth;
+			SpriteHeight = spriteheight;
+
 			TabwordLength = tabwordLength;
 
 			if (label == SharedSpace.CursorFilePrefix)
@@ -412,6 +463,8 @@ namespace XCom
 						//Logfile.Log("sprite #" + i);
 						var sprite = new PckSprite(
 												bindata,
+												SpriteWidth,
+												SpriteHeight,
 												Pal,
 												i,
 												this,
@@ -437,7 +490,10 @@ namespace XCom
 		/// <param name="label"></param>
 		/// <param name="fs">a <c>Stream</c> of the SCANG.DAT or LOFTEMPS.DAT
 		/// file</param>
-		/// <param name="isLoFT"><c>true</c> if LoFT data, <c>false</c> if ScanG</param>
+		/// <param name="setType"><c><see cref="SpritesetType.LoFT"></see></c>
+		/// if LoFT data,
+		/// <c><see cref="SpritesetType.ScanG">SpritesetType.ScanG</see></c>
+		/// if ScanG</param>
 		/// <remarks>cf
 		/// <list type="bullet">
 		/// <item><c><see cref="SpritesetManager.LoadScanGufo()">SpritesetManager.LoadScanGufo()</see></c></item>
@@ -449,74 +505,82 @@ namespace XCom
 		/// <item><c>McdviewF.LoadLoFTufo()</c></item>
 		/// <item><c>McdviewF.LoadLoFTtftd()</c></item>
 		/// </list></remarks>
-		public Spriteset(string label, Stream fs, bool isLoFT)
+		public Spriteset(string label, Stream fs, SpritesetType setType)
 		{
 			Label         = label;
 			TabwordLength = SpritesetManager.TAB_WORD_LENGTH_0;
 
-			if (!isLoFT) // is ScanG
+			byte[] bindata; int iconCount;
+
+			switch (setType)
 			{
-				var bindata = new byte[(int)fs.Length];
-				fs.Read(bindata, 0, bindata.Length);
+				case SpritesetType.ScanG:
+					SpriteWidth = SpriteHeight = XCImage.ScanGside;
 
-				int iconCount = bindata.Length / ScanGicon.Length_ScanG;
-				for (int i = 0; i != iconCount; ++i)
-				{
-					var icondata = new byte[ScanGicon.Length_ScanG];
+					bindata = new byte[(int)fs.Length];
+					fs.Read(bindata, 0, bindata.Length);
 
-					for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
-						icondata[j] = bindata[i * ScanGicon.Length_ScanG + j];
-
-					Sprites.Add(new ScanGicon(icondata, i));
-				}
-				Pal = Palette.UfoBattle; // <- default
-			}
-			else // is LoFT
-			{
-				var bindata = new byte[(int)fs.Length];
-				fs.Read(bindata, 0, bindata.Length);
-
-				int posByte = 0;
-
-				int iconCount = bindata.Length / LoFTicon.Length_LoFT;
-				for (int id = 0; id != iconCount; ++id)
-				{
-					// 32 bytes in a loft
-					// 256 bits in a loft
-
-					var icondata = new BitArray(LoFTicon.Length_LoFT_bits); // init to Falses
-
-					// read the data as little-endian unsigned shorts - you gotta be kidding
-					// who decided to write LoFTemps.dat as SHORTS
-					// eg. C0 01 -> 01 C0
-
-					int posBit = -1;
-					for (int i = 0; i != LoFTicon.Length_LoFT; i += 2, posByte += 2)
+					iconCount = bindata.Length / ScanGicon.Length_ScanG;
+					for (int i = 0; i != iconCount; ++i)
 					{
-						for (byte j = 0x80; j != 0x00; j >>= 1) // 1000 0000 - iterate over bits in each even byte
+						var icondata = new byte[ScanGicon.Length_ScanG];
+
+						for (int j = 0; j != ScanGicon.Length_ScanG; ++j)
+							icondata[j] = bindata[i * ScanGicon.Length_ScanG + j];
+
+						Sprites.Add(new ScanGicon(icondata, i));
+					}
+					Pal = Palette.UfoBattle; // <- default
+					break;
+
+				case SpritesetType.LoFT:
+					SpriteWidth = SpriteHeight = XCImage.LoFTside;
+
+					bindata = new byte[(int)fs.Length];
+					fs.Read(bindata, 0, bindata.Length);
+
+					int posByte = 0, posBit;
+
+					iconCount = bindata.Length / LoFTicon.Length_LoFT;
+					for (int id = 0; id != iconCount; ++id)
+					{
+						// 32 bytes in a loft
+						// 256 bits in a loft
+
+						var icondata = new BitArray(LoFTicon.Length_LoFT_bits); // init to Falses
+
+						// read the data as little-endian unsigned shorts - you gotta be kidding
+						// who decided to write LoFTemps.dat as SHORTS
+						// eg. C0 01 -> 01 C0
+
+						posBit = -1;
+						for (int i = 0; i != LoFTicon.Length_LoFT; i += 2, posByte += 2)
 						{
-							icondata[++posBit] = ((bindata[posByte + 1] & j) != 0);
+							for (byte j = 0x80; j != 0x00; j >>= 1) // 1000 0000 - iterate over bits in each even byte
+							{
+								icondata[++posBit] = ((bindata[posByte + 1] & j) != 0);
+							}
+
+							for (byte j = 0x80; j != 0x00; j >>= 1) // iterate over bits in each odd byte
+							{
+								icondata[++posBit] = ((bindata[posByte] & j) != 0);
+							}
 						}
 
-						for (byte j = 0x80; j != 0x00; j >>= 1) // iterate over bits in each odd byte
+						// convert to binary palette-ids and store the data to a
+						// byte-array in 'XCImage' ->
+						var bytes = new byte[icondata.Length];
+						for (int i = 0; i != icondata.Length; ++i)
 						{
-							icondata[++posBit] = ((bindata[posByte] & j) != 0);
+							if (icondata[i])
+								bytes[i] = (byte)1;
+							else
+								bytes[i] = (byte)0;
 						}
+						Sprites.Add(new LoFTicon(bytes, id));
 					}
-
-					// convert to binary palette-ids and store the data to a
-					// byte-array in 'XCImage' ->
-					var bytes = new byte[icondata.Length];
-					for (int i = 0; i != icondata.Length; ++i)
-					{
-						if (icondata[i])
-							bytes[i] = (byte)1;
-						else
-							bytes[i] = (byte)0;
-					}
-					Sprites.Add(new LoFTicon(bytes, id));
-				}
-				Pal = Palette.Binary;
+					Pal = Palette.Binary;
+					break;
 			}
 		}
 		#endregion cTor

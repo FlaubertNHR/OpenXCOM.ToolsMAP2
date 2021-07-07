@@ -446,7 +446,7 @@ namespace XCom
 				}
 
 				(sprite as PckSprite).SpriteToned =
-				 sprite.Sprite = BitmapService.CreateSprite(
+				 sprite.Sprite = SpriteService.CreateSprite(
 														XCImage.SpriteWidth32,
 														XCImage.SpriteHeight40,
 														bindata,

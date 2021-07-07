@@ -20,22 +20,17 @@ namespace XCom
 		/// <param name="bindata">the LoFTemps.Dat source data for this
 		/// <c>LoFTicon</c></param>
 		/// <param name="id"></param>
-		internal LoFTicon(
-				byte[] bindata,
-				int id)
-			:
-				base(
-					bindata,
-					XCImage.SpriteWidth,
-					XCImage.SpriteHeight,
-					null, // do *not* pass 'pal' in here. See XCImage..cTor
-					id)
+		internal LoFTicon(byte[] bindata, int id)
 		{
+			Id  = id;
 			Pal = Palette.Binary;
 
-			Sprite = BitmapService.CreateSprite(
-											XCImage.SpriteWidth,
-											XCImage.SpriteHeight,
+			_width = _height = XCImage.LoFTside;
+			_bindata = bindata;
+
+			Sprite = SpriteService.CreateSprite(
+											_width,
+											_height,
 											_bindata,
 											Pal.Table);
 		}
