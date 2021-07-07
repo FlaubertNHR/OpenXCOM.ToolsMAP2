@@ -473,8 +473,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Writes the id of a <c><see cref="Tilepart"/></c> to a given
-		/// <c>Stream</c>.
+		/// Writes the id of a specified <c><see cref="Tilepart"/></c> to a
+		/// specified <c>FileStream</c>.
 		/// </summary>
 		/// <param name="fs"></param>
 		/// <param name="part"></param>
@@ -629,18 +629,18 @@ namespace XCom
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
-		/// <returns>the corresponding MapTile object</returns>
+		/// <returns>the corresponding <c>MapTile</c> object</returns>
 		public MapTile GetTile(int col, int row, int lev)
 		{
 			return Tiles.GetTile(col, row, lev);
 		}
 		/// <summary>
-		/// Gets the <c><see cref="MapTile"/></c> at the current level using
+		/// Gets a <c><see cref="MapTile"/></c> at the current level using
 		/// col,row values.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
-		/// <returns>the corresponding MapTile object</returns>
+		/// <returns>the corresponding <c>MapTile</c> object</returns>
 		public MapTile GetTile(int col, int row)
 		{
 			return Tiles.GetTile(col, row, Level);
