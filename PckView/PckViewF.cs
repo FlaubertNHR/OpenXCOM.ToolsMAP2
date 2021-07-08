@@ -854,17 +854,6 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Disposes temporary bitmaps.
-		/// </summary>
-		/// <param name="bs"></param>
-		private static void DisposeBitmaps(IList<Bitmap> bs)
-		{
-			for (int i = bs.Count - 1; i != -1; --i) // not sure if Dispose() needs to be done in reverse order
-			if (bs[i] != null)
-				bs[i].Dispose();
-		}
-
-		/// <summary>
 		/// Adds a sprite or sprites to the collection. Called when the Context
 		/// menu's click-event is raised.
 		/// </summary>
@@ -894,11 +883,13 @@ namespace PckView
 				{
 					_lastSpriteDirectory = Path.GetDirectoryName(ofd.FileName);
 
-					bool valid = true;
+					var bs = new List<Bitmap>();
 
-					var bs = new Bitmap[ofd.FileNames.Length]; // first run a check against all sprites and if any are borked set error.
+					bool valid = true; // first run a check against all sprites and if any are borked set error.
 					for (int i = 0; valid && i != ofd.FileNames.Length; ++i)
 					{
+						valid = false;
+
 //						var b = new Bitmap(ofd.FileNames[i]);	// <- .net.bork. Creates a 32-bpp Argb image if source is
 																// 8-bpp PNG w/transparency; GIF,BMP however retains 8-bpp format.
 
@@ -907,21 +898,18 @@ namespace PckView
 						{
 							Bitmap b = SpriteLoader.LoadBitmap(bindata);
 
-							if (b == null) // error was shown by SpriteLoader.
+							if (b != null)
 							{
-								valid = false;
+								bs.Add(b);
+
+								if (!(valid = (b.Width  == SpriteWidth
+											&& b.Height == SpriteHeight
+											&& b.PixelFormat == PixelFormat.Format8bppIndexed)))
+								{
+									ShowBitmapError();
+								}
 							}
-							else if (b.Width       != SpriteWidth
-								||   b.Height      != SpriteHeight
-								||   b.PixelFormat != PixelFormat.Format8bppIndexed)
-							{
-								ShowBitmapError();
-								valid = false;
-							}
-							else
-								bs[i] = b;
 						}
-						else valid = false; // error was shown by FileService.
 					}
 
 					if (valid)
@@ -942,7 +930,8 @@ namespace PckView
 						SpritesetCountChanged(TilePanel.Selid);
 					}
 
-					DisposeBitmaps(bs);
+					foreach (var b in bs)
+						b.Dispose();
 				}
 			}
 		}
@@ -1036,33 +1025,31 @@ namespace PckView
 		/// <see cref="OnInsertSpritesAfterClick"/></remarks>
 		private bool InsertSprites(int id, string[] files)
 		{
-			bool valid = true;
+			var bs = new List<Bitmap>();
 
-			var bs = new Bitmap[files.Length]; // first run a check against all sprites and if any are borked exit w/ false.
+			bool valid = true; // first run a check against all sprites and if any are borked exit w/ false.
 			for (int i = 0; valid && i != files.Length; ++i)
 			{
+				valid = false;
+
 				byte[] bindata = FileService.ReadFile(files[i]);
 				if (bindata != null)
 				{
 					Bitmap b = SpriteLoader.LoadBitmap(bindata);
 
-					if (b == null) // error was shown by SpriteLoader.
+					if (b != null)
 					{
-						valid = false;
-					}
-					else if (b.Width       != SpriteWidth
-						||   b.Height      != SpriteHeight
-						||   b.PixelFormat != PixelFormat.Format8bppIndexed)
-					{
-						ShowBitmapError();
-						valid = false;
-					}
-					else
-						bs[i] = b;
-				}
-				else valid = false; // error was shown by FileService.
-			}
+						bs.Add(b);
 
+						if (!(valid = (b.Width       == SpriteWidth
+									&& b.Height      == SpriteHeight
+									&& b.PixelFormat == PixelFormat.Format8bppIndexed)))
+						{
+							ShowBitmapError();
+						}
+					}
+				}
+			}
 
 			if (valid)
 			{
@@ -1083,7 +1070,8 @@ namespace PckView
 				}
 			}
 
-			DisposeBitmaps(bs);
+			foreach (var b in bs)
+				b.Dispose();
 
 			return valid;
 		}
