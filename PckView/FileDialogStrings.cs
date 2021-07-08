@@ -6,21 +6,22 @@ using XCom;
 namespace PckView
 {
 	/// <summary>
-	/// A static class that creates several of the OpenFileDialog and
-	/// SaveFileDialog strings for titles and filters.
+	/// A static class that creates several of the <c>OpenFileDialog</c> and
+	/// <c>SaveFileDialog</c> strings for titles and filters.
 	/// </summary>
 	internal static class FileDialogStrings
 	{
 		/// <summary>
-		/// Gets title for dialogs.
+		/// Gets a title for dialogs.
 		/// </summary>
-		/// <param name="t">the SsType of the currently loaded spriteset</param>
-		/// <param name="plural">true if multi-file open dialog</param>
+		/// <param name="setType">the <c><see cref="Spriteset.SsType"></see></c>
+		/// of the currently loaded <c><see cref="Spriteset"/></c></param>
+		/// <param name="plural"><c>true</c> if multi-file open dialog</param>
 		/// <returns></returns>
-		internal static string GetTitle(Spriteset.SsType t, bool plural)
+		internal static string GetTitle(Spriteset.SsType setType, bool plural)
 		{
 			string title = String.Empty;
-			switch (t)
+			switch (setType)
 			{
 				case Spriteset.SsType.Pck:    title = "Select 32x40 8-bpp Image file"; break;
 				case Spriteset.SsType.Bigobs: title = "Select 32x48 8-bpp Image file"; break;
@@ -35,7 +36,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets filter for dialogs.
+		/// Gets a filter for dialogs.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilter()
@@ -46,7 +47,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets filter for PCK files.
+		/// Gets a filter for Pckfiles.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilterPck()
@@ -55,7 +56,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets filter for DAT files.
+		/// Gets a filter for Datfiles.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilterDat()
@@ -64,7 +65,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets filter for PNG files.
+		/// Gets a filter for Pngfiles.
 		/// </summary>
 		/// <returns></returns>
 		internal static string GetFilterPng()
@@ -73,9 +74,10 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Gets error hint.
+		/// Gets an error hint.
 		/// </summary>
-		/// <param name="setType"></param>
+		/// <param name="setType">the <c><see cref="Spriteset.SsType"></see></c>
+		/// of the currently loaded <c><see cref="Spriteset"/></c></param>
 		/// <param name="spritesheet"><c>true</c> if the error occured when
 		/// importing a spritesheet</param>
 		/// <returns></returns>
