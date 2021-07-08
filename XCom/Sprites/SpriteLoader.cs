@@ -11,19 +11,20 @@ using DSShared;
 
 namespace XCom
 {
-	/// https://stackoverflow.com/questions/44835726/c-sharp-loading-an-indexed-color-image-file-correctly#answer-45100442
 	/// <summary>
 	/// Image loading toolset class which corrects the bug that prevents
-	/// paletted PNG images with transparency from being loaded as paletted.
+	/// paletted <c>PNG</c> images with transparency from being loaded as
+	/// paletted.
 	/// </summary>
-	/// <remarks>Handles 8-bpp PNG,GIF,BMP (tested).</remarks>
+	/// <remarks>Handles 8-bpp <c>PNG</c>/<c>GIF</c>/<c>BMP</c>.</remarks>
+	/// https://stackoverflow.com/questions/44835726/c-sharp-loading-an-indexed-color-image-file-correctly#answer-45100442
 	public static class SpriteLoader
 	{
 		private static byte[] PNG_IDENTIFIER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
 
 
 		/// <summary>
-		/// Loads an image. Checks if it is a PNG containing palette
+		/// Loads an image. Checks if it is a <c>PNG</c> containing palette
 		/// transparency and if so ensures it loads correctly.
 		/// </summary>
 		/// <param name="data">file data to load</param>
@@ -34,33 +35,33 @@ namespace XCom
 		{
 			byte[] dataTrns = null;
 
-			if (data.Length > PNG_IDENTIFIER.Length) // Check if the image is a PNG.
+			if (data.Length > PNG_IDENTIFIER.Length)
 			{
-				var data1 = new Byte[PNG_IDENTIFIER.Length];
+				var data1 = new byte[PNG_IDENTIFIER.Length];
 				Array.Copy(data, data1, PNG_IDENTIFIER.Length);
 
-				if (PNG_IDENTIFIER.SequenceEqual(data1))
+				if (PNG_IDENTIFIER.SequenceEqual(data1)) // check if the image is a PNG
 				{
-					// Check if it contains a palette.
+					// check if it contains a palette
 					// I'm sure it can be looked up in the header somehow, but meh.
 
 					int plteOffset = FindChunk(data, "PLTE");
 					if (plteOffset != -1)
 					{
-						// Check if it contains a palette transparency chunk.
+						// check if it contains a palette transparency chunk
 						int trnsOffset = FindChunk(data, "tRNS");
 						if (trnsOffset != -1)
 						{
-							// Get chunk
+							// get chunk
 							int trnsLength = GetChunkLength(data, trnsOffset);
 							switch (trnsLength)
 							{
 								default:
-									dataTrns = new Byte[trnsLength];
+									dataTrns = new byte[trnsLength];
 									Array.Copy(data, trnsOffset + 8, dataTrns, 0, trnsLength);
 
 									// filter out the palette alpha chunk, make new data array
-									var data2 = new Byte[data.Length - (trnsLength + 12)];
+									var data2 = new byte[data.Length - (trnsLength + 12)];
 									Array.Copy(data, 0, data2, 0, trnsOffset);
 
 									int trnsEnd = trnsOffset + trnsLength + 12;
@@ -84,7 +85,7 @@ namespace XCom
 				}
 				else showinfo("Image is not a PNG.");
 			}
-			else showinfo("Data length is larger than PNG identifier.");
+			else showinfo("Data length is less than or equal to PNG identifier.");
 
 
 			using (var ms = new MemoryStream(data))
@@ -116,14 +117,14 @@ namespace XCom
 		/// identified as PNG. It does not go over the first 8 bytes but starts
 		/// at the start of the header chunk.
 		/// </summary>
-		/// <param name="data">he bytes of the PNG image</param>
+		/// <param name="data">the bytes of the PNG image</param>
 		/// <param name="chunkName">the name of the chunk to find</param>
-		/// <returns>the offset of the start of the png chunk or -1 if the chunk
+		/// <returns>the offset of the start of the PNG chunk or -1 if the chunk
 		/// was not found.</returns>
 		private static int FindChunk(byte[] data, string chunkName)
 		{
 			byte[] chunkNameBytes = Encoding.ASCII.GetBytes(chunkName);
-			byte[] test = new Byte[4];
+			var test = new byte[4];
 
 			// continue until either the end is reached or there is not enough
 			// space behind it for reading a new header
@@ -171,9 +172,12 @@ namespace XCom
 
 			// Don't want to use BitConverter; then you have to check platform
 			// endianness and all that mess.
-			int length = data[offset + 3] + (data[offset + 2] << 8) + (data[offset + 1] << 16) + (data[offset] << 24);
-			if (length < 0)
-				return -2;
+			int length =  data[offset + 3]
+					   + (data[offset + 2] << 8)
+					   + (data[offset + 1] << 16)
+					   + (data[offset]     << 24);
+
+			if (length < 0) return -2;
 
 			return length;
 		}
@@ -201,7 +205,7 @@ namespace XCom
 			int srcStride = srcLocked.Stride;
 			int dstStride = dstLocked.Stride;
 
-			byte[] imageData = new Byte[actualDataWidth];
+			var imageData = new byte[actualDataWidth];
 
 			IntPtr srcPos = srcLocked.Scan0;
 			IntPtr dstPos = dstLocked.Scan0;
