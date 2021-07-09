@@ -204,7 +204,45 @@ namespace XCom
 		#endregion cTor
 
 
-		#region Methods (static)
+		#region Methods (override)
+		/// <summary>
+		/// Gets a string-representation of this <c>PckSprite</c> incl/ its
+		/// bindata.
+		/// </summary>
+		/// <returns></returns>
+		/// <remarks>Not used.</remarks>
+		public override string ToString()
+		{
+			string ret;
+
+			if (_spriteset != null)
+				ret = _spriteset + ": ";
+			else
+				ret = String.Empty;
+
+			ret += Id + Environment.NewLine;
+
+			for (int i = 0; i != _bindata.Length; ++i)
+			{
+				ret += _bindata[i];
+
+				switch (_bindata[i])
+				{
+					case MarkerEos:
+						ret += Environment.NewLine;
+						break;
+
+					default:
+						ret += " ";
+						break;
+				}
+			}
+			return ret;
+		}
+		#endregion Methods (override)
+
+
+		#region Methods
 		/// <summary>
 		/// Compresses and optionally writes this <c>PckSprite</c> to a
 		/// specified stream.
@@ -281,48 +319,8 @@ namespace XCom
 		// non-standardized. It's sorta like if there's at least one full row of
 		// transparent pixels at the end of an image, it gets 0xFE,0xFF tacked
 		// on before the final 0xFF (end of image) marker.
-		#endregion Methods (static)
 
 
-		#region Methods (override)
-		/// <summary>
-		/// Gets a string-representation of this <c>PckSprite</c> incl/ its
-		/// bindata.
-		/// </summary>
-		/// <returns></returns>
-		/// <remarks>Not used.</remarks>
-		public override string ToString()
-		{
-			string ret;
-
-			if (_spriteset != null)
-				ret = _spriteset + ": ";
-			else
-				ret = String.Empty;
-
-			ret += Id + Environment.NewLine;
-
-			for (int i = 0; i != _bindata.Length; ++i)
-			{
-				ret += _bindata[i];
-
-				switch (_bindata[i])
-				{
-					case MarkerEos:
-						ret += Environment.NewLine;
-						break;
-
-					default:
-						ret += " ";
-						break;
-				}
-			}
-			return ret;
-		}
-		#endregion Methods (override)
-
-
-		#region Methods
 		/// <summary>
 		/// Returns a deep clone of this <c>PckSprite</c>. Except
 		/// <c><see cref="Pal"/></c>.
