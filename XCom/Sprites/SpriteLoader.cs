@@ -20,8 +20,65 @@ namespace XCom
 	/// https://stackoverflow.com/questions/44835726/c-sharp-loading-an-indexed-color-image-file-correctly#answer-45100442
 	public static class SpriteLoader
 	{
-		private static byte[] PNG_IDENTIFIER = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+		private static byte[] Id_PNG = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
+		private static byte[] Id_GIF = { 0x47, 0x49, 0x46, 0x38 };
+		private static byte[] Id_BMP = { 0x42, 0x4D };
 
+		/// <summary>
+		/// Checks the byte-array's header for an image-format that is supported
+		/// by MapView.
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns><c>true</c> if valid</returns>
+		/// <remarks>This is ofc not entirely robust. Image-formats with their
+		/// chunks and subtypes get complicated real fast. So
+		/// <c><see cref="LoadBitmap()">LoadBitmap()</see></c> will further run
+		/// a try/catch block to display any .NET <c>Exception</c> when trying
+		/// to create the <c>Bitmap</c>.</remarks>
+		private static bool CheckValidHeader(byte[] data)
+		{
+			bool fail = false;
+			if (data.Length >= Id_PNG.Length)
+			{
+				for (int i = 0; i != Id_PNG.Length; ++i)
+				if (data[i] != Id_PNG[i])
+				{
+					fail = true;
+					break;
+				}
+			}
+			else fail = true;
+
+			if (!fail) return true;
+
+			fail = false;
+			if (fail && data.Length >= Id_GIF.Length)
+			{
+				for (int i = 0; i != Id_GIF.Length; ++i)
+				if (data[i] != Id_GIF[i])
+				{
+					fail = true;
+					break;
+				}
+			}
+			else fail = true;
+
+			if (!fail) return true;
+
+			fail = false;
+			if (fail && data.Length >= Id_BMP.Length)
+			{
+				for (int i = 0; i != Id_BMP.Length; ++i)
+				if (data[i] != Id_BMP[i])
+				{
+					fail = true;
+					break;
+				}
+			}
+			else fail = true;
+
+			return !fail;
+		}
 
 		/// <summary>
 		/// Loads an image. Checks if it is a <c>PNG</c> containing palette
@@ -33,14 +90,20 @@ namespace XCom
 		/// http://www.libpng.org/pub/png/book/chapter08.html</remarks>
 		public static Bitmap LoadBitmap(byte[] data)
 		{
+			if (!CheckValidHeader(data))
+			{
+				showerror("File does not have a PNG/GIF/BMP header.");
+				return null;
+			}
+
 			byte[] dataTrns = null;
 
-			if (data.Length > PNG_IDENTIFIER.Length)
+			if (data.Length > Id_PNG.Length)
 			{
-				var data1 = new byte[PNG_IDENTIFIER.Length];
-				Array.Copy(data, data1, PNG_IDENTIFIER.Length);
+				var data1 = new byte[Id_PNG.Length];
+				Array.Copy(data, data1, Id_PNG.Length);
 
-				if (PNG_IDENTIFIER.SequenceEqual(data1)) // check if the image is a PNG
+				if (Id_PNG.SequenceEqual(data1)) // check if the image is a PNG
 				{
 					// check if it contains a palette
 					// I'm sure it can be looked up in the header somehow, but meh.
@@ -71,44 +134,52 @@ namespace XCom
 									break;
 
 								case -1:
-									showinfo("Bad chunk length in PNG image.", true);
+									showerror("Bad chunk length in PNG image.");
 									return null;
 
 								case -2:
-									showinfo("Bad chunk endianness in PNG image.", true);
+									showerror("Bad chunk endianness in PNG image.");
 									return null;
 							}
 						}
-						else showinfo("Chunk not found in PNG image: tRNS");
+//						else showerror("Chunk not found in PNG image: tRNS", true);
 					}
-					else showinfo("Chunk not found in PNG image: PLTE");
+//					else showerror("Chunk not found in PNG image: PLTE", true);
 				}
-				else showinfo("Image is not a PNG.");
+//				else showerror("Image is not a PNG.", true);
 			}
-			else showinfo("Data length is less than or equal to PNG identifier.");
+//			else showerror("Data length is less than or equal to PNG identifier.", true);
 
 
-			using (var ms = new MemoryStream(data))
-			using (var b = new Bitmap(ms))
+			try
 			{
-				if (b.Palette.Entries.Length != 0 && dataTrns != null)
+				using (var ms = new MemoryStream(data))
+				using (var b = new Bitmap(ms))
 				{
-					ColorPalette pal = b.Palette;
-					for (int i = 0; i != pal.Entries.Length; ++i)
+					if (b.Palette.Entries.Length != 0 && dataTrns != null)
 					{
-						if (i >= dataTrns.Length)
-							break;
+						ColorPalette pal = b.Palette;
+						for (int i = 0; i != pal.Entries.Length; ++i)
+						{
+							if (i >= dataTrns.Length)
+								break;
 
-						Color color = pal.Entries[i];
-						pal.Entries[i] = Color.FromArgb(dataTrns[i], color.R, color.G, color.B);
+							Color color = pal.Entries[i];
+							pal.Entries[i] = Color.FromArgb(dataTrns[i], color.R, color.G, color.B);
+						}
+						b.Palette = pal;
 					}
-					b.Palette = pal;
-				}
 
-				// Images in .net often cause odd crashes when their backing
-				// resource disappears. This prevents that from happening by
-				// copying its inner contents into a new Bitmap object.
-				return Copy(b);
+					// Images in .net often cause odd crashes when their backing
+					// resource disappears. This prevents that from happening by
+					// copying its inner contents into a new Bitmap object.
+					return Copy(b);
+				}
+			}
+			catch (Exception e)
+			{
+				showerror(".net could not load the Image.", e.Message);
+				return null;
 			}
 		}
 
@@ -129,7 +200,7 @@ namespace XCom
 			// continue until either the end is reached or there is not enough
 			// space behind it for reading a new header
 
-			int offset = PNG_IDENTIFIER.Length;
+			int offset = Id_PNG.Length;
 			while (offset < data.Length && offset + 8 < data.Length) // huh - if (offset + 8 < end) then shirley (offset < end)
 			{
 				Array.Copy(
@@ -148,11 +219,11 @@ namespace XCom
 						break;
 
 					case -1:
-						showinfo("Bad chunk length in PNG image.", true);
+						showerror("Bad chunk length in PNG image.");
 						return -1;
 
 					case -2:
-						showinfo("Bad chunk endianness in PNG image.", true);
+						showerror("Bad chunk endianness in PNG image.");
 						return -1;
 				}
 			}
@@ -239,23 +310,24 @@ namespace XCom
 		/// Displays an <see cref="Infobox"/>.
 		/// </summary>
 		/// <param name="head"></param>
-		/// <param name="error"></param>
-		private static void showinfo(string head, bool error = false)
+		/// <param name="copy"></param>
+		/// <param name="info"></param>
+		private static void showerror(string head, string copy = null, bool info = false)
 		{
 			string title; InfoboxType bt;
 
-			if (error)
-			{
-				title = "Load error";
-				bt = InfoboxType.Error;
-			}
-			else
+			if (info)
 			{
 				title = "Load info";
 				bt = InfoboxType.Info;
 			}
+			else
+			{
+				title = "Load error";
+				bt = InfoboxType.Error;
+			}
 
-			using (var f = new Infobox(title, head, null, bt))
+			using (var f = new Infobox(title, head, copy, bt))
 				f.ShowDialog();
 		}
 	}
