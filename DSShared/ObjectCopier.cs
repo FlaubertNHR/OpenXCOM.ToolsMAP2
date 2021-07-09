@@ -16,11 +16,18 @@ namespace DSShared
 	public static class ObjectCopier
 	{
 		/// <summary>
-		/// Performs a deep copy of a specified object.
+		/// Performs a deep clone of a specified serializable object.
 		/// </summary>
-		/// <typeparam name="T">the type of object being copied</typeparam>
-		/// <param name="src">the object instance to copy</param>
-		/// <returns>the copied object</returns>
+		/// <typeparam name="T">the type of object being cloned</typeparam>
+		/// <param name="src">the object to clone</param>
+		/// <returns>the cloned object</returns>
+		/// <exception cref="ArgumentException"><typeparamref name="T"/> is not
+		/// serializable</exception>
+		/// <remarks>If <paramref name="src"/> is <c>null</c> a default instance
+		/// of <typeparamref name="T"/> is returned.
+		/// 
+		/// 
+		/// See also <c>XCom.SpriteLoader.Clone()</c>.</remarks>
 		public static T Clone<T>(T src)
 		{
 			if (!typeof(T).IsSerializable)
@@ -35,11 +42,11 @@ namespace DSShared
 			}
 
 			IFormatter bf = new BinaryFormatter();
-			using (Stream ms = new MemoryStream())
+			using (Stream str = new MemoryStream())
 			{
-				bf.Serialize(ms, src);
-				ms.Seek(0, SeekOrigin.Begin);
-				return (T)bf.Deserialize(ms);
+				bf.Serialize(str, src);
+				str.Seek(0, SeekOrigin.Begin);
+				return (T)bf.Deserialize(str);
 			}
 		}
 	}
