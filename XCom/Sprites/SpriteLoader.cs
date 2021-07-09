@@ -178,8 +178,8 @@ namespace XCom
 
 			try
 			{
-				using (var ms = new MemoryStream(data))
-				using (var b = new Bitmap(ms))
+				using (var str = new MemoryStream(data))
+				using (var b = new Bitmap(str))
 				{
 					if (b.Palette.Entries.Length != 0 && dataTrns != null)
 					{
@@ -198,7 +198,7 @@ namespace XCom
 					// Images in .net often cause odd crashes when their backing
 					// resource disappears. This prevents that from happening by
 					// copying its inner contents into a new Bitmap object.
-					return Copy(b);
+					return Clone(b);
 				}
 			}
 			catch (Exception e)
@@ -279,15 +279,18 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clones a <c>Bitmap</c> object to free it from any backing resources.
-		/// Code taken from http://stackoverflow.com/a/3661892/ with some extra
-		/// fixes.
+		/// Clones a specified <c>Bitmap</c> to free it from any backing
+		/// resources. Code taken from http://stackoverflow.com/a/3661892/ with
+		/// some extra fixes.
 		/// </summary>
 		/// <param name="src">the image to clone</param>
 		/// <returns>the cloned image</returns>
-		/// <remarks>It's the responsibility of the caller to dispose the
-		/// Bitmap.</remarks>
-		private static Bitmap Copy(Bitmap src)
+		/// <remarks>It's the responsibility of the caller to dispose both
+		/// source and destination <c>Bitmaps</c>.
+		/// 
+		/// See also <c><see cref="ObjectCopier"/>.Clone()</c>.
+		/// </remarks>
+		private static Bitmap Clone(Bitmap src)
 		{
 			int height = src.Height;
 
