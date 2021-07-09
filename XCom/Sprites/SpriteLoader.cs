@@ -24,11 +24,37 @@ namespace XCom
 		private static byte[] Id_GIF = { 0x47, 0x49, 0x46, 0x38 };
 		private static byte[] Id_BMP = { 0x42, 0x4D };
 
+
+//		private static bool validateImage(byte[] data)
+//		{
+//			try
+//			{
+//				Stream str = new MemoryStream(data);
+//				using (Image i = Image.FromStream(str))
+//				{
+//					if (   i.RawFormat.Equals(ImageFormat.Bmp)
+//						|| i.RawFormat.Equals(ImageFormat.Gif)
+//						|| i.RawFormat.Equals(ImageFormat.Jpeg)
+//						|| i.RawFormat.Equals(ImageFormat.Png))
+//					{
+//						return true;
+//					}
+//				}
+//				return false;
+//			}
+//			catch
+//			{
+//				return false;
+//			}
+//		}
+
+
 		/// <summary>
-		/// Checks the byte-array's header for an image-format that is supported
-		/// by MapView.
+		/// Checks a specified byte-array's initial bytes for an image-format
+		/// that is supported as input to PckView -
+		/// <c>PNG</c>/<c>GIF</c>/<c>BMP</c>.
 		/// </summary>
-		/// <param name="data"></param>
+		/// <param name="data">file data to check</param>
 		/// <returns><c>true</c> if valid</returns>
 		/// <remarks>This is ofc not entirely robust. Image-formats with their
 		/// chunks and subtypes get complicated real fast. So
@@ -108,8 +134,7 @@ namespace XCom
 					// check if it contains a palette
 					// I'm sure it can be looked up in the header somehow, but meh.
 
-					int plteOffset = FindChunk(data, "PLTE");
-					if (plteOffset != -1)
+					if (FindChunk(data, "PLTE") != -1)
 					{
 						// check if it contains a palette transparency chunk
 						int trnsOffset = FindChunk(data, "tRNS");
@@ -184,14 +209,14 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Finds the start of a PNG chunk. This assumes the image is already
-		/// identified as PNG. It does not go over the first 8 bytes but starts
-		/// at the start of the header chunk.
+		/// Finds the start of a <c>PNG</c> chunk. This assumes the image is
+		/// already identified as <c>PNG</c>. It does not go over the first 8
+		/// bytes but starts at the start of the header chunk.
 		/// </summary>
-		/// <param name="data">the bytes of the PNG image</param>
+		/// <param name="data">the bytes of the <c>PNG</c> image</param>
 		/// <param name="chunkName">the name of the chunk to find</param>
-		/// <returns>the offset of the start of the PNG chunk or -1 if the chunk
-		/// was not found.</returns>
+		/// <returns>the offset of the start of the <c>PNG</c> chunk or
+		/// <c>-1</c> if the chunk was not found.</returns>
 		private static int FindChunk(byte[] data, string chunkName)
 		{
 			byte[] chunkNameBytes = Encoding.ASCII.GetBytes(chunkName);
@@ -254,8 +279,9 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Clones an image object to free it from any backing resources. Code
-		/// taken from http://stackoverflow.com/a/3661892/ with some extra fixes.
+		/// Clones a <c>Bitmap</c> object to free it from any backing resources.
+		/// Code taken from http://stackoverflow.com/a/3661892/ with some extra
+		/// fixes.
 		/// </summary>
 		/// <param name="src">the image to clone</param>
 		/// <returns>the cloned image</returns>
@@ -263,7 +289,9 @@ namespace XCom
 		/// Bitmap.</remarks>
 		private static Bitmap Copy(Bitmap src)
 		{
-			var rect = new Rectangle(0,0, src.Width, src.Height);
+			int height = src.Height;
+
+			var rect = new Rectangle(0,0, src.Width, height);
 			var dst = new Bitmap(rect.Width, rect.Height, src.PixelFormat);
 
 			dst.SetResolution(src.HorizontalResolution, src.VerticalResolution);
@@ -271,17 +299,16 @@ namespace XCom
 			var srcLocked = src.LockBits(rect, ImageLockMode.ReadOnly,  src.PixelFormat);
 			var dstLocked = dst.LockBits(rect, ImageLockMode.WriteOnly, dst.PixelFormat);
 
-			int actualDataWidth = (Image.GetPixelFormatSize(src.PixelFormat) * rect.Width + 7) / 8;
-			int height = src.Height;
-			int srcStride = srcLocked.Stride;
-			int dstStride = dstLocked.Stride;
+			long srcStride = (long)srcLocked.Stride;
+			long dstStride = (long)dstLocked.Stride;
 
+			int actualDataWidth = (Image.GetPixelFormatSize(src.PixelFormat) * rect.Width + 7) / 8;
 			var imageData = new byte[actualDataWidth];
 
 			IntPtr srcPos = srcLocked.Scan0;
 			IntPtr dstPos = dstLocked.Scan0;
 
-			// Copy line by line, skipping by stride but copying actual data width
+			// copy line by line skipping by stride but copying actual data width
 			for (int y = 0; y != height; ++y)
 			{
 				Marshal.Copy(srcPos, imageData, 0, actualDataWidth);
@@ -294,10 +321,10 @@ namespace XCom
 			dst.UnlockBits(dstLocked);
 			src.UnlockBits(srcLocked);
 
-			// For indexed images, restore the palette. This is not linking to a
-			// referenced object in the original image; the getter of Palette
-			// creates a new object when called.
-			if (((int)src.PixelFormat & (int)PixelFormat.Indexed) != 0) // Indexed = 65536
+			// restore the palette for indexed images.
+			// This is not linking to a referenced object in the original image;
+			// the getter of Palette creates a new object when called.
+			if (((int)src.PixelFormat & (int)PixelFormat.Indexed) != 0)
 				dst.Palette = src.Palette;
 
 			dst.SetResolution(src.HorizontalResolution, src.VerticalResolution); // Restore DPI settings - wtf.
@@ -307,7 +334,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Displays an <see cref="Infobox"/>.
+		/// Displays an <c><see cref="Infobox"/></c>.
 		/// </summary>
 		/// <param name="head"></param>
 		/// <param name="copy"></param>
