@@ -68,7 +68,7 @@ namespace MapView
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(305, 15);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "AUTHOR - Ben Ratzlaff aka DaiShiva";
+			this.label1.Text = "AUTHOR - Ben Ratzlaff aka Daishiva";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label2
