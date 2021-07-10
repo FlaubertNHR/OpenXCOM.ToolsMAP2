@@ -847,7 +847,6 @@ namespace PckView
 		{
 			using (var f = new Infobox(
 									"Image error",
-//									"Detected incorrect Dimensions and/or PixelFormat.",
 									FileDialogStrings.GetError(SetType, spritesheet),
 									pfe + Environment.NewLine + Environment.NewLine
 										+ b.Width + "x" + b.Height + " " + b.PixelFormat,

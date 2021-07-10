@@ -269,8 +269,8 @@ namespace XCom
 				cols = spriteset.Count;
 
 			using (var b = CreateTransparent(
-										cols * spriteset.SpriteWidth,
-										((spriteset.Count + (cols - 1)) / cols) * spriteset.SpriteHeight,
+										spriteset.SpriteWidth  * cols,
+										spriteset.SpriteHeight * ((spriteset.Count + cols - 1) / cols),
 										pal.Table))
 			{
 				for (int i = 0; i != spriteset.Count; ++i)

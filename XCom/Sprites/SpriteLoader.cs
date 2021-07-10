@@ -20,92 +20,14 @@ namespace XCom
 	/// https://stackoverflow.com/questions/44835726/c-sharp-loading-an-indexed-color-image-file-correctly#answer-45100442
 	public static class SpriteLoader
 	{
+		#region Fields (static)
 		private static byte[] Id_PNG = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
 		private static byte[] Id_GIF = { 0x47, 0x49, 0x46, 0x38 };
 		private static byte[] Id_BMP = { 0x42, 0x4D };
+		#endregion Fields (static)
 
 
-//		private static bool validateImage(byte[] data)
-//		{
-//			try
-//			{
-//				Stream str = new MemoryStream(data);
-//				using (Image i = Image.FromStream(str))
-//				{
-//					if (   i.RawFormat.Equals(ImageFormat.Bmp)
-//						|| i.RawFormat.Equals(ImageFormat.Gif)
-//						|| i.RawFormat.Equals(ImageFormat.Jpeg)
-//						|| i.RawFormat.Equals(ImageFormat.Png))
-//					{
-//						return true;
-//					}
-//				}
-//				return false;
-//			}
-//			catch
-//			{
-//				return false;
-//			}
-//		}
-
-
-		/// <summary>
-		/// Checks a specified byte-array's initial bytes for an image-format
-		/// that is supported as input to PckView -
-		/// <c>PNG</c>/<c>GIF</c>/<c>BMP</c>.
-		/// </summary>
-		/// <param name="data">file data to check</param>
-		/// <returns><c>true</c> if valid</returns>
-		/// <remarks>This is ofc not entirely robust. Image-formats with their
-		/// chunks and subtypes get complicated real fast. So
-		/// <c><see cref="CreateSprite()">CreateSprite()</see></c> will further
-		/// run a try/catch block to display any .NET <c>Exception</c> when
-		/// trying to create the <c>Bitmap</c>.</remarks>
-		private static bool CheckValidHeader(byte[] data)
-		{
-			bool fail = false;
-			if (data.Length >= Id_PNG.Length)
-			{
-				for (int i = 0; i != Id_PNG.Length; ++i)
-				if (data[i] != Id_PNG[i])
-				{
-					fail = true;
-					break;
-				}
-			}
-			else fail = true;
-
-			if (!fail) return true;
-
-			fail = false;
-			if (fail && data.Length >= Id_GIF.Length)
-			{
-				for (int i = 0; i != Id_GIF.Length; ++i)
-				if (data[i] != Id_GIF[i])
-				{
-					fail = true;
-					break;
-				}
-			}
-			else fail = true;
-
-			if (!fail) return true;
-
-			fail = false;
-			if (fail && data.Length >= Id_BMP.Length)
-			{
-				for (int i = 0; i != Id_BMP.Length; ++i)
-				if (data[i] != Id_BMP[i])
-				{
-					fail = true;
-					break;
-				}
-			}
-			else fail = true;
-
-			return !fail;
-		}
-
+		#region Methods (static)
 		/// <summary>
 		/// Creates a <c>Bitmap</c> from a specified byte-array of
 		/// <c>PNG</c>/<c>GIF</c>/<c>BMP</c> file-data. Checks if it is a
@@ -225,6 +147,77 @@ namespace XCom
 		}
 
 		/// <summary>
+		/// Checks a specified byte-array's initial bytes for an image-format
+		/// that is supported as input to PckView -
+		/// <c>PNG</c>/<c>GIF</c>/<c>BMP</c>.
+		/// </summary>
+		/// <param name="data">file data to check</param>
+		/// <returns><c>true</c> if valid</returns>
+		/// <remarks>This is ofc not entirely robust. Image-formats with their
+		/// chunks and subtypes get complicated real fast. So
+		/// <c><see cref="CreateSprite()">CreateSprite()</see></c> will further
+		/// run a try/catch block to display any .NET <c>Exception</c> when
+		/// trying to create the <c>Bitmap</c>.</remarks>
+		private static bool CheckValidHeader(byte[] data)
+		{
+			bool fail = false;
+			if (data.Length >= Id_PNG.Length)
+			{
+				for (int i = 0; i != Id_PNG.Length; ++i)
+				if (data[i] != Id_PNG[i])
+				{ fail = true; break; }
+			}
+			else fail = true;
+
+			if (!fail) return true;
+
+			fail = false;
+			if (fail && data.Length >= Id_GIF.Length)
+			{
+				for (int i = 0; i != Id_GIF.Length; ++i)
+				if (data[i] != Id_GIF[i])
+				{ fail = true; break; }
+			}
+			else fail = true;
+
+			if (!fail) return true;
+
+			fail = false;
+			if (fail && data.Length >= Id_BMP.Length)
+			{
+				for (int i = 0; i != Id_BMP.Length; ++i)
+				if (data[i] != Id_BMP[i])
+				{ fail = true; break; }
+			}
+			else fail = true;
+
+			return !fail;
+		}
+//		private static bool validateImage(byte[] data)
+//		{
+//			try
+//			{
+//				Stream str = new MemoryStream(data);
+//				using (Image i = Image.FromStream(str))
+//				{
+//					if (   i.RawFormat.Equals(ImageFormat.Bmp)
+//						|| i.RawFormat.Equals(ImageFormat.Gif)
+//						|| i.RawFormat.Equals(ImageFormat.Jpeg)
+//						|| i.RawFormat.Equals(ImageFormat.Png))
+//					{
+//						return true;
+//					}
+//				}
+//				return false;
+//			}
+//			catch
+//			{
+//				return false;
+//			}
+//		}
+
+
+		/// <summary>
 		/// Finds the start of a <c>PNG</c> chunk. This assumes the image is
 		/// already identified as <c>PNG</c>. It does not go over the first 8
 		/// bytes but starts at the start of the header chunk.
@@ -279,8 +272,7 @@ namespace XCom
 		/// <returns></returns>
 		private static int GetChunkLength(byte[] data, int offset)
 		{
-			if (offset + 4 > data.Length)
-				return -1;
+			if (offset + 4 > data.Length) return -1;
 
 			// Don't want to use BitConverter; then you have to check platform
 			// endianness and all that mess.
@@ -359,7 +351,10 @@ namespace XCom
 		/// <param name="head"></param>
 		/// <param name="copy"></param>
 		/// <param name="info"></param>
-		private static void showerror(string head, string copy = null, bool info = false)
+		private static void showerror(
+				string head,
+				string copy = null,
+				bool info = false)
 		{
 			string title; InfoboxType bt;
 
@@ -377,5 +372,6 @@ namespace XCom
 			using (var f = new Infobox(title, head, copy, bt))
 				f.ShowDialog();
 		}
+		#endregion Methods (static)
 	}
 }
