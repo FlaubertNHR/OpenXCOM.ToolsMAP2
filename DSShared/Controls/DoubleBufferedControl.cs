@@ -55,7 +55,7 @@ namespace DSShared.Controls
 
 		#region Methods (virtual)
 		/// <summary>
-		/// Shunts rendering off to TopControl and QuadrantControl.
+		/// Shunts rendering off to <c>TopControl</c> and <c>QuadrantControl</c>.
 		/// </summary>
 		protected virtual void OnPaintControl(Graphics graphics)
 		{}

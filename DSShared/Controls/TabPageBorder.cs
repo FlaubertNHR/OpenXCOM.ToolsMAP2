@@ -8,7 +8,7 @@ namespace DSShared.Controls
 {
 	// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#7785745
 	/// <summary>
-	/// A NativeWindow that hides the ugly border around tab-pages.
+	/// A <c>NativeWindow</c> that hides the ugly border around tab-pages.
 	/// </summary>
 	/// <example><code>
 	/// public Form1()
@@ -59,9 +59,8 @@ namespace DSShared.Controls
 		/// </summary>
 		public void TabPageBorder_init()
 		{
-			_tabControl.HandleCreated   += tabControl_HandleCreated;	// TODO: Does this object need to unsubscribe
-			_tabControl.HandleDestroyed += tabControl_HandleDestroyed;	//       the TabControl events.
-//			_tabControl.Selected        += tabControl_Selected;
+			_tabControl.HandleCreated   += tabControl_HandleCreated;
+			_tabControl.HandleDestroyed += tabControl_HandleDestroyed;
 		}
 		#endregion Methods (init)
 
@@ -76,11 +75,6 @@ namespace DSShared.Controls
 		{
 			ReleaseHandle();
 		}
-
-//		void tabControl_Selected(object sender, TabControlEventArgs e)
-//		{
-//			_tabControl.Invalidate();
-//		}
 		#endregion Events
 
 
@@ -125,7 +119,7 @@ namespace DSShared.Controls
 
 
 	/// <summary>
-	/// Derived class for a TabControl.
+	/// Derived class for a <c>TabControl</c>.
 	/// </summary>
 	public sealed class CompositedTabControl
 		:
@@ -145,31 +139,5 @@ namespace DSShared.Controls
 			}
 		}
 		#endregion Properties (override)
-
-
-//		// Can be SUPERCEDED BY DSShared.Windows.TabPageBorder (NativeWindow) - do not
-//		// implement both.
-//		//
-//		// The following removes white padding on the interior of the tabpages.
-//		// This also effectively expands the control-area of each tabpage (to
-//		// the left and top at least). It leaves the white border on the
-//		// exterior to the right and below a page's 1px black border.
-//		// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#32055608
-//		// - works fine on my w7 machine but who knows
-//		private struct RECT { public int Left, Top, Right, Bottom; }
-//
-//		protected override void WndProc(ref Message m)
-//		{
-//			if (m.Msg == 0x1300 + 40)
-//			{
-//				var rc = (RECT)m.GetLParam(typeof(RECT));
-//				rc.Left   -= 3;
-//				rc.Top    -= 1;
-//				rc.Right  += 1; // NOTE: There's still a white margin outside the page to the right.
-//				rc.Bottom += 2; // NOTE: There's still a white margin outside the page to the bottom.
-//				System.Runtime.InteropServices.Marshal.StructureToPtr(rc, m.LParam, true);
-//			}
-//			base.WndProc(ref m);
-//		}
 	}
 }
