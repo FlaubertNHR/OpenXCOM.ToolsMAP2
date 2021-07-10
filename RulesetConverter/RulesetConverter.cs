@@ -20,9 +20,6 @@ namespace RulesetConverter
 		private const string LabelBasepathDefault = "[use Configurator's basepath]";
 		private const string LabelBasepathInvalid = "[basepath needs MAPS and ROUTES folders]";
 
-		private const string UFO  = "ufo_";
-		private const string TFTD = "tftd_";
-
 		private const string PrePad = "#----- ";
 		#endregion Fields (static)
 
@@ -30,7 +27,7 @@ namespace RulesetConverter
 		#region Fields
 		private readonly string Info = "This app inputs an OpenXcom/E ruleset and converts any terrains found out to"
 									 + Environment.NewLine
-									 + "MapTilesets.tpl a YAML template file (.TPL) for MapView 2 tileset configuration.";
+									 + "MapTilesets.tpl - a YAML template file (.TPL) for tileset configuration.";
 
 		private int PrePadLength = PrePad.Length;
 
@@ -42,7 +39,7 @@ namespace RulesetConverter
 
 		#region cTor
 		/// <summary>
-		/// Instantiates the RulesetConverter.
+		/// Instantiates this <c>RulesetConverter</c>.
 		/// </summary>
 		internal RulesetConverter()
 		{
@@ -198,8 +195,8 @@ namespace RulesetConverter
 			var rb = sender as RadioButton;
 			if (rb == rb_Ufo)
 			{
-				if (rb.Checked) lbl_Label.Text = UFO;
-				else            lbl_Label.Text = TFTD;
+				if (rb.Checked) lbl_Label.Text = "ufo_";
+				else            lbl_Label.Text = "tftd_";
 			}
 		}
 
@@ -246,27 +243,32 @@ namespace RulesetConverter
 			{
 //				lbl_Info.BorderStyle = BorderStyle.FixedSingle;
 //				lbl_Info.BackColor = Color.LightCoral;
-//				lbl_Info.Text = "Selected basepath does not contain MAPS and ROUTES folders.";
 				lbl_Basepath.Text = LabelBasepathInvalid;
 				btn_Convert.Enabled = false;
 //				OnFindBasepathClick(null, EventArgs.Empty);
 			}
 			else 
 			{
-				string dirAppl = Path.GetDirectoryName(Application.ExecutablePath);
+				string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
 
-//				using (var log = new StreamWriter(File.Open(
-//														Path.Combine(dirAppl, "convert.log"),
-//														FileMode.Create,
-//														FileAccess.Write,
-//														FileShare.None)))
-//				{
+#if DEBUG
+				var swl = new StreamWriter(File.Open(
+												Path.Combine(dirAppL, "convert.log"),
+												FileMode.Create,
+												FileAccess.Write,
+												FileShare.None));
+#endif
+
 				// Read ruleset to get the "terrains".
 
 				var Tilesets = new List<Tileset>();
 
-				string @group = GetGroupLabel();
-
+				string @group = lbl_Label.Text + tb_Label.Text.Trim();
+#if DEBUG
+				swl.WriteLine("input= " + tb_Input.Text);
+				swl.WriteLine("basepath= " + _basepath);
+				swl.WriteLine("group= " + @group);
+#endif
 				using (var fs = new FileStream(tb_Input.Text, FileMode.Open, FileAccess.Read, FileShare.Read))
 				using (var sr = new StreamReader(fs))
 				{
@@ -284,6 +286,9 @@ namespace RulesetConverter
 					var key = new YamlScalarNode("terrains");
 					if (nodeRoot.Children.ContainsKey(key))
 					{
+#if DEBUG
+						swl.WriteLine(". found terrains");
+#endif
 						var battlesets = nodeRoot.Children[key] as YamlSequenceNode;
 						foreach (YamlMappingNode battlefield in battlesets)
 						{
@@ -336,6 +341,10 @@ namespace RulesetConverter
 							}
 						}
 					}
+#if DEBUG
+					else
+						swl.WriteLine(". terrains NOT found.");
+#endif
 				}
 
 
@@ -348,7 +357,7 @@ namespace RulesetConverter
 				else
 				{
 					// YAML the tilesets ....
-					using (var fs = new FileStream(Path.Combine(dirAppl, "MapTilesets.tpl"), FileMode.Create, FileAccess.Write, FileShare.None))
+					using (var fs = new FileStream(Path.Combine(dirAppL, "MapTilesets.tpl"), FileMode.Create, FileAccess.Write, FileShare.None))
 					using (var sw = new StreamWriter(fs))
 					{
 						sw.WriteLine("# This is MapTilesets for MapViewII.");
@@ -444,7 +453,9 @@ namespace RulesetConverter
 					lbl_Info.BackColor = Color.PaleGreen;
 					lbl_Info.Text = result;
 				}
-//				}
+#if DEBUG
+				swl.Dispose();
+#endif
 			}
 		}
 		#endregion Events
@@ -458,7 +469,7 @@ namespace RulesetConverter
 		private void EnableConvert()
 		{
 			btn_Convert.Enabled = File.Exists(tb_Input.Text)
-							 && (!cb_Basepath.Checked || IsBasepathValid(_basepath));
+							   && (!cb_Basepath.Checked || IsBasepathValid(_basepath));
 		}
 
 		/// <summary>
@@ -496,23 +507,6 @@ namespace RulesetConverter
 		}
 
 		/// <summary>
-		/// Gets a label for the Maptree group.
-		/// </summary>
-		/// <returns></returns>
-		private string GetGroupLabel()
-		{
-			string label;
-			if (rb_Ufo.Checked) label = UFO;
-			else                label = TFTD; // rb_Tftd.Checked
-
-			string text = tb_Label.Text.Trim();
-			if (!String.IsNullOrEmpty(text))
-				return label + text;
-
-			return label;
-		}
-
-		/// <summary>
 		/// Checks if val is readable ASCII w/out quotes.
 		/// </summary>
 		/// <param name="val"></param>
@@ -536,9 +530,7 @@ namespace RulesetConverter
 				pad = " ";
 
 			for (int i = 78; i > len; --i)
-			{
 				pad += "-";
-			}
 
 			if (len < 79)
 				pad += "#";
@@ -550,7 +542,7 @@ namespace RulesetConverter
 
 		#region Structs
 		/// <summary>
-		/// The Tileset struct is the basic stuff of a tileset.
+		/// The <c>Tileset</c> struct is the basic stuff of a tileset.
 		/// </summary>
 		private struct Tileset
 		{
