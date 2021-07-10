@@ -58,9 +58,9 @@ namespace XCom
 		/// <returns><c>true</c> if valid</returns>
 		/// <remarks>This is ofc not entirely robust. Image-formats with their
 		/// chunks and subtypes get complicated real fast. So
-		/// <c><see cref="LoadBitmap()">LoadBitmap()</see></c> will further run
-		/// a try/catch block to display any .NET <c>Exception</c> when trying
-		/// to create the <c>Bitmap</c>.</remarks>
+		/// <c><see cref="CreateSprite()">CreateSprite()</see></c> will further
+		/// run a try/catch block to display any .NET <c>Exception</c> when
+		/// trying to create the <c>Bitmap</c>.</remarks>
 		private static bool CheckValidHeader(byte[] data)
 		{
 			bool fail = false;
@@ -107,16 +107,18 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Loads an image. Checks if it is a <c>PNG</c> containing palette
-		/// transparency and if so ensures it loads correctly.
+		/// Creates a <c>Bitmap</c> from a specified byte-array of
+		/// <c>PNG</c>/<c>GIF</c>/<c>BMP</c> file-data. Checks if it is a
+		/// <c>PNG</c> containing palette transparency and if so ensures it
+		/// loads correctly.
 		/// </summary>
-		/// <param name="data">file data to load</param>
+		/// <param name="filedata">byte-array to load</param>
 		/// <returns>a CLONED image - the onus is on the receiver for disposal</returns>
 		/// <remarks>The theory on the PNG internals can be found at
 		/// http://www.libpng.org/pub/png/book/chapter08.html</remarks>
-		public static Bitmap LoadBitmap(byte[] data)
+		public static Bitmap CreateSprite(byte[] filedata)
 		{
-			if (!CheckValidHeader(data))
+			if (!CheckValidHeader(filedata))
 			{
 				showerror("File does not have a PNG/GIF/BMP header.");
 				return null;
@@ -124,38 +126,38 @@ namespace XCom
 
 			byte[] dataTrns = null;
 
-			if (data.Length > Id_PNG.Length)
+			if (filedata.Length > Id_PNG.Length)
 			{
 				var data1 = new byte[Id_PNG.Length];
-				Array.Copy(data, data1, Id_PNG.Length);
+				Array.Copy(filedata, data1, Id_PNG.Length);
 
 				if (Id_PNG.SequenceEqual(data1)) // check if the image is a PNG
 				{
 					// check if it contains a palette
 					// I'm sure it can be looked up in the header somehow, but meh.
 
-					if (FindChunk(data, "PLTE") != -1)
+					if (FindChunk(filedata, "PLTE") != -1)
 					{
 						// check if it contains a palette transparency chunk
-						int trnsOffset = FindChunk(data, "tRNS");
+						int trnsOffset = FindChunk(filedata, "tRNS");
 						if (trnsOffset != -1)
 						{
 							// get chunk
-							int trnsLength = GetChunkLength(data, trnsOffset);
+							int trnsLength = GetChunkLength(filedata, trnsOffset);
 							switch (trnsLength)
 							{
 								default:
 									dataTrns = new byte[trnsLength];
-									Array.Copy(data, trnsOffset + 8, dataTrns, 0, trnsLength);
+									Array.Copy(filedata, trnsOffset + 8, dataTrns, 0, trnsLength);
 
 									// filter out the palette alpha chunk, make new data array
-									var data2 = new byte[data.Length - (trnsLength + 12)];
-									Array.Copy(data, 0, data2, 0, trnsOffset);
+									var data = new byte[filedata.Length - (trnsLength + 12)];
+									Array.Copy(filedata, 0, data, 0, trnsOffset);
 
 									int trnsEnd = trnsOffset + trnsLength + 12;
-									Array.Copy(data, trnsEnd, data2, trnsOffset, data.Length - trnsEnd);
+									Array.Copy(filedata, trnsEnd, data, trnsOffset, filedata.Length - trnsEnd);
 
-									data = data2;
+									filedata = data;
 									break;
 
 								case -1:
@@ -178,7 +180,7 @@ namespace XCom
 
 			try
 			{
-				using (var str = new MemoryStream(data))
+				using (var str = new MemoryStream(filedata))
 				using (var b = new Bitmap(str))
 				{
 					if (b.Palette.Entries.Length != 0 && dataTrns != null)
@@ -198,6 +200,20 @@ namespace XCom
 					// Images in .net often cause odd crashes when their backing
 					// resource disappears. This prevents that from happening by
 					// copying its inner contents into a new Bitmap object.
+
+//					Logfile.Log("b " + b.Width + "x" + b.Height + " " + b.PixelFormat); // b 32x40 Format8bppIndexed
+//
+//					var b1 = Clone(b);
+//					var b2 = ObjectCopier.Clone<Bitmap>(b); // Format32bppArgb wtf.
+//
+//					// so how does ObjectCopier.Clone<Bitmap>(b) turn Format8bppIndexed into Format32bppArgb
+//					// ... it doesn't do that in McdView.TerrainPanel_main.addPart() : 8bpp stays 8bpp
+//
+//					//Logfile.Log("b1 " + b1.Width + "x" + b1.Height + " " + b1.PixelFormat); // b1 32x40 Format8bppIndexed
+//					//Logfile.Log("b2 " + b2.Width + "x" + b2.Height + " " + b2.PixelFormat); // b2 32x40 Format32bppArgb
+//
+//					return b1;
+
 					return Clone(b);
 				}
 			}
@@ -288,7 +304,8 @@ namespace XCom
 		/// <remarks>It's the responsibility of the caller to dispose both
 		/// source and destination <c>Bitmaps</c>.
 		/// 
-		/// See also <c><see cref="ObjectCopier"/>.Clone()</c>.
+		/// See also <c><see cref="ObjectCopier"/>.Clone()</c> - for whatever
+		/// reason they're not interchangeable.
 		/// </remarks>
 		private static Bitmap Clone(Bitmap src)
 		{

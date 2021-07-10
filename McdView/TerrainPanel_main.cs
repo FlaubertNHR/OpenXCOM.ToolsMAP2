@@ -392,7 +392,9 @@ namespace McdView
 								_f.Spriteset = new Spriteset(_f.Label, _f.Pal);
 
 							var sprite_src = _f.Copier.Spriteset[spriteId] as PckSprite;
+							//DSShared.Logfile.Log("sprite_src.Sprite " + sprite_src.Sprite.Width + "x" + sprite_src.Sprite.Height + " " + sprite_src.Sprite.PixelFormat);
 							var sprite_dst = sprite_src.Duplicate(_f.Spriteset, _f.Spriteset.Count);
+							//DSShared.Logfile.Log("sprite_dst.Sprite " + sprite_dst.Sprite.Width + "x" + sprite_dst.Sprite.Height + " " + sprite_dst.Sprite.PixelFormat);
 							_ial_SpriteIds.Add(spriteId, _f.Spriteset.Count);
 
 							_f.Spriteset.Sprites.Add(sprite_dst);
@@ -487,8 +489,9 @@ namespace McdView
 		/// A special insert-operation via the Copier. Selects the last
 		/// tilepart and inserts the Copier's selected tileparts as well as
 		/// those parts' subparts.
-		/// Called by TerrainPanel_copier.OnInsertAfterLastClick().
 		/// </summary>
+		/// <remarks>Called by
+		/// <c><see cref="TerrainPanel_copier"></see>.OnInsertAfterLastClick()</c>.</remarks>
 		internal void InsertAfterLast()
 		{
 			_ial_PartsList.Clear();

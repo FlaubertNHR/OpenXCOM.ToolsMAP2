@@ -839,14 +839,18 @@ namespace PckView
 		/// Displays an errorbox to the user about incorrect Bitmap dimensions
 		/// and/or pixel-format.
 		/// </summary>
+		/// <param name="pfe">path-file-extension</param>
+		/// <param name="b">a <c>Bitmap</c></param>
 		/// <param name="spritesheet"><c>true</c> if the error occured when
 		/// importing a spritesheet</param>
-		private void ShowBitmapError(bool spritesheet = false)
+		private void ShowBitmapError(string pfe, Image b, bool spritesheet = false)
 		{
 			using (var f = new Infobox(
 									"Image error",
-									"Detected incorrect Dimensions and/or PixelFormat.",
+//									"Detected incorrect Dimensions and/or PixelFormat.",
 									FileDialogStrings.GetError(SetType, spritesheet),
+									pfe + Environment.NewLine + Environment.NewLine
+										+ b.Width + "x" + b.Height + " " + b.PixelFormat,
 									InfoboxType.Error))
 			{
 				f.ShowDialog(this);
@@ -896,7 +900,7 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileNames[i]);
 						if (bindata != null)
 						{
-							Bitmap b = SpriteLoader.LoadBitmap(bindata);
+							Bitmap b = SpriteLoader.CreateSprite(bindata);
 
 							if (b != null)
 							{
@@ -906,7 +910,7 @@ namespace PckView
 											&& b.Height == SpriteHeight
 											&& b.PixelFormat == PixelFormat.Format8bppIndexed)))
 								{
-									ShowBitmapError();
+									ShowBitmapError(ofd.FileNames[i], b);
 								}
 							}
 						}
@@ -1035,7 +1039,7 @@ namespace PckView
 				byte[] bindata = FileService.ReadFile(files[i]);
 				if (bindata != null)
 				{
-					Bitmap b = SpriteLoader.LoadBitmap(bindata);
+					Bitmap b = SpriteLoader.CreateSprite(bindata);
 
 					if (b != null)
 					{
@@ -1045,7 +1049,7 @@ namespace PckView
 									&& b.Height      == SpriteHeight
 									&& b.PixelFormat == PixelFormat.Format8bppIndexed)))
 						{
-							ShowBitmapError();
+							ShowBitmapError(files[i], b);
 						}
 					}
 				}
@@ -1124,7 +1128,7 @@ namespace PckView
 					byte[] bindata = FileService.ReadFile(ofd.FileName);
 					if (bindata != null) // else error was shown by FileService.
 					{
-						using (Bitmap b = SpriteLoader.LoadBitmap(bindata))
+						using (Bitmap b = SpriteLoader.CreateSprite(bindata))
 						{
 							if (b != null) // else error was shown by SpriteLoader.
 							{
@@ -1132,7 +1136,7 @@ namespace PckView
 									|| b.Height      != SpriteHeight
 									|| b.PixelFormat != PixelFormat.Format8bppIndexed)
 								{
-									ShowBitmapError();
+									ShowBitmapError(ofd.FileName, b);
 								}
 								else
 								{
@@ -1746,7 +1750,7 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileName);
 						if (bindata != null) // else error was shown by FileService.
 						{
-							using (Bitmap b = SpriteLoader.LoadBitmap(bindata))
+							using (Bitmap b = SpriteLoader.CreateSprite(bindata))
 							{
 								if (b != null) // else error was shown by SpriteLoader.
 								{
@@ -1754,7 +1758,7 @@ namespace PckView
 										|| b.Height % SpriteHeight != 0
 										|| b.PixelFormat != PixelFormat.Format8bppIndexed)
 									{
-										ShowBitmapError(true);
+										ShowBitmapError(ofd.FileName, b, true);
 									}
 									else
 									{
