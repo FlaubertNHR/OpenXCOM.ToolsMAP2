@@ -1,12 +1,12 @@
 MapView ii
 
-2021 jul 6
+2021 jul 10
 
-MapView   .exe 3.9.0.0
-McdView   .exe 3.5.0.0
-PckView   .exe 3.4.0.0
-XCom      .dll 3.7.0.0
-DSShared  .dll 3.4.0.0
+MapView   .exe 4.0.0.0
+McdView   .exe 4.0.0.0
+PckView   .exe 4.0.0.0
+XCom      .dll 4.0.0.0
+DSShared  .dll 4.0.0.0
 YamlDotNet.dll 0.0.1.0
 
 ConfigConverter .exe 2.2.2.0
@@ -46,7 +46,7 @@ MAKE BACKUPS OF ALL YOUR STUFF. i mean it. Stuff being your MAPS and ROUTES,
 mostly.
 
 PckView is included as a spriteset editor and a very simple sprite editor - it
-can be used to create/edit/save PCK/TAB files.
+can be used to create/edit/save PCK+TAB files.
 
 McdView is included as a partset editor - it can be used to create/edit/save MCD
 files.
