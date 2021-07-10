@@ -276,10 +276,10 @@ namespace XCom
 				for (int i = 0; i != spriteset.Count; ++i)
 				{
 					BlitSprite(
-						spriteset[i].Sprite,
-						b,
-						i % cols * spriteset.SpriteWidth,
-						i / cols * spriteset.SpriteHeight);
+							spriteset[i].Sprite,
+							b,
+							i % cols * spriteset.SpriteWidth,
+							i / cols * spriteset.SpriteHeight);
 				}
 				ExportSprite(fullpath, b);
 			}

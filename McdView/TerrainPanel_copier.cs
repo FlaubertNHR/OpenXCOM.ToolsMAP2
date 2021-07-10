@@ -72,11 +72,11 @@ namespace McdView
 		/// <summary>
 		/// Determines which contextmenu commands are enabled when the menu
 		/// is opened.
-		/// IMPORTANT: The conditions shall be synched w/ KeyInput() and/or
-		/// their respective shortcut handlers.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>IMPORTANT: The conditions shall be synched w/
+		/// <c>KeyInput()</c> and/or their respective shortcut handlers.</remarks>
 		private void OnOpening_Context(object sender, EventArgs e)
 		{
 			bool selid = (SelId != -1);
@@ -90,9 +90,9 @@ namespace McdView
 		/// <summary>
 		/// A special insert-operation. Inserts selected parts after the last
 		/// tilepart in Main.
-		/// @note This is for instant insertion of parts via the Copier to
-		/// the MainPanel.
 		/// </summary>
+		/// <remarks>This is for instant insertion of parts via the Copier to
+		/// the MainPanel.</remarks>
 		private void OnInsertAfterLastClick(object sender, EventArgs e)
 		{
 			if (SelId != -1 && _f.Parts != null)
@@ -106,11 +106,12 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// @note Shortcuts on the contextmenu items happen regardless of
-		/// key-suppression or call to base; neither do they need to call
-		/// KeyInput().
+		/// 
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Shortcuts on the contextmenu items happen regardless of
+		/// key-suppression or call to base; neither do they need to call
+		/// <c>KeyInput()</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			e.Handled = e.SuppressKeyPress = true;

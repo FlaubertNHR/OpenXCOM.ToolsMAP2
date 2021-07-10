@@ -27,7 +27,8 @@ namespace DSShared
 		/// of <typeparamref name="T"/> is returned.
 		/// 
 		/// 
-		/// See also <c>XCom.SpriteLoader.Clone()</c>.</remarks>
+		/// See also <c>XCom.SpriteLoader.Clone()</c> - for whatever reason
+		/// they're not interchangeable.</remarks>
 		public static T Clone<T>(T src)
 		{
 			if (!typeof(T).IsSerializable)

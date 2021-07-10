@@ -336,18 +336,16 @@ namespace XCom
 		{
 			var sprite = new PckSprite();
 
-			// PckSprite vars
 			sprite._spriteset = spriteset;
+
+			sprite.Id = id;
 //			sprite.Ordinal = -1; // not used.
 
-			// XCImage vars
 			sprite._bindata = _bindata.Clone() as byte[];
 
 			sprite.Sprite      = ObjectCopier.Clone<Bitmap>(Sprite);		// workaround for Bitmap's clone/copy/new shenanigans
 			sprite.SpriteToned = ObjectCopier.Clone<Bitmap>(SpriteToned);	// workaround for Bitmap's clone/copy/new shenanigans
 			sprite.Pal         = Pal;
-
-			sprite.Id = id;
 
 			return sprite;
 		}
