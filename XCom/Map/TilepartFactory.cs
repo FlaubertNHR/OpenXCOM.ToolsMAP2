@@ -19,11 +19,15 @@ namespace XCom
 		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>; default
 		/// <c>-1</c> if McdView is going to handle the
 		/// sprites itself and this <c>Tilepart</c> is not part of a terrainset</param>
+		/// <param name="info"><c>true</c> if the
+		/// <c><see cref="McdRecord">McdRecords</see></c> need to create preset
+		/// strings for <c>MapView.McdInfoF</c></param>
 		/// <returns>an array of <c>Tileparts</c></returns>
 		public static Tilepart[] CreateTileparts(
 				string terrain,
 				string dirTerrain,
-				int terid = -1)
+				int terid = -1,
+				bool info = false)
 		{
 			string pfeMcd = Path.Combine(dirTerrain, terrain + GlobalsXC.McdExt);
 
@@ -41,7 +45,7 @@ namespace XCom
 
 					parts[id] = new Tilepart(
 										id,
-										new McdRecord(bindata),
+										new McdRecord(bindata, info),
 										terid);
 				}
 
@@ -67,7 +71,7 @@ namespace XCom
 		/// <param name="fs"></param>
 		/// <param name="pfeMcd"></param>
 		/// <returns><c>true</c> if the records do not overflow</returns>
-		public static bool CheckMcdLength(Stream fs, string pfeMcd)
+		private static bool CheckMcdLength(Stream fs, string pfeMcd)
 		{
 			if (((int)fs.Length % McdRecord.Length) != 0)
 			{
@@ -94,7 +98,7 @@ namespace XCom
 		/// <param name="terrain"></param>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public static Tilepart GetDeadPart(
+		private static Tilepart GetDeadPart(
 				McdRecord record,
 				Tilepart[] parts,
 				string terrain,
@@ -130,7 +134,7 @@ namespace XCom
 		/// <param name="terrain"></param>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public static Tilepart GetAltrPart(
+		private static Tilepart GetAltrPart(
 				McdRecord record,
 				Tilepart[] parts,
 				string terrain,

@@ -112,15 +112,44 @@ namespace XCom
 
 
 		// The following strings are used by 'McdInfoF' only.
-		public string stSprites { get; set; }
-		public string stScanG   { get; set; }
-		public string stLoFTs   { get; set; }
+		public string stSprites { get; private set; }
+		public string stScanG   { get; private set; }
+		public string stLoFTs   { get; private set; }
 
-		public string ByteTable { get; set; }
+		public string ByteTable { get; private set; }
 
 
 		/// <summary>
-		/// Gets the value of a given MCD-entry as an int.
+		/// Used by <c>MapView.BlobDrawService</c>.
+		/// </summary>
+		public IList<byte> LoftList
+		{
+			get
+			{
+				var lofts = new List<byte>();
+
+				lofts.Add(Loft1);
+				lofts.Add(Loft2);
+				lofts.Add(Loft3);
+				lofts.Add(Loft4);
+				lofts.Add(Loft5);
+				lofts.Add(Loft6);
+				lofts.Add(Loft7);
+				lofts.Add(Loft8);
+				lofts.Add(Loft9);
+				lofts.Add(Loft10);
+				lofts.Add(Loft11);
+				lofts.Add(Loft12);
+
+				return lofts;
+			}
+		}
+		#endregion Properties
+
+
+		#region Indexers
+		/// <summary>
+		/// Gets the value of a specified MCD-entry as an <c>int</c>.
 		/// </summary>
 		public int this[int id]
 		{
@@ -200,42 +229,17 @@ namespace XCom
 				return 0;
 			}
 		}
-
-
-		/// <summary>
-		/// Used by <c>MapView.BlobDrawService</c>.
-		/// </summary>
-		public IList<byte> LoftList
-		{
-			get
-			{
-				var lofts = new List<byte>();
-
-				lofts.Add(Loft1);
-				lofts.Add(Loft2);
-				lofts.Add(Loft3);
-				lofts.Add(Loft4);
-				lofts.Add(Loft5);
-				lofts.Add(Loft6);
-				lofts.Add(Loft7);
-				lofts.Add(Loft8);
-				lofts.Add(Loft9);
-				lofts.Add(Loft10);
-				lofts.Add(Loft11);
-				lofts.Add(Loft12);
-
-				return lofts;
-			}
-		}
-		#endregion Properties
+		#endregion Indexers
 
 
 		#region cTor
 		/// <summary>
 		/// cTor[0].
 		/// </summary>
-		/// <param name="bindata">if null a blank byte-array gets created</param>
-		public McdRecord(IList<byte> bindata)
+		/// <param name="bindata">if <c>null</c> a blank byte-array gets created</param>
+		/// <param name="info"><c>true</c> if this <c>McdRecord</c> needs to
+		/// create preset strings for <c>MapView.McdInfoF</c></param>
+		public McdRecord(IList<byte> bindata, bool info = false)
 		{
 			if (bindata == null)
 				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to (byte)0
@@ -309,48 +313,51 @@ namespace XCom
 			BaseObject    = bindata[60] != 0;
 			Unknown61     = bindata[61];
 
+			if (info)
+			{
+				stSprites = string.Format(
+									"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}",
+									"images:",	// 0
+									Sprite1,	// 1
+									Sprite2,	// 2
+									Sprite3,	// 3
+									Sprite4,	// 4
+									Sprite5,	// 5
+									Sprite6,	// 6
+									Sprite7,	// 7
+									Sprite8);	// 8
 
-			stSprites = string.Format(
-								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}",
-								"images:",	// 0
-								Sprite1,	// 1
-								Sprite2,	// 2
-								Sprite3,	// 3
-								Sprite4,	// 4
-								Sprite5,	// 5
-								Sprite6,	// 6
-								Sprite7,	// 7
-								Sprite8);	// 8
+				stScanG = string.Format(
+									"{0,-20}{1} : {2} -> [{3}] {4}",
+									"scang reference:",	// 0
+									bindata[21],		// 1 - ushort in the MCD is little-endian
+									bindata[20],		// 2
+									ScanG_reduced,		// 3
+									ScanG);				// 4
 
-			stScanG = string.Format(
-								"{0,-20}{1} : {2} -> [{3}] {4}",
-								"scang reference:",	// 0
-								bindata[21],		// 1 - ushort in the MCD is little-endian
-								bindata[20],		// 2
-								ScanG_reduced,		// 3
-								ScanG);				// 4
+				stLoFTs = string.Format(
+									"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
+									"loft references:",	// 0
+									Loft1,				// 1
+									Loft2,				// 2
+									Loft3,				// 3
+									Loft4,				// 4
+									Loft5,				// 5
+									Loft6,				// 6
+									Loft7,				// 7
+									Loft8,				// 8
+									Loft9,				// 9
+									Loft10,				// 10
+									Loft11,				// 11
+									Loft12);			// 12
 
-			stLoFTs = string.Format(
-								"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12}",
-								"loft references:",	// 0
-								Loft1,				// 1
-								Loft2,				// 2
-								Loft3,				// 3
-								Loft4,				// 4
-								Loft5,				// 5
-								Loft6,				// 6
-								Loft7,				// 7
-								Loft8,				// 8
-								Loft9,				// 9
-								Loft10,				// 10
-								Loft11,				// 11
-								Loft12);			// 12
-
-			ByteTable = BytesTable(bindata);
+				ByteTable = BytesTable(bindata);
+			}
 		}
 
 		/// <summary>
-		/// cTor[1]. Creates a blank record for Duplicate().
+		/// cTor[1]. Creates a blank record for
+		/// <c><see cref="Duplicate()">Duplicate()</see></c>.
 		/// </summary>
 		private McdRecord()
 		{}
@@ -394,11 +401,12 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Writes/overwrites a specified MCD-file.
+		/// Writes/overwrites a specified Mcdfile.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
-		/// <param name="parts">an array of tileparts</param>
-		/// <returns>true if it looks like the file got written</returns>
+		/// <param name="parts">an array of
+		/// <c><see cref="Tilepart">Tileparts</see></c></param>
+		/// <returns><c>true</c> if it looks like the file got written</returns>
 		public static bool WriteRecords(string pfe, Tilepart[] parts)
 		{
 			string pfeT;
@@ -502,7 +510,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Creates an independent copy of this McdRecord.
+		/// Creates an independent copy of this <c>McdRecord</c>.
 		/// </summary>
 		/// <returns></returns>
 		public McdRecord Duplicate()

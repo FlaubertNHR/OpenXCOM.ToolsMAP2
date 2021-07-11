@@ -194,7 +194,7 @@ namespace XCom
 			if (spriteset != null)
 			{
 				//Logfile.Log(". spriteset Valid - create tileparts");
-				return TilepartFactory.CreateTileparts(terr, path, terid);
+				return TilepartFactory.CreateTileparts(terr, path, terid, true);
 			}
 
 			//Logfile.Log(". spriteset NOT Valid - ret null");
