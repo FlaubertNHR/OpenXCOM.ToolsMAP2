@@ -64,7 +64,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="addrangeinput.cs" />
+    <Compile Include="AddRangeInput_.cs" />
     <Compile Include="CacheLoad.cs" />
     <Compile Include="CloseTerrainDialog.cs" />
     <Compile Include="Colors.cs" />
@@ -101,8 +101,8 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="addrangeinput.resx">
-      <DependentUpon>addrangeinput.cs</DependentUpon>
+    <EmbeddedResource Include="AddRangeInput_.resx">
+      <DependentUpon>AddRangeInput_.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CloseTerrainDialog.resx">
       <DependentUpon>CloseTerrainDialog.cs</DependentUpon>
