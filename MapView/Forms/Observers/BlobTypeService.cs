@@ -45,15 +45,16 @@ namespace MapView.Forms.Observers
 
 		#region Methods (static)
 		/// <summary>
-		/// Gets the BlobType of a given tile for drawing its blob in TopView
-		/// and/or RouteView.
+		/// Gets the <c><see cref="BlobType"/></c> of a specified
+		/// <c><see cref="Tilepart"/></c> for drawing its blob in TopView and/or
+		/// RouteView.
 		/// </summary>
 		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
 		/// <param name="part"></param>
 		/// <returns></returns>
-		/// <remarks>The checks are not robust; the return BlobType is just a
-		/// guess based on what LoFTs have been assigned (externally) to a given
-		/// tile.</remarks>
+		/// <remarks>The checks are not robust; the return <c>BlobType</c> is
+		/// just a guess based on what LoFTs have been assigned (externally) to
+		/// a <c>Tilepart</c>.</remarks>
 		internal static BlobType GetBlobType(Tilepart part)
 		{
 			McdRecord record = part.Record;
