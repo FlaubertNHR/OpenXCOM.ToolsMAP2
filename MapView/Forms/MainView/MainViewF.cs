@@ -508,10 +508,12 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
+				SpritesetManager.SetCursor(SpritesetManager.CURSOR_UFO); // for spriteset Label
 				CuboidSprite.Ufoset = SpritesetManager.CreateSpriteset(
 																	SharedSpace.CursorFilePrefix,
 																	dir,
 																	Palette.UfoBattle);
+				SpritesetManager.SetCursor(SpritesetManager.CURSOR_non);
 				if (CuboidSprite.Ufoset != null)
 				{
 					if (CuboidSprite.Ufoset.Failr != Spriteset.Fail.non)
@@ -529,10 +531,12 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
+				SpritesetManager.SetCursor(SpritesetManager.CURSOR_TFTD); // for spriteset Label
 				CuboidSprite.Tftdset = SpritesetManager.CreateSpriteset(
 																	SharedSpace.CursorFilePrefix,
 																	dir,
 																	Palette.TftdBattle);
+				SpritesetManager.SetCursor(SpritesetManager.CURSOR_non);
 				if (CuboidSprite.Tftdset != null)
 				{
 					if (CuboidSprite.Tftdset.Failr != Spriteset.Fail.non)

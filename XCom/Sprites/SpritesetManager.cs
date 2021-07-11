@@ -40,8 +40,27 @@ namespace XCom
 
 
 		#region Fields (static)
+		public const int TAB_WORD_LENGTH_0 = 0; // ie. no Tabfile
+		public const int TAB_WORD_LENGTH_2 = 2;
+		public const int TAB_WORD_LENGTH_4 = 4;
+
 		private static int[,] _scanGufo;
 		private static int[,] _scanGtftd;
+
+
+		public const int CURSOR_non  = 0;
+		public const int CURSOR_UFO  = 1;
+		public const int CURSOR_TFTD = 2;
+
+		private static int _isCursor;
+		public static void SetCursor(int cursor)
+		{
+			_isCursor = cursor;
+		}
+		internal static int GetCursor()
+		{
+			return _isCursor;
+		}
 		#endregion Fields (static)
 
 
@@ -79,10 +98,6 @@ namespace XCom
 
 		public static BitArray LoFTtftd
 		{ get; private set; }
-
-		public const int TAB_WORD_LENGTH_0 = 0; // ie. no Tabfile
-		public const int TAB_WORD_LENGTH_2 = 2;
-		public const int TAB_WORD_LENGTH_4 = 4;
 		#endregion Properties (static)
 
 

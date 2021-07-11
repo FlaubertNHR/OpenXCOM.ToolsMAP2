@@ -346,29 +346,35 @@ namespace XCom
 		{
 			//Logfile.Log("Spriteset label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
 
-			Pal           = pal;
+			if (bytesTab.Length % tabwordLength != 0)
+			{
+				Failr = Fail.tab;
+				return;
+			}
+
+
+			switch (SpritesetManager.GetCursor())
+			{
+				case SpritesetManager.CURSOR_non:
+					Label = label;
+					break;
+
+				case SpritesetManager.CURSOR_UFO: // label == SharedSpace.CursorFilePrefix
+					Label = "TargeterUfo";
+					break;
+
+				case SpritesetManager.CURSOR_TFTD: // label == SharedSpace.CursorFilePrefix
+					Label = "TargeterTftd";
+					break;
+			}
+
+			Pal = pal;
 
 			SpriteWidth  = spritewidth;
 			SpriteHeight = spriteheight;
 
 			TabwordLength = tabwordLength;
 
-			if (label == SharedSpace.CursorFilePrefix)
-			{
-				if (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_4) // are you sure ...
-					Label = "TargeterTftd";
-				else
-					Label = "TargeterUfo";
-			}
-			else
-				Label = label;
-
-
-			if (bytesTab.Length % TabwordLength != 0)
-			{
-				Failr = Fail.tab;
-				return;
-			}
 
 			CountOffsets = bytesTab.Length / TabwordLength;
 			var offsets = new uint[CountOffsets + 1];	// NOTE: the last entry will be set to the total length of
