@@ -59,6 +59,10 @@ namespace XCom
 			LoFT
 		}
 
+		/// <summary>
+		/// Possible fail-states for
+		/// <c><see cref="Spriteset(string, Palette, byte[], byte[], int, int, int, bool)">Spriteset()</see></c>.
+		/// </summary>
 		public enum Fail
 		{
 			/// <summary>
@@ -230,7 +234,7 @@ namespace XCom
 		/// <summary>
 		/// cTor[0]. Creates a quick and dirty blank <c>Spriteset</c>.
 		/// </summary>
-		/// <param name="label">file w/out path or extension</param>
+		/// <param name="label">typically the file w/out path or extension</param>
 		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
 		/// <c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c> for
 		/// UFO-sprites or <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c>
@@ -265,8 +269,7 @@ namespace XCom
 		/// cTor[1]. Parses a Pckfile into a collection of sprites according to
 		/// its Tabfile.
 		/// </summary>
-		/// <param name="label">usually the file w/out path or extension but
-		/// it's arbitrary here</param>
+		/// <param name="label">typically the file w/out path or extension</param>
 		/// <param name="pal">the <c><see cref="Palette"/></c> to use (typically
 		/// <c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c> for
 		/// UFO-sprites or
@@ -283,9 +286,6 @@ namespace XCom
 		/// <param name="createToned"><c>true</c> to create
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
 		/// sprites for MapView</param>
-		/// <returns>a <c>Spriteset</c> containing all the sprites, or
-		/// <c>null</c> if the quantity of sprites in the Pck- vs Tab-files
-		/// aren't equal</returns>
 		/// <remarks>Check that <paramref name="bytesPck"/> and
 		/// <paramref name="bytesTab"/> are valid before call.
 		/// 
@@ -294,19 +294,23 @@ namespace XCom
 		/// <list type="number">
 		/// <item><c>MapView.MainViewF()</c>
 		/// 
-		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c> partype icons</item>
+		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c>
+		/// partype icons</item>
 		/// <item><c>MapView.MainViewF()</c>
 		/// 
-		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c> ufo-cursor
+		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c>
+		/// ufo-cursor
 		/// 
-		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c> tftd-cursor</item>
+		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c>
+		/// tftd-cursor</item>
 		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
 		/// 
 		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
 		/// 
 		/// > <c><see cref="Descriptor.CreateTerrain(int)">Descriptor.CreateTerrain()</see></c>
 		/// 
-		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c> tilepart sprites</item>
+		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c>
+		/// tilepart sprites</item>
 		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
 		/// 
 		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
@@ -321,7 +325,8 @@ namespace XCom
 		/// 
 		/// > <c>Tilepart.CreateCrippledSprites()</c>
 		/// 
-		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c> crippled sprites</item>
+		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c>
+		/// crippled sprites</item>
 		/// <item><c>PckView.PckViewF.LoadSpriteset(string, bool)</c></item>
 		/// <item><c>McdView.McdViewF.OnClick_Create()</c></item>
 		/// <item><c>McdView.McdViewF.LoadTerrain()</c></item>
@@ -531,9 +536,9 @@ namespace XCom
 		/// ScanG chops bindata into 16-byte icons (4x4 256-color indexed).
 		/// LoFT chops bindata into 256-bit icons (16x16 2-color true/false bits).
 		/// </summary>
-		/// <param name="label"></param>
-		/// <param name="fs">a <c>Stream</c> of the SCANG.DAT or LOFTEMPS.DAT
-		/// file</param>
+		/// <param name="label">typically the file w/out path or extension</param>
+		/// <param name="fs">a <c>Stream</c> of the <c>SCANG.DAT</c> or
+		/// <c>LOFTEMPS.DAT</c> file</param>
 		/// <param name="setType"><c><see cref="SsType.LoFT"></see></c>
 		/// if LoFT data,
 		/// <c><see cref="SsType.ScanG">SsType.ScanG</see></c>
@@ -784,7 +789,7 @@ namespace XCom
 		/// <summary>
 		/// Saves this <c>Spriteset</c> to <c>SCANG.DAT</c>.
 		/// </summary>
-		/// <param name="pfe">the directory to save to</param>
+		/// <param name="pfe">the path-file-extension to save to</param>
 		/// <returns><c>true</c> if mission was successful</returns>
 		public bool WriteScanG(string pfe)
 		{
@@ -817,7 +822,7 @@ namespace XCom
 		/// <summary>
 		/// Saves this <c>Spriteset</c> to <c>LOFTEMPS.DAT</c>.
 		/// </summary>
-		/// <param name="pfe">the directory to save to</param>
+		/// <param name="pfe">the path-file-extension to save to</param>
 		/// <returns><c>true</c> if mission was successful</returns>
 		public bool WriteLoFT(string pfe)
 		{
