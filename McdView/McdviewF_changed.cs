@@ -15,10 +15,10 @@ namespace McdView
 		#region Leave
 		/// <summary>
 		/// Tags each LoftPanel with its corresponding RecordTextbox.
-		/// @note The tagged TextBoxes are tagged with (string)panelid in the
-		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
-		/// synched respectively.
 		/// </summary>
+		/// <remarks>The tagged TextBoxes are tagged with (string)panelid in the
+		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
+		/// synched respectively.</remarks>
 		private void TagLoftPanels()
 		{
 			pnl_Loft08.Tag = tb08_loft00;
