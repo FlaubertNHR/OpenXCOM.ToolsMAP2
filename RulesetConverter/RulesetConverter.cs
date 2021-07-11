@@ -250,7 +250,6 @@ namespace RulesetConverter
 			else 
 			{
 				string dirAppL = Path.GetDirectoryName(Application.ExecutablePath);
-
 #if DEBUG
 				var swl = new StreamWriter(File.Open(
 												Path.Combine(dirAppL, "convert.log"),
