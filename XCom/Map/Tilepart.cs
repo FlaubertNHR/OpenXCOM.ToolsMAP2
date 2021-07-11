@@ -146,7 +146,7 @@ namespace XCom
 		/// <summary>
 		/// cTor[0]. Creates a standard <c>Tilepart</c>.
 		/// </summary>
-		/// <param name="id">the id of this <c>Tilepart</c> in its recordset</param>
+		/// <param name="id">the id of this <c>Tilepart</c> in its terrain</param>
 		/// <param name="record">the <c><see cref="McdRecord"/></c> of this
 		/// <c>Tilepart</c></param>
 		/// <param name="terid">the ID of this <c>Tilepart's</c> terrain in
@@ -155,24 +155,25 @@ namespace XCom
 		/// <c><see cref="SetId"/></c> and <c><see cref="_sprites"/></c>
 		/// respectively in MapView; <c>-1</c> if McdView is going to handle the
 		/// sprites itself and this <c>Tilepart</c> is not part of a terrainset</param>
-		public Tilepart(
+		internal Tilepart(
 				int id,
 				McdRecord record,
 				int terid = -1)
 		{
+			//DSShared.Logfile.Log("Tilepart terid= " + terid + " id= " + id);
+
 			Id = id;
 
 			Record = record;
 			isDoor = (Record.HingedDoor || Record.SlidingDoor);
 
-			if (terid != -1)
-				SetId = ++_ordinal;
-
-			//DSShared.Logfile.Log("Tilepart terid= " + terid + " id= " + Id + " setid= " + SetId);
-
 			if (terid != -1) // NOTA BENE: _terId shall be -1 and _sprites shall be null for McdView.
 			{
 				_terId = terid;
+				SetId = ++_ordinal;
+
+				//DSShared.Logfile.Log(". SetId= " + SetId);
+
 
 				_sprites = new XCImage[PHASES]; // for MapView each tilepart contains its own pointers to 8 sprites.
 
@@ -211,10 +212,14 @@ namespace XCom
 		/// McdView (req'd: <c><see cref="Id"/></c>). Also used for crippled
 		/// parts on Mapfile load (req'd: <c><see cref="SetId"/></c>).
 		/// </summary>
-		public Tilepart(int id)
+		/// <param name="id"></param>
+		/// <param name="setid"></param>
+		public Tilepart(int id, int setid = -1)
 		{
 			Record = new McdRecord(null);
-			Id = SetId = id; // TODO: are you sure this is correct for crippled parts
+
+			Id = id;
+			SetId = setid;
 		}
 
 		/// <summary>
@@ -344,9 +349,9 @@ namespace XCom
 
 			part.Record = Record.Duplicate();
 
-			part.Dead = Dead;	// NOTE: keep these pointers and use their Ids to
-			part.Altr = Altr;	// determine the part's 'DieTile' and 'Alt_MCD' fields
-								// after insertion. (aha!)
+			part.Dead = Dead;	// NOTE: keep these pointers and use their Ids to determine the
+			part.Altr = Altr;	// part's 'DieTile' and 'Alt_MCD' fields after insertion. (aha!)
+
 			part.Id    = Id;
 			part.SetId = SetId;
 

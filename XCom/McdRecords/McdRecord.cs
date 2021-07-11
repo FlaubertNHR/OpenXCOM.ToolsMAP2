@@ -111,7 +111,7 @@ namespace XCom
 		public byte Unknown61      { get; set; }
 
 
-		// The following strings are used by 'McdInfoF' only.
+		// The following strings are used by the McdInfoF dialog only.
 		public string stSprites { get; private set; }
 		public string stScanG   { get; private set; }
 		public string stLoFTs   { get; private set; }
@@ -120,30 +120,10 @@ namespace XCom
 
 
 		/// <summary>
-		/// Used by <c>MapView.BlobDrawService</c>.
+		/// Used by <c>MapView.BlobTypeService</c>.
 		/// </summary>
 		public IList<byte> LoftList
-		{
-			get
-			{
-				var lofts = new List<byte>();
-
-				lofts.Add(Loft1);
-				lofts.Add(Loft2);
-				lofts.Add(Loft3);
-				lofts.Add(Loft4);
-				lofts.Add(Loft5);
-				lofts.Add(Loft6);
-				lofts.Add(Loft7);
-				lofts.Add(Loft8);
-				lofts.Add(Loft9);
-				lofts.Add(Loft10);
-				lofts.Add(Loft11);
-				lofts.Add(Loft12);
-
-				return lofts;
-			}
-		}
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -237,9 +217,11 @@ namespace XCom
 		/// cTor[0].
 		/// </summary>
 		/// <param name="bindata">if <c>null</c> a blank byte-array gets created</param>
-		/// <param name="info"><c>true</c> if this <c>McdRecord</c> needs to
-		/// create preset strings for <c>MapView.McdInfoF</c></param>
-		public McdRecord(IList<byte> bindata, bool info = false)
+		/// <param name="extra"><c>true</c> if this <c>McdRecord</c> needs to
+		/// create preset strings for <c>MapView.McdInfoF</c> and
+		/// <c><see cref="McdRecord.LoftList">McdRecord.LoftLists</see></c>
+		/// for <c>MapView.BlobDrawService</c></param>
+		public McdRecord(IList<byte> bindata, bool extra = false)
 		{
 			if (bindata == null)
 				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to (byte)0
@@ -313,7 +295,7 @@ namespace XCom
 			BaseObject    = bindata[60] != 0;
 			Unknown61     = bindata[61];
 
-			if (info)
+			if (extra)
 			{
 				stSprites = string.Format(
 									"{0,-20}{1} {2} {3} {4} {5} {6} {7} {8}",
@@ -352,6 +334,22 @@ namespace XCom
 									Loft12);			// 12
 
 				ByteTable = BytesTable(bindata);
+
+
+				LoftList = new List<byte>(); // create LoftList for MapView.BlobTypeService ->
+
+				LoftList.Add(Loft1);
+				LoftList.Add(Loft2);
+				LoftList.Add(Loft3);
+				LoftList.Add(Loft4);
+				LoftList.Add(Loft5);
+				LoftList.Add(Loft6);
+				LoftList.Add(Loft7);
+				LoftList.Add(Loft8);
+				LoftList.Add(Loft9);
+				LoftList.Add(Loft10);
+				LoftList.Add(Loft11);
+				LoftList.Add(Loft12);
 			}
 		}
 
@@ -587,14 +585,15 @@ namespace XCom
 			record.Unknown61     = Unknown61;
 
 
-			#region Descript
 			// The following strings are used by the MapView.McdInfoF dialog only.
 			record.stSprites = stSprites;
 			record.stScanG   = stScanG;
 			record.stLoFTs   = stLoFTs;
 
 			record.ByteTable = ByteTable;
-			#endregion Descript
+
+			// The following list is used by MapView.BlobTypeService only.
+			record.LoftList = LoftList;
 
 			return record;
 		}

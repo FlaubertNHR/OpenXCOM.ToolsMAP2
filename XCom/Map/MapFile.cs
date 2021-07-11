@@ -228,10 +228,11 @@ namespace XCom
 
 		#region Methods (read/load)
 		/// <summary>
-		/// Reads a MAP Mapfile.
+		/// Reads a .MAP Mapfile.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of a Mapfile</param>
-		/// <param name="parts">a list of <c><see cref="Tilepart">Tileparts</see></c></param>
+		/// <param name="parts">a list of
+		/// <c><see cref="Tilepart">Tileparts</see></c></param>
 		/// <returns><c>true</c> if read okay</returns>
 		private bool LoadMapfile(string pfe, IList<Tilepart> parts)
 		{
@@ -279,10 +280,10 @@ namespace XCom
 		/// Creates a <c><see cref="MapTile"/></c> with its four parts.
 		/// </summary>
 		/// <param name="parts">a <c><see cref="Tilepart"/></c> list that can be used</param>
-		/// <param name="id_floor">the floor id</param>
-		/// <param name="id_west">the westwall id</param>
-		/// <param name="id_north">the northwall id</param>
-		/// <param name="id_content">the content id</param>
+		/// <param name="id_floor">the floor setid</param>
+		/// <param name="id_west">the westwall setid</param>
+		/// <param name="id_north">the northwall setid</param>
+		/// <param name="id_content">the content setid</param>
 		/// <returns>the <c>MapTile</c> created</returns>
 		/// <remarks>If an id in the Mapfile exceeds the maxid of the file's
 		/// terrainset a crippled tilepart will be created for it and displayed
@@ -308,7 +309,7 @@ namespace XCom
 			}
 			else
 			{
-				floor = new Tilepart(id_floor);
+				floor = new Tilepart((int)PartType.Floor, id_floor);
 				floor.Cripple(PartType.Floor);
 				++TerrainsetCountExceeded;
 			}
@@ -323,7 +324,7 @@ namespace XCom
 			}
 			else
 			{
-				west = new Tilepart(id_west);
+				west = new Tilepart((int)PartType.West, id_west);
 				west.Cripple(PartType.West);
 				++TerrainsetCountExceeded;
 			}
@@ -338,7 +339,7 @@ namespace XCom
 			}
 			else
 			{
-				north = new Tilepart(id_north);
+				north = new Tilepart((int)PartType.North, id_north);
 				north.Cripple(PartType.North);
 				++TerrainsetCountExceeded;
 			}
@@ -353,7 +354,7 @@ namespace XCom
 			}
 			else
 			{
-				content = new Tilepart(id_content);
+				content = new Tilepart((int)PartType.Content, id_content);
 				content.Cripple(PartType.Content);
 				++TerrainsetCountExceeded;
 			}
