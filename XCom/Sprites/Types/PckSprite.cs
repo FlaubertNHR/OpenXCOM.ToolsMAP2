@@ -251,52 +251,67 @@ namespace XCom
 		/// <returns>the length of the sprite in <c>bytes</c> after compression</returns>
 		internal uint Write(BinaryWriter bw = null)
 		{
+			//Logfile.Log("PckSprite.Write() Id= " + Id + " _bindata.Length= " + _bindata.Length + (bw == null ? " test" : String.Empty));
+
 			var binlist = new List<byte>();
 
-			int tran = 0;
-			bool first = true;
-
-			byte[] bindata = GetBindata();
-			byte b;
-
-			for (int id = 0; id != _bindata.Length; ++id)
+			if (Istid())
 			{
-				if ((b = _bindata[id]) == Palette.Tid)
+				binlist.Add((byte)0);
+			}
+			else
+			{
+				bool start = true;
+
+				int tally = 0; // tally of transparent pixels
+
+				byte b;
+				for (int id = 0; id != _bindata.Length; ++id)
 				{
-					++tran;
-				}
-				else
-				{
-					if (tran != 0)
+					if ((b = _bindata[id]) == Palette.Tid)
 					{
-						if (first)
-						{
-							binlist.Add((byte)(tran / Sprite.Width));	// qty of initial transparent rows
-							tran      = (byte)(tran % Sprite.Width);	// qty of transparent pixels starting on the next row
-						}
-
-						while (tran >= Byte.MaxValue)
-						{
-							tran -= Byte.MaxValue;
-
-							binlist.Add(MarkerRle);
-							binlist.Add(Byte.MaxValue);
-						}
-
-						if (tran != 0)
-						{
-							binlist.Add(MarkerRle);
-							binlist.Add((byte)tran);
-						}
-						tran = 0;
+						++tally;
 					}
-					else if (first)
+					else
 					{
-						binlist.Add((byte)0);
-					}
+						if (tally != 0)
+						{
+							if (start)
+							{
+								binlist.Add((byte)(tally / Sprite.Width));	// qty of initial transparent rows
+								tally     = (byte)(tally % Sprite.Width);	// qty of transparent pixels starting on the next row
+							}
 
-					first = false;
-					binlist.Add(b);
+							while (tally >= Byte.MaxValue)
+							{
+								tally -= Byte.MaxValue;
+
+								binlist.Add(MarkerRle);
+								binlist.Add(Byte.MaxValue);
+							}
+
+							if (tally != 0)
+							{
+								if (tally == 1)
+								{
+									binlist.Add((byte)0);
+								}
+								else
+								{
+									binlist.Add(MarkerRle);
+									binlist.Add((byte)tally);
+								}
+							}
+							tally = 0;
+						}
+						else if (start)
+						{
+							binlist.Add((byte)0);	// always add count of transparent rows at start
+						}							// even if the first pixel is not transparent
+
+						start = false;
+						binlist.Add(b);
+					}
 				}
 			}
 			binlist.Add(MarkerEos);
