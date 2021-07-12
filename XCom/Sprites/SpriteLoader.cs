@@ -155,9 +155,9 @@ namespace XCom
 		/// <returns><c>true</c> if valid</returns>
 		/// <remarks>This is ofc not entirely robust. Image-formats with their
 		/// chunks and subtypes get complicated real fast. So
-		/// <c><see cref="CreateSprite()">CreateSprite()</see></c> will further
-		/// run a try/catch block to display any .NET <c>Exception</c> when
-		/// trying to create the <c>Bitmap</c>.</remarks>
+		/// <c><see cref="LoadImageData()">LoadImageData()</see></c> will
+		/// further run a try/catch block to display any .NET <c>Exception</c>
+		/// when trying to create the <c>Bitmap</c>.</remarks>
 		private static bool CheckValidHeader(byte[] data)
 		{
 			bool fail = false;
