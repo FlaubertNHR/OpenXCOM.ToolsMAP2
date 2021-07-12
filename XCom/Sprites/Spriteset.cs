@@ -498,9 +498,21 @@ namespace XCom
 					}
 				}
 			}
-			// else malformed pck file (a proper sprite needs at least 2 bytes:
-			// one for the count of transparent lines and another for the EoS
-			// marker)
+			else
+			{
+				// a spriteset needs at least 2 bytes: one for the count of
+				// transparent lines in the first sprite and another for its
+				// End_of_Sprite
+
+				using (var f = new Infobox(
+										"Error",
+										Label + " is corrupt.",
+										null,
+										InfoboxType.Error))
+				{
+					f.ShowDialog();
+				}
+			}
 		}
 
 		/// <summary>
