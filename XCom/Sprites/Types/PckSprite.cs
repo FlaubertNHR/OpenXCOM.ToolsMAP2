@@ -104,8 +104,8 @@ namespace XCom
 			if (createToned)
 				Ordinal = ++_ordinal; // only for 'MapInfoDialog'.
 
-			Pal = pal;
 			Id  = id;
+			Pal = pal;
 
 			//Logfile.Log("PckSprite spriteset= " + spriteset.Label + " Pal= " + Pal + " Id= " + Id + " Ordinal= " + Ordinal);
 			//Logfile.Log(". bindata.Length= " + bindata.Length);
@@ -148,8 +148,11 @@ namespace XCom
 											_bindata,
 											Pal.Table);
 
+
 			// do NOT create ANY tone-scaled sprites for PckView or McdView nor
-			// MapView's MonotoneSprites or UFO/TFTD cursor-sprites
+			// MapView's MonotoneSprites or CrippledSprites or UFO/TFTD
+			// cursor-sprites (nor for the TonedSprites themselves) ->
+
 			if (createToned)
 				SpriteToned = SpriteService.CreateSprite(
 													_width,
