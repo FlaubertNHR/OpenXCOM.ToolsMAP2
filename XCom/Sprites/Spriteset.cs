@@ -431,41 +431,6 @@ namespace XCom
 					}
 				}
 
-				// NOTE: I'd just like to point out that a Tabfile is redundant
-				// if the Pckfile is wellformed. But if the Pckfile is *not*
-				// wellformed you might as well be screwing the dog anyway.
-				//
-				// At least under my conception of PCK-RLE-compression.
-				// Obviously there are others. Which is what makes PCKs so
-				// lovely to work with, although the RLE-compression itself is
-				// rather excellent.
-				//
-				// You just don't need Tabfiles if you follow a few rules ....
-				// a) a sprite is a minimum of 2 bytes
-				// b) the first byte in a sprite shall not be FE or FF
-				// c) the first byte shall always be a quantity of transparent
-				//    fullrows
-				// d) the final byte of a sprite shall be FF
-				// e) FE shall be followed by a byte that is a quantity of
-				//    transparent pixels (FF is allowed as a quantity)
-				// f) do not allow FE or FF to be used as a palette-color
-				// g) a decoding program shall initialize the entire buffer of a
-				//    sprite with transparent pixels first. Hence a contiguous
-				//    sequence of transparent pixels that hit the final FF do
-				//    not need to be written.
-				//
-				// I've seen a fair few whacky PCK files, including ones with
-				// "FE 01" <- "make the next pixel transparent". Hint, that's
-				// the equivalent of simply "00". Another common occurance is to
-				// write a blank sprite as FF only; while this could be valid
-				// if it were policy (and ofc not preceeded by FE), decoding
-				// problems can occur depending on the decoding application.
-				//
-				// protip: a Minimal (blank) sprite would/could/should be "00 FF".
-				// - 0 blank initial rows
-				// - End_of_Sprite marker
-				// - let the decoding algo fill the sprite with palette-id #0 as default
-
 				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
 					Failr = Fail.qty;

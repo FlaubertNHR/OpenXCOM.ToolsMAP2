@@ -19,11 +19,7 @@ namespace XCom
 		/// </summary>
 		public void Dispose()
 		{
-			var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
-			if (sprite != null)
-				DSShared.Logfile.Log("XCImage.Dispose() id= " + sprite.Id);
-			else
-				DSShared.Logfile.Log("XCImage.Dispose()");
+			DSShared.Logfile.Log("XCImage.Dispose() id= " + Id);
 
 			if (Sprite != null)
 			{
@@ -31,6 +27,7 @@ namespace XCom
 				Sprite = null; // pointless. not necessarily ...
 			}
 
+			var sprite = this as PckSprite; // dispose this in PckSprite - not so fast.
 			if (sprite != null && sprite.SpriteToned != null)
 			{
 				sprite.SpriteToned.Dispose();
