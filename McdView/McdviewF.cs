@@ -1084,6 +1084,50 @@ namespace McdView
 		}
 
 		/// <summary>
+		/// Checks that all <c><see cref="McdRecord">McdRecords</see></c> have
+		/// nonzero <c>McdRecord.Armor</c> values.
+		/// </summary>
+		/// <returns><c>true</c> if <c>Armor</c> okay or user doesn't care</returns>
+		private bool CheckArmor()
+		{
+			bool singular = true;
+
+			string copy = String.Empty;
+			for (int id = 0; id != Parts.Length; ++id)
+			{
+				if (Parts[id].Record.Armor == 0)
+				{
+					if (copy.Length != 0)
+					{
+						copy += Environment.NewLine;
+						singular = false;
+					}
+					copy += "id " + id;
+				}
+			}
+
+			bool proceed = (copy.Length == 0);
+			if (!proceed)
+			{
+				string head = String.Format("{0} record{1} Armor value 0.",
+											singular ? "This" : "These",	// 0
+											singular ? " has" : "s have");	// 1
+
+				using (var f = new Infobox(
+										"Warning",
+										head,
+										copy,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (f.ShowDialog(this) == DialogResult.OK)
+						return true;
+				}
+			}
+			return proceed;
+		}
+
+		/// <summary>
 		/// Handles clicking the File|Save menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -1092,7 +1136,8 @@ namespace McdView
 		{
 			SaveRecordsetFailed = true;
 
-			if (CheckRecordCount() && McdRecord.WriteRecords(PfeMcd, Parts))
+			if (CheckArmor() && CheckRecordCount()
+				&& McdRecord.WriteRecords(PfeMcd, Parts))
 			{
 				SaveRecordsetFailed = false;
 				CacheLoad.SetCacheSaved(Parts);
@@ -1149,7 +1194,7 @@ namespace McdView
 
 
 				if (sfd.ShowDialog(this) == DialogResult.OK
-					&& CheckRecordCount())
+					&& CheckArmor() && CheckRecordCount())
 				{
 					string pfeMcd = sfd.FileName;
 					_lastBrowserDirectory = Path.GetDirectoryName(pfeMcd);
