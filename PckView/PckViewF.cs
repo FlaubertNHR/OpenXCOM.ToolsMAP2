@@ -2162,7 +2162,7 @@ namespace PckView
 		/// Enables or disables various menus and initializes the statusbar.
 		/// </summary>
 		/// <remarks>Called only when the spriteset changes in
-		/// <see cref="PckViewPanel.Spriteset"/></remarks>
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c></remarks>
 		internal void EnableInterface()
 		{
 			SpriteEditor.SpritePanel.Sprite = null;
@@ -2213,10 +2213,12 @@ namespace PckView
 		/// Sets the currently selected sprite-id.
 		/// </summary>
 		/// <param name="id">the sprite-id to select</param>
-		/// <param name="force">true to force init even if <see cref="PckViewPanel.Selid"/>
+		/// <param name="force"><c>true</c> to force init even if
+		/// <c><see cref="PckViewPanel.Selid">PckViewPanel.Selid</see></c>
 		/// doesn't change</param>
-		/// <returns>true if currently selected sprite-id changed or is forced</returns>
-		/// <remarks>Can be called by TileView to set <see cref="PckViewPanel.Selid"/>
+		/// <returns><c>true</c> if currently selected sprite-id changed or is
+		/// forced</returns>
+		/// <remarks>Can be called by TileView to set <c>PckViewPanel.Selid</c>
 		/// externally.</remarks>
 		public bool SetSelected(int id, bool force = false)
 		{
@@ -2273,7 +2275,8 @@ namespace PckView
 		/// <summary>
 		/// Prints last and after offsets to the statubar.
 		/// </summary>
-		/// <remarks>Helper for <see cref="PrintSelected"/></remarks>
+		/// <remarks>Helper for
+		/// <c><see cref="PrintSelected()">PrintSelected()</see></c>.</remarks>
 		private void PrintOffsets()
 		{
 			if (   TilePanel.Spriteset != null
@@ -2341,7 +2344,8 @@ namespace PckView
 		/// <summary>
 		/// Prints the label of the currently loaded spriteset to the statubar.
 		/// </summary>
-		/// <remarks>Helper for <see cref="EnableInterface"/></remarks>
+		/// <remarks>Helper for
+		/// <c><see cref="EnableInterface()">EnableInterface()</see></c></remarks>
 		private void PrintSpritesetLabel()
 		{
 			string text;
@@ -2365,10 +2369,11 @@ namespace PckView
 
 
 		/// <summary>
-		/// Checks state of the 'Changed' flag and/or asks user if the spriteset
-		/// ought be closed anyway.
+		/// Checks state of <c><see cref="Changed"/></c> and/or asks user if the
+		/// spriteset ought be closed anyway.
 		/// </summary>
-		/// <returns>true if state is NOT changed or 'DialogResult.OK'</returns>
+		/// <returns><c>true</c> if state is NOT changed or if
+		/// <c>DialogResult.OK</c></returns>
 		private bool RequestSpritesetClose()
 		{
 			if (Changed)
