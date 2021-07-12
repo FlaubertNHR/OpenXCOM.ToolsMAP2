@@ -13,12 +13,13 @@ namespace XCom
 	/// <c>PCK+TAB</c> terrain file data but can also be bigobs or a ScanG or
 	/// LoFT iconset.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their
-	/// <c>IDisposable crap</c>.</remarks>
 	/// <remarks>Only PckView maintains ScanG and/or LoFT iconsets as
 	/// <c>Spritesets</c>. MapView and McdView use ScanG and LoFT icons in
-	/// nonjagged 2d-arrays of color-indices which are used to instantiate
-	/// <c>Bitmaps</c> that will be drawn on-the-fly.</remarks>
+	/// nonjagged 2d-arrays of color-indices which are used to instantiate and
+	/// draw <c>Bitmaps</c> on-the-fly.
+	/// 
+	/// 
+	/// This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public sealed class Spriteset
 	{
 		#region Enums (public)
@@ -187,7 +188,7 @@ namespace XCom
 		/// mismatch error. It's printed in the errorbox as an aid for
 		/// debugging.
 		/// </summary>
-		public int CountSprites
+		internal int CountSprites
 		{ get; private set; }
 
 		/// <summary>
@@ -196,7 +197,7 @@ namespace XCom
 		/// mismatch error. It's printed in the errorbox as an aid for
 		/// debugging.
 		/// </summary>
-		public int CountOffsets
+		internal int CountOffsets
 		{ get; private set; }
 		#endregion Properties
 
