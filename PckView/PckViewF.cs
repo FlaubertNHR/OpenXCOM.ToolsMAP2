@@ -899,7 +899,7 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileNames[i]);
 						if (bindata != null)
 						{
-							Bitmap b = SpriteLoader.CreateSprite(bindata);
+							Bitmap b = SpriteLoader.LoadImageData(bindata);
 
 							if (b != null)
 							{
@@ -1038,7 +1038,7 @@ namespace PckView
 				byte[] bindata = FileService.ReadFile(files[i]);
 				if (bindata != null)
 				{
-					Bitmap b = SpriteLoader.CreateSprite(bindata);
+					Bitmap b = SpriteLoader.LoadImageData(bindata);
 
 					if (b != null)
 					{
@@ -1127,7 +1127,7 @@ namespace PckView
 					byte[] bindata = FileService.ReadFile(ofd.FileName);
 					if (bindata != null) // else error was shown by FileService.
 					{
-						using (Bitmap b = SpriteLoader.CreateSprite(bindata))
+						using (Bitmap b = SpriteLoader.LoadImageData(bindata))
 						{
 							if (b != null) // else error was shown by SpriteLoader.
 							{
@@ -1719,8 +1719,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Imports (and replaces) the current spriteset from an external
-		/// spritesheet.
+		/// Imports a spritesheet that replaces the current spriteset.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1731,7 +1730,13 @@ namespace PckView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title = "Import an 8-bpp spritesheet file";
+					bool @add = (sender as MenuItem == miImportSheetAdd);
+
+					if (@add)
+						ofd.Title = "Import an 8-bpp spritesheet file (add)";
+					else
+						ofd.Title = "Import an 8-bpp spritesheet file (replace)";
+
 					ofd.Filter = FileDialogStrings.GetFilter();
 
 					if (!Directory.Exists(_lastSpriteDirectory))
@@ -1749,7 +1754,7 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileName);
 						if (bindata != null) // else error was shown by FileService.
 						{
-							using (Bitmap b = SpriteLoader.CreateSprite(bindata))
+							using (Bitmap b = SpriteLoader.LoadImageData(bindata))
 							{
 								if (b != null) // else error was shown by SpriteLoader.
 								{
@@ -1761,8 +1766,14 @@ namespace PckView
 									}
 									else
 									{
-										// TODO: user-choice to Add a spritesheet ... instead of replacing the current one.
-										TilePanel.Spriteset.Dispose();
+										int selid;
+										if (!@add)
+										{
+											TilePanel.Spriteset.Dispose();
+											selid = -1;
+										}
+										else
+											selid = TilePanel.Spriteset.Count;
 
 										SpriteService.ImportSpritesheet(
 																	TilePanel.Spriteset.Sprites,
@@ -1772,7 +1783,7 @@ namespace PckView
 																	SpriteHeight,
 																	SetType);
 
-										SpritesetCountChanged(-1);
+										SpritesetCountChanged(selid);
 									}
 								}
 							}
@@ -2156,13 +2167,14 @@ namespace PckView
 		{
 			SpriteEditor.SpritePanel.Sprite = null;
 
-			miSave             .Enabled =									// File ->
-			miSaveAs           .Enabled =
-			miExportSprites    .Enabled =
-			miExportSpritesheet.Enabled =
-			miImportSpritesheet.Enabled =
-			miPaletteMenu      .Enabled =									// Main
-			_miAdd             .Enabled = (TilePanel.Spriteset != null);	// context
+			miSave              .Enabled =									// File ->
+			miSaveAs            .Enabled =
+			miExportSprites     .Enabled =
+			miExportSpritesheet .Enabled =
+			miImportSheetReplace.Enabled =
+			miImportSheetAdd    .Enabled =
+			miPaletteMenu       .Enabled =									// Main
+			_miAdd              .Enabled = (TilePanel.Spriteset != null);	// context
 
 			EnableContext();
 

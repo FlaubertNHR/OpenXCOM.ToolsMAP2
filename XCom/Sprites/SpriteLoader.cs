@@ -38,7 +38,7 @@ namespace XCom
 		/// <returns>a CLONED image - the onus is on the receiver for disposal</returns>
 		/// <remarks>The theory on the PNG internals can be found at
 		/// http://www.libpng.org/pub/png/book/chapter08.html</remarks>
-		public static Bitmap CreateSprite(byte[] filedata)
+		public static Bitmap LoadImageData(byte[] filedata)
 		{
 			if (!CheckValidHeader(filedata))
 			{

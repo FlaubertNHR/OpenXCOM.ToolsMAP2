@@ -29,7 +29,8 @@ namespace PckView
 		private MenuItem miSeparator2;
 		private MenuItem miExportSprites;
 		private MenuItem miExportSpritesheet;
-		private MenuItem miImportSpritesheet;
+		private MenuItem miImportSheetReplace;
+		private MenuItem miImportSheetAdd;
 		private MenuItem miSeparator3;
 		private MenuItem miQuit;
 		private MenuItem miCompare;
@@ -97,7 +98,8 @@ namespace PckView
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miExportSprites = new System.Windows.Forms.MenuItem();
 			this.miExportSpritesheet = new System.Windows.Forms.MenuItem();
-			this.miImportSpritesheet = new System.Windows.Forms.MenuItem();
+			this.miImportSheetReplace = new System.Windows.Forms.MenuItem();
+			this.miImportSheetAdd = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miQuit = new System.Windows.Forms.MenuItem();
 			this.miCompare = new System.Windows.Forms.MenuItem();
@@ -149,7 +151,8 @@ namespace PckView
 			this.miSeparator2,
 			this.miExportSprites,
 			this.miExportSpritesheet,
-			this.miImportSpritesheet,
+			this.miImportSheetReplace,
+			this.miImportSheetAdd,
 			this.miSeparator3,
 			this.miQuit,
 			this.miCompare});
@@ -263,29 +266,37 @@ namespace PckView
 			this.miExportSpritesheet.Text = "E&xport Spritesheet ...";
 			this.miExportSpritesheet.Click += new System.EventHandler(this.OnExportSpritesheetClick);
 			// 
-			// miImportSpritesheet
+			// miImportSheetReplace
 			// 
-			this.miImportSpritesheet.Enabled = false;
-			this.miImportSpritesheet.Index = 16;
-			this.miImportSpritesheet.Shortcut = System.Windows.Forms.Shortcut.F6;
-			this.miImportSpritesheet.Text = "I&mport Spritesheet ...";
-			this.miImportSpritesheet.Click += new System.EventHandler(this.OnImportSpritesheetClick);
+			this.miImportSheetReplace.Enabled = false;
+			this.miImportSheetReplace.Index = 16;
+			this.miImportSheetReplace.Shortcut = System.Windows.Forms.Shortcut.F6;
+			this.miImportSheetReplace.Text = "I&mport Spritesheet (replace set) ...";
+			this.miImportSheetReplace.Click += new System.EventHandler(this.OnImportSpritesheetClick);
+			// 
+			// miImportSheetAdd
+			// 
+			this.miImportSheetAdd.Enabled = false;
+			this.miImportSheetAdd.Index = 17;
+			this.miImportSheetAdd.Shortcut = System.Windows.Forms.Shortcut.F7;
+			this.miImportSheetAdd.Text = "I&mport Spritesheet (add to set) ...";
+			this.miImportSheetAdd.Click += new System.EventHandler(this.OnImportSpritesheetClick);
 			// 
 			// miSeparator3
 			// 
-			this.miSeparator3.Index = 17;
+			this.miSeparator3.Index = 18;
 			this.miSeparator3.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 18;
+			this.miQuit.Index = 19;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
 			// 
 			// miCompare
 			// 
-			this.miCompare.Index = 19;
+			this.miCompare.Index = 20;
 			this.miCompare.Text = "Compare";
 			this.miCompare.Visible = false;
 			this.miCompare.Click += new System.EventHandler(this.OnCompareClick);
