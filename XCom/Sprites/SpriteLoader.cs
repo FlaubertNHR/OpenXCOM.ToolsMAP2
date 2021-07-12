@@ -296,6 +296,7 @@ namespace XCom
 		/// <remarks>It's the responsibility of the caller to dispose both
 		/// source and destination <c>Bitmaps</c>.
 		/// 
+		/// 
 		/// See also <c><see cref="ObjectCopier"/>.Clone()</c> - for whatever
 		/// reason they're not interchangeable.
 		/// </remarks>
