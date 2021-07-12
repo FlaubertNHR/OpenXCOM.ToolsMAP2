@@ -101,8 +101,7 @@ namespace XCom
 		/// <c><see cref="Palette.Tid">Palette.Tid</see></c></returns>
 		public bool Istid()
 		{
-			byte[] bindata = GetBindata();
-			for (int i = 0; i != bindata.Length; ++i)
+			for (int i = 0; i != _bindata.Length; ++i)
 			{
 				if (_bindata[i] != Palette.Tid)
 					return false;
