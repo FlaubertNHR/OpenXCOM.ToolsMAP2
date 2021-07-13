@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 using XCom;
 
@@ -28,11 +29,17 @@ namespace MapView
 				Tftdset = null;
 			}
 
+			_ia.Dispose();
+			_ia = null;
+
 			Cursorset = null;
 		}
 
 
 		#region Fields (static)
+//		private static Graphics _graphics;
+		private static ImageAttributes _ia = new ImageAttributes();
+
 		private const int RED_BACK   = 0; // sprite-ids in CURSOR.PCK ->
 		private const int RED_FRONT  = 3;
 		private const int BLUE_BACK  = 2;
@@ -94,6 +101,14 @@ namespace MapView
 			return (Cursorset != null);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		internal static void SetSpriteShadeCursor()
+		{
+			_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloatCursor, ColorAdjustType.Bitmap);
+		}
+
 
 		/// <summary>
 		/// Draws the cuboid-cursor.
@@ -105,33 +120,67 @@ namespace MapView
 		/// <param name="halfHeight"></param>
 		/// <param name="front"><c>true</c> to draw the front sprite, else back</param>
 		/// <param name="toplevel"><c>true</c> to draw the red sprite, else blue</param>
+		/// <param name="rect">destination rectangle for shaded sprites</param>
 		internal static void DrawCuboid_Rembrandt(
 				Graphics graphics,
 				int x, int y,
 				int halfWidth,
 				int halfHeight,
 				bool front,
-				bool toplevel)
+				bool toplevel,
+				Rectangle rect)
 		{
 			int id;
 			if (front) id = (toplevel ? RED_FRONT : BLUE_FRONT);
 			else       id = (toplevel ? RED_BACK  : BLUE_BACK);
 
-			graphics.DrawImage(
-							Cursorset[id].Sprite,
-							x,y,
-							halfWidth  * widthfactor,
-							halfHeight * heightfactor);
-		}
-//			if (MainViewF.Optionables.SpriteShadeEnabled)
-//				_graphics.DrawImage(
-//								sprite,
-//								rect,
-//								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
-//								GraphicsUnit.Pixel,
-//								_ia);
-//			else
+			if (MainViewF.Optionables.SpriteShadeEnabledCursor)
+				graphics.DrawImage(
+								Cursorset[id].Sprite,
+								rect,
+								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
+								GraphicsUnit.Pixel,
+								_ia);
+			else
 //				_graphics.DrawImage(sprite, rect);
+				graphics.DrawImage(
+								Cursorset[id].Sprite,
+								x,y,
+								halfWidth  * widthfactor,
+								halfHeight * heightfactor);
+		}
+
+		/// <summary>
+		/// Draws the target-cursor.
+		/// </summary>
+		/// <param name="graphics"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="halfWidth"></param>
+		/// <param name="halfHeight"></param>
+		/// <param name="rect">destination rectangle for shaded sprites</param>
+		internal static void DrawTargeter_Rembrandt(
+				Graphics graphics,
+				int x, int y,
+				int halfWidth,
+				int halfHeight,
+				Rectangle rect)
+		{
+			if (MainViewF.Optionables.SpriteShadeEnabledCursor)
+				graphics.DrawImage(
+								Cursorset[TARGETER].Sprite,
+								rect,
+								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
+								GraphicsUnit.Pixel,
+								_ia);
+			else
+//				_graphics.DrawImage(sprite, rect);
+				graphics.DrawImage(
+								Cursorset[TARGETER].Sprite,
+								x,y,
+								halfWidth  * widthfactor,
+								halfHeight * heightfactor);
+		}
 
 		/// <summary>
 		/// Draws the cuboid-cursor w/ Mono-style.
@@ -170,36 +219,6 @@ namespace MapView
 				}
 			}
 		}
-
-		/// <summary>
-		/// Draws the target-cursor.
-		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="halfWidth"></param>
-		/// <param name="halfHeight"></param>
-		internal static void DrawTargeter_Rembrandt(
-				Graphics graphics,
-				int x, int y,
-				int halfWidth,
-				int halfHeight)
-		{
-			graphics.DrawImage(
-							Cursorset[TARGETER].Sprite,
-							x,y,
-							halfWidth  * widthfactor,
-							halfHeight * heightfactor);
-		}
-//			if (MainViewF.Optionables.SpriteShadeEnabled)
-//				_graphics.DrawImage(
-//								sprite,
-//								rect,
-//								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
-//								GraphicsUnit.Pixel,
-//								_ia);
-//			else
-//				_graphics.DrawImage(sprite, rect);
 
 		/// <summary>
 		/// Draws the target-cursor w/ Mono.

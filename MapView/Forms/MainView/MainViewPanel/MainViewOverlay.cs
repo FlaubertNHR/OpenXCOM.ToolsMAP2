@@ -1338,7 +1338,7 @@ namespace MapView.Forms.MainView
 
 
 			MapTile tile;
-			bool isLocCuboid;
+			bool cuboid;
 
 			bool isLevel;
 
@@ -1375,7 +1375,11 @@ namespace MapView.Forms.MainView
 								x += HalfWidth,
 								y += HalfHeight)
 					{
-						if (isLocCuboid = (col == DragBeg.X && row == DragBeg.Y))
+						var rect0 = new Rectangle(
+												x,y,
+												_halfwidth2, _halfheight5);
+
+						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
 														_graphics,
@@ -1383,7 +1387,8 @@ namespace MapView.Forms.MainView
 														HalfWidth,
 														HalfHeight,
 														false,
-														isLevel);
+														isLevel,
+														rect0);
 						}
 
 						if (!(tile = _file.GetTile(col, row, lev)).Vacant
@@ -1399,17 +1404,17 @@ namespace MapView.Forms.MainView
 						}
 
 						if (isLevel && !_targeterSuppressed
-							&& col == _col
-							&& row == _row)
+							&& col == _col && row == _row)
 						{
 							CuboidSprite.DrawTargeter_Rembrandt(
 														_graphics,
 														x,y,
 														HalfWidth,
-														HalfHeight);
+														HalfHeight,
+														rect0);
 						}
 
-						if (isLocCuboid)
+						if (cuboid)
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
 														_graphics,
@@ -1417,7 +1422,8 @@ namespace MapView.Forms.MainView
 														HalfWidth,
 														HalfHeight,
 														true,
-														isLevel);
+														isLevel,
+														rect0);
 						}
 					}
 				}

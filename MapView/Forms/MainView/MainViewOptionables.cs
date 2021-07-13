@@ -538,6 +538,61 @@ namespace MapView.Forms.MainView
 		}
 
 
+#if !LOCKBITS
+		private bool _spriteShadeEnabledCursor = true;
+		internal bool SpriteShadeEnabledCursor
+		{
+			get { return _spriteShadeEnabledCursor; }
+			private set { _spriteShadeEnabledCursor = value; }
+		}
+#endif
+		private const string str_SpriteShadeCursor = "SpriteShadeCursor";
+		private const int    def_SpriteShadeCursor = 0;
+
+		// NOTE: Options don't like floats, hence this workaround w/ 'SpriteShadeCursor' and 'SpriteShadeFloatCursor' ->
+
+		private int _spriteShadeCursor = def_SpriteShadeCursor;
+		[Category(cat_Sprites_render)]
+		[Description(@"The darkness of the cursor sprites (0..100 default 0 off, 33 is unity)
+(only if UseMono is false)")]
+		[DefaultValue(def_SpriteShadeCursor)]
+		public int SpriteShadeCursor
+		{
+			get { return _spriteShadeCursor; }
+			set
+			{
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
+				{
+					MainViewF.that.Options[str_SpriteShadeCursor].Value =
+					_spriteShadeCursor = value.Viceroy(0,100);
+				}
+				else if ((_spriteShadeCursor = value.Viceroy(0,100)) != value) // on user-changed
+				{
+					MainViewF.that.Options[str_SpriteShadeCursor].Value = _spriteShadeCursor;
+				}
+
+				if (_spriteShadeCursor != 0)
+				{
+#if !LOCKBITS
+					SpriteShadeEnabledCursor = true;
+#endif
+					SpriteShadeFloatCursor = (float)_spriteShadeCursor * 0.03F;
+				}
+#if !LOCKBITS
+				else
+					SpriteShadeEnabledCursor = false;
+#endif
+			}
+		}
+
+		private float _spriteShadeFloatCursor = 1F;
+		internal float SpriteShadeFloatCursor
+		{
+			get { return _spriteShadeFloatCursor; }
+			private set { _spriteShadeFloatCursor = value; }
+		}
+
+
 		private const string str_Interpolation = "Interpolation";
 		private const int    def_Interpolation = 5;
 
@@ -860,6 +915,7 @@ namespace MapView.Forms.MainView
 			options.CreateOptionDefault(str_OneTileDraw,             def_OneTileDraw,             changer0);
 
 			options.CreateOptionDefault(str_SpriteShade,             def_SpriteShade,             changer3);
+			options.CreateOptionDefault(str_SpriteShadeCursor,       def_SpriteShadeCursor,       changer0);
 			options.CreateOptionDefault(str_Interpolation,           def_Interpolation,           changer0);
 
 			options.CreateOptionDefault(str_AnimateSprites,          def_AnimateSprites,          changer2);
@@ -976,6 +1032,12 @@ namespace MapView.Forms.MainView
 				case str_PreferTftdTargeter: // NOTE: The cuboids need to invalidate but not the targeter.
 					PreferTftdTargeter = (bool)val;
 					CuboidSprite.SetCursor();
+					break;
+
+
+				case str_SpriteShadeCursor:
+					SpriteShadeCursor = (int)val;
+					CuboidSprite.SetSpriteShadeCursor();
 					break;
 			}
 
