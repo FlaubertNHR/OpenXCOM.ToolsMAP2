@@ -595,7 +595,7 @@ namespace MapView
 				Logfile.Log("User options NOT loaded - no options file to load.");
 
 
-			if (CuboidSprite.Cursorset == null && !CuboidSprite.AssignCursorset()) // exit app if a cuboid-targeter is not instantiated
+			if (CuboidSprite.Cursorset == null && !CuboidSprite.SetCursor()) // exit app if a cuboid-targeter is not instantiated
 			{
 				Logfile.Log("Targeter not instantiated: quit MapView.");
 

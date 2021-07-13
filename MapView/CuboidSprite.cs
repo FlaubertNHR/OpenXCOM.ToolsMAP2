@@ -74,14 +74,14 @@ namespace MapView
 		/// <c><see cref="Forms.MainView.MainViewOptionables.PreferTftdTargeter">MainViewOptionables.PreferTftdTargeter</see></c>.
 		/// </summary>
 		/// <returns><c>true</c> if a valid cursorset gets assigned</returns>
-		/// <remarks>Used only in
+		/// <remarks>Used in
 		/// <c><see cref="MainViewF()">MainViewF()</see></c> for cases (1)
-		/// <c>PreferUfoTargeter</c> has not been registered in
-		/// "settings/MapOptions.cfg" yet or (2) the user's
+		/// <c>PreferTftdTargeter</c> has not been registered in
+		/// "settings/MapOptions.cfg" yet or (2) user changes the
+		/// <c>PreferTftdTargeter</c> option or (3) the user's
 		/// <c>UFOGRAPH/CURSOR.PCK+TAB</c> disappeared for whatever reason.</remarks>
-		internal static bool AssignCursorset()
+		internal static bool SetCursor()
 		{
-			//DSShared.Logfile.Log("CuboidSprite.AssignCursorset()");
 			if (Tftdset != null
 				&& (MainViewF.Optionables.PreferTftdTargeter || Ufoset == null))
 			{
@@ -92,24 +92,6 @@ namespace MapView
 				Cursorset = Ufoset;
 			}
 			return (Cursorset != null);
-		}
-
-		/// <summary>
-		/// Changes <c><see cref="Cursorset"/></c> when user changes
-		/// <c><see cref="Forms.MainView.MainViewOptionables.PreferTftdTargeter"/></c>.
-		/// </summary>
-		/// <param name="val"><c>true</c> to prefer the TFTD cursorset</param>
-		internal static void PreferTftdTargeter(bool val)
-		{
-			//DSShared.Logfile.Log("CuboidSprite.PreferTftdTargeter() val= " + val);
-			if (Tftdset != null && (val || Ufoset == null))
-			{
-				Cursorset = Tftdset;
-			}
-			else if (Ufoset != null)
-			{
-				Cursorset = Ufoset;
-			}
 		}
 
 
