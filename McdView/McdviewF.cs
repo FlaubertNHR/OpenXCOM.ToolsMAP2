@@ -1467,8 +1467,16 @@ namespace McdView
 				miResourcesUfo .Checked = true;
 				miResourcesTftd.Checked = false;
 
+				Palette pal = Pal;
+
 				if (Spriteset != null)
-					Spriteset.Pal = Pal;
+					Spriteset.Pal = pal;
+
+				if (Copier != null && Copier.Spriteset != null)
+				{
+					Copier.Spriteset.Pal = pal;
+					Copier.PartsPanel.Invalidate();
+				}
 
 				if (_scanGufo != null) // miLoadScanGufo.Checked
 					ScanG = _scanGufo;
@@ -1496,8 +1504,16 @@ namespace McdView
 				miResourcesUfo .Checked = false;
 				miResourcesTftd.Checked = true;
 
+				Palette pal = Pal;
+
 				if (Spriteset != null)
-					Spriteset.Pal = Pal;
+					Spriteset.Pal = pal;
+
+				if (Copier != null && Copier.Spriteset != null)
+				{
+					Copier.Spriteset.Pal = pal;
+					Copier.PartsPanel.Invalidate();
+				}
 
 				if (_scanGtftd != null) // miLoadScanGtftd.Checked
 					ScanG = _scanGtftd;
