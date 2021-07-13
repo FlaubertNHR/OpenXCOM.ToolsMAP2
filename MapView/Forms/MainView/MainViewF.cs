@@ -1061,6 +1061,8 @@ namespace MapView
 
 			SpritesetManager    .Dispose();
 
+			Globals.Ia          .Dispose();
+
 
 			RegistryInfo.WriteRegistry(); // write all registered windows' locations and sizes to file
 		}

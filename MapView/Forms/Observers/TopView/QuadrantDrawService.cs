@@ -28,8 +28,6 @@ namespace MapView.Forms.Observers
 			_pathContent .Dispose();
 			_pathPart    .Dispose();
 
-			_ia          .Dispose();
-
 			Font         .Dispose();
 			LocationFont .Dispose();
 			LocationBrush.Dispose();
@@ -85,8 +83,7 @@ namespace MapView.Forms.Observers
 		private static Graphics _graphics;
 		private static bool _inited;
 
-		private static ImageAttributes _ia      = new ImageAttributes();
-		private static IList<Brush>    _brushes = new List<Brush>();
+		private static IList<Brush> _brushes = new List<Brush>();
 		#endregion Fields (static)
 
 
@@ -217,11 +214,6 @@ namespace MapView.Forms.Observers
 				PartType partType)
 		{
 			if (MainViewF.Dontdrawyougits) return;
-
-			if (!MainViewF.Optionables.UseMono && MainViewF.Optionables.SpriteShadeEnabled)
-			{
-				_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
-			}
 
 			if (!_inited) // TODO: break that out ->
 			{
@@ -394,7 +386,7 @@ namespace MapView.Forms.Observers
 											b.Height),
 								0,0, b.Width, b.Height,
 								GraphicsUnit.Pixel,
-								_ia);
+								Globals.Ia);
 			}
 		}
 

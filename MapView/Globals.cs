@@ -1,4 +1,5 @@
 using System;
+using System.Drawing.Imaging;
 
 using MapView.Forms.MainView;
 
@@ -16,7 +17,7 @@ namespace MapView
 		internal const string ALLFILES = "*.*";
 
 		internal const int PERIOD = 235; // longest acceptable tic-delay for Timers
-		#endregion
+		#endregion Fields (static)
 
 
 		#region Properties (static)
@@ -43,7 +44,19 @@ namespace MapView
 			get { return _autoScale; }
 			set { _autoScale = value; }
 		}
-		#endregion
+
+		internal static ImageAttributes Ia = new ImageAttributes();
+		internal static void SetSpriteShade(bool reset = false)
+		{
+			if (reset)
+			{
+				Ia.Dispose();
+				Ia = new ImageAttributes();
+			}
+			else
+				Ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
+		}
+		#endregion Properties (static)
 
 
 		#region Methods (static)
@@ -97,6 +110,6 @@ namespace MapView
 			return "c " + c + "  r " + r + "  L " + l;
 
 		}
-		#endregion
+		#endregion Methods (static)
 	}
 }

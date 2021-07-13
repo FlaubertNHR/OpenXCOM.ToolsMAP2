@@ -522,11 +522,15 @@ namespace MapView.Forms.MainView
 					SpriteShadeEnabled = true;
 #endif
 					SpriteShadeFloat = (float)_spriteShade * 0.03F;
+					Globals.SetSpriteShade();
 				}
-#if !LOCKBITS
 				else
+				{
+#if !LOCKBITS
 					SpriteShadeEnabled = false;
 #endif
+					Globals.SetSpriteShade(true);
+				}
 			}
 		}
 
@@ -577,11 +581,15 @@ namespace MapView.Forms.MainView
 					SpriteShadeEnabledCursor = true;
 #endif
 					SpriteShadeFloatCursor = (float)_spriteShadeCursor * 0.03F;
+					CuboidSprite.SetSpriteShadeCursor();
 				}
-#if !LOCKBITS
 				else
+				{
+#if !LOCKBITS
 					SpriteShadeEnabledCursor = false;
 #endif
+					CuboidSprite.SetSpriteShadeCursor(true);
+				}
 			}
 		}
 
@@ -1037,7 +1045,6 @@ namespace MapView.Forms.MainView
 
 				case str_SpriteShadeCursor:
 					SpriteShadeCursor = (int)val;
-					CuboidSprite.SetSpriteShadeCursor();
 					break;
 			}
 

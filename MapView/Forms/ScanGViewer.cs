@@ -332,18 +332,12 @@ namespace MapView
 
 					icon.Palette = _pal.Table;
 
-					using (var ia = new ImageAttributes())
-					{
-						if (MainViewF.Optionables.SpriteShadeEnabled) // && !MainViewF.Optionables.UseMono
-							ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
-
-						e.Graphics.DrawImage(
-											icon,
-											new Rectangle(1,1, icon.Width, icon.Height),
-											0,0, icon.Width, icon.Height,
-											GraphicsUnit.Pixel,
-											ia);
-					}
+					e.Graphics.DrawImage(
+										icon,
+										new Rectangle(1,1, icon.Width, icon.Height),
+										0,0, icon.Width, icon.Height,
+										GraphicsUnit.Pixel,
+										Globals.Ia);
 				}
 			}
 		}

@@ -29,7 +29,6 @@ namespace MapView.Forms.MainView
 			LocationFont.Dispose();
 			_layerFill  .Dispose();
 			_t1         .Dispose();
-			_ia         .Dispose();
 		}
 
 
@@ -160,7 +159,6 @@ namespace MapView.Forms.MainView
 		private GraphicsPath _layerFill = new GraphicsPath();
 
 		private Graphics _graphics;
-		private ImageAttributes _ia = new ImageAttributes();
 
 		private int _cols, _rows;
 		#endregion Fields (graphics)
@@ -1248,9 +1246,6 @@ namespace MapView.Forms.MainView
 				if (!MainViewF.Optionables.UseMono)
 				{
 					_graphics.InterpolationMode = MainViewF.Optionables.InterpolationE;
-
-					if (MainViewF.Optionables.SpriteShadeEnabled)
-						_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
 				}
 #endif
 
@@ -1968,15 +1963,12 @@ namespace MapView.Forms.MainView
 		/// <param name="rect">destination rectangle</param>
 		private void DrawSprite(Image sprite, Rectangle rect)
 		{
-			if (MainViewF.Optionables.SpriteShadeEnabled)
-				_graphics.DrawImage(
-								sprite,
-								rect,
-								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
-								GraphicsUnit.Pixel,
-								_ia);
-			else
-				_graphics.DrawImage(sprite, rect);
+			_graphics.DrawImage(
+							sprite,
+							rect,
+							0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
+							GraphicsUnit.Pixel,
+							Globals.Ia);
 		}
 #else
 		/// <summary>

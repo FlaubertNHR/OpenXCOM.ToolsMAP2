@@ -104,9 +104,16 @@ namespace MapView
 		/// <summary>
 		/// 
 		/// </summary>
-		internal static void SetSpriteShadeCursor()
+		/// <param name="reset"></param>
+		internal static void SetSpriteShadeCursor(bool reset = false)
 		{
-			_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloatCursor, ColorAdjustType.Bitmap);
+			if (reset)
+			{
+				_ia.Dispose();
+				_ia = new ImageAttributes();
+			}
+			else
+				_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloatCursor, ColorAdjustType.Bitmap);
 		}
 
 		/// <summary>

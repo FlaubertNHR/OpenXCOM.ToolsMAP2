@@ -548,15 +548,8 @@ namespace MapView.Forms.Observers
 				var rectOuter = new Rectangle(0,0, SpriteWidth, SpriteHeight);
 				var rectInner = new Rectangle();
 
-				ImageAttributes ia = null;
 				if (!MainViewF.Optionables.UseMono)
 				{
-					if (MainViewF.Optionables.SpriteShadeEnabled)
-					{
-						ia = new ImageAttributes();
-						ia.SetGamma(MainViewF.Optionables.SpriteShadeFloat, ColorAdjustType.Bitmap);
-					}
-
 					rectInner.Width  = Spriteset.SpriteWidth32;
 					rectInner.Height = Spriteset.SpriteHeight40;
 				}
@@ -622,7 +615,7 @@ namespace MapView.Forms.Observers
 												rectInner,
 												0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 												GraphicsUnit.Pixel,
-												ia);
+												Globals.Ia);
 							}
 						}
 
@@ -678,9 +671,6 @@ namespace MapView.Forms.Observers
 									TableOffset + _id % _tilesX * SpriteWidth,
 									TableOffset + _id / _tilesX * SpriteHeight + _startY,
 									SpriteWidth, SpriteHeight);
-
-				if (ia != null)
-					ia.Dispose();
 			}
 		}
 		#endregion Events (override)
