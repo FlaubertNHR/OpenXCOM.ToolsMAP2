@@ -408,7 +408,7 @@ namespace XCom
 				{
 					color = this[id];
 					val = GetBrightness(color.R, color.G, color.B) * brightness / 5;
-					val = Math.Max(0, Math.Min(val, 255));
+					val = Math.Max(Byte.MinValue, Math.Min(val, Byte.MaxValue));
 
 					switch (i)
 					{
