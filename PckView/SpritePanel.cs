@@ -354,7 +354,9 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Handler for PaletteChanged. Invalidates this panel.
+		/// Handler for
+		/// <c><see cref="PckViewF.PaletteChanged">PckViewF.PaletteChanged</see></c>.
+		/// Invalidates this panel.
 		/// </summary>
 		private void OnPaletteChanged()
 		{
@@ -365,8 +367,9 @@ namespace PckView
 
 		#region Methods (static)
 		/// <summary>
-		/// Adjusts the gamma-value of each pixel in <see cref="OnPaint()"/>.
-		/// Also called by <see cref="PalettePanel"/>.OnPaint().
+		/// Adjusts the gamma-value of each pixel in
+		/// <c><see cref="OnPaint()">OnPaint()</see></c>.
+		/// Also called by <c><see cref="PalettePanel"/>.OnPaint()</c>.
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
