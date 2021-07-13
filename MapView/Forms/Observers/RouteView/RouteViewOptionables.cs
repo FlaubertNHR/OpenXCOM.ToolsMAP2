@@ -514,7 +514,7 @@ namespace MapView.Forms.Observers
 		/// The default values were assigned to RouteView's optionable
 		/// properties when those properties were instantiated above.
 		/// </summary>
-		/// <param name="options">RouteView's options</param>
+		/// <param name="options"><c><see cref="RouteView.Options">RouteView.Options</see></c></param>
 		internal void LoadDefaults(Options options)
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.LoadDefaults()");

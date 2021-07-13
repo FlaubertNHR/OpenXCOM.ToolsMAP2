@@ -375,7 +375,7 @@ namespace MapView.Forms.Observers
 		/// The default values were assigned to TopView's optionable properties
 		/// when those properties were instantiated above.
 		/// </summary>
-		/// <param name="options">TopView's options</param>
+		/// <param name="options"><c><see cref="TopView.Options">TopView.Options</see></c></param>
 		internal void LoadDefaults(Options options)
 		{
 			//DSShared.Logfile.Log("TopViewOptionables.LoadDefaults()");

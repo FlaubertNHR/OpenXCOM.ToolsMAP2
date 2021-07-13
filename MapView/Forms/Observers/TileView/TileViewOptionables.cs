@@ -291,7 +291,7 @@ The path specified can be used to start an application or to open a specified"
 		/// to TileView's optionable properties when those properties were
 		/// instantiated above. Also prepares the Volutar service.
 		/// </summary>
-		/// <param name="options">TileView's options</param>
+		/// <param name="options"><c><see cref="TileView.Options">TileView.Options</see></c></param>
 		internal void LoadDefaults(Options options)
 		{
 			//DSShared.Logfile.Log("TileViewOptionables.LoadDefaults()");
