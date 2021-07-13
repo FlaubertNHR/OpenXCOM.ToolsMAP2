@@ -209,7 +209,8 @@ namespace McdView
 
 		#region Events
 		/// <summary>
-		/// Refreshes the PartsPanel when the scrollbar's value changes.
+		/// Invalidates this <c>TerrainPanel</c> when the scrollbar's value
+		/// changes.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -232,7 +233,7 @@ namespace McdView
 		private Graphics _graphics;
 
 		/// <summary>
-		/// Paints this TerrainPanel.
+		/// Paints this <c>TerrainPanel</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
@@ -413,9 +414,9 @@ namespace McdView
 		/// <summary>
 		/// Handles client resizing. Sets the scrollbar's Enabled and Maximum
 		/// values.
-		/// @note Holy f*ck I hate .NET scrollbars.
 		/// </summary>
 		/// <param name="eventargs"></param>
+		/// <remarks>Holy f*ck I hate .NET scrollbars.</remarks>
 		protected override void OnResize(EventArgs eventargs)
 		{
 			if (eventargs != null) // ie. is *not* Parts load
