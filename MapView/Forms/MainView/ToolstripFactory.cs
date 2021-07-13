@@ -226,7 +226,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Toggles the auto-scale button checked/unchecked.
 		/// </summary>
-		/// <returns>true if checked</returns>
+		/// <returns><c>true</c> if checked</returns>
 		internal bool ToggleAutoscale()
 		{
 			return (_tsbScale.Checked = !_tsbScale.Checked);
