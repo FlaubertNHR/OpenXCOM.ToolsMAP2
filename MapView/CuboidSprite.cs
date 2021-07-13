@@ -37,7 +37,7 @@ namespace MapView
 
 
 		#region Fields (static)
-//		private static Graphics _graphics;
+		private static Graphics _graphics;
 		private static ImageAttributes _ia = new ImageAttributes();
 
 		private const int RED_BACK   = 0; // sprite-ids in CURSOR.PCK ->
@@ -109,11 +109,19 @@ namespace MapView
 			_ia.SetGamma(MainViewF.Optionables.SpriteShadeFloatCursor, ColorAdjustType.Bitmap);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="graphics"></param>
+		internal static void SetGraphics(Graphics graphics)
+		{
+			_graphics = graphics;
+		}
+
 
 		/// <summary>
 		/// Draws the cuboid-cursor.
 		/// </summary>
-		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="halfWidth"></param>
@@ -122,7 +130,6 @@ namespace MapView
 		/// <param name="toplevel"><c>true</c> to draw the red sprite, else blue</param>
 		/// <param name="rect">destination rectangle for shaded sprites</param>
 		internal static void DrawCuboid_Rembrandt(
-				Graphics graphics,
 				int x, int y,
 				int halfWidth,
 				int halfHeight,
@@ -135,7 +142,7 @@ namespace MapView
 			else       id = (toplevel ? RED_BACK  : BLUE_BACK);
 
 			if (MainViewF.Optionables.SpriteShadeEnabledCursor)
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Cursorset[id].Sprite,
 								rect,
 								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
@@ -143,7 +150,7 @@ namespace MapView
 								_ia);
 			else
 //				_graphics.DrawImage(sprite, rect);
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Cursorset[id].Sprite,
 								x,y,
 								halfWidth  * widthfactor,
@@ -153,21 +160,19 @@ namespace MapView
 		/// <summary>
 		/// Draws the target-cursor.
 		/// </summary>
-		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="halfWidth"></param>
 		/// <param name="halfHeight"></param>
 		/// <param name="rect">destination rectangle for shaded sprites</param>
 		internal static void DrawTargeter_Rembrandt(
-				Graphics graphics,
 				int x, int y,
 				int halfWidth,
 				int halfHeight,
 				Rectangle rect)
 		{
 			if (MainViewF.Optionables.SpriteShadeEnabledCursor)
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Cursorset[TARGETER].Sprite,
 								rect,
 								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
@@ -175,7 +180,7 @@ namespace MapView
 								_ia);
 			else
 //				_graphics.DrawImage(sprite, rect);
-				graphics.DrawImage(
+				_graphics.DrawImage(
 								Cursorset[TARGETER].Sprite,
 								x,y,
 								halfWidth  * widthfactor,
@@ -185,13 +190,11 @@ namespace MapView
 		/// <summary>
 		/// Draws the cuboid-cursor w/ Mono-style.
 		/// </summary>
-		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="front"><c>true</c> to draw the front sprite, else back</param>
 		/// <param name="toplevel"><c>true</c> to draw the red sprite, else blue</param>
 		internal static void DrawCuboid_Picasso(
-				Graphics graphics,
 				int x, int y,
 				bool front,
 				bool toplevel)
@@ -211,7 +214,7 @@ namespace MapView
 			{
 				if ((palid = bindata[++i]) != Palette.Tid)
 				{
-					graphics.FillRectangle(
+					_graphics.FillRectangle(
 										_brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
@@ -223,11 +226,9 @@ namespace MapView
 		/// <summary>
 		/// Draws the target-cursor w/ Mono.
 		/// </summary>
-		/// <param name="graphics"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		internal static void DrawTargeter_Picasso(
-				Graphics graphics,
 				int x, int y)
 		{
 			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
@@ -241,7 +242,7 @@ namespace MapView
 			{
 				if ((palid = bindata[++i]) != Palette.Tid)
 				{
-					graphics.FillRectangle(
+					_graphics.FillRectangle(
 										_brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),

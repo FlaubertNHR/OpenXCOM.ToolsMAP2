@@ -1242,7 +1242,7 @@ namespace MapView.Forms.MainView
 			{
 				_targeterSuppressed = !_targeterForced && (!Focused || SuppressTargeter());
 
-				_graphics = e.Graphics;
+				CuboidSprite.SetGraphics(_graphics = e.Graphics);
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 #if !LOCKBITS
 				if (!MainViewF.Optionables.UseMono)
@@ -1382,7 +1382,6 @@ namespace MapView.Forms.MainView
 						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
-														_graphics,
 														x,y,
 														HalfWidth,
 														HalfHeight,
@@ -1407,7 +1406,6 @@ namespace MapView.Forms.MainView
 							&& col == _col && row == _row)
 						{
 							CuboidSprite.DrawTargeter_Rembrandt(
-														_graphics,
 														x,y,
 														HalfWidth,
 														HalfHeight,
@@ -1417,7 +1415,6 @@ namespace MapView.Forms.MainView
 						if (cuboid)
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
-														_graphics,
 														x,y,
 														HalfWidth,
 														HalfHeight,
@@ -1497,7 +1494,6 @@ namespace MapView.Forms.MainView
 						if (isLocCuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							CuboidSprite.DrawCuboid_Picasso(
-														_graphics,
 														x,y,
 														false,
 														isLevel);
@@ -1515,14 +1511,12 @@ namespace MapView.Forms.MainView
 							&& row == _row)
 						{
 							CuboidSprite.DrawTargeter_Picasso(
-														_graphics,
 														x,y);
 						}
 
 						if (isLocCuboid)
 						{
 							CuboidSprite.DrawCuboid_Picasso(
-														_graphics,
 														x,y,
 														true,
 														isLevel);
