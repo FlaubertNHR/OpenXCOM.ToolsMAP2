@@ -876,7 +876,7 @@ namespace MapView.Forms.MainView
 			options.CreateOptionDefault(str_IgnoreRecordsExceeded,   def_IgnoreRecordsExceeded,   changer1);
 			options.CreateOptionDefault(str_InvertMousewheel,        def_InvertMousewheel,        changer1);
 
-			options.CreateOptionDefault(str_PreferTftdTargeter,      def_PreferTftdTargeter,      changer1);
+			options.CreateOptionDefault(str_PreferTftdTargeter,      def_PreferTftdTargeter,      changer0);
 
 			options.CreateOptionDefault(str_DescriptionHeight,       def_DescriptionHeight,       changer5);
 		}
@@ -971,6 +971,12 @@ namespace MapView.Forms.MainView
 				case str_Interpolation:
 					Interpolation = (int)val;
 					break;
+
+
+				case str_PreferTftdTargeter: // NOTE: The cuboids need to invalidate but not the targeter.
+					PreferTftdTargeter = (bool)val;
+					CuboidSprite.SetCursor();
+					break;
 			}
 
 			_overlay.Invalidate();
@@ -1045,12 +1051,6 @@ namespace MapView.Forms.MainView
 
 				case str_InvertMousewheel:
 					InvertMousewheel = (bool)val;
-					break;
-
-
-				case str_PreferTftdTargeter:
-					CuboidSprite.PreferTftdTargeter(PreferTftdTargeter = (bool)val);
-					_overlay.Invalidate();
 					break;
 			}
 		}
