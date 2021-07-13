@@ -112,8 +112,7 @@ namespace DSShared
 				height = rt_Copyable.Font.Height;
 				pa_Copyable.Height = (height - 1) * (lines.Length + 1) + pa_Copyable.Padding.Vertical;
 
-				copyable += Environment.NewLine; // add a blank line to bot of the copyable text.
-				rt_Copyable.Text = copyable;
+				rt_Copyable.Text = copyable + Environment.NewLine; // add a blank line to bot of the copyable text.
 			}
 			else
 			{
