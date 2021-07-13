@@ -402,18 +402,29 @@ namespace MapView
 			_overlay  = MainViewOverlay.that;
 			Logfile.Log("MainView panels instantiated.");
 
-			Optionables = new MainViewOptionables();
-			Logfile.Log("MainView optionables initialized.");
-
 			RegistryInfo.InitializeRegistry(dirAppL);
 			Logfile.Log("Registry initialized.");
 			RegistryInfo.RegisterProperties(this);
 			Logfile.Log("MainView registered.");
 
+			Optionables = new MainViewOptionables();
+			Logfile.Log("MainView optionables initialized.");
+
 			Options.InitializeConverters();
 			Logfile.Log("OptionsConverters initialized.");
 			Option.InitializeParsers();
 			Logfile.Log("OptionParsers initialized.");
+
+
+			Palette.UfoBattle.SetTransparent(true); // WARNING: ufo/tftd Palettes created here ->
+			Logfile.Log("ufo-battle Palette instantiated.");
+			Palette.TftdBattle.SetTransparent(true);
+			Logfile.Log("tftd-battle Palette instantiated.");
+			Logfile.Log("Palette transparencies set.");
+
+			Palette.CreateUfoBrushes();  // for Mono draw
+			Palette.CreateTftdBrushes(); // for Mono draw
+
 
 			OptionsManager.SetOptionsSection(RegistryInfo.MainView, Options);
 
@@ -421,12 +432,11 @@ namespace MapView
 			Logfile.Log("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
 																// when OnOptionsClick() runs ....
 
+			Palette.UfoBattle.CreateTonescaledPalettes(Optionables.SelectedTonerBrightness);
+			Logfile.Log("ufo-battle Tonescaled Palettes instantiated.");
+			Palette.TftdBattle.CreateTonescaledPalettes(Optionables.SelectedTonerBrightness);
+			Logfile.Log("tftd-battle Tonescaled Palettes instantiated.");
 
-			Palette.UfoBattle .SetTransparent(true); // WARNING: ufo/tftd Palettes created here ->
-			Logfile.Log("ufo-battle Palette instantiated.");
-			Palette.TftdBattle.SetTransparent(true);
-			Logfile.Log("tftd-battle Palette instantiated.");
-			Logfile.Log("Palette transparencies set.");
 
 			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone");	// sprites for TileView's eraser and QuadrantControl's blank quads.
 																					// NOTE: transparency of the 'UfoBattle' palette must be set first.
@@ -3224,12 +3234,12 @@ namespace MapView
 						if (descriptor.GroupType == GameType.Tftd)
 						{
 							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
-							_overlay.SpriteBrushes = Palette.BrushesTftdBattle; // used by Mono only
+							_overlay.SetMonoBrushes(Palette.BrushesTftdBattle); // used by Mono only
 						}
 						else // default to ufo-battle palette
 						{
 							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
-							_overlay.SpriteBrushes = Palette.BrushesUfoBattle; // used by Mono only
+							_overlay.SetMonoBrushes(Palette.BrushesUfoBattle); // used by Mono only
 						}
 
 
@@ -3258,7 +3268,7 @@ namespace MapView
 						if (_foptions != null && _foptions.Visible)
 						   (_foptions as OptionsForm).propertyGrid.Refresh();
 
-						SetTileToner(Optionables.SelectedTileToner); // create toned spriteset(s) for selected-tile(s)
+						SelectToner(); // create toned spriteset(s) for selected-tile(s)
 
 						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 							ViewersMenuManager.StartSecondStageBoosters();
@@ -3323,24 +3333,38 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Sets the toner to be used for drawing
+		/// Selects the toned <c><see cref="Palette"/></c> to be used for drawing
 		/// <c><see cref="Tilepart">Tileparts</see></c> of selected tiles.
 		/// </summary>
-		/// <param name="toner">one of the
+		/// <remarks>See
 		/// <c><see cref="MainViewOptionables.TONER_NONE">MainViewOptionables.TONER_*</see></c>
-		/// constants</param>
-		internal void SetTileToner(int toner)
+		/// for the toner constants.</remarks>
+		internal void SelectToner()
 		{
+			int toner = Optionables.SelectedTileToner;
+
 			miNone .Checked = (toner == MainViewOptionables.TONER_NONE);
 			miGray .Checked = (toner == MainViewOptionables.TONER_GRAY);
 			miRed  .Checked = (toner == MainViewOptionables.TONER_RED);
 			miGreen.Checked = (toner == MainViewOptionables.TONER_GREEN);
 			miBlue .Checked = (toner == MainViewOptionables.TONER_BLUE);
 
+			SetTonedPalette();
+		}
+
+		/// <summary>
+		/// Sets the toned <c><see cref="Palette"/></c> to be used for drawing
+		/// <c><see cref="Tilepart">Tileparts</see></c> of selected tiles based
+		/// on
+		/// <c><see cref="MainViewOptionables.SelectedTileToner">MainViewOptionables.SelectedTileToner</see></c>.
+		/// </summary>
+		internal void SetTonedPalette()
+		{
 			if (SpritesetManager.Spritesets.Count != 0)
 			{
 				ColorPalette table;
-				switch (toner)
+
+				switch (Optionables.SelectedTileToner)
 				{
 					case MainViewOptionables.TONER_NONE:
 						return; // sprites shall draw their standard, no-toned palette version

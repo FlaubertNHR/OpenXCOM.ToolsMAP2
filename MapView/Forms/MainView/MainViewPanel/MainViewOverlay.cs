@@ -83,9 +83,17 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private int _row = -1;
 
-		private int _phase;
+		/// <summary>
+		/// A list of <c>SolidBrushes</c> used to draw sprites using
+		/// <c><see cref="XCImage"></see>._bindata</c> for Mono.
+		/// </summary>
+		/// <remarks>Can be either <c>Palette.BrushesUfoBattle</c> or
+		/// <c>Palette.BrushesTftdBattle</c>.</remarks>
+		private IList<Brush> _brushes;
+
 
 		private Timer _t1 = new Timer();
+		private int _phase;
 		#endregion Fields
 
 
@@ -133,15 +141,6 @@ namespace MapView.Forms.MainView
 				ObserverManager.ToolFactory.EnablePasters(_firstClick && _copied != null);
 			}
 		}
-
-		/// <summary>
-		/// List of SolidBrushes used to draw sprites from XCImage.Bindata (in
-		/// Mono).
-		/// </summary>
-		/// <remarks>Can be either UfoBattle palette brushes or TftdBattle
-		/// palette brushes.</remarks>
-		internal IList<Brush> SpriteBrushes
-		{ private get; set; }
 
 		internal SolidBrush BrushLayer
 		{ get; set; }
@@ -212,6 +211,17 @@ namespace MapView.Forms.MainView
 				_file.LocationSelected += OnLocationSelectedMain;
 				_file.LevelSelected    += OnLevelSelectedMain;
 			}
+		}
+
+		/// <summary>
+		/// Sets the <c>SolidBrushes</c> to use when drawing in Mono.
+		/// </summary>
+		/// <param name="brushes"></param>
+		/// <remarks>Can be either <c>Palette.BrushesUfoBattle</c> or
+		/// <c>Palette.BrushesTftdBattle</c>.</remarks>
+		internal void SetMonoBrushes(IList<Brush> brushes)
+		{
+			_brushes = brushes;
 		}
 		#endregion Methods
 
@@ -1943,7 +1953,7 @@ namespace MapView.Forms.MainView
 				if (palid != Palette.Tid) // <- this is the fix for Mono.
 				{
 					_graphics.FillRectangle(
-										SpriteBrushes[palid],
+										_brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
 										_d, _d);

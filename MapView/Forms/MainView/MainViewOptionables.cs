@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using XCom;
+
 using MapView.Forms.Observers;
 
 
@@ -406,6 +408,32 @@ namespace MapView.Forms.MainView
 		}
 
 
+		internal const string str_SelectedTonerBrightness = "SelectedTonerBrightness";
+		private  const int    def_SelectedTonerBrightness = 5;
+
+		private int _selectedTonerBrightness = def_SelectedTonerBrightness;
+		[Category(cat_Selection)]
+		[Description(@"The brightness of selected (colortoned) tiles (0..10 default 5)
+(only if UseMono is false)")]
+		[DefaultValue(def_SelectedTonerBrightness)]
+		public int SelectedTonerBrightness
+		{
+			get { return _selectedTonerBrightness; }
+			set
+			{
+				if ((MainViewF._foptions as OptionsForm) == null) // on load
+				{
+					MainViewF.that.Options[str_SelectedTonerBrightness].Value =
+					_selectedTonerBrightness = value.Viceroy(0, 10);
+				}
+				else if ((_selectedTonerBrightness = value.Viceroy(0, 10)) != value) // user-changed ->
+				{
+					MainViewF.that.Options[str_SelectedTonerBrightness].Value = _selectedTonerBrightness;
+				}
+			}
+		}
+
+
 		internal const string str_LayerSelectionBorder = "LayerSelectionBorder";
 		private  const int    def_LayerSelectionBorder = 0;
 
@@ -785,7 +813,7 @@ namespace MapView.Forms.MainView
 		/// assigned to MainView's optionable properties when those properties
 		/// were instantiated above.
 		/// </summary>
-		/// <param name="options">MainView's options</param>
+		/// <param name="options"><c><see cref="MainViewF.Options">MainViewF.Options</see></c></param>
 		internal void LoadDefaults(Options options)
 		{
 			//DSShared.Logfile.Log("MainViewOptionables.LoadDefaults()");
@@ -809,47 +837,48 @@ namespace MapView.Forms.MainView
 			OptionChangedEvent changer4 = OnBaseCounttypeChanged;
 			OptionChangedEvent changer5 = OnDescriptionHeightChanged;
 
-			options.CreateOptionDefault(str_StartTileView,          def_StartTileView,          changer1);
-			options.CreateOptionDefault(str_StartTopView,           def_StartTopView,           changer1);
-			options.CreateOptionDefault(str_StartRouteView,         def_StartRouteView,         changer1);
-			options.CreateOptionDefault(str_StartTopRouteView,      def_StartTopRouteView,      changer1);
-			options.CreateOptionDefault(str_StartTopRoutePage,      def_StartTopRoutePage,      changer1);
+			options.CreateOptionDefault(str_StartTileView,           def_StartTileView,           changer1);
+			options.CreateOptionDefault(str_StartTopView,            def_StartTopView,            changer1);
+			options.CreateOptionDefault(str_StartRouteView,          def_StartRouteView,          changer1);
+			options.CreateOptionDefault(str_StartTopRouteView,       def_StartTopRouteView,       changer1);
+			options.CreateOptionDefault(str_StartTopRoutePage,       def_StartTopRoutePage,       changer1);
 
-			options.CreateOptionDefault(str_GridVisible,            def_GridVisible,            changer0);
-			options.CreateOptionDefault(str_GridLayerColor,         def_GridLayerColor,         changer0);
-			options.CreateOptionDefault(str_GridLayerOpacity,       def_GridLayerOpacity,       changer0);
-			options.CreateOptionDefault(str_GridLineColor,          def_GridLineColor,          changer0);
-			options.CreateOptionDefault(str_GridLineWidth,          def_GridLineWidth,          changer0);
-			options.CreateOptionDefault(str_GridLine10Color,        def_GridLine10Color,        changer0);
-			options.CreateOptionDefault(str_GridLine10Width,        def_GridLine10Width,        changer0);
+			options.CreateOptionDefault(str_GridVisible,             def_GridVisible,             changer0);
+			options.CreateOptionDefault(str_GridLayerColor,          def_GridLayerColor,          changer0);
+			options.CreateOptionDefault(str_GridLayerOpacity,        def_GridLayerOpacity,        changer0);
+			options.CreateOptionDefault(str_GridLineColor,           def_GridLineColor,           changer0);
+			options.CreateOptionDefault(str_GridLineWidth,           def_GridLineWidth,           changer0);
+			options.CreateOptionDefault(str_GridLine10Color,         def_GridLine10Color,         changer0);
+			options.CreateOptionDefault(str_GridLine10Width,         def_GridLine10Width,         changer0);
 
-			options.CreateOptionDefault(str_SelectionBorderColor,   def_SelectionBorderColor,   changer0);
-			options.CreateOptionDefault(str_SelectionBorderOpacity, def_SelectionBorderOpacity, changer0);
-			options.CreateOptionDefault(str_SelectionBorderWidth,   def_SelectionBorderWidth,   changer0);
-			options.CreateOptionDefault(str_SelectedTileToner,      def_SelectedTileToner,      changer0);
-			options.CreateOptionDefault(str_LayerSelectionBorder,   def_LayerSelectionBorder,   changer0);
-			options.CreateOptionDefault(str_OneTileDraw,            def_OneTileDraw,            changer0);
+			options.CreateOptionDefault(str_SelectionBorderColor,    def_SelectionBorderColor,    changer0);
+			options.CreateOptionDefault(str_SelectionBorderOpacity,  def_SelectionBorderOpacity,  changer0);
+			options.CreateOptionDefault(str_SelectionBorderWidth,    def_SelectionBorderWidth,    changer0);
+			options.CreateOptionDefault(str_SelectedTileToner,       def_SelectedTileToner,       changer0);
+			options.CreateOptionDefault(str_SelectedTonerBrightness, def_SelectedTonerBrightness, changer0);
+			options.CreateOptionDefault(str_LayerSelectionBorder,    def_LayerSelectionBorder,    changer0);
+			options.CreateOptionDefault(str_OneTileDraw,             def_OneTileDraw,             changer0);
 
-			options.CreateOptionDefault(str_SpriteShade,            def_SpriteShade,            changer3);
-			options.CreateOptionDefault(str_Interpolation,          def_Interpolation,          changer0);
+			options.CreateOptionDefault(str_SpriteShade,             def_SpriteShade,             changer3);
+			options.CreateOptionDefault(str_Interpolation,           def_Interpolation,           changer0);
 
-			options.CreateOptionDefault(str_AnimateSprites,         def_AnimateSprites,         changer2);
-			options.CreateOptionDefault(str_OpenDoors,              def_OpenDoors,              changer2);
-			options.CreateOptionDefault(str_BringAllToFront,        def_BringAllToFront,        changer1);
-			options.CreateOptionDefault(str_UseMono,                def_UseMono,                changer2);
+			options.CreateOptionDefault(str_AnimateSprites,          def_AnimateSprites,          changer2);
+			options.CreateOptionDefault(str_OpenDoors,               def_OpenDoors,               changer2);
+			options.CreateOptionDefault(str_BringAllToFront,         def_BringAllToFront,         changer1);
+			options.CreateOptionDefault(str_UseMono,                 def_UseMono,                 changer2);
 
-			options.CreateOptionDefault(str_BackgroundColor,        def_BackgroundColor,        changer1);
-			options.CreateOptionDefault(str_CropBackground,         def_CropBackground,         changer1);
-			options.CreateOptionDefault(str_Png_notGif,             def_Png_notGif,             changer1);
+			options.CreateOptionDefault(str_BackgroundColor,         def_BackgroundColor,         changer1);
+			options.CreateOptionDefault(str_CropBackground,          def_CropBackground,          changer1);
+			options.CreateOptionDefault(str_Png_notGif,              def_Png_notGif,              changer1);
 
-			options.CreateOptionDefault(str_Base1_xy,               def_Base1_xy,               changer4);
-			options.CreateOptionDefault(str_Base1_z,                def_Base1_z,                changer4);
-			options.CreateOptionDefault(str_IgnoreRecordsExceeded,  def_IgnoreRecordsExceeded,  changer1);
-			options.CreateOptionDefault(str_InvertMousewheel,       def_InvertMousewheel,       changer1);
+			options.CreateOptionDefault(str_Base1_xy,                def_Base1_xy,                changer4);
+			options.CreateOptionDefault(str_Base1_z,                 def_Base1_z,                 changer4);
+			options.CreateOptionDefault(str_IgnoreRecordsExceeded,   def_IgnoreRecordsExceeded,   changer1);
+			options.CreateOptionDefault(str_InvertMousewheel,        def_InvertMousewheel,        changer1);
 
-			options.CreateOptionDefault(str_PreferTftdTargeter,     def_PreferTftdTargeter,     changer1);
+			options.CreateOptionDefault(str_PreferTftdTargeter,      def_PreferTftdTargeter,      changer1);
 
-			options.CreateOptionDefault(str_DescriptionHeight,      def_DescriptionHeight,      changer5);
+			options.CreateOptionDefault(str_DescriptionHeight,       def_DescriptionHeight,       changer5);
 		}
 		#endregion Methods
 
@@ -918,7 +947,17 @@ namespace MapView.Forms.MainView
 					break;
 
 				case str_SelectedTileToner:
-					MainViewF.that.SetTileToner(SelectedTileToner = (int)val);
+					SelectedTileToner = (int)val;
+					MainViewF.that.SelectToner();
+					break;
+
+				case str_SelectedTonerBrightness:
+					SelectedTonerBrightness = (int)val;
+
+					Palette.UfoBattle .CreateTonescaledPalettes(SelectedTonerBrightness);
+					Palette.TftdBattle.CreateTonescaledPalettes(SelectedTonerBrightness);
+
+					MainViewF.that.SetTonedPalette();
 					break;
 
 				case str_LayerSelectionBorder:

@@ -181,15 +181,12 @@ namespace McdView
 		{
 			get
 			{
-				Palette.BypassTonescales(true);
-
 				Palette pal;
 				if (miResourcesTftd.Checked)
 					pal = Palette.TftdBattle;
 				else
 					pal = Palette.UfoBattle;
 
-				Palette.BypassTonescales(false);
 				return pal;
 			}
 		}

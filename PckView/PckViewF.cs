@@ -493,19 +493,16 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Adds the palettes as menuitems to the palettes menu on the main
-		/// menubar.
+		/// Adds <c><see cref="Palette">Palettes</see></c> as menuitems to the
+		/// Palettes menu on the main menubar.
 		/// </summary>
 		private void PopulatePaletteMenu()
 		{
-			// instantiate the palettes
-			// iff not invoked by MapView - else the palettes have already been
-			// instantiated and these are just pointers in which case
-			// 'BypassTonescales' is irrelevant
-
-			Palette.BypassTonescales(true);
+			// instantiate the palettes iff not invoked by MapView - else the
+			// palettes have already been instantiated
 
 			var pals = new List<Palette>();
+
 			pals.Add(Palette.UfoBattle);
 			pals.Add(Palette.UfoGeo);
 			pals.Add(Palette.UfoGraph);
@@ -514,8 +511,6 @@ namespace PckView
 			pals.Add(Palette.TftdGeo);
 			pals.Add(Palette.TftdGraph);
 			pals.Add(Palette.TftdResearch);
-
-			Palette.BypassTonescales(false);
 
 
 			MenuItem it;

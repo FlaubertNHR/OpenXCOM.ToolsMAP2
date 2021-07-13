@@ -98,12 +98,6 @@ namespace XCom
 		/// <c>Palette</c>.
 		/// </summary>
 		private const string BLUE  = "#blue";
-
-		/// <summary>
-		/// Bypasses creating tone-scaled subpalettes if this <c>Palette</c> is
-		/// created by PckView or McdView.
-		/// </summary>
-		private static bool _bypassTonescales;
 		#endregion Fields (static)
 
 
@@ -125,9 +119,7 @@ namespace XCom
 				{
 					_palettes[ufobattle] = new Palette(
 													Assembly.GetExecutingAssembly()
-															.GetManifestResourceStream(Embedded + ufobattle + PalExt),
-													true);
-					CreateUfoBrushes();
+															.GetManifestResourceStream(Embedded + ufobattle + PalExt));
 				}
 				return _palettes[ufobattle] as Palette;
 			}
@@ -144,8 +136,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(ufogeo))
 					_palettes[ufogeo] = new Palette(
 												Assembly.GetExecutingAssembly()
-														.GetManifestResourceStream(Embedded + ufogeo + PalExt),
-												false);
+														.GetManifestResourceStream(Embedded + ufogeo + PalExt));
 				return _palettes[ufogeo] as Palette;
 			}
 		}
@@ -161,8 +152,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(ufograph))
 					_palettes[ufograph] = new Palette(
 													Assembly.GetExecutingAssembly()
-															.GetManifestResourceStream(Embedded + ufograph + PalExt),
-													false);
+															.GetManifestResourceStream(Embedded + ufograph + PalExt));
 				return _palettes[ufograph] as Palette;
 			}
 		}
@@ -178,8 +168,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(uforesearch))
 					_palettes[uforesearch] = new Palette(
 													Assembly.GetExecutingAssembly()
-															.GetManifestResourceStream(Embedded + uforesearch + PalExt),
-													false);
+															.GetManifestResourceStream(Embedded + uforesearch + PalExt));
 				return _palettes[uforesearch] as Palette;
 			}
 		}
@@ -196,9 +185,7 @@ namespace XCom
 				{
 					_palettes[tftdbattle] = new Palette(
 													Assembly.GetExecutingAssembly()
-															.GetManifestResourceStream(Embedded + tftdbattle + PalExt),
-													true);
-					CreateTftdBrushes();
+															.GetManifestResourceStream(Embedded + tftdbattle + PalExt));
 				}
 				return _palettes[tftdbattle] as Palette;
 			}
@@ -215,8 +202,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(tftdgeo))
 					_palettes[tftdgeo] = new Palette(
 												Assembly.GetExecutingAssembly()
-														.GetManifestResourceStream(Embedded + tftdgeo + PalExt),
-												false);
+														.GetManifestResourceStream(Embedded + tftdgeo + PalExt));
 				return _palettes[tftdgeo] as Palette;
 			}
 		}
@@ -232,8 +218,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(tftdgraph))
 					_palettes[tftdgraph] = new Palette(
 													Assembly.GetExecutingAssembly()
-															.GetManifestResourceStream(Embedded + tftdgraph + PalExt),
-													false);
+															.GetManifestResourceStream(Embedded + tftdgraph + PalExt));
 				return _palettes[tftdgraph] as Palette;
 			}
 		}
@@ -249,8 +234,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(tftdresearch))
 					_palettes[tftdresearch] = new Palette(
 														Assembly.GetExecutingAssembly()
-																.GetManifestResourceStream(Embedded + tftdresearch + PalExt),
-														false);
+																.GetManifestResourceStream(Embedded + tftdresearch + PalExt));
 				return _palettes[tftdresearch] as Palette;
 			}
 		}
@@ -315,13 +299,7 @@ namespace XCom
 		/// </summary>
 		public Palette GrayScale
 		{
-			get
-			{
-				if (_palettes.ContainsKey(Label + GRAY))
-					return _palettes[Label + GRAY];
-
-				return null;
-			}
+			get { return _palettes[Label + GRAY]; }
 		}
 		/// <summary>
 		/// The red-scaled <c>Palette</c> of this <c>Palette</c>.
@@ -366,9 +344,7 @@ namespace XCom
 		/// filestream of data.
 		/// </summary>
 		/// <param name="fs"></param>
-		/// <param name="createTonescales">tonescaled palettes are required by
-		/// ufo-battle and tftd-battle for MapView only</param>
-		private Palette(Stream fs, bool createTonescales)
+		private Palette(Stream fs)
 		{
 			using (var b = new Bitmap(1,1, PixelFormat.Format8bppIndexed))
 				Table = b.Palette;
@@ -386,9 +362,6 @@ namespace XCom
 													Int32.Parse(rgb[1]),
 													Int32.Parse(rgb[2]));
 				}
-
-				if (createTonescales && !_bypassTonescales)
-					CreateTonescaledPalettes(Label);
 			}
 		}
 
@@ -411,20 +384,19 @@ namespace XCom
 		/// <summary>
 		/// Creates the toner-palettes.
 		/// </summary>
-		/// <param name="baselabel">all your label are belong to us</param>
 		/// <remarks>Tonescaled <c>Palettes</c> are required by ufo-battle and
 		/// tftd-battle for MapView only.</remarks>
-		private void CreateTonescaledPalettes(string baselabel)
+		public void CreateTonescaledPalettes(int brightness)
 		{
 			string label;
 			for (int i = 0; i != 4; ++i)
 			{
 				switch (i)
 				{
-					default: label = baselabel + GRAY;  break; // case 0
-					case 1:  label = baselabel + RED;   break;
-					case 2:  label = baselabel + GREEN; break;
-					case 3:  label = baselabel + BLUE;  break;
+					default: label = Label + GRAY;  break; // case 0
+					case 1:  label = Label + RED;   break;
+					case 2:  label = Label + GREEN; break;
+					case 3:  label = Label + BLUE;  break;
 				}
 
 				var pal = new Palette(label);
@@ -432,13 +404,11 @@ namespace XCom
 				pal[Tid] = Color.FromArgb(0, 0,0,0); // id#0 shall always be transparent black
 
 				Color color; int val;
-				for (int id = Tid + 1; id != Table.Entries.Length; ++id)
+				for (int id = 1; id != Table.Entries.Length; ++id)
 				{
 					color = this[id];
-					val = GetBrightness(color.R, color.G, color.B);
-
-//					val = val * 7 / 10;
-//					val = Math.Max(0, Math.Min(val, 255));
+					val = GetBrightness(color.R, color.G, color.B) * brightness / 5;
+					val = Math.Max(0, Math.Min(val, 255));
 
 					switch (i)
 					{
@@ -502,7 +472,7 @@ namespace XCom
 		{
 			pal.Table.Entries[Tid] = Color.Black;
 
-			for (int id = Tid + 1; id != 256; ++id)
+			for (int id = 1; id != 256; ++id)
 				pal.Table.Entries[id] = Color.White;
 		}
 
@@ -511,10 +481,10 @@ namespace XCom
 		/// Create brushes for drawing UFO sprites per
 		/// <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
-		private static void CreateUfoBrushes()
+		public static void CreateUfoBrushes()
 		{
-			var pal = _palettes[ufobattle] as Palette;
-			foreach (var color in pal.Table.Entries)
+			Color[] colors = _palettes[ufobattle].Table.Entries;
+			foreach (var color in colors)
 			{
 				BrushesUfoBattle.Add(new SolidBrush(color));
 			}
@@ -524,23 +494,13 @@ namespace XCom
 		/// Create brushes for drawing TFTD sprites per
 		/// <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
-		private static void CreateTftdBrushes()
+		public static void CreateTftdBrushes()
 		{
-			var pal = _palettes[tftdbattle] as Palette;
-			foreach (var color in pal.Table.Entries)
+			Color[] colors = _palettes[tftdbattle].Table.Entries;
+			foreach (var color in colors)
 			{
 				BrushesTftdBattle.Add(new SolidBrush(color));
 			}
-		}
-
-		/// <summary>
-		/// Bypasses creating tone-scaled subpalettes if this <c>Palette</c> is
-		/// created by PckView or McdView.
-		/// </summary>
-		/// <param name="bypass"></param>
-		public static void BypassTonescales(bool bypass)
-		{
-			_bypassTonescales = bypass;
 		}
 		#endregion Methods (static)
 

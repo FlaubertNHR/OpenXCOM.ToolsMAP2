@@ -41,12 +41,24 @@ namespace MapView
 
 		private const int widthfactor  = 2; // the values for width and height
 		private const int heightfactor = 5; // are based on a sprite that's 32x40.
+
+		private static IList<Brush> _brushes;
 		#endregion Fields (static)
 
 
 		#region Properties (static)
+		private static Spriteset _cursorset;
 		internal static Spriteset Cursorset
-		{ get; private set; }
+		{
+			get { return _cursorset; }
+			private set
+			{
+				if ((_cursorset = value) == Tftdset)
+					_brushes = Palette.BrushesTftdBattle;
+				else
+					_brushes = Palette.BrushesUfoBattle;
+			}
+		}
 
 		internal static Spriteset Ufoset
 		{ get; set; }
@@ -90,8 +102,14 @@ namespace MapView
 		internal static void PreferTftdTargeter(bool val)
 		{
 			//DSShared.Logfile.Log("CuboidSprite.PreferTftdTargeter() val= " + val);
-			if (Tftdset != null && (val || Ufoset == null)) Cursorset = Tftdset;
-			else if (Ufoset != null) Cursorset = Ufoset;
+			if (Tftdset != null && (val || Ufoset == null))
+			{
+				Cursorset = Tftdset;
+			}
+			else if (Ufoset != null)
+			{
+				Cursorset = Ufoset;
+			}
 		}
 
 
@@ -154,19 +172,16 @@ namespace MapView
 			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
 
 			byte[] bindata = Cursorset[id].GetBindata();
-
-			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;
 
 			int i = -1, h,w;
 			for (h = 0; h != Spriteset.SpriteHeight40; ++h)
 			for (w = 0; w != Spriteset.SpriteWidth32;  ++w)
 			{
-				palid = bindata[++i];
-				if (palid != Palette.Tid)
+				if ((palid = bindata[++i]) != Palette.Tid)
 				{
 					graphics.FillRectangle(
-										brushes[palid],
+										_brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
 										d,d);
@@ -217,19 +232,16 @@ namespace MapView
 			int d = (int)(Globals.Scale - 0.1) + 1; // NOTE: Globals.ScaleMinimum is 0.25; don't let it drop to negative value here.
 
 			byte[] bindata = Cursorset[TARGETER].GetBindata();
-
-			IList<Brush> brushes = Palette.BrushesUfoBattle;
 			int palid;
 
 			int i = -1, h,w;
 			for (h = 0; h != Spriteset.SpriteHeight40; ++h)
 			for (w = 0; w != Spriteset.SpriteWidth32;  ++w)
 			{
-				palid = bindata[++i];
-				if (palid != Palette.Tid)
+				if ((palid = bindata[++i]) != Palette.Tid)
 				{
 					graphics.FillRectangle(
-										brushes[palid],
+										_brushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
 										d,d);
