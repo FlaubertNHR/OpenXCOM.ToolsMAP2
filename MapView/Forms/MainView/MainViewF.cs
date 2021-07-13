@@ -2249,10 +2249,8 @@ namespace MapView
 		internal void OnAutoScaleClick(object sender, EventArgs e)
 		{
 			if (Globals.AutoScale = ObserverManager.ToolFactory.ToggleAutoscale())
-			{
 				_underlay.SetScale();
-				_underlay.SetOverlaySize();
-			}
+
 			_underlay.UpdateScrollers();
 		}
 

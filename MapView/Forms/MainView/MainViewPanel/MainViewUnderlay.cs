@@ -141,15 +141,23 @@ namespace MapView.Forms.MainView
 			base.OnResize(eventargs);
 
 			if (_file != null && Globals.AutoScale)
-			{
 				SetScale();
-				SetOverlaySize();
-			}
+
 			UpdateScrollers();
 
 			Invalidate(); // updates the reserved scroll indicators.
 
 //			DSShared.Logfile.Log("MainViewUnderlay.OnResize EXIT");
+		}
+
+		/// <summary>
+		/// Focuses <c><see cref="MainViewOverlay"/></c> when the panel is
+		/// clicked just outside the border of the Map or if there is no Map.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			_overlay.Select();
 		}
 		#endregion Events (override)
 
@@ -357,7 +365,7 @@ namespace MapView.Forms.MainView
 			//DSShared.Logfile.Log("");
 			//DSShared.Logfile.Log("MainViewUnderlay.SetScale");
 
-			var required = GetRequiredOverlaySize(1f);
+			Size required = DeterOverlaySize(1f);
 			Globals.Scale = Math.Min(
 								(float)(Width  - OffsetX) / required.Width,
 								(float)(Height - OffsetY) / required.Height);
@@ -366,6 +374,7 @@ namespace MapView.Forms.MainView
 												Globals.ScaleMaximum);
 
 			//DSShared.Logfile.Log(". scale set to= " + Globals.Scale);
+			SetOverlaySize();
 		}
 
 		/// <summary>
@@ -379,7 +388,7 @@ namespace MapView.Forms.MainView
 			if (_file != null)
 			{
 				//DSShared.Logfile.Log(". scale= " + Globals.Scale);
-				Size size = GetRequiredOverlaySize(Globals.Scale);
+				Size size = DeterOverlaySize(Globals.Scale);
 
 				_overlay.Width  = size.Width;
 				_overlay.Height = size.Height;
@@ -390,12 +399,17 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Gets the required x/y size in pixels for the current MapFile as a
-		/// lozenge. Also sets the 'Origin' point and the half-width/height vals.
+		/// Determines the required width/height in pixels for the current Map
+		/// as a lozenge. Also sets
+		/// <c><see cref="MainViewOverlay.Origin">MainViewOverlay.Origin</see></c>
+		/// along with
+		/// <c><see cref="MainViewOverlay.HalfWidth">MainViewOverlay.HalfWidth</see></c>
+		/// and
+		/// <c><see cref="MainViewOverlay.HalfHeight">MainViewOverlay.HalfHeight</see></c>.
 		/// </summary>
 		/// <param name="scale">the current scaling factor</param>
 		/// <returns></returns>
-		private Size GetRequiredOverlaySize(float scale)
+		private Size DeterOverlaySize(float scale)
 		{
 			//DSShared.Logfile.Log("");
 			//DSShared.Logfile.Log("MainViewUnderlay.GetRequiredOverlaySize");
