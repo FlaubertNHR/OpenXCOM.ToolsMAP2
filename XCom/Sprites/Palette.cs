@@ -10,20 +10,21 @@ namespace XCom
 {
 	//see http://support.microsoft.com/default.aspx?scid=kb%3Ben-us%3B319061
 	/// <summary>
-	/// A class defining a Color array of 256 values.
+	/// A class defining a <c>Color</c> array of 256 values.
 	/// </summary>
-	/// <remarks>Palettes are instantiated only as the 8 palettes for ufo/tftd
-	/// and the 4 tone-scaled palettes (for selected tileparts in MainView). The
-	/// transparency (alpha-value) of colorid #0 can be toggled but beware that
-	/// it appears to require re-assigning the changed ColorPalette to affected
-	/// sprites/spritesets ... palettes are difficult to reliably/intuitively
-	/// work with in .net - you'd think they would be referenced but they could
-	/// be/ are dereferences of a copy instead. .net strikes again!</remarks>
+	/// <remarks><c>Palettes</c> are instantiated only as the 8 palettes for
+	/// ufo/tftd and the 4 tone-scaled palettes (for selected tileparts in
+	/// MainView). The transparency (alpha-value) of colorid #0 can be toggled
+	/// but beware that it appears to require re-assigning the changed
+	/// <c>ColorPalette</c> to affected sprites/spritesets ... palettes are
+	/// difficult to reliably/intuitively work with in .net - you'd think they
+	/// would be referenced but they could be/are dereferences of a copy
+	/// instead. .net strikes again!</remarks>
 	public sealed class Palette
 	{
 		/// <summary>
 		/// Disposes the UFO and TFTD brushes used by
-		/// MainViewF.Optionables.UseMono.
+		/// <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
 		public static void DisposeMonoBrushes()
 		{
@@ -38,20 +39,22 @@ namespace XCom
 
 		#region Fields (static)
 		/// <summary>
-		/// The transparent Id in the <see cref="Table">Table.Entries</see>
-		/// array.
+		/// The transparent Id in the
+		/// <c><see cref="Table">Table.Entries</see></c> array.
 		/// </summary>
 		public const byte Tid = 0x00;
 
 		/// <summary>
-		/// LoFT icons use only <see cref="ColorPalette">ColorPalette.Entries</see>
-		/// #0 and #1. LoFTclear shall be black for non-solid voxelspace.
+		/// LoFT icons use only
+		/// <c><see cref="ColorPalette">ColorPalette.Entries</see></c> #0 and
+		/// #1. LoFTclear shall be black for non-solid voxelspace.
 		/// </summary>
 		public const byte LoFTclear = 0x00;
 
 		/// <summary>
-		/// LoFT icons use only <see cref="ColorPalette">ColorPalette.Entries</see>
-		/// #0 and #1. LoFTSolid shall be white for solid voxelspace.
+		/// LoFT icons use only
+		/// <c><see cref="ColorPalette">ColorPalette.Entries</see></c> #0 and
+		/// #1. LoFTSolid shall be white for solid voxelspace.
 		/// </summary>
 		public const byte LoFTSolid = 0x01;
 
@@ -76,25 +79,29 @@ namespace XCom
 		private const string PalExt = ".pal";
 
 		/// <summary>
-		/// The suffix for the (key)label of the grayscaled version of this palette.
+		/// The suffix for the (key)label of the grayscaled version of this
+		/// <c>Palette</c>.
 		/// </summary>
 		private const string GRAY  = "#gray";
 		/// <summary>
-		/// The suffix for the (key)label of the redscaled version of this palette.
+		/// The suffix for the (key)label of the redscaled version of this
+		/// <c>Palette</c>.
 		/// </summary>
 		private const string RED   = "#red";
 		/// <summary>
-		/// The suffix for the (key)label of the greenscaled version of this palette.
+		/// The suffix for the (key)label of the greenscaled version of this
+		/// <c>Palette</c>.
 		/// </summary>
 		private const string GREEN = "#green";
 		/// <summary>
-		/// The suffix for the (key)label of the bluescaled version of this palette.
+		/// The suffix for the (key)label of the bluescaled version of this
+		/// <c>Palette</c>.
 		/// </summary>
 		private const string BLUE  = "#blue";
 
 		/// <summary>
-		/// Bypasses creating tone-scaled subpalettes if this Palette is created
-		/// by PckView or McdView.
+		/// Bypasses creating tone-scaled subpalettes if this <c>Palette</c> is
+		/// created by PckView or McdView.
 		/// </summary>
 		private static bool _bypassTonescales;
 		#endregion Fields (static)
@@ -107,7 +114,7 @@ namespace XCom
 
 		#region Properties (static)
 		/// <summary>
-		/// The "ufo-battle" palette _Embedded in this assembly.
+		/// The "ufo-battle" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used throughout MapView.</remarks>
 		public static Palette UfoBattle
@@ -127,7 +134,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "ufo-geo" palette _Embedded in this assembly.
+		/// The "ufo-geo" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette UfoGeo
@@ -144,7 +151,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "ufo-graph" palette _Embedded in this assembly.
+		/// The "ufo-graph" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette UfoGraph
@@ -161,7 +168,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "ufo-research" palette _Embedded in this assembly.
+		/// The "ufo-research" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette UfoResearch
@@ -178,7 +185,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "tftd-battle" palette _Embedded in this assembly.
+		/// The "tftd-battle" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used throughout MapView.</remarks>
 		public static Palette TftdBattle
@@ -198,7 +205,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "tftd-geo" palette _Embedded in this assembly.
+		/// The "tftd-geo" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette TftdGeo
@@ -215,7 +222,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "tftd-graph" palette _Embedded in this assembly.
+		/// The "tftd-graph" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette TftdGraph
@@ -232,7 +239,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "tftd-research" palette _Embedded in this assembly.
+		/// The "tftd-research" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette TftdResearch
@@ -249,7 +256,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// The "binary" palette _Embedded in this assembly.
+		/// The "binary" palette <c>_Embedded</c> in this assembly.
 		/// </summary>
 		/// <remarks>Is used by PckView only.</remarks>
 		public static Palette Binary
@@ -266,7 +273,7 @@ namespace XCom
 
 		private static readonly IList<Brush> _brushesUfoBattle = new List<Brush>();
 		/// <summary>
-		/// Brushes for MainViewF.Optionables.UseMono.
+		/// Brushes for <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
 		public static IList<Brush> BrushesUfoBattle
 		{
@@ -275,7 +282,7 @@ namespace XCom
 
 		private static readonly IList<Brush> _brushesTftdBattle = new List<Brush>();
 		/// <summary>
-		/// Brushes for MainViewF.Optionables.UseMono.
+		/// Brushes for <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
 		public static IList<Brush> BrushesTftdBattle
 		{
@@ -286,26 +293,16 @@ namespace XCom
 
 		#region Properties
 		/// <summary>
-		/// Gets/Sets the (key)Label of this Palette.
+		/// Gets/Sets the (key)Label of this <c>Palette</c>.
 		/// </summary>
 		public string Label
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets/Sets the ColorPalette of this Palette (sic).
+		/// Gets/Sets the <c>ColorPalette</c> of this <c>Palette</c> (sic).
 		/// </summary>
 		public ColorPalette Table
 		{ get; private set; }
-
-		/// <summary>
-		/// Gets/Sets the Color of a given index in this Palette's
-		/// <see cref="Table"/>.
-		/// </summary>
-		public Color this[int id]
-		{
-			get { return Table.Entries[id]; }
-			private set { Table.Entries[id] = value; }
-		}
 
 
 		// TODO: Move the TonescaledPalettes out to their own Palette(s).
@@ -314,7 +311,7 @@ namespace XCom
 		// rethought and reworked ...
 
 		/// <summary>
-		/// The gray-scaled Palette of this Palette.
+		/// The gray-scaled <c>Palette</c> of this <c>Palette</c>.
 		/// </summary>
 		public Palette GrayScale
 		{
@@ -327,21 +324,21 @@ namespace XCom
 			}
 		}
 		/// <summary>
-		/// The red-scaled Palette of this Palette.
+		/// The red-scaled <c>Palette</c> of this <c>Palette</c>.
 		/// </summary>
 		public Palette RedScale
 		{
 			get { return _palettes[Label + RED]; }
 		}
 		/// <summary>
-		/// The green-scaled Palette of this Palette.
+		/// The green-scaled <c>Palette</c> of this <c>Palette</c>.
 		/// </summary>
 		public Palette GreenScale
 		{
 			get { return _palettes[Label + GREEN]; }
 		}
 		/// <summary>
-		/// The blue-scaled Palette of this Palette.
+		/// The blue-scaled <c>Palette</c> of this <c>Palette</c>.
 		/// </summary>
 		public Palette BlueScale
 		{
@@ -350,9 +347,22 @@ namespace XCom
 		#endregion Properties
 
 
+		#region Indexers
+		/// <summary>
+		/// Gets/Sets the <c>Color</c> of a given index in this <c>Palette's</c>
+		/// <c><see cref="Table"/></c>.
+		/// </summary>
+		public Color this[int id]
+		{
+			get { return Table.Entries[id]; }
+			private set { Table.Entries[id] = value; }
+		}
+		#endregion Indexers
+
+
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Instantiates any of the 8 ufo/tftd palettes given a
+		/// cTor[0]. Instantiates any of the 8 ufo/tftd <c>Palettes</c> given a
 		/// filestream of data.
 		/// </summary>
 		/// <param name="fs"></param>
@@ -383,8 +393,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// cTor[1]. Instantiates a standard palette with a given label for a
-		/// tone-scaled palette.
+		/// cTor[1]. Instantiates a standard <c>Palette</c> with a given label
+		/// for a tone-scaled palette.
 		/// </summary>
 		/// <param name="label"></param>
 		private Palette(string label)
@@ -402,7 +412,7 @@ namespace XCom
 		/// Creates the toner-palettes.
 		/// </summary>
 		/// <param name="baselabel">all your label are belong to us</param>
-		/// <remarks>Tonescaled palettes are required by ufo-battle and
+		/// <remarks>Tonescaled <c>Palettes</c> are required by ufo-battle and
 		/// tftd-battle for MapView only.</remarks>
 		private void CreateTonescaledPalettes(string baselabel)
 		{
@@ -425,7 +435,10 @@ namespace XCom
 				for (int id = Tid + 1; id != Table.Entries.Length; ++id)
 				{
 					color = this[id];
-					val = GetMonochromaticBrightness(color.R, color.G, color.B);
+					val = GetBrightness(color.R, color.G, color.B);
+
+//					val = val * 7 / 10;
+//					val = Math.Max(0, Math.Min(val, 255));
 
 					switch (i)
 					{
@@ -447,7 +460,7 @@ namespace XCom
 		/// <param name="blue"></param>
 		/// <returns></returns>
 		/// <remarks>See also ColorHelp.GetTextColor().</remarks>
-		private static int GetMonochromaticBrightness(int red, int green, int blue)
+		private static int GetBrightness(int red, int green, int blue)
 		{
 			return (int)(Math.Sqrt(Math.Pow(red,   2) * 0.2990
 								 + Math.Pow(green, 2) * 0.5870
@@ -458,11 +471,13 @@ namespace XCom
 
 
 		/// <summary>
-		/// Enables or disables transparency on the 'Tid' palette-index.
-		/// TODO: It would perhaps be worthwhile to create a separate Palette
-		/// for ufo-battle and tftd-battle that has id #0 transparent.
+		/// Enables or disables transparency on the <c><see cref="Tid"/></c>
+		/// palette-index.
+		/// TODO: It would perhaps be worthwhile to create a separate
+		/// <c>Palette</c> for ufo-battle and tftd-battle that has id #0
+		/// transparent.
 		/// </summary>
-		/// <param name="transparent">true to enable transparency</param>
+		/// <param name="transparent"><c>true</c> to enable transparency</param>
 		public void SetTransparent(bool transparent)
 		{
 			if (transparent != _isTransparent)
@@ -481,7 +496,7 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Creates a binary ColorTable for LoFTicons.
+		/// Creates a binary <c>ColorTable</c> for LoFTicons.
 		/// </summary>
 		private static void CreateBinaryTable(Palette pal)
 		{
@@ -494,7 +509,7 @@ namespace XCom
 
 		/// <summary>
 		/// Create brushes for drawing UFO sprites per
-		/// MainViewF.Optionables.UseMono.
+		/// <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
 		private static void CreateUfoBrushes()
 		{
@@ -507,7 +522,7 @@ namespace XCom
 
 		/// <summary>
 		/// Create brushes for drawing TFTD sprites per
-		/// MainViewF.Optionables.UseMono.
+		/// <c>MainViewF.Optionables.UseMono</c>.
 		/// </summary>
 		private static void CreateTftdBrushes()
 		{
@@ -519,8 +534,8 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Bypasses creating tone-scaled subpalettes if this Palette is created
-		/// by PckView or McdView.
+		/// Bypasses creating tone-scaled subpalettes if this <c>Palette</c> is
+		/// created by PckView or McdView.
 		/// </summary>
 		/// <param name="bypass"></param>
 		public static void BypassTonescales(bool bypass)
@@ -532,7 +547,7 @@ namespace XCom
 
 		#region Methods (override)
 		/// <summary>
-		/// Returns <see cref="Label"/>.
+		/// Returns <c><see cref="Label"/></c>.
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -541,10 +556,11 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Checks for palette equality.
+		/// Checks this <c>Palette</c> against another <c>Palette</c> for
+		/// equality.
 		/// </summary>
-		/// <param name="obj">another palette</param>
-		/// <returns>true if the palette names are the same</returns>
+		/// <param name="obj">another <c>Palette</c></param>
+		/// <returns><c>true</c> if the palette names are the same</returns>
 		public override bool Equals(Object obj)
 		{
 			var pal = obj as Palette;
