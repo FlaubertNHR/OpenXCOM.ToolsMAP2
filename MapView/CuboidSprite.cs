@@ -102,9 +102,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// Sets or disables spriteshade for the targeter and cuboid sprites.
 		/// </summary>
 		/// <param name="reset"></param>
+		/// <remarks>Called by
+		/// <c><see cref="Forms.MainView.MainViewOptionables.SpriteShadeCursor">MainViewOptionables.SpriteShadeCursor</see></c>.</remarks>
 		internal static void SetSpriteShadeCursor(bool reset = false)
 		{
 			if (reset)
@@ -117,9 +119,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// 
+		/// Sets the <c>Graphics</c> that will be used to draw the targeter and
+		/// cuboid sprites.
 		/// </summary>
 		/// <param name="graphics"></param>
+		/// <remarks>The <c>Graphics</c> need to be set near the start of every
+		/// call to <c><see cref="Forms.MainView.MainViewOverlay"/>.OnPaint()</c></remarks>
 		internal static void SetGraphics(Graphics graphics)
 		{
 			_graphics = graphics;
@@ -134,34 +139,27 @@ namespace MapView
 		/// <param name="halfWidth"></param>
 		/// <param name="halfHeight"></param>
 		/// <param name="front"><c>true</c> to draw the front sprite, else back</param>
-		/// <param name="toplevel"><c>true</c> to draw the red sprite, else blue</param>
+		/// <param name="gridlevel"><c>true</c> to draw the red sprite, else
+		/// blue</param>
 		/// <param name="rect">destination rectangle for shaded sprites</param>
 		internal static void DrawCuboid_Rembrandt(
 				int x, int y,
 				int halfWidth,
 				int halfHeight,
 				bool front,
-				bool toplevel,
+				bool gridlevel,
 				Rectangle rect)
 		{
 			int id;
-			if (front) id = (toplevel ? RED_FRONT : BLUE_FRONT);
-			else       id = (toplevel ? RED_BACK  : BLUE_BACK);
+			if (front) id = (gridlevel ? RED_FRONT : BLUE_FRONT);
+			else       id = (gridlevel ? RED_BACK  : BLUE_BACK);
 
-			if (MainViewF.Optionables.SpriteShadeEnabledCursor)
-				_graphics.DrawImage(
-								Cursorset[id].Sprite,
-								rect,
-								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
-								GraphicsUnit.Pixel,
-								_ia);
-			else
-//				_graphics.DrawImage(sprite, rect);
-				_graphics.DrawImage(
-								Cursorset[id].Sprite,
-								x,y,
-								halfWidth  * widthfactor,
-								halfHeight * heightfactor);
+			_graphics.DrawImage(
+							Cursorset[id].Sprite,
+							rect,
+							0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
+							GraphicsUnit.Pixel,
+							_ia);
 		}
 
 		/// <summary>
@@ -178,24 +176,17 @@ namespace MapView
 				int halfHeight,
 				Rectangle rect)
 		{
-			if (MainViewF.Optionables.SpriteShadeEnabledCursor)
-				_graphics.DrawImage(
-								Cursorset[TARGETER].Sprite,
-								rect,
-								0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
-								GraphicsUnit.Pixel,
-								_ia);
-			else
-//				_graphics.DrawImage(sprite, rect);
-				_graphics.DrawImage(
-								Cursorset[TARGETER].Sprite,
-								x,y,
-								halfWidth  * widthfactor,
-								halfHeight * heightfactor);
+			_graphics.DrawImage(
+							Cursorset[TARGETER].Sprite,
+							rect,
+							0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
+							GraphicsUnit.Pixel,
+							_ia);
 		}
 
 		/// <summary>
-		/// Draws the cuboid-cursor w/ Mono-style.
+		/// Draws the cuboid-cursor for
+		/// <c><see cref="Forms.MainView.MainViewOptionables.UseMono">MainViewOptionables.UseMono</see></c>.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -231,7 +222,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Draws the target-cursor w/ Mono.
+		/// Draws the target-cursor for
+		/// <c><see cref="Forms.MainView.MainViewOptionables.UseMono">MainViewOptionables.UseMono</see></c>.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>

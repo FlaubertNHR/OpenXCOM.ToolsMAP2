@@ -542,14 +542,6 @@ namespace MapView.Forms.MainView
 		}
 
 
-#if !LOCKBITS
-		private bool _spriteShadeEnabledCursor = true;
-		internal bool SpriteShadeEnabledCursor
-		{
-			get { return _spriteShadeEnabledCursor; }
-			private set { _spriteShadeEnabledCursor = value; }
-		}
-#endif
 		private const string str_SpriteShadeCursor = "SpriteShadeCursor";
 		private const int    def_SpriteShadeCursor = 0;
 
@@ -577,17 +569,11 @@ namespace MapView.Forms.MainView
 
 				if (_spriteShadeCursor != 0)
 				{
-#if !LOCKBITS
-					SpriteShadeEnabledCursor = true;
-#endif
 					SpriteShadeFloatCursor = (float)_spriteShadeCursor * 0.03F;
 					CuboidSprite.SetSpriteShadeCursor();
 				}
 				else
 				{
-#if !LOCKBITS
-					SpriteShadeEnabledCursor = false;
-#endif
 					CuboidSprite.SetSpriteShadeCursor(true);
 				}
 			}
