@@ -291,9 +291,10 @@ namespace PckView
 		/// <summary>
 		/// cTor. Creates the PckView window.
 		/// </summary>
-		/// <param name="isInvoked">true if invoked via TileView</param>
-		/// <param name="spriteshade">if 'isInvoked' is true you can pass in a
-		/// SpriteShade value from MapView</param>
+		/// <param name="isInvoked"><c>true</c> if invoked via TileView</param>
+		/// <param name="spriteshade">if <paramref name="isInvoked"/> is true
+		/// you can pass in a <c><see cref="SpriteShade"/></c> value from
+		/// MapView</param>
 		public PckViewF(bool isInvoked = false, int spriteshade = -1)
 		{
 			IsInvoked = isInvoked;

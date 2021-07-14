@@ -375,17 +375,17 @@ namespace PckView
 		/// <returns></returns>
 		internal static Color Shade(Color color)
 		{
-			double red   = (double)color.R / 255;
-			double green = (double)color.G / 255;
-			double blue  = (double)color.B / 255;
+			double r = (double)color.R / 255;
+			double g = (double)color.G / 255;
+			double b = (double)color.B / 255;
 
 			double factor = (double)PckViewF.SpriteShadeFloat + 1.65;	// <- is arbitrary - it would help to know the actual
 																		//    algorithm used by ImageAttributes.SetGamma()
 			return Color.FromArgb(
 							color.A,
-							(int)(Math.Pow(red,   1 / factor) * 255),
-							(int)(Math.Pow(green, 1 / factor) * 255),
-							(int)(Math.Pow(blue,  1 / factor) * 255));
+							(int)(Math.Pow(r, 1 / factor) * 255),
+							(int)(Math.Pow(g, 1 / factor) * 255),
+							(int)(Math.Pow(b, 1 / factor) * 255));
 		}
 		#endregion Methods (static)
 

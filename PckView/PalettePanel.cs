@@ -149,7 +149,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 			PckViewF f = _fpalette._feditor._f;
 
 			if (f.SpriteShade >= PckViewF.SPRITESHADE_ON)
