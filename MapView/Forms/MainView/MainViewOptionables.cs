@@ -1,7 +1,4 @@
-﻿//#define LOCKBITS	// toggle this to change OnPaint routine in standard build.
-					// Must be set in MainViewOverlay as well. Purely experimental.
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -483,14 +480,6 @@ namespace MapView.Forms.MainView
 
 		private const string cat_Sprites_render = "Sprites - render";
 
-#if !LOCKBITS
-		private bool _spriteShadeEnabled = true;
-		internal bool SpriteShadeEnabled
-		{
-			get { return _spriteShadeEnabled; }
-			private set { _spriteShadeEnabled = value; }
-		}
-#endif
 		private const string str_SpriteShade = "SpriteShade";
 		private const int    def_SpriteShade = 0;
 
@@ -518,19 +507,11 @@ namespace MapView.Forms.MainView
 
 				if (_spriteShade != 0)
 				{
-#if !LOCKBITS
-					SpriteShadeEnabled = true;
-#endif
 					SpriteShadeFloat = (float)_spriteShade * 0.03F;
 					Globals.SetSpriteShade();
 				}
 				else
-				{
-#if !LOCKBITS
-					SpriteShadeEnabled = false;
-#endif
 					Globals.SetSpriteShade(true);
-				}
 			}
 		}
 
@@ -573,9 +554,7 @@ namespace MapView.Forms.MainView
 					CuboidSprite.SetSpriteShadeCursor();
 				}
 				else
-				{
 					CuboidSprite.SetSpriteShadeCursor(true);
-				}
 			}
 		}
 
