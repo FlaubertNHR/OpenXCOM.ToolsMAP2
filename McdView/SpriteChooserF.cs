@@ -119,7 +119,7 @@ namespace McdView
 				graphics.DrawImage(
 								_f.Spriteset[i].Sprite,
 								new Rectangle(
-											x, y,
+											x,y,
 											Spriteset.SpriteWidth32,
 											Spriteset.SpriteHeight40),
 								0, 0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,

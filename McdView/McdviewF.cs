@@ -612,7 +612,7 @@ namespace McdView
 		/// has been flagged.
 		/// </summary>
 		/// <returns><c>true</c> if okay to proceed</returns>
-		private bool closeTerrain()
+		private bool RequestCloseTerrain()
 		{
 			if (Changed)
 			{
@@ -667,7 +667,7 @@ namespace McdView
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (closeTerrain())
+				if (RequestCloseTerrain())
 				{
 					RegistryInfo.UpdateRegistry(this);
 
@@ -825,7 +825,7 @@ namespace McdView
 		/// </list></remarks>
 		private void OnClick_Create(object sender, EventArgs e)
 		{
-			if (closeTerrain())
+			if (RequestCloseTerrain())
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -908,7 +908,7 @@ namespace McdView
 		/// </list></remarks>
 		private void OnClick_Open(object sender, EventArgs e)
 		{
-			if (closeTerrain())
+			if (RequestCloseTerrain())
 			{
 				using (var ofd = new OpenFileDialog())
 				{

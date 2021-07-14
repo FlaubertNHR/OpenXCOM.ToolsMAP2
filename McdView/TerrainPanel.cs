@@ -402,7 +402,7 @@ namespace McdView
 			_graphics.DrawImage(
 							sprite,
 							new Rectangle(
-										x, y,
+										x,y,
 										Spriteset.SpriteWidth32,
 										Spriteset.SpriteHeight40),
 							0, topcrop, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
