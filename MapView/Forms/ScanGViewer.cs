@@ -193,11 +193,11 @@ namespace MapView
 										_file.Rows * 16,
 										PixelFormat.Format8bppIndexed))
 				{
-					var data = icon.LockBits(
-										new Rectangle(0,0, icon.Width, icon.Height),
-										ImageLockMode.WriteOnly,
-										PixelFormat.Format8bppIndexed);
-					var start = data.Scan0;
+					var locked = icon.LockBits(
+											new Rectangle(0,0, icon.Width, icon.Height),
+											ImageLockMode.WriteOnly,
+											PixelFormat.Format8bppIndexed);
+					IntPtr start = locked.Scan0;
 
 					unsafe
 					{
@@ -206,7 +206,7 @@ namespace MapView
 						for (uint row = 0; row != icon.Height; ++row)
 						for (uint col = 0; col != icon.Width;  ++col)
 						{
-							byte* pixel = pos + col + row * data.Stride;
+							byte* pixel = pos + col + row * locked.Stride;
 							*pixel = 15; // fill w/ a dark color.
 						}
 
@@ -242,7 +242,7 @@ namespace MapView
 						for (int y = 0; y != _file.Rows; ++y)
 						for (int x = 0; x != _file.Cols; ++x)
 						{
-							ptrPixel = pos + (x * 16) + (y * 16 * data.Stride);
+							ptrPixel = pos + (x * 16) + (y * 16 * locked.Stride);
 
 							tile = _file.GetTile(x,y,z);
 
@@ -270,7 +270,7 @@ namespace MapView
 									palid = _icons[iconid, j];
 									if (palid != Palette.Tid)
 									{
-										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+										ptr = ptrPixel + (i % 16) + (i / 16 * locked.Stride);
 										*ptr = (byte)palid;
 									}
 								}
@@ -287,7 +287,7 @@ namespace MapView
 									palid = _icons[iconid, j];
 									if (palid != Palette.Tid)
 									{
-										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+										ptr = ptrPixel + (i % 16) + (i / 16 * locked.Stride);
 										*ptr = (byte)palid;
 									}
 								}
@@ -304,7 +304,7 @@ namespace MapView
 									palid = _icons[iconid, j];
 									if (palid != Palette.Tid)
 									{
-										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+										ptr = ptrPixel + (i % 16) + (i / 16 * locked.Stride);
 										*ptr = (byte)palid;
 									}
 								}
@@ -321,14 +321,14 @@ namespace MapView
 									palid = _icons[iconid, j];
 									if (palid != Palette.Tid)
 									{
-										ptr = ptrPixel + (i % 16) + (i / 16 * data.Stride);
+										ptr = ptrPixel + (i % 16) + (i / 16 * locked.Stride);
 										*ptr = (byte)palid;
 									}
 								}
 							}
 						}
 					}
-					icon.UnlockBits(data);
+					icon.UnlockBits(locked);
 
 					icon.Palette = _pal.Table;
 
