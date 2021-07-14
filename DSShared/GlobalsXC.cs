@@ -68,7 +68,7 @@ namespace DSShared
 				while ((line = sr.ReadLine()) != null)
 				{
 					line = line.Trim();
-					if (line.StartsWith("SpriteShade", StringComparison.Ordinal))
+					if (line.StartsWith("SpriteShade:", StringComparison.Ordinal))
 						return line.Substring(12);
 				}
 			}
