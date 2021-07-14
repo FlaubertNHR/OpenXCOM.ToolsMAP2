@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 
 using MapView.Forms.Observers;
@@ -507,7 +509,7 @@ namespace MapView.Forms.MainView
 
 				if (_spriteShade != 0)
 				{
-					SpriteShadeFloat = (float)_spriteShade * 0.03F;
+					SpriteShadeFloat = (float)_spriteShade * GlobalsXC.SpriteShadeCoefficient;
 					Globals.SetSpriteShade();
 				}
 				else
@@ -550,7 +552,7 @@ namespace MapView.Forms.MainView
 
 				if (_spriteShadeCursor != 0)
 				{
-					SpriteShadeFloatCursor = (float)_spriteShadeCursor * 0.03F;
+					SpriteShadeFloatCursor = (float)_spriteShadeCursor * GlobalsXC.SpriteShadeCoefficient;
 					CuboidSprite.SetSpriteShadeCursor();
 				}
 				else

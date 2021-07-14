@@ -50,6 +50,8 @@ namespace DSShared
 
 
 		#region Methods (static)
+		public const float SpriteShadeCoefficient = 0.03F;
+
 		/// <summary>
 		/// Parses the sprite-shade value out of "settings/MapOptions.Cfg".
 		/// </summary>

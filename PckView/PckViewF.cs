@@ -367,7 +367,7 @@ namespace PckView
 				miSpriteShade.Checked = true;
 
 				SpriteShade = Math.Min(spriteshade, 100);
-				SpriteShadeFloat = (float)SpriteShade * 0.03F;
+				SpriteShadeFloat = (float)SpriteShade * GlobalsXC.SpriteShadeCoefficient;
 
 				Ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 			}

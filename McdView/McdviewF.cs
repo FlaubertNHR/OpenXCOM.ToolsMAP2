@@ -220,7 +220,7 @@ namespace McdView
 			set
 			{
 				if (SpriteShadeEnabled = ((_spriteshade = value) != -1))
-					SpriteShadeFloat = (float)_spriteshade * 0.03f; // NOTE: 33 is unity.
+					SpriteShadeFloat = (float)_spriteshade * GlobalsXC.SpriteShadeCoefficient;
 
 				Ia = new ImageAttributes();
 
