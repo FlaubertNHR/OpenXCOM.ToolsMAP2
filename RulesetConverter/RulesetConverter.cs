@@ -18,7 +18,7 @@ namespace RulesetConverter
 	{
 		#region Fields (static)
 		private const string LabelBasepathDefault = "[use Configurator's basepath]";
-		private const string LabelBasepathInvalid = "[basepath needs MAPS and ROUTES folders]";
+		private const string LabelBasepathInvalid = "[basepath needs MAPS, ROUTES, and TERRAIN folders]";
 
 		private const string PrePad = "#----- ";
 		#endregion Fields (static)
@@ -104,16 +104,16 @@ namespace RulesetConverter
 				{
 					tb_Input.Text = ofd.FileName;
 
-					if (String.IsNullOrEmpty(tb_Label.Text))
+//					if (String.IsNullOrEmpty(tb_Label.Text))
+//					{
+					string text = Path.GetFileNameWithoutExtension(ofd.FileName).Trim();
+					for (int i = text.Length - 1; i != -1; --i)
 					{
-						string text = Path.GetFileNameWithoutExtension(ofd.FileName).Trim();
-						for (int i = text.Length - 1; i != -1; --i)
-						{
-							if (!IsValidAscii((int)text[i]))
-								text = text.Remove(i,1);
-						}
-						tb_Label.Text = text;
+						if (!IsValidAscii((int)text[i]))
+							text = text.Remove(i,1);
 					}
+					tb_Label.Text = text;
+//					}
 				}
 			}
 			EnableConvert();
@@ -262,6 +262,8 @@ namespace RulesetConverter
 
 				var Tilesets = new List<Tileset>();
 
+				string target = "idiot";
+
 				string @group = lbl_Label.Text + tb_Label.Text.Trim();
 #if DEBUG
 				swl.WriteLine("input= " + tb_Input.Text);
@@ -274,76 +276,23 @@ namespace RulesetConverter
 					var str = new YamlStream();
 					str.Load(sr);
 
-					IDictionary<YamlNode, YamlNode> keyvals;
-					YamlScalarNode keylabel;
-					YamlSequenceNode terrainset, tilesets;
-					string category;
-					var terrains = new List<string>();
-
 					var nodeRoot = str.Documents[0].RootNode as YamlMappingNode;
 
-					var key = new YamlScalarNode("terrains");
-					if (nodeRoot.Children.ContainsKey(key))
+					if (rb_Terrains.Checked)
 					{
-#if DEBUG
-						swl.WriteLine(". found terrains");
-#endif
-						var battlesets = nodeRoot.Children[key] as YamlSequenceNode;
-						foreach (YamlMappingNode battlefield in battlesets)
-						{
-							keyvals = battlefield.Children;
-							if (keyvals != null && keyvals.Count != 0)
-							{
-								// get the category ->
-								key = new YamlScalarNode("name");
-								if (keyvals.ContainsKey(key))
-								{
-									category = keyvals[key].ToString();
-
-									if (!String.IsNullOrEmpty(category))
-									{
-										// get the terrainset ->
-										terrains.Clear();
-
-										key = new YamlScalarNode("mapDataSets");
-										if (keyvals.ContainsKey(key))
-										{
-											terrainset = keyvals[key] as YamlSequenceNode;
-											foreach (var terrain in terrainset)
-											{
-												if (terrain.ToString().ToUpperInvariant() != "BLANKS")
-													terrains.Add(terrain.ToString());
-											}
-										}
-
-										if (terrains.Count != 0)
-										{
-											// get the tilesets ->
-											key = new YamlScalarNode("mapBlocks");
-											if (keyvals.ContainsKey(key))
-											{
-												keylabel = new YamlScalarNode("name");
-
-												tilesets = keyvals[key] as YamlSequenceNode;
-												foreach (var tileset in tilesets)
-												{
-													Tilesets.Add(new Tileset(
-																			tileset[keylabel].ToString(),
-																			@group,
-																			category,
-																			new List<string>(terrains))); // copy that, Roger.
-												}
-											}
-										}
-									}
-								}
-							}
-						}
+						target = "terrain";
+						TerrainService.CreateTerrains(Tilesets, nodeRoot, @group);
 					}
-#if DEBUG
-					else
-						swl.WriteLine(". terrains NOT found.");
-#endif
+					else if (rb_Crafts.Checked)
+					{
+						target = "craft";
+						CraftService.CreateTerrains(Tilesets, nodeRoot, @group, "Craft", "crafts");
+					}
+					else if (rb_Ufos.Checked)
+					{
+						target = "ufo";
+						CraftService.CreateTerrains(Tilesets, nodeRoot, @group, "Ufo", "ufos");
+					}
 				}
 
 
@@ -351,7 +300,7 @@ namespace RulesetConverter
 				{
 					lbl_Info.BorderStyle = BorderStyle.FixedSingle;
 					lbl_Info.BackColor = Color.LightCoral;
-					lbl_Info.Text = "No terrains were found in the ruleset.";
+					lbl_Info.Text = "No " + target + "s were found in the ruleset.";
 				}
 				else
 				{
@@ -444,9 +393,9 @@ namespace RulesetConverter
 
 					string result;
 					if (Tilesets.Count == 1)
-						result = "1 terrain converted to a tileset";
+						result = "1 " + target + " converted to a tileset";
 					else
-						result = Tilesets.Count + " terrains converted to tilesets";
+						result = Tilesets.Count + " " + target + "s converted to tilesets";
 
 					lbl_Info.BorderStyle = BorderStyle.FixedSingle;
 					lbl_Info.BackColor = Color.PaleGreen;
@@ -537,37 +486,5 @@ namespace RulesetConverter
 			return pad;
 		}
 		#endregion Methods
-
-
-		#region Structs
-		/// <summary>
-		/// The <c>Tileset</c> struct is the basic stuff of a tileset.
-		/// </summary>
-		private struct Tileset
-		{
-			internal string Label
-			{ get; private set; }
-			internal string Group
-			{ get; private set; }
-			internal string Category
-			{ get; private set; }
-			internal List<string> Terrains
-			{ get; private set; }
-
-			internal Tileset(
-					string label,
-					string @group,
-					string category,
-					List<string> terrains)
-				:
-					this()
-			{
-				Label    = label;
-				Group    = @group;
-				Category = category;
-				Terrains = terrains;
-			}
-		}
-		#endregion Structs
 	}
 }

@@ -59,12 +59,15 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CraftService.cs" />
     <Compile Include="RulesetConverter.cs" />
     <Compile Include="RulesetConverter.Designer.cs">
       <DependentUpon>RulesetConverter.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TerrainService.cs" />
+    <Compile Include="Tileset.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
