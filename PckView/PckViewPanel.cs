@@ -334,7 +334,7 @@ namespace PckView
 									TableOffsetHori + tileX * TileWidth  + SpriteMargin,
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value);
 				}
-				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				else if (_f.Shader == PckViewF.ShaderOn)
 				{
 					_graphics.DrawImage(
 									Spriteset[id].Sprite,
@@ -381,7 +381,7 @@ namespace PckView
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
 									Spriteset.SpriteWidth32, Spriteset.SpriteHeight48);
 				}
-				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				else if (_f.Shader == PckViewF.ShaderOn)
 				{
 					_graphics.DrawImage(
 									Spriteset[id].Sprite,
@@ -428,7 +428,7 @@ namespace PckView
 									TableOffsetVert + tileY * TileHeight + SpriteMargin - _scrollBar.Value,
 									_f.SpriteWidth * 4, _f.SpriteHeight * 4);
 				}
-				else if (_f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+				else if (_f.Shader == PckViewF.ShaderOn)
 				{
 					_graphics.DrawImage(
 									Spriteset[id].Sprite,

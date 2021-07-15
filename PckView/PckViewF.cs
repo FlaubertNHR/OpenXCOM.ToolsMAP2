@@ -88,9 +88,9 @@ namespace PckView
 
 		internal static float SpriteShadeFloat;
 
-		internal const int SPRITESHADE_ON       =  0;
-		internal const int SPRITESHADE_DISABLED = -1;
-		internal const int SPRITESHADE_OFF      = -2;
+		internal const int ShaderDisabled = 0;
+		internal const int ShaderOn       = 1;
+		internal const int ShaderOff      = 2;
 
 		internal static bool BypassActivatedEvent;
 		#endregion Fields (static)
@@ -117,8 +117,8 @@ namespace PckView
 		private readonly Dictionary<Palette, MenuItem> _itPalettes =
 					 new Dictionary<Palette, MenuItem>();
 
-		internal int SpriteShade = SPRITESHADE_DISABLED;
-		internal readonly ImageAttributes Ia = new ImageAttributes();
+		internal int Shader;
+		internal ImageAttributes Ia;
 
 
 		private string _lastCreateDirectory;
@@ -293,9 +293,8 @@ namespace PckView
 		/// </summary>
 		/// <param name="isInvoked"><c>true</c> if invoked via TileView</param>
 		/// <param name="spriteshade">if <paramref name="isInvoked"/> is true
-		/// you can pass in a <c><see cref="SpriteShade"/></c> value from
-		/// MapView</param>
-		public PckViewF(bool isInvoked = false, int spriteshade = -1)
+		/// you can pass in a the <c>SpriteShade</c> value from MapView</param>
+		public PckViewF(bool isInvoked = false, int spriteshade = 0)
 		{
 			IsInvoked = isInvoked;
 
@@ -364,11 +363,14 @@ namespace PckView
 
 			if (@set)
 			{
+				miSpriteShade.Enabled =
 				miSpriteShade.Checked = true;
 
-				SpriteShade = Math.Min(spriteshade, 100);
-				SpriteShadeFloat = (float)SpriteShade * GlobalsXC.SpriteShadeCoefficient;
+				Shader = ShaderOn;
+				SpriteShadeFloat = (float)Math.Min(spriteshade, 99)
+								 * GlobalsXC.SpriteShadeCoefficient;
 
+				Ia = new ImageAttributes();
 				Ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
 			}
 
@@ -1849,27 +1851,32 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Toggles usage of the sprite-shade value of MapView's options. Called
-		/// when the Palette menu's click-event is raised.
+		/// Toggles usage of the sprite-shade value in MapView's options. Called
+		/// when the Palette menu's <c>Click</c> event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>'SpriteShade' is no longer the sprite-shade value.
-		/// 'SpriteShade' was converted to 'SpriteShadeFloat' in the cTor, hence
-		/// it can and does take a new definition here:
-		/// -2 user toggled sprite-shade off;
-		/// -1 sprite-shade was not found by the cTor thus it cannot be enabled;
-		///  0 draw sprites/swatches w/ the 'SpriteShadeFloat' val.</remarks>
+		/// <remarks><c>SpriteShade</c> was converted to
+		/// <c><see cref="SpriteShadeFloat"/></c> in the cTor hence it can and
+		/// does take a new definition here:
+		/// <list type="bullet">
+		/// <item><c><see cref="ShaderDisabled"/></c> - sprite-shade was
+		/// not found by the cTor thus it cannot be enabled</item>
+		/// <item><c><see cref="ShaderOn"/></c> - draw sprites/swatches w/
+		/// the <c>SpriteShadeFloat</c> value</item>
+		/// <item><c><see cref="ShaderOff"/></c> - user toggled
+		/// sprite-shade off</item>
+		/// </list></remarks>
 		private void OnSpriteshadeClick(object sender, EventArgs e)
 		{
-			if (SpriteShade != SPRITESHADE_DISABLED)
+			if (Shader != ShaderDisabled)
 			{
 				if (miSpriteShade.Checked = !miSpriteShade.Checked)
 				{
-					SpriteShade = SPRITESHADE_ON;
+					Shader = ShaderOn;
 				}
 				else
-					SpriteShade = SPRITESHADE_OFF;
+					Shader = ShaderOff;
 
 				TilePanel                      .Invalidate();
 				SpriteEditor.SpritePanel       .Invalidate();

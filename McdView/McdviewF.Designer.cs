@@ -3584,7 +3584,7 @@ namespace McdView
 			this.bar_SpriteShade.AutoSize = false;
 			this.bar_SpriteShade.Location = new System.Drawing.Point(195, 345);
 			this.bar_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
-			this.bar_SpriteShade.Maximum = 100;
+			this.bar_SpriteShade.Maximum = 99;
 			this.bar_SpriteShade.Name = "bar_SpriteShade";
 			this.bar_SpriteShade.Size = new System.Drawing.Size(140, 16);
 			this.bar_SpriteShade.TabIndex = 17;

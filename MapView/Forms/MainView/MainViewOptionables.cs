@@ -489,7 +489,7 @@ namespace MapView.Forms.MainView
 
 		private int _spriteShade = def_SpriteShade;
 		[Category(cat_Sprites_render)]
-		[Description(@"The darkness of the tile sprites (0..100 default 0 off, 33 is unity)
+		[Description(@"The darkness of the tile sprites (0..99 default 0 off, 33 is unity)
 (only if UseMono is false)")]
 		[DefaultValue(def_SpriteShade)]
 		public int SpriteShade
@@ -500,9 +500,9 @@ namespace MapView.Forms.MainView
 				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SpriteShade].Value =
-					_spriteShade = value.Viceroy(0,100);
+					_spriteShade = value.Viceroy(0,99);
 				}
-				else if ((_spriteShade = value.Viceroy(0,100)) != value) // on user-changed
+				else if ((_spriteShade = value.Viceroy(0,99)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SpriteShade].Value = _spriteShade;
 				}
@@ -532,7 +532,7 @@ namespace MapView.Forms.MainView
 
 		private int _spriteShadeCursor = def_SpriteShadeCursor;
 		[Category(cat_Sprites_render)]
-		[Description(@"The darkness of the cursor sprites (0..100 default 0 off, 33 is unity)
+		[Description(@"The darkness of the cursor sprites (0..99 default 0 off, 33 is unity)
 (only if UseMono is false)")]
 		[DefaultValue(def_SpriteShadeCursor)]
 		public int SpriteShadeCursor
@@ -543,9 +543,9 @@ namespace MapView.Forms.MainView
 				if ((MainViewF._foptions as OptionsForm) == null) // on load
 				{
 					MainViewF.that.Options[str_SpriteShadeCursor].Value =
-					_spriteShadeCursor = value.Viceroy(0,100);
+					_spriteShadeCursor = value.Viceroy(0,99);
 				}
-				else if ((_spriteShadeCursor = value.Viceroy(0,100)) != value) // on user-changed
+				else if ((_spriteShadeCursor = value.Viceroy(0,99)) != value) // on user-changed
 				{
 					MainViewF.that.Options[str_SpriteShadeCursor].Value = _spriteShadeCursor;
 				}

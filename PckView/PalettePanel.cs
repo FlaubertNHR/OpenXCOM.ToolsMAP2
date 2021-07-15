@@ -152,7 +152,7 @@ namespace PckView
 			Graphics graphics = e.Graphics;
 			PckViewF f = _fpalette._feditor._f;
 
-			if (f.SpriteShade >= PckViewF.SPRITESHADE_ON)
+			if (f.Shader == PckViewF.ShaderOn)
 			{
 				for (int i = 0, y = 0; i != Sqrt; ++i, y += SwatchHeight)
 				for (int j = 0, x = 0; j != Sqrt; ++j, x += SwatchWidth)

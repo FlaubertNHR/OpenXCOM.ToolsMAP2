@@ -472,7 +472,7 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					using (var fPckView = new PckViewF(true, GetSpriteshade()))
+					using (var fPckView = new PckViewF(true, MainViewF.Optionables.SpriteShade))
 					{
 						fPckView.SetSpritesetType(Spriteset.SsType.Pck);
 						fPckView.LoadSpriteset(pfePck);
@@ -532,7 +532,7 @@ namespace MapView.Forms.Observers
 				}
 				else
 				{
-					using (var fMcdView = new McdviewF(true, GetSpriteshade()))
+					using (var fMcdView = new McdviewF(true, MainViewF.Optionables.SpriteShade))
 					{
 						Palette.UfoBattle .SetTransparent(false); // NOTE: McdView wants non-transparent palettes.
 						Palette.TftdBattle.SetTransparent(false);
@@ -563,18 +563,6 @@ namespace MapView.Forms.Observers
 				error_SelectTile();
 		}
 
-		/// <summary>
-		/// Gets the current sprite-shade in
-		/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>.
-		/// </summary>
-		/// <returns>sprite-shade or <c>-1</c> if disabled</returns>
-		private static int GetSpriteshade()
-		{
-			int shade = MainViewF.Optionables.SpriteShade;
-			if (shade != 0) return shade;
-
-			return -1;
-		}
 
 		/// <summary>
 		/// Warns user that they are about to be asked to save the Map+Routes
@@ -614,9 +602,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Invokes an <see cref="Infobox"/> telling the user that the operation
-		/// they are attempting is invalid because they haven't selected a
-		/// tilepart.
+		/// Invokes an <c><see cref="Infobox"/></c> telling the user that the
+		/// operation they are attempting is invalid because they haven't
+		/// selected a <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		private void error_SelectTile()
 		{

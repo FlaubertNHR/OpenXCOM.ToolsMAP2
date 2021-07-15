@@ -192,26 +192,14 @@ namespace McdView
 		}
 
 
-		private ImageAttributes _ia;
+		private ImageAttributes _ia = new ImageAttributes();
 		internal ImageAttributes Ia
 		{
 			get { return _ia; }
-			private set
-			{
-				if (_ia != null)
-					_ia.Dispose();
-
-				_ia = value;
-
-				if (SpriteShadeEnabled)
-					_ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
-			}
+			private set { _ia = value; }
 		}
 
-		private bool SpriteShadeEnabled
-		{ get; set; }
-
-		private int _spriteshade = -1;
+		private int _spriteshade;
 		/// <summary>
 		/// The inverse-gamma adjustment for sprites and icons.
 		/// </summary>
@@ -219,10 +207,17 @@ namespace McdView
 		{
 			set
 			{
-				if (SpriteShadeEnabled = ((_spriteshade = value) != -1))
-					SpriteShadeFloat = (float)_spriteshade * GlobalsXC.SpriteShadeCoefficient;
-
-				Ia = new ImageAttributes();
+				if ((_spriteshade = value) != 0)
+				{
+					Ia.SetGamma(
+							(float)_spriteshade * GlobalsXC.SpriteShadeCoefficient,
+							ColorAdjustType.Bitmap);
+				}
+				else
+				{
+					Ia.Dispose();
+					Ia = new ImageAttributes();
+				}
 
 				InvalidatePanels(false);
 
@@ -230,8 +225,6 @@ namespace McdView
 					Copier.PartsPanel.Invalidate();
 			}
 		}
-		private float SpriteShadeFloat
-		{ get; set; }
 
 
 		private int _selid = -1;
@@ -344,7 +337,7 @@ namespace McdView
 		/// <param name="spriteshade">if <paramref name="isInvoked"/> is
 		/// <c>true</c> you can pass in a <paramref name="spriteshade"/> value
 		/// from MapView</param>
-		public McdviewF(bool isInvoked = false, int spriteshade = -1)
+		public McdviewF(bool isInvoked = false, int spriteshade = 0)
 		{
 			IsInvoked = isInvoked;
 
@@ -425,7 +418,7 @@ namespace McdView
 					if (Int32.TryParse(shade, out result)
 						&& result > 0)
 					{
-						_spriteshade = Math.Min(result, 100);
+						_spriteshade = Math.Min(result, 99);
 					}
 				}
 			}
@@ -1959,14 +1952,15 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles SpriteShade's TextChanged event for its TextBox.
+		/// Handles <c><see cref="SpriteShade">SpriteShade's</see></c>
+		/// <c>TextChanged</c> event for its <c>TextBox</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnTextChanged_SpriteShade(object sender, EventArgs e)
 		{
 			string text = tb_SpriteShade.Text.Trim();
-			while (text.StartsWith("0", StringComparison.Ordinal))
+			while (text.Length != 1 && text.StartsWith("0", StringComparison.Ordinal))
 				text = text.Substring(1);
 
 			if (text != tb_SpriteShade.Text)
@@ -1978,38 +1972,32 @@ namespace McdView
 				int result;
 				if (Int32.TryParse(tb_SpriteShade.Text, out result))
 				{
-					if      (result <  -1) tb_SpriteShade.Text =  "-1"; // recurse
-					else if (result ==  0) tb_SpriteShade.Text =  "-1"; // recurse
-					else if (result > 100) tb_SpriteShade.Text = "100"; // recurse
+					if      (result <  0) tb_SpriteShade.Text =  "0"; // recurse
+					else if (result > 99) tb_SpriteShade.Text = "99"; // recurse
 					else
 					{
 						SpriteShade = result;
 
 						_bypassShadebar = true;
-						bar_SpriteShade.Value = (result != -1 ? result : 0);
+						bar_SpriteShade.Value = result;
 						_bypassShadebar = false;
 					}
 				}
 				else
-					tb_SpriteShade.Text = "-1"; // recurse
+					tb_SpriteShade.Text = "0"; // recurse
 			}
 		}
 
 		private bool _bypassShadebar;
 		/// <summary>
-		/// Handles SpriteShade's trackbar's ValueChanged event.
+		/// Handles SpriteShade's trackbar's <c>ValueChanged</c> event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnValueChanged_SpriteShade(object sender, EventArgs e)
 		{
 			if (!_bypassShadebar)
-			{
-				int val = bar_SpriteShade.Value;
-				if (val == 0) val = -1;
-
-				tb_SpriteShade.Text = val.ToString();
-			}
+				tb_SpriteShade.Text = bar_SpriteShade.Value.ToString();
 		}
 
 		/// <summary>

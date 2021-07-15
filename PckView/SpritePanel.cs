@@ -265,7 +265,7 @@ namespace PckView
 			{
 				byte[] bindata = Sprite.GetBindata();
 
-				if (_feditor._f.SpriteShade >= PckViewF.SPRITESHADE_ON
+				if (_feditor._f.Shader == PckViewF.ShaderOn
 					&& _feditor._f.SetType != Spriteset.SsType.LoFT)
 				{
 					for (int y = 0; y != _feditor._f.SpriteHeight; ++y)

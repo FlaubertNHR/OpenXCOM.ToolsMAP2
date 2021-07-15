@@ -66,7 +66,8 @@ namespace PckView
 			if (disposing && components != null)
 				components.Dispose();
 
-			Ia.Dispose(); // fxCop ca2213 - wants this here despite not caring about BlankSprite or BlankIcon.
+			if (Ia != null)
+				Ia.Dispose(); // fxCop ca2213 - wants this here despite not caring about BlankSprite or BlankIcon.
 
 			base.Dispose(disposing);
 		}
@@ -320,6 +321,7 @@ namespace PckView
 			// 
 			// miSpriteShade
 			// 
+			this.miSpriteShade.Enabled = false;
 			this.miSpriteShade.Index = 1;
 			this.miSpriteShade.Shortcut = System.Windows.Forms.Shortcut.F8;
 			this.miSpriteShade.Text = "&SpriteShade";
