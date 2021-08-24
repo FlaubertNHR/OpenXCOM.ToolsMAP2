@@ -14,6 +14,32 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2021 August 23
+[MapView2_210823.7z](https://drive.google.com/file/d/1ukGC_Ago7eRJe3iWWj11g2o2ZlhRP8pm/view?usp=sharing)
+
+time to unleash this. I put a whackload of manhours in (again :)_~
+
+There's a few minor fixes, but I wasn't keeping track ... there's a lot of
+underlying code changes so things could screw up. Perhaps a couple of minor
+enhancements i forget.
+
+oh, PckView ought handle LOFTEMPS.DAT
+
+So, for the time, consider this BETA version! Ie. if you back up your stuff
+(MAPS,ROUTES,TERRAIN folders) and aren't afraid of glitches etc.
+
+Paranoid usage: backup your current installation of Mapview2 by appending an
+underscore to the label of its root folder. Unzip this version alongside it.
+Copy your current MapTilesets.yml file into /settings. There are some
+MapOptions.cfg changes that might bork on first run ... just keep yer eye on the
+ball and things should be ok.
+
+
+Pls report any weirdness (after trying to resolve it on your end ;),
+
+on the other hand if you're happy with your current version of Mapview2 then
+just hold tight
+
 2020 December 7-b<br>
 [MapView2_201207b.7z](https://drive.google.com/file/d/1-HIl47bE5yP2xa7K9IuVVQmKfeQ8XrS2/view?usp=sharing)
 
