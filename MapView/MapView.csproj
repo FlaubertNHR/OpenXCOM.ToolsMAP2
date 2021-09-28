@@ -188,7 +188,7 @@
     <Compile Include="Error\ErrorF.Designer.cs">
       <DependentUpon>ErrorF.cs</DependentUpon>
     </Compile>
-    <Compile Include="Error\ErrorWindowAdapter.cs" />
+    <Compile Include="Error\ErrorAdapter.cs" />
     <Compile Include="Error\IErrorHandler.cs" />
     <Compile Include="Forms\Observers\TileView\TilePanel.cs">
       <SubType>Component</SubType>
