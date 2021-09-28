@@ -274,7 +274,7 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Sets DialogResult to Yes and closes this dialog.
+		/// Sets DialogResult to Retry and closes this dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
