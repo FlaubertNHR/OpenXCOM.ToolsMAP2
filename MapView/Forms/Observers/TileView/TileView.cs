@@ -702,7 +702,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Gets the label of the terrain of the <c><see cref="SelectedTilepart"/></c>.
+		/// Gets the label of the terrain of the
+		/// <c><see cref="SelectedTilepart"/></c>.
 		/// </summary>
 		/// <returns></returns>
 		internal string GetTerrainLabel()
