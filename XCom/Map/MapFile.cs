@@ -73,14 +73,36 @@ namespace XCom
 
 
 		#region Properties
+		/// <summary>
+		/// The <c><see cref="XCom.Descriptor"/></c> holds all of the metadata
+		/// about this <c>MapFile</c>.
+		/// </summary>
 		public Descriptor Descriptor
 		{ get; private set; }
 
+		/// <summary>
+		/// A <c><see cref="MapTileArray"/></c> of all tiles in this
+		/// <c>MapFile</c>. Each <c><see cref="MapTile"/></c> holds pointers to
+		/// its <c><see cref="MapTile.Floor"/></c>, <c><see cref="MapTile.West"/></c>,
+		/// <c><see cref="MapTile.North"/></c>, and <c><see cref="MapTile.Content"/></c>
+		/// <c><see cref="Tilepart">Tileparts</see></c>.
+		/// </summary>
 		public MapTileArray Tiles
 		{ get; private set; }
 
+		/// <summary>
+		/// A <c>List</c> of all <c><see cref="Tilepart">Tileparts</see></c>
+		/// that are available to build this <c>MapFile</c> with.
+		/// </summary>
 		public IList<Tilepart> Parts
 		{ get; private set; }
+
+		/// <summary>
+		/// An array that holds the count of parts in each terrain allocated to
+		/// this <c>MapFile</c>.
+		/// </summary>
+		/// <remarks>Used by the <c>TerrainSwapDialog</c>.</remarks>
+		public int[] PartCounts;
 
 		/// <summary>
 		/// The Map's terrainset.
