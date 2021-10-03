@@ -9,10 +9,6 @@ using XCom;
 
 namespace MapView
 {
-	internal enum TilepartSubstitutionType
-	{ Clear, Desti, Shift }
-
-
 	/// <summary>
 	/// A dialog that allows the user to change or shift tilepart-ids.
 	/// </summary>
@@ -183,7 +179,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the keydown event. Closes this dialog on [Ctrl+u].
+		/// Overrides the <c>KeyDown</c> handler. Closes this dialog on
+		/// <c>[Ctrl+u]</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Requires KeyPreview true.</remarks>
@@ -194,7 +191,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the paint event.
+		/// Overrides the <c>Paint</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
@@ -208,7 +205,7 @@ namespace MapView
 		/// <summary>
 		/// Paints a left/top border on the head-label.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="la_head"/></c></param>
 		/// <param name="e"></param>
 		private void OnPaintHead(object sender, PaintEventArgs e)
 		{
@@ -637,4 +634,8 @@ namespace MapView
 		}
 		#endregion Designer
 	}
+
+
+	internal enum TilepartSubstitutionType
+	{ Clear, Desti, Shift }
 }
