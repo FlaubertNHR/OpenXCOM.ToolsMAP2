@@ -126,10 +126,11 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the keydown event. Closes this dialog on [Ctrl+z].
+		/// Overrides the <c>KeyDown</c> handler. Closes this dialog on
+		/// <c>[Ctrl+z]</c>.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>Requires KeyPreview true.</remarks>
+		/// <remarks>Requires <c>KeyPreview</c> <c>true</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			if (e.KeyData == (Keys.Control | Keys.Z))
@@ -137,7 +138,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the paint event.
+		/// Overrides the <c>Paint</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
