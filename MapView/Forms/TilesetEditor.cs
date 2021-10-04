@@ -217,9 +217,6 @@ namespace MapView
 
 			SetPasteTip();
 
-			lb_TerrainsAllocated.DisplayMember = "Terrain";
-			lb_TerrainsAvailable.DisplayMember = "Terrain";
-
 			TileGroup = TileGroupManager.TileGroups[GroupLabel];
 
 			string key;
@@ -883,9 +880,7 @@ namespace MapView
 			int sel = lb_TerrainsAvailable.SelectedIndex;
 
 			var it = lb_TerrainsAvailable.SelectedItem as tle;
-			var terrain = new Tuple<string,string>(
-												String.Copy(it.Terrain),
-												String.Copy(it.Basepath));
+			var terrain = new Tuple<string,string>(it.Terrain, it.Basepath);
 
 			int id = _descriptor.Terrains.Count;
 			_descriptor.Terrains[id] = terrain;
@@ -987,24 +982,22 @@ namespace MapView
 			if (!MainViewF.that.MaptreeChanged && EditMode == TilesetEdit.DescriptorExists)
 				 MainViewF.that.MaptreeChanged = true;
 
-			var terrains = _descriptor.Terrains;
+			Dictionary<int, Tuple<string,string>> terrains = _descriptor.Terrains;
 
-			int id_0 = lb_TerrainsAllocated.SelectedIndex;
-			int id_1 = id_0 + dir;
+			int id0 = lb_TerrainsAllocated.SelectedIndex;
+			int id1 = id0 + dir;
 
-			var terrain = terrains[id_1];
-			terrains[id_1] = terrains[id_0];
-			terrains[id_0] = terrain;
+			Tuple<string,string> terrain = terrains[id1];
+			terrains[id1] = terrains[id0];
+			terrains[id0] = terrain;
 
 			lb_TerrainsAllocated.BeginUpdate();
-			lb_TerrainsAllocated.Items.Clear();
-			for (id_0 = 0; id_0 != terrains.Count; ++id_0)
-			{
-				lb_TerrainsAllocated.Items.Add(new tle(terrains[id_0]));
-			}
+			object it = lb_TerrainsAllocated.Items[id1];
+			lb_TerrainsAllocated.Items[id1] = lb_TerrainsAllocated.Items[id0];
+			lb_TerrainsAllocated.Items[id0] = it;
 			lb_TerrainsAllocated.EndUpdate();
 
-			lb_TerrainsAllocated.SelectedIndex = id_1;
+			lb_TerrainsAllocated.SelectedIndex = id1;
 			lb_TerrainsAllocated.Select();
 		}
 
@@ -1017,9 +1010,11 @@ namespace MapView
 		{
 			_copiedTerrains.Clear();
 
+			Tuple<string,string> terrain;
 			for (int i = 0; i != _descriptor.Terrains.Count; ++i)
 			{
-				_copiedTerrains[i] = CloneTerrainTuple(_descriptor.Terrains[i]);
+				terrain = _descriptor.Terrains[i];
+				_copiedTerrains[i] = new Tuple<string,string>(terrain.Item1, terrain.Item2);
 			}
 
 			SetPasteTip();
@@ -1039,9 +1034,11 @@ namespace MapView
 
 			_descriptor.Terrains.Clear();
 
+			Tuple<string,string> terrain;
 			for (int i = 0; i != _copiedTerrains.Count; ++i)
 			{
-				_descriptor.Terrains[i] = CloneTerrainTuple(_copiedTerrains[i]);
+				terrain = _copiedTerrains[i];
+				_descriptor.Terrains[i] = new Tuple<string,string>(terrain.Item1, terrain.Item2);
 			}
 
 			ListTerrains();
@@ -1271,37 +1268,54 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Applies the current Allocated terrains-list to all tilesets that
-		/// have the current tileset's
-		/// <c><see cref="Descriptor"/>.Label</c> and
+		/// Applies the currently Allocated terrainset to all tilesets that have
+		/// the current tileset's <c><see cref="Descriptor"/>.Label</c> and
 		/// <c><see cref="Descriptor"/>.Basepath</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Does not include the tileset that's current in this
+		/// <c>TilesetEditor</c>.
+		/// 
+		/// 
+		/// See also
+		/// <c><see cref="TerrainSwapDialog"/>.OnOkayClick()</c>.</remarks>
 		private void OnGlobalTerrainsClick(object sender, EventArgs e)
 		{
-			var terrains = _descriptor.Terrains;
+			int changed = 0;
 
-			bool changed = false;
+			Dictionary<int, Tuple<string,string>> terrains = _descriptor.Terrains;
+			Tuple<string,string> terrain;
 
 			foreach (var @group in TileGroupManager.TileGroups)
 			foreach (var category in @group.Value.Categories)
-			if (category.Key != CategoryLabel)
+			if (@group.Value != TileGroup || category.Key != CategoryLabel)
 			{
 				foreach (var descriptor in category.Value.Values)
 				if (   descriptor.Label    == _descriptor.Label
 					&& descriptor.Basepath == _descriptor.Basepath)
 				{
-					changed = true;
+					++changed;
 
 					descriptor.Terrains.Clear();
 					for (int i = 0; i != terrains.Count; ++i)
-						descriptor.Terrains[i] = CloneTerrainTuple(terrains[i]);
+					{
+						terrain = terrains[i];
+						descriptor.Terrains[i] = new Tuple<string,string>(terrain.Item1, terrain.Item2);
+					}
 				}
 			}
 
-			if (!MainViewF.that.MaptreeChanged && changed)
+			if (!MainViewF.that.MaptreeChanged && changed != 0)
 				 MainViewF.that.MaptreeChanged = true;
+
+
+			string head = String.Format("{0} other tileset{1} been updated.",
+										changed,
+										changed == 1 ? " has" : "s have");
+
+			using (var f = new Infobox("Tilesets updated", head))
+				f.ShowDialog(this);
 		}
 
 		/// <summary>
@@ -1311,6 +1325,8 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>See also
+		/// <c><see cref="TerrainSwapDialog"/>.OnGlobalTerrainsListClick()</c>.</remarks>
 		private void OnGlobalTerrainsListClick(object sender, EventArgs e)
 		{
 			string copyable = String.Empty;
@@ -1507,6 +1523,8 @@ namespace MapView
 		/// Prints the count of the tileset that are in every
 		/// <c><see cref="XCom.TileGroup"/></c>.
 		/// </summary>
+		/// <remarks>See also
+		/// <c><see cref="TerrainSwapDialog"/>.PrintTilesetCount()</c>.</remarks>
 		private void PrintTilesetCount()
 		{
 			int count = GetTilesetCount(TilesetLabel);
@@ -1639,18 +1657,6 @@ namespace MapView
 			return File.Exists(pfe);
 		}
 
-		/// <summary>
-		/// Deep clones a given terrain-tuple. jic.
-		/// </summary>
-		/// <param name="terrain">a terrain-tuple</param>
-		/// <returns>deep clone of the specified terrain-tuple</returns>
-		private static Tuple<string,string> CloneTerrainTuple(Tuple<string,string> terrain)
-		{
-			return new Tuple<string,string>(
-										String.Copy(terrain.Item1),
-										String.Copy(terrain.Item2));
-		}
-
 
 		/// <summary>
 		/// Gets an array of chars that are invalid in file-labels.
@@ -1754,7 +1760,7 @@ namespace MapView
 
 
 	/// <summary>
-	/// An object for parsing out a terrain-string to show in the terrain-
+	/// An object for parsing out a terrain-label to show in the terrain-
 	/// listboxes while retaining a reference to its terrain-tuple.
 	/// </summary>
 	internal sealed class tle // TerrainListEntry
@@ -1774,14 +1780,14 @@ namespace MapView
 		/// <summary>
 		/// Required for
 		/// <list type="bullet">
-		/// <item><c>lb_TerrainsAllocated.DisplayMember = "Terrain";</c></item>
-		/// <item><c>lb_TerrainsAvailable.DisplayMember = "Terrain";</c></item>
+		/// <item><c>lb_TerrainsAllocated.DisplayMember</c></item>
+		/// <item><c>lb_TerrainsAvailable.DisplayMember</c></item>
 		/// </list>
 		/// 
 		/// 
 		/// to work correctly.
 		/// </summary>
-		/// <returns>the <c><see cref="Terrain"/></c> string</returns>
+		/// <returns>the <c><see cref="Terrain"/></c> label</returns>
 		public override string ToString()
 		{
 			return Terrain;

@@ -571,6 +571,7 @@ namespace MapView
 			// lbl_TilesetCount
 			// 
 			this.lbl_TilesetCount.Location = new System.Drawing.Point(280, 60);
+			this.lbl_TilesetCount.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_TilesetCount.Name = "lbl_TilesetCount";
 			this.lbl_TilesetCount.Size = new System.Drawing.Size(95, 15);
 			this.lbl_TilesetCount.TabIndex = 8;
@@ -580,6 +581,7 @@ namespace MapView
 			// lbl_TilesetCount_
 			// 
 			this.lbl_TilesetCount_.Location = new System.Drawing.Point(10, 60);
+			this.lbl_TilesetCount_.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_TilesetCount_.Name = "lbl_TilesetCount_";
 			this.lbl_TilesetCount_.Size = new System.Drawing.Size(270, 15);
 			this.lbl_TilesetCount_.TabIndex = 7;
