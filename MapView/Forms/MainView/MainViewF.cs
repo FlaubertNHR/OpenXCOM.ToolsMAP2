@@ -1441,8 +1441,7 @@ namespace MapView
 		/// <param name="e"></param>
 		internal void OnSaveMapClick(object sender, EventArgs e)
 		{
-			if (MapFile != null
-				&& MapFile.SaveMap())
+			if (MapFile != null && MapFile.SaveMap())
 			{
 				MapChanged = false;
 
@@ -1837,7 +1836,7 @@ namespace MapView
 		/// Opens a dialog that allows user to replace a tilepart throughout the
 		/// Map with another tilepart.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miTilepartSubstitution"/></c></param>
 		/// <param name="e"></param>
 		private void OnTilepartSubstitutionClick(object sender, EventArgs e)
 		{
@@ -1875,6 +1874,47 @@ namespace MapView
 					}
 
 					_overlay.SubstituteTileparts(src0, src1, dst, shift);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Opens a dialog that allows user to switch around allocated terrains.
+		/// TODO: CHM-helpfile doc
+		/// </summary>
+		/// <param name="sender"><c><see cref="miTerrainSwap"/></c></param>
+		/// <param name="e"></param>
+		private void OnTerrainSwapClick(object sender, EventArgs e)
+		{
+			if (MaptreeChanged || MapFile.MapChanged)
+			{
+				const string head = "Terrain swapping changes the tileset's data and"
+								  + " its Maptree data - they need to be kept synchronized."
+								  + " The Maptree and Map must both be in a saved"
+								  + " state before a Terrain Swap is allowed.";
+
+				using (var f = new Infobox("save state", Infobox.SplitString(head, 80)))
+					f.ShowDialog(this);
+			}
+			else
+			{
+				using (var f = new TerrainSwapDialog(MapFile))
+				{
+					if (f.ShowDialog() == DialogResult.OK)
+					{
+						// NOTE: If user uses the TerrainSwapDialog twice and orders
+						// the terrains back to their original state the MaptreeChanged
+						// flag does not get removed.
+
+						MaptreeChanged = !TileGroupManager.WriteTileGroups();
+						MapChanged     = !MapFile.SaveMap();
+
+						// NOTE: There ought be no need to reload the Map.
+						// Except that if another TerrainSwap is performed; the terrainset's setids are whack.
+						// so force reload (keep Routes) ->
+						_loadReady = LOADREADY_STAGE_2;
+						LoadSelectedDescriptor(false, true);
+					}
 				}
 			}
 		}
@@ -3331,6 +3371,7 @@ namespace MapView
 			miScreenshot          .Enabled =
 			miModifySize          .Enabled =
 			miTilepartSubstitution.Enabled =
+			miTerrainSwap         .Enabled =
 			miMapInfo             .Enabled = true;
 		}
 

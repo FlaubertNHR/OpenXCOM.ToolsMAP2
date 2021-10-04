@@ -116,17 +116,20 @@ namespace XCom
 				SpritesetManager.Dispose();
 
 				var parts = new List<Tilepart>();
+				var partCounts = new List<int>(); // for TerrainSwapDialog.
 
 				//Logfile.Log(". . terraincount= " + descriptor.Terrains.Count);
 
 				PckSprite.ResetOrdinal();
 				Tilepart .ResetOrdinal();
 
+				Tilepart[] records;
+
 				int setid = -1;
 				for (int terid = 0; terid != descriptor.Terrains.Count; ++terid) // push together the tileparts of all allocated terrains
 				{
-					Tilepart[] records = descriptor.CreateTerrain(terid);	// -> TilepartFactory.CreateTileparts()
-					if (records == null)									// -> SpritesetManager.CreateSpriteset()
+					records = descriptor.CreateTerrain(terid);	// -> TilepartFactory.CreateTileparts()
+					if (records == null)						// -> SpritesetManager.CreateSpriteset()
 					{
 						//Logfile.Log(". . . . no records ABORT");
 						// TODO: dispose any created spritesets
@@ -138,6 +141,7 @@ namespace XCom
 						record.SetId = ++setid;
 						parts.Add(record);
 					}
+					partCounts.Add(records.Length);
 				}
 
 				//Logfile.Log("");
@@ -199,6 +203,7 @@ namespace XCom
 					if (!file.Fail)
 					{
 						//Logfile.Log(". . . ret MapFile");
+						file.PartCounts = partCounts.ToArray();
 						return file;
 					}
 

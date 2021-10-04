@@ -110,7 +110,7 @@ namespace XCom
 		public int SetId
 		{
 			get { return _setId; }
-			internal set { _setId = value; }
+			set { _setId = value; }
 		}
 
 		/// <summary>

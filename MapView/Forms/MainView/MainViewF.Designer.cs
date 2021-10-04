@@ -36,6 +36,7 @@ namespace MapView
 		private MenuItem menuEdit;
 		private MenuItem miModifySize;
 		private MenuItem miTilepartSubstitution;
+		private MenuItem miTerrainSwap;
 		private MenuItem miSeparator8;
 		private MenuItem miClearRecordsExceeded;
 		private MenuItem miSeparator6;
@@ -110,6 +111,7 @@ namespace MapView
 			this.menuEdit = new System.Windows.Forms.MenuItem();
 			this.miModifySize = new System.Windows.Forms.MenuItem();
 			this.miTilepartSubstitution = new System.Windows.Forms.MenuItem();
+			this.miTerrainSwap = new System.Windows.Forms.MenuItem();
 			this.miSeparator8 = new System.Windows.Forms.MenuItem();
 			this.miClearRecordsExceeded = new System.Windows.Forms.MenuItem();
 			this.miSeparator6 = new System.Windows.Forms.MenuItem();
@@ -263,6 +265,7 @@ namespace MapView
 			this.menuEdit.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miModifySize,
 			this.miTilepartSubstitution,
+			this.miTerrainSwap,
 			this.miSeparator8,
 			this.miClearRecordsExceeded,
 			this.miSeparator6,
@@ -286,32 +289,39 @@ namespace MapView
 			this.miTilepartSubstitution.Text = "Tilepart S&ubstitution";
 			this.miTilepartSubstitution.Click += new System.EventHandler(this.OnTilepartSubstitutionClick);
 			// 
+			// miTerrainSwap
+			// 
+			this.miTerrainSwap.Enabled = false;
+			this.miTerrainSwap.Index = 2;
+			this.miTerrainSwap.Text = "Terrain Swap";
+			this.miTerrainSwap.Click += new System.EventHandler(this.OnTerrainSwapClick);
+			// 
 			// miSeparator8
 			// 
-			this.miSeparator8.Index = 2;
+			this.miSeparator8.Index = 3;
 			this.miSeparator8.Text = "-";
 			// 
 			// miClearRecordsExceeded
 			// 
-			this.miClearRecordsExceeded.Index = 3;
+			this.miClearRecordsExceeded.Index = 4;
 			this.miClearRecordsExceeded.Text = "Clear all BypassRecordsExceeded &flags";
 			this.miClearRecordsExceeded.Click += new System.EventHandler(this.OnClearRecordsExceededClick);
 			// 
 			// miSeparator6
 			// 
-			this.miSeparator6.Index = 4;
+			this.miSeparator6.Index = 5;
 			this.miSeparator6.Text = "-";
 			// 
 			// miOptions
 			// 
-			this.miOptions.Index = 5;
+			this.miOptions.Index = 6;
 			this.miOptions.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
 			this.miOptions.Text = "&Options";
 			this.miOptions.Click += new System.EventHandler(this.OnOptionsClick);
 			// 
 			// miConfigurator
 			// 
-			this.miConfigurator.Index = 6;
+			this.miConfigurator.Index = 7;
 			this.miConfigurator.Text = "&Configurator";
 			this.miConfigurator.Click += new System.EventHandler(this.OnConfiguratorClick);
 			// 
