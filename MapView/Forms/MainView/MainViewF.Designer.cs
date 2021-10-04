@@ -293,7 +293,8 @@ namespace MapView
 			// 
 			this.miTerrainSwap.Enabled = false;
 			this.miTerrainSwap.Index = 2;
-			this.miTerrainSwap.Text = "Terrain Swap";
+			this.miTerrainSwap.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
+			this.miTerrainSwap.Text = "Terrain S&wap";
 			this.miTerrainSwap.Click += new System.EventHandler(this.OnTerrainSwapClick);
 			// 
 			// miSeparator8
