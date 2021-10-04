@@ -70,14 +70,16 @@ namespace MapView
 			tb_Src0.BackColor =
 			tb_Src1.BackColor = Color.Wheat;
 
-			var loc = new Point(_x,_y);
+			var   loc0 = new Point(_x,_y);
+			Point loc1 = loc0 + Size;
+
 			bool isInsideBounds = false;
 			if (_x > -1)
 			{
 				foreach (var screen in Screen.AllScreens)
 				{
-					if (isInsideBounds = screen.Bounds.Contains(loc)
-									  && screen.Bounds.Contains(loc + Size))
+					if (isInsideBounds = screen.Bounds.Contains(loc0)
+									  && screen.Bounds.Contains(loc1))
 					{
 						break;
 					}
@@ -85,7 +87,7 @@ namespace MapView
 			}
 
 			if (isInsideBounds)
-				Location = loc;
+				Location = loc0;
 			else
 				CenterToScreen();
 
