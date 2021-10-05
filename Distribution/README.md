@@ -14,6 +14,23 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2021 October 4<br>
+[MapView2_211004.7z](https://drive.google.com/file/d/1D1l0Ds-VPkjjiflQ5d5PDhzD8MhUzFuV/view?usp=sharing)
+
+Edit|Terrain Swap [Ctrl+W] opens a dialog box for rearranging the order of
+terrains in the current Map's terrainset without the tileset going all wtf.
+
+fix obscure bug in the TilesetEditor: if button at the bottom was clicked to
+apply allocated terrains to all tilesets that share Map+Path, and such a
+tileset shared the same Category-label as the current tileset, but is in a
+different Group, said tileset failed to update its metadata. Fixed.
+
+when the button at the bottom of the TilesetEditor is clicked to apply allocated
+terrains to all tilesets that share Map+Path, show an infobox with how many
+tilesets got updated. (It was irksome to click it and nothing seemed to happen.)
+
++ slight refactors to TilesetEditor and TilepartSubstitution etc.
+
 2021 August 23<br>
 [MapView2_210823.7z](https://drive.google.com/file/d/1ukGC_Ago7eRJe3iWWj11g2o2ZlhRP8pm/view?usp=sharing)
 
