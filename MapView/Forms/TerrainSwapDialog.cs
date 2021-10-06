@@ -237,47 +237,6 @@ namespace MapView
 			bu_ok.Enabled = enabled;
 		}
 
-		/// <summary>
-		/// Shifts the <c>SetId</c> of a specified <c><see cref="Tilepart"/></c>.
-		/// </summary>
-		/// <param name="part"></param>
-		/// <remarks>Helper for
-		/// <c><see cref="OnOkayClick()">OnOkayClick()</see></c></remarks>
-		private void ShiftId(Tilepart part)
-		{
-			Tuple<string,string> terrain = _file.GetTerrain(part);
-			string label    = terrain.Item1;
-			string basepath = terrain.Item2;
-
-			var partCounts = new int[_terCount];
-
-			int order0 = -1, order1 = -1; tce tce;
-			for (int i = 0; i != _terCount; ++i)
-			{
-				tce = lb_allocated.Items[i] as tce;
-				if (label == tce.Terrain && basepath == tce.Basepath)
-				{
-					order0 = tce.Order;
-					order1 = i;
-				}
-				partCounts[i] = tce.PartCount;
-			}
-
-			// NOTE: order0 and order1 shall be valid list-ids.
-
-			for (int i = 0; i != _terCount; ++i) // subtract part-ids until the terrain becomes the 'first' terrain ->
-			{
-				if (order0 == i) break;
-				part.SetId -= _partCounts[i];
-			}
-
-			for (int i = 0; i != _terCount; ++i) // add part-ids until the terrain goes to its 'final' position in the terrainset.
-			{
-				if (order1 == i) break;
-				part.SetId += partCounts[i];
-			}
-		}
-
 
 		/// <summary>
 		/// Copies the order of the terrains in
@@ -332,6 +291,47 @@ namespace MapView
 						}
 					}
 				}
+			}
+		}
+
+		/// <summary>
+		/// Shifts the <c>SetId</c> of a specified <c><see cref="Tilepart"/></c>.
+		/// </summary>
+		/// <param name="part"></param>
+		/// <remarks>Helper for
+		/// <c><see cref="OnOkayClick()">OnOkayClick()</see></c></remarks>
+		private void ShiftId(Tilepart part)
+		{
+			Tuple<string,string> terrain = _file.GetTerrain(part);
+			string label    = terrain.Item1;
+			string basepath = terrain.Item2;
+
+			var partCounts = new int[_terCount];
+
+			int order0 = -1, order1 = -1; tce tce;
+			for (int i = 0; i != _terCount; ++i)
+			{
+				tce = lb_allocated.Items[i] as tce;
+				if (label == tce.Terrain && basepath == tce.Basepath)
+				{
+					order0 = tce.Order;
+					order1 = i;
+				}
+				partCounts[i] = tce.PartCount;
+			}
+
+			// NOTE: order0 and order1 shall be valid list-ids.
+
+			for (int i = 0; i != _terCount; ++i) // subtract part-ids until the terrain becomes the 'first' terrain ->
+			{
+				if (order0 == i) break;
+				part.SetId -= _partCounts[i];
+			}
+
+			for (int i = 0; i != _terCount; ++i) // add part-ids until the terrain goes to its 'final' position in the terrainset.
+			{
+				if (order1 == i) break;
+				part.SetId += partCounts[i];
 			}
 		}
 
