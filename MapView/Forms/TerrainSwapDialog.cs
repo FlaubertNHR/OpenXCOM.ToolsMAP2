@@ -324,13 +324,13 @@ namespace MapView
 
 			for (int i = 0; i != _terCount; ++i) // subtract part-ids until the terrain becomes the 'first' terrain ->
 			{
-				if (order0 == i) break;
+				if (i == order0) break;
 				part.SetId -= _partCounts[i];
 			}
 
 			for (int i = 0; i != _terCount; ++i) // add part-ids until the terrain goes to its 'final' position in the terrainset.
 			{
-				if (order1 == i) break;
+				if (i == order1) break;
 				part.SetId += partCounts[i];
 			}
 		}
