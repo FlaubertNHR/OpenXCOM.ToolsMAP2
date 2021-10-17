@@ -455,10 +455,20 @@ namespace MapView.Forms.MainView
 
 
 		private Dictionary<int, Tuple<string,string>> _copiedTerrains;
-		private MapTile[,] _copied;
 
 		/// <summary>
-		/// Copies any selected tiles to an internal buffer.
+		/// The first D is the cols-dimension and the second D stores the
+		/// part-ids of four <c><see cref="Tilepart">Tileparts</see></c>.
+		/// </summary>
+		/// <remarks>A part-id of <c>-1</c> denotes that a <c>Tilepart</c> is
+		/// <c>null</c>.</remarks>
+		private int[,] _copied;
+
+		/// <summary>
+		/// Copies the part-ids of selected
+		/// <c><see cref="MapTile">MapTiles'</see></c>
+		/// <c><see cref="Tilepart">Tileparts</see></c> to the
+		/// <c><see cref="_copied">_copied</see></c> 2d-array.
 		/// </summary>
 		/// <remarks>Disrespects parttype visibility.</remarks>
 		private void Copy()
@@ -472,33 +482,56 @@ namespace MapView.Forms.MainView
 				Point a = GetDragBeg_abs();
 				Point b = GetDragEnd_abs();
 
-				_copied = new MapTile[b.X - a.X + 1,
-									  b.Y - a.Y + 1];
+				_copied = new int[b.X - a.X + 1,		// for each element of the cols-dimension
+								 (b.Y - a.Y + 1) * 4];	// each element of the rows-dimension has 4 tile-ids
 
 				MapTile tile;
 
-				for (int col = a.X; col <= b.X; ++col)
-				for (int row = a.Y; row <= b.Y; ++row)
+				int id;
+				for (int col = a.X;        col <= b.X; ++col)
+				for (int row = a.Y, r = 0; row <= b.Y; ++row)
 				{
-					tile = _file.GetTile(col, row);
-					_copied[col - a.X,
-							row - a.Y] = new MapTile(
-												tile.Floor,
-												tile.West,
-												tile.North,
-												tile.Content);
+					if ((tile = _file.GetTile(col, row)) != null)
+					{
+						if (tile.Floor != null) id = tile.Floor.SetId;
+						else                    id = -1;
+
+						_copied[col - a.X,
+								row - a.Y + r] = id;
+
+						if (tile.West != null) id = tile.West.SetId;
+						else                   id = -1;
+
+						_copied[col - a.X,
+								row - a.Y + ++r] = id;
+
+						if (tile.North != null) id = tile.North.SetId;
+						else                    id = -1;
+
+						_copied[col - a.X,
+								row - a.Y + ++r] = id;
+
+						if (tile.Content != null) id = tile.Content.SetId;
+						else                      id = -1;
+
+						_copied[col - a.X,
+								row - a.Y + ++r] = id;
+					}
 				}
 			}
 		}
 
 		/// <summary>
-		/// Pastes any copied tiles to the currently selected location.
+		/// Pastes the <c><see cref="_copied"/></c> 2d-array of part-ids to the
+		/// currently selected location.
 		/// </summary>
 		/// <remarks>The terrainset of the current tileset needs to be identical
 		/// to the terrainset of the tileset from which parts were copied (or
-		/// nearly so). Unlike
-		/// <c><see cref="FillSelectedQuads()">FillSelectedQuads()</see></c>
-		/// this respects parttype visibility.</remarks>
+		/// nearly so).
+		/// 
+		/// 
+		/// <c>Paste()</c> respects parttype visibility, unlike
+		/// <c><see cref="FillSelectedQuads()">FillSelectedQuads()</see></c>.</remarks>
 		private void Paste()
 		{
 			if (_file != null && FirstClick && _copied != null)
@@ -507,32 +540,49 @@ namespace MapView.Forms.MainView
 				{
 					MainViewF.that.MapChanged = true;
 
-					MapTile tile, copy;
+					MapTile tile;
 
 					int visible = ObserverManager.TopView.Control.VisibleQuadrants;
 
 					for (int
-							row = DragBeg.Y;
-							row != _file.Rows && (row - DragBeg.Y) < _copied.GetLength(1);
-							++row)
+							col = DragBeg.X, c = 0;
+							col != _file.Cols && col - DragBeg.X < _copied.GetLength(0);		// for each element of the cols-dimension
+							++col, ++c)
+					for (int
+							row = DragBeg.Y, r = 0;
+							row != _file.Rows && row - DragBeg.Y < _copied.GetLength(1) / 4;	// each element of the rows-dimension has 4 tile-ids
+							++row, ++r)
 					{
-						for (int
-								col = DragBeg.X;
-								col != _file.Cols && (col - DragBeg.X) < _copied.GetLength(0);
-								++col)
-						{
-							if ((tile = _file.GetTile(col, row)) != null
-								&& (copy = _copied[col - DragBeg.X,
-												   row - DragBeg.Y]) != null)
-							{
-								if ((visible & TopView.Vis_FLOOR)   != 0) tile.Floor   = copy.Floor;
-								if ((visible & TopView.Vis_WEST)    != 0) tile.West    = copy.West;
-								if ((visible & TopView.Vis_NORTH)   != 0) tile.North   = copy.North;
-								if ((visible & TopView.Vis_CONTENT) != 0) tile.Content = copy.Content;
+						tile = _file.GetTile(col, row);
 
-								tile.Vacancy();
-							}
+						if ((visible & TopView.Vis_FLOOR) != 0)
+						{
+							if (_copied[c,r] != -1) tile.Floor = _file.Parts[_copied[c,r]];
+							else                    tile.Floor = null;
 						}
+
+						++r;
+						if ((visible & TopView.Vis_WEST) != 0)
+						{
+							if (_copied[c,r] != -1) tile.West = _file.Parts[_copied[c,r]];
+							else                    tile.West = null;
+						}
+
+						++r;
+						if ((visible & TopView.Vis_NORTH) != 0)
+						{
+							if (_copied[c,r] != -1) tile.North = _file.Parts[_copied[c,r]];
+							else                    tile.North = null;
+						}
+
+						++r;
+						if ((visible & TopView.Vis_CONTENT) != 0)
+						{
+							if (_copied[c,r] != -1) tile.Content = _file.Parts[_copied[c,r]];
+							else                    tile.Content = null;
+						}
+
+						tile.Vacancy();
 					}
 
 					_file.CalculateOccultations();
@@ -614,8 +664,8 @@ namespace MapView.Forms.MainView
 		/// Fills the selected quadrant of the currently selected tile(s) with
 		/// the currently selected tilepart from <c><see cref="TileView"/></c>.
 		/// </summary>
-		/// <remarks>Unlike <c><see cref="Paste()">Paste()</see></c> this
-		/// ignores parttype visibility.</remarks>
+		/// <remarks><c>FillSelectedQuads()</c> ignores parttype visibility,
+		/// unlike <c><see cref="Paste()">Paste()</see></c>.</remarks>
 		internal void FillSelectedQuads()
 		{
 			if (_file != null && FirstClick)
