@@ -1273,19 +1273,19 @@ namespace MapView
 
 				// toggle TopView tilepart visibilities ->
 				case Keys.Control | Keys.F1:
-					it = ObserverManager.TopView.Control.Floor;
+					it = ObserverManager.TopView.Control.it_Floor;
 					break;
 
 				case Keys.Control | Keys.F2:
-					it = ObserverManager.TopView.Control.West;
+					it = ObserverManager.TopView.Control.it_West;
 					break;
 
 				case Keys.Control | Keys.F3:
-					it = ObserverManager.TopView.Control.North;
+					it = ObserverManager.TopView.Control.it_North;
 					break;
 
 				case Keys.Control | Keys.F4:
-					it = ObserverManager.TopView.Control.Content;
+					it = ObserverManager.TopView.Control.it_Content;
 					break;
 
 				// focus viewer (show/hide shortcuts are handled by menuitems directly) ->

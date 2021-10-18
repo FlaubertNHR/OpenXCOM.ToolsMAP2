@@ -83,22 +83,16 @@ namespace MapView.Forms.Observers
 		{ get; private set; }
 
 
-		internal ToolStripMenuItem Floor
+		internal ToolStripMenuItem it_Floor
 		{ get; private set; }
 
-		internal ToolStripMenuItem North
+		internal ToolStripMenuItem it_North
 		{ get; private set; }
 
-		internal ToolStripMenuItem West
+		internal ToolStripMenuItem it_West
 		{ get; private set; }
 
-		internal ToolStripMenuItem Content
-		{ get; private set; }
-
-		/// <summary>
-		/// A bit-cache denoting which parttypes are currently visible or not.
-		/// </summary>
-		internal int VisibleQuadrants
+		internal ToolStripMenuItem it_Content
 		{ get; private set; }
 		#endregion Properties
 
@@ -129,24 +123,22 @@ namespace MapView.Forms.Observers
 																	pnlMain.Width,
 																	pnlMain.Height);
 
-			Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
-			West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
-			North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
-			Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantVisibilityClick, Keys.F4);
+			it_Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
+			it_West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
+			it_North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
+			it_Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantVisibilityClick, Keys.F4);
 
-			ToolStripItemCollection visQuads = tsddbVisibleQuads.DropDown.Items;
+			ToolStripItemCollection tsic_visQuads = tsddbVisibleQuads.DropDown.Items;
 
-			visQuads.Add(Floor);
-			visQuads.Add(West);
-			visQuads.Add(North);
-			visQuads.Add(Content);
+			tsic_visQuads.Add(it_Floor);
+			tsic_visQuads.Add(it_West);
+			tsic_visQuads.Add(it_North);
+			tsic_visQuads.Add(it_Content);
 
-			Floor  .Checked =
-			West   .Checked =
-			North  .Checked =
-			Content.Checked = true;
-
-			VisibleQuadrants = Vis_FLOOR | Vis_WEST | Vis_NORTH | Vis_CONTENT;
+			it_Floor  .Checked =
+			it_West   .Checked =
+			it_North  .Checked =
+			it_Content.Checked = true;
 
 			ResumeLayout();
 		}
@@ -205,57 +197,46 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Mapview2 uses quadrant-visibility in 2 ways.
+		/// <list type="bullet">
+		/// <item>by setting/checking the <c>Checked</c> state of the respective
+		/// it</item>
+		/// <item>by setting/checking a respective <c>bool</c> in
+		/// <c><see cref="MainViewOverlay"/></c></item>
+		/// </list></remarks>
 		internal void OnQuadrantVisibilityClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
-			if (it == Floor)
+			if (it == it_Floor)
 			{
-				if (ObserverManager.TopView     .Control   .Floor.Checked =
-					ObserverManager.TopRouteView.ControlTop.Floor.Checked = !it.Checked)
-				{
-					VisibleQuadrants |= Vis_FLOOR;
-				}
-				else
-					VisibleQuadrants &= ~Vis_FLOOR;
+				ObserverManager.TopView     .Control   .it_Floor.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = !it.Checked;
 
+				MainViewOverlay.that.SetFloorVisibility(it.Checked);
 				_file.CalculateOccultations(!it.Checked);
 			}
-			else if (it == West)
+			else if (it == it_West)
 			{
-				if (ObserverManager.TopView     .Control   .West.Checked =
-					ObserverManager.TopRouteView.ControlTop.West.Checked = !it.Checked)
-				{
-					VisibleQuadrants |= Vis_WEST;
-				}
-				else
-					VisibleQuadrants &= ~Vis_WEST;
+				ObserverManager.TopView     .Control   .it_West.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_West.Checked = !it.Checked;
+
+				MainViewOverlay.that.SetWestVisibility(it.Checked);
 			}
-			else if (it == North)
+			else if (it == it_North)
 			{
-				if (ObserverManager.TopView     .Control   .North.Checked =
-					ObserverManager.TopRouteView.ControlTop.North.Checked = !it.Checked)
-				{
-					VisibleQuadrants |= Vis_NORTH;
-				}
-				else
-					VisibleQuadrants &= ~Vis_NORTH;
+				ObserverManager.TopView     .Control   .it_North.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_North.Checked = !it.Checked;
+
+				MainViewOverlay.that.SetNorthVisibility(it.Checked);
 			}
-			else //if (it == Content)
+			else // it_Content
 			{
-				if (ObserverManager.TopView     .Control   .Content.Checked =
-					ObserverManager.TopRouteView.ControlTop.Content.Checked = !it.Checked)
-				{
-					VisibleQuadrants |= Vis_CONTENT;
-				}
-				else
-					VisibleQuadrants &= ~Vis_CONTENT;
+				ObserverManager.TopView     .Control   .it_Content.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_Content.Checked = !it.Checked;
+
+				MainViewOverlay.that.SetContentVisibility(it.Checked);
 			}
 
-			MainViewOverlay.that.SetQuadrantVisibilities(
-													(VisibleQuadrants & Vis_FLOOR)   != 0,
-													(VisibleQuadrants & Vis_WEST)    != 0,
-													(VisibleQuadrants & Vis_NORTH)   != 0,
-													(VisibleQuadrants & Vis_CONTENT) != 0);
 			MainViewOverlay.that.Invalidate();
 
 			ObserverManager.InvalidateTopControls();

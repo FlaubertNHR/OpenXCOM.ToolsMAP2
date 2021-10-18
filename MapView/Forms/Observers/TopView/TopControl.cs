@@ -353,27 +353,27 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				int x, int y)
 		{
-			if (TopView.Floor.Checked && tile.Floor != null)
+			if (TopView.it_Floor.Checked && tile.Floor != null)
 				_blobService.Draw(
 								_graphics,
 								TopBrushes[TopViewOptionables.str_FloorColor],
 								x,y);
 
-			if (TopView.Content.Checked && tile.Content != null)
+			if (TopView.it_Content.Checked && tile.Content != null)
 				_blobService.Draw(
 								_graphics,
 								ToolContent,
 								x,y,
 								tile.Content);
 
-			if (TopView.West.Checked && tile.West != null)
+			if (TopView.it_West.Checked && tile.West != null)
 				_blobService.Draw(
 								_graphics,
 								ToolWest,
 								x,y,
 								tile.West);
 
-			if (TopView.North.Checked && tile.North != null)
+			if (TopView.it_North.Checked && tile.North != null)
 				_blobService.Draw(
 								_graphics,
 								ToolNorth,

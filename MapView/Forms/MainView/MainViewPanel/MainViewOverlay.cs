@@ -335,7 +335,7 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		internal void OnFill(object sender, EventArgs e)
 		{
-			FillSelectedQuads();
+			FillSelectedQuadrants();
 		}
 
 
@@ -377,7 +377,7 @@ namespace MapView.Forms.MainView
 					break;
 
 				case Keys.F:
-					FillSelectedQuads();
+					FillSelectedQuadrants();
 					break;
 
 				case Keys.Delete:
@@ -420,7 +420,8 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears all tileparts from any currently selected tiles.
 		/// </summary>
-		/// <remarks>Respects parttype visibility.</remarks>
+		/// <remarks><c>ClearSelection()</c> respects quadrant visibility unlike
+		/// <c><see cref="ClearSelectedQuadrants()">ClearSelectedQuadrants()</see></c>.</remarks>
 		private void ClearSelection()
 		{
 			if (_file != null && FirstClick)
@@ -428,8 +429,6 @@ namespace MapView.Forms.MainView
 				MainViewF.that.MapChanged = true;
 
 				MapTile tile;
-
-				int visible = ObserverManager.TopView.Control.VisibleQuadrants;
 
 				Point a = GetDragBeg_abs();
 				Point b = GetDragEnd_abs();
@@ -439,10 +438,10 @@ namespace MapView.Forms.MainView
 				{
 					tile = _file.GetTile(col, row);
 
-					if ((visible & TopView.Vis_FLOOR)   != 0) tile.Floor   = null;
-					if ((visible & TopView.Vis_WEST)    != 0) tile.West    = null;
-					if ((visible & TopView.Vis_NORTH)   != 0) tile.North   = null;
-					if ((visible & TopView.Vis_CONTENT) != 0) tile.Content = null;
+					if (_visFloor)   tile.Floor   = null;
+					if (_visWest)    tile.West    = null;
+					if (_visNorth)   tile.North   = null;
+					if (_visContent) tile.Content = null;
 
 					tile.Vacancy();
 				}
@@ -470,7 +469,7 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="Tilepart">Tileparts</see></c> to the
 		/// <c><see cref="_copied">_copied</see></c> 2d-array.
 		/// </summary>
-		/// <remarks>Disrespects parttype visibility.</remarks>
+		/// <remarks>Disrespects quadrant visibility.</remarks>
 		private void Copy()
 		{
 			if (_file != null && FirstClick)
@@ -530,8 +529,8 @@ namespace MapView.Forms.MainView
 		/// nearly so).
 		/// 
 		/// 
-		/// <c>Paste()</c> respects parttype visibility, unlike
-		/// <c><see cref="FillSelectedQuads()">FillSelectedQuads()</see></c>.</remarks>
+		/// <c>Paste()</c> respects quadrant visibility unlike
+		/// <c><see cref="FillSelectedQuadrants()">FillSelectedQuadrants()</see></c>.</remarks>
 		private void Paste()
 		{
 			if (_file != null && FirstClick && _copied != null)
@@ -541,8 +540,6 @@ namespace MapView.Forms.MainView
 					MainViewF.that.MapChanged = true;
 
 					MapTile tile;
-
-					int visible = ObserverManager.TopView.Control.VisibleQuadrants;
 
 					for (int
 							col = DragBeg.X, c = 0;
@@ -555,28 +552,28 @@ namespace MapView.Forms.MainView
 					{
 						tile = _file.GetTile(col, row);
 
-						if ((visible & TopView.Vis_FLOOR) != 0)
+						if (_visFloor)
 						{
 							if (_copied[c,r] != -1) tile.Floor = _file.Parts[_copied[c,r]];
 							else                    tile.Floor = null;
 						}
 
 						++r;
-						if ((visible & TopView.Vis_WEST) != 0)
+						if (_visWest)
 						{
 							if (_copied[c,r] != -1) tile.West = _file.Parts[_copied[c,r]];
 							else                    tile.West = null;
 						}
 
 						++r;
-						if ((visible & TopView.Vis_NORTH) != 0)
+						if (_visNorth)
 						{
 							if (_copied[c,r] != -1) tile.North = _file.Parts[_copied[c,r]];
 							else                    tile.North = null;
 						}
 
 						++r;
-						if ((visible & TopView.Vis_CONTENT) != 0)
+						if (_visContent)
 						{
 							if (_copied[c,r] != -1) tile.Content = _file.Parts[_copied[c,r]];
 							else                    tile.Content = null;
@@ -664,9 +661,9 @@ namespace MapView.Forms.MainView
 		/// Fills the selected quadrant of the currently selected tile(s) with
 		/// the currently selected tilepart from <c><see cref="TileView"/></c>.
 		/// </summary>
-		/// <remarks><c>FillSelectedQuads()</c> ignores parttype visibility,
+		/// <remarks><c>FillSelectedQuadrants()</c> ignores quadrant visibility
 		/// unlike <c><see cref="Paste()">Paste()</see></c>.</remarks>
-		internal void FillSelectedQuads()
+		internal void FillSelectedQuadrants()
 		{
 			if (_file != null && FirstClick)
 			{
@@ -712,10 +709,9 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears the selected quadrant of the currently selected tile(s).
 		/// </summary>
-		/// <remarks>Unlike
-		/// <c><see cref="ClearSelection()">ClearSelection()</see></c> this
-		/// ignores quadtype visibility.</remarks>
-		internal void ClearSelectedQuads()
+		/// <remarks><c>ClearSelectedQuadrants()</c> ignores quadrant visibility
+		/// unlike <c><see cref="ClearSelection()">ClearSelection()</see></c>.</remarks>
+		internal void ClearSelectedQuadrants()
 		{
 			MainViewF.that.MapChanged = true;
 
@@ -1837,22 +1833,39 @@ namespace MapView.Forms.MainView
 		bool _visContent = true;
 
 		/// <summary>
-		/// Sets the current quadrant-visibilites as checked in TopView.
+		/// Sets the floor-visibility flag.
 		/// </summary>
-		/// <param name="floor"></param>
-		/// <param name="west"></param>
-		/// <param name="north"></param>
-		/// <param name="content"></param>
-		internal void SetQuadrantVisibilities(
-				bool floor,
-				bool west,
-				bool north,
-				bool content)
+		/// <param name="visible"><c>true</c> if quadrant is visible</param>
+		internal void SetFloorVisibility(bool visible)
 		{
-			_visFloor   = floor;
-			_visWest    = west;
-			_visNorth   = north;
-			_visContent = content;
+			_visFloor = visible;
+		}
+
+		/// <summary>
+		/// Sets the westwall-visibility flag.
+		/// </summary>
+		/// <param name="visible"><c>true</c> if quadrant is visible</param>
+		internal void SetWestVisibility(bool visible)
+		{
+			_visWest = visible;
+		}
+
+		/// <summary>
+		/// Sets the northwall-visibility flag.
+		/// </summary>
+		/// <param name="visible"><c>true</c> if quadrant is visible</param>
+		internal void SetNorthVisibility(bool visible)
+		{
+			_visNorth = visible;
+		}
+
+		/// <summary>
+		/// Sets the content-visibility flag.
+		/// </summary>
+		/// <param name="visible"><c>true</c> if quadrant is visible</param>
+		internal void SetContentVisibility(bool visible)
+		{
+			_visContent = visible;
 		}
 
 		/// <summary>

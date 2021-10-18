@@ -267,11 +267,11 @@ namespace MapView.Forms.Observers
 			switch (_t1clicks)
 			{
 				case 1:
-					MainViewOverlay.that.FillSelectedQuads();
+					MainViewOverlay.that.FillSelectedQuadrants();
 					break;
 
 				case 2:
-					MainViewOverlay.that.ClearSelectedQuads();
+					MainViewOverlay.that.ClearSelectedQuadrants();
 					break;
 			}
 			_t1clicks = 0;
