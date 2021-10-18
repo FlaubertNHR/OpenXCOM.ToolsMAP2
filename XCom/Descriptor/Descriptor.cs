@@ -183,18 +183,18 @@ namespace XCom
 		internal Tilepart[] CreateTerrain(int terid)
 		{
 			Tuple<string,string> terrain = Terrains[terid];
-			string terr = terrain.Item1;
-			string path = GetTerrainDirectory(terrain.Item2);
+			string ter = terrain.Item1;
+			string dir = GetTerrainDirectory(terrain.Item2);
 
 			Spriteset spriteset = SpritesetManager.CreateSpriteset( // a pointer to the spriteset shall be stored in 'SpriteManager.Spritesets'
-																terr,
-																path,
+																ter,
+																dir,
 																Pal,
 																true);
 			if (spriteset != null)
 			{
 				//Logfile.Log(". spriteset Valid - create tileparts");
-				return TilepartFactory.CreateTileparts(terr, path, terid, true);
+				return TilepartFactory.CreateTileparts(ter, dir, terid, true);
 			}
 
 			//Logfile.Log(". spriteset NOT Valid - ret null");
@@ -218,11 +218,11 @@ namespace XCom
 		public int GetRecordCount(int id, bool disregard = false)
 		{
 			Tuple<string,string> terrain = Terrains[id];
-			string terr = terrain.Item1;
-			string path = GetTerrainDirectory(terrain.Item2);
+			string ter = terrain.Item1;
+			string dir = GetTerrainDirectory(terrain.Item2);
 
 			using (var fs = FileService.OpenFile(
-											Path.Combine(path, terr + GlobalsXC.McdExt),
+											Path.Combine(dir, ter + GlobalsXC.McdExt),
 											disregard))
 			if (fs != null)
 				return (int)fs.Length / McdRecord.Length; // TODO: Error if this don't work out right.
