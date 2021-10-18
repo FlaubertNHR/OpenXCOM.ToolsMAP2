@@ -734,6 +734,7 @@ namespace MapView.Forms.MainView
 			InvalidateObservers();
 		}
 
+
 		/// <summary>
 		/// Replaces <c><see cref="Tilepart">Tileparts</see></c> throughout the
 		/// currently loaded <c><see cref="MapFile"/></c>.
@@ -835,6 +836,7 @@ namespace MapView.Forms.MainView
 
 			InvalidateObservers();
 		}
+
 
 		/// <summary>
 		/// Causes this panel to redraw along with the TopView, RouteView, and
