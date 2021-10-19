@@ -838,10 +838,7 @@ namespace XCom
 						bits = new BitArray(8);
 						for (int j = 15; j != 7; --j, ++b)
 						{
-							if (bindata[i + j] != 0)
-								bits[b] = true;
-							else
-								bits[b] = false;
+							bits[b] = (bindata[i + j] != 0);
 						}
 						bits.CopyTo(buffer, 0);
 						fs.Write(buffer, 0, 1);
@@ -850,10 +847,7 @@ namespace XCom
 						bits = new BitArray(8);
 						for (int j = 7; j != -1; --j, ++b)
 						{
-							if (bindata[i + j] != 0)
-								bits[b] = true;
-							else
-								bits[b] = false;
+							bits[b] = (bindata[i + j] != 0);
 						}
 						bits.CopyTo(buffer, 0);
 						fs.Write(buffer, 0, 1);
