@@ -261,7 +261,7 @@ namespace MapView
 			Logfile.SetPath(dirAppL); // creates a logfile/wipes the old one.
 #endif
 
-			Logfile.Log("Instantiating MAIN MapView window ...");
+			//Logfile.Log("Instantiating MAIN MapView window ...");
 
 			// TODO: Either move all this SharedSpace stuff to DSShared so it
 			// can be implemented/instantiated for Mcd/PckView also, or better
@@ -270,7 +270,7 @@ namespace MapView
 			SharedSpace.SetShare(SharedSpace.ApplicationDirectory, dirAppL);
 			SharedSpace.SetShare(SharedSpace.SettingsDirectory,    dirSetT);
 
-			Logfile.Log("App paths cached.");
+			//Logfile.Log("App paths cached.");
 
 
 			// TODO: The .NET framework already has a class for "PathInfo":
@@ -287,7 +287,7 @@ namespace MapView
 			SharedSpace.SetShare(PathInfo.ShareTilesets,  piTilesets);			// set share for MapTilesets.yml
 			SharedSpace.SetShare(PathInfo.ShareViewers,   piViewers);			// set share for MapViewers.yml
 
-			Logfile.Log("PathInfo cached.");
+			//Logfile.Log("PathInfo cached.");
 
 
 			// Check if MapTilesets.yml and MapResources.yml exist yet, show the
@@ -295,19 +295,19 @@ namespace MapView
 			// NOTE: MapResources.yml and MapTilesets.yml are created by ConfigurationForm.
 			if (!piResources.FileExists() || !piTilesets.FileExists())
 			{
-				Logfile.Log("Resources or Tilesets file does not exist: run configurator.");
+				//Logfile.Log("Resources or Tilesets file does not exist: run configurator.");
 
 				using (var f = new ConfigurationForm())
 					f.ShowDialog(this);
 			}
-			else
-				Logfile.Log("Resources and Tilesets files exist.");
+//			else
+//				Logfile.Log("Resources and Tilesets files exist.");
 
 
 			// Exit app if either MapResources.yml or MapTilesets.yml doesn't exist
 			if (!piResources.FileExists() || !piTilesets.FileExists()) // safety. The Configurator shall demand that both these files get created.
 			{
-				Logfile.Log("Resources or Tilesets file does not exist: quit MapView.");
+				//Logfile.Log("Resources or Tilesets file does not exist: quit MapView.");
 				using (var dialog = new Infobox(
 											"Error",
 											"Cannot find configuration files. The application will exit.",
@@ -323,18 +323,19 @@ namespace MapView
 			// Check if settings/MapViewers.yml exists yet, if not create it
 			if (!piViewers.FileExists())
 			{
-				if (CopyViewersFile(piViewers.Fullpath))
-					Logfile.Log("Viewers file created.");
-				else
-					Logfile.Log("Viewers file could not be created.");
+				CopyViewersFile(piViewers.Fullpath);
+//				if (CopyViewersFile(piViewers.Fullpath))
+//					Logfile.Log("Viewers file created.");
+//				else
+//					Logfile.Log("Viewers file could not be created.");
 			}
-			else
-				Logfile.Log("Viewers file exists.");
+//			else
+//				Logfile.Log("Viewers file exists.");
 
 
 
 			InitializeComponent(); // ffs. This fires OnActivated but the Optionables aren't ready yet.
-			Logfile.Log("MainView initialized.");
+			//Logfile.Log("MainView initialized.");
 
 
 			var splitter = new CollapsibleSplitter(); // NOTE: This needs to be weird ->
@@ -393,34 +394,34 @@ namespace MapView
 
 
 			QuadrantDrawService.CacheQuadrantPaths();
-			Logfile.Log("Quadrant panel graphics paths cached.");
+			//Logfile.Log("Quadrant panel graphics paths cached.");
 
 
 			that = this;
 
 			_underlay = new MainViewUnderlay();
 			_overlay  = MainViewOverlay.that;
-			Logfile.Log("MainView panels instantiated.");
+			//Logfile.Log("MainView panels instantiated.");
 
 			RegistryInfo.InitializeRegistry(dirAppL);
-			Logfile.Log("Registry initialized.");
+			//Logfile.Log("Registry initialized.");
 			RegistryInfo.RegisterProperties(this);
-			Logfile.Log("MainView registered.");
+			//Logfile.Log("MainView registered.");
 
 			Optionables = new MainViewOptionables();
-			Logfile.Log("MainView optionables initialized.");
+			//Logfile.Log("MainView optionables initialized.");
 
 			Options.InitializeConverters();
-			Logfile.Log("OptionsConverters initialized.");
+			//Logfile.Log("OptionsConverters initialized.");
 			Option.InitializeParsers();
-			Logfile.Log("OptionParsers initialized.");
+			//Logfile.Log("OptionParsers initialized.");
 
 
 			Palette.UfoBattle.SetTransparent(true); // WARNING: ufo/tftd Palettes created here ->
-			Logfile.Log("ufo-battle Palette instantiated.");
+			//Logfile.Log("ufo-battle Palette instantiated.");
 			Palette.TftdBattle.SetTransparent(true);
-			Logfile.Log("tftd-battle Palette instantiated.");
-			Logfile.Log("Palette transparencies set.");
+			//Logfile.Log("tftd-battle Palette instantiated.");
+			//Logfile.Log("Palette transparencies set.");
 
 			Palette.CreateUfoBrushes();  // for Mono draw
 			Palette.CreateTftdBrushes(); // for Mono draw
@@ -429,22 +430,22 @@ namespace MapView
 			OptionsManager.SetOptionsSection(RegistryInfo.MainView, Options);
 
 			LoadDefaultOptions();								// TODO: check if this should go after the managers load
-			Logfile.Log("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
+			//Logfile.Log("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
 																// when OnOptionsClick() runs ....
 
 			Palette.UfoBattle.CreateTonescaledPalettes(Optionables.SelectedTonerBrightness);
-			Logfile.Log("ufo-battle Tonescaled Palettes instantiated.");
+			//Logfile.Log("ufo-battle Tonescaled Palettes instantiated.");
 			Palette.TftdBattle.CreateTonescaledPalettes(Optionables.SelectedTonerBrightness);
-			Logfile.Log("tftd-battle Tonescaled Palettes instantiated.");
+			//Logfile.Log("tftd-battle Tonescaled Palettes instantiated.");
 
 
 			MonotoneSprites = EmbeddedService.CreateMonotoneSpriteset("Monotone");	// sprites for TileView's eraser and QuadrantControl's blank quads.
 																					// NOTE: transparency of the 'UfoBattle' palette must be set first.
-			Logfile.Log("Monotone sprites loaded.");
+			//Logfile.Log("Monotone sprites loaded.");
 
 
 			ObserverManager.CreateObservers(); // adds each subsidiary viewer's options and Options-type etc.
-			Logfile.Log("ObserverManager initialized.");
+			//Logfile.Log("ObserverManager initialized.");
 
 			ObserverManager.TileView.Control.ReloadDescriptor += OnReloadDescriptor;
 
@@ -457,10 +458,10 @@ namespace MapView
 			ObserverManager.ToolFactory.AddEditorTools(tsTools);
 			ObserverManager.ToolFactory.AddOptionsTool(tsTools);
 			tsTools.ResumeLayout();
-			Logfile.Log("MainView toolstrip created.");
+			//Logfile.Log("MainView toolstrip created.");
 
 			ViewersMenuManager.Initialize(menuViewers);
-			Logfile.Log("Viewers menu created.");
+			//Logfile.Log("Viewers menu created.");
 
 
 			PathInfo piScanGufo  = null;
@@ -529,14 +530,14 @@ namespace MapView
 					if (CuboidSprite.Ufoset.Failr != Spriteset.Fail.non)
 					{
 						CuboidSprite.Ufoset = null;
-						Logfile.Log("UFO Cursor failed to load.");
+						//Logfile.Log("UFO Cursor failed to load.");
 					}
-					else
-						Logfile.Log("UFO Cursor loaded.");
+//					else
+//						Logfile.Log("UFO Cursor loaded.");
 				}
 			}
-			else
-				Logfile.Log("UFO Cursor directory not found.");
+//			else
+//				Logfile.Log("UFO Cursor directory not found.");
 
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
@@ -552,52 +553,57 @@ namespace MapView
 					if (CuboidSprite.Tftdset.Failr != Spriteset.Fail.non)
 					{
 						CuboidSprite.Tftdset = null;
-						Logfile.Log("TFTD Cursor failed to load.");
+						//Logfile.Log("TFTD Cursor failed to load.");
 					}
-					else
-						Logfile.Log("TFTD Cursor loaded.");
+//					else
+//						Logfile.Log("TFTD Cursor loaded.");
 				}
 			}
-			else
-				Logfile.Log("TFTD Cursor directory not found.");
+//			else
+//				Logfile.Log("TFTD Cursor directory not found.");
 
 
 			// NOTE: ScanG's are conditional loads iff File exists.
-			if (piScanGufo != null && piScanGufo.FileExists()
-				&& SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
-			{
-				Logfile.Log("ScanG UFO loaded.");
-			}
-			else
-				Logfile.Log("ScanG UFO not found.");
+			if (piScanGufo != null && piScanGufo.FileExists())
+				SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo));
+//			if (piScanGufo != null && piScanGufo.FileExists()
+//				&& SpritesetManager.LoadScanGufo(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo)))
+//			{
+//				Logfile.Log("ScanG UFO loaded.");
+//			}
+//			else
+//				Logfile.Log("ScanG UFO not found.");
 
-			if (piScanGtftd != null && piScanGtftd.FileExists()
-				&& SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
-			{
-				Logfile.Log("ScanG TFTD loaded.");
-			}
-			else
-				Logfile.Log("ScanG TFTD not found.");
+			if (piScanGtftd != null && piScanGtftd.FileExists())
+				SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd));
+//			if (piScanGtftd != null && piScanGtftd.FileExists()
+//				&& SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
+//			{
+//				Logfile.Log("ScanG TFTD loaded.");
+//			}
+//			else
+//				Logfile.Log("ScanG TFTD not found.");
 
 
 			TileGroupManager.LoadTileGroups(piTilesets.Fullpath); // load resources from YAML.
-			Logfile.Log("Tilesets loaded/Descriptors created.");
+			//Logfile.Log("Tilesets loaded/Descriptors created.");
 
 
 			if (piOptions.FileExists()) // NOTE: load user-options before ViewersMenuManager.StartSecondStageBoosters() in LoadSelectedDescriptor()
 			{
-				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
-					Logfile.Log("User options loaded.");
-				else
-					Logfile.Log("User options could not be opened.");
+				OptionsManager.LoadUserOptions(piOptions.Fullpath);
+//				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
+//					Logfile.Log("User options loaded.");
+//				else
+//					Logfile.Log("User options could not be opened.");
 			}
-			else
-				Logfile.Log("User options NOT loaded - no options file to load.");
+//			else
+//				Logfile.Log("User options NOT loaded - no options file to load.");
 
 
 			if (CuboidSprite.Cursorset == null && !CuboidSprite.SetCursor()) // exit app if a cuboid-targeter is not instantiated
 			{
-				Logfile.Log("Targeter not instantiated: quit MapView.");
+				//Logfile.Log("Targeter not instantiated: quit MapView.");
 
 				string copyable = Path.Combine("[basepath]", SharedSpace.CursorFilePrefix);
 					   copyable = copyable + GlobalsXC.PckExt + Environment.NewLine
@@ -616,7 +622,7 @@ namespace MapView
 
 
 			CreateTree();
-			Logfile.Log("Maptree instantiated.");
+			//Logfile.Log("Maptree instantiated.");
 
 			splitter.SetClickableRectangle();
 			ShiftSplitter();
@@ -630,7 +636,7 @@ namespace MapView
 			Application.AddMessageFilter(this);
 #endif
 			Cursor.Current = Cursors.Default;
-			Logfile.Log("About to show MainView ..." + Environment.NewLine);
+			//Logfile.Log("About to show MainView ..." + Environment.NewLine);
 		}
 		#endregion cTor
 
@@ -1007,7 +1013,7 @@ namespace MapView
 		/// </summary>
 		private void SafeQuit()
 		{
-			Logfile.Log("MainViewF.SafeQuit() EXIT MapView ->");
+			//Logfile.Log("MainViewF.SafeQuit() EXIT MapView ->");
 
 			Dontdrawyougits = true;
 

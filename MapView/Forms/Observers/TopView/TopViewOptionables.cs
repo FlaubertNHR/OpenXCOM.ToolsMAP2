@@ -14,7 +14,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposeOptionables()
 		{
-			DSShared.Logfile.Log("TopViewOptionables.DisposeOptionables() static");
+			//DSShared.Logfile.Log("TopViewOptionables.DisposeOptionables() static");
 			foreach (var pair in TopControl.TopPens)
 				pair.Value.Dispose();
 

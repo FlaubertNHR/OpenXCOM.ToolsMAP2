@@ -16,7 +16,7 @@ namespace MapView
 	{
 		public static void DisposeCursorset()
 		{
-			DSShared.Logfile.Log("CuboidSprite.DisposeCursorset() static");
+			//DSShared.Logfile.Log("CuboidSprite.DisposeCursorset() static");
 			if (Ufoset != null)
 			{
 				Ufoset.Dispose();

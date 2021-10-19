@@ -10,8 +10,8 @@ namespace XCom
 {
 	/// <summary>
 	/// a <c>Spriteset</c>. A collection of images that is usually created of
-	/// <c>PCK+TAB</c> terrain file data but can also be bigobs or a ScanG or
-	/// LoFT iconset.
+	/// <c>PCK+TAB</c> terrain file data but can also be units or bigobs or a
+	/// ScanG or LoFT iconset.
 	/// </summary>
 	/// <remarks>Only PckView maintains ScanG and/or LoFT iconsets as
 	/// <c>Spritesets</c>. MapView and McdView use ScanG and LoFT icons in
@@ -98,7 +98,7 @@ namespace XCom
 		/// cleared <c>Sprites</c> list.</remarks>
 		public void Dispose()
 		{
-			Logfile.Log("Spriteset.Dispose() Label= " + Label);
+			//Logfile.Log("Spriteset.Dispose() Label= " + Label);
 			foreach (var sprite in Sprites)
 				sprite.Dispose();
 

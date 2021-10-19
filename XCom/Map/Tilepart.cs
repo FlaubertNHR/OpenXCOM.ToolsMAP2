@@ -10,7 +10,7 @@ namespace XCom
 		/// </summary>
 		public static void DisposeCrippledSprites()
 		{
-			DSShared.Logfile.Log("Tilepart.DisposeCrippledSprites() static");
+			//DSShared.Logfile.Log("Tilepart.DisposeCrippledSprites() static");
 			if (CrippledSprites != null)
 			{
 				CrippledSprites.Dispose();

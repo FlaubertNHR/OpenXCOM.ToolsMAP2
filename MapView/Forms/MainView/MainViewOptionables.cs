@@ -21,7 +21,7 @@ namespace MapView.Forms.MainView
 	{
 		public void DisposeOptionables()
 		{
-			DSShared.Logfile.Log("MainViewOptionables.DisposeOptionables()");
+			//Logfile.Log("MainViewOptionables.DisposeOptionables()");
 			_overlay.BrushLayer.Dispose();
 			_overlay.PenGrid   .Dispose();
 			_overlay.PenGrid10 .Dispose();

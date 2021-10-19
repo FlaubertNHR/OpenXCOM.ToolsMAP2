@@ -21,7 +21,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal static void DisposeService()
 		{
-			DSShared.Logfile.Log("QuadrantDrawService.DisposeService() static");
+			//DSShared.Logfile.Log("QuadrantDrawService.DisposeService() static");
 			_pathFloor   .Dispose();
 			_pathWest    .Dispose();
 			_pathNorth   .Dispose();

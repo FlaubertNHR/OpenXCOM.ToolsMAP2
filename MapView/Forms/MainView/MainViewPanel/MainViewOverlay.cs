@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+#if LOCKBITS
 using System.Drawing.Imaging;
+#endif
 using System.Linq;
 using System.Windows.Forms;
 
@@ -25,7 +27,7 @@ namespace MapView.Forms.MainView
 	{
 		internal void DisposeOverlay()
 		{
-			Logfile.Log("MainViewOverlay.DisposeOverlay()");
+			//Logfile.Log("MainViewOverlay.DisposeOverlay()");
 			LocationFont.Dispose();
 			_layerFill  .Dispose();
 			_t1         .Dispose();

@@ -19,12 +19,13 @@ namespace MapView.Forms.Observers
 		/// Disposes <see cref="TopControl"/>.
 		/// </summary>
 		/// <remarks>Do NOT use <c>public void Dispose()</c> or else you'll have
-		/// one Fuck of a time trying to trace usage. Use <c>public void Dispose()</c>
-		/// only for Designer code w/ <c>components</c>. Thank yourself for
-		/// heeding this piece of ornery advice later.</remarks>
+		/// one Fuck of a time trying to trace usage.
+		/// Use <c>public void Dispose()</c> only for Designer code w/
+		/// <c>components</c>. Thank yourself for heeding this piece of ornery
+		/// advice later.</remarks>
 		internal void DisposeObserver()
 		{
-			Logfile.Log("TopView.DisposeObserver()");
+			//Logfile.Log("TopView.DisposeObserver()");
 			TopControl.DisposeControl();
 		}
 

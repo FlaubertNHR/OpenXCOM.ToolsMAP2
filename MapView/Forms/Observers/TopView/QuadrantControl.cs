@@ -23,7 +23,7 @@ namespace MapView.Forms.Observers
 	{
 		public static void DisposeControl()
 		{
-			DSShared.Logfile.Log("QuadrantControl.DisposeControl() static");
+			//DSShared.Logfile.Log("QuadrantControl.DisposeControl() static");
 			_t1.Dispose();
 		}
 

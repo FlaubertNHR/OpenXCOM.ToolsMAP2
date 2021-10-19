@@ -28,7 +28,7 @@ namespace XCom
 		/// </summary>
 		public static void DisposeMonoBrushes()
 		{
-			DSShared.Logfile.Log("Palette.DisposeMonoBrushes() static");
+			//DSShared.Logfile.Log("Palette.DisposeMonoBrushes() static");
 			foreach (var brush in _brushesUfoBattle)
 				brush.Dispose();
 

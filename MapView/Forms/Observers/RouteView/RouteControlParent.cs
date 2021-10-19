@@ -21,7 +21,7 @@ namespace MapView.Forms.Observers
 	{
 		protected void DisposeControlParent()
 		{
-			DSShared.Logfile.Log("RouteControlParent.DisposeControlParent()");
+			//DSShared.Logfile.Log("RouteControlParent.DisposeControlParent()");
 			_t1.Dispose();
 		}
 

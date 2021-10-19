@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 using DSShared.Controls;
@@ -23,7 +22,7 @@ namespace MapView.Forms.Observers
 	{
 		internal static void DisposePanels()
 		{
-			DSShared.Logfile.Log("TilePanel.DisposePanels() static");
+			//DSShared.Logfile.Log("TilePanel.DisposePanels() static");
 			if (PenSelectedPartBorder != null)
 			{
 				PenSelectedPartBorder.Dispose();

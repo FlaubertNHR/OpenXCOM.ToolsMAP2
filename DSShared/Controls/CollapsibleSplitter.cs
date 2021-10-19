@@ -17,7 +17,7 @@ namespace DSShared.Controls
 		private bool _disposed;
 		protected override void Dispose(bool disposing)
 		{
-			Logfile.Log("CollapsibleSplitter.Dispose(" + disposing + ")");
+			//Logfile.Log("CollapsibleSplitter.Dispose(" + disposing + ")");
 			if (!_disposed && disposing)
 			{
 				_disposed = true;

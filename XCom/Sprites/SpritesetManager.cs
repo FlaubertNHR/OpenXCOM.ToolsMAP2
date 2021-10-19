@@ -28,7 +28,7 @@ namespace XCom
 		{
 			if (Spritesets.Count != 0)
 			{
-				Logfile.Log("SpritesetManager.Dispose() static");
+				//Logfile.Log("SpritesetManager.Dispose() static");
 				for (int i = 0; i != Spritesets.Count; ++i)
 				{
 					Spritesets[i].Dispose();

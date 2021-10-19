@@ -19,7 +19,7 @@ namespace XCom
 		/// </summary>
 		public void Dispose()
 		{
-			DSShared.Logfile.Log("XCImage.Dispose() id= " + Id);
+			//DSShared.Logfile.Log("XCImage.Dispose() id= " + Id);
 
 			if (Sprite != null)
 			{

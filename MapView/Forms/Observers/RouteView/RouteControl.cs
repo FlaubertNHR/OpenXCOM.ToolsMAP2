@@ -21,7 +21,7 @@ namespace MapView.Forms.Observers
 	{
 		internal void DisposeControl()
 		{
-			DSShared.Logfile.Log("RouteControl.DisposeControl()");
+			//DSShared.Logfile.Log("RouteControl.DisposeControl()");
 			_nodeFill   .Dispose();
 			_lozSelector.Dispose();
 			_lozSelected.Dispose();
@@ -32,7 +32,7 @@ namespace MapView.Forms.Observers
 
 		internal static void DisposeControlStatics()
 		{
-			DSShared.Logfile.Log("RouteControl.DisposeControlStatics() static");
+			//DSShared.Logfile.Log("RouteControl.DisposeControlStatics() static");
 			BrushOverlayBlue .Dispose();
 			BrushOverlayLight.Dispose();
 			FontOverlay      .Dispose();

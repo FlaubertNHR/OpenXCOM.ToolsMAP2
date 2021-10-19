@@ -27,7 +27,7 @@ namespace MapView.Forms.Observers
 	{
 		internal void DisposeObserver()
 		{
-			Logfile.Log("TileView.DisposeObserver()");
+			//Logfile.Log("TileView.DisposeObserver()");
 			if (ContextMenu != null)
 			{
 				DisposeContext(); // paranoia ... this is .net disposal stuff after all.
