@@ -1900,7 +1900,7 @@ namespace McdView
 #if DEBUG
 			string head = "debug ";
 #else
-			string text = "release ";
+			string head = "release ";
 #endif
 			DateTime dt = ass.GetLinkerTime();
 			head += String.Format(
