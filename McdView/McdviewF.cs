@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 #if !__MonoCS__
 using System.Runtime.InteropServices;
 #endif
+using System.Text;
 using System.Windows.Forms;
 
 using DSShared;
@@ -1876,8 +1878,7 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles clicking the Help|Help menuitem.
-		/// Shows the CHM helpfile.
+		/// Handles clicking the Help|Help menuitem. Shows the CHM helpfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1889,28 +1890,62 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles clicking the Help|About menuitem.
-		/// Shows the about-box.
+		/// Handles clicking the Help|About menuitem. Shows the about-box.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnClick_About(object sender, EventArgs e)
 		{
-			var an = Assembly.GetExecutingAssembly().GetName();
-			string ver = "Ver "
-					   + an.Version.Major + "."
+			Assembly ass = Assembly.GetExecutingAssembly();
+
+#if DEBUG
+			string head = "debug ";
+#else
+			string text = "release ";
+#endif
+			DateTime dt = ass.GetLinkerTime();
+			head += String.Format(
+							CultureInfo.CurrentCulture,
+							"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
+							dt);
+
+			var sb = new StringBuilder();
+
+			AssemblyName an = ass.GetName();
+			string ver = an.Version.Major + "."
 					   + an.Version.Minor + "."
 					   + an.Version.Build + "."
 					   + an.Version.Revision;
-#if DEBUG
-			ver += " - debug";
-#else
-			ver += " - release";
-#endif
+			sb.Append("McdView   .exe " + ver);
+
+			sb.AppendLine();
+			an = Assembly.Load("XCom").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("XCom      .dll " + ver);
+
+			sb.AppendLine();
+			an = Assembly.Load("DSShared").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("DSShared  .dll " + ver);
+
+			sb.AppendLine();
+			an = Assembly.Load("YamlDotNet").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("YamlDotNet.dll " + ver);
+
 			using (var f = new Infobox(
-									"Version info",
-									null,
-									ver))
+									"McdView",
+									head,
+									sb.ToString()))
 			{
 				f.ShowDialog(this);
 			}
