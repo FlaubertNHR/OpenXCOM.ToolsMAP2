@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -35,38 +36,79 @@ namespace MapView
 		{
 			InitializeComponent();
 
-			string text = "About";
 			string before = String.Format(
 										CultureInfo.CurrentCulture,
 										"{0:n0}", GC.GetTotalMemory(false));
-//			string after  = String.Format(
-//										CultureInfo.CurrentCulture,
-//										"{0:n0}", GC.GetTotalMemory(true));
+			Text = "MapView || " + before + " bytes allocated";
 
-//			text += " - " + before + " \u2192 " + after + " bytes"; // '\u2192' = right arrow.
-			text += " - " + before + " bytes allocated";
-			Text = text;
 
-			var an = Assembly.GetExecutingAssembly().GetName();
+			Assembly ass = Assembly.GetExecutingAssembly();
+
+#if DEBUG
+			string text = "debug ";
+#else
+			string text = "release ";
+#endif
+			DateTime dt = ass.GetLinkerTime();
+			text += String.Format(
+							CultureInfo.CurrentCulture,
+							"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
+							dt);
+			la_Date.Text = text;
+
+
+			var sb = new StringBuilder();
+
+			AssemblyName an = ass.GetName();
 			string ver = an.Version.Major + "."
 					   + an.Version.Minor + "."
 					   + an.Version.Build + "."
 					   + an.Version.Revision;
+			sb.Append("MapView   .exe " + ver);
 
-			lblVersion.Text = "MapView " + ver;
-#if DEBUG
-			lblVersion.Text += " debug";
-#else
-			lblVersion.Text += " release";
-#endif
+			sb.AppendLine();
+			an = Assembly.Load("McdView").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("McdView   .exe " + ver);
 
-			DateTime dt = Assembly.GetExecutingAssembly().GetLinkerTime();
+			sb.AppendLine();
+			an = Assembly.Load("PckView").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("PckView   .exe " + ver);
 
-			lblVersion.Text += Environment.NewLine + Environment.NewLine
-							 + String.Format(
-										CultureInfo.CurrentCulture,
-										"{0:yyyy MMM d}  {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
-										dt);
+			sb.AppendLine();
+			an = Assembly.Load("XCom").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("XCom      .dll " + ver);
+
+			sb.AppendLine();
+			an = Assembly.Load("DSShared").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("DSShared  .dll " + ver);
+
+			sb.AppendLine();
+			an = Assembly.Load("YamlDotNet").GetName();
+			ver = an.Version.Major + "."
+				+ an.Version.Minor + "."
+				+ an.Version.Build + "."
+				+ an.Version.Revision;
+			sb.Append("YamlDotNet.dll " + ver);
+
+			tb_Ver.Text = sb.ToString();
+
+			tb_Ver.SelectionStart = tb_Ver.SelectionLength = 0;
 		}
 		#endregion cTor
 
@@ -92,11 +134,14 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Handles keyup events.
+		/// Handles <c>KeyDown</c> events.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>[Esc] closes the About box. [Enter] starts and stops
-		/// brownian movement.</remarks>
+		/// <remarks>[Esc] or [Ctrl+b] closes the About box. [Enter] starts and
+		/// stops brownian motion.
+		/// 
+		/// 
+		/// Requires <c>KeyPreview</c> <c>true</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -114,7 +159,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Handles the formclosing event.
+		/// Handles the <c>FormClosing</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
