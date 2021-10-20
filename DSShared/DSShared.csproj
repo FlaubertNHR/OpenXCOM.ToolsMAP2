@@ -80,6 +80,7 @@
     <Compile Include="Controls\CompositedTreeView.cs" />
     <Compile Include="Controls\CustomToolStripRenderer.cs" />
     <Compile Include="Controls\ProgressBarF.cs" />
+    <Compile Include="DateTimeExtension.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="GlobalsXC.cs" />
     <Compile Include="Infobox.cs" />
