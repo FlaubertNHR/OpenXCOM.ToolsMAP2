@@ -1908,38 +1908,34 @@ namespace McdView
 							"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
 							dt);
 
+			head += Environment.NewLine + DateTimeExtension.GetArchitecture();
+
+
 			var sb = new StringBuilder();
 
-			AssemblyName an = ass.GetName();
-			string ver = an.Version.Major + "."
-					   + an.Version.Minor + "."
-					   + an.Version.Build + "."
-					   + an.Version.Revision;
-			sb.Append("McdView   .exe " + ver);
+			Version ver = ass.GetName().Version;
+			sb.AppendLine("McdView   .exe " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("XCom").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("XCom      .dll " + ver);
+			ver = Assembly.Load("XCom").GetName().Version;
+			sb.AppendLine("XCom      .dll " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("DSShared").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("DSShared  .dll " + ver);
+			ver = Assembly.Load("DSShared").GetName().Version;
+			sb.AppendLine("DSShared  .dll " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("YamlDotNet").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("YamlDotNet.dll " + ver);
+			ver = Assembly.Load("YamlDotNet").GetName().Version;
+			sb.Append("YamlDotNet.dll " + ver.Major + "."
+										+ ver.Minor + "."
+										+ ver.Build + "."
+										+ ver.Revision);
 
 			using (var f = new Infobox(
 									"McdView about",

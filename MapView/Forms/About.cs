@@ -42,67 +42,58 @@ namespace MapView
 
 
 			Assembly ass = Assembly.GetExecutingAssembly();
-#if DEBUG
-			string text = "debug ";
-#else
-			string text = "release ";
-#endif
-			DateTime dt = ass.GetLinkerTime();
-			text += String.Format(
-							CultureInfo.CurrentCulture,
-							"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
-							dt);
-			la_Date.Text = text;
-
 
 			var sb = new StringBuilder();
+#if DEBUG
+			sb.Append("debug ");
+#else
+			sb.Append("release ");
+#endif
+			DateTime dt = ass.GetLinkerTime();
+			sb.Append(String.Format(
+								CultureInfo.CurrentCulture,
+								"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
+								dt));
+			la_Date.Text = sb.ToString();
 
-			AssemblyName an = ass.GetName();
-			string ver = an.Version.Major + "."
-					   + an.Version.Minor + "."
-					   + an.Version.Build + "."
-					   + an.Version.Revision;
-			sb.Append("MapView   .exe " + ver);
 
-			sb.AppendLine();
-			an = Assembly.Load("McdView").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("McdView   .exe " + ver);
+			sb.Clear();
 
-			sb.AppendLine();
-			an = Assembly.Load("PckView").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("PckView   .exe " + ver);
+			Version ver = ass.GetName().Version;
+			sb.AppendLine("MapView   .exe " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("XCom").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("XCom      .dll " + ver);
+			ver = Assembly.Load("McdView").GetName().Version;
+			sb.AppendLine("McdView   .exe " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("DSShared").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("DSShared  .dll " + ver);
+			ver = Assembly.Load("PckView").GetName().Version;
+			sb.AppendLine("PckView   .exe " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("YamlDotNet").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("YamlDotNet.dll " + ver);
+			ver = Assembly.Load("XCom").GetName().Version;
+			sb.AppendLine("XCom      .dll " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
+
+			ver = Assembly.Load("DSShared").GetName().Version;
+			sb.AppendLine("DSShared  .dll " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
+
+			ver = Assembly.Load("YamlDotNet").GetName().Version;
+			sb.Append("YamlDotNet.dll " + ver.Major + "."
+										+ ver.Minor + "."
+										+ ver.Build + "."
+										+ ver.Revision);
 
 			tb_Ver.Text = sb.ToString();
 

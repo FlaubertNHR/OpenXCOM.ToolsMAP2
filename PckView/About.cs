@@ -30,44 +30,41 @@ namespace PckView
 
 			var sb = new StringBuilder();
 
-			AssemblyName an = ass.GetName();
-			string ver = an.Version.Major + "."
-					   + an.Version.Minor + "."
-					   + an.Version.Build + "."
-					   + an.Version.Revision;
-			sb.Append("PckView .exe " + ver);
+			Version ver = ass.GetName().Version;
+			sb.AppendLine("PckView .exe " + ver.Major + "."
+										  + ver.Minor + "."
+										  + ver.Build + "."
+										  + ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("XCom").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("XCom    .dll " + ver);
+			ver = Assembly.Load("XCom").GetName().Version;
+			sb.AppendLine("XCom    .dll " + ver.Major + "."
+										  + ver.Minor + "."
+										  + ver.Build + "."
+										  + ver.Revision);
 
-			sb.AppendLine();
-			an = Assembly.Load("DSShared").GetName();
-			ver = an.Version.Major + "."
-				+ an.Version.Minor + "."
-				+ an.Version.Build + "."
-				+ an.Version.Revision;
-			sb.Append("DSShared.dll " + ver);
+			ver = Assembly.Load("DSShared").GetName().Version;
+			sb.Append("DSShared.dll " + ver.Major + "."
+									  + ver.Minor + "."
+									  + ver.Build + "."
+									  + ver.Revision);
 
 			tb_Ver.Text = sb.ToString();
 
 			tb_Ver.SelectionStart = tb_Ver.SelectionLength = 0;
 
+
+			sb.Clear();
 #if DEBUG
-			string text = "debug ";
+			sb.Append("debug ");
 #else
-			string text = "release ";
+			sb.Append("release ");
 #endif
 			DateTime dt = ass.GetLinkerTime();
-			text += String.Format(
-							CultureInfo.CurrentCulture,
-							"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
-							dt);
-			la_Date.Text = text;
+			sb.Append(String.Format(
+								CultureInfo.CurrentCulture,
+								"{0:yyyy MMM d} {0:HH}:{0:mm}:{0:ss} UTC", // {0:zzz}
+								dt));
+			la_Date.Text = sb.ToString();
 
 
 			// NOTE: this won't work for .NET 4+ (always returns 'None')
