@@ -14,6 +14,13 @@ Distribution builds for Windows 32/64 is hosted on Google Drive.
 
 Built against .NET 4.5.1
 
+2021 October 20<br>
+[MapView2_211020.7z](https://drive.google.com/file/d/1CLaCLZu_Y_YMfmWaeSMYrfKsUCyeJTMx/view?usp=sharing)
+
+fix Copy/Paste tiles from one Map to another.
+rework About boxes
++ assorted tweaks
+
 2021 October 4<br>
 [MapView2_211004.7z](https://drive.google.com/file/d/1D1l0Ds-VPkjjiflQ5d5PDhzD8MhUzFuV/view?usp=sharing)
 
