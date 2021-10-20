@@ -1897,7 +1897,6 @@ namespace McdView
 		private void OnClick_About(object sender, EventArgs e)
 		{
 			Assembly ass = Assembly.GetExecutingAssembly();
-
 #if DEBUG
 			string head = "debug ";
 #else
@@ -1943,7 +1942,7 @@ namespace McdView
 			sb.Append("YamlDotNet.dll " + ver);
 
 			using (var f = new Infobox(
-									"McdView",
+									"McdView about",
 									head,
 									sb.ToString()))
 			{

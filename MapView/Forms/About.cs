@@ -42,7 +42,6 @@ namespace MapView
 
 
 			Assembly ass = Assembly.GetExecutingAssembly();
-
 #if DEBUG
 			string text = "debug ";
 #else
