@@ -45,9 +45,21 @@ namespace XCom
 		public Dictionary<int, Tuple<string,string>> Terrains
 		{ get; private set; }
 
+		/// <summary>
+		/// <c><see cref="GameType.Ufo">GameType.Ufo</see></c> or
+		/// <c><see cref="GameType.Tftd">GameType.Tftd</see></c>.
+		/// </summary>
 		public GameType GroupType
 		{ get; private set; }
 
+		/// <summary>
+		/// The <c><see cref="Palette"/> used to create sprites for this
+		/// tileset.</c>
+		/// <list type="bullet">
+		/// <item><c><see cref="Palette.UfoBattle">Palette.UfoBattle</see></c></item>
+		/// <item><c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c></item>
+		/// </list>
+		/// </summary>
 		public Palette Pal
 		{ get; private set; }
 
