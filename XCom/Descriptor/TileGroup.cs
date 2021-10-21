@@ -39,9 +39,10 @@ namespace XCom
 		/// cTor.
 		/// </summary>
 		/// <param name="labelGroup"></param>
-		/// <remarks>If the prefix "tftd" is not found at the beginning of this
-		/// <c>TileGroup's</c> label then default to UFO
-		/// <c><see cref="GroupType"/></c>.</remarks>
+		/// <remarks>If the prefix "tftd" (case insensitive) is not found at the
+		/// beginning of this <c>TileGroup's</c> label then default
+		/// <c><see cref="GroupType"/></c> to
+		/// <c><see cref="GameType.Ufo">GameType.Ufo</see></c>.</remarks>
 		internal TileGroup(string labelGroup)
 		{
 			Label = labelGroup;
@@ -61,7 +62,12 @@ namespace XCom
 		#region Methods
 		/// <summary>
 		/// Adds a <c><see cref="Categories">Category</see></c>. Called by
-		/// <c>MainViewF.OnAddCategoryClick()</c>.
+		/// <list type="bullet">
+		/// <item><c><see cref="EditCategory()">EditCategory()</see></c></item>
+		/// <item><c><see cref="TileGroupManager.LoadTileGroups()">TileGroupManager.LoadTileGroups()</see></c></item>
+		/// <item><c><see cref="TileGroupManager.EditTileGroup()">TileGroupManager.EditTileGroup()</see></c></item>
+		/// <item><c>MainViewF.OnAddCategoryClick()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelCategory">the label of the category to add</param>
 		/// <remarks>Check if the category already exists first.</remarks>
@@ -72,7 +78,10 @@ namespace XCom
 
 		/// <summary>
 		/// Deletes a <c><see cref="Categories">Category</see></c>. Called by
-		/// <c>MainViewF.OnDeleteCategoryClick()</c>.
+		/// <list type="bullet">
+		/// <item><c><see cref="EditCategory()">EditCategory()</see></c></item>
+		/// <item><c>MainViewF.OnDeleteCategoryClick()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelCategory">the label of the <c>Category</c> to
 		/// delete</param>
@@ -86,7 +95,9 @@ namespace XCom
 		/// transfers ownership of all
 		/// <c><see cref="Descriptor">Descriptors</see></c> from their previous
 		/// <c>Category</c> to the specified new <c>Category</c>. Called by
-		/// <c>MainViewF.OnEditCategoryClick()</c>.
+		/// <list type="bullet">
+		/// <item><c>MainViewF.OnEditCategoryClick()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelCategory">the new label for the <c>Category</c></param>
 		/// <param name="labelCategory0">the old label of the <c>Category</c></param>
@@ -103,7 +114,11 @@ namespace XCom
 
 		/// <summary>
 		/// Adds a <c><see cref="Descriptor"/></c>. Called by
-		/// <c>TilesetEditor.OnAcceptClick()</c>.
+		/// <list type="bullet">
+		/// <item><c><see cref="TileGroupManager.LoadTileGroups()">TileGroupManager.LoadTileGroups()</see></c></item>
+		/// <item><c>TilesetEditor.OnAcceptClick()</c></item>
+		/// <item><c>TilesetEditor.GlobalChangeLabels()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="descriptor"></param>
 		/// <param name="labelCategory"></param>
@@ -116,8 +131,11 @@ namespace XCom
 
 		/// <summary>
 		/// Deletes a <c><see cref="Descriptor"/></c>. Called by
-		/// <c>MainViewF.OnDeleteTilesetClick()</c> and
-		/// <c>TilesetEditor.OnAcceptClick()</c>.
+		/// <list type="bullet">
+		/// <item><c>MainViewF.OnDeleteTilesetClick()</c></item>
+		/// <item><c>TilesetEditor.OnAcceptClick()</c></item>
+		/// <item><c>TilesetEditor.GlobalChangeLabels()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelTileset">the label of the tileset to delete</param>
 		/// <param name="labelCategory">the label of the

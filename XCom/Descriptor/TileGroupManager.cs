@@ -46,7 +46,10 @@ namespace XCom
 		#region Methods (static)
 		/// <summary>
 		/// Adds a <c><see cref="TileGroup"/></c>. Called by
-		/// <c>MainViewF.OnAddGroupClick()</c>.
+		/// <list type="bullet">
+		/// <item><c><see cref="EditTileGroup()">EditTileGroup()</see></c></item>
+		/// <item><c>MainViewF.OnAddGroupClick()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to add</param>
 		/// <remarks>Check if the group already exists first.</remarks>
@@ -57,7 +60,10 @@ namespace XCom
 
 		/// <summary>
 		/// Deletes a <c><see cref="TileGroup"/></c>. Called by
-		/// <c>MainViewF.OnDeleteGroupClick()</c>.
+		/// <list type="bullet">
+		/// <item><c><see cref="EditTileGroup()">EditTileGroup()</see></c></item>
+		/// <item><c>MainViewF.OnDeleteGroupClick()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelGroup">the label of the group to delete</param>
 		public static void DeleteTileGroup(string labelGroup)
@@ -71,7 +77,10 @@ namespace XCom
 		/// <c><see cref="TileGroup.Categories">TileGroup.Categories</see></c>
 		/// and <c><see cref="Descriptor">Descriptors</see></c> from their
 		/// previous <c>TileGroup</c> to the specified new <c>TileGroup</c>.
-		/// Called by <c>MainViewF.OnEditGroupClick()</c>.
+		/// Called by
+		/// <list type="bullet">
+		/// <item><c>MainViewF.OnEditGroupClick()</c></item>
+		/// </list>
 		/// </summary>
 		/// <param name="labelGroup">the new label for the <c>TileGroup</c></param>
 		/// <param name="labelGroup0">the old label of the <c>TileGroup</c></param>
@@ -79,8 +88,7 @@ namespace XCom
 		/// exist first.</remarks>
 		public static void EditTileGroup(string labelGroup, string labelGroup0)
 		{
-			TileGroups[labelGroup] = new TileGroup(labelGroup);
-			//or, AddTileGroup(labelGroup);
+			AddTileGroup(labelGroup);
 
 			foreach (var labelCategory in TileGroups[labelGroup0].Categories.Keys)
 			{
