@@ -140,7 +140,7 @@ namespace MapView.Forms.MainView
 				}
 
 				ObserverManager.ToolFactory.EnableEditors(_firstClick);
-				ObserverManager.ToolFactory.EnablePasters(_firstClick && _copy.descriptor != null);
+				ObserverManager.ToolFactory.EnablePasters(_firstClick && _copy.terrains != null);
 			}
 		}
 
@@ -173,13 +173,26 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private struct CopiedTerrainsStruct
 		{
-			/// <summary>
+/*			/// <summary>
 			/// The <c><see cref="Descriptor"/></c> of the
 			/// <c><see cref="MapFile"/></c> from which tiles are copied.
 			/// </summary>
 			/// <remarks>This pointer can cause a <c>Descriptor</c> to remain in
 			/// memory after user unloads a <c>MapFile</c>.</remarks>
-			internal Descriptor descriptor;
+			internal Descriptor descriptor; */
+
+			/// <summary>
+			/// <c>true</c> if <c><see cref="_file"/></c> hasn't changed since
+			/// the last Copy operation.
+			/// </summary>
+			/// <remarks>Set <c>true</c> when a Copy is performed. Set
+			/// <c>false</c> in
+			/// <c><see cref="SetMapFile()">SetMapFile()</see></c>.
+			/// 
+			/// 
+			/// Do not use a pointer to <c><see cref="Descriptor"/></c> since
+			/// that would prevent <c>GC</c> from releasing memory.</remarks>
+			internal bool isDescriptor;
 
 			/// <summary>
 			/// A <c>List</c> of the terrain-paths in order.
@@ -243,6 +256,8 @@ namespace MapView.Forms.MainView
 			{
 				_file.LocationSelected += OnLocationSelectedMain;
 				_file.LevelSelected    += OnLevelSelectedMain;
+
+				_copy.isDescriptor = false;
 			}
 		}
 
@@ -501,7 +516,9 @@ namespace MapView.Forms.MainView
 			{
 				ObserverManager.ToolFactory.EnablePasters();
 
-				Descriptor descriptor = _copy.descriptor = _file.Descriptor;
+				_copy.isDescriptor = true;
+
+				Descriptor descriptor = _file.Descriptor;
 
 				var terrains = new List<string>();
 				for (int i = 0; i != descriptor.Terrains.Count; ++i)
@@ -566,7 +583,7 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="FillSelectedQuadrants()">FillSelectedQuadrants()</see></c>.</remarks>
 		private void Paste()
 		{
-			if (_file != null && FirstClick && _copy.descriptor != null)
+			if (_file != null && FirstClick && _copy.terrains != null)
 			{
 				if (AreTerrainsetsCompatible())
 				{
@@ -666,9 +683,10 @@ namespace MapView.Forms.MainView
 		/// to allow a Paste operation without causing complete and utter mayhem</returns>
 		private bool AreTerrainsetsCompatible()
 		{
-			Descriptor descriptor = _file.Descriptor;
-			if (descriptor != _copy.descriptor)
+			if (!_copy.isDescriptor)
 			{
+				Descriptor descriptor = _file.Descriptor;
+
 				if (descriptor.Terrains.Count < _copy.terrains.Count)
 					return false;
 
