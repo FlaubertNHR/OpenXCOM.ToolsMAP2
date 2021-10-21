@@ -182,6 +182,19 @@ namespace XCom
 		}
 
 		/// <summary>
+		/// Gets the path_file without extension of a specified terrain-id.
+		/// </summary>
+		/// <param name="terid">the id of a terrain in
+		/// <c><see cref="Terrains"/></c></param>
+		/// <returns>the path_file string</returns>
+		/// <remarks>Used when copying tiles in <c>MainViewOverlay</c>.</remarks>
+		public string GetTerrainPathfile(int terid)
+		{
+			return Path.Combine(GetTerrainDirectory(Terrains[terid].Item2),
+													Terrains[terid].Item1);
+		}
+
+		/// <summary>
 		/// Creates the <c><see cref="McdRecord">McdRecords</see></c> and
 		/// <c><see cref="Spriteset"/></c> for a given terrain in this
 		/// <c>Descriptor</c> and returns an array of

@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 #endif
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 using DSShared;
@@ -139,7 +140,7 @@ namespace MapView.Forms.MainView
 				}
 
 				ObserverManager.ToolFactory.EnableEditors(_firstClick);
-				ObserverManager.ToolFactory.EnablePasters(_firstClick && _copied != null);
+				ObserverManager.ToolFactory.EnablePasters(_firstClick && _copy.descriptor != null);
 			}
 		}
 
@@ -164,6 +165,38 @@ namespace MapView.Forms.MainView
 
 		private int _cols, _rows;
 		#endregion Fields (graphics)
+
+
+		#region Structs
+		/// <summary>
+		/// This is MUTATABLE muahahahahahahaa
+		/// </summary>
+		private struct CopiedTerrainsStruct
+		{
+			/// <summary>
+			/// The <c><see cref="Descriptor"/></c> of the
+			/// <c><see cref="MapFile"/></c> from which tiles are copied.
+			/// </summary>
+			/// <remarks>This pointer can cause a <c>Descriptor</c> to remain in
+			/// memory after user unloads a <c>MapFile</c>.</remarks>
+			internal Descriptor descriptor;
+
+			/// <summary>
+			/// A <c>List</c> of the terrain-paths in order.
+			/// </summary>
+			internal IList<string> terrains;
+
+			/// <summary>
+			/// The first D is the cols-dimension and the second D stores the
+			/// part-ids of four <c><see cref="Tilepart">Tileparts</see></c> for
+			/// each row in the col.
+			/// </summary>
+			/// <remarks>A part-id of <c>-1</c> denotes that a <c>Tilepart</c>
+			/// is <c>null</c>.</remarks>
+			internal int[,] partids;
+		}
+		private CopiedTerrainsStruct _copy;
+		#endregion Structs
 
 
 		#region cTor
@@ -290,7 +323,8 @@ namespace MapView.Forms.MainView
 
 		#region Events and Methods for the edit-functions
 		/// <summary>
-		/// For subscription to toolstrip Editor button.
+		/// For subscription to toolstrip Editor button. Handles the
+		/// <c>Click</c> event on the Cut button.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -301,7 +335,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// For subscription to toolstrip Editor button.
+		/// For subscription to toolstrip Editor button. Handles the
+		/// <c>Click</c> event on the Copy button.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -311,7 +346,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// For subscription to toolstrip Editor button.
+		/// For subscription to toolstrip Editor button. Handles the
+		/// <c>Click</c> event on the Paste button.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -321,7 +357,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// For subscription to toolstrip Editor button.
+		/// For subscription to toolstrip Editor button. Handles the
+		/// <c>Click</c> event on the Delete button.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -331,7 +368,8 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// For subscription to toolstrip Editor button.
+		/// For subscription to toolstrip Editor button. Handles the
+		/// <c>Click</c> event on the Fill button.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -351,7 +389,6 @@ namespace MapView.Forms.MainView
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			//Logfile.Log("MainViewOverlay.OnKeyDown()");
-
 			Edit(e);
 		}
 
@@ -454,22 +491,8 @@ namespace MapView.Forms.MainView
 			}
 		}
 
-
-		private Dictionary<int, Tuple<string,string>> _copiedTerrains;
-
 		/// <summary>
-		/// The first D is the cols-dimension and the second D stores the
-		/// part-ids of four <c><see cref="Tilepart">Tileparts</see></c>.
-		/// </summary>
-		/// <remarks>A part-id of <c>-1</c> denotes that a <c>Tilepart</c> is
-		/// <c>null</c>.</remarks>
-		private int[,] _copied;
-
-		/// <summary>
-		/// Copies the part-ids of selected
-		/// <c><see cref="MapTile">MapTiles'</see></c>
-		/// <c><see cref="Tilepart">Tileparts</see></c> to the
-		/// <c><see cref="_copied">_copied</see></c> 2d-array.
+		/// Updates data in <c><see cref="_copy"/></c>.
 		/// </summary>
 		/// <remarks>Disrespects quadrant visibility.</remarks>
 		private void Copy()
@@ -478,13 +501,20 @@ namespace MapView.Forms.MainView
 			{
 				ObserverManager.ToolFactory.EnablePasters();
 
-				_copiedTerrains = _file.Descriptor.Terrains;
+				Descriptor descriptor = _copy.descriptor = _file.Descriptor;
+
+				var terrains = new List<string>();
+				for (int i = 0; i != descriptor.Terrains.Count; ++i)
+				{
+					terrains.Add(descriptor.GetTerrainPathfile(i));
+				}
+				_copy.terrains = terrains;
 
 				Point a = GetDragBeg_abs();
 				Point b = GetDragEnd_abs();
 
-				_copied = new int[b.X - a.X + 1,		// for each element of the cols-dimension
-								 (b.Y - a.Y + 1) * 4];	// each element of the rows-dimension has 4 tile-ids
+				var partids = new int[b.X - a.X + 1,		// for each element of the cols-dimension
+									 (b.Y - a.Y + 1) * 4];	// each element of the rows-dimension has 4 part-ids
 
 				MapTile tile;
 
@@ -492,39 +522,40 @@ namespace MapView.Forms.MainView
 				for (int col = a.X;        col <= b.X; ++col)
 				for (int row = a.Y, r = 0; row <= b.Y; ++row)
 				{
-					if ((tile = _file.GetTile(col, row)) != null)
-					{
-						if (tile.Floor != null) id = tile.Floor.SetId;
-						else                    id = -1;
+					tile = _file.GetTile(col, row);
 
-						_copied[col - a.X,
-								row - a.Y + r] = id;
+					if (tile.Floor != null) id = tile.Floor.SetId;
+					else                    id = -1;
 
-						if (tile.West != null) id = tile.West.SetId;
-						else                   id = -1;
+					partids[col - a.X,
+							row - a.Y + r] = id;
 
-						_copied[col - a.X,
-								row - a.Y + ++r] = id;
+					if (tile.West != null) id = tile.West.SetId;
+					else                   id = -1;
 
-						if (tile.North != null) id = tile.North.SetId;
-						else                    id = -1;
+					partids[col - a.X,
+							row - a.Y + ++r] = id;
 
-						_copied[col - a.X,
-								row - a.Y + ++r] = id;
+					if (tile.North != null) id = tile.North.SetId;
+					else                    id = -1;
 
-						if (tile.Content != null) id = tile.Content.SetId;
-						else                      id = -1;
+					partids[col - a.X,
+							row - a.Y + ++r] = id;
 
-						_copied[col - a.X,
-								row - a.Y + ++r] = id;
-					}
+					if (tile.Content != null) id = tile.Content.SetId;
+					else                      id = -1;
+
+					partids[col - a.X,
+							row - a.Y + ++r] = id;
 				}
+				_copy.partids = partids;
 			}
 		}
 
 		/// <summary>
-		/// Pastes the <c><see cref="_copied"/></c> 2d-array of part-ids to the
-		/// currently selected location.
+		/// Pastes the
+		/// <c><see cref="CopiedTerrainsStruct.partids">CopiedTerrainsStruct.partids</see></c>
+		/// 2d-array of part-ids to the currently selected location.
 		/// </summary>
 		/// <remarks>The terrainset of the current tileset needs to be identical
 		/// to the terrainset of the tileset from which parts were copied (or
@@ -535,49 +566,51 @@ namespace MapView.Forms.MainView
 		/// <c><see cref="FillSelectedQuadrants()">FillSelectedQuadrants()</see></c>.</remarks>
 		private void Paste()
 		{
-			if (_file != null && FirstClick && _copied != null)
+			if (_file != null && FirstClick && _copy.descriptor != null)
 			{
-				if (AllowPaste(_copiedTerrains, _file.Descriptor.Terrains))
+				if (AreTerrainsetsCompatible())
 				{
 					MainViewF.that.MapChanged = true;
 
 					MapTile tile;
 
+					int[,] partids = _copy.partids;
+
 					for (int
 							col = DragBeg.X, c = 0;
-							col != _file.Cols && col - DragBeg.X < _copied.GetLength(0);		// for each element of the cols-dimension
+							col != _file.Cols && col - DragBeg.X < partids.GetLength(0);		// for each element of the cols-dimension
 							++col, ++c)
 					for (int
 							row = DragBeg.Y, r = 0;
-							row != _file.Rows && row - DragBeg.Y < _copied.GetLength(1) / 4;	// each element of the rows-dimension has 4 tile-ids
+							row != _file.Rows && row - DragBeg.Y < partids.GetLength(1) / 4;	// each element of the rows-dimension has 4 tile-ids
 							++row, ++r)
 					{
 						tile = _file.GetTile(col, row);
 
 						if (_visFloor)
 						{
-							if (_copied[c,r] != -1) tile.Floor = _file.Parts[_copied[c,r]];
+							if (partids[c,r] != -1) tile.Floor = _file.Parts[partids[c,r]];
 							else                    tile.Floor = null;
 						}
 
 						++r;
 						if (_visWest)
 						{
-							if (_copied[c,r] != -1) tile.West = _file.Parts[_copied[c,r]];
+							if (partids[c,r] != -1) tile.West = _file.Parts[partids[c,r]];
 							else                    tile.West = null;
 						}
 
 						++r;
 						if (_visNorth)
 						{
-							if (_copied[c,r] != -1) tile.North = _file.Parts[_copied[c,r]];
+							if (partids[c,r] != -1) tile.North = _file.Parts[partids[c,r]];
 							else                    tile.North = null;
 						}
 
 						++r;
 						if (_visContent)
 						{
-							if (_copied[c,r] != -1) tile.Content = _file.Parts[_copied[c,r]];
+							if (partids[c,r] != -1) tile.Content = _file.Parts[partids[c,r]];
 							else                    tile.Content = null;
 						}
 
@@ -590,26 +623,30 @@ namespace MapView.Forms.MainView
 				}
 				else
 				{
-					string copyable = "copied:";
-					foreach (var key in _copiedTerrains)
+					var sb = new StringBuilder();
+
+					sb.Append("copied:");
+					foreach (var terrain in _copy.terrains)
 					{
-						copyable += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
-								  + GetBasepathDescript(key.Value.Item2);
+						sb.AppendLine();
+						sb.Append(terrain);
 					}
 
-					copyable += Environment.NewLine + Environment.NewLine
-							  + "currently allocated:";
-					foreach (var key in _file.Descriptor.Terrains)
+					sb.AppendLine();
+					sb.AppendLine();
+
+					sb.Append("currently allocated:");
+					for (int i = 0; i != _file.Descriptor.Terrains.Count; ++i)
 					{
-						copyable += Environment.NewLine + key.Value.Item1 + " - " // TODO: Align w/ tabs.
-								  + GetBasepathDescript(key.Value.Item2);
+						sb.AppendLine();
+						sb.Append(_file.Descriptor.GetTerrainPathfile(i));
 					}
 
 					using (var f = new Infobox(
 											"Allocated terrains differ",
 											Infobox.SplitString("The list of terrains that were copied are too"
 													+ " different from the terrains in the currently loaded Map."),
-											copyable,
+											sb.ToString(),
 											InfoboxType.Error))
 					{
 						f.ShowDialog(this);
@@ -619,44 +656,29 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Checks if two terrain-definitions are or are nearly identical.
+		/// Compares the terrainset of the currently loaded
+		/// <c><see cref="MapFile">MapFile's</see></c>
+		/// <c><see cref="Descriptor"/></c> with the terrainset defined in
+		/// <c><see cref="_copy"/></c>. Checks if two terrain definitions are or
+		/// are nearly identical.
 		/// </summary>
-		/// <param name="src">source terrain definition</param>
-		/// <param name="dst">destination terrain definition</param>
-		/// <returns></returns>
-		/// <remarks>It's okay if 'dst' has more terrains allocated than 'src'.</remarks>
-		private static bool AllowPaste(
-				IDictionary<int, Tuple<string,string>> src,
-				IDictionary<int, Tuple<string,string>> dst)
+		/// <returns><c>true</c> if the two terrain definitions are close enough
+		/// to allow a Paste operation without causing complete and utter mayhem</returns>
+		private bool AreTerrainsetsCompatible()
 		{
-			if (src.Keys.Count > dst.Keys.Count)
-				return false;
-
-			for (int i = 0; i != src.Keys.Count; ++i)
+			Descriptor descriptor = _file.Descriptor;
+			if (descriptor != _copy.descriptor)
 			{
-				if (   src[i].Item1 != dst[i].Item1
-					|| src[i].Item2 != dst[i].Item2) // TODO: Compare Item2 by expanding it.
-				{
+				if (descriptor.Terrains.Count < _copy.terrains.Count)
 					return false;
+
+				for (int i = 0; i != _copy.terrains.Count; ++i)
+				{
+					if (descriptor.GetTerrainPathfile(i) != _copy.terrains[i])
+						return false;
 				}
 			}
 			return true;
-		}
-
-		/// <summary>
-		/// Gets a string descripting a specified basepath.
-		/// </summary>
-		/// <param name="basepath"></param>
-		/// <returns></returns>
-		private static string GetBasepathDescript(string basepath)
-		{
-			if (String.IsNullOrEmpty(basepath))
-				return "config basepath";
-
-			if (basepath == GlobalsXC.BASEPATH)
-				return "tileset basepath";
-
-			return basepath;
 		}
 
 		/// <summary>
