@@ -1152,7 +1152,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Handles key-down event at the Form level.
+		/// Overrides the <c>KeyDown</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Requires <c>KeyPreview</c>.
@@ -1196,9 +1196,8 @@ namespace MapView
 
 						if (_selected.Level == TREELEVEL_TILESET)
 						{
-							var descriptor = _selected.Tag as Descriptor;
 							if (   MapFile == null
-								|| MapFile.Descriptor != descriptor)
+								|| MapFile.Descriptor != _selected.Tag as Descriptor)
 							{
 								_dontbeeptype = DontBeepType.LoadDescriptor;
 								BeginInvoke(DontBeepEvent);
@@ -3170,16 +3169,14 @@ namespace MapView
 			if (e.Node == _selected)
 			{
 				var descriptor = _selected.Tag as Descriptor;
-				if (descriptor != null)
+				if (descriptor != null
+					&& (   MapFile == null
+						|| MapFile.Descriptor != descriptor))
 				{
-					if (   MapFile == null
-						|| MapFile.Descriptor != descriptor)
-					{
-						ClearSearched();
+					ClearSearched();
 
-						_loadReady = LOADREADY_STAGE_2;
-						LoadSelectedDescriptor(true);
-					}
+					_loadReady = LOADREADY_STAGE_2;
+					LoadSelectedDescriptor(true);
 				}
 			}
 		}
