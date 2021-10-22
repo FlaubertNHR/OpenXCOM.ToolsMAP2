@@ -160,7 +160,7 @@ namespace MapView.Forms.Observers
 		/// <c>RouteView</c>; the real <c>RoutesChanged</c> flag is stored in
 		/// <c>MapFile</c>. reasons.
 		/// </summary>
-		private bool RoutesChanged // TODO: static
+		private bool RoutesChanged
 		{
 			set { bu_Save.Enabled = (_file.RoutesChanged = value); }
 		}
@@ -1867,9 +1867,7 @@ namespace MapView.Forms.Observers
 							  NodeSelected.Lev).Node = null;
 				_file.Routes.DeleteNode(NodeSelected);
 
-				ObserverManager.RouteView   .Control     .DeselectNode();
-				ObserverManager.TopRouteView.ControlRoute.DeselectNode();
-
+				DeselectNodeStatic();
 				UpdateNodeInfo();
 
 				gb_NodeData.Enabled =
@@ -1904,16 +1902,20 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Deselects any currently selected node.
 		/// </summary>
-		/// <param name="clearloc"></param>
-		internal void DeselectNode(bool clearloc = true)
+		/// <param name="clearloc"><c>true</c> if the node is deleted from
+		/// <c>RouteView</c> itself - <c>false</c> if a location is selected in
+		/// <c>MainView</c> or <c>TopView</c> (even if it's still the node's
+		/// location)</param>
+		/// <seealso cref="DeselectNodeStatic()"><c>DeselectNodeStatic()</c></seealso>
+		private void DeselectNode(bool clearloc = true)
 		{
 			NodeSelected = null;
 
-			if (clearloc) // basically the node is deleted from RouteView itself
+			if (clearloc)
 			{
 				RouteControl.Select();
 			}
-			else // basically a location is selected in MainView or TopView (even if it's still the node's location)
+			else
 			{
 				UpdateNodeInfo();
 
@@ -1922,6 +1924,21 @@ namespace MapView.Forms.Observers
 
 				RouteControl.Invalidate();
 			}
+		}
+
+		/// <summary>
+		/// Synchs
+		/// <c><see cref="DeselectNode()">DeselectNode()</see></c> in
+		/// <c>TopView</c> and <c>TopRouteView</c>.
+		/// </summary>
+		/// <param name="clearloc"><c>true</c> if the node is deleted from
+		/// <c>RouteView</c> itself - <c>false</c> if a location is selected in
+		/// <c>MainView</c> or <c>TopView</c> (even if it's still the node's
+		/// location)</param>
+		internal static void DeselectNodeStatic(bool clearloc = true)
+		{
+			ObserverManager.RouteView   .Control     .DeselectNode(clearloc);
+			ObserverManager.TopRouteView.ControlRoute.DeselectNode(clearloc);
 		}
 
 
@@ -2064,8 +2081,7 @@ namespace MapView.Forms.Observers
 						{
 							RoutesChangedCoordinator = true;
 
-							ObserverManager.RouteView   .Control     .DeselectNode();
-							ObserverManager.TopRouteView.ControlRoute.DeselectNode();
+							DeselectNodeStatic();
 
 							_file.ClearRouteNodes();
 							_file.Routes = routes;

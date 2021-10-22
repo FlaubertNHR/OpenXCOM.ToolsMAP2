@@ -953,8 +953,7 @@ namespace MapView.Forms.MainView
 							int r = _file.Location.Row + loc.Y;
 							if (r > -1 && r < _file.Rows)
 							{
-								ObserverManager.RouteView   .Control     .DeselectNode(false);
-								ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+								RouteView.DeselectNodeStatic(false);
 
 								_keyDeltaX =
 								_keyDeltaY = 0;
@@ -998,8 +997,7 @@ namespace MapView.Forms.MainView
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						ObserverManager.RouteView   .Control     .DeselectNode(false);
-						ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+						RouteView.DeselectNodeStatic(false);
 
 						_targeterForced = !top;
 
@@ -1097,8 +1095,7 @@ namespace MapView.Forms.MainView
 						if (   _col > -1 && _col < _file.Cols
 							&& _row > -1 && _row < _file.Rows)
 						{
-							ObserverManager.RouteView   .Control     .DeselectNode(false);
-							ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+							RouteView.DeselectNodeStatic(false);
 
 							_keyDeltaX =
 							_keyDeltaY = 0;

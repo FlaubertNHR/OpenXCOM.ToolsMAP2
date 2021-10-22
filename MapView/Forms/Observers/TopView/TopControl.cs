@@ -499,8 +499,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>Helper for <c><see cref="OnMouseDown()"/></c>.</remarks>
 		private void SelectMapLocation()
 		{
-			ObserverManager.RouteView   .Control     .DeselectNode(false);
-			ObserverManager.TopRouteView.ControlRoute.DeselectNode(false);
+			RouteView.DeselectNodeStatic(false);
 
 			MainViewOverlay.that._keyDeltaX =
 			MainViewOverlay.that._keyDeltaY = 0;
