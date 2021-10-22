@@ -2544,12 +2544,13 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>A MouseDown event occurs *before* the treeview's
-		/// BeforeSelect and AfterSelected events occur .... A MouseClick event
-		/// occurs *after* the treeview's BeforeSelect and AfterSelected events
-		/// occur. So the selected Map will change *before* a context-menu is
-		/// shown, which is good. A MouseClick event won't work if the tree is
-		/// blank. So use MouseDown.</remarks>
+		/// <remarks>A <c>MouseDown</c> event occurs before <c>TreeView's</c>
+		/// <c>BeforeSelect</c> and <c>AfterSelected</c> events occur .... A
+		/// <c>MouseClick</c> event occurs after <c>TreeView's</c>
+		/// <c>BeforeSelect</c> and <c>AfterSelected</c> events occur. So the
+		/// selected Map will change before a context-menu is shown, which is
+		/// good. A <c>MouseClick</c> event won't work if the tree is blank. So
+		/// use <c>MouseDown</c>.</remarks>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnMapTreeMouseDown() _bypassChanged= " + _bypassChanged);
