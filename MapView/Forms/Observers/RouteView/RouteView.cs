@@ -1058,10 +1058,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private static void EnableEditButtons()
 		{
-			bool valid = NodeSelected != null;
-
-			ObserverManager.RouteView   .Control     .tsmi_ClearLinks.Enabled =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_ClearLinks.Enabled =
+			bool nodeselected = NodeSelected != null;
 
 			ObserverManager.RouteView   .Control     .bu_Cut         .Enabled =
 			ObserverManager.TopRouteView.ControlRoute.bu_Cut         .Enabled =
@@ -1070,10 +1067,10 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlRoute.bu_Copy        .Enabled =
 
 			ObserverManager.RouteView   .Control     .bu_Delete      .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Delete      .Enabled = valid;
+			ObserverManager.TopRouteView.ControlRoute.bu_Delete      .Enabled = nodeselected;
 
 			ObserverManager.RouteView   .Control     .bu_Paste       .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Paste       .Enabled = valid && _copynodedata.unittype != -1;
+			ObserverManager.TopRouteView.ControlRoute.bu_Paste       .Enabled = nodeselected && _copynodedata.unittype != -1;
 		}
 
 
@@ -1925,8 +1922,6 @@ namespace MapView.Forms.Observers
 
 				RouteControl.Invalidate();
 			}
-
-			tsmi_ClearLinks.Enabled = false;
 		}
 
 
@@ -2105,8 +2100,12 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnEditOpening(object sender, EventArgs e)
 		{
-			tsmi_LowerNode.Enabled = (NodeSelected != null && NodeSelected.Lev != _file.Levs - 1);
-			tsmi_RaiseNode.Enabled = (NodeSelected != null && NodeSelected.Lev != 0);
+			bool nodeselected = NodeSelected != null;
+
+			tsmi_RaiseNode.Enabled = nodeselected && NodeSelected.Lev != 0;
+			tsmi_LowerNode.Enabled = nodeselected && NodeSelected.Lev != _file.Levs - 1;
+
+			tsmi_ClearLinks.Enabled = nodeselected;
 		}
 
 
