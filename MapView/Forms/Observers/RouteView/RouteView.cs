@@ -921,7 +921,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="args"></param>
-		internal void OnRouteControlMouseMove(object sender, MouseEventArgs args)
+		private void OnRouteControlMouseMove(object sender, MouseEventArgs args)
 		{
 			RouteControl.SetOver(new Point(args.X, args.Y));
 
