@@ -20,8 +20,9 @@ namespace MapView.Forms.Observers
 		private ToolStripMenuItem tsmi_RaiseNode;
 		private ToolStripMenuItem tsmi_LowerNode;
 		private ToolStripSeparator tss_1;
-		private ToolStripMenuItem tsmi_Rank0;
 		private ToolStripMenuItem tsmi_ClearLinks;
+		private ToolStripSeparator tss_2;
+		private ToolStripMenuItem tsmi_Rank0;
 		private ToolStripMenuItem tsmi_RecalcDist;
 
 		private ToolStripDropDownButton tsddb_Debug;
@@ -127,8 +128,9 @@ namespace MapView.Forms.Observers
 			this.tsmi_RaiseNode = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_LowerNode = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_1 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsmi_Rank0 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_ClearLinks = new System.Windows.Forms.ToolStripMenuItem();
+			this.tss_2 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsmi_Rank0 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_RecalcDist = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddb_Debug = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmi_TestPositions = new System.Windows.Forms.ToolStripMenuItem();
@@ -258,8 +260,9 @@ namespace MapView.Forms.Observers
 			this.tsmi_RaiseNode,
 			this.tsmi_LowerNode,
 			this.tss_1,
-			this.tsmi_Rank0,
 			this.tsmi_ClearLinks,
+			this.tss_2,
+			this.tsmi_Rank0,
 			this.tsmi_RecalcDist});
 			this.tsddb_Edit.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tsddb_Edit.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -289,19 +292,24 @@ namespace MapView.Forms.Observers
 			this.tss_1.Name = "tss_1";
 			this.tss_1.Size = new System.Drawing.Size(210, 6);
 			// 
-			// tsmi_Rank0
-			// 
-			this.tsmi_Rank0.Name = "tsmi_Rank0";
-			this.tsmi_Rank0.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_Rank0.Text = "&Zero all noderanks ...";
-			this.tsmi_Rank0.Click += new System.EventHandler(this.OnRank0Click);
-			// 
 			// tsmi_ClearLinks
 			// 
 			this.tsmi_ClearLinks.Name = "tsmi_ClearLinks";
 			this.tsmi_ClearLinks.Size = new System.Drawing.Size(213, 22);
 			this.tsmi_ClearLinks.Text = "&Clear current Link data ...";
 			this.tsmi_ClearLinks.Click += new System.EventHandler(this.OnClearLinksClick);
+			// 
+			// tss_2
+			// 
+			this.tss_2.Name = "tss_2";
+			this.tss_2.Size = new System.Drawing.Size(210, 6);
+			// 
+			// tsmi_Rank0
+			// 
+			this.tsmi_Rank0.Name = "tsmi_Rank0";
+			this.tsmi_Rank0.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_Rank0.Text = "&Zero all noderanks ...";
+			this.tsmi_Rank0.Click += new System.EventHandler(this.OnRank0Click);
 			// 
 			// tsmi_RecalcDist
 			// 
