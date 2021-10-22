@@ -279,8 +279,7 @@ namespace MapView.Forms.Observers
 				if (   ObserverManager.RouteView   .Control     .RouteControl._col == -1
 					&& ObserverManager.TopRouteView.ControlRoute.RouteControl._col == -1)
 				{
-					ObserverManager.RouteView   .Control     .ClearOveredInfo();
-					ObserverManager.TopRouteView.ControlRoute.ClearOveredInfo();
+					RouteView.ClearOveredInfoStatic();
 				}
 			}
 		}

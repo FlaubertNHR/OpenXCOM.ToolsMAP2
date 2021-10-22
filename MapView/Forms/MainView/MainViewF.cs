@@ -1814,8 +1814,7 @@ namespace MapView
 
 						_overlay.FirstClick = false;
 
-						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
-						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
+						RouteView.ClearSelectedInfoStatic();
 
 						ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.Levs);
 
@@ -1825,8 +1824,7 @@ namespace MapView
 
 						ObserverManager.AssignMapfile(MapFile); // TODO: That is overkill ... the pointer to the current MapFile does not change.
 
-						ObserverManager.TopView     .Control   .TopControl.ClearSelectorLozenge();
-						ObserverManager.TopRouteView.ControlTop.TopControl.ClearSelectorLozenge();
+						TopControl.ClearSelectorLozengeStatic();
 
 						if (ScanG != null) // update ScanG viewer if open
 							ScanG.LoadMapfile(MapFile);
@@ -3305,8 +3303,7 @@ namespace MapView
 						if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
 						file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
-						ObserverManager.RouteView   .Control     .ClearSelectedInfo();
-						ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
+						RouteView.ClearSelectedInfoStatic();
 
 						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
 						Optionables.OpenDoors = false;

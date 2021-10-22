@@ -246,10 +246,22 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Clears the selector-lozenge.
 		/// </summary>
+		/// <seealso cref="ClearSelectorLozengeStatic()"><c>ClearSelectorLozengeStatic()</c></seealso>
 		internal void ClearSelectorLozenge()
 		{
 			_col =
 			_row = -1;
+		}
+
+		/// <summary>
+		/// Synchs
+		/// <c><see cref="ClearSelectorLozenge()">ClearSelectorLozenge()</see></c>
+		/// in <c>TopView</c> and <c>TopRouteView</c>.
+		/// </summary>
+		internal static void ClearSelectorLozengeStatic()
+		{
+			ObserverManager.TopView     .Control   .TopControl.ClearSelectorLozenge();
+			ObserverManager.TopRouteView.ControlTop.TopControl.ClearSelectorLozenge();
 		}
 
 		/// <summary>

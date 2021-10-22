@@ -589,17 +589,41 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Clears the selected tile-info text when another Map loads.
 		/// </summary>
-		internal void ClearOveredInfo()
+		/// <seealso cref="ClearOveredInfoStatic()"><c>ClearOveredInfoStatic()</c></seealso>
+		private void ClearOveredInfo()
 		{
 			la_Over.Text = String.Empty;
 		}
 
 		/// <summary>
+		/// Synchs
+		/// <c><see cref="ClearOveredInfo()">ClearOveredInfo()</see></c>
+		/// in <c>TopView</c> and <c>TopRouteView</c>.
+		/// </summary>
+		internal static void ClearOveredInfoStatic()
+		{
+			ObserverManager.RouteView   .Control     .ClearOveredInfo();
+			ObserverManager.TopRouteView.ControlRoute.ClearOveredInfo();
+		}
+
+		/// <summary>
 		/// Clears the selected tile-info text when another Map loads.
 		/// </summary>
-		internal void ClearSelectedInfo()
+		/// <seealso cref="ClearSelectedInfoStatic()"><c>ClearSelectedInfoStatic()</c></seealso>
+		private void ClearSelectedInfo()
 		{
 			la_Selected.Text = String.Empty;
+		}
+
+		/// <summary>
+		/// Synchs
+		/// <c><see cref="ClearSelectedInfo()">ClearSelectedInfo()</see></c>
+		/// in <c>TopView</c> and <c>TopRouteView</c>.
+		/// </summary>
+		internal static void ClearSelectedInfoStatic()
+		{
+			ObserverManager.RouteView   .Control     .ClearSelectedInfo();
+			ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
 		}
 
 		/// <summary>
