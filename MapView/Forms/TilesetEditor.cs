@@ -1366,7 +1366,7 @@ namespace MapView
 		/// </summary>
 		private void GlobalChangeLabels()
 		{
-			Descriptor d;
+			Descriptor descript;
 
 			var changes = new List<Tuple<Descriptor, string>>(); // ie. Don't screw up the groups-iterator.
 			foreach (var @group in TileGroupManager.TileGroups)
@@ -1379,7 +1379,7 @@ namespace MapView
 					if (   descriptor.Label    == TilesetLabel_0
 						&& descriptor.Basepath == TilesetBasepath)
 					{
-						var keyCategory = category.Key;
+						string keyCategory = category.Key;
 						if (TilesetExistsInCategory(@group.Key, keyCategory))
 						{
 							// NOTE: In practice this will not fire; it gets superceded by
@@ -1413,13 +1413,13 @@ namespace MapView
 						}
 						else
 						{
-							d = new Descriptor(
-											TilesetLabel,
-											descriptor.Basepath,
-											descriptor.Terrains,
-											descriptor.GroupType,
-											descriptor.BypassRecordsExceeded);
-							changes.Add(new Tuple<Descriptor, string>(d, keyCategory));
+							descript = new Descriptor(
+												TilesetLabel,
+												descriptor.Basepath,
+												descriptor.Terrains,
+												descriptor.GroupType,
+												descriptor.BypassRecordsExceeded);
+							changes.Add(new Tuple<Descriptor, string>(descript, keyCategory));
 						}
 					}
 				}
