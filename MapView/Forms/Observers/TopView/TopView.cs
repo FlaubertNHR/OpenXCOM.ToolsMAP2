@@ -31,11 +31,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
-		internal const int Vis_FLOOR   = 0x1; // flags for parttype visibility ->
-		internal const int Vis_WEST    = 0x2;
-		internal const int Vis_NORTH   = 0x4;
-		internal const int Vis_CONTENT = 0x8;
-
 		/// <summary>
 		/// The TestPartslots dialog - a nonmodal <see cref="Infobox"/>.
 		/// </summary>
