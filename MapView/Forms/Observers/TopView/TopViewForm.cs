@@ -43,7 +43,6 @@ namespace MapView.Forms.Observers
 			Control.Name     = "TopViewControl";
 			Control.Dock     = DockStyle.Fill;
 			Control.TabIndex = 0;
-			Control.Tag      = "TOP";
 
 			Controls.Add(Control);
 		}
@@ -63,8 +62,6 @@ namespace MapView.Forms.Observers
 
 			Control.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
 			Control.TopControl.Focus();
-
-//			base.OnActivated(e);
 		}
 
 		/// <summary>
@@ -170,7 +167,6 @@ namespace MapView.Forms.Observers
 				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
 				Control.QuadrantControl.doMouseDown(args, slot);
 			}
-//			base.OnKeyDown(e);
 		}
 
 		/// <summary>

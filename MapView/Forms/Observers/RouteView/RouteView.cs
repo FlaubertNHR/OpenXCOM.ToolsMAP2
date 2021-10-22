@@ -85,6 +85,8 @@ namespace MapView.Forms.Observers
 			LinkType.ExitWest,
 			LinkType.NotUsed
 		};
+
+		internal bool isToproute;
 		#endregion Fields
 
 
@@ -1148,10 +1150,10 @@ namespace MapView.Forms.Observers
 				RoutesChangedCoordinator = true;
 				NodeSelected.Unit = (UnitType)co_Type.SelectedItem;
 
-				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.co_Type.SelectedIndex = co_Type.SelectedIndex;
-				else //if (Tag == "TOPROUTE")
+				if (isToproute)
 					ObserverManager.RouteView.Control.co_Type.SelectedIndex = co_Type.SelectedIndex;
+				else
+					ObserverManager.TopRouteView.ControlRoute.co_Type.SelectedIndex = co_Type.SelectedIndex;
 			}
 		}
 
@@ -1187,10 +1189,10 @@ namespace MapView.Forms.Observers
 
 					NodeSelected.OobRank = (byte)0;
 
-					if (Tag as String == "ROUTE")
-						ObserverManager.TopRouteView.ControlRoute.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
-					else //if (Tag == "TOPROUTE")
+					if (isToproute)
 						ObserverManager.RouteView.Control.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
+					else
+						ObserverManager.TopRouteView.ControlRoute.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
 				}
 			}
 		}
@@ -1212,10 +1214,10 @@ namespace MapView.Forms.Observers
 
 				_curSpawnweight = NodeSelected.Spawn;
 
-				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.co_Spawn.SelectedIndex = co_Spawn.SelectedIndex;
-				else //if (Tag == "TOPROUTE")
+				if (isToproute)
 					ObserverManager.RouteView.Control.co_Spawn.SelectedIndex = co_Spawn.SelectedIndex;
+				else
+					ObserverManager.TopRouteView.ControlRoute.co_Spawn.SelectedIndex = co_Spawn.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}
@@ -1233,10 +1235,10 @@ namespace MapView.Forms.Observers
 				RoutesChangedCoordinator = true;
 				NodeSelected.Patrol = (PatrolPriority)((Pterodactyl)co_Patrol.SelectedItem).O;
 
-				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.co_Patrol.SelectedIndex = co_Patrol.SelectedIndex;
-				else //if (Tag == "TOPROUTE")
+				if (isToproute)
 					ObserverManager.RouteView.Control.co_Patrol.SelectedIndex = co_Patrol.SelectedIndex;
+				else
+					ObserverManager.TopRouteView.ControlRoute.co_Patrol.SelectedIndex = co_Patrol.SelectedIndex;
 
 				RefreshControls(); // update the importance bar
 			}
@@ -1254,10 +1256,10 @@ namespace MapView.Forms.Observers
 				RoutesChangedCoordinator = true;
 				NodeSelected.Attack = (AttackBase)((Pterodactyl)co_Attack.SelectedItem).O;
 
-				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.co_Attack.SelectedIndex = co_Attack.SelectedIndex;
-				else //if (Tag == "TOPROUTE")
+				if (isToproute)
 					ObserverManager.RouteView.Control.co_Attack.SelectedIndex = co_Attack.SelectedIndex;
+				else
+					ObserverManager.TopRouteView.ControlRoute.co_Attack.SelectedIndex = co_Attack.SelectedIndex;
 			}
 		}
 		#endregion Events (NodeData)
@@ -1357,16 +1359,7 @@ namespace MapView.Forms.Observers
 
 				RouteControl.SetSpot(new Point(-1,-1));
 
-				if (Tag as String == "ROUTE")
-				{
-					ObserverManager.TopRouteView.ControlRoute.TransferDestination(
-																				slot,
-																				co.SelectedIndex,
-																				la_dist.Text,
-																				enable,
-																				bu_go.Text);
-				}
-				else //if (Tag == "TOPROUTE")
+				if (isToproute)
 				{
 					ObserverManager.RouteView.Control.TransferDestination(
 																		slot,
@@ -1374,6 +1367,15 @@ namespace MapView.Forms.Observers
 																		la_dist.Text,
 																		enable,
 																		bu_go.Text);
+				}
+				else
+				{
+					ObserverManager.TopRouteView.ControlRoute.TransferDestination(
+																				slot,
+																				co.SelectedIndex,
+																				la_dist.Text,
+																				enable,
+																				bu_go.Text);
 				}
 
 				RefreshControls();
@@ -1485,10 +1487,10 @@ namespace MapView.Forms.Observers
 
 				NodeSelected[slot].Unit = (UnitType)co.SelectedItem;
 
-				if (Tag as String == "ROUTE")
-					ObserverManager.TopRouteView.ControlRoute.TransferUnitType(slot, co.SelectedIndex);
-				else //if (Tag == "TOPROUTE")
+				if (isToproute)
 					ObserverManager.RouteView.Control.TransferUnitType(slot, co.SelectedIndex);
+				else
+					ObserverManager.TopRouteView.ControlRoute.TransferUnitType(slot, co.SelectedIndex);
 			}
 		}
 
@@ -1946,14 +1948,10 @@ namespace MapView.Forms.Observers
 			if (!tsb.Checked)
 			{
 				RouteView alt;
-				if (Tag as String == "ROUTE")
-				{
-					alt = ObserverManager.TopRouteView.ControlRoute;
-				}
-				else //if (Tag as String == "TOPROUTE")
-				{
+				if (isToproute)
 					alt = ObserverManager.RouteView.Control;
-				}
+				else
+					alt = ObserverManager.TopRouteView.ControlRoute;
 
 					tsb_connect0.Checked =
 				alt.tsb_connect0.Checked =
@@ -1990,7 +1988,7 @@ namespace MapView.Forms.Observers
 						tsb_connect1.Image =
 					alt.tsb_connect1.Image = Properties.Resources.connect_1_blue;
 				}
-				else //if (tsb == tsb_connect2)
+				else // tsb == tsb_connect2
 				{
 					_conType = ConnectNodesType.TwoWay;
 

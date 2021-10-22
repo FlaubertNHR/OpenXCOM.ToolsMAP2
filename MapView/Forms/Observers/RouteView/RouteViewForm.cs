@@ -41,7 +41,6 @@ namespace MapView.Forms.Observers
 			Control.Name     = "RouteViewControl";
 			Control.Dock     = DockStyle.Fill;
 			Control.TabIndex = 0;
-			Control.Tag      = "ROUTE";
 
 			Controls.Add(Control);
 		}
@@ -56,8 +55,6 @@ namespace MapView.Forms.Observers
 		protected override void OnShown(EventArgs e)
 		{
 			Control.ActivateConnector();
-
-//			base.OnShown(e);
 		}
 
 		/// <summary>
@@ -69,8 +66,6 @@ namespace MapView.Forms.Observers
 		{
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
-
-//			base.OnActivated(e);
 		}
 
 		/// <summary>

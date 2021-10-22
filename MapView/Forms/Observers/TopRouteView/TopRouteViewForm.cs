@@ -55,17 +55,16 @@ namespace MapView.Forms.Observers
 			tpBorder.TabPageBorder_init();
 
 			ControlTop = new TopView();
-			ControlTop.Name       = "TopViewControl";
-			ControlTop.Dock       = DockStyle.Fill;
-			ControlTop.TabIndex   = 0;
-			ControlTop.Tag        = "TOPROUTE";
+			ControlTop.Name     = "TopViewControl";
+			ControlTop.Dock     = DockStyle.Fill;
+			ControlTop.TabIndex = 0;
 			tp_Top.Controls.Add(ControlTop);
 
 			ControlRoute = new RouteView();
-			ControlRoute.Name     = "RouteViewControl";
-			ControlRoute.Dock     = DockStyle.Fill;
-			ControlRoute.TabIndex = 0;
-			ControlRoute.Tag      = "TOPROUTE";
+			ControlRoute.Name       = "RouteViewControl";
+			ControlRoute.Dock       = DockStyle.Fill;
+			ControlRoute.TabIndex   = 0;
+			ControlRoute.isToproute = true;
 			tp_Route.Controls.Add(ControlRoute);
 		}
 		#endregion cTor
@@ -79,8 +78,6 @@ namespace MapView.Forms.Observers
 		protected override void OnShown(EventArgs e)
 		{
 			ControlRoute.ActivateConnector();
-
-//			base.OnShown(e);
 		}
 
 		/// <summary>
@@ -99,8 +96,6 @@ namespace MapView.Forms.Observers
 				ControlTop.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
 				ControlTop.TopControl.Focus();
 			}
-
-//			base.OnActivated(e);
 		}
 
 		/// <summary>
