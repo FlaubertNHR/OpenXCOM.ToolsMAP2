@@ -156,6 +156,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\Observers\RouteView\RouteControlEventArgs.cs" />
+    <Compile Include="Forms\Observers\RouteView\CopyNodeData.cs" />
     <Compile Include="Forms\Observers\RouteView\RouteViewForm.cs">
       <SubType>Form</SubType>
     </Compile>

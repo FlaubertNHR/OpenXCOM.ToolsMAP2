@@ -40,9 +40,6 @@ namespace MapView.Forms.Observers
 		#region Fields (static)
 		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControlDefaultOptions()
 
-		private const string NodeCopyPrefix  = "MVNode"; // TODO: use a struct to copy/paste the info.
-		private const char NodeCopySeparator = '|';
-
 		private const string Go = "go";
 
 		internal static RouteNode Dragnode;
@@ -59,6 +56,14 @@ namespace MapView.Forms.Observers
 		internal static SpawnWeight _curSpawnweight;
 
 		private static bool _connectoractivated;
+
+		/// <summary>
+		/// A <c><see cref="CopyNodeData"/></c> struct that holds copied node
+		/// data.
+		/// </summary>
+		/// <remarks>Is <c>static</c> so that it remains consistent between
+		/// <c>RouteView</c> and <c>TopRouteView(Route)</c>.</remarks>
+		private static CopyNodeData _copynodedata;
 		#endregion Fields (static)
 
 
@@ -172,6 +177,8 @@ namespace MapView.Forms.Observers
 		public RouteView()
 		{
 			InitializeComponent();
+
+			_copynodedata.unittype = -1; // '_copynodedata' has not been filled w/ valid node data.
 
 			RouteControl = new RouteControl();
 			RouteControl.RouteControlMouseDownEvent += OnRouteControlMouseDown;
@@ -1051,7 +1058,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private static void EnableEditButtons()
 		{
-			bool valid = (NodeSelected != null);
+			bool valid = NodeSelected != null;
 
 			ObserverManager.RouteView   .Control     .tsmi_ClearLinks.Enabled =
 			ObserverManager.TopRouteView.ControlRoute.tsmi_ClearLinks.Enabled =
@@ -1065,10 +1072,8 @@ namespace MapView.Forms.Observers
 			ObserverManager.RouteView   .Control     .bu_Delete      .Enabled =
 			ObserverManager.TopRouteView.ControlRoute.bu_Delete      .Enabled = valid;
 
-			valid = valid && Clipboard.GetText().Split(NodeCopySeparator)[0] == NodeCopyPrefix;
-
 			ObserverManager.RouteView   .Control     .bu_Paste       .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Paste       .Enabled = valid;
+			ObserverManager.TopRouteView.ControlRoute.bu_Paste       .Enabled = valid && _copynodedata.unittype != -1;
 		}
 
 
@@ -1803,17 +1808,11 @@ namespace MapView.Forms.Observers
 				ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
 				ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = true;
 
-				string nodeCopy = NodeCopyPrefix         + NodeCopySeparator
-								+ co_Type  .SelectedIndex + NodeCopySeparator
-								+ co_Patrol.SelectedIndex + NodeCopySeparator
-								+ co_Attack.SelectedIndex + NodeCopySeparator
-								+ co_Rank  .SelectedIndex + NodeCopySeparator
-								+ co_Spawn .SelectedIndex;
-
-				// TODO: include Link info ... perhaps.
-				// But re-assigning the link node-ids would be difficult, since
-				// those nodes could have be deleted, etc.
-				Clipboard.SetText(nodeCopy);
+				_copynodedata.unittype       = co_Type  .SelectedIndex;
+				_copynodedata.noderank       = co_Rank  .SelectedIndex;
+				_copynodedata.spawnweight    = co_Spawn .SelectedIndex;
+				_copynodedata.patrolpriority = co_Patrol.SelectedIndex;
+				_copynodedata.baseattack     = co_Attack.SelectedIndex;
 			}
 			else
 				ShowError("A node must be selected.");
@@ -1830,22 +1829,17 @@ namespace MapView.Forms.Observers
 
 			if (NodeSelected != null) // TODO: auto-create a new node
 			{
-				var nodeData = Clipboard.GetText().Split(NodeCopySeparator);
-				if (nodeData[0] == NodeCopyPrefix)
+				if (_copynodedata.unittype != -1)
 				{
 					RoutesChangedCoordinator = true;
 
-					co_Type  .SelectedIndex = Int32.Parse(nodeData[1]);
-					co_Patrol.SelectedIndex = Int32.Parse(nodeData[2]);
-					co_Attack.SelectedIndex = Int32.Parse(nodeData[3]);
-					co_Rank  .SelectedIndex = Int32.Parse(nodeData[4]);
-					co_Spawn .SelectedIndex = Int32.Parse(nodeData[5]);
-
-					// TODO: include Link info ... perhaps.
-					// But re-assigning the link node-ids would be difficult, since
-					// those nodes could have be deleted, etc.
+					co_Type  .SelectedIndex = _copynodedata.unittype;
+					co_Rank  .SelectedIndex = _copynodedata.noderank;
+					co_Spawn .SelectedIndex = _copynodedata.spawnweight;
+					co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
+					co_Attack.SelectedIndex = _copynodedata.baseattack;
 				}
-				else // non-node data is on the clipboard.
+				else
 				{
 					ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
 					ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = false;
