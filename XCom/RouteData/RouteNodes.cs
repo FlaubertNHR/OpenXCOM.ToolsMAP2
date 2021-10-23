@@ -152,8 +152,8 @@ namespace XCom
 		/// </summary>
 		/// <remarks>Is static to maintain its value when importing a different
 		/// .RMP file.</remarks>
-		private static string PfeRoutes
-		{ get; set; }
+		public static string PfeRoutes
+		{ get; private set; }
 		#endregion Properties (static)
 
 
@@ -260,7 +260,7 @@ namespace XCom
 					foreach (byte id in invalids)
 					{
 						if (copyable.Length != 0) copyable += Environment.NewLine;
-						copyable += id.ToString();
+						copyable += Path.GetFileNameWithoutExtension(pfe).ToUpper() + " - node " + id;
 					}
 
 					using (var f = new Infobox(

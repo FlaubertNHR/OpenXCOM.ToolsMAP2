@@ -2380,7 +2380,7 @@ namespace MapView.Forms.Observers
 				foreach (byte id in invalids)
 				{
 					if (copyable.Length != 0) copyable += Environment.NewLine;
-					copyable += id;
+					copyable += Path.GetFileNameWithoutExtension(RouteNodes.PfeRoutes).ToUpper() + " - node " + id;
 				}
 			}
 			else
