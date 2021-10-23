@@ -2937,14 +2937,14 @@ namespace MapView
 			TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 
 			string key;
-			if (@group.GroupType == GameType.Tftd)
+			if (@group.GroupType == GroupType.Tftd)
 				key = SharedSpace.ResourceDirectoryTftd;
 			else
 				key = SharedSpace.ResourceDirectoryUfo;
 
 			if (SharedSpace.GetShareString(key) == null)
 			{
-				if (@group.GroupType == GameType.Tftd)
+				if (@group.GroupType == GroupType.Tftd)
 					key = "TFTD";
 				else
 					key = "UFO";
@@ -3275,7 +3275,7 @@ namespace MapView
 
 						_overlay.FirstClick = false;
 
-						if (descriptor.GroupType == GameType.Tftd)
+						if (descriptor.GroupType == GroupType.Tftd)
 						{
 							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
 							_overlay.SetMonoBrushes(Palette.BrushesTftdBattle); // used by Mono only

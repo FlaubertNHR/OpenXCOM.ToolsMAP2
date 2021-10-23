@@ -272,7 +272,7 @@ namespace MapView.Forms.Observers
 
 			if (MainViewF.Optionables.UseMono)
 			{
-				if (MainViewF.that.MapFile.Descriptor.GroupType == GameType.Tftd)
+				if (MainViewF.that.MapFile.Descriptor.GroupType == GroupType.Tftd)
 					_brushes = Palette.BrushesTftdBattle;
 				else
 					_brushes = Palette.BrushesUfoBattle;

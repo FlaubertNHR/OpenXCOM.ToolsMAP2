@@ -46,10 +46,10 @@ namespace XCom
 		{ get; private set; }
 
 		/// <summary>
-		/// <c><see cref="GameType.Ufo">GameType.Ufo</see></c> or
-		/// <c><see cref="GameType.Tftd">GameType.Tftd</see></c>.
+		/// <c><see cref="GroupType.Ufo">GroupType.Ufo</see></c> or
+		/// <c><see cref="GroupType.Tftd">GroupType.Tftd</see></c>.
 		/// </summary>
-		public GameType GroupType
+		public GroupType GroupType
 		{ get; private set; }
 
 		/// <summary>
@@ -84,8 +84,8 @@ namespace XCom
 		/// <param name="label">the label of this tileset</param>
 		/// <param name="basepath">the parent directory of the Map and Routes</param>
 		/// <param name="terrains">a dictionary of terrains</param>
-		/// <param name="groupType"><c><see cref="GameType.Ufo">GameType.Ufo</see></c>
-		/// or <c><see cref="GameType.Tftd">GameType.Tftd</see></c></param>
+		/// <param name="groupType"><c><see cref="GroupType.Ufo">GroupType.Ufo</see></c>
+		/// or <c><see cref="GroupType.Tftd">GroupType.Tftd</see></c></param>
 		/// <param name="bypassRecordsExceeded"><c>true</c> to not issue a
 		/// warning if the terrainset exceeds
 		/// <c><see cref="MapFile.MAX_MCDRECORDS">MapFile.MAX_MCDRECORDS</see></c>
@@ -94,7 +94,7 @@ namespace XCom
 				string label,
 				string basepath,
 				Dictionary<int, Tuple<string,string>> terrains,
-				GameType groupType,
+				GroupType groupType,
 				bool bypassRecordsExceeded)
 		{
 			//Logfile.Log("Descriptor..cTor label= " + label);
@@ -105,12 +105,12 @@ namespace XCom
 
 			switch (GroupType = groupType)
 			{
-				case GameType.Ufo:
+				case GroupType.Ufo:
 					Pal = Palette.UfoBattle;
 					_dirTerr = SharedSpace.ResourceDirectoryUfo;
 					break;
 
-				case GameType.Tftd:
+				case GroupType.Tftd:
 					Pal = Palette.TftdBattle;
 					_dirTerr = SharedSpace.ResourceDirectoryTftd;
 					break;

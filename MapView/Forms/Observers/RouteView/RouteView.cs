@@ -244,7 +244,7 @@ namespace MapView.Forms.Observers
 
 				co_Rank.Items.Clear();
 
-				if (_file.Descriptor.GroupType == GameType.Tftd)
+				if (_file.Descriptor.GroupType == GroupType.Tftd)
 					co_Rank.Items.AddRange(RouteNodes.RankTftd);
 				else
 					co_Rank.Items.AddRange(RouteNodes.RankUfo);
@@ -292,7 +292,7 @@ namespace MapView.Forms.Observers
 
 				co_Type.SelectedItem = UnitType.Any;
 
-				if (_file.Descriptor.GroupType == GameType.Tftd)
+				if (_file.Descriptor.GroupType == GroupType.Tftd)
 					co_Rank.SelectedItem = RouteNodes.RankTftd[0];	//(byte)NodeRankTftd.CivScout
 				else
 					co_Rank.SelectedItem = RouteNodes.RankUfo [0];	//(byte)NodeRankUfo.CivScout
@@ -333,7 +333,7 @@ namespace MapView.Forms.Observers
 
 				co_Type.SelectedItem = NodeSelected.Unit;
 
-				if (_file.Descriptor.GroupType == GameType.Tftd)
+				if (_file.Descriptor.GroupType == GroupType.Tftd)
 					co_Rank.SelectedItem = RouteNodes.RankTftd[NodeSelected.Rank];
 				else
 					co_Rank.SelectedItem = RouteNodes.RankUfo [NodeSelected.Rank];
@@ -2179,7 +2179,7 @@ namespace MapView.Forms.Observers
 		private void OnRank0Click(object sender, EventArgs e)
 		{
 			string rank;
-			if (_file.Descriptor.GroupType == GameType.Tftd)
+			if (_file.Descriptor.GroupType == GroupType.Tftd)
 				rank = ((Pterodactyl)RouteNodes.RankTftd[0]).ToString();
 			else
 				rank = ((Pterodactyl)RouteNodes.RankUfo [0]).ToString();

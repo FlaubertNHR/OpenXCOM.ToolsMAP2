@@ -556,7 +556,7 @@ namespace MapView.Forms.Observers
 				IList<Brush> brushes; // TODO: set these when the Mapfile loads
 				if (MainViewF.Optionables.UseMono)
 				{
-					if (MainViewF.that.MapFile.Descriptor.GroupType == GameType.Tftd)
+					if (MainViewF.that.MapFile.Descriptor.GroupType == GroupType.Tftd)
 						brushes = Palette.BrushesTftdBattle;
 					else
 						brushes = Palette.BrushesUfoBattle;

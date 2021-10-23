@@ -385,7 +385,7 @@ namespace MapView
 		/// </summary>
 		private void SetResources()
 		{
-			if (_file.Descriptor.GroupType == GameType.Tftd)
+			if (_file.Descriptor.GroupType == GroupType.Tftd)
 			{
 				_icons = SpritesetManager.GetScanGtftd();
 				_pal   = Palette.TftdBattle;
@@ -440,7 +440,7 @@ namespace MapView
 		{
 			bool error = false;
 
-			if (_file.Descriptor.GroupType == GameType.Tftd)
+			if (_file.Descriptor.GroupType == GroupType.Tftd)
 			{
 				if (SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd)))
 					_icons = SpritesetManager.GetScanGtftd();

@@ -220,7 +220,7 @@ namespace MapView
 			TileGroup = TileGroupManager.TileGroups[GroupLabel];
 
 			string key;
-			if (TileGroup.GroupType == GameType.Tftd)
+			if (TileGroup.GroupType == GroupType.Tftd)
 				key = SharedSpace.ResourceDirectoryTftd;
 			else
 				key = SharedSpace.ResourceDirectoryUfo;

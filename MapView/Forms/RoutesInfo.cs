@@ -95,7 +95,7 @@ namespace MapView
 			_file = file;
 
 			object[] pters;
-			if (_file.Descriptor.GroupType == GameType.Tftd)
+			if (_file.Descriptor.GroupType == GroupType.Tftd)
 				pters = RouteNodes.RankTftd;
 			else
 				pters = RouteNodes.RankUfo;

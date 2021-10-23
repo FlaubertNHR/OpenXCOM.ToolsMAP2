@@ -11,7 +11,7 @@ using YamlDotNet.RepresentationModel;
 namespace XCom
 {
 	#region Enums
-	public enum GameType
+	public enum GroupType
 	{
 		Ufo,	// 0
 		Tftd	// 1
@@ -233,11 +233,11 @@ namespace XCom
 						{
 							basepath = keyvals[keyBasepath].ToString();
 						}
-						else if (@group.GroupType == GameType.Tftd) // assign the Configurator's basepath to the tileset's Descriptor ->
+						else if (@group.GroupType == GroupType.Tftd) // assign the Configurator's basepath to the tileset's Descriptor ->
 						{
 							basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd);
 						}
-						else // default GameType.Ufo
+						else // default GroupType.Ufo
 						{
 							basepath = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo);
 						}
@@ -379,7 +379,7 @@ namespace XCom
 											sw.WriteLine("    " + GlobalsXC.GROUP + ": " + labelGroup);
 
 											string keyConfigPath;
-											if (@group.GroupType == GameType.Tftd)
+											if (@group.GroupType == GroupType.Tftd)
 												keyConfigPath = SharedSpace.ResourceDirectoryTftd;
 											else
 												keyConfigPath = SharedSpace.ResourceDirectoryUfo;

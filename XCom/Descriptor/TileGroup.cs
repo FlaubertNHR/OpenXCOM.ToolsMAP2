@@ -15,7 +15,7 @@ namespace XCom
 		public string Label
 		{ get; private set; }
 
-		public GameType GroupType
+		public GroupType GroupType
 		{ get; private set; }
 
 
@@ -42,18 +42,18 @@ namespace XCom
 		/// <remarks>If the prefix "tftd" (case insensitive) is not found at the
 		/// beginning of this <c>TileGroup's</c> label then default
 		/// <c><see cref="GroupType"/></c> to
-		/// <c><see cref="GameType.Ufo">GameType.Ufo</see></c>.</remarks>
+		/// <c><see cref="GroupType.Ufo">GroupType.Ufo</see></c>.</remarks>
 		internal TileGroup(string labelGroup)
 		{
 			Label = labelGroup;
 
 			if (Label.StartsWith("tftd", StringComparison.OrdinalIgnoreCase))
 			{
-				GroupType = GameType.Tftd;
+				GroupType = GroupType.Tftd;
 			}
 			else //if (labelGroup.StartsWith("ufo", StringComparison.OrdinalIgnoreCase))
 			{
-				GroupType = GameType.Ufo;
+				GroupType = GroupType.Ufo;
 			}
 		}
 		#endregion cTor

@@ -753,7 +753,7 @@ namespace MapView.Forms.Observers
 					textOver = node.Id.ToString();
 					textUnit = Enum.GetName(typeof(UnitType), node.Unit);
 
-					if (_file.Descriptor.GroupType == GameType.Tftd)
+					if (_file.Descriptor.GroupType == GroupType.Tftd)
 						textRank = RouteNodes.RankTftd[node.Rank].ToString();
 					else
 						textRank = RouteNodes.RankUfo [node.Rank].ToString();
