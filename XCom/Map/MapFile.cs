@@ -102,7 +102,8 @@ namespace XCom
 		/// this <c>MapFile</c>.
 		/// </summary>
 		/// <remarks>Used by the <c>TerrainSwapDialog</c>.</remarks>
-		public int[] PartCounts;
+		public int[] PartCounts
+		{ get; internal set; }
 
 		/// <summary>
 		/// The Map's terrainset.
