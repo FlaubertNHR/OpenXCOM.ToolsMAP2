@@ -2212,7 +2212,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnRank0Click(object sender, EventArgs e)
+		private void OnZeroNoderanksClick(object sender, EventArgs e)
 		{
 			string rank;
 			if (_file.Descriptor.GroupType == GroupType.Tftd)

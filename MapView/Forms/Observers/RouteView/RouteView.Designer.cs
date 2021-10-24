@@ -309,7 +309,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Rank0.Name = "tsmi_Rank0";
 			this.tsmi_Rank0.Size = new System.Drawing.Size(213, 22);
 			this.tsmi_Rank0.Text = "&Zero all noderanks ...";
-			this.tsmi_Rank0.Click += new System.EventHandler(this.OnRank0Click);
+			this.tsmi_Rank0.Click += new System.EventHandler(this.OnZeroNoderanksClick);
 			// 
 			// tsmi_RecalcDist
 			// 
