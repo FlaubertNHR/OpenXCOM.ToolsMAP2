@@ -2172,6 +2172,42 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Handler for menuitem that clears all link-data of the currently
+		/// selected node.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClearLinksClick(object sender, EventArgs e)
+		{
+			if (NodeSelected != null)
+			{
+				using (var f = new Infobox(
+										"Warning",
+										"Are you sure you want to clear the selected node's Link data ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (f.ShowDialog(this) == DialogResult.OK)
+					{
+						RoutesChangedCoordinator = true;
+
+						for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
+						{
+							NodeSelected[slot].Destination = Link.NotUsed;
+							NodeSelected[slot].Distance = 0;
+
+							NodeSelected[slot].Unit = UnitType.Any;
+						}
+
+						UpdateNodeInfo();
+						RefreshControls();
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// Handler for menuitem that sets all NodeRanks to Civilian/Scout.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -2219,42 +2255,6 @@ namespace MapView.Forms.Observers
 
 					using (var f1 = new Infobox("All nodes rank 0", head))
 						f1.ShowDialog(this);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Handler for menuitem that clears all link-data of the currently
-		/// selected node.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnClearLinksClick(object sender, EventArgs e)
-		{
-			if (NodeSelected != null)
-			{
-				using (var f = new Infobox(
-										"Warning",
-										"Are you sure you want to clear the selected node's Link data ...",
-										null,
-										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
-				{
-					if (f.ShowDialog(this) == DialogResult.OK)
-					{
-						RoutesChangedCoordinator = true;
-
-						for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
-						{
-							NodeSelected[slot].Destination = Link.NotUsed;
-							NodeSelected[slot].Distance = 0;
-
-							NodeSelected[slot].Unit = UnitType.Any;
-						}
-
-						UpdateNodeInfo();
-						RefreshControls();
-					}
 				}
 			}
 		}
