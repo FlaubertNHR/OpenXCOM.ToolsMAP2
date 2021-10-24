@@ -26,7 +26,7 @@ namespace MapView.Forms.Observers
 			UserControl
 	{
 		#region Enums
-		private enum ConnectNodesType
+		private enum ConnectNodes
 		{ None, OneWay, TwoWay }
 
 		private enum LinkSlotResult
@@ -38,7 +38,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
-		private static ConnectNodesType _conType = ConnectNodesType.None; // safety - shall be set by LoadControlDefaultOptions()
+		private static ConnectNodes _conType = ConnectNodes.None; // safety - shall be set by LoadControlDefaultOptions()
 
 		private const string Go = "go";
 
@@ -961,7 +961,7 @@ namespace MapView.Forms.Observers
 
 			switch (_conType)
 			{
-				case ConnectNodesType.TwoWay:
+				case ConnectNodes.TwoWay:
 					switch (result = GetOpenLinkSlot(node, NodeSelected.Id))
 					{
 						case LinkSlotResult.AllSlotsUsed:
@@ -990,9 +990,9 @@ namespace MapView.Forms.Observers
 							node[(int)result].Distance = CalculateLinkDistance(node, NodeSelected);
 							break;
 					}
-					goto case ConnectNodesType.OneWay; // fallthrough
+					goto case ConnectNodes.OneWay; // fallthrough
 
-				case ConnectNodesType.OneWay:
+				case ConnectNodes.OneWay:
 					switch (result = GetOpenLinkSlot(NodeSelected, node.Id))
 					{
 						case LinkSlotResult.AllSlotsUsed:
@@ -1976,7 +1976,7 @@ namespace MapView.Forms.Observers
 
 				if (tsb == tsb_connect0)
 				{
-					_conType = ConnectNodesType.None;
+					_conType = ConnectNodes.None;
 
 						tsb_connect0.Checked =
 					alt.tsb_connect0.Checked = true;
@@ -1986,7 +1986,7 @@ namespace MapView.Forms.Observers
 				}
 				else if (tsb == tsb_connect1)
 				{
-					_conType = ConnectNodesType.OneWay;
+					_conType = ConnectNodes.OneWay;
 
 						tsb_connect1.Checked =
 					alt.tsb_connect1.Checked = true;
@@ -1996,7 +1996,7 @@ namespace MapView.Forms.Observers
 				}
 				else // tsb == tsb_connect2
 				{
-					_conType = ConnectNodesType.TwoWay;
+					_conType = ConnectNodes.TwoWay;
 
 						tsb_connect2.Checked =
 					alt.tsb_connect2.Checked = true;
