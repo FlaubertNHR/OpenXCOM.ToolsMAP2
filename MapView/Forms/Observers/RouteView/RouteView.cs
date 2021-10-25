@@ -2214,10 +2214,11 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnZeroUnittypesClick(object sender, EventArgs e)
 		{
-			string type = Enum.GetName(typeof(UnitType), UnitType.Any);
+			string unittype = Enum.GetName(typeof(UnitType), UnitType.Any);
+
 			using (var f = new Infobox(
 									"Warning",
-									"Are you sure you want to change all unittypes to " + type + " ...",
+									"Are you sure you want to change all unittypes to " + unittype + " ...",
 									null,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
@@ -2229,9 +2230,6 @@ namespace MapView.Forms.Observers
 					{
 						if (node.Unit != UnitType.Any)
 						{
-//							if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
-//								RoutesInfo.UpdateNoderank(node.Rank, 0);
-
 							++changed;
 							node.Unit = UnitType.Any;
 						}
@@ -2246,7 +2244,7 @@ namespace MapView.Forms.Observers
 						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
 					}
 					else
-						head = "All nodes are already type " + type + ".";
+						head = "All nodes are already type " + unittype + ".";
 
 					using (var f1 = new Infobox("Zero all unittypes", head))
 						f1.ShowDialog(this);
@@ -2261,21 +2259,23 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnZeroNoderanksClick(object sender, EventArgs e)
 		{
-			string rank;
+			string noderank;
 			if (_file.Descriptor.GroupType == GroupType.Tftd)
-				rank = ((Pterodactyl)RouteNodes.RankTftd[0]).ToString();
+				noderank = ((Pterodactyl)RouteNodes.RankTftd[0]).ToString();
 			else
-				rank = ((Pterodactyl)RouteNodes.RankUfo [0]).ToString();
+				noderank = ((Pterodactyl)RouteNodes.RankUfo [0]).ToString();
 
 			using (var f = new Infobox(
 									"Warning",
-									"Are you sure you want to change all noderanks to " + rank + " ...",
+									"Are you sure you want to change all noderanks to " + noderank + " ...",
 									null,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
+					_curNoderank = (byte)0;
+
 					int changed = 0;
 					foreach (RouteNode node in _file.Routes)
 					{
@@ -2298,9 +2298,59 @@ namespace MapView.Forms.Observers
 						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
 					}
 					else
-						head = "All nodes are already rank 0.";
+						head = "All nodes are already rank " + noderank + ".";
 
 					using (var f1 = new Infobox("Zero all noderanks", head))
+						f1.ShowDialog(this);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Handler for menuitem that sets all Spawnweights to None.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnZeroSpawnweightsClick(object sender, EventArgs e)
+		{
+			string spawnweight = Enum.GetName(typeof(SpawnWeight), SpawnWeight.None);
+
+			using (var f = new Infobox(
+									"Warning",
+									"Are you sure you want to change all spawnweights to " + spawnweight + " ...",
+									null,
+									InfoboxType.Warn,
+									InfoboxButtons.CancelOkay))
+			{
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					_curSpawnweight = SpawnWeight.None;
+
+					int changed = 0;
+					foreach (RouteNode node in _file.Routes)
+					{
+						if (node.Spawn != SpawnWeight.None)
+						{
+							if (RoutesInfo != null)
+								RoutesInfo.ChangedSpawnweight(node.Spawn, SpawnWeight.None, node.Rank);
+
+							++changed;
+							node.Spawn = SpawnWeight.None;
+						}
+					}
+
+					string head;
+					if (changed != 0)
+					{
+						RoutesChangedCoordinator = true;
+						UpdateNodeInfo();
+
+						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
+					}
+					else
+						head = "All nodes are already weight " + spawnweight + ".";
+
+					using (var f1 = new Infobox("Zero all spawnweights", head))
 						f1.ShowDialog(this);
 				}
 			}
