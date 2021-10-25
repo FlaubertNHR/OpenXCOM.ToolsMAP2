@@ -2208,7 +2208,54 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handler for menuitem that sets all NodeRanks to Civilian/Scout.
+		/// Handler for menuitem that sets all Unittypes to Any.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnZeroUnittypesClick(object sender, EventArgs e)
+		{
+			string type = Enum.GetName(typeof(UnitType), UnitType.Any);
+			using (var f = new Infobox(
+									"Warning",
+									"Are you sure you want to change all unittypes to " + type + " ...",
+									null,
+									InfoboxType.Warn,
+									InfoboxButtons.CancelOkay))
+			{
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					int changed = 0;
+					foreach (RouteNode node in _file.Routes)
+					{
+						if (node.Unit != UnitType.Any)
+						{
+//							if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
+//								RoutesInfo.UpdateNoderank(node.Rank, 0);
+
+							++changed;
+							node.Unit = UnitType.Any;
+						}
+					}
+
+					string head;
+					if (changed != 0)
+					{
+						RoutesChangedCoordinator = true;
+						UpdateNodeInfo();
+
+						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
+					}
+					else
+						head = "All nodes are already type " + type + ".";
+
+					using (var f1 = new Infobox("Zero all unittypes", head))
+						f1.ShowDialog(this);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Handler for menuitem that sets all Noderanks to Civilian/Scout.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2222,7 +2269,7 @@ namespace MapView.Forms.Observers
 
 			using (var f = new Infobox(
 									"Warning",
-									"Are you sure you want to change all node ranks to " + rank + " ...",
+									"Are you sure you want to change all noderanks to " + rank + " ...",
 									null,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
@@ -2232,13 +2279,13 @@ namespace MapView.Forms.Observers
 					int changed = 0;
 					foreach (RouteNode node in _file.Routes)
 					{
-						if (node.Rank != 0)
+						if (node.Rank != (byte)0)
 						{
 							if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
-								RoutesInfo.UpdateNoderank(node.Rank, 0);
+								RoutesInfo.UpdateNoderank(node.Rank, (byte)0);
 
 							++changed;
-							node.Rank = 0;
+							node.Rank = (byte)0;
 						}
 					}
 
@@ -2253,7 +2300,7 @@ namespace MapView.Forms.Observers
 					else
 						head = "All nodes are already rank 0.";
 
-					using (var f1 = new Infobox("All nodes rank 0", head))
+					using (var f1 = new Infobox("Zero all noderanks", head))
 						f1.ShowDialog(this);
 				}
 			}
