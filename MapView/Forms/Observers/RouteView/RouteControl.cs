@@ -54,7 +54,7 @@ namespace MapView.Forms.Observers
 		private const string Patrol = "patrol";
 		private const string Attack = "attack";
 
-		private const string TextNorth = "N";
+		private const string TextNorth = "N"; // these go in the corners of the panel ->
 		private const string TextSouth = "S";
 		private const string TextEast  = "E";
 		private const string TextWest  = "W";
@@ -91,7 +91,7 @@ namespace MapView.Forms.Observers
 		private Point _over = new Point(-1,-1);
 
 		/// <summary>
-		/// Sets the over position.
+		/// Sets the <c><see cref="_over"/></c> position.
 		/// </summary>
 		/// <param name="over"></param>
 		/// <remarks>Used to position the InfoOverlay.</remarks>
@@ -107,7 +107,7 @@ namespace MapView.Forms.Observers
 		private Point _spot = new Point(-1,-1);
 
 		/// <summary>
-		/// Sets the spot location.
+		/// Sets the <c><see cref="_spot"/></c> location.
 		/// </summary>
 		/// <param name="spot"></param>
 		/// <remarks>Used to highlight a destination node.</remarks>

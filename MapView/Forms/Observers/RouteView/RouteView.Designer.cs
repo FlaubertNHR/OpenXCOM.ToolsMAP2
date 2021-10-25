@@ -22,9 +22,11 @@ namespace MapView.Forms.Observers
 		private ToolStripSeparator tss_1;
 		private ToolStripMenuItem tsmi_ClearLinks;
 		private ToolStripSeparator tss_2;
-		private ToolStripMenuItem tsmi_ZeroNoderanks;
 		private ToolStripMenuItem tsmi_ZeroUnittypes;
+		private ToolStripMenuItem tsmi_ZeroNoderanks;
 		private ToolStripMenuItem tsmi_ZeroSpawnweights;
+		private ToolStripMenuItem tsmi_ZeroPatrolpriorities;
+		private ToolStripMenuItem tsmi_ZeroBaseattacks;
 		private ToolStripSeparator tss_3;
 		private ToolStripMenuItem tsmi_RecalcDist;
 
@@ -136,6 +138,8 @@ namespace MapView.Forms.Observers
 			this.tsmi_ZeroUnittypes = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_ZeroNoderanks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_ZeroSpawnweights = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_ZeroPatrolpriorities = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_ZeroBaseattacks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_3 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmi_RecalcDist = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddb_Debug = new System.Windows.Forms.ToolStripDropDownButton();
@@ -271,6 +275,8 @@ namespace MapView.Forms.Observers
 			this.tsmi_ZeroUnittypes,
 			this.tsmi_ZeroNoderanks,
 			this.tsmi_ZeroSpawnweights,
+			this.tsmi_ZeroPatrolpriorities,
+			this.tsmi_ZeroBaseattacks,
 			this.tss_3,
 			this.tsmi_RecalcDist});
 			this.tsddb_Edit.Font = new System.Drawing.Font("Verdana", 7F);
@@ -333,6 +339,20 @@ namespace MapView.Forms.Observers
 			this.tsmi_ZeroSpawnweights.Size = new System.Drawing.Size(213, 22);
 			this.tsmi_ZeroSpawnweights.Text = "Zero all spawnweights ...";
 			this.tsmi_ZeroSpawnweights.Click += new System.EventHandler(this.OnZeroSpawnweightsClick);
+			// 
+			// tsmi_ZeroPatrolpriorities
+			// 
+			this.tsmi_ZeroPatrolpriorities.Name = "tsmi_ZeroPatrolpriorities";
+			this.tsmi_ZeroPatrolpriorities.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroPatrolpriorities.Text = "Zero all patrolpriorities ...";
+			this.tsmi_ZeroPatrolpriorities.Click += new System.EventHandler(this.OnZeroPatrolprioritiesClick);
+			// 
+			// tsmi_ZeroBaseattacks
+			// 
+			this.tsmi_ZeroBaseattacks.Name = "tsmi_ZeroBaseattacks";
+			this.tsmi_ZeroBaseattacks.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroBaseattacks.Text = "Zero all baseattacks ...";
+			this.tsmi_ZeroBaseattacks.Click += new System.EventHandler(this.OnZeroBaseattacksClick);
 			// 
 			// tss_3
 			// 

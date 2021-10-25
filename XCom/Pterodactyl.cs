@@ -1,11 +1,14 @@
+using System;
+
+
 namespace XCom
 {
 	/// <summary>
-	/// A struct that associates any object with a readable label.
+	/// A <c>class</c> that associates any object with a readable label.
 	/// </summary>
-	/// <remarks>This could be deleted and done w/ Tuple or Dictionary or
-	/// HashTable or SortedSet or whatever. Hence <c>Pterodactyl</c>. Because it
-	/// should go the way of the dinosaurs.</remarks>
+	/// <remarks>This could be deleted and done w/ <c>Tuple</c> or
+	/// <c>Dictionary</c> or <c>HashTable</c> or <c>SortedSet</c> or whatever.
+	/// Hence <c>Pterodactyl</c>. Because it should go the way of the dinosaurs.</remarks>
 	public class Pterodactyl
 	{
 		#region Fields

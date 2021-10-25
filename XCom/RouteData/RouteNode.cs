@@ -37,13 +37,13 @@ namespace XCom
 		public byte Rank
 		{ get; set; }
 
+		public SpawnWeight Spawn
+		{ get; set; }
+
 		public PatrolPriority Patrol
 		{ get; set; }
 
 		public AttackBase Attack
-		{ get; set; }
-
-		public SpawnWeight Spawn
 		{ get; set; }
 
 		/// <summary>

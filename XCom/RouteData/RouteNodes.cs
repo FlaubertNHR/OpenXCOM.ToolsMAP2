@@ -9,9 +9,9 @@ using DSShared;
 namespace XCom
 {
 	/// <summary>
-	/// This class reads saves and generally manages all the information in an
-	/// RMP Routefile. <c><see cref="Nodes"/></c> is a container for the tileset's
-	/// <c><see cref="RouteNode">RouteNodes</see></c>.
+	/// This <c>class</c> reads saves and generally manages all the information
+	/// in an <c>RMP</c> Routefile. <c><see cref="Nodes"/></c> is a container
+	/// for the tileset's <c><see cref="RouteNode">RouteNodes</see></c>.
 	/// </summary>
 	public sealed class RouteNodes // fxCop ca1710 - wants "RouteNodeCollection"
 		:

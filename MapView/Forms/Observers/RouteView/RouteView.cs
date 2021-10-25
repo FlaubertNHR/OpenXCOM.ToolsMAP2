@@ -2208,17 +2208,20 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handler for menuitem that sets all Unittypes to Any.
+		/// Handler for menuitem that sets all
+		/// <c><see cref="RouteNode">RouteNodes'</see></c> <c>Unit</c> value
+		/// to <c><see cref="UnitType"/>.Any</c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_ZeroUnittypes"/></c></param>
 		/// <param name="e"></param>
 		private void OnZeroUnittypesClick(object sender, EventArgs e)
 		{
-			string unittype = Enum.GetName(typeof(UnitType), UnitType.Any);
+			string any = Enum.GetName(typeof(UnitType), UnitType.Any);
+//			string any = ((Pterodactyl)RouteNodes.Unit[0]).ToString(); // there is no Pterodactyl for UnitType.
 
 			using (var f = new Infobox(
 									"Warning",
-									"Are you sure you want to change all unittypes to " + unittype + " ...",
+									"Are you sure you want to change all unittypes to " + any + " ...",
 									null,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
@@ -2230,8 +2233,8 @@ namespace MapView.Forms.Observers
 					{
 						if (node.Unit != UnitType.Any)
 						{
-							++changed;
 							node.Unit = UnitType.Any;
+							++changed;
 						}
 					}
 
@@ -2244,7 +2247,7 @@ namespace MapView.Forms.Observers
 						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
 					}
 					else
-						head = "All nodes are already type " + unittype + ".";
+						head = "All nodes are already type " + any + ".";
 
 					using (var f1 = new Infobox("Zero all unittypes", head))
 						f1.ShowDialog(this);
@@ -2253,21 +2256,23 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handler for menuitem that sets all Noderanks to Civilian/Scout.
+		/// Handler for menuitem that sets all
+		/// <c><see cref="RouteNode">RouteNodes'</see></c> <c>Rank</c> value to
+		/// <c><see cref="NodeRankUfo"/>/<see cref="NodeRankTftd"/>.CivScout</c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_ZeroNoderanks"/></c></param>
 		/// <param name="e"></param>
 		private void OnZeroNoderanksClick(object sender, EventArgs e)
 		{
-			string noderank;
+			string civscout;
 			if (_file.Descriptor.GroupType == GroupType.Tftd)
-				noderank = ((Pterodactyl)RouteNodes.RankTftd[0]).ToString();
+				civscout = ((Pterodactyl)RouteNodes.RankTftd[0]).ToString(); // these are basically identical but go with it ...
 			else
-				noderank = ((Pterodactyl)RouteNodes.RankUfo [0]).ToString();
+				civscout = ((Pterodactyl)RouteNodes.RankUfo [0]).ToString();
 
 			using (var f = new Infobox(
 									"Warning",
-									"Are you sure you want to change all noderanks to " + noderank + " ...",
+									"Are you sure you want to change all noderanks to " + civscout + " ...",
 									null,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
@@ -2284,8 +2289,8 @@ namespace MapView.Forms.Observers
 							if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
 								RoutesInfo.UpdateNoderank(node.Rank, (byte)0);
 
-							++changed;
 							node.Rank = (byte)0;
+							++changed;
 						}
 					}
 
@@ -2298,7 +2303,7 @@ namespace MapView.Forms.Observers
 						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
 					}
 					else
-						head = "All nodes are already rank " + noderank + ".";
+						head = "All nodes are already rank " + civscout + ".";
 
 					using (var f1 = new Infobox("Zero all noderanks", head))
 						f1.ShowDialog(this);
@@ -2307,17 +2312,19 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handler for menuitem that sets all Spawnweights to None.
+		/// Handler for menuitem that sets all
+		/// <c><see cref="RouteNode">RouteNodes'</see></c> <c>Spawn</c> value
+		/// to <c><see cref="SpawnWeight"/>.None</c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_ZeroSpawnweights"/></c></param>
 		/// <param name="e"></param>
 		private void OnZeroSpawnweightsClick(object sender, EventArgs e)
 		{
-			string spawnweight = Enum.GetName(typeof(SpawnWeight), SpawnWeight.None);
+			string none = ((Pterodactyl)RouteNodes.Spawn[0]).ToString();
 
 			using (var f = new Infobox(
 									"Warning",
-									"Are you sure you want to change all spawnweights to " + spawnweight + " ...",
+									"Are you sure you want to change all spawnweights to " + none + " ...",
 									null,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
@@ -2334,8 +2341,8 @@ namespace MapView.Forms.Observers
 							if (RoutesInfo != null)
 								RoutesInfo.ChangedSpawnweight(node.Spawn, SpawnWeight.None, node.Rank);
 
-							++changed;
 							node.Spawn = SpawnWeight.None;
+							++changed;
 						}
 					}
 
@@ -2348,9 +2355,103 @@ namespace MapView.Forms.Observers
 						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
 					}
 					else
-						head = "All nodes are already weight " + spawnweight + ".";
+						head = "All nodes are already weight " + none + ".";
 
 					using (var f1 = new Infobox("Zero all spawnweights", head))
+						f1.ShowDialog(this);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Handler for menuitem that sets all
+		/// <c><see cref="RouteNode">RouteNodes'</see></c> <c>Patrol</c> value
+		/// to <c><see cref="PatrolPriority"/>.Zero</c>.
+		/// </summary>
+		/// <param name="sender"><c><see cref="tsmi_ZeroPatrolpriorities"/></c></param>
+		/// <param name="e"></param>
+		private void OnZeroPatrolprioritiesClick(object sender, EventArgs e)
+		{
+			string lolo = ((Pterodactyl)RouteNodes.Patrol[0]).ToString();
+
+			using (var f = new Infobox(
+									"Warning",
+									"Are you sure you want to change all patrolpriorities to " + lolo + " ...",
+									null,
+									InfoboxType.Warn,
+									InfoboxButtons.CancelOkay))
+			{
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					int changed = 0;
+					foreach (RouteNode node in _file.Routes)
+					{
+						if (node.Patrol != PatrolPriority.Zero)
+						{
+							node.Patrol = PatrolPriority.Zero;
+							++changed;
+						}
+					}
+
+					string head;
+					if (changed != 0)
+					{
+						RoutesChangedCoordinator = true;
+						UpdateNodeInfo();
+
+						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
+					}
+					else
+						head = "All nodes are already priority " + lolo + ".";
+
+					using (var f1 = new Infobox("Zero all patrolpriorities", head))
+						f1.ShowDialog(this);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Handler for menuitem that sets all
+		/// <c><see cref="RouteNode">RouteNodes'</see></c> <c>Attack</c> value
+		/// to <c><see cref="AttackBase"/>.Zero</c>.
+		/// </summary>
+		/// <param name="sender"><c><see cref="tsmi_ZeroBaseattacks"/></c></param>
+		/// <param name="e"></param>
+		private void OnZeroBaseattacksClick(object sender, EventArgs e)
+		{
+			string none = ((Pterodactyl)RouteNodes.Attack[0]).ToString();
+
+			using (var f = new Infobox(
+									"Warning",
+									"Are you sure you want to change all baseattacks to " + none + " ...",
+									null,
+									InfoboxType.Warn,
+									InfoboxButtons.CancelOkay))
+			{
+				if (f.ShowDialog(this) == DialogResult.OK)
+				{
+					int changed = 0;
+					foreach (RouteNode node in _file.Routes)
+					{
+						if (node.Attack != AttackBase.Zero)
+						{
+							node.Attack = AttackBase.Zero;
+							++changed;
+						}
+					}
+
+					string head;
+					if (changed != 0)
+					{
+						RoutesChangedCoordinator = true;
+						UpdateNodeInfo();
+
+						head = changed + ((changed == 1) ? " node was" : " nodes were") + " changed.";
+					}
+					else
+						head = "All nodes are already attack " + none + ".";
+
+					using (var f1 = new Infobox("Zero all baseattacks", head))
 						f1.ShowDialog(this);
 				}
 			}

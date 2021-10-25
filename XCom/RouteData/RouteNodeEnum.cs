@@ -1,4 +1,7 @@
-﻿namespace XCom
+﻿using System;
+
+
+namespace XCom
 {
 	#region Enums (node characteristics)
 	// NOTE: Only 'NodeRankUfo' and 'NodeRankTftd' need to be enumerated as
