@@ -74,6 +74,7 @@ namespace PckView
 		private int _scale = 10;
 		internal int ScaleFactor
 		{
+			private get { return _feditor.GetScaled(_scale); }
 			set
 			{
 				_scale = value;
@@ -125,11 +126,11 @@ namespace PckView
 
 			if (e.Button == MouseButtons.Left
 				&& Sprite != null
-				&& e.X > 0 && e.X < _feditor._f.SpriteWidth  * _scale
-				&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * _scale)
+				&& e.X > 0 && e.X < _feditor._f.SpriteWidth  * ScaleFactor
+				&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * ScaleFactor)
 			{
-				int pixelX = e.X / _scale;
-				int pixelY = e.Y / _scale;
+				int pixelX = e.X / ScaleFactor;
+				int pixelY = e.Y / ScaleFactor;
 
 				byte[] bindata = Sprite.GetBindata();
 
@@ -228,11 +229,11 @@ namespace PckView
 		{
 			if (Sprite != null)
 			{
-				if (   e.X > 0 && e.X < _feditor._f.SpriteWidth  * _scale
-					&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * _scale)
+				if (   e.X > 0 && e.X < _feditor._f.SpriteWidth  * ScaleFactor
+					&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * ScaleFactor)
 				{
-					int pixelX = e.X / _scale;
-					int pixelY = e.Y / _scale;
+					int pixelX = e.X / ScaleFactor;
+					int pixelY = e.Y / ScaleFactor;
 
 					byte[] bindata = Sprite.GetBindata();
 
@@ -276,10 +277,10 @@ namespace PckView
 						{
 							graphics.FillRectangle(
 												brush,
-												x * _scale,
-												y * _scale,
-													_scale,
-													_scale);
+												x * ScaleFactor,
+												y * ScaleFactor,
+													ScaleFactor,
+													ScaleFactor);
 						}
 					}
 				}
@@ -293,33 +294,33 @@ namespace PckView
 						{
 							graphics.FillRectangle(
 												brush,
-												x * _scale,
-												y * _scale,
-													_scale,
-													_scale);
+												x * ScaleFactor,
+												y * ScaleFactor,
+													ScaleFactor,
+													ScaleFactor);
 						}
 					}
 				}
 			}
 
 
-			if (_penGrid != null && _scale > 2)
+			if (_penGrid != null && ScaleFactor > 2)
 			{
 				for (int x = 0; x != _feditor._f.SpriteWidth; ++x) // vertical lines
 					graphics.DrawLine(
 									_penGrid,
-									x * _scale + Pad,
+									x * ScaleFactor + Pad,
 									0,
-									x * _scale + Pad,
-									_feditor._f.SpriteHeight * _scale);
+									x * ScaleFactor + Pad,
+									_feditor._f.SpriteHeight * ScaleFactor);
 
 				for (int y = 0; y != _feditor._f.SpriteHeight; ++y) // horizontal lines
 					graphics.DrawLine(
 									_penGrid,
 									0,
-									y * _scale + Pad,
-									_feditor._f.SpriteWidth * _scale,
-									y * _scale + Pad);
+									y * ScaleFactor + Pad,
+									_feditor._f.SpriteWidth * ScaleFactor,
+									y * ScaleFactor + Pad);
 			}
 
 
@@ -327,14 +328,14 @@ namespace PckView
 							0,
 							1);
 			var p1 = new Point(
-							_feditor._f.SpriteWidth  * _scale + Pad,
+							_feditor._f.SpriteWidth  * ScaleFactor + Pad,
 							1);
 			var p2 = new Point(
-							_feditor._f.SpriteWidth  * _scale + Pad,
-							_feditor._f.SpriteHeight * _scale + Pad);
+							_feditor._f.SpriteWidth  * ScaleFactor + Pad,
+							_feditor._f.SpriteHeight * ScaleFactor + Pad);
 			var p3 = new Point(
 							1,
-							_feditor._f.SpriteHeight * _scale + Pad);
+							_feditor._f.SpriteHeight * ScaleFactor + Pad);
 			var p4 = new Point(
 							1,
 							1);

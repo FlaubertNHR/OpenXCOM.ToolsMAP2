@@ -139,6 +139,9 @@
     <Compile Include="SpriteEditorF.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SpriteEditorF.Designer.cs">
+      <DependentUpon>SpriteEditorF.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpritePanel.cs">
       <SubType>Component</SubType>
     </Compile>

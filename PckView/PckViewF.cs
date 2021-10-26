@@ -826,7 +826,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>This fires after the editor's FormClosing event.</remarks>
+		/// <remarks>This fires after the editor's <c>FormClosing</c> event.</remarks>
 		private void OnSpriteEditorClosing(object sender, CancelEventArgs e)
 		{
 			_miEdit.Checked = false;
@@ -834,7 +834,7 @@ namespace PckView
 
 
 		/// <summary>
-		/// Displays an errorbox to the user about incorrect Bitmap dimensions
+		/// Displays an errorbox to the user about incorrect image dimensions
 		/// and/or pixel-format.
 		/// </summary>
 		/// <param name="pfe">path-file-extension</param>
