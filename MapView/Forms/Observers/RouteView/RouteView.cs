@@ -52,8 +52,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private static Stack<int> _ogIds = new Stack<int>();
 
-		internal static byte _curNoderank;
-		internal static SpawnWeight _curSpawnweight;
+		private static        byte _selRank;
+		private static SpawnWeight _selWeight;
 
 		private static bool _connectoractivated;
 
@@ -129,8 +129,8 @@ namespace MapView.Forms.Observers
 
 				if (_nodeSelected != null) // for RoutesInfo ->
 				{
-					_curNoderank    = _nodeSelected.Rank;
-					_curSpawnweight = _nodeSelected.Spawn;
+					_selRank   = _nodeSelected.Rank;
+					_selWeight = _nodeSelected.Spawn;
 				}
 			}
 		}
@@ -160,6 +160,7 @@ namespace MapView.Forms.Observers
 		/// <c>RouteView</c>; the real <c>RoutesChanged</c> flag is stored in
 		/// <c>MapFile</c>. reasons.
 		/// </summary>
+		/// <seealso cref="RoutesChangedCoordinator"><c>RoutesChangedCoordinator</c></seealso>
 		private bool RoutesChanged
 		{
 			set { bu_Save.Enabled = (_file.RoutesChanged = value); }
@@ -1184,9 +1185,9 @@ namespace MapView.Forms.Observers
 					if (NodeSelected.Spawn != SpawnWeight.None)
 					{
 						if (RoutesInfo != null)
-							RoutesInfo.UpdateNoderank(_curNoderank, NodeSelected.Rank);
+							RoutesInfo.UpdateNoderank(_selRank, NodeSelected.Rank);
 
-						_curNoderank = NodeSelected.Rank;
+						_selRank = NodeSelected.Rank;
 					}
 
 					NodeSelected.OobRank = (byte)0;
@@ -1212,9 +1213,9 @@ namespace MapView.Forms.Observers
 				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)co_Spawn.SelectedItem).O;
 
 				if (RoutesInfo != null)
-					RoutesInfo.ChangedSpawnweight(_curSpawnweight, NodeSelected.Spawn, NodeSelected.Rank);
+					RoutesInfo.ChangedSpawnweight(_selWeight, NodeSelected.Spawn, NodeSelected.Rank);
 
-				_curSpawnweight = NodeSelected.Spawn;
+				_selWeight = NodeSelected.Spawn;
 
 				if (isToproute)
 					ObserverManager.RouteView.Control.co_Spawn.SelectedIndex = co_Spawn.SelectedIndex;
@@ -1836,8 +1837,8 @@ namespace MapView.Forms.Observers
 					co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
 					co_Attack.SelectedIndex = _copynodedata.baseattack;
 
-					_curNoderank    =        (byte)_copynodedata.noderank;
-					_curSpawnweight = (SpawnWeight)_copynodedata.spawnweight;
+					_selRank   =        (byte)_copynodedata.noderank;
+					_selWeight = (SpawnWeight)_copynodedata.spawnweight;
 				}
 				else // TODO: make this unnecessary ->
 				{
@@ -2282,7 +2283,7 @@ namespace MapView.Forms.Observers
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
-					_curNoderank = (byte)0;
+					_selRank = (byte)0;
 
 					int changed = 0;
 					foreach (RouteNode node in _file.Routes)
@@ -2334,7 +2335,7 @@ namespace MapView.Forms.Observers
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
-					_curSpawnweight = SpawnWeight.None;
+					_selWeight = SpawnWeight.None;
 
 					int changed = 0;
 					foreach (RouteNode node in _file.Routes)
