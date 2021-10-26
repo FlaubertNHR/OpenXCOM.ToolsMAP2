@@ -120,6 +120,11 @@ namespace MapView.Forms.Observers
 
 
 		private static RouteNode _nodeSelected;
+		/// <summary>
+		/// A <c><see cref="RouteNode"/></c> that is currently selected.
+		/// </summary>
+		/// <remarks>Use the setter to set
+		/// <c><see cref="RouteControlParent"></see>.NodeSelected</c>.</remarks>
 		internal static RouteNode NodeSelected
 		{
 			private get { return _nodeSelected; }
@@ -1586,9 +1591,9 @@ namespace MapView.Forms.Observers
 			var loc = new Point(node.Col, node.Row);
 
 			if (node.Lev != _file.Level)
-				_file.Level = node.Lev;			// fire LevelSelected
+				_file.Level = node.Lev;											// fire LevelSelected
 
-			_file.Location = new MapLocation(	// fire LocationSelected
+			_file.Location = new MapLocation(									// fire LocationSelected
 										loc.X, loc.Y,
 										_file.Level);
 
@@ -1842,13 +1847,8 @@ namespace MapView.Forms.Observers
 					_selRank   =        (byte)_copynodedata.noderank;
 					_selWeight = (SpawnWeight)_copynodedata.spawnweight;
 				}
-				else // TODO: make this unnecessary ->
-				{
-					ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
-					ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = false;
-
-					ShowError("The data on the clipboard is not a node.");
-				}
+				else
+					ShowError("There isn't any node data copied."); // <- needed for [Ctrl+v]
 			}
 			else
 				ShowError("A node must be selected.");
