@@ -1835,8 +1835,11 @@ namespace MapView.Forms.Observers
 					co_Spawn .SelectedIndex = _copynodedata.spawnweight;
 					co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
 					co_Attack.SelectedIndex = _copynodedata.baseattack;
+
+					_curNoderank    =        (byte)_copynodedata.noderank;
+					_curSpawnweight = (SpawnWeight)_copynodedata.spawnweight;
 				}
-				else
+				else // TODO: make this unnecessary ->
 				{
 					ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
 					ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = false;
