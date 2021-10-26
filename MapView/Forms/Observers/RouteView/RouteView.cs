@@ -1836,16 +1836,43 @@ namespace MapView.Forms.Observers
 			{
 				if (_copynodedata.unittype != -1)
 				{
-					RoutesChangedCoordinator = true;
+					bool changed = false;
 
-					co_Type  .SelectedIndex = _copynodedata.unittype;
-					co_Rank  .SelectedIndex = _copynodedata.noderank;
-					co_Spawn .SelectedIndex = _copynodedata.spawnweight;
-					co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
-					co_Attack.SelectedIndex = _copynodedata.baseattack;
+					if (co_Type.SelectedIndex != _copynodedata.unittype)
+					{
+						co_Type.SelectedIndex = _copynodedata.unittype;
+						changed = true;
+					}
 
-					_selRank   =        (byte)_copynodedata.noderank;
-					_selWeight = (SpawnWeight)_copynodedata.spawnweight;
+					if (co_Rank.SelectedIndex != _copynodedata.noderank)
+					{
+						co_Rank.SelectedIndex = _copynodedata.noderank;
+						changed = true;
+
+						_selRank = (byte)_copynodedata.noderank;
+					}
+
+					if (co_Spawn.SelectedIndex != _copynodedata.spawnweight)
+					{
+						co_Spawn.SelectedIndex = _copynodedata.spawnweight;
+						changed = true;
+
+						_selWeight = (SpawnWeight)_copynodedata.spawnweight;
+					}
+
+					if (co_Patrol.SelectedIndex != _copynodedata.patrolpriority)
+					{
+						co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
+						changed = true;
+					}
+
+					if (co_Attack.SelectedIndex != _copynodedata.baseattack)
+					{
+						co_Attack.SelectedIndex = _copynodedata.baseattack;
+						changed = true;
+					}
+
+					if (changed) RoutesChangedCoordinator = true;
 				}
 				else
 					ShowError("There isn't any node data copied."); // <- needed for [Ctrl+v]
