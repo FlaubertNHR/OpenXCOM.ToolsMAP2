@@ -1091,7 +1091,7 @@ namespace MapView.Forms.Observers
 			this.bu_Cut.Size = new System.Drawing.Size(65, 30);
 			this.bu_Cut.TabIndex = 0;
 			this.bu_Cut.Text = "Cut";
-			this.toolTip1.SetToolTip(this.bu_Cut, "cuts the selected node with its Patrol and Spawn data (not Link data)");
+			this.toolTip1.SetToolTip(this.bu_Cut, "deletes the selected node and copies its Node data (not Link data)");
 			this.bu_Cut.Click += new System.EventHandler(this.OnCutClick);
 			// 
 			// bu_Copy
@@ -1103,7 +1103,7 @@ namespace MapView.Forms.Observers
 			this.bu_Copy.Size = new System.Drawing.Size(65, 30);
 			this.bu_Copy.TabIndex = 1;
 			this.bu_Copy.Text = "Copy";
-			this.toolTip1.SetToolTip(this.bu_Copy, "copies Patrol and Spawn data of the selected node");
+			this.toolTip1.SetToolTip(this.bu_Copy, "copies Node data of the selected node");
 			this.bu_Copy.Click += new System.EventHandler(this.OnCopyClick);
 			// 
 			// bu_Paste
@@ -1115,7 +1115,7 @@ namespace MapView.Forms.Observers
 			this.bu_Paste.Size = new System.Drawing.Size(65, 30);
 			this.bu_Paste.TabIndex = 2;
 			this.bu_Paste.Text = "Paste";
-			this.toolTip1.SetToolTip(this.bu_Paste, "pastes copied Patrol and Spawn data to the selected node");
+			this.toolTip1.SetToolTip(this.bu_Paste, "pastes copied Node data to the selected node");
 			this.bu_Paste.Click += new System.EventHandler(this.OnPasteClick);
 			// 
 			// bu_Delete
