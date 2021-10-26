@@ -17,7 +17,7 @@ namespace MapView
 	/// currently loaded tileset as well as that tileset's Category. Quantities
 	/// are shown in a table by spawn-rank.
 	/// </summary>
-	internal sealed partial class RoutesInfo
+	internal sealed partial class SpawnInfo
 		:
 			Form
 	{
@@ -41,10 +41,10 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates this <c>RoutesInfo</c> dialog.
+		/// cTor. Instantiates this <c>SpawnInfo</c> dialog.
 		/// </summary>
 		/// <param name="file"></param>
-		internal RoutesInfo(MapFile file)
+		internal SpawnInfo(MapFile file)
 		{
 			InitializeComponent();
 			_clientheight = gb_Info.Height + gb_Tileset.Height;
@@ -57,14 +57,14 @@ namespace MapView
 		#region Events (override)
 		/// <summary>
 		/// Nulls
-		/// <c><see cref="RouteView.RoutesInfo">RouteView.RoutesInfo</see></c>
+		/// <c><see cref="RouteView.SpawnInfo">RouteView.SpawnInfo</see></c>
 		/// after this dialog closes.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
-				RouteView.RoutesInfo = null;
+				RouteView.SpawnInfo = null;
 
 			base.OnFormClosed(e);
 		}
@@ -73,7 +73,7 @@ namespace MapView
 
 		#region Events
 		/// <summary>
-		/// Closes this <c>RoutesInfo</c> dialog on <c>[Esc]</c>.
+		/// Closes this <c>SpawnInfo</c> dialog on <c>[Esc]</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)
@@ -86,7 +86,7 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Initializes this <c>RoutesInfo</c> with a specified
+		/// Initializes this <c>SpawnInfo</c> with a specified
 		/// <c><see cref="MapFile"/></c>.
 		/// </summary>
 		/// <param name="file"></param>
@@ -271,7 +271,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Lays out this <c>RoutesInfo</c> dialog.
+		/// Lays out this <c>SpawnInfo</c> dialog.
 		/// </summary>
 		private void LayoutRoutesInfo()
 		{

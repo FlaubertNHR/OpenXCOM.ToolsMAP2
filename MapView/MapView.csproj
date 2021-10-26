@@ -205,9 +205,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\OptionsPropertyGrid.cs" />
-    <Compile Include="Forms\RoutesInfo.cs" />
-    <Compile Include="Forms\RoutesInfo.Designer.cs">
-      <DependentUpon>RoutesInfo.cs</DependentUpon>
+    <Compile Include="Forms\SpawnInfo.cs" />
+    <Compile Include="Forms\SpawnInfo.Designer.cs">
+      <DependentUpon>SpawnInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ScanGViewer.cs" />
     <Compile Include="Forms\TerrainSwapDialog.cs" />
@@ -332,8 +332,8 @@
       <SubType>Designer</SubType>
       <DependentUpon>TopView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RoutesInfo.resx">
-      <DependentUpon>RoutesInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SpawnInfo.resx">
+      <DependentUpon>SpawnInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ScanGViewer.resx">
       <DependentUpon>ScanGViewer.cs</DependentUpon>

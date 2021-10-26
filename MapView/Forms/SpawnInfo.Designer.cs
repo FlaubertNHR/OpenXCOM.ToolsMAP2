@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace MapView
 {
-	internal sealed partial class RoutesInfo
+	internal sealed partial class SpawnInfo
 	{
 		#region Designer
 		/// <summary>
@@ -535,7 +535,7 @@ namespace MapView
 			this.toolTip1.UseAnimation = false;
 			this.toolTip1.UseFading = false;
 			// 
-			// RoutesInfo
+			// SpawnInfo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -544,7 +544,7 @@ namespace MapView
 			this.Controls.Add(this.gb_Info);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MaximizeBox = false;
-			this.Name = "RoutesInfo";
+			this.Name = "SpawnInfo";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Spawn Info";

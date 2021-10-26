@@ -169,8 +169,8 @@ namespace MapView.Forms.Observers
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (RouteView.RoutesInfo != null)
-					RouteView.RoutesInfo.Close();
+				if (RouteView.SpawnInfo != null)
+					RouteView.SpawnInfo.Close();
 
 				if (MainViewF.Quit)
 				{

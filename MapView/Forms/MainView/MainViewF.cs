@@ -1030,8 +1030,8 @@ namespace MapView
 			// NOTE: TopView's PartslotTest dialog is closed when TopView closes.
 			// TODO: McdRecordsExceeded dialog is pseudo-static ... close it (if it was instantiated).
 
-			if (RouteView.RoutesInfo != null)
-				RouteView.RoutesInfo.Close();	// close RouteView's RoutesInfo dialog
+			if (RouteView.SpawnInfo != null)
+				RouteView.SpawnInfo.Close();	// close RouteView's SpawnInfo dialog
 
 			ObserverManager.CloseObservers();	// close secondary viewers (TileView, TopView, RouteView, TopRouteView)
 
@@ -1803,8 +1803,8 @@ namespace MapView
 
 							foreach (RouteNode node in RouteCheckService.Invalids)
 							{
-								if (RouteView.RoutesInfo != null)
-									RouteView.RoutesInfo.DeleteNode(node);
+								if (RouteView.SpawnInfo != null)
+									RouteView.SpawnInfo.DeleteNode(node);
 
 								MapFile.Routes.DeleteNode(node);
 							}
@@ -3342,8 +3342,8 @@ namespace MapView
 						if (fMcdInfo != null)
 							fMcdInfo.UpdateData();
 
-						if (RouteView.RoutesInfo != null) // update RoutesInfo if open ->
-							RouteView.RoutesInfo.Initialize(file);
+						if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
+							RouteView.SpawnInfo.Initialize(file);
 
 						ResetQuadrantPanel(); // update the Quadrant panel
 

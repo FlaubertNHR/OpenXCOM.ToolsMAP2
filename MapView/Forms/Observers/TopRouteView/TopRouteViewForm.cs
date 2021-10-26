@@ -297,8 +297,8 @@ namespace MapView.Forms.Observers
 					TopView._fpartslots = null;
 				}
 
-				if (RouteView.RoutesInfo != null)
-					RouteView.RoutesInfo.Close();
+				if (RouteView.SpawnInfo != null)
+					RouteView.SpawnInfo.Close();
 
 				if (MainViewF.Quit)
 				{

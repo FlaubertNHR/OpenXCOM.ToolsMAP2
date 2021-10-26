@@ -127,7 +127,7 @@ namespace MapView.Forms.Observers
 			{
 				RouteControlParent.SetNodeSelected(_nodeSelected = value);
 
-				if (_nodeSelected != null) // for RoutesInfo ->
+				if (_nodeSelected != null) // for SpawnInfo ->
 				{
 					_selRank   = _nodeSelected.Rank;
 					_selWeight = _nodeSelected.Spawn;
@@ -837,7 +837,7 @@ namespace MapView.Forms.Observers
 					NodeSelected = _file.AddRouteNode(args.Location);
 					InvalidatePanels(); // not sure why but that's needed after adding the "ReduceDraws" option
 				}
-				updateinfo = (NodeSelected != null);
+				updateinfo = NodeSelected != null;
 			}
 			else if (node == null) // a node is already selected but there's not a node on the current tile ->
 			{
@@ -1061,24 +1061,25 @@ namespace MapView.Forms.Observers
 		{
 			bool nodeselected = NodeSelected != null;
 
-			ObserverManager.RouteView   .Control     .bu_Cut         .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Cut         .Enabled =
+			ObserverManager.RouteView   .Control     .bu_Cut   .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Cut   .Enabled =
 
-			ObserverManager.RouteView   .Control     .bu_Copy        .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Copy        .Enabled =
+			ObserverManager.RouteView   .Control     .bu_Copy  .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Copy  .Enabled =
 
-			ObserverManager.RouteView   .Control     .bu_Delete      .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Delete      .Enabled = nodeselected;
+			ObserverManager.RouteView   .Control     .bu_Delete.Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Delete.Enabled = nodeselected;
 
-			ObserverManager.RouteView   .Control     .bu_Paste       .Enabled =
-			ObserverManager.TopRouteView.ControlRoute.bu_Paste       .Enabled = nodeselected && _copynodedata.unittype != -1;
+			ObserverManager.RouteView   .Control     .bu_Paste .Enabled =
+			ObserverManager.TopRouteView.ControlRoute.bu_Paste .Enabled = nodeselected && _copynodedata.unittype != -1;
 		}
 
 
 		/// <summary>
 		/// Updates distances to and from the currently selected node.
 		/// </summary>
-		/// <remarks>NodeSelected must be valid before call.</remarks>
+		/// <remarks><c><see cref="NodeSelected"/></c> must be valid before
+		/// call.</remarks>
 		private void UpdateLinkDistances()
 		{
 			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // update distances to selected node's linked nodes ->
@@ -1184,8 +1185,8 @@ namespace MapView.Forms.Observers
 
 					if (NodeSelected.Spawn != SpawnWeight.None)
 					{
-						if (RoutesInfo != null)
-							RoutesInfo.UpdateNoderank(_selRank, NodeSelected.Rank);
+						if (SpawnInfo != null)
+							SpawnInfo.UpdateNoderank(_selRank, NodeSelected.Rank);
 
 						_selRank = NodeSelected.Rank;
 					}
@@ -1212,8 +1213,8 @@ namespace MapView.Forms.Observers
 				RoutesChangedCoordinator = true;
 				NodeSelected.Spawn = (SpawnWeight)((Pterodactyl)co_Spawn.SelectedItem).O;
 
-				if (RoutesInfo != null)
-					RoutesInfo.ChangedSpawnweight(_selWeight, NodeSelected.Spawn, NodeSelected.Rank);
+				if (SpawnInfo != null)
+					SpawnInfo.ChangedSpawnweight(_selWeight, NodeSelected.Spawn, NodeSelected.Rank);
 
 				_selWeight = NodeSelected.Spawn;
 
@@ -1309,7 +1310,7 @@ namespace MapView.Forms.Observers
 					la_dist = la_Link4Dist;
 					bu_go   = bu_GoLink4;
 				}
-				else //if (co == co_Link5Dest)
+				else // co == co_Link5Dest
 				{
 					slot    = 4;
 					la_dist = la_Link5Dist;
@@ -1427,7 +1428,7 @@ namespace MapView.Forms.Observers
 					bu_go   = bu_GoLink4;
 					break;
 
-				default: //case 4:
+				default: // case 4
 					co_dest = co_Link5Dest;
 					la_dist = la_Link5Dist;
 					bu_go   = bu_GoLink5;
@@ -1486,7 +1487,7 @@ namespace MapView.Forms.Observers
 				else if (co == co_Link2UnitType) slot = 1;
 				else if (co == co_Link3UnitType) slot = 2;
 				else if (co == co_Link4UnitType) slot = 3;
-				else                             slot = 4; // co_Link5UnitType
+				else                             slot = 4; // co == co_Link5UnitType
 
 				NodeSelected[slot].Unit = (UnitType)co.SelectedItem;
 
@@ -1512,7 +1513,7 @@ namespace MapView.Forms.Observers
 				case 1:  co_UnitType = co_Link2UnitType; break;
 				case 2:  co_UnitType = co_Link3UnitType; break;
 				case 3:  co_UnitType = co_Link4UnitType; break;
-				default: co_UnitType = co_Link5UnitType; break; //case 4
+				default: co_UnitType = co_Link5UnitType; break; // case 4
 			}
 			co_UnitType.SelectedIndex = type;
 		}
@@ -1532,7 +1533,7 @@ namespace MapView.Forms.Observers
 			else if (bu == bu_GoLink2) slot = 1;
 			else if (bu == bu_GoLink3) slot = 2;
 			else if (bu == bu_GoLink4) slot = 3;
-			else                       slot = 4; // bu_GoLink5
+			else                       slot = 4; // bu == bu_GoLink5
 
 			byte dest = NodeSelected[slot].Destination;
 			RouteNode node = _file.Routes[dest];
@@ -1547,10 +1548,11 @@ namespace MapView.Forms.Observers
 				{
 					RoutesChangedCoordinator = true;
 
-					if (RoutesInfo != null)
-						RoutesInfo.DeleteNode(node);
+					if (SpawnInfo != null)
+						SpawnInfo.DeleteNode(node);
 
 					_file.Routes.DeleteNode(node);
+
 					UpdateNodeInfo();
 					// TODO: May need _pnlRoutes.Refresh()
 				}
@@ -1584,9 +1586,9 @@ namespace MapView.Forms.Observers
 			var loc = new Point(node.Col, node.Row);
 
 			if (node.Lev != _file.Level)
-				_file.Level = node.Lev; // fire LevelSelected
+				_file.Level = node.Lev;			// fire LevelSelected
 
-			_file.Location = new MapLocation( // fire LocationSelected
+			_file.Location = new MapLocation(	// fire LocationSelected
 										loc.X, loc.Y,
 										_file.Level);
 
@@ -1622,7 +1624,7 @@ namespace MapView.Forms.Observers
 				case "L2": slot = 1; break;
 				case "L3": slot = 2; break;
 				case "L4": slot = 3; break;
-				default:   slot = 4; break; // tag == "L5"
+				default:   slot = 4; break; // case "L5"
 			}
 			SpotDestination(slot); // TODO: RouteView/TopRouteView(Route)
 
@@ -1731,7 +1733,7 @@ namespace MapView.Forms.Observers
 		/// Disables the Og button when a Map gets loaded.
 		/// </summary>
 		/// <param name="enable"></param>
-		internal static void EnableOgButton(bool enable)
+		private static void EnableOgButton(bool enable)
 		{
 			ObserverManager.RouteView   .Control     .bu_Og.Enabled =
 			ObserverManager.TopRouteView.ControlRoute.bu_Og.Enabled = enable;
@@ -1743,7 +1745,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Prevents two error-dialogs from showing if a key-cut is underway.
 		/// </summary>
-		private bool _asterisk;
+		private bool _bypassCutError;
 
 		/// <summary>
 		/// Handles keyboard input.
@@ -1765,10 +1767,10 @@ namespace MapView.Forms.Observers
 					break;
 
 				case Keys.Control | Keys.X:
-					_asterisk = true;
+					_bypassCutError = true;
 					 OnCopyClick(  null, EventArgs.Empty);
 					 OnDeleteClick(null, EventArgs.Empty);
-					 _asterisk = false;
+					 _bypassCutError = false;
 					 break;
 
 				case Keys.Control | Keys.C:
@@ -1863,8 +1865,8 @@ namespace MapView.Forms.Observers
 			{
 				RoutesChangedCoordinator = true;
 
-				if (RoutesInfo != null)
-					RoutesInfo.DeleteNode(NodeSelected);
+				if (SpawnInfo != null)
+					SpawnInfo.DeleteNode(NodeSelected);
 
 				_file.GetTile(NodeSelected.Col,
 							  NodeSelected.Row,
@@ -1881,7 +1883,7 @@ namespace MapView.Forms.Observers
 
 				RefreshControls();
 			}			
-			else if (!_asterisk)
+			else if (!_bypassCutError)
 				ShowError("A node must be selected.");
 		}
 
@@ -2104,8 +2106,8 @@ namespace MapView.Forms.Observers
 							UpdateNodeInfo(); // not sure is necessary ...
 							RefreshPanels();
 
-							if (RoutesInfo != null)
-								RoutesInfo.Initialize(_file);
+							if (SpawnInfo != null)
+								SpawnInfo.Initialize(_file);
 						}
 					}
 				}
@@ -2253,8 +2255,8 @@ namespace MapView.Forms.Observers
 					else
 						head = "All nodes are already type " + any + ".";
 
-					using (var f1 = new Infobox("Zero all unittypes", head))
-						f1.ShowDialog(this);
+					using (var g = new Infobox("Zero all unittypes", head))
+						g.ShowDialog(this);
 				}
 			}
 		}
@@ -2290,8 +2292,8 @@ namespace MapView.Forms.Observers
 					{
 						if (node.Rank != (byte)0)
 						{
-							if (RoutesInfo != null && node.Spawn != SpawnWeight.None)
-								RoutesInfo.UpdateNoderank(node.Rank, (byte)0);
+							if (SpawnInfo != null && node.Spawn != SpawnWeight.None)
+								SpawnInfo.UpdateNoderank(node.Rank, (byte)0);
 
 							node.Rank = (byte)0;
 							++changed;
@@ -2309,8 +2311,8 @@ namespace MapView.Forms.Observers
 					else
 						head = "All nodes are already rank " + civscout + ".";
 
-					using (var f1 = new Infobox("Zero all noderanks", head))
-						f1.ShowDialog(this);
+					using (var g = new Infobox("Zero all noderanks", head))
+						g.ShowDialog(this);
 				}
 			}
 		}
@@ -2342,8 +2344,8 @@ namespace MapView.Forms.Observers
 					{
 						if (node.Spawn != SpawnWeight.None)
 						{
-							if (RoutesInfo != null)
-								RoutesInfo.ChangedSpawnweight(node.Spawn, SpawnWeight.None, node.Rank);
+							if (SpawnInfo != null)
+								SpawnInfo.ChangedSpawnweight(node.Spawn, SpawnWeight.None, node.Rank);
 
 							node.Spawn = SpawnWeight.None;
 							++changed;
@@ -2361,8 +2363,8 @@ namespace MapView.Forms.Observers
 					else
 						head = "All nodes are already weight " + none + ".";
 
-					using (var f1 = new Infobox("Zero all spawnweights", head))
-						f1.ShowDialog(this);
+					using (var g = new Infobox("Zero all spawnweights", head))
+						g.ShowDialog(this);
 				}
 			}
 		}
@@ -2408,8 +2410,8 @@ namespace MapView.Forms.Observers
 					else
 						head = "All nodes are already priority " + lolo + ".";
 
-					using (var f1 = new Infobox("Zero all patrolpriorities", head))
-						f1.ShowDialog(this);
+					using (var g = new Infobox("Zero all patrolpriorities", head))
+						g.ShowDialog(this);
 				}
 			}
 		}
@@ -2455,8 +2457,8 @@ namespace MapView.Forms.Observers
 					else
 						head = "All nodes are already attack " + none + ".";
 
-					using (var f1 = new Infobox("Zero all baseattacks", head))
-						f1.ShowDialog(this);
+					using (var g = new Infobox("Zero all baseattacks", head))
+						g.ShowDialog(this);
 				}
 			}
 		}
@@ -2542,8 +2544,8 @@ namespace MapView.Forms.Observers
 
 				foreach (RouteNode node in RouteCheckService.Invalids)
 				{
-					if (RoutesInfo != null)
-						RoutesInfo.DeleteNode(node);
+					if (SpawnInfo != null)
+						SpawnInfo.DeleteNode(node);
 
 					_file.Routes.DeleteNode(node);
 				}
@@ -2606,7 +2608,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Events
-		internal static RoutesInfo RoutesInfo
+		internal static SpawnInfo SpawnInfo
 		{ get; set; }
 
 		/// <summary>
@@ -2618,22 +2620,22 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTallyhoClick(object sender, EventArgs e)
 		{
-			if (RoutesInfo == null)
+			if (SpawnInfo == null)
 			{
-				RoutesInfo = new RoutesInfo(_file);
-				RoutesInfo.Show(this);
+				SpawnInfo = new SpawnInfo(_file);
+				SpawnInfo.Show(this);
 			}
 			else
 			{
-				if (RoutesInfo.WindowState == FormWindowState.Minimized)
-					RoutesInfo.WindowState  = FormWindowState.Normal;
+				if (SpawnInfo.WindowState == FormWindowState.Minimized)
+					SpawnInfo.WindowState  = FormWindowState.Normal;
 
-				RoutesInfo.Activate(); // so what's the diff ->
-//				RoutesInfo.Focus();
-//				RoutesInfo.Select();
-//				RoutesInfo.BringToFront();
-//				RoutesInfo.TopMost = true;
-//				RoutesInfo.TopMost = false;
+				SpawnInfo.Activate(); // so what's the diff ->
+//				SpawnInfo.Focus();
+//				SpawnInfo.Select();
+//				SpawnInfo.BringToFront();
+//				SpawnInfo.TopMost = true;
+//				SpawnInfo.TopMost = false;
 			}
 		}
 
