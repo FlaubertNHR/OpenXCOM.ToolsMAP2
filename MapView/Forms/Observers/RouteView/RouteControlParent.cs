@@ -75,7 +75,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties (static)
 		/// <summary>
-		/// A <c><see cref="XCom.RouteNode"/></c> that is currently selected.
+		/// A <c><see cref="RouteNode"/></c> that is currently selected.
 		/// </summary>
 		/// <remarks>Set its value via
 		/// <c><see cref="RouteView.NodeSelected">RouteView.NodeSelected</see></c>
@@ -237,7 +237,7 @@ namespace MapView.Forms.Observers
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
 
-				_file.Location = new MapLocation( // fire LocationSelected
+				_file.Location = new MapLocation(								// fire LocationSelected
 											_col, _row,
 											_file.Level);
 
@@ -247,7 +247,7 @@ namespace MapView.Forms.Observers
 												e.Button,
 												_file.GetTile(_col, _row),
 												_file.Location);
-				RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
+				RouteControlMouseDownEvent(this, args);							// fire RouteView.OnRouteControlMouseDown()
 			}
 		}
 
@@ -263,7 +263,7 @@ namespace MapView.Forms.Observers
 		{
 			if (_col != -1)
 			{
-				_file.Location = new MapLocation( // fire LocationSelected
+				_file.Location = new MapLocation(								// fire LocationSelected
 											_col, _row,
 											_file.Level);
 
@@ -271,7 +271,7 @@ namespace MapView.Forms.Observers
 												e.Button,
 												_file.GetTile(_col, _row),
 												_file.Location);
-				RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
+				RouteControlMouseUpEvent(this, args);							// fire RouteView.OnRouteControlMouseUp()
 			}
 		}
 
@@ -298,7 +298,7 @@ namespace MapView.Forms.Observers
 
 			// this fires panel refreshes whenever the mouse moves a single pixel
 			// The InfoOverlay moves freely.
-			base.OnMouseMove(e); // fire RouteView.OnRouteControlMouseMove()
+			base.OnMouseMove(e);												// fire RouteView.OnRouteControlMouseMove()
 		}
 		#endregion Events (override)
 
@@ -330,7 +330,7 @@ namespace MapView.Forms.Observers
 
 				if (!MainViewOverlay.that.FirstClick) // allow Shift
 				{
-					_file.Location = new MapLocation(0,0, _file.Level); // fire LocationSelected event
+					_file.Location = new MapLocation(0,0, _file.Level);			// fire LocationSelected event
 
 					var loc = new Point(0,0);
 					MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -339,7 +339,7 @@ namespace MapView.Forms.Observers
 													MouseButtons.Left,
 													_file.GetTile(0,0),
 													_file.Location);
-					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
+					RouteControlMouseDownEvent(this, args);						// fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
 				}
 				else if (keyData == Keys.Enter)
@@ -349,7 +349,7 @@ namespace MapView.Forms.Observers
 													_file.GetTile(_file.Location.Col,
 																  _file.Location.Row),
 													_file.Location);
-					RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
+					RouteControlMouseDownEvent(this, args);						// fire RouteView.OnRouteControlMouseDown()
 					invalidate = true;
 				}
 				else if ((keyData & Keys.Shift) == Keys.None)
@@ -380,7 +380,7 @@ namespace MapView.Forms.Observers
 						if (   c > -1 && c < _file.Cols
 							&& r > -1 && r < _file.Rows)
 						{
-							_file.Location = new MapLocation(c,r, _file.Level); // fire LocationSelected event
+							_file.Location = new MapLocation(c,r, _file.Level);	// fire LocationSelected event
 
 							loc.X = c; loc.Y = r;
 							MainViewOverlay.that.ProcessSelection(loc,loc);
@@ -389,7 +389,7 @@ namespace MapView.Forms.Observers
 															MouseButtons.Left,
 															_file.GetTile(c,r),
 															_file.Location);
-							RouteControlMouseDownEvent(this, args); // fire RouteView.OnRouteControlMouseDown()
+							RouteControlMouseDownEvent(this, args);				// fire RouteView.OnRouteControlMouseDown()
 							invalidate = true;
 						}
 					}
@@ -398,8 +398,8 @@ namespace MapView.Forms.Observers
 						int level = _file.Level + vert;
 						if (level > -1 && level < _file.Levs)
 						{
-							_file.ChangeLevel(vert);			// fire LevelSelected event
-							_file.Location = new MapLocation(	// fire LocationSelected event
+							_file.ChangeLevel(vert);							// fire LevelSelected event
+							_file.Location = new MapLocation(					// fire LocationSelected event
 														_file.Location.Col,
 														_file.Location.Row,
 														level);
@@ -437,13 +437,13 @@ namespace MapView.Forms.Observers
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							_file.Location = new MapLocation(c,r, _file.Level); // fire LocationSelected event
+							_file.Location = new MapLocation(c,r, _file.Level);	// fire LocationSelected event
 
 							var args = new RouteControlEventArgs(
 															MouseButtons.None,
 															_file.GetTile(c,r),
 															_file.Location);
-							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
+							RouteControlMouseUpEvent(this, args);				// fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
 							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
@@ -459,8 +459,8 @@ namespace MapView.Forms.Observers
 						{
 							RouteView.Dragnode = NodeSelected;
 
-							_file.ChangeLevel(vert);			// fire LevelSelected event
-							_file.Location = new MapLocation(	// fire LocationSelected event
+							_file.ChangeLevel(vert);							// fire LevelSelected event
+							_file.Location = new MapLocation(					// fire LocationSelected event
 														_file.Location.Col,
 														_file.Location.Row,
 														level);
@@ -470,7 +470,7 @@ namespace MapView.Forms.Observers
 															_file.GetTile(_file.Location.Col,
 																		  _file.Location.Row),
 															_file.Location);
-							RouteControlMouseUpEvent(this, args); // fire RouteView.OnRouteControlMouseUp()
+							RouteControlMouseUpEvent(this, args);				// fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
 							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
