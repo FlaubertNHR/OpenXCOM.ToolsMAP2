@@ -282,9 +282,9 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnGridDarkClick(object sender, EventArgs e)
+		internal void OnGridDarkClick(object sender, EventArgs e)
 		{
-			if ((miGridDark.Checked = !miGridDark.Checked))
+			if (miGridDark.Checked = !miGridDark.Checked)
 			{
 				miGridLight.Checked = false;
 				SpritePanel.PenGrid = Pens.DarkGray;
@@ -298,15 +298,32 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnGridLightClick(object sender, EventArgs e)
+		internal void OnGridLightClick(object sender, EventArgs e)
 		{
-			if ((miGridLight.Checked = !miGridLight.Checked))
+			if (miGridLight.Checked = !miGridLight.Checked)
 			{
 				miGridDark.Checked = false;
 				SpritePanel.PenGrid = Pens.LightGray;
 			}
 			else
 				SpritePanel.PenGrid = null;
+		}
+
+		/// <summary>
+		/// Gets an <c>int</c> representing the current Grid menu checked.
+		/// </summary>
+		/// <returns>
+		/// <list type="bullet">
+		/// <item><c>0</c> - no grid</item>
+		/// <item><c>1</c> - dark grid</item>
+		/// <item><c>2</c> - light grid</item>
+		/// </list>
+		/// </returns>
+		internal int GetGridConfig()
+		{
+			if (miGridDark .Checked) return 1;
+			if (miGridLight.Checked) return 2;
+			return 0;
 		}
 
 		/// <summary>
@@ -320,7 +337,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Resets the magnification factor to <c>+0</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -331,7 +348,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Sets the magnification factor.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -403,6 +420,30 @@ namespace PckView
 
 				OnLoad(null, EventArgs.Empty);
 			}
+		}
+
+		/// <summary>
+		/// Sets the magnification factor from the configfile.
+		/// </summary>
+		/// <param name="scale"></param>
+		internal void SetScale(int scale)
+		{
+			ToolStripMenuItem it;
+			switch (scale)
+			{
+				default: it = tsddb_Size_0;  break; // case 0
+				case  1: it = tsddb_Size_1;  break;
+				case  2: it = tsddb_Size_2;  break;
+				case  3: it = tsddb_Size_3;  break;
+				case  4: it = tsddb_Size_4;  break;
+				case  5: it = tsddb_Size_5;  break;
+				case  6: it = tsddb_Size_6;  break;
+				case  7: it = tsddb_Size_7;  break;
+				case  8: it = tsddb_Size_8;  break;
+				case  9: it = tsddb_Size_9;  break;
+				case 10: it = tsddb_Size_10; break;
+			}
+			size_click(it, EventArgs.Empty);
 		}
 		#endregion Events
 

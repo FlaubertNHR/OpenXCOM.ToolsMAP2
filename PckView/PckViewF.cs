@@ -15,6 +15,8 @@ using DSShared.Controls;
 
 using XCom;
 
+using YamlDotNet.RepresentationModel; // read values (deserialization)
+
 
 namespace PckView
 {
@@ -88,9 +90,9 @@ namespace PckView
 
 		internal static float SpriteShadeFloat;
 
-		internal const int ShaderDisabled = 0;
+		private  const int ShaderDisabled = 0;
 		internal const int ShaderOn       = 1;
-		internal const int ShaderOff      = 2;
+		private  const int ShaderOff      = 2;
 
 		internal static bool BypassActivatedEvent;
 		#endregion Fields (static)
@@ -327,7 +329,74 @@ namespace PckView
 			PrintSelected();
 			PrintOver();
 
-			PopulatePaletteMenu(); // WARNING: Palettes created here <-
+
+			int palselected = 0;
+
+			// NOTE: Ben was a genius but this is fucked. He was devouring the
+			// c#/.net language/framework when he set this 'pattern' up ... and
+			// while his tactics were no doubt invaluable for research I've left
+			// myself stuck with it so far ->
+
+			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
+			var piConfig = new PathInfo(dirSetT, PathInfo.Pck_Config);	// define a PathInfo for PckConfig.yml
+			SharedSpace.SetShare(PathInfo.SharePckConfig, piConfig);	// set a share for PckConfig.yml
+
+			// That's 3 variables just for "PckConfig.yml" ...
+			// - PathInfo.Pck_Config
+			// - PathInfo.SharePckConfig
+			// - piConfig
+
+			bool config_spriteshade = true;
+
+			string pfe = piConfig.Fullpath;
+
+			using (var fs = FileService.OpenFile(pfe, true)) // don't warn user if not found.
+			if (fs != null)
+			using (var sr = new StreamReader(pfe))
+			{
+				var ys = new YamlStream();
+				ys.Load(sr);
+
+				var root = ys.Documents[0].RootNode as YamlMappingNode;
+				foreach (var node in root.Children)
+				{
+					string label = (node.Key as YamlScalarNode).Value;
+
+					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
+					foreach (var keyval in keyvals)
+					{
+						switch (keyval.Key.ToString())
+						{
+							case "transparent": // NOTE: set Transparent before setting the palette.
+								miTransparent.Checked = Boolean.Parse(keyval.Value.ToString()); // TODO: Error handling.
+								break;
+
+							case "spriteshade":
+								config_spriteshade = Boolean.Parse(keyval.Value.ToString()); // TODO: Error handling.
+								break;
+
+							case "palette":
+								palselected = Int32.Parse(keyval.Value.ToString()); // TODO: Error handling.
+								break;
+
+							case "grid":
+								switch (Int32.Parse(keyval.Value.ToString())) // TODO: Error handling.
+								{
+									case 1: SpriteEditor.OnGridDarkClick( null, EventArgs.Empty); break;
+									case 2: SpriteEditor.OnGridLightClick(null, EventArgs.Empty); break;
+								}
+								break;
+
+							case "scale":
+								SpriteEditor.SetScale(Int32.Parse(keyval.Value.ToString())); // TODO: Error handling.
+								break;
+						}
+					}
+				}
+			}
+
+			PopulatePaletteMenu(palselected); // WARNING: Palettes created here <-
+
 
 			BlankSprite = Properties.Resources.blanksprite;
 			BlankIcon   = Properties.Resources.blankicon;
@@ -349,7 +418,7 @@ namespace PckView
 			bool @set = false;
 			if (IsInvoked)
 			{
-				@set = (spriteshade > 0);
+				@set = spriteshade > 0;
 			}
 			else
 			{
@@ -363,10 +432,13 @@ namespace PckView
 
 			if (@set)
 			{
-				miSpriteShade.Enabled =
-				miSpriteShade.Checked = true;
+				miSpriteShade.Enabled = true;
 
-				Shader = ShaderOn;
+				if (miSpriteShade.Checked = config_spriteshade)
+					Shader = ShaderOn;
+				else
+					Shader = ShaderOff;
+
 				SpriteShadeFloat = (float)Math.Min(spriteshade, 99)
 								 * GlobalsXC.SpriteShadeCoefficient;
 
@@ -500,7 +572,8 @@ namespace PckView
 		/// Adds <c><see cref="Palette">Palettes</see></c> as menuitems to the
 		/// Palettes menu on the main menubar.
 		/// </summary>
-		private void PopulatePaletteMenu()
+		/// <param name="sel">the palette to select</param>
+		private void PopulatePaletteMenu(int sel)
 		{
 			// instantiate the palettes iff not invoked by MapView - else the
 			// palettes have already been instantiated
@@ -541,7 +614,7 @@ namespace PckView
 				}
 			}
 
-			OnPaletteClick(_itPalettes[Palette.UfoBattle], EventArgs.Empty);
+			OnPaletteClick(_itPalettes[pals[sel]], EventArgs.Empty);
 		}
 		#endregion cTor
 
@@ -630,6 +703,8 @@ namespace PckView
 				{
 					RegistryInfo.UpdateRegistry(this);
 
+					SaveConfiguration();
+
 					Quit = true;
 
 					SpriteEditor.ClosePalette();	// these are needed when PckView is invoked via TileView
@@ -651,6 +726,52 @@ namespace PckView
 					e.Cancel = true;
 			}
 			base.OnFormClosing(e);
+		}
+
+		/// <summary>
+		/// Saves user-configuration.
+		/// </summary>
+		private void SaveConfiguration()
+		{
+			string pfe = ((PathInfo)SharedSpace.GetShareObject(PathInfo.SharePckConfig)).Fullpath; // gfl
+
+			string pfeT;
+			if (File.Exists(pfe))
+				pfeT = pfe + GlobalsXC.TEMPExt;
+			else
+				pfeT = pfe;
+
+			bool fail = true;
+			using (var fs = FileService.CreateFile(pfeT))
+			if (fs != null)
+			{
+				fail = false;
+
+				int pal = 0;
+				foreach (var entry in _itPalettes)
+				{
+					if ((entry.Value as MenuItem).Checked)
+						break;
+					++pal;
+				}
+
+				using (var sw = new StreamWriter(fs))
+				{
+					sw.WriteLine("PckConfig:");
+
+					// PckViewF
+					sw.WriteLine("  transparent: " + miTransparent.Checked);
+					sw.WriteLine("  spriteshade: " + miSpriteShade.Checked);
+					sw.WriteLine("  palette: "     + pal);
+
+					// SpriteEditorF
+					sw.WriteLine("  grid: "  + SpriteEditor.GetGridConfig());
+					sw.WriteLine("  scale: " + SpriteEditor._scaler);
+				}
+			}
+
+			if (!fail && pfeT != pfe)
+				FileService.ReplaceFile(pfe);
 		}
 
 		/// <summary>

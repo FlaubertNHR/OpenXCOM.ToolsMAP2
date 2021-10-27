@@ -10,8 +10,9 @@ namespace DSShared
 	public sealed class PathInfo
 	{
 		#region Fields (static)
-		// path-keys in SharedSpace
+		// path-keys in SharedSpace. TODO: They should be in SharedSpace not PathInfo.
 		public const string ShareOptions   = "MV_OptionsFile";		// -> MapOptions.cfg
+		public const string SharePckConfig = "PckConfigFile";		// -> PckConfig.yml
 
 		public const string ShareResources = "MV_ResourcesFile";	// -> MapResources.yml
 		public const string ShareTilesets  = "MV_TilesetsFile";		// -> MapTilesets.yml
@@ -22,6 +23,7 @@ namespace DSShared
 
 		// Configuration files
 		public const string CFG_Options    = "MapOptions.cfg";		// stores user-settings for the viewers
+		public const string Pck_Config     = "PckConfig.yml";		// stores user-settings for PckView
 
 		public const string YML_Resources  = "MapResources.yml";	// stores the installation paths of UFO/TFTD
 
@@ -66,7 +68,8 @@ namespace DSShared
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Initializes a new instance of the PathInfo class.
+		/// cTor[0]. Initializes a new instance of the <c>PathInfo</c>
+		/// <c>class</c>.
 		/// </summary>
 		/// <param name="dir">a path to the directory</param>
 		/// <param name="file">the file with any extension</param>
