@@ -315,7 +315,7 @@ namespace PckView
 			// 
 			this.miTransparent.Checked = true;
 			this.miTransparent.Index = 0;
-			this.miTransparent.Shortcut = System.Windows.Forms.Shortcut.F7;
+			this.miTransparent.Shortcut = System.Windows.Forms.Shortcut.F9;
 			this.miTransparent.Text = "&Transparent";
 			this.miTransparent.Click += new System.EventHandler(this.OnTransparencyClick);
 			// 
@@ -323,7 +323,7 @@ namespace PckView
 			// 
 			this.miSpriteShade.Enabled = false;
 			this.miSpriteShade.Index = 1;
-			this.miSpriteShade.Shortcut = System.Windows.Forms.Shortcut.F8;
+			this.miSpriteShade.Shortcut = System.Windows.Forms.Shortcut.F10;
 			this.miSpriteShade.Text = "&SpriteShade";
 			this.miSpriteShade.Click += new System.EventHandler(this.OnSpriteshadeClick);
 			// 
@@ -342,7 +342,7 @@ namespace PckView
 			// miBytes
 			// 
 			this.miBytes.Index = 0;
-			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.F9;
+			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.F11;
 			this.miBytes.Text = "Show/hide &byte table";
 			this.miBytes.Click += new System.EventHandler(this.OnBytesClick);
 			// 

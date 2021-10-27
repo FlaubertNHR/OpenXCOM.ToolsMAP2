@@ -150,18 +150,20 @@ namespace PckView
 
 		#region Events (static)
 		/// <summary>
-		/// Fix 'AutoWordSelection'.
+		/// Turns off <c>AutoWordSelection</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks><c>AutoWordSelection</c> can't be turned off correctly in
+		/// the Designer or the cTor.</remarks>
 		private static void OnBytesLoad(object sender, EventArgs e)
 		{
 			_rtbBytes.AutoWordSelection = false;
 		}
 
 		/// <summary>
-		/// Handles the keydown event. Hides or closes the form on [Esc] or
-		/// [F9] keypress.
+		/// Handles the <c>KeyDown</c> event. Hides or closes the form on
+		/// <c>[Esc]</c> or <c>[F11]</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -170,7 +172,7 @@ namespace PckView
 			switch (e.KeyData)
 			{
 				case Keys.Escape:
-				case Keys.F9:
+				case Keys.F11:
 					e.Handled = e.SuppressKeyPress = true;
 					_fBytes.Close();
 					break;
@@ -178,8 +180,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles the formclosing event. Hides the form if PckView is not
-		/// quitting.
+		/// Handles the <c>FormClosing</c> event. Hides the form if PckView is
+		/// not quitting.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

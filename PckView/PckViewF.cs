@@ -420,13 +420,14 @@ namespace PckView
 		// miSaveAs				CtrlE
 		// miExportSprites		CtrlP
 		// miExportSpritesheet	F5
-		// miImportSpritesheet	F6
+		// miImportSheetReplace	F6
+		// miImportSheetAdd		F7
 		// miQuit				CtrlQ
 		// miCompare
-		// miTransparent		F7
-		// miSpriteShade		F8
+		// miTransparent		F9
+		// miSpriteShade		F10
 		// palette items		Ctrl1..Ctrl8
-		// miBytes				F9
+		// miBytes				F11
 		// miHelp				F1
 		//
 		// CONTEXT:
