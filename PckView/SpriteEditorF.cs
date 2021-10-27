@@ -244,7 +244,6 @@ namespace PckView
 		private void popup_Palette(object sender, EventArgs e)
 		{
 			miPalette.Enabled = (_f.SetType != Spriteset.SsType.LoFT);
-			miPalette.Checked = _fpalette.Visible;
 		}
 
 		/// <summary>
@@ -268,7 +267,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// <c><see cref="PaletteF"/> hides rather then closes.</c>
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -416,6 +415,14 @@ namespace PckView
 		internal void PrintPixelColor(string color)
 		{
 			tssl_ColorInfo.Text = color;
+		}
+
+		/// <summary>
+		/// Sets the Palette it checked.
+		/// </summary>
+		internal void SetPaletteChecked()
+		{
+			miPalette.Checked = true;
 		}
 
 		/// <summary>

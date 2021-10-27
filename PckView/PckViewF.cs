@@ -817,7 +817,10 @@ namespace PckView
 				SpriteEditor.Show();
 
 				if (SetType != Spriteset.SsType.LoFT)
+				{
+					SpriteEditor.SetPaletteChecked();
 					SpriteEditor._fpalette.Show();
+				}
 			}
 		}
 
