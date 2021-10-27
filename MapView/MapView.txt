@@ -1,12 +1,12 @@
 MapView ii
 
-2021 oct 26
+2021 oct 27
 
 MapView   .exe 4.1.1.0
 McdView   .exe 4.1.0.0
 PckView   .exe 4.2.0.0
 XCom      .dll 4.1.1.0
-DSShared  .dll 4.1.0.0
+DSShared  .dll 4.1.1.0
 YamlDotNet.dll 0.0.1.0 (c) Antoine Aubry and contributors
 
 ConfigConverter .exe 2.2.2.0
