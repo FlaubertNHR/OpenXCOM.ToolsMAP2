@@ -11,7 +11,7 @@
 
 		<p>The Palette Viewer, to the right, shows the palette that is currently selected under PckView's Palette menu. Since color information is not stored in XCOM sprites, the colors shown are taken from hard-coded values. The statusbar at the bottom displays the color-index and color-value of the selected color swatch.</p>
 
-		<p>Notice that index #0 is for transparency in XCOM, and indices #254 and #255 are invalid.</p>
+		<p>Notice that index #0 is for transparency in XCOM, and indices #254 and #255 are invalid since they are reserved for RLE compression.</p>
 
 		<p>The editor can be toggled between two modes:<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;Locked - the image cannot be modified. Click the text to switch to Enabled mode.<br>
@@ -25,6 +25,8 @@
 
 		<p>Along the top of the Sprite Editor is a trackbar for adjusting the displayed scale of the sprite. It has no effect when saving the spriteset or exporting the sprite. Moving the slider all the way to the left shows the image with a 1:1 scale and hides the grid. All the way to the right shows the image at a 10:1 scale.</p>
 
+		<p>The statusbar at the bottom of the Sprite Editor shows the 8-bit palette index and color values [a,r,g,b] of a pixel as the mousecursor moves over it. At the very bottom right is a dropdown that sets a magnification factor for the entire Sprite Editor window.</p>
+
 		<br>
 		<h3>Palette menu</h3>
 
@@ -35,6 +37,11 @@
 
 		<p>Show grid - shows or hides a grid of 1 sprite-pixel squares over the sprite. The grid is not visible when the display scale is at 1:1.</p>
 		<p>Invert color - toggles the color of the grid between dim-gray and off-white.</p>
+
+		<br>
+		<h3>Magnification menu</h3>
+
+		<p>Reset - resets the magnification factor on the statusbar. This is useful if you choose a magnification that is too large for your monitor and the statusbar gets pushed down off the screen.</p>
 
 		<br>
 		<p>That's about it.</p>
