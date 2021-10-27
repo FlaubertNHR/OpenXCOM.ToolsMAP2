@@ -170,7 +170,7 @@ namespace DSShared
 		/// <summary>
 		/// Properties to be assigned.
 		/// </summary>
-		/// <param name="f">a Form aka viewer</param>
+		/// <param name="f">a <c>Form</c> aka viewer</param>
 		/// <returns><c>true</c> if form/viewer is found in the dictionary and
 		/// its properties get loaded</returns>
 		public static bool RegisterProperties(Form f)
@@ -284,10 +284,11 @@ namespace DSShared
 		/// <summary>
 		/// Checks if the OS wants this shit to stop instantly.
 		/// </summary>
-		/// <param name="reason"><see cref="CloseReason"/></param>
-		/// <returns>true if Windoze is shutting down [or another application
-		/// such as TaskManager sends a WM_CLOSE message]</returns>
+		/// <param name="reason"><c><see cref="CloseReason"/></c></param>
+		/// <returns><c>true</c> if Windoze is shutting down [or another
+		/// application such as TaskManager sends a <c>WM_CLOSE</c> message]</returns>
 		/// <remarks>holy erection batrat
+		/// 
 		/// https://stackoverflow.com/questions/23872921/how-to-reset-the-close-reason-when-close-is-cancelled#answer-23919394</remarks>
 		public static bool FastClose(CloseReason reason)
 		{
