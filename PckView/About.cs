@@ -31,22 +31,28 @@ namespace PckView
 			var sb = new StringBuilder();
 
 			Version ver = ass.GetName().Version;
-			sb.AppendLine("PckView .exe " + ver.Major + "."
-										  + ver.Minor + "."
-										  + ver.Build + "."
-										  + ver.Revision);
+			sb.AppendLine("PckView   .exe " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
 			ver = Assembly.Load("XCom").GetName().Version;
-			sb.AppendLine("XCom    .dll " + ver.Major + "."
-										  + ver.Minor + "."
-										  + ver.Build + "."
-										  + ver.Revision);
+			sb.AppendLine("XCom      .dll " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
 
 			ver = Assembly.Load("DSShared").GetName().Version;
-			sb.Append("DSShared.dll " + ver.Major + "."
-									  + ver.Minor + "."
-									  + ver.Build + "."
-									  + ver.Revision);
+			sb.AppendLine("DSShared  .dll " + ver.Major + "."
+											+ ver.Minor + "."
+											+ ver.Build + "."
+											+ ver.Revision);
+
+			ver = Assembly.Load("YamlDotNet").GetName().Version;
+			sb.Append("YamlDotNet.dll " + ver.Major + "."
+										+ ver.Minor + "."
+										+ ver.Build + "."
+										+ ver.Revision);
 
 			tb_Ver.Text = sb.ToString();
 

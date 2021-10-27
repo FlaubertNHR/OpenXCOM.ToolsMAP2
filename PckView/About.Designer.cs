@@ -56,14 +56,14 @@ namespace PckView
 			this.tb_Ver.Multiline = true;
 			this.tb_Ver.Name = "tb_Ver";
 			this.tb_Ver.ReadOnly = true;
-			this.tb_Ver.Size = new System.Drawing.Size(285, 43);
+			this.tb_Ver.Size = new System.Drawing.Size(285, 57);
 			this.tb_Ver.TabIndex = 4;
 			this.tb_Ver.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tb_Ver.WordWrap = false;
 			// 
 			// la_Date
 			// 
-			this.la_Date.Location = new System.Drawing.Point(5, 95);
+			this.la_Date.Location = new System.Drawing.Point(5, 109);
 			this.la_Date.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Date.Name = "la_Date";
 			this.la_Date.Size = new System.Drawing.Size(285, 15);
@@ -72,7 +72,7 @@ namespace PckView
 			// 
 			// la_Architecture
 			// 
-			this.la_Architecture.Location = new System.Drawing.Point(5, 113);
+			this.la_Architecture.Location = new System.Drawing.Point(5, 127);
 			this.la_Architecture.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Architecture.Name = "la_Architecture";
 			this.la_Architecture.Size = new System.Drawing.Size(285, 15);
@@ -82,7 +82,7 @@ namespace PckView
 			// About
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(294, 134);
+			this.ClientSize = new System.Drawing.Size(294, 148);
 			this.Controls.Add(this.tb_Ver);
 			this.Controls.Add(this.la_Architecture);
 			this.Controls.Add(this.la_Date);
