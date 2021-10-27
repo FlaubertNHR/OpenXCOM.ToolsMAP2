@@ -435,13 +435,23 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Gets the length of anything that needs to be scaled by the
+		/// magnification factor.
 		/// </summary>
-		/// <param name="length"></param>
+		/// <param name="length">a length that needs to be scaled</param>
 		/// <returns></returns>
 		internal int GetScaled(int length)
 		{
 			return length * (10 + _scaler) / 10;
+		}
+
+		/// <summary>
+		/// Checks if the trackbar is at its minimum value.
+		/// </summary>
+		/// <returns><c>true</c> if trackbar is not at its minimum value</returns>
+		internal bool isMinTrackVal()
+		{
+			return bar_Scale.Value == bar_Scale.Minimum;
 		}
 		#endregion Methods
 	}

@@ -61,7 +61,16 @@ namespace PckView
 			}
 		}
 
+		/// <summary>
+		/// The <c>Pen</c> for drawing the gridlines.
+		/// </summary>
+		/// <remarks><c>_penGrid</c> is <c>null</c> when the grid is off</remarks>
 		private Pen _penGrid;
+
+		/// <summary>
+		/// The <c>Pen</c> for drawing the gridlines.
+		/// </summary>
+		/// <remarks>Set <c>PenGrid</c> <c>null</c> to turn the grid off</remarks>
 		internal Pen PenGrid
 		{
 			set
@@ -124,98 +133,101 @@ namespace PckView
 		{
 			base.OnMouseDown(e);
 
-			if (e.Button == MouseButtons.Left
-				&& Sprite != null
-				&& e.X > 0 && e.X < _feditor._f.SpriteWidth  * ScaleFactor
-				&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * ScaleFactor)
+			if (e.Button == MouseButtons.Left && Sprite != null
+				&& e.X > 0 && e.Y > 0)
 			{
-				int pixelX = e.X / ScaleFactor;
-				int pixelY = e.Y / ScaleFactor;
-
-				byte[] bindata = Sprite.GetBindata();
-
-				int binid = pixelY * (bindata.Length / _feditor._f.SpriteHeight) + pixelX;
-
-				if (binid > -1 && binid < bindata.Length) // safety.
+				int scale = ScaleFactor;
+				if (   e.X < _feditor._f.SpriteWidth  * scale
+					&& e.Y < _feditor._f.SpriteHeight * scale)
 				{
-					switch (SpriteEditorF.Mode)
+					int pixelX = e.X / scale;
+					int pixelY = e.Y / scale;
+
+					byte[] bindata = Sprite.GetBindata();
+
+					int binid = pixelY * (bindata.Length / _feditor._f.SpriteHeight) + pixelX;
+
+					if (binid > -1 && binid < bindata.Length) // safety.
 					{
-						case EditMode.Enabled: // paint ->
-							if (_feditor._f.SetType != Spriteset.SsType.LoFT)
-							{
-								int palid = _feditor._fpalette.PalPanel.Palid;
-								if (palid > -1)
+						switch (SpriteEditorF.Mode)
+						{
+							case EditMode.Enabled: // paint ->
+								if (_feditor._f.SetType != Spriteset.SsType.LoFT)
 								{
-									if (palid < PckSprite.MarkerRle
-										|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetManager.TAB_WORD_LENGTH_0)
+									int palid = _feditor._fpalette.PalPanel.Palid;
+									if (palid > -1)
 									{
-										if (palid != (int)bindata[binid])
+										if (palid < PckSprite.MarkerRle
+											|| _feditor._f.TilePanel.Spriteset.TabwordLength == SpritesetManager.TAB_WORD_LENGTH_0)
 										{
-											bindata[binid] = (byte)palid;
-											Bitmap sprite = SpriteService.CreateSprite(
-																					_feditor._f.SpriteWidth,
-																					_feditor._f.SpriteHeight,
-																					bindata,
-																					Sprite.Pal.Table); //_feditor._f.Pal.Table
-											Sprite.Dispose();
-											Sprite.Sprite = sprite;
+											if (palid != (int)bindata[binid])
+											{
+												bindata[binid] = (byte)palid;
+												Bitmap sprite = SpriteService.CreateSprite(
+																						_feditor._f.SpriteWidth,
+																						_feditor._f.SpriteHeight,
+																						bindata,
+																						Sprite.Pal.Table); //_feditor._f.Pal.Table
+												Sprite.Dispose();
+												Sprite.Sprite = sprite;
 
-											Invalidate();
-											_feditor._f.TilePanel.Invalidate();
+												Invalidate();
+												_feditor._f.TilePanel.Invalidate();
 
-											_feditor._f.Changed = true;
+												_feditor._f.Changed = true;
 
-											ByteTableManager.ReloadTable(Sprite, _feditor._f.SetType);
+												ByteTableManager.ReloadTable(Sprite, _feditor._f.SetType);
+											}
 										}
-									}
-									else
-									{
-										switch (palid)
+										else
 										{
-											case PckSprite.MarkerRle: // #254
-											case PckSprite.MarkerEos: // #255
-												using (var f = new Infobox(
-																		"Error",
-																		Infobox.SplitString("The colortable values #254 and #255"
-																				+ " are reserved as special markers in a .PCK file."),
-																		"#254 - RLE" + Environment.NewLine
-																	  + "#255 - End-of-Sprite",
-																		InfoboxType.Error))
-												{
-													f.ShowDialog(this);
-												}
-												break;
+											switch (palid)
+											{
+												case PckSprite.MarkerRle: // #254
+												case PckSprite.MarkerEos: // #255
+													using (var f = new Infobox(
+																			"Error",
+																			Infobox.SplitString("The colortable values #254 and #255"
+																					+ " are reserved as special markers in a .PCK file."),
+																			"#254 - RLE" + Environment.NewLine
+																		  + "#255 - End-of-Sprite",
+																			InfoboxType.Error))
+													{
+														f.ShowDialog(this);
+													}
+													break;
+											}
 										}
 									}
 								}
-							}
-							else // is LoFT
-							{
-								if (bindata[binid] != Palette.LoFTclear)
-									bindata[binid]  = Palette.LoFTclear;
-								else
-									bindata[binid]  = Palette.LoFTSolid;
+								else // is LoFT
+								{
+									if (bindata[binid] != Palette.LoFTclear)
+										bindata[binid]  = Palette.LoFTclear;
+									else
+										bindata[binid]  = Palette.LoFTSolid;
 
-								Bitmap sprite = SpriteService.CreateSprite(
-																		_feditor._f.SpriteWidth,
-																		_feditor._f.SpriteHeight,
-																		bindata,
-																		Sprite.Pal.Table); //Palette.Binary.Table
-								Sprite.Dispose();
-								Sprite.Sprite = sprite;
+									Bitmap sprite = SpriteService.CreateSprite(
+																			_feditor._f.SpriteWidth,
+																			_feditor._f.SpriteHeight,
+																			bindata,
+																			Sprite.Pal.Table); //Palette.Binary.Table
+									Sprite.Dispose();
+									Sprite.Sprite = sprite;
 
-								Invalidate();
-								_feditor._f.TilePanel.Invalidate();
+									Invalidate();
+									_feditor._f.TilePanel.Invalidate();
 
-								_feditor._f.Changed = true;
+									_feditor._f.Changed = true;
 
-								ByteTableManager.ReloadTable(Sprite, _feditor._f.SetType);
-							}
-							break;
+									ByteTableManager.ReloadTable(Sprite, _feditor._f.SetType);
+								}
+								break;
 
-						case EditMode.Locked: // eye-dropper ->
-							_feditor._fpalette.PalPanel.SelectPalid(bindata[binid]);
-							break;
+							case EditMode.Locked: // eye-dropper ->
+								_feditor._fpalette.PalPanel.SelectPalid(bindata[binid]);
+								break;
+						}
 					}
 				}
 			}
@@ -229,23 +241,27 @@ namespace PckView
 		{
 			if (Sprite != null)
 			{
-				if (   e.X > 0 && e.X < _feditor._f.SpriteWidth  * ScaleFactor
-					&& e.Y > 0 && e.Y < _feditor._f.SpriteHeight * ScaleFactor)
+				if (e.X > 0 && e.Y > 0)
 				{
-					int pixelX = e.X / ScaleFactor;
-					int pixelY = e.Y / ScaleFactor;
-
-					byte[] bindata = Sprite.GetBindata();
-
-					int binid = pixelY * (bindata.Length / _feditor._f.SpriteHeight) + pixelX;
-
-					if (binid > -1 && binid < bindata.Length) // safety.
+					int scale = ScaleFactor;
+					if (   e.X < _feditor._f.SpriteWidth  * scale
+						&& e.Y < _feditor._f.SpriteHeight * scale)
 					{
-						int palid = bindata[binid];
-						if (palid != Palid)
-							Palid = palid;
+						int pixelX = e.X / scale;
+						int pixelY = e.Y / scale;
 
-						return;
+						byte[] bindata = Sprite.GetBindata();
+
+						int binid = pixelY * (bindata.Length / _feditor._f.SpriteHeight) + pixelX;
+
+						if (binid > -1 && binid < bindata.Length) // safety.
+						{
+							int palid = bindata[binid];
+							if (palid != Palid)
+								Palid = palid;
+
+							return;
+						}
 					}
 				}
 				Palid = -1;
@@ -259,8 +275,10 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 			graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+			int scale = ScaleFactor;
 
 			if (Sprite != null)
 			{
@@ -277,10 +295,10 @@ namespace PckView
 						{
 							graphics.FillRectangle(
 												brush,
-												x * ScaleFactor,
-												y * ScaleFactor,
-													ScaleFactor,
-													ScaleFactor);
+												x * scale,
+												y * scale,
+													scale,
+													scale);
 						}
 					}
 				}
@@ -294,33 +312,33 @@ namespace PckView
 						{
 							graphics.FillRectangle(
 												brush,
-												x * ScaleFactor,
-												y * ScaleFactor,
-													ScaleFactor,
-													ScaleFactor);
+												x * scale,
+												y * scale,
+													scale,
+													scale);
 						}
 					}
 				}
 			}
 
 
-			if (_penGrid != null && ScaleFactor > 2)
+			if (_penGrid != null && !_feditor.isMinTrackVal())
 			{
 				for (int x = 0; x != _feditor._f.SpriteWidth; ++x) // vertical lines
 					graphics.DrawLine(
 									_penGrid,
-									x * ScaleFactor + Pad,
+									x * scale + Pad,
 									0,
-									x * ScaleFactor + Pad,
-									_feditor._f.SpriteHeight * ScaleFactor);
+									x * scale + Pad,
+									_feditor._f.SpriteHeight * scale);
 
 				for (int y = 0; y != _feditor._f.SpriteHeight; ++y) // horizontal lines
 					graphics.DrawLine(
 									_penGrid,
 									0,
-									y * ScaleFactor + Pad,
-									_feditor._f.SpriteWidth * ScaleFactor,
-									y * ScaleFactor + Pad);
+									y * scale + Pad,
+									_feditor._f.SpriteWidth * scale,
+									y * scale + Pad);
 			}
 
 
@@ -328,14 +346,14 @@ namespace PckView
 							0,
 							1);
 			var p1 = new Point(
-							_feditor._f.SpriteWidth  * ScaleFactor + Pad,
+							_feditor._f.SpriteWidth  * scale + Pad,
 							1);
 			var p2 = new Point(
-							_feditor._f.SpriteWidth  * ScaleFactor + Pad,
-							_feditor._f.SpriteHeight * ScaleFactor + Pad);
+							_feditor._f.SpriteWidth  * scale + Pad,
+							_feditor._f.SpriteHeight * scale + Pad);
 			var p3 = new Point(
 							1,
-							_feditor._f.SpriteHeight * ScaleFactor + Pad);
+							_feditor._f.SpriteHeight * scale + Pad);
 			var p4 = new Point(
 							1,
 							1);
