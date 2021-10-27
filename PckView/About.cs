@@ -78,6 +78,8 @@ namespace PckView
 		/// Closes this <c>About</c> on a <c>KeyDown</c> event.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires <c>KeyPreview</c> <c>true</c> since
+		/// <c><see cref="tb_Ver"/></c> always takes focus.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
