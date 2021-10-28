@@ -115,6 +115,8 @@ namespace PckView
 		private ToolStripMenuItem _miMoveR;
 		private ToolStripMenuItem _miDelete;
 		private ToolStripMenuItem _miExport;
+		private ToolStripMenuItem _miCreate;
+		private ToolStripMenuItem _miClear;
 
 		private readonly Dictionary<Palette, MenuItem> _itPalettes =
 					 new Dictionary<Palette, MenuItem>();
@@ -528,6 +530,8 @@ namespace PckView
 		// MoveRight			+
 		// Delete				Delete
 		// ExportSprite ...		p
+		// create               t
+		// clear                c
 
 		/// <summary>
 		/// Builds the RMB contextmenu.
@@ -544,6 +548,8 @@ namespace PckView
 			_miMoveR       = new ToolStripMenuItem("Move right",        null, OnMoveRightSpriteClick);		// OnKeyDown +
 			_miDelete      = new ToolStripMenuItem("Delete",            null, OnDeleteSpriteClick);			// OnKeyDown Delete
 			_miExport      = new ToolStripMenuItem("Export sprite ...", null, OnExportSpriteClick);			// OnKeyDown p
+			_miCreate      = new ToolStripMenuItem("create",            null, OnCreateSpriteClick);			// OnKeyDown t
+			_miClear       = new ToolStripMenuItem("clear",             null, OnClearSpriteClick);			// OnKeyDown c
 
 			_miEdit       .ShortcutKeyDisplayString = "Enter";
 			_miAdd        .ShortcutKeyDisplayString = "d";
@@ -554,6 +560,8 @@ namespace PckView
 			_miMoveR      .ShortcutKeyDisplayString = "+";
 			_miDelete     .ShortcutKeyDisplayString = "Del";
 			_miExport     .ShortcutKeyDisplayString = "p";
+			_miCreate     .ShortcutKeyDisplayString = "t";
+			_miClear      .ShortcutKeyDisplayString = "c";
 
 
 			var context = new ContextMenuStrip();
@@ -571,6 +579,9 @@ namespace PckView
 			context.Items.Add(_miDelete);
 			context.Items.Add(new ToolStripSeparator());
 			context.Items.Add(_miExport);
+			context.Items.Add(new ToolStripSeparator());
+			context.Items.Add(_miCreate);
+			context.Items.Add(_miClear);
 
 			_miAdd        .Enabled =
 			_miInsertBefor.Enabled =
@@ -579,7 +590,9 @@ namespace PckView
 			_miMoveL      .Enabled =
 			_miMoveR      .Enabled =
 			_miDelete     .Enabled =
-			_miExport     .Enabled = false;
+			_miExport     .Enabled =
+			_miCreate     .Enabled =
+			_miClear      .Enabled = false;
 
 			return context;
 		}
@@ -874,6 +887,22 @@ namespace PckView
 					}
 					break;
 
+				case Keys.T:												// create
+					if (_miCreate.Enabled)
+					{
+						e.Handled = e.SuppressKeyPress = true;
+						OnCreateSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
+				case Keys.C:												// clear
+					if (_miClear.Enabled)
+					{
+						e.Handled = e.SuppressKeyPress = true;
+						OnClearSpriteClick(null, EventArgs.Empty);
+					}
+					break;
+
 
 				// Navigation shortcuts ->
 
@@ -932,8 +961,8 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>This fires after PckViewPanel.OnMouseDown() - thought you'd
-		/// like to know.</remarks>
+		/// <remarks>This fires after <c>PckViewPanel.OnMouseDown()</c> -
+		/// thought you'd like to know.</remarks>
 		private void OnPanelClick(object sender, EventArgs e)
 		{
 			EnableContext();
@@ -942,7 +971,7 @@ namespace PckView
 		/// <summary>
 		/// Opens the currently selected sprite in the sprite-editor. Called
 		/// when the Context menu's click-event or the viewer-panel's
-		/// DoubleClick event is raised or [Enter] is pressed.
+		/// <c>DoubleClick</c> event is raised or <c>[Enter]</c> is pressed.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1414,6 +1443,24 @@ namespace PckView
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCreateSpriteClick(object sender, EventArgs e)
+		{
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnClearSpriteClick(object sender, EventArgs e)
+		{
+		}
+
 
 		/// <summary>
 		/// Creates a brand sparkling new (blank) sprite-collection. Called when
@@ -1755,8 +1802,8 @@ namespace PckView
 
 
 		/// <summary>
-		/// Exports all sprites in the currently loaded spriteset to PNG files.
-		/// Called when the File menu's click-event is raised.
+		/// Exports all sprites in the currently loaded spriteset to <c>PNG</c>
+		/// files. Called when the File menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1858,7 +1905,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Imports a spritesheet that replaces the current spriteset.
+		/// Imports a spritesheet that replaces or appends to the current
+		/// spriteset.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2033,7 +2081,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnBytesClick(object sender, EventArgs e)
+		private void OnByteTableClick(object sender, EventArgs e)
 		{
 			if (miBytes.Checked = !miBytes.Checked)
 			{
@@ -2311,14 +2359,15 @@ namespace PckView
 		{
 			SpriteEditor.SpritePanel.Sprite = null;
 
-			miSave              .Enabled =									// File ->
+			miSave              .Enabled =								// File ->
 			miSaveAs            .Enabled =
 			miExportSprites     .Enabled =
 			miExportSpritesheet .Enabled =
 			miImportSheetReplace.Enabled =
 			miImportSheetAdd    .Enabled =
-			miPaletteMenu       .Enabled =									// Main
-			_miAdd              .Enabled = (TilePanel.Spriteset != null);	// context
+			miPaletteMenu       .Enabled =								// Main
+			_miAdd              .Enabled =								// context ->
+			_miCreate           .Enabled = TilePanel.Spriteset != null;
 
 			EnableContext();
 
@@ -2341,16 +2390,17 @@ namespace PckView
 		/// </summary>
 		private void EnableContext()
 		{
-			bool enabled = (TilePanel.Selid != -1);
+			bool enabled = TilePanel.Selid != -1;
 
 			_miInsertBefor.Enabled = // Context ->
 			_miInsertAfter.Enabled =
 			_miReplace    .Enabled =
 			_miDelete     .Enabled =
-			_miExport     .Enabled = enabled;
+			_miExport     .Enabled =
+			_miClear      .Enabled = enabled;
 
-			_miMoveL.Enabled = enabled && (TilePanel.Selid != 0);
-			_miMoveR.Enabled = enabled && (TilePanel.Selid != TilePanel.Spriteset.Count - 1);
+			_miMoveL.Enabled = enabled && TilePanel.Selid != 0;
+			_miMoveR.Enabled = enabled && TilePanel.Selid != TilePanel.Spriteset.Count - 1;
 		}
 
 		/// <summary>
