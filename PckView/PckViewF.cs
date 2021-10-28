@@ -337,16 +337,16 @@ namespace PckView
 			// while his tactics were no doubt invaluable for research I've left
 			// myself stuck with it so far ->
 
-			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);
-			var piConfig = new PathInfo(dirSetT, PathInfo.Pck_Config);	// define a PathInfo for PckConfig.yml
-			SharedSpace.SetShare(PathInfo.SharePckConfig, piConfig);	// set a share for PckConfig.yml
+			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);	// path to the /settings dir
+			var piConfig = new PathInfo(dirSetT, PathInfo.Pck_Config);		// define a PathInfo for 'PckConfig.yml'
+			SharedSpace.SetShare(PathInfo.SharePckConfig, piConfig);		// set a share for 'PckConfig.yml'
 
-			// That's 3 variables just for "PckConfig.yml" ...
+			// That's 3 variables just for 'PckConfig.yml' ...
 			// - PathInfo.Pck_Config
 			// - PathInfo.SharePckConfig
 			// - piConfig
 
-			bool config_spriteshade = true;
+			bool userconfig_spriteshade = true;
 
 			string pfe = piConfig.Fullpath;
 
@@ -356,6 +356,8 @@ namespace PckView
 			{
 				var ys = new YamlStream();
 				ys.Load(sr);
+
+				bool val_bool; int val_int;
 
 				var root = ys.Documents[0].RootNode as YamlMappingNode;
 				foreach (var node in root.Children)
@@ -367,28 +369,42 @@ namespace PckView
 					{
 						switch (keyval.Key.ToString())
 						{
-							case "transparent": // NOTE: set Transparent before setting the palette.
-								miTransparent.Checked = Boolean.Parse(keyval.Value.ToString()); // TODO: Error handling.
+							case "transparent": // NOTE: Try to set Transparent before the palette.
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
+									miTransparent.Checked = val_bool;
 								break;
 
 							case "spriteshade":
-								config_spriteshade = Boolean.Parse(keyval.Value.ToString()); // TODO: Error handling.
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
+									userconfig_spriteshade = val_bool;
 								break;
 
 							case "palette":
-								palselected = Int32.Parse(keyval.Value.ToString()); // TODO: Error handling.
+								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
+									&& val_int > -1 && val_int < 8)
+								{
+									palselected = val_int;
+								}
 								break;
 
 							case "grid":
-								switch (Int32.Parse(keyval.Value.ToString())) // TODO: Error handling.
+								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
+									&& val_int > 0 && val_int < 3)
 								{
-									case 1: SpriteEditor.OnGridDarkClick( null, EventArgs.Empty); break;
-									case 2: SpriteEditor.OnGridLightClick(null, EventArgs.Empty); break;
+									switch (val_int)
+									{
+										case 1: SpriteEditor.OnGridDarkClick( null, EventArgs.Empty); break;
+										case 2: SpriteEditor.OnGridLightClick(null, EventArgs.Empty); break;
+									}
 								}
 								break;
 
 							case "scale":
-								SpriteEditor.SetScale(Int32.Parse(keyval.Value.ToString())); // TODO: Error handling.
+								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
+									&& val_int > 0 && val_int < 11)
+								{
+								}
+								SpriteEditor.SetScale(val_int);
 								break;
 						}
 					}
@@ -434,7 +450,7 @@ namespace PckView
 			{
 				miSpriteShade.Enabled = true;
 
-				if (miSpriteShade.Checked = config_spriteshade)
+				if (miSpriteShade.Checked = userconfig_spriteshade)
 					Shader = ShaderOn;
 				else
 					Shader = ShaderOff;
