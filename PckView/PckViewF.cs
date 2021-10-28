@@ -1473,9 +1473,9 @@ namespace PckView
 						// ReplaceFile() if necessary - after they get created.
 						bool fail = true;
 
-						using (var fsPck = FileService.CreateFile(pfePckT))
+						using (var fsPck = FileService.CreateFile(pfePckT)) // create 0-byte file
 						if (fsPck != null)
-						using (var fsTab = FileService.CreateFile(pfeTabT))
+						using (var fsTab = FileService.CreateFile(pfeTabT)) // create 0-byte file
 						if (fsTab != null)
 							fail = false;
 

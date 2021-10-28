@@ -285,7 +285,6 @@ namespace XCom
 			if (fs != null)
 			{
 				fail = false;
-
 				using (var sw = new StreamWriter(fs))
 				{
 					sw.WriteLine("# This is MapTilesets for MapViewII.");

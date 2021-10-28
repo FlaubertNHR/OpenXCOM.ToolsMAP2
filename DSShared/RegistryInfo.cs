@@ -258,7 +258,6 @@ namespace DSShared
 			if (fs != null)
 			{
 				fail = false;
-
 				using (var sw = new StreamWriter(fs))
 				{
 					sw.WriteLine("# delete this file if things go wrong with your window locations and/or sizes.");

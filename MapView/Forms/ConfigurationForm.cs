@@ -233,7 +233,6 @@ namespace MapView
 					if (fs != null)
 					{
 						fail = false;
-
 						using (var sw = new StreamWriter(fs))
 						{
 							object node = new
@@ -277,7 +276,6 @@ namespace MapView
 					if (fs != null)
 					{
 						fail = false;
-
 						using (var sw = new StreamWriter(fs))
 						using (var sr = new StreamReader(Assembly.GetExecutingAssembly()
 																 .GetManifestResourceStream(PathInfo.MAN_Tilesets)))

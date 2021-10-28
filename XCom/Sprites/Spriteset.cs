@@ -652,7 +652,6 @@ namespace XCom
 			if (fsTab != null)
 			{
 				fail = false;
-
 				using (var bwPck = new BinaryWriter(fsPck))
 				using (var bwTab = new BinaryWriter(fsTab))
 				{

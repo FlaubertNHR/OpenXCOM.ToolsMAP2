@@ -851,7 +851,10 @@ namespace McdView
 						else
 							pfeT = pfeMcd;
 
+						// NOTE: Use 'fail' to allow the file to unlock - for
+						// ReplaceFile() if necessary - after it gets created.
 						bool fail = true;
+
 						using (var fs = FileService.CreateFile(pfeT)) // create 0-byte file
 						if (fs != null)
 							fail = false;
