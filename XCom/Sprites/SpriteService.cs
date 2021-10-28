@@ -117,7 +117,7 @@ namespace XCom
 		/// <c><see cref="PckSprite.MarkerEos">PckSprite.MarkerRle</see></c>
 		/// entries in the ColorTable of rle-encoded terrain-sprites,
 		/// unit-sprites, or bigobs-sprites per
-		/// <c><see cref="SpritesetType">Spriteset.SpritesetType</see></c>.
+		/// <c><see cref="SpritesetType">SpritesetType</see></c>.
 		/// </summary>
 		/// <param name="b">an 8-bpp indexed <c>Bitmap</c></param>
 		/// <param name="id">an appropriate <c><see cref="Spriteset"/></c> id</param>
