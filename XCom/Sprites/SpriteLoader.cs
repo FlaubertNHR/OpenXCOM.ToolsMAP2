@@ -172,7 +172,7 @@ namespace XCom
 			if (!fail) return true;
 
 			fail = false;
-			if (fail && data.Length >= Id_GIF.Length)
+			if (data.Length >= Id_GIF.Length)
 			{
 				for (int i = 0; i != Id_GIF.Length; ++i)
 				if (data[i] != Id_GIF[i])
@@ -183,7 +183,7 @@ namespace XCom
 			if (!fail) return true;
 
 			fail = false;
-			if (fail && data.Length >= Id_BMP.Length)
+			if (data.Length >= Id_BMP.Length)
 			{
 				for (int i = 0; i != Id_BMP.Length; ++i)
 				if (data[i] != Id_BMP[i])
