@@ -5,14 +5,14 @@ using System.IO;
 namespace DSShared
 {
 	/// <summary>
-	/// A class that handles file reading/writing with generic exception
+	/// A class that handles file reading/writing with generic <c>Exception</c>
 	/// handling.
 	/// </summary>
 	public static class FileService
 	{
 		#region Methods (static)
 		/// <summary>
-		/// Shows an error in an Infobox modally.
+		/// Shows an error in an <c><see cref="Infobox"/></c> modally.
 		/// </summary>
 		/// <param name="head"></param>
 		/// <param name="copyable"></param>
@@ -34,7 +34,7 @@ namespace DSShared
 		/// The file will be closed.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of the file to read</param>
-		/// <returns>an array of bytes else null</returns>
+		/// <returns>an array of <c>bytes</c> else <c>null</c></returns>
 		public static byte[] ReadFile(string pfe)
 		{
 			byte[] bytes = null;
@@ -60,13 +60,15 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Opens a file for reading and returns it as a filestream. The file
-		/// will not be closed.
+		/// Opens a file for reading and returns it as a <c>FileStream</c>. The
+		/// file will not be closed.
+		/// 
+		/// 
 		/// IMPORTANT: Dispose the stream in the calling function.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of the file to be opened</param>
 		/// <param name="disregard">true to disregard file-not-found error</param>
-		/// <returns>the filestream if valid else null</returns>
+		/// <returns>the <c>FileStream</c> if valid else <c>null</c></returns>
 		public static FileStream OpenFile(string pfe, bool disregard = false)
 		{
 			FileStream fs = null;
@@ -92,14 +94,19 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Creates a file and returns a FileStream for writing after backing up
-		/// a pre-existing file if it exists. The file will not be closed.
+		/// Creates a file and returns a <c>FileStream</c> for writing after
+		/// backing up a pre-existing file if it exists. The file will not be
+		/// closed.
+		/// 
+		/// 
 		/// IMPORTANT: Dispose the stream in the calling function.
-		/// @note If file exists call this only to create a file_ext_[t.ext]
-		/// file. Then call ReplaceFile() by passing in file_ext.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of the file to be created</param>
-		/// <returns>the filestream if valid else null</returns>
+		/// <returns>the <c>FileStream</c> if valid else <c>null</c></returns>
+		/// <remarks>If file exists call this only to create a
+		/// <c>file.ext.t</c> file. Then call
+		/// <c><see cref="ReplaceFile()">ReplaceFile()</see></c> by passing in
+		/// <c>file.ext</c>.</remarks>
 		public static FileStream CreateFile(string pfe)
 		{
 			FileStream fs = null;
@@ -120,18 +127,24 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Replaces a file with another file (that has a ".t" extension) after
-		/// making a backup of the destination file. If the destination file
-		/// does not exist, a copy-delete operation is performed instead of a
-		/// backup.
+		/// Replaces a file with another file that has a <c>.t</c> extension
+		/// after making a backup of the destination file. A copy-delete
+		/// operation is performed instead of a backup if the destination file
+		/// does not exist.
+		/// 
+		/// 
 		/// IMPORTANT: The source file must have the name and extension of the
-		/// destination file plus the 'GlobalsXC.TEMPExt' extension. In other
-		/// words, the standard save-procedure is to write to file_ext_[t.ext]
-		/// then call ReplaceFile() by passing in the original file_ext.
-		/// @note The backup will be in the 'GlobalsXC.MV_Backup' subdirectory.
+		/// destination file plus the
+		/// <c><see cref="GlobalsXC.TEMPExt">GlobalsXC.TEMPExt</see></c>
+		/// extension. In other words, the standard save-procedure is to write
+		/// to <c>file.ext.t</c> then call <c>ReplaceFile()</c> passing in the
+		/// original <c>file.ext</c>.
 		/// </summary>
 		/// <param name="pfe">path-file-extension of the destination file</param>
 		/// <returns>true if everything goes according to plan</returns>
+		/// <remarks>The backup will be in the
+		/// <c><see cref="GlobalsXC.MV_Backup">GlobalsXC.MV_Backup</see></c>
+		/// subdirectory.</remarks>
 		public static bool ReplaceFile(string pfe)
 		{
 			if (File.Exists(pfe))
@@ -180,11 +193,11 @@ namespace DSShared
 		/// <summary>
 		/// Moves a file by copying it to another location before deleting the
 		/// old file.
-		/// @note Ensure that the destination file doesn't already exist.
 		/// </summary>
 		/// <param name="src"></param>
 		/// <param name="dst"></param>
 		/// <returns></returns>
+		/// <remarks>Ensure that the destination file doesn't already exist.</remarks>
 		public static bool MoveFile(string src, string dst)
 		{
 			try
