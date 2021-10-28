@@ -119,15 +119,19 @@ namespace MapView.Forms.MainView
 			else
 				pfeT = pfe;
 
+			bool fail = true;
 			using (var fs = FileService.CreateFile(pfeT))
 			if (fs != null)
-			using (var sw = new StreamWriter(fs))
 			{
-				foreach (string key in _sections.Keys)
-					_sections[key].WriteOptions(key, sw);
+				fail = false;
+				using (var sw = new StreamWriter(fs))
+				{
+					foreach (string key in _sections.Keys)
+						_sections[key].WriteOptions(key, sw);
+				}
 			}
 
-			if (pfeT != pfe)
+			if (!fail && pfeT != pfe)
 				FileService.ReplaceFile(pfe);
 		}
 
