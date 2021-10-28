@@ -299,6 +299,7 @@ namespace XCom
 		/// <item><c><see cref="ExportSpritesheet()">ExportSpritesheet()</see></c></item>
 		/// <item><c><see cref="CropTransparentEdges()">CropTransparentEdges()</see></c></item>
 		/// <item><c>MainViewF.Screenshot()</c></item>
+		/// <item><c>PckViewF.OnCreateSpriteClick()</c></item>
 		/// </list></remarks>
 		public static Bitmap CreateTransparent(
 				int width,

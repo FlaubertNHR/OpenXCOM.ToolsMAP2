@@ -1071,16 +1071,13 @@ namespace PckView
 
 							if (b != null)
 							{
-								if (valid = b.Width  == SpriteWidth
-										 && b.Height == SpriteHeight
-										 && b.PixelFormat == PixelFormat.Format8bppIndexed)
-								{
-									bs.Add(b);
-								}
-								else
+								bs.Add(b);
+
+								if (!(valid = b.Width       == SpriteWidth
+										   && b.Height      == SpriteHeight
+										   && b.PixelFormat == PixelFormat.Format8bppIndexed))
 								{
 									ShowBitmapError(ofd.FileNames[i], b);
-									b.Dispose();
 								}
 							}
 						}
@@ -1214,9 +1211,9 @@ namespace PckView
 					{
 						bs.Add(b);
 
-						if (!(valid = (b.Width       == SpriteWidth
-									&& b.Height      == SpriteHeight
-									&& b.PixelFormat == PixelFormat.Format8bppIndexed)))
+						if (!(valid = b.Width       == SpriteWidth
+								   && b.Height      == SpriteHeight
+								   && b.PixelFormat == PixelFormat.Format8bppIndexed))
 						{
 							ShowBitmapError(files[i], b);
 						}
@@ -1451,12 +1448,25 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>The routine is bloated but it works.</remarks>
 		private void OnCreateSpriteClick(object sender, EventArgs e)
 		{
-			Bitmap b = SpriteService.CreateTransparent(
-													SpriteWidth,
-													SpriteHeight,
-													GetCurrentPalette().Table);
+			using (var b = SpriteService.CreateTransparent(
+														SpriteWidth,
+														SpriteHeight,
+														GetCurrentPalette().Table))
+			{
+				XCImage sprite = SpriteService.CreateSanitarySprite(
+																b,
+																TilePanel.Spriteset.Count,
+																GetCurrentPalette(),
+																SpriteWidth,
+																SpriteHeight,
+																SetType);
+				TilePanel.Spriteset.Sprites.Add(sprite);
+
+				SpritesetCountChanged(TilePanel.Selid);
+			}
 		}
 
 		/// <summary>
