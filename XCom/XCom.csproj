@@ -101,6 +101,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Sprites\Spriteset.cs" />
+    <Compile Include="Sprites\SpritesetType.cs" />
     <Compile Include="Sprites\Types\LoFTicon.cs" />
     <Compile Include="Sprites\Types\PckSprite.cs">
       <SubType>Code</SubType>

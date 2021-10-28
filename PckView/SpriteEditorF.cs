@@ -165,8 +165,8 @@ namespace PckView
 					w = GetScaled(Spriteset.SpriteWidth32 * 10);
 					break;
 
-				case Spriteset.SsType.ScanG:
-				case Spriteset.SsType.LoFT:
+				case SpritesetType.ScanG:
+				case SpritesetType.LoFT:
 					w = Spriteset.SpriteWidth32 * 10;
 					break;
 			}
@@ -243,7 +243,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void popup_Palette(object sender, EventArgs e)
 		{
-			miPalette.Enabled = (_f.SetType != Spriteset.SsType.LoFT);
+			miPalette.Enabled = (_f.SetType != SpritesetType.LoFT);
 		}
 
 		/// <summary>
@@ -254,7 +254,7 @@ namespace PckView
 		/// <remarks>Has no effect if a LoFTset is loaded.</remarks>
 		private void OnShowPaletteClick(object sender, EventArgs e)
 		{
-			if (_f.SetType != Spriteset.SsType.LoFT) // don't allow the Palette to show if editing LoFTs
+			if (_f.SetType != SpritesetType.LoFT) // don't allow the Palette to show if editing LoFTs
 			{
 				if (!miPalette.Checked)
 				{

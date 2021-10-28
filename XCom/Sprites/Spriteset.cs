@@ -24,43 +24,6 @@ namespace XCom
 	{
 		#region Enums (public)
 		/// <summary>
-		/// The spriteset-type is based on the x/y dimensions of the sprites in
-		/// a <c>Spriteset's</c> <c><see cref="Sprites"/></c>.
-		/// </summary>
-		public enum SsType
-		{
-			/// <summary>
-			/// default
-			/// </summary>
-			non,
-
-			/// <summary>
-			/// a terrain or unit PCK+TAB set is currently loaded. These are
-			/// 32x40 w/ 2-byte Tabword (terrain or ufo-unit) or 4-byte Tabword
-			/// (tftd-unit).
-			/// </summary>
-			Pck,
-
-			/// <summary>
-			/// a Bigobs PCK+TAB set is currently loaded. Bigobs are 32x48 w/
-			/// 2-byte Tabword.
-			/// </summary>
-			Bigobs,
-
-			/// <summary>
-			/// a ScanG iconset is currently loaded. ScanGs are 4x4 w/ 0-byte
-			/// Tabword.
-			/// </summary>
-			ScanG,
-
-			/// <summary>
-			/// a LoFT iconset is currently loaded. LoFTs are 16x16 w/ 0-byte
-			/// Tabword.
-			/// </summary>
-			LoFT
-		}
-
-		/// <summary>
 		/// Possible fail-states for
 		/// <c><see cref="Spriteset(string, Palette, byte[], byte[], int, int, int, bool)">Spriteset()</see></c>.
 		/// </summary>
@@ -523,9 +486,9 @@ namespace XCom
 		/// <param name="label">typically the file w/out path or extension</param>
 		/// <param name="fs">a <c>Stream</c> of the <c>SCANG.DAT</c> or
 		/// <c>LOFTEMPS.DAT</c> file</param>
-		/// <param name="setType"><c><see cref="SsType.LoFT"></see></c>
+		/// <param name="setType"><c><see cref="SpritesetType.LoFT"></see></c>
 		/// if LoFT data,
-		/// <c><see cref="SsType.ScanG">SsType.ScanG</see></c>
+		/// <c><see cref="SpritesetType.ScanG">SpritesetType.ScanG</see></c>
 		/// if ScanG</param>
 		/// <remarks>cf
 		/// <list type="bullet">
@@ -538,7 +501,7 @@ namespace XCom
 		/// <item><c>McdviewF.LoadLoFTufo()</c></item>
 		/// <item><c>McdviewF.LoadLoFTtftd()</c></item>
 		/// </list></remarks>
-		public Spriteset(string label, Stream fs, SsType setType)
+		public Spriteset(string label, Stream fs, SpritesetType setType)
 		{
 			Label         = label;
 			TabwordLength = SpritesetManager.TAB_WORD_LENGTH_0;
@@ -547,7 +510,7 @@ namespace XCom
 
 			switch (setType)
 			{
-				case SsType.ScanG:
+				case SpritesetType.ScanG:
 					SpriteWidth = SpriteHeight = ScanGside;
 
 					bindata = new byte[(int)fs.Length];
@@ -566,7 +529,7 @@ namespace XCom
 					Pal = Palette.UfoBattle; // <- default
 					break;
 
-				case SsType.LoFT:
+				case SpritesetType.LoFT:
 					SpriteWidth = SpriteHeight = LoFTside;
 
 					bindata = new byte[(int)fs.Length];

@@ -69,7 +69,7 @@ namespace XCom
 		/// <summary>
 		/// Extracts sprites from a specified spritesheet and adds them to a
 		/// list of <c><see cref="XCImage">XCImages</see></c> according to a
-		/// specified <c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>.
+		/// specified <c><see cref="SpritesetType">SpritesetType</see></c>.
 		/// </summary>
 		/// <param name="sprites">the
 		/// <c><see cref="Spriteset.Sprites">Spriteset.Sprites</see></c> list of
@@ -79,7 +79,7 @@ namespace XCom
 		/// <param name="pal">a <c><see cref="Palette"/></c></param>
 		/// <param name="width">the width of one sprite in the spritesheet</param>
 		/// <param name="height">the height of one sprite in the spritesheet</param>
-		/// <param name="setType"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>
+		/// <param name="setType"><c><see cref="SpritesetType">SpritesetType</see></c>
 		/// to pass to
 		/// <c><see cref="CreateSanitarySprite()">CreateSanitarySprite()</see></c></param>
 		/// <remarks>Called by <c>PckViewF.OnImportSpritesheetClick()</c>.</remarks>
@@ -89,7 +89,7 @@ namespace XCom
 				Palette pal,
 				int width,
 				int height,
-				Spriteset.SsType setType)
+				SpritesetType setType)
 		{
 			int cols = b.Width  / width;
 			int rows = b.Height / height;
@@ -117,14 +117,14 @@ namespace XCom
 		/// <c><see cref="PckSprite.MarkerEos">PckSprite.MarkerRle</see></c>
 		/// entries in the ColorTable of rle-encoded terrain-sprites,
 		/// unit-sprites, or bigobs-sprites per
-		/// <c><see cref="Spriteset.SsType">Spriteset.SsType</see></c>.
+		/// <c><see cref="SpritesetType">Spriteset.SpritesetType</see></c>.
 		/// </summary>
 		/// <param name="b">an 8-bpp indexed <c>Bitmap</c></param>
 		/// <param name="id">an appropriate <c><see cref="Spriteset"/></c> id</param>
 		/// <param name="pal">a <c><see cref="Palette"/></c></param>
 		/// <param name="width">the width of the output sprite</param>
 		/// <param name="height">the height of the output sprite</param>
-		/// <param name="setType"><c><see cref="Spriteset.SsType">Spriteset.SsType</see></c></param>
+		/// <param name="setType"><c><see cref="SpritesetType">SpritesetType</see></c></param>
 		/// <param name="x">used by spritesheets only</param>
 		/// <param name="y">used by spritesheets only</param>
 		/// <returns>a sprite derived from <c>XCImage</c></returns>
@@ -142,7 +142,7 @@ namespace XCom
 				Palette pal,
 				int width,
 				int height,
-				Spriteset.SsType setType,
+				SpritesetType setType,
 				int x = 0,
 				int y = 0)
 		{
@@ -171,8 +171,8 @@ namespace XCom
 
 				switch (setType)
 				{
-					case Spriteset.SsType.Pck:
-					case Spriteset.SsType.Bigobs:
+					case SpritesetType.Pck:
+					case SpritesetType.Bigobs:
 					{
 						byte palid;
 						for (uint row = 0; row != height; ++row)
@@ -188,8 +188,8 @@ namespace XCom
 						break;
 					}
 
-					case Spriteset.SsType.ScanG:
-					case Spriteset.SsType.LoFT:
+					case SpritesetType.ScanG:
+					case SpritesetType.LoFT:
 						for (uint row = 0; row != height; ++row)
 						for (uint col = 0; col != width;  ++col)
 						{
@@ -197,9 +197,9 @@ namespace XCom
 						}
 						break;
 
-					default:
-					case Spriteset.SsType.non: // TODO: error out
-						break;
+//					default:
+//					case SpritesetType.non: // TODO: error out
+//						break;
 				}
 			}
 			b.UnlockBits(locked);
@@ -209,8 +209,8 @@ namespace XCom
 
 			switch (setType)
 			{
-				case Spriteset.SsType.Pck:
-				case Spriteset.SsType.Bigobs:
+				case SpritesetType.Pck:
+				case SpritesetType.Bigobs:
 					sprite = new PckSprite(
 										bindata,
 										width,
@@ -219,17 +219,16 @@ namespace XCom
 										pal);
 					break;
 
-				case Spriteset.SsType.ScanG:
+				case SpritesetType.ScanG:
 					sprite = new ScanGicon(bindata, id);
 					break;
 
-				case Spriteset.SsType.LoFT:
+				case SpritesetType.LoFT:
 					sprite = new LoFTicon(bindata, id);
 					break;
 
-				default:
-				case Spriteset.SsType.non: // TODO: error out
-					sprite = null;
+				default: // case SpritesetType.non
+					sprite = null; // TODO: error out
 					break;
 			}
 			return sprite;

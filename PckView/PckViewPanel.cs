@@ -62,7 +62,7 @@ namespace PckView
 					_spriteset.Dispose();
 
 				if ((_spriteset = value) != null
-					&& _f.SetType != Spriteset.SsType.LoFT)
+					&& _f.SetType != SpritesetType.LoFT)
 				{
 					_spriteset.Pal = _f.Pal;
 				}
@@ -70,7 +70,7 @@ namespace PckView
 				TileWidth  = _f.SpriteWidth;
 				TileHeight = _f.SpriteHeight;
 
-				if (_f.SetType == Spriteset.SsType.ScanG)
+				if (_f.SetType == SpritesetType.ScanG)
 				{
 					TileWidth  *= 4;
 					TileHeight *= 4;
@@ -270,10 +270,10 @@ namespace PckView
 
 				switch (_f.SetType) // draw sprites
 				{
-					case Spriteset.SsType.Pck:    DrawPck();    break;
-					case Spriteset.SsType.Bigobs: DrawBigobs(); break;
-					case Spriteset.SsType.ScanG:  DrawScanG();  break;
-					case Spriteset.SsType.LoFT:   DrawLoFT();   break;
+					case SpritesetType.Pck:    DrawPck();    break;
+					case SpritesetType.Bigobs: DrawBigobs(); break;
+					case SpritesetType.ScanG:  DrawScanG();  break;
+					case SpritesetType.LoFT:   DrawLoFT();   break;
 				}
 
 				_graphics.FillRectangle(

@@ -152,7 +152,7 @@ namespace PckView
 						switch (SpriteEditorF.Mode)
 						{
 							case EditMode.Enabled: // paint ->
-								if (_feditor._f.SetType != Spriteset.SsType.LoFT)
+								if (_feditor._f.SetType != SpritesetType.LoFT)
 								{
 									int palid = _feditor._fpalette.PalPanel.Palid;
 									if (palid > -1)
@@ -285,7 +285,7 @@ namespace PckView
 				byte[] bindata = Sprite.GetBindata();
 
 				if (_feditor._f.Shader == PckViewF.ShaderOn
-					&& _feditor._f.SetType != Spriteset.SsType.LoFT)
+					&& _feditor._f.SetType != SpritesetType.LoFT)
 				{
 					for (int y = 0; y != _feditor._f.SpriteHeight; ++y)
 					for (int x = 0; x != _feditor._f.SpriteWidth;  ++x)
