@@ -1073,9 +1073,9 @@ namespace PckView
 							{
 								bs.Add(b);
 
-								if (!(valid = (b.Width  == SpriteWidth
-											&& b.Height == SpriteHeight
-											&& b.PixelFormat == PixelFormat.Format8bppIndexed)))
+								if (!(valid = b.Width  == SpriteWidth
+										   && b.Height == SpriteHeight
+										   && b.PixelFormat == PixelFormat.Format8bppIndexed))
 								{
 									ShowBitmapError(ofd.FileNames[i], b);
 								}
@@ -1444,7 +1444,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Creates a blank sprite at the end of the array. Called when the
+		/// Context menu's click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1457,7 +1458,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Clears the currently selected sprite. Called when the Context menu's
+		/// click-event is raised.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
