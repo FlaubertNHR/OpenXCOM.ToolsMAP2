@@ -85,23 +85,28 @@ namespace DSShared
 				var ys = new YamlStream();
 				ys.Load(sr);
 
+				int val;
+
 				var root = ys.Documents[0].RootNode as YamlMappingNode;
 				foreach (var node in root.Children)
 				{
-					string label = (node.Key as YamlScalarNode).Value;
-
 					var tric = new Metric();
+
+					string label = (node.Key as YamlScalarNode).Value;
 
 					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
 					foreach (var keyval in keyvals)
 					{
-						int val = Int32.Parse(keyval.Value.ToString()); // TODO: Error handling.
-						switch (keyval.Key.ToString())
+						if (Int32.TryParse(keyval.Value.ToString(), out val)
+							&& val > -1)
 						{
-							case Left:   tric.left   = val; break;
-							case Top:    tric.top    = val; break;
-							case Width:  tric.width  = val; break;
-							case Height: tric.height = val; break;
+							switch (keyval.Key.ToString())
+							{
+								case Left:   tric.left   = val; break;
+								case Top:    tric.top    = val; break;
+								case Width:  tric.width  = val; break; // TODO: width/height could be 0 if parse fails
+								case Height: tric.height = val; break;
+							}
 						}
 					}
 
