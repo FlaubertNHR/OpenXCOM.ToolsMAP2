@@ -21,6 +21,11 @@ namespace XCom
 	public static class SpriteLoader
 	{
 		#region Fields (static)
+		/// <summary>
+		/// path_file_extension of the file for failure info.
+		/// </summary>
+		private static string Pfe;
+
 		private static byte[] Id_PNG = { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
 		private static byte[] Id_GIF = { 0x47, 0x49, 0x46, 0x38 };
 		private static byte[] Id_BMP = { 0x42, 0x4D };
@@ -35,14 +40,17 @@ namespace XCom
 		/// loads correctly.
 		/// </summary>
 		/// <param name="filedata">byte-array to load</param>
+		/// <param name="pfe">path_file_extension of the file for failure info</param>
 		/// <returns>a CLONED image - the onus is on the receiver for disposal</returns>
 		/// <remarks>The theory on the PNG internals can be found at
 		/// http://www.libpng.org/pub/png/book/chapter08.html</remarks>
-		public static Bitmap LoadImageData(byte[] filedata)
+		public static Bitmap LoadImageData(byte[] filedata, string pfe)
 		{
+			Pfe = pfe;
+
 			if (!CheckValidHeader(filedata))
 			{
-				showerror("File does not have a PNG/GIF/BMP header.");
+				error("File does not have a PNG/GIF/BMP header.", Pfe);
 				return null;
 			}
 
@@ -83,21 +91,21 @@ namespace XCom
 									break;
 
 								case -1:
-									showerror("Bad chunk length in PNG image.");
+									error("Bad chunk length in PNG image.", Pfe);
 									return null;
 
 								case -2:
-									showerror("Bad chunk endianness in PNG image.");
+									error("Bad chunk endianness in PNG image.", Pfe);
 									return null;
 							}
 						}
-//						else showerror("Chunk not found in PNG image: tRNS", true);
+//						else error("Chunk not found in PNG image: tRNS", true);
 					}
-//					else showerror("Chunk not found in PNG image: PLTE", true);
+//					else error("Chunk not found in PNG image: PLTE", true);
 				}
-//				else showerror("Image is not a PNG.", true);
+//				else error("Image is not a PNG.", true);
 			}
-//			else showerror("Data length is less than or equal to PNG identifier.", true);
+//			else error("Data length is less than or equal to PNG identifier.", true);
 
 
 			try
@@ -141,7 +149,7 @@ namespace XCom
 			}
 			catch (Exception e)
 			{
-				showerror(".net could not load the Image.", e.Message);
+				error(".net could not load the Image.", Pfe + Environment.NewLine + Environment.NewLine + e.Message);
 				return null;
 			}
 		}
@@ -253,11 +261,11 @@ namespace XCom
 						break;
 
 					case -1:
-						showerror("Bad chunk length in PNG image.");
+						error("Bad chunk length in PNG image.", Pfe);
 						return -1;
 
 					case -2:
-						showerror("Bad chunk endianness in PNG image.");
+						error("Bad chunk endianness in PNG image.", Pfe);
 						return -1;
 				}
 			}
@@ -352,7 +360,7 @@ namespace XCom
 		/// <param name="head"></param>
 		/// <param name="copy"></param>
 		/// <param name="info"></param>
-		private static void showerror(
+		private static void error(
 				string head,
 				string copy = null,
 				bool info = false)

@@ -1067,17 +1067,20 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileNames[i]);
 						if (bindata != null)
 						{
-							Bitmap b = SpriteLoader.LoadImageData(bindata);
+							Bitmap b = SpriteLoader.LoadImageData(bindata, ofd.FileNames[i]);
 
 							if (b != null)
 							{
-								bs.Add(b);
-
-								if (!(valid = b.Width  == SpriteWidth
-										   && b.Height == SpriteHeight
-										   && b.PixelFormat == PixelFormat.Format8bppIndexed))
+								if (valid = b.Width  == SpriteWidth
+										 && b.Height == SpriteHeight
+										 && b.PixelFormat == PixelFormat.Format8bppIndexed)
+								{
+									bs.Add(b);
+								}
+								else
 								{
 									ShowBitmapError(ofd.FileNames[i], b);
+									b.Dispose();
 								}
 							}
 						}
@@ -1085,12 +1088,11 @@ namespace PckView
 
 					if (valid)
 					{
-						int id = (TilePanel.Spriteset.Count - 1);
 						foreach (var b in bs)
 						{
 							XCImage sprite = SpriteService.CreateSanitarySprite(
 																			b,
-																			++id,
+																			TilePanel.Spriteset.Count,
 																			GetCurrentPalette(),
 																			SpriteWidth,
 																			SpriteHeight,
@@ -1206,7 +1208,7 @@ namespace PckView
 				byte[] bindata = FileService.ReadFile(files[i]);
 				if (bindata != null)
 				{
-					Bitmap b = SpriteLoader.LoadImageData(bindata);
+					Bitmap b = SpriteLoader.LoadImageData(bindata, files[i]);
 
 					if (b != null)
 					{
@@ -1295,7 +1297,7 @@ namespace PckView
 					byte[] bindata = FileService.ReadFile(ofd.FileName);
 					if (bindata != null) // else error was shown by FileService.
 					{
-						using (Bitmap b = SpriteLoader.LoadImageData(bindata))
+						using (Bitmap b = SpriteLoader.LoadImageData(bindata, ofd.FileName))
 						{
 							if (b != null) // else error was shown by SpriteLoader.
 							{
@@ -1967,7 +1969,7 @@ namespace PckView
 						byte[] bindata = FileService.ReadFile(ofd.FileName);
 						if (bindata != null) // else error was shown by FileService.
 						{
-							using (Bitmap b = SpriteLoader.LoadImageData(bindata))
+							using (Bitmap b = SpriteLoader.LoadImageData(bindata, ofd.FileName))
 							{
 								if (b != null) // else error was shown by SpriteLoader.
 								{
