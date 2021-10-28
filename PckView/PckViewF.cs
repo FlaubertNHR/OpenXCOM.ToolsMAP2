@@ -1450,6 +1450,10 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnCreateSpriteClick(object sender, EventArgs e)
 		{
+			Bitmap b = SpriteService.CreateTransparent(
+													SpriteWidth,
+													SpriteHeight,
+													GetCurrentPalette().Table);
 		}
 
 		/// <summary>
@@ -1459,6 +1463,26 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnClearSpriteClick(object sender, EventArgs e)
 		{
+			XCImage sprite = TilePanel.Spriteset[TilePanel.Selid];
+			if (!sprite.Istid())
+			{
+				byte[] bindata = sprite.GetBindata();
+				for (int i = 0; i != bindata.Length; ++i)
+					bindata[i] = Palette.Tid; // works for LoTFsets also.
+
+				Bitmap b = SpriteService.CreateSprite(
+												SpriteWidth,
+												SpriteHeight,
+												bindata,
+												GetCurrentPalette().Table);
+				sprite.Dispose();
+				sprite.Sprite = b;
+
+				SetSelected(TilePanel.Selid, true);
+
+				TilePanel.Invalidate();
+				Changed = true;
+			}
 		}
 
 
