@@ -11,11 +11,14 @@ notes for Mono/Linux/Mac users
 <br>
 Built against .NET 4.5.1
 
+<br>
 2021 October 29<br>
 https://github.com/kevL/OpenXCOM.Tools/releases/tag/211029
 
 <br>
 Distribution builds for Windows 32/64 is hosted on Google Drive.
+
+<br>
 2021 October 20<br>
 [MapView2_211020.7z](https://drive.google.com/file/d/1CLaCLZu_Y_YMfmWaeSMYrfKsUCyeJTMx/view?usp=sharing)
 
