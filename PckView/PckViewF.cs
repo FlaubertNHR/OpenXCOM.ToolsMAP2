@@ -405,8 +405,8 @@ namespace PckView
 								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
 									&& val_int > 0 && val_int < 11)
 								{
+									SpriteEditor.SetScale(val_int);
 								}
-								SpriteEditor.SetScale(val_int);
 								break;
 						}
 					}
@@ -977,17 +977,22 @@ namespace PckView
 		/// <param name="e"></param>
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
-			if (!_miEdit.Checked)
+			if (TilePanel.Spriteset != null)
 			{
-				_miEdit.Checked = true;
-
-				SpriteEditor.Show();
-
-				if (SetType != SpritesetType.LoFT)
+				if (!_miEdit.Checked)
 				{
-					SpriteEditor.SetPaletteChecked();
-					SpriteEditor._fpalette.Show();
+					_miEdit.Checked = true;
+
+					SpriteEditor.Show();
+
+					if (SetType != SpritesetType.LoFT)
+					{
+						SpriteEditor.SetPaletteChecked();
+						SpriteEditor._fpalette.Show();
+					}
 				}
+				else
+					SpriteEditor.Activate();
 			}
 		}
 
