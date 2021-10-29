@@ -8,12 +8,14 @@ notes for Mono/Linux/Mac users
 - .NET on Mono tends to layout and render differently than in Windows, so pls look for usability rather than perfection.
 - the Mono package does not contain the CHM helpfile or the keyboard_cheatsheet. They're available in the Windows archive and are recommended since they describe shortcuts, functionality, etc.
 
+<br>
+Built against .NET 4.5.1
+
+2021 October 29<br>
+https://github.com/kevL/OpenXCOM.Tools/releases/tag/211029
 
 <br>
 Distribution builds for Windows 32/64 is hosted on Google Drive.
-
-Built against .NET 4.5.1
-
 2021 October 20<br>
 [MapView2_211020.7z](https://drive.google.com/file/d/1CLaCLZu_Y_YMfmWaeSMYrfKsUCyeJTMx/view?usp=sharing)
 
