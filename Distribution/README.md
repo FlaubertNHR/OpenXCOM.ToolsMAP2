@@ -13,7 +13,7 @@ Built against .NET 4.5.1
 2021 October 29<br>
 https://github.com/kevL/OpenXCOM.Tools/releases/tag/211029
 
-old Distribution builds for Windows 32/64 is hosted on Google Drive.
+old Distribution builds for Windows 32/64 are hosted on Google Drive.
 
 2021 October 20<br>
 [MapView2_211020.7z](https://drive.google.com/file/d/1CLaCLZu_Y_YMfmWaeSMYrfKsUCyeJTMx/view?usp=sharing)
@@ -37,7 +37,7 @@ when the button at the bottom of the TilesetEditor is clicked to apply allocated
 terrains to all tilesets that share Map+Path, show an infobox with how many
 tilesets got updated. (It was irksome to click it and nothing seemed to happen.)
 
-+ slight refactors to TilesetEditor and TilepartSubstitution etc.
+slight refactors to TilesetEditor and TilepartSubstitution etc.
 
 2021 August 23<br>
 [MapView2_210823.7z](https://drive.google.com/file/d/1ukGC_Ago7eRJe3iWWj11g2o2ZlhRP8pm/view?usp=sharing)
@@ -68,7 +68,7 @@ just hold tight
 2020 December 7-b<br>
 [MapView2_201207b.7z](https://drive.google.com/file/d/1-HIl47bE5yP2xa7K9IuVVQmKfeQ8XrS2/view?usp=sharing)
 
-MapView.exe - 3.8.2.0
+MapView.exe - 3.8.2.0<br>
 XCom.dll - 3.6.1.0
 - fix inability to save the top two tileparts of a terrainset to a Mapfile
 
