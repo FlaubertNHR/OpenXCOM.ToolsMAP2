@@ -408,12 +408,23 @@ namespace PckView
 									SpriteEditor.SetScale(val_int);
 								}
 								break;
+
+							case "edit":
+								switch (keyval.Value.ToString())
+								{
+									case SpriteEditorF.EditEnabled:
+										SpriteEditor.OnEditModeMouseClick(null, EventArgs.Empty);
+										break;
+								}
+								break;
 						}
 					}
 				}
 			}
 
 			PopulatePaletteMenu(palselected); // WARNING: Palettes created here <-
+
+			SpriteEditor._fpalette.PalPanel.SelectPalid((byte)0); // <- requires valid Pal
 
 
 			BlankSprite = Properties.Resources.blanksprite;
@@ -801,6 +812,7 @@ namespace PckView
 					// SpriteEditorF
 					sw.WriteLine("  grid: "  + SpriteEditor.GetGridConfig());
 					sw.WriteLine("  scale: " + SpriteEditor._scaler);
+					sw.WriteLine("  edit: "  + SpriteEditorF.Mode);
 				}
 			}
 

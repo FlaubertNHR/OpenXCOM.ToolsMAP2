@@ -215,21 +215,21 @@ namespace PckView
 		/// <summary>
 		/// Locks or enables the sprite for edits.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="la_EditMode"/></c></param>
 		/// <param name="e"></param>
-		private void OnEditModeMouseClick(object sender, EventArgs e)
+		internal void OnEditModeMouseClick(object sender, EventArgs e)
 		{
 			switch (Mode)
 			{
 				case EditMode.Locked:
 					Mode = EditMode.Enabled;
-					la_EditMode.Text = "Enabled";
+					la_EditMode.Text = EditEnabled;
 					la_EditMode.BackColor = Color.AliceBlue;
 					break;
 
 				case EditMode.Enabled:
 					Mode = EditMode.Locked;
-					la_EditMode.Text = "Locked";
+					la_EditMode.Text = EditLocked;
 					la_EditMode.BackColor = Control.DefaultBackColor;
 					break;
 			}
@@ -243,7 +243,7 @@ namespace PckView
 		/// <param name="e"></param>
 		private void popup_Palette(object sender, EventArgs e)
 		{
-			miPalette.Enabled = (_f.SetType != SpritesetType.LoFT);
+			miPalette.Enabled = _f.SetType != SpritesetType.LoFT;
 		}
 
 		/// <summary>
@@ -495,12 +495,40 @@ namespace PckView
 			return bar_Scale.Value == bar_Scale.Minimum;
 		}
 		#endregion Methods
+
+
+		/// <summary>
+		/// <c>string</c> of <c><see cref="EditMode.Locked">EditMode.Locked</see></c>.
+		/// </summary>
+		internal const string EditLocked  = "Locked";
+
+		/// <summary>
+		/// <c>string</c> of <c><see cref="EditMode.Enabled">EditMode.Enabled</see></c>.
+		/// </summary>
+		internal const string EditEnabled = "Enabled";
 	}
 
 
+	/// <summary>
+	/// <c>enum</c> for
+	/// <c><see cref="SpriteEditorF.Mode">SpriteEditorF.Mode</see></c>.
+	/// </summary>
 	internal enum EditMode
 	{
+		/// <summary>
+		/// Sprite cannot be edited.
+		/// </summary>
+		/// <remarks>Keep this identifier synched with
+		/// <c><see cref="SpriteEditorF.EditLocked">SpriteEditorF.EditLocked</see></c>
+		/// since it is used as a <c>string</c> by the user-config file.</remarks>
 		Locked,
+
+		/// <summary>
+		/// Sprite can be edited.
+		/// </summary>
+		/// <remarks>Keep this identifier synched with
+		/// <c><see cref="SpriteEditorF.EditLocked">SpriteEditorF.EditEnabled</see></c>
+		/// since it is used as a <c>string</c> by the user-config file.</remarks>
 		Enabled
 	}
 }
