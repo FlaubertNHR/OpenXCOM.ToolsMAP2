@@ -151,9 +151,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Console.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <EmbeddedResource Include="McdRecords\McdRecordsExceeded.resx">
       <DependentUpon>McdRecordsExceeded.cs</DependentUpon>
     </EmbeddedResource>
