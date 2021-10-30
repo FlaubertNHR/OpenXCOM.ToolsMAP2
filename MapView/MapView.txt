@@ -2,7 +2,7 @@ MapView ii
 
 2021 oct 30
 
-MapView   .exe 4.1.1.0
+MapView   .exe 4.1.2.0
 McdView   .exe 4.1.0.0
 PckView   .exe 4.2.1.0
 XCom      .dll 4.1.1.0
