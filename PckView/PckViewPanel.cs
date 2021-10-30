@@ -34,9 +34,10 @@ namespace PckView
 		private int TableHeight;
 
 		/// <summary>
-		/// The LargeChange value for the scrollbar will return "1" when the bar
-		/// isn't visible. Therefore this value needs to be used instead of the
-		/// actual LargeValue in order to calculate the panel's various dynamics.
+		/// The <c>LargeChange</c> value for the scrollbar will return <c>1</c>
+		/// when the bar isn't visible. Therefore this value needs to be used
+		/// instead of the actual <c>LargeValue</c> in order to calculate the
+		/// panel's various dynamics.
 		/// </summary>
 		private int _largeChange;
 
@@ -642,8 +643,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Disposes the Spriteset the ContextMenuStrip and unsubscribes from
-		/// static event.
+		/// Disposes <c><see cref="Spriteset"/></c> the <c>ContextMenuStrip</c>
+		/// and unsubscribes from
+		/// <c><see cref="PckViewF.PaletteChanged">PckViewF.PaletteChanged</see></c>.
 		/// </summary>
 		internal void Destroy()
 		{

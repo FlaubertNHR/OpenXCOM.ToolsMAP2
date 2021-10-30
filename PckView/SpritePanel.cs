@@ -110,7 +110,8 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Clears <c><see cref="Palid"/></c> when the cursor leaves this panel.
+		/// Clears <c><see cref="Palid"/></c> when the cursor leaves this
+		/// <c>SpritePanel</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
@@ -119,12 +120,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles a <c>MouseDown</c> event on this <c>SpritePanel</c>.
+		/// Overrides the <c>MouseDown</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks><c><see cref="EditMode.Enabled">EditMode.Enabled</see></c>:
 		/// changes a clicked pixel's palette-id (color) to whatever the current
 		/// <c><see cref="PalettePanel.Palid">PalettePanel.Palid</see></c>.
+		/// 
 		/// 
 		/// <c><see cref="EditMode.Locked">EditMode.Locked</see></c>: changes
 		/// the <c><see cref="PalettePanel.Palid">PalettePanel.Palid</see></c>
@@ -234,7 +236,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Displays the color of any mouseovered pixel.
+		/// Overrides the <c>MouseMove</c> handler. Prints the color of a
+		/// mouseovered pixel to the statusbar.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -270,7 +273,7 @@ namespace PckView
 
 
 		/// <summary>
-		/// Handles the Paint event.
+		/// Overrides the <c>Paint</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
@@ -375,7 +378,7 @@ namespace PckView
 		/// <summary>
 		/// Handler for
 		/// <c><see cref="PckViewF.PaletteChanged">PckViewF.PaletteChanged</see></c>.
-		/// Invalidates this panel.
+		/// Invalidates this <c>SpritePanel</c>.
 		/// </summary>
 		private void OnPaletteChanged()
 		{
@@ -416,9 +419,9 @@ namespace PckView
 		/// </summary>
 		/// <param name="palid">a palette-id to get info about</param>
 		/// <returns>string of color-info</returns>
-		/// <remarks>Palette ids #254 and #255 are invalid (as colors) in PCK
-		/// files because the RLE-compression algorithm uses them as markers
-		/// with different meanings.</remarks>
+		/// <remarks>Palette ids #254 and #255 are invalid (as colors) in
+		/// <c>PCK</c> files because the RLE-compression algorithm uses them as
+		/// markers with different meanings.</remarks>
 		internal string GetColorInfo(int palid)
 		{
 			if (palid != -1)

@@ -63,8 +63,8 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// The PalettePanel cannot be resized, but OnResize will fire when its
-		/// form loads etc.
+		/// Thus <c>PalettePanel</c> cannot be resized, but the <c>Resize</c>
+		/// <c>event</c> will fire when its parent <c>Form</c> loads etc.
 		/// </summary>
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
@@ -75,9 +75,9 @@ namespace PckView
 			_pathTran_hori.Reset();
 			_pathTran_vert.Reset();
 
-			int x0 = SwatchWidth  / 3;
+			int x0 = SwatchWidth      / 3;
 			int x1 = SwatchWidth  * 2 / 3;
-			int y0 = SwatchHeight / 3;
+			int y0 = SwatchHeight     / 3;
 			int y1 = SwatchHeight * 2 / 3;
 
 			_pathTran_hori.AddLine(x0,y1, x0,y0);
@@ -286,13 +286,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Disposes graphics paths and unsubscribes from static event.
+		/// Disposes graphics paths and unsubscribes from
+		/// <c><see cref="PckViewF.PaletteChanged">PckViewF.PaletteChanged</see></c>.
 		/// </summary>
 		/// <remarks>I have no idea if this is really necessary despite hundreds
-		/// of hours reading about Dispose() et al. This class is a visual
-		/// control so it gets disposed when its parent closes, but do its
-		/// private fields get disposed reliably ... the designer doesn't appear
-		/// to care re. Font eg.</remarks>
+		/// of hours reading about <c>Dispose()</c> et al. This class is a
+		/// visual control so it gets disposed when its parent closes, but do
+		/// its private fields get disposed reliably ... the designer doesn't
+		/// appear to care re. <c>Font</c> eg.</remarks>
 		internal void Destroy()
 		{
 			PckViewF.PaletteChanged -= OnPaletteChanged;
