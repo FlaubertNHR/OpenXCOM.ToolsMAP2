@@ -94,7 +94,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles the mousedown event.
+		/// Overrides the <c>MouseDown</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -116,7 +116,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Scrolls the selected <c><see cref="Palid"/></c>.
+		/// Overrides the <c>MouseWheel</c> handler. Scrolls the selected
+		/// <c><see cref="Palid"/></c>.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>This <c>PalettePanel</c> cannot have focus because it is a
@@ -144,7 +145,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Draws the palette viewer.
+		/// Overrides the <c>Paint</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
@@ -275,8 +276,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handler for PaletteChanged. Prints color-info to the statusbar and
-		/// invalidates this panel.
+		/// Prints color-info to the statusbar and invalidates this
+		/// <c>PalettePanel</c>.
 		/// </summary>
 		private void UpdatePalette()
 		{

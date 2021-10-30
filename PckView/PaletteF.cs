@@ -65,7 +65,7 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles the <c>KeyDown</c> event.
+		/// Overrides the <c>KeyDown</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Does not require <c>KeyPreview</c> because there's not
@@ -89,12 +89,11 @@ namespace PckView
 					PalPanel.Navigate(e.KeyData);
 					break;
 			}
-//			base.OnKeyDown(e);
 		}
 
 		/// <summary>
-		/// Handles the <c>FormClosing</c> event. Closes this form if PckView is
-		/// quitting - else hide.
+		/// Overrides the <c>FormClosing</c> handler. Closes this
+		/// <c>PaletteF</c> if PckView is quitting - else hide.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
