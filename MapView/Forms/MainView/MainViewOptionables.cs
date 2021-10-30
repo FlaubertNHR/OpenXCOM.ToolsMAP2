@@ -988,7 +988,7 @@ namespace MapView.Forms.MainView
 					Palette.UfoBattle .CreateTonescaledPalettes(SelectedTonerBrightness);
 					Palette.TftdBattle.CreateTonescaledPalettes(SelectedTonerBrightness);
 
-					MainViewF.that.SetTonedPalette();
+					MainViewF.SetTonedPalette();
 					break;
 
 				case str_LayerSelectionBorder:

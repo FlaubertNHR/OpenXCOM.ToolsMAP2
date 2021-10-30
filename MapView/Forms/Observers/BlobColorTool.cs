@@ -33,11 +33,11 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties
-		/// <summary>
-		/// A human-readable label for this <c>BlobColorTool</c>.
-		/// </summary>
-		internal string Label
-		{ get; private set; }
+//		/// <summary>
+//		/// A human-readable label for this <c>BlobColorTool</c>.
+//		/// </summary>
+//		internal string Label
+//		{ get; private set; }
 
 		/// <summary>
 		/// A pen for drawing walls.
@@ -75,10 +75,11 @@ namespace MapView.Forms.Observers
 		/// cTor[0]. Instantiates a colortool from a Pen object.
 		/// </summary>
 		/// <param name="pen"></param>
-		/// <param name="label"></param>
-		internal BlobColorTool(Pen pen, string label)
+//		/// <param name="label"></param>
+		internal BlobColorTool(Pen pen)
+//			string label
 		{
-			Label = label;
+//			Label = label;
 
 			var colorLight = Color.FromArgb(ALFALFA, pen.Color);
 
@@ -95,10 +96,11 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="width"></param>
-		/// <param name="label"></param>
-		internal BlobColorTool(SolidBrush brush, float width, string label)
+//		/// <param name="label"></param>
+		internal BlobColorTool(SolidBrush brush, float width)
+//			string label
 		{
-			Label = label;
+//			Label = label;
 
 			var colorLight = Color.FromArgb(ALFALFA, brush.Color);
 

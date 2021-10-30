@@ -134,18 +134,18 @@ namespace MapView
 		/// <summary>
 		/// Draws the cuboid-cursor.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="halfWidth"></param>
-		/// <param name="halfHeight"></param>
+//		/// <param name="x"></param>
+//		/// <param name="y"></param>
+//		/// <param name="halfWidth"></param>
+//		/// <param name="halfHeight"></param>
 		/// <param name="front"><c>true</c> to draw the front sprite, else back</param>
 		/// <param name="gridlevel"><c>true</c> to draw the red sprite, else
 		/// blue</param>
 		/// <param name="rect">destination rectangle for shaded sprites</param>
 		internal static void DrawCuboid_Rembrandt(
-				int x, int y,
-				int halfWidth,
-				int halfHeight,
+//				int x, int y,
+//				int halfWidth,
+//				int halfHeight,
 				bool front,
 				bool gridlevel,
 				Rectangle rect)
@@ -165,15 +165,15 @@ namespace MapView
 		/// <summary>
 		/// Draws the target-cursor.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
-		/// <param name="halfWidth"></param>
-		/// <param name="halfHeight"></param>
+//		/// <param name="x"></param>
+//		/// <param name="y"></param>
+//		/// <param name="halfWidth"></param>
+//		/// <param name="halfHeight"></param>
 		/// <param name="rect">destination rectangle for shaded sprites</param>
 		internal static void DrawTargeter_Rembrandt(
-				int x, int y,
-				int halfWidth,
-				int halfHeight,
+//				int x, int y,
+//				int halfWidth,
+//				int halfHeight,
 				Rectangle rect)
 		{
 			_graphics.DrawImage(

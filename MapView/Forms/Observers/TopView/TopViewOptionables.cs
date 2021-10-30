@@ -392,15 +392,15 @@ namespace MapView.Forms.Observers
 
 			pen = new Pen(def_WestColor, def_WestWidth);
 			TopControl.TopPens.Add(str_WestColor, pen);
-			TopControl.ToolWest = new BlobColorTool(pen, "TopToolWest");
+			TopControl.ToolWest = new BlobColorTool(pen);//, "TopToolWest");
 
 			pen = new Pen(def_NorthColor, def_NorthWidth);
 			TopControl.TopPens.Add(str_NorthColor, pen);
-			TopControl.ToolNorth = new BlobColorTool(pen, "TopToolNorth");
+			TopControl.ToolNorth = new BlobColorTool(pen);//, "TopToolNorth");
 
 			brush = new SolidBrush(def_ContentColor);
 			TopControl.TopBrushes.Add(str_ContentColor, brush);
-			TopControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT, "TopToolContent");
+			TopControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);//, "TopToolContent");
 
 			pen = new Pen(def_SelectorColor, def_SelectorWidth);
 			TopControl.TopPens.Add(str_SelectorColor, pen);
@@ -529,8 +529,8 @@ namespace MapView.Forms.Observers
 				TopControl.ToolContent.Dispose();
 				TopControl.ToolContent = new BlobColorTool(
 														TopControl.TopBrushes[key],
-														BlobDrawService.LINEWIDTH_CONTENT,
-														"TopToolContent");
+														BlobDrawService.LINEWIDTH_CONTENT);
+//														"TopToolContent");
 			}
 
 			if (MainViewF.that._fcolors != null)
@@ -552,13 +552,13 @@ namespace MapView.Forms.Observers
 			{
 				case str_WestColor:
 					TopControl.ToolWest.Dispose();
-					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key], "TopToolWest");
+					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key]);//, "TopToolWest");
 					updateColorhelp = true;
 					break;
 
 				case str_NorthColor:
 					TopControl.ToolNorth.Dispose();
-					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key], "TopToolNorth");
+					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key]);//, "TopToolNorth");
 					updateColorhelp = true;
 					break;
 			}
@@ -580,12 +580,12 @@ namespace MapView.Forms.Observers
 			{
 				case str_WestColor:
 					TopControl.ToolWest.Dispose();
-					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key], "TopToolWest");
+					TopControl.ToolWest = new BlobColorTool(TopControl.TopPens[key]);//, "TopToolWest");
 					break;
 
 				case str_NorthColor:
 					TopControl.ToolNorth.Dispose();
-					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key], "TopToolNorth");
+					TopControl.ToolNorth = new BlobColorTool(TopControl.TopPens[key]);//, "TopToolNorth");
 					break;
 			}
 		}

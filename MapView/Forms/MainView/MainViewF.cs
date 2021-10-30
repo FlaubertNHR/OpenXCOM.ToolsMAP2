@@ -3402,7 +3402,7 @@ namespace MapView
 		/// on
 		/// <c><see cref="MainViewOptionables.SelectedTileToner">MainViewOptionables.SelectedTileToner</see></c>.
 		/// </summary>
-		internal void SetTonedPalette()
+		internal static void SetTonedPalette()
 		{
 			if (SpritesetManager.Spritesets.Count != 0)
 			{

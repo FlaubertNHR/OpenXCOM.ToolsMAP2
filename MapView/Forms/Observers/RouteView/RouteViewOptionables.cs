@@ -529,11 +529,11 @@ namespace MapView.Forms.Observers
 
 			pen = new Pen(def_WallColor, def_WallWidth);
 			RouteControl.RoutePens[str_WallColor] = pen;
-			RouteControl.ToolWall = new BlobColorTool(pen, "RouteToolWall");
+			RouteControl.ToolWall = new BlobColorTool(pen);//, "RouteToolWall");
 
 			brush = new SolidBrush(def_ContentColor);
 			RouteControl.RouteBrushes[str_ContentColor] = brush;
-			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT, "RouteToolContent");
+			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);//, "RouteToolContent");
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
 			brush = new SolidBrush(color);
@@ -610,7 +610,7 @@ namespace MapView.Forms.Observers
 				case str_NodeColor:         NodeColor         = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeSpawnColor:    NodeSpawnColor    = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeSelectedColor: NodeSelectedColor = (Color)val; ChangeBruColor(key, val); break;
-				case str_NodeOpacity:       NodeOpacity       =   (int)val; ChangeBruOpaci(key, val); break;
+				case str_NodeOpacity:       NodeOpacity       =   (int)val; ChangeBruOpaci(     val); break;
 
 				case str_LinkColor:         LinkColor         = (Color)val; ChangePenColor(key, val); break;
 				case str_LinkWidth:         LinkWidth         =   (int)val; ChangePenWidth(key, val); break;
@@ -648,8 +648,8 @@ namespace MapView.Forms.Observers
 					RouteControl.ToolContent.Dispose();
 					RouteControl.ToolContent = new BlobColorTool(
 															RouteControl.RouteBrushes[str_ContentColor],
-															BlobDrawService.LINEWIDTH_CONTENT,
-															"RouteToolContent");
+															BlobDrawService.LINEWIDTH_CONTENT);
+//															"RouteToolContent");
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
@@ -678,9 +678,8 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Fires when a brush-opacity changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
 		/// <param name="val"></param>
-		private void ChangeBruOpaci(string key, object val)
+		private void ChangeBruOpaci(object val)
 		{
 			Color color = Color.FromArgb((int)val, NodeColor);
 			RouteControl.RouteBrushes[str_NodeColor].Color = color;
@@ -720,7 +719,7 @@ namespace MapView.Forms.Observers
 			{
 				case str_WallColor:
 					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key], "RouteToolWall");
+					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
@@ -741,7 +740,7 @@ namespace MapView.Forms.Observers
 			{
 				case str_WallColor: // doh!
 					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key], "RouteToolWall");
+					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
 					break;
 			}
 		}

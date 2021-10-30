@@ -2707,7 +2707,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Loads default options for <c>RouteView</c>.
 		/// </summary>
-		internal void LoadControlDefaultOptions()
+		internal static void LoadControlDefaultOptions()
 		{
 			//Logfile.Log("RouteView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);

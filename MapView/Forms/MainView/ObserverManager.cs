@@ -67,9 +67,9 @@ namespace MapView.Forms.MainView
 			_observers.Add(TopRouteView);
 
 
-			TileView .Control.LoadControlDefaultOptions();
-			TopView  .Control.LoadControlDefaultOptions();
-			RouteView.Control.LoadControlDefaultOptions();
+			MapView.Forms.Observers.TileView .LoadControlDefaultOptions();
+			MapView.Forms.Observers.TopView  .LoadControlDefaultOptions();
+			MapView.Forms.Observers.RouteView.LoadControlDefaultOptions();
 
 			OptionsManager.SetOptionsSection(RegistryInfo.TileView,  Observers.TileView .Options);
 			OptionsManager.SetOptionsSection(RegistryInfo.TopView,   Observers.TopView  .Options);

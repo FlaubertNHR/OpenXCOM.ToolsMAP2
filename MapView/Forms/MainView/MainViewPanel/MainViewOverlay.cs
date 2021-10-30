@@ -1464,9 +1464,9 @@ namespace MapView.Forms.MainView
 						if (cuboid = (col == DragBeg.X && row == DragBeg.Y))
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
-														x,y,
-														HalfWidth,
-														HalfHeight,
+//														x,y,
+//														HalfWidth,
+//														HalfHeight,
 														false,
 														isLevel,
 														rect0);
@@ -1488,18 +1488,18 @@ namespace MapView.Forms.MainView
 							&& col == _col && row == _row)
 						{
 							CuboidSprite.DrawTargeter_Rembrandt(
-														x,y,
-														HalfWidth,
-														HalfHeight,
+//														x,y,
+//														HalfWidth,
+//														HalfHeight,
 														rect0);
 						}
 
 						if (cuboid)
 						{
 							CuboidSprite.DrawCuboid_Rembrandt(
-														x,y,
-														HalfWidth,
-														HalfHeight,
+//														x,y,
+//														HalfWidth,
+//														HalfHeight,
 														true,
 														isLevel,
 														rect0);

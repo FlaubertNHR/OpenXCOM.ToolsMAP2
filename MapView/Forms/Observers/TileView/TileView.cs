@@ -296,7 +296,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Loads default options for <c>TileView</c>.
 		/// </summary>
-		internal void LoadControlDefaultOptions()
+		internal static void LoadControlDefaultOptions()
 		{
 			//Logfile.Log("TileView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
