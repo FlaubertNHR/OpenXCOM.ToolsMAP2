@@ -1083,6 +1083,8 @@ namespace PckView
 
 					if (valid)
 					{
+						int id = TilePanel.Spriteset.Count;
+
 						foreach (var b in bs)
 						{
 							XCImage sprite = SpriteService.CreateSanitarySprite(
@@ -1095,7 +1097,7 @@ namespace PckView
 							TilePanel.Spriteset.Sprites.Add(sprite);
 						}
 
-						SpritesetCountChanged(TilePanel.Selid);
+						SpritesetCountChanged(id);
 					}
 
 					foreach (var b in bs)
@@ -1196,7 +1198,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="id">the id to start inserting at</param>
 		/// <param name="files">an array of filenames</param>
-		/// <returns><c>true</c> if all sprites are inserted successfully</returns>
+		/// <returns><c>true</c> if sprites are inserted</returns>
 		/// <remarks>Helper for
 		/// <list type="bullet">
 		/// <item><c><see cref="OnInsertSpritesBeforeClick()">OnInsertSpritesBeforeClick()</see></c></item>
@@ -1232,7 +1234,7 @@ namespace PckView
 
 			if (valid)
 			{
-				int length = files.Length;
+				int length = bs.Count;
 				for (int i = id; i != TilePanel.Spriteset.Count; ++i)
 					TilePanel.Spriteset[i].Id = i + length;
 
@@ -1521,7 +1523,7 @@ namespace PckView
 																SetType);
 				TilePanel.Spriteset.Sprites.Add(sprite);
 
-				SpritesetCountChanged(TilePanel.Selid);
+				SpritesetCountChanged(TilePanel.Spriteset.Count - 1);
 			}
 		}
 
