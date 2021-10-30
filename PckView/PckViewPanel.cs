@@ -138,9 +138,9 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles this panel's resize event. Sets the scrollbar range, forces
-		/// any selected sprite into view, and fixes the quirky .net behavior
-		/// that shifts the scroll up by a pixel.
+		/// Overrides the <c>Resize</c> handler. Sets the scrollbar range,
+		/// forces any selected sprite into view, and fixes the quirky .net
+		/// behavior that shifts the scroll up by a pixel.
 		/// </summary>
 		/// <param name="eventargs"></param>
 		protected override void OnResize(EventArgs eventargs)
@@ -161,7 +161,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Forces a call to OnResize().
+		/// Forces a call to <c><see cref="OnResize()">OnResize()</see></c>.
 		/// </summary>
 		internal void ForceResize()
 		{
@@ -169,7 +169,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Scrolls this panel with the mousewheel.
+		/// Overrides the <c>MouseWheel</c> handler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -200,11 +200,12 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Selects and shows status-information for a sprite. Overrides core
-		/// implementation for the MouseDown event.
+		/// Overrides the <c>MouseDown</c> handler. Selects and shows
+		/// status-information for a sprite.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>This fires before PckViewF.OnPanelClick().</remarks>
+		/// <remarks>This fires before
+		/// <c><see cref="PckViewF"></see>.OnPanelClick()</c>.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left
@@ -220,8 +221,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Shows status-information for a sprite. Overrides core implementation
-		/// for the MouseMove event.
+		/// Overrides the <c>MouseMove</c> handler. Shows status-information for
+		/// a sprite.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
@@ -238,8 +239,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Clears the overId in the statusbar when the mouse-cursor leaves the
-		/// panel.
+		/// Overrides the <c>MouseLeave</c> handler. Clears the overId in the
+		/// statusbar when the mouse-cursor leaves the panel.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
@@ -249,7 +250,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Let's draw this puppy.
+		/// Overrides the <c>Paint</c> handler. Let's draw this puppy.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)

@@ -598,8 +598,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Adds <c><see cref="Palette">Palettes</see></c> as menuitems to the
-		/// Palettes menu on the main menubar.
+		/// Adds <c><see cref="Palette">Palettes</see></c> as <c>MenuItems</c>
+		/// to the Palettes menu on the main menubar.
 		/// </summary>
 		/// <param name="sel">the palette to select</param>
 		private void PopulatePaletteMenu(int sel)
@@ -650,7 +650,8 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Brings all forms to top when this is activated.
+		/// Overrides the <c>Activated</c> handler. Brings all forms to top when
+		/// this <c>PckViewF</c> is activated.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -680,8 +681,10 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Minimizes and restores this along with the SpriteEditor and
-		/// PaletteViewer synchronistically.
+		/// Overrides the <c>Resize</c> handler. Minimizes and restores this
+		/// <c>PckViewF</c> along with <c><see cref="SpriteEditor"/></c> and
+		/// <c><see cref="SpriteEditorF._fpalette">SpriteEditorF._fpalette</see></c>
+		/// synchronistically.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -711,7 +714,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Focuses the viewer-panel after the app loads.
+		/// Overrides the <c>Shown</c> handler. Focuses
+		/// <c><see cref="TilePanel"/></c> after the app loads.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
@@ -721,7 +725,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Closes the app after a .NET call to close (roughly).
+		/// Overrides the <c>FormClosing</c> handler. Closes the app after a
+		/// .net call to close (roughly).
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -804,7 +809,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Handles keydown events at the form level - context and navigation
+		/// Overrides the <c>KeyDown</c> handler. Context and navigation
 		/// shortcuts.
 		/// </summary>
 		/// <param name="e"></param>
@@ -956,25 +961,29 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Bring back the dinosaurs. Called when the tile-panel's click-event
-		/// is raised.
+		/// Bring back the dinosaurs.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="TilePanel"/></c> - <c>Click</c></param>
 		/// <param name="e"></param>
-		/// <remarks>This fires after <c>PckViewPanel.OnMouseDown()</c> -
-		/// thought you'd like to know.</remarks>
+		/// <seealso cref="PckViewPanel"><c>PckViewPanel</c></seealso>
+		/// <remarks>This fires after <c>PckViewPanel.OnMouseDown()</c>.</remarks>
 		private void OnPanelClick(object sender, EventArgs e)
 		{
 			EnableContext();
 		}
 
 		/// <summary>
-		/// Opens the currently selected sprite in the sprite-editor. Called
-		/// when the Context menu's click-event or the viewer-panel's
-		/// <c>DoubleClick</c> event is raised or <c>[Enter]</c> is pressed.
+		/// Opens the currently selected sprite in
+		/// <c><see cref="SpriteEditorF"/></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miEdit"/></c> - <c>Click</c></item>
+		/// <item><c><see cref="TilePanel"/></c> - <c>DoubleClick</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[Enter]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
+		/// <seealso cref="PckViewPanel"><c>PckViewPanel</c></seealso>
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null)
@@ -997,11 +1006,12 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Dechecks the context's Edit it.
+		/// Dechecks <c><see cref="_miEdit"/></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="SpriteEditor"/></c></param>
 		/// <param name="e"></param>
 		/// <remarks>This fires after the editor's <c>FormClosing</c> event.</remarks>
+		/// <seealso cref="SpriteEditorF"><c>SpriteEditorF</c></seealso>
 		private void OnSpriteEditorClosing(object sender, CancelEventArgs e)
 		{
 			_miEdit.Checked = false;
@@ -1009,31 +1019,14 @@ namespace PckView
 
 
 		/// <summary>
-		/// Displays an errorbox to the user about incorrect image dimensions
-		/// and/or pixel-format.
+		/// Adds sprite(s) to
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>.
 		/// </summary>
-		/// <param name="pfe">path-file-extension</param>
-		/// <param name="b">a <c>Bitmap</c></param>
-		/// <param name="spritesheet"><c>true</c> if the error occured when
-		/// importing a spritesheet</param>
-		private void ShowBitmapError(string pfe, Image b, bool spritesheet = false)
-		{
-			using (var f = new Infobox(
-									"Image error",
-									FileDialogStrings.GetError(SetType, spritesheet),
-									pfe + Environment.NewLine + Environment.NewLine
-										+ b.Width + "x" + b.Height + " " + b.PixelFormat,
-									InfoboxType.Error))
-			{
-				f.ShowDialog(this);
-			}
-		}
-
-		/// <summary>
-		/// Adds a sprite or sprites to the collection. Called when the Context
-		/// menu's click-event is raised.
-		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miAdd"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[d]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnAddSpritesClick(object sender, EventArgs e)
 		{
@@ -1112,11 +1105,15 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Inserts sprites into the currently loaded spriteset before the
-		/// currently selected sprite. Called when the Context menu's click-
-		/// event is raised.
+		/// Inserts sprite(s) into
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>
+		/// before the selected sprite.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miInsertBefor"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[b]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnInsertSpritesBeforeClick(object sender, EventArgs e)
 		{
@@ -1151,11 +1148,15 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Inserts sprites into the currently loaded spriteset after the
-		/// currently selected sprite. Called when the Context menu's click-
-		/// event is raised.
+		/// Inserts sprite(s) into
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>
+		/// after the selected sprite.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miInsertAfter"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[a]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnInsertSpritesAfterClick(object sender, EventArgs e)
 		{
@@ -1193,11 +1194,14 @@ namespace PckView
 		/// Inserts sprites into the currently loaded spriteset starting at a
 		/// given Id.
 		/// </summary>
-		/// <param name="id">the terrain-id to start inserting at</param>
+		/// <param name="id">the id to start inserting at</param>
 		/// <param name="files">an array of filenames</param>
-		/// <returns>true if all sprites are inserted successfully</returns>
-		/// <remarks>Helper for <see cref="OnInsertSpritesBeforeClick"/> and
-		/// <see cref="OnInsertSpritesAfterClick"/></remarks>
+		/// <returns><c>true</c> if all sprites are inserted successfully</returns>
+		/// <remarks>Helper for
+		/// <list type="bullet">
+		/// <item><c><see cref="OnInsertSpritesBeforeClick()">OnInsertSpritesBeforeClick()</see></c></item>
+		/// <item><c><see cref="OnInsertSpritesAfterClick()">OnInsertSpritesAfterClick()</see></c></item>
+		/// </list></remarks>
 		private bool InsertSprites(int id, string[] files)
 		{
 			var bs = new List<Bitmap>();
@@ -1268,10 +1272,15 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Replaces the selected sprite in the collection with a different
-		/// sprite. Called when the Context menu's click-event is raised.
+		/// Replaces the selected sprite in
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>
+		/// with a different sprite.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miReplace"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[r]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnReplaceSpriteClick(object sender, EventArgs e)
 		{
@@ -1335,9 +1344,34 @@ namespace PckView
 		}
 
 		/// <summary>
+		/// Displays an errorbox to the user about incorrect image dimensions
+		/// and/or pixel-format.
+		/// </summary>
+		/// <param name="pfe">path-file-extension</param>
+		/// <param name="b">a <c>Bitmap</c></param>
+		/// <param name="spritesheet"><c>true</c> if the error occured when
+		/// importing a spritesheet</param>
+		private void ShowBitmapError(string pfe, Image b, bool spritesheet = false)
+		{
+			using (var f = new Infobox(
+									"Image error",
+									FileDialogStrings.GetError(SetType, spritesheet),
+									pfe + Environment.NewLine + Environment.NewLine
+										+ b.Width + "x" + b.Height + " " + b.PixelFormat,
+									InfoboxType.Error))
+			{
+				f.ShowDialog(this);
+			}
+		}
+
+		/// <summary>
 		/// Moves a sprite one slot to the left.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miMoveL"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[-]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnMoveLeftSpriteClick(object sender, EventArgs e)
 		{
@@ -1347,7 +1381,11 @@ namespace PckView
 		/// <summary>
 		/// Moves a sprite one slot to the right.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miMoveR"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[+]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnMoveRightSpriteClick(object sender, EventArgs e)
 		{
@@ -1377,10 +1415,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Deletes the selected sprite from the collection. Called when the
-		/// Context menu's click-event is raised.
+		/// Deletes the selected sprite in
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miDelete"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[Del]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnDeleteSpriteClick(object sender, EventArgs e)
 		{
@@ -1399,10 +1441,15 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Exports the selected sprite in the collection to a Pngfile. Called
-		/// when the Context menu's click-event is raised.
+		/// Exports the selected sprite in
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>
+		/// to a <c>PNG</c> file.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miExport"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[p]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnExportSpriteClick(object sender, EventArgs e)
 		{
@@ -1448,10 +1495,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Creates a blank sprite at the end of the array. Called when the
-		/// Context menu's click-event is raised.
+		/// Creates a blank sprite at the end of
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miCreate"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[t]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		/// <remarks>The routine is bloated but it works.</remarks>
 		private void OnCreateSpriteClick(object sender, EventArgs e)
@@ -1475,10 +1526,14 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Clears the currently selected sprite. Called when the Context menu's
-		/// click-event is raised.
+		/// Clears the selected sprite in
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_miClear"/></c> - <c>Click</c></item>
+		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[c]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnClearSpriteClick(object sender, EventArgs e)
 		{
@@ -1506,12 +1561,18 @@ namespace PckView
 
 
 		/// <summary>
-		/// Creates a brand sparkling new (blank) sprite-collection. Called when
-		/// the File menu's click-event is raised.
+		/// Creates a brand sparkling new (blank)
+		/// <c><see cref="PckViewPanel.Spriteset">PckViewPanel.Spriteset</see></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="miCreateTerrain"/></c></item>
+		/// <item><c><see cref="miCreateBigobs"/></c></item>
+		/// <item><c><see cref="miCreateUnitUfo"/></c></item>
+		/// <item><c><see cref="miCreateUnitTftd"/></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
-		/// <remarks>ScanG.dat and LoFTemps.dat cannot be created.</remarks>
+		/// <remarks><c>ScanG.dat</c> and <c>LoFTemps.dat</c> cannot be created.</remarks>
 		private void OnCreateClick(object sender, EventArgs e)
 		{
 			if (RequestSpritesetClose())
@@ -1605,10 +1666,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of a terrain or a unit. Called when the
-		/// File menu's click-event is raised.
+		/// Opens a spriteset of a terrain or a unit.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miOpen"/></c></param>
 		/// <param name="e"></param>
 		private void OnOpenPckClick(object sender, EventArgs e)
 		{
@@ -1634,10 +1694,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of bigobs. Called when the File menu's
-		/// click-event is raised.
+		/// Opens a spriteset of bigobs.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miOpenBigobs"/></c></param>
 		/// <param name="e"></param>
 		private void OnOpenBigobsClick(object sender, EventArgs e)
 		{
@@ -1664,10 +1723,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of ScanG icons. Called when the File
-		/// menu's click-event is raised.
+		/// Opens a spriteset of ScanG icons.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miOpenScanG"/></c></param>
 		/// <param name="e"></param>
 		private void OnOpenScanGClick(object sender, EventArgs e)
 		{
@@ -1687,10 +1745,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Opens a sprite-collection of LoFT icons. Called when the File menu's
-		/// click-event is raised.
+		/// Opens a spriteset of LoFT icons.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miOpenLoFT"/></c></param>
 		/// <param name="e"></param>
 		private void OnOpenLoFTClick(object sender, EventArgs e)
 		{
@@ -1710,11 +1767,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Saves all the sprites to the currently loaded PCK+TAB files if
-		/// terrain/unit/bigobs or to the currently loaded DAT file if ScanG or
-		/// LoFT. Called when the File menu's click-event is raised.
+		/// Saves all the sprites to the currently loaded <c>PCK+TAB</c> files
+		/// if terrain/unit/bigobs or to the currently loaded <c>DAT</c> file if
+		/// ScanG or LoFT.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miSave"/></c></param>
 		/// <param name="e"></param>
 		private void OnSaveClick(object sender, EventArgs e)
 		{
@@ -1750,11 +1807,11 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Saves all the sprites to potentially different PCK+TAB files if
-		/// terrain/unit/bigobs or to a potentially different DAT file if ScanG
-		/// or LoFT. Called when the File menu's click-event is raised.
+		/// Saves all the sprites to potentially different <c>PCK+TAB</c> files
+		/// if terrain/unit/bigobs or to a potentially different <c>DAT</c> file
+		/// if ScanG or LoFT.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miSaveAs"/></c></param>
 		/// <param name="e"></param>
 		private void OnSaveAsClick(object sender, EventArgs e)
 		{
@@ -1846,9 +1903,9 @@ namespace PckView
 
 		/// <summary>
 		/// Exports all sprites in the currently loaded spriteset to <c>PNG</c>
-		/// files. Called when the File menu's click-event is raised.
+		/// files.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miExportSprites"/></c></param>
 		/// <param name="e"></param>
 		private void OnExportSpritesClick(object sender, EventArgs e)
 		{
@@ -1907,9 +1964,8 @@ namespace PckView
 		/// Exports all sprites in the currently loaded spriteset to a
 		/// spritesheet file in <c>PNG</c> format.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miExportSpritesheet"/></c></param>
 		/// <param name="e"></param>
-		/// <remarks>Called when the File menu's click-event is raised.</remarks>
 		private void OnExportSpritesheetClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null && TilePanel.Spriteset.Count != 0)
@@ -1951,9 +2007,12 @@ namespace PckView
 		/// Imports a spritesheet that replaces or appends to the current
 		/// spriteset.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="miImportSheetReplace"/></c></item>
+		/// <item><c><see cref="miImportSheetAdd"/></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
-		/// <remarks>Called when the File menu's click-event is raised.</remarks>
 		private void OnImportSpritesheetClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null)
@@ -2024,9 +2083,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Closes the app. Called when the File menu's click-event is raised.
+		/// Closes the app.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miQuit"/></c></param>
 		/// <param name="e"></param>
 		private void OnQuitClick(object sender, EventArgs e)
 		{
@@ -2034,13 +2093,15 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Changes the current palette. Called when the Palette menu's click-
-		/// event is raised whether by mouse or keyboard.
+		/// Changes the current palette.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="_itPalettes">_itPalettes[pal]</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
-		/// <remarks>LoFTsets don't need their palette set; their palette is set
-		/// on creation and don't change.</remarks>
+		/// <remarks>LoFTsets don't need their palette set since their palette
+		/// is set on creation and don't change.</remarks>
 		private void OnPaletteClick(object sender, EventArgs e)
 		{
 			var it = sender as MenuItem;
@@ -2064,14 +2125,12 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Toggles transparency of the currently loaded palette. Called when
-		/// the Palette menu's click-event is raised whether by mouse or
-		/// keyboard.
+		/// Toggles transparency of the currently loaded palette.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miTransparent"/></c></param>
 		/// <param name="e"></param>
-		/// <remarks>LoFTsets don't need their palette set; their palette is set
-		/// on creation and don't change.</remarks>
+		/// <remarks>LoFTsets don't need their palette set since their palette
+		/// is set on creation and don't change.</remarks>
 		private void OnTransparencyClick(object sender, EventArgs e)
 		{
 			Pal.SetTransparent(miTransparent.Checked = !miTransparent.Checked);
@@ -2083,14 +2142,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Toggles usage of the sprite-shade value in MapView's options. Called
-		/// when the Palette menu's <c>Click</c> event is raised.
+		/// Toggles usage of the sprite-shade value in MapView's options.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miSpriteShade"/></c></param>
 		/// <param name="e"></param>
-		/// <remarks><c>SpriteShade</c> was converted to
-		/// <c><see cref="SpriteShadeFloat"/></c> in the cTor hence it can and
-		/// does take a new definition here:
+		/// <remarks><c>(int)spriteshade</c> was converted to
+		/// <c><see cref="SpriteShadeFloat"/></c> in the cTor.
+		/// <c><see cref="Shader"/></c> values:
 		/// <list type="bullet">
 		/// <item><c><see cref="ShaderDisabled"/></c> - sprite-shade was
 		/// not found by the cTor thus it cannot be enabled</item>
@@ -2119,10 +2177,9 @@ namespace PckView
 
 		/// <summary>
 		/// Shows a richtextbox with all the bytes of the currently selected
-		/// sprite laid out in a fairly readable fashion. Called when the Bytes
-		/// menu's click-event is raised.
+		/// sprite laid out in a fairly readable fashion.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miBytes"/></c></param>
 		/// <param name="e"></param>
 		private void OnByteTableClick(object sender, EventArgs e)
 		{
@@ -2144,7 +2201,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Callback for LoadBytesTable().
+		/// Callback for
+		/// <c><see cref="ByteTableManager.LoadTable()">ByteTableManager.LoadTable()</see></c>.
 		/// </summary>
 		private void BytesClosingCallback()
 		{
@@ -2152,10 +2210,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Shows the CHM helpfile. Called when the Help menu's click-event is
-		/// raised.
+		/// Shows the CHM helpfile.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miHelp"/></c></param>
 		/// <param name="e"></param>
 		private void OnHelpClick(object sender, EventArgs e)
 		{
@@ -2165,10 +2222,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Shows the about-box. Called when the Help menu's click-event is
-		/// raised.
+		/// Shows <c><see cref="About"/></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miAbout"/></c></param>
 		/// <param name="e"></param>
 		private void OnAboutClick(object sender, EventArgs e)
 		{
@@ -2178,7 +2234,7 @@ namespace PckView
 		/// <summary>
 		/// is disabled.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miCompare"/></c></param>
 		/// <param name="e"></param>
 		private void OnCompareClick(object sender, EventArgs e) // disabled in designer w/ Visible=FALSE
 		{
