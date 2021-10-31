@@ -44,13 +44,15 @@ namespace DSShared
 
 		#region Methods (static)
 		/// <summary>
-		/// Allocates a key-val pair in the SharedSpace. This does not replace
-		/// the value of an existing key unless its current value is <c>null</c>.
+		/// Allocates a key-val pair in the <c>SharedSpace</c>. This does not
+		/// replace the value of an existing key unless its current value is
+		/// <c>null</c>.
 		/// TODO: But that's just silly.
 		/// </summary>
 		/// <param name="key">the key to look for</param>
 		/// <param name="val">the <c>object</c> to add if the key doesn't exist
 		/// or its value is <c>null</c></param>
+		/// <remarks>Ensure <paramref name="key"/> is not <c>null</c> or blank.</remarks>
 		public static void SetShare(string key, object val)
 		{
 			if (!_shares.ContainsKey(key))
@@ -68,10 +70,11 @@ namespace DSShared
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
+		/// <remarks>Ensure <paramref name="key"/> is not <c>null</c> or blank.</remarks>
 		public static object GetShareObject(string key)
 		{
 			object val;
-			if (!String.IsNullOrEmpty(key) && _shares.TryGetValue(key, out val))
+			if (_shares.TryGetValue(key, out val))
 				return val;
 
 			return null;
@@ -81,12 +84,13 @@ namespace DSShared
 		/// Gets the value of a specified key as a <c>string</c>.
 		/// </summary>
 		/// <param name="key"></param>
-		/// <returns>the value associated with the key; <c>null</c> if key is
-		/// invalid</returns>
+		/// <returns>the value associated with the key; <c>null</c> if key
+		/// doesn't exist</returns>
+		/// <remarks>Ensure <paramref name="key"/> is not <c>null</c> or blank.</remarks>
 		public static string GetShareString(string key)
 		{
 			object val;
-			if (!String.IsNullOrEmpty(key) && _shares.TryGetValue(key, out val))
+			if (_shares.TryGetValue(key, out val))
 				return val as String;
 
 			return null;
