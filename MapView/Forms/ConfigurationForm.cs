@@ -202,8 +202,8 @@ namespace MapView
 
 
 					// check for a valid CursorSprite
-					string CursorPck = SharedSpace.CursorFilePrefix + GlobalsXC.PckExt;
-					string CursorTab = SharedSpace.CursorFilePrefix + GlobalsXC.TabExt;
+					string CursorPck = PathInfo.CursorFile + GlobalsXC.PckExt;
+					string CursorTab = PathInfo.CursorFile + GlobalsXC.TabExt;
 
 					if (   (!File.Exists(Path.Combine(Ufo,  CursorPck)) || !File.Exists(Path.Combine(Ufo,  CursorTab)))
 						&& (!File.Exists(Path.Combine(Tftd, CursorPck)) || !File.Exists(Path.Combine(Tftd, CursorTab))))

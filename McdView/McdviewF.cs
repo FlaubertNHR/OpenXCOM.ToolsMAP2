@@ -439,13 +439,13 @@ namespace McdView
 			{
 				if (pathufo != PathInfo.NotConfigured)
 				{
-					pfe = Path.Combine(pathufo, SharedSpace.ScanGfile);
+					pfe = Path.Combine(pathufo, PathInfo.ScanGfile);
 					if (File.Exists(pfe))
 						SpritesetManager.LoadScanGufo(pathufo);	// -> SpritesetManager.ScanGufo
 					else
 						files.Add("ufo - " + pfe);
 
-					pfe = Path.Combine(pathufo, SharedSpace.LoftfileUfo);
+					pfe = Path.Combine(pathufo, PathInfo.LoftfileUfo);
 					if (File.Exists(pfe))
 						SpritesetManager.LoadLoFTufo(pathufo);	// -> SpritesetManager.LoFTufo
 					else
@@ -456,21 +456,21 @@ namespace McdView
 			}
 			else
 			{
-				files.Add("ufo - " + SharedSpace.ScanGfile);
-				files.Add("ufo - " + SharedSpace.LoftfileUfo);
+				files.Add("ufo - " + PathInfo.ScanGfile);
+				files.Add("ufo - " + PathInfo.LoftfileUfo);
 			}
 
 			if (pathtftd != null)
 			{
 				if (pathtftd != PathInfo.NotConfigured)
 				{
-					pfe = Path.Combine(pathtftd, SharedSpace.ScanGfile);
+					pfe = Path.Combine(pathtftd, PathInfo.ScanGfile);
 					if (File.Exists(pfe))
 						SpritesetManager.LoadScanGtftd(pathtftd);	// -> SpritesetManager.ScanGtftd
 					else
 						files.Add("tftd - " + pfe);
 
-					pfe = Path.Combine(pathtftd, SharedSpace.LoftfileTftd);
+					pfe = Path.Combine(pathtftd, PathInfo.LoftfileTftd);
 					if (File.Exists(pfe))
 						SpritesetManager.LoadLoFTtftd(pathtftd);	// -> SpritesetManager.LoFTtftd
 					else
@@ -481,8 +481,8 @@ namespace McdView
 			}
 			else
 			{
-				files.Add("tftd - " + SharedSpace.ScanGfile);
-				files.Add("tftd - " + SharedSpace.LoftfileTftd);
+				files.Add("tftd - " + PathInfo.ScanGfile);
+				files.Add("tftd - " + PathInfo.LoftfileTftd);
 			}
 
 			if (files.Count != 0)

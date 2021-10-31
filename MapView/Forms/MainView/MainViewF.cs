@@ -491,7 +491,7 @@ namespace MapView
 							if (val == PathInfo.NotConfigured)
 								val = null;
 							else
-								piScanGufo = new PathInfo(Path.Combine(val, SharedSpace.ScanGfile));
+								piScanGufo = new PathInfo(Path.Combine(val, PathInfo.ScanGfile));
 
 							SharedSpace.SetShare(key, val);
 							break;
@@ -502,7 +502,7 @@ namespace MapView
 							if (val == PathInfo.NotConfigured)
 								val = null;
 							else
-								piScanGtftd = new PathInfo(Path.Combine(val, SharedSpace.ScanGfile));
+								piScanGtftd = new PathInfo(Path.Combine(val, PathInfo.ScanGfile));
 
 							SharedSpace.SetShare(key, val);
 							break;
@@ -521,7 +521,7 @@ namespace MapView
 			{
 				SpritesetManager.SetCursor(SpritesetManager.CURSOR_UFO); // for spriteset Label
 				CuboidSprite.Ufoset = SpritesetManager.CreateSpriteset(
-																	SharedSpace.CursorFilePrefix,
+																	PathInfo.CursorFile,
 																	dir,
 																	Palette.UfoBattle);
 				SpritesetManager.SetCursor(SpritesetManager.CURSOR_non);
@@ -544,7 +544,7 @@ namespace MapView
 			{
 				SpritesetManager.SetCursor(SpritesetManager.CURSOR_TFTD); // for spriteset Label
 				CuboidSprite.Tftdset = SpritesetManager.CreateSpriteset(
-																	SharedSpace.CursorFilePrefix,
+																	PathInfo.CursorFile,
 																	dir,
 																	Palette.TftdBattle);
 				SpritesetManager.SetCursor(SpritesetManager.CURSOR_non);
@@ -605,7 +605,7 @@ namespace MapView
 			{
 				//Logfile.Log("Targeter not instantiated: quit MapView.");
 
-				string copyable = Path.Combine("[basepath]", SharedSpace.CursorFilePrefix);
+				string copyable = Path.Combine("[basepath]", PathInfo.CursorFile);
 					   copyable = copyable + GlobalsXC.PckExt + Environment.NewLine
 								+ copyable + GlobalsXC.TabExt;
 

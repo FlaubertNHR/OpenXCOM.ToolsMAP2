@@ -28,6 +28,11 @@ namespace DSShared
 		public const string NotConfigured  = "notconfigured";		// used in MapResources.yml in case UFO or TFTD installation is not configured.
 
 		public const string DIR_Settings   = "settings";
+
+		public static readonly string CursorFile   = "UFOGRAPH" + Path.DirectorySeparatorChar + "CURSOR"; // the cursor is determined in MainViewF..cTor
+		public static readonly string ScanGfile    = "GEODATA"  + Path.DirectorySeparatorChar + "SCANG.DAT";
+		public static readonly string LoftfileUfo  = "GEODATA"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
+		public static readonly string LoftfileTftd = "TERRAIN"  + Path.DirectorySeparatorChar + "LOFTEMPS.DAT";
 		#endregion Fields (static)
 
 

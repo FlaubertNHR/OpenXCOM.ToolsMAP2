@@ -274,7 +274,7 @@ namespace XCom
 		{
 			if (Directory.Exists(dirUfo))
 			{
-				string pfe = Path.Combine(dirUfo, SharedSpace.ScanGfile);
+				string pfe = Path.Combine(dirUfo, PathInfo.ScanGfile);
 
 				byte[] bytes = FileService.ReadFile(pfe);
 				if (bytes != null)
@@ -309,7 +309,7 @@ namespace XCom
 		{
 			if (Directory.Exists(dirTftd))
 			{
-				string pfe = Path.Combine(dirTftd, SharedSpace.ScanGfile);
+				string pfe = Path.Combine(dirTftd, PathInfo.ScanGfile);
 
 				byte[] bytes = FileService.ReadFile(pfe);
 				if (bytes != null)
@@ -345,7 +345,7 @@ namespace XCom
 		{
 			if (Directory.Exists(dirUfo))
 			{
-				string pfe = Path.Combine(dirUfo, SharedSpace.LoftfileUfo);
+				string pfe = Path.Combine(dirUfo, PathInfo.LoftfileUfo);
 
 				byte[] bytes = FileService.ReadFile(pfe);
 				if (bytes != null)
@@ -391,7 +391,7 @@ namespace XCom
 		{
 			if (Directory.Exists(dirTftd))
 			{
-				string pfe = Path.Combine(dirTftd, SharedSpace.LoftfileTftd);
+				string pfe = Path.Combine(dirTftd, PathInfo.LoftfileTftd);
 
 				byte[] bytes = FileService.ReadFile(pfe);
 				if (bytes != null)
