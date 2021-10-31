@@ -2114,7 +2114,7 @@ namespace MapView
 		/// Selects a selected-tile toner color. It does this by changing the
 		/// option and firing
 		/// <c><see cref="MainViewOptionables.OnOptionChanged()">MainViewOptionables.OnOptionChanged()</see></c>
-		/// which calls <c><see cref="SetTileToner()">SetTileToner()</see></c>
+		/// which calls <c><see cref="SelectToner()">SelectToner()</see></c>
 		/// which sets an alternate set of sprites with the toner-palette and
 		/// also checks the it in MainView's Toner menu. so bite
 		/// </summary>
