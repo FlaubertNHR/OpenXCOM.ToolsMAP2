@@ -15,8 +15,8 @@ namespace MapView
 			Form
 	{
 		#region Fields
-		private PathInfo _piResources = SharedSpace.GetShareObject(PathInfo.ShareResources) as PathInfo;
-		private PathInfo _piTilesets  = SharedSpace.GetShareObject(PathInfo.ShareTilesets)  as PathInfo;
+		private PathInfo _piResources = SharedSpace.GetShareObject(SharedSpace.MapResourcesFile) as PathInfo;
+		private PathInfo _piTilesets  = SharedSpace.GetShareObject(SharedSpace.MapTilesetsFile)  as PathInfo;
 		#endregion Fields
 
 

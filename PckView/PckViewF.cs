@@ -341,11 +341,11 @@ namespace PckView
 
 			string dirSetT = Path.Combine(dirAppL, PathInfo.DIR_Settings);	// path to the /settings dir
 			var piConfig = new PathInfo(dirSetT, PathInfo.Pck_Config);		// define a PathInfo for 'PckConfig.yml'
-			SharedSpace.SetShare(PathInfo.SharePckConfig, piConfig);		// set a share for 'PckConfig.yml'
+			SharedSpace.SetShare(SharedSpace.PckConfigFile, piConfig);		// set a share for 'PckConfig.yml'
 
 			// That's 3 variables just for 'PckConfig.yml' ...
 			// - PathInfo.Pck_Config
-			// - PathInfo.SharePckConfig
+			// - SharedSpace.PckConfigFile
 			// - piConfig
 
 			bool userconfig_spriteshade = true;
@@ -778,7 +778,7 @@ namespace PckView
 		/// </summary>
 		private void SaveConfiguration()
 		{
-			string pfe = ((PathInfo)SharedSpace.GetShareObject(PathInfo.SharePckConfig)).Fullpath; // gfl
+			string pfe = ((PathInfo)SharedSpace.GetShareObject(SharedSpace.PckConfigFile)).Fullpath; // gfl
 
 			string pfeT;
 			if (File.Exists(pfe))

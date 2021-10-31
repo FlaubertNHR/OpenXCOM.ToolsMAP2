@@ -282,10 +282,10 @@ namespace MapView
 			var piTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);		// define a PathInfo for MapTilesets.yml
 			var piViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);		// define a PathInfo for MapViewers.yml
 
-			SharedSpace.SetShare(PathInfo.ShareOptions,   piOptions);			// set share for MapOptions.cfg
-			SharedSpace.SetShare(PathInfo.ShareResources, piResources);			// set share for MapResources.yml
-			SharedSpace.SetShare(PathInfo.ShareTilesets,  piTilesets);			// set share for MapTilesets.yml
-			SharedSpace.SetShare(PathInfo.ShareViewers,   piViewers);			// set share for MapViewers.yml
+			SharedSpace.SetShare(SharedSpace.MapOptionsFile,   piOptions);		// set share for MapOptions.cfg
+			SharedSpace.SetShare(SharedSpace.MapResourcesFile, piResources);	// set share for MapResources.yml
+			SharedSpace.SetShare(SharedSpace.MapTilesetsFile,  piTilesets);		// set share for MapTilesets.yml
+			SharedSpace.SetShare(SharedSpace.MapViewersFile,   piViewers);		// set share for MapViewers.yml
 
 			//Logfile.Log("PathInfo cached.");
 
@@ -1019,7 +1019,7 @@ namespace MapView
 
 			RegistryInfo.UpdateRegistry(this); // store MainView's current location and size
 
-			OptionsManager.SaveOptions();	// save MV_OptionsFile // TODO: do SaveOptions() every time an Options form closes.
+			OptionsManager.SaveOptions();	// save MapOptionsFile // TODO: do SaveOptions() every time an Options form closes.
 			OptionsManager.CloseOptions();	// close any open Options windows
 
 			if ( ScanG   != null)  ScanG  .Close(); // close ScanG

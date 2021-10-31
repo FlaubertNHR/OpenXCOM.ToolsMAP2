@@ -10,14 +10,6 @@ namespace DSShared
 	public sealed class PathInfo
 	{
 		#region Fields (static)
-		// path-keys in SharedSpace. TODO: They should be in SharedSpace not PathInfo.
-		public const string ShareOptions   = "MV_OptionsFile";		// -> MapOptions.cfg
-		public const string SharePckConfig = "PckConfigFile";		// -> PckConfig.yml
-
-		public const string ShareResources = "MV_ResourcesFile";	// -> MapResources.yml
-		public const string ShareTilesets  = "MV_TilesetsFile";		// -> MapTilesets.yml
-		public const string ShareViewers   = "MV_ViewersFile";		// -> MapViewers.yml
-
 		public const string MAN_Viewers    = "MapView._Embedded.MapViewers.yml";
 		public const string MAN_Tilesets   = "MapView._Embedded.MapTilesets.yml";
 

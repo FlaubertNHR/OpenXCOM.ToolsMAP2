@@ -111,7 +111,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void SaveOptions()
 		{
-			string pfe = ((PathInfo)SharedSpace.GetShareObject(PathInfo.ShareOptions)).Fullpath; // gfl
+			string pfe = ((PathInfo)SharedSpace.GetShareObject(SharedSpace.MapOptionsFile)).Fullpath; // gfl
 
 			string pfeT;
 			if (File.Exists(pfe))

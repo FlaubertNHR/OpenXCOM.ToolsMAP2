@@ -8,6 +8,13 @@ namespace DSShared
 	public static class SharedSpace
 	{
 		#region Fields (static)
+		public const string MapOptionsFile = "MapOptionsFile";		// -> MapOptions.cfg
+		public const string PckConfigFile  = "PckConfigFile";		// -> PckConfig.yml
+
+		public const string MapResourcesFile = "MapResourcesFile";	// -> MapResources.yml
+		public const string MapTilesetsFile  = "MapTilesetsFile";	// -> MapTilesets.yml
+		public const string MapViewersFile   = "MapViewersFile";	// -> MapViewers.yml
+
 		public const string ApplicationDirectory  = "ApplicationDirectory";
 		public const string SettingsDirectory     = "SettingsDirectory";
 		public const string ResourceDirectoryUfo  = "ResourceDirectoryUfo";

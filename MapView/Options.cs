@@ -132,7 +132,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Writes this Options to 'ShareOptions' = "MV_OptionsFile" -> MapOptions.cfg
+		/// Writes this Options to 'MapOptionsFile' = "MapOptionsFile" -> MapOptions.cfg
 		/// And you thought indirection was a bad thing.
 		/// </summary>
 		/// <param name="head"></param>
