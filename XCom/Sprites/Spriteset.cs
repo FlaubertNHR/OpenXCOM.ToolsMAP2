@@ -319,17 +319,9 @@ namespace XCom
 
 			switch (SpritesetManager.GetCursor())
 			{
-				case SpritesetManager.CURSOR_non:
-					Label = label;
-					break;
-
-				case SpritesetManager.CURSOR_UFO: // label == SharedSpace.CursorFilePrefix
-					Label = "TargeterUfo";
-					break;
-
-				case SpritesetManager.CURSOR_TFTD: // label == SharedSpace.CursorFilePrefix
-					Label = "TargeterTftd";
-					break;
+				case SpritesetManager.CURSOR_non:  Label = label;          break;
+				case SpritesetManager.CURSOR_UFO:  Label = "TargeterUfo";  break;
+				case SpritesetManager.CURSOR_TFTD: Label = "TargeterTftd"; break;
 			}
 
 			Pal = pal;
