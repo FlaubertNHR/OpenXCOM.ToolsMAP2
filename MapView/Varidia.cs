@@ -5,17 +5,17 @@ using System.IO;
 namespace MapView
 {
 	/// <summary>
-	/// Varidia is [still] used to read/write/parse/interpret
+	/// <c>Varidia</c> is [still] used to read/write/parse/interpret
 	/// user-settings/Options.
 	/// </summary>
 	internal static class Varidia
 	{
 		#region Methods (static)
 		/// <summary>
-		/// Read a line from 'DSShared.PathInfo.CFG_Options'.
+		/// Read a line from <c><see cref="DSShared.PathInfo"/>.CFG_Options</c>.
 		/// </summary>
 		/// <param name="tr"></param>
-		/// <returns>KeyvalPair else null</returns>
+		/// <returns><c>KeyvalPair</c> else <c>null</c></returns>
 		internal static KeyvalPair getKeyvalPair(TextReader tr)
 		{
 			string line = null;
@@ -48,7 +48,7 @@ namespace MapView
 
 
 	/// <summary>
-	/// KeyvalPair - helper class for Varidia.
+	/// <c>KeyvalPair</c> - helper class for <c><see cref="Varidia"/></c>.
 	/// </summary>
 	public class KeyvalPair
 	{
