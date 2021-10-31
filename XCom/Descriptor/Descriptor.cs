@@ -103,17 +103,15 @@ namespace XCom
 			Basepath = basepath;
 			Terrains = terrains;
 
-			switch (GroupType = groupType)
+			if ((GroupType = groupType) == GroupType.Tftd)
 			{
-				case GroupType.Ufo:
-					Pal = Palette.UfoBattle;
-					_dirTerr = SharedSpace.ResourceDirectoryUfo;
-					break;
-
-				case GroupType.Tftd:
-					Pal = Palette.TftdBattle;
-					_dirTerr = SharedSpace.ResourceDirectoryTftd;
-					break;
+				Pal = Palette.TftdBattle;
+				_dirTerr = SharedSpace.ResourceDirectoryTftd;
+			}
+			else // GroupType.Ufo <- default
+			{
+				Pal = Palette.UfoBattle;
+				_dirTerr = SharedSpace.ResourceDirectoryUfo;
 			}
 
 			if ((_dirTerr = SharedSpace.GetShareString(_dirTerr)) != null)
