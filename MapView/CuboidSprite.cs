@@ -98,7 +98,7 @@ namespace MapView
 			{
 				Cursorset = Ufoset;
 			}
-			return (Cursorset != null);
+			return Cursorset != null;
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <remarks>The <c>Graphics</c> need to be set near the start of every
-		/// call to <c><see cref="Forms.MainView.MainViewOverlay"/>.OnPaint()</c></remarks>
+		/// call to <c><see cref="Forms.MainView.MainViewOverlay"/>.OnPaint()</c>.</remarks>
 		internal static void SetGraphics(Graphics graphics)
 		{
 			_graphics = graphics;
