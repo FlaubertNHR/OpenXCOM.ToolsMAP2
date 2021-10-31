@@ -78,7 +78,7 @@ namespace MapView
 
 		#region Methods (static)
 		/// <summary>
-		/// Adds parsers for types boolean, int32, and color.
+		/// Adds parsers for types <c>Boolean</c>, <c>Int32</c>, and <c>Color</c>.
 		/// </summary>
 		internal static void InitializeParsers()
 		{
@@ -117,41 +117,42 @@ namespace MapView
 
 		/// <summary>
 		/// Parses out user-defined colors output by "MapOptions.Cfg".
-		/// UD-colors can be one of three formats:
-		/// - "color"
-		/// - (int)r,(int)g,(int)b
-		/// - (int)a,(int)r,(int)g,(int)b
+		/// User-defined colors can be one of three formats.
+		/// <list type="bullet">
+		/// <item><c>(string)[color]</c></item>
+		/// <item><c>(int)r,(int)g,(int)b</c></item>
+		/// <item><c>(int)a,(int)r,(int)g,(int)b</c></item>
+		/// </list>
 		/// </summary>
-		/// <param name="val"></param>
-		/// <returns></returns>
+		/// <param name="val">a <c>string</c> in one of the three accepted
+		/// formats</param>
+		/// <returns>the <c>Color</c> as an <c>object</c></returns>
 		private static object ParseColor(string val)
 		{
 			string[] vals = val.Split(',');
-
-			if (vals.Length == 1)
+			switch (vals.Length)
 			{
-				for (int i = 0; i != KnownColors.Length; ++i)
+				case 1:
+					for (int i = 0; i != KnownColors.Length; ++i)
+					{
+						if (KnownColors[i] == val)
+							return Color.FromName(val);
+					}
+					break;
+
+				case 3:
+					vals = new [] { "255", vals[0], vals[1], vals[2] };
+					goto case 4;
+
+				case 4:
 				{
-					if (KnownColors[i] == val)
-						return Color.FromName(val);
+					int a = 0, r = 0, g = 0, b = 0;
+					if (TryColorArgb(vals, ref a, ref r, ref g, ref b))
+						return Color.FromArgb(a,r,g,b);
+					break;
 				}
 			}
-			else if (vals.Length == 3 || vals.Length == 4)
-			{
-				if (vals.Length == 3)
-				{
-					var argb = new string[4] { "255", "0","0","0" };
-					for (int i = 1; i != 4; ++i)
-						argb[i] = vals[i - 1];
-
-					vals = argb;
-				}
-
-				int a = 0, r = 0, g = 0, b = 0;
-				if (TryColorValues(vals, ref a, ref r, ref g, ref b))
-					return Color.FromArgb(a,r,g,b);
-			}
-			return null;
+			return null; // this better never happen.
 		}
 
 		/// <summary>
@@ -163,7 +164,7 @@ namespace MapView
 		/// <param name="g"></param>
 		/// <param name="b"></param>
 		/// <returns></returns>
-		private static bool TryColorValues(
+		private static bool TryColorArgb(
 				IReadOnlyList<string> vals,
 				ref int a,
 				ref int r,
@@ -171,34 +172,21 @@ namespace MapView
 				ref int b) // idiots ought to have put alpha at last pos. But thanks anyway.
 		{
 			int result;
-			if (Int32.TryParse(vals[0], out result)
-				&& result > -1 && result < 256)
+			for (int i = 0; i != 4; ++i)
 			{
-				a = result;
+				if (Int32.TryParse(vals[i], out result)
+					&& result > -1 && result <= Byte.MaxValue)
+				{
+					switch (i)
+					{
+						case 0: a = result; break;
+						case 1: r = result; break;
+						case 2: g = result; break;
+						case 3: b = result; break;
+					}
+				}
+				else return false;
 			}
-			else return false;
-
-			if (Int32.TryParse(vals[1], out result)
-				&& result > -1 && result < 256)
-			{
-				r = result;
-			}
-			else return false;
-
-			if (Int32.TryParse(vals[2], out result)
-				&& result > -1 && result < 256)
-			{
-				g = result;
-			}
-			else return false;
-
-			if (Int32.TryParse(vals[3], out result)
-				&& result > -1 && result < 256)
-			{
-				b = result;
-			}
-			else return false;
-
 			return true;
 		}
 		#endregion Methods (static)
