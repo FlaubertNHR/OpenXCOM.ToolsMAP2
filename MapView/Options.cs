@@ -42,11 +42,12 @@ namespace MapView
 		#endregion Fields
 
 
-		#region Properties
+		#region Indexers
 		/// <summary>
 		/// Gets an <c><see cref="Option"/></c> keyed by a specified key.
 		/// </summary>
-		/// <remarks>Ensure that <paramref name="key"/> is non-null before call.</remarks>
+		/// <remarks>Ensure that <paramref name="key"/> is not <c>null</c>
+		/// before call.</remarks>
 		internal Option this[string key]
 		{
 			get
@@ -57,12 +58,12 @@ namespace MapView
 				return null;
 			}
 		}
-		#endregion Properties
+		#endregion Indexers
 
 
 		#region Methods (static)
 		/// <summary>
-		/// Adds an <c><see cref="ConvertEvent"/></c> for <c>Color</c> to
+		/// Adds a <c><see cref="ConvertEvent"/></c> for <c>Color</c> to
 		/// <c><see cref="_converters"/></c>.
 		/// </summary>
 		internal static void InitializeConverters()
@@ -72,13 +73,15 @@ namespace MapView
 
 		/// <summary>
 		/// Converts an <c>object</c> to a <c>string</c> for output to
-		/// "MapOptions.Cfg".
+		/// "MapOptions.cfg".
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
+		/// <remarks>If <paramref name="o"/> is <c>null</c> this throws when
+		/// trying to write "MapOptions.cfg".</remarks>
 		private static string Convert(object o)
 		{
-			var type = o.GetType();
+			Type type = o.GetType();
 			if (_converters.ContainsKey(type))
 				return _converters[type](o);
 
@@ -87,7 +90,7 @@ namespace MapView
 
 		/// <summary>
 		/// Converts an <c>(object)Color</c> to a <c>string</c> for output to
-		/// "MapOptions.Cfg".
+		/// "MapOptions.cfg".
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>

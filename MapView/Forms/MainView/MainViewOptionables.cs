@@ -921,6 +921,8 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
+		/// <remarks>If <paramref name="val"/> is <c>null</c> this borks badly -
+		/// particularly when loading user-options.</remarks>
 		internal void OnOptionChanged(string key, object val)
 		{
 			switch (key)
