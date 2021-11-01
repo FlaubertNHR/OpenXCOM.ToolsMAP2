@@ -1174,7 +1174,7 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData);
 
-			string key; object val = null;
+			string key = null; object val = null;
 			ToolStripMenuItem it = null;
 			int id = ViewersMenuManager.MI_non;
 
@@ -1231,50 +1231,36 @@ namespace MapView
 				case Keys.F9: // cycle LayerSelectionBorder
 					key = MainViewOptionables.str_LayerSelectionBorder;
 					val = (Optionables.LayerSelectionBorder + 1) % 3;
-					Options[key].Value = val;
-					Optionables.OnOptionChanged(key,val);
 					break;
 
 				case Keys.F9 | Keys.Control: // toggle OneTileDraw
 					key = MainViewOptionables.str_OneTileDraw;
 					val = !Optionables.OneTileDraw;
-					Options[key].Value = val;
-					Optionables.OnOptionChanged(key,val);
 					break;
 
 				case Keys.F10:				// cycle tiletoner option forward
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(+1);
-					Options[key].Value = val;
-					Optionables.OnOptionChanged(key,val);
 					break;
 
-				case Keys.Shift | Keys.F10:	// cycle tiletoner option reverse
+				case Keys.F10 | Keys.Shift:	// cycle tiletoner option reverse
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(-1);
-					Options[key].Value = val;
-					Optionables.OnOptionChanged(key,val);
 					break;
 
 				case Keys.F2:
 					key = MainViewOptionables.str_AnimateSprites;
-					val = !MainViewF.Optionables.AnimateSprites;
-					Options[key].Value = val;
-					Optionables.OnSpriteStateChanged(key,val);
+					val = !Optionables.AnimateSprites;
 					break;
 
 				case Keys.F3:
 					key = MainViewOptionables.str_OpenDoors;
-					val = !MainViewF.Optionables.OpenDoors;
-					Options[key].Value = val;
-					Optionables.OnSpriteStateChanged(key,val);
+					val = !Optionables.OpenDoors;
 					break;
 
 				case Keys.F4:
 					key = MainViewOptionables.str_GridVisible;
-					val = !MainViewF.Optionables.GridVisible;
-					Options[key].Value = val;
-					Optionables.OnOptionChanged(key,val);
+					val = !Optionables.GridVisible;
 					break;
 
 				// toggle TopView tilepart visibilities ->
@@ -1318,9 +1304,10 @@ namespace MapView
 					break;
 			}
 
-			if (val != null)
+			if (key != null)
 			{
 				e.SuppressKeyPress = true;
+				Options[key].SetValue(key,val);
 
 				if (_foptions != null && _foptions.Visible)
 					(_foptions as OptionsForm).propertyGrid.Refresh();
@@ -2131,10 +2118,10 @@ namespace MapView
 				else if (it == miGray)  val = MainViewOptionables.TONER_GRAY;
 				else if (it == miRed)   val = MainViewOptionables.TONER_RED;
 				else if (it == miGreen) val = MainViewOptionables.TONER_GREEN;
-				else                    val = MainViewOptionables.TONER_BLUE; // (it == miBlue)
+				else                    val = MainViewOptionables.TONER_BLUE; // it == miBlue
 
-				Options[MainViewOptionables.str_SelectedTileToner].Value = val;
-				Optionables.OnOptionChanged(MainViewOptionables.str_SelectedTileToner, val);
+				const string key = MainViewOptionables.str_SelectedTileToner;
+				Options[key].SetValue(key,val);
 
 				if (_foptions != null && _foptions.Visible)
 					(_foptions as OptionsForm).propertyGrid.Refresh();
