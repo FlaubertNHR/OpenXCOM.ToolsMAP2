@@ -121,7 +121,7 @@ namespace XCom
 													Assembly.GetExecutingAssembly()
 															.GetManifestResourceStream(Embedded + ufobattle + PalExt));
 				}
-				return _palettes[ufobattle] as Palette;
+				return _palettes[ufobattle];
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace XCom
 					_palettes[ufogeo] = new Palette(
 												Assembly.GetExecutingAssembly()
 														.GetManifestResourceStream(Embedded + ufogeo + PalExt));
-				return _palettes[ufogeo] as Palette;
+				return _palettes[ufogeo];
 			}
 		}
 
@@ -153,7 +153,7 @@ namespace XCom
 					_palettes[ufograph] = new Palette(
 													Assembly.GetExecutingAssembly()
 															.GetManifestResourceStream(Embedded + ufograph + PalExt));
-				return _palettes[ufograph] as Palette;
+				return _palettes[ufograph];
 			}
 		}
 
@@ -169,7 +169,7 @@ namespace XCom
 					_palettes[uforesearch] = new Palette(
 													Assembly.GetExecutingAssembly()
 															.GetManifestResourceStream(Embedded + uforesearch + PalExt));
-				return _palettes[uforesearch] as Palette;
+				return _palettes[uforesearch];
 			}
 		}
 
@@ -187,7 +187,7 @@ namespace XCom
 													Assembly.GetExecutingAssembly()
 															.GetManifestResourceStream(Embedded + tftdbattle + PalExt));
 				}
-				return _palettes[tftdbattle] as Palette;
+				return _palettes[tftdbattle];
 			}
 		}
 
@@ -203,7 +203,7 @@ namespace XCom
 					_palettes[tftdgeo] = new Palette(
 												Assembly.GetExecutingAssembly()
 														.GetManifestResourceStream(Embedded + tftdgeo + PalExt));
-				return _palettes[tftdgeo] as Palette;
+				return _palettes[tftdgeo];
 			}
 		}
 
@@ -219,7 +219,7 @@ namespace XCom
 					_palettes[tftdgraph] = new Palette(
 													Assembly.GetExecutingAssembly()
 															.GetManifestResourceStream(Embedded + tftdgraph + PalExt));
-				return _palettes[tftdgraph] as Palette;
+				return _palettes[tftdgraph];
 			}
 		}
 
@@ -235,7 +235,7 @@ namespace XCom
 					_palettes[tftdresearch] = new Palette(
 														Assembly.GetExecutingAssembly()
 																.GetManifestResourceStream(Embedded + tftdresearch + PalExt));
-				return _palettes[tftdresearch] as Palette;
+				return _palettes[tftdresearch];
 			}
 		}
 
@@ -250,7 +250,7 @@ namespace XCom
 				if (!_palettes.ContainsKey(binary))
 					CreateBinaryTable(_palettes[binary] = new Palette(binary));
 
-				return _palettes[binary] as Palette;
+				return _palettes[binary];
 			}
 		}
 
