@@ -939,8 +939,6 @@ namespace MapView
 				_overlay.Focus();
 			else
 				FirstActivated = true;
-
-//			base.OnActivated(e);
 		}
 
 		/// <summary>
@@ -951,8 +949,6 @@ namespace MapView
 		{
 			_overlay.ReleaseTargeter();
 			Invalidate();
-
-//			base.OnDeactivate(e);
 		}
 
 
