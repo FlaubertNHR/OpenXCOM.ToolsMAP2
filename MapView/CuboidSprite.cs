@@ -84,7 +84,7 @@ namespace MapView
 		/// <remarks>Used in
 		/// <c><see cref="MainViewF()">MainViewF()</see></c> for cases (1)
 		/// <c>PreferTftdTargeter</c> has not been registered in
-		/// "settings/MapOptions.cfg" yet or (2) user changes the
+		/// 'settings/MapOptions.cfg' yet or (2) user changes the
 		/// <c>PreferTftdTargeter</c> option or (3) the user's
 		/// <c>UFOGRAPH/CURSOR.PCK+TAB</c> disappeared for whatever reason.</remarks>
 		internal static bool SetCursor()
