@@ -325,6 +325,8 @@ The path specified can be used to start an application or to open a specified"
 		/// <param name="val">its color</param>
 		private void OnSpecialPropertyColorChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TileViewOptionables.OnSpecialPropertyColorChanged()");
+
 			var color = (Color)val;
 
 			var special = (SpecialType)Enum.Parse(typeof(SpecialType), key);
@@ -361,6 +363,7 @@ The path specified can be used to start an application or to open a specified"
 		/// <param name="val"></param>
 		private void OnExternalProcessChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TileViewOptionables.OnExternalProcessChanged()");
 			ExternalProcess = (String)val;
 		}
 
@@ -372,6 +375,7 @@ The path specified can be used to start an application or to open a specified"
 		/// <param name="val"></param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TileViewOptionables.OnDescriptionHeightChanged()");
 			DescriptionHeight = (int)val;
 		}
 		#endregion Events

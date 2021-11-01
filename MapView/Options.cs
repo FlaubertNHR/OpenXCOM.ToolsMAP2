@@ -29,7 +29,7 @@ namespace MapView
 		#region Fields (static)
 		/// <summary>
 		/// These converters are for taking a property as input and outputting
-		/// it as a string to "MapOptions.Cfg".
+		/// it as a string to 'MapOptions.cfg'.
 		/// </summary>
 		private static Dictionary<Type, ConvertEvent> _converters =
 				   new Dictionary<Type, ConvertEvent>();
@@ -68,29 +68,32 @@ namespace MapView
 		/// </summary>
 		internal static void InitializeConverters()
 		{
+			//DSShared.Logfile.Log("Options.InitializeConverters()");
 			_converters[typeof(Color)] = new ConvertEvent(GetColorString);
 		}
 
 		/// <summary>
 		/// Converts an <c>object</c> to a <c>string</c> for output to
-		/// "MapOptions.cfg".
+		/// 'MapOptions.cfg'.
 		/// </summary>
-		/// <param name="o"></param>
+		/// <param name="val">an <c><see cref="Option"/></c> as an <c>object</c></param>
 		/// <returns></returns>
-		/// <remarks>If <paramref name="o"/> is <c>null</c> this throws when
-		/// trying to write "MapOptions.cfg".</remarks>
-		private static string Convert(object o)
+		/// <remarks>If <paramref name="val"/> is <c>null</c> this throws when
+		/// trying to write 'MapOptions.cfg'.</remarks>
+		private static string Convert(object val)
 		{
-			Type type = o.GetType();
-			if (_converters.ContainsKey(type))
-				return _converters[type](o);
+			//DSShared.Logfile.Log("Options.Convert()");
 
-			return o.ToString();
+			Type type = val.GetType();
+			if (_converters.ContainsKey(type))
+				return _converters[type](val);
+
+			return val.ToString();
 		}
 
 		/// <summary>
 		/// Converts an <c>(object)Color</c> to a <c>string</c> for output to
-		/// "MapOptions.cfg".
+		/// 'MapOptions.cfg'.
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
@@ -121,7 +124,7 @@ namespace MapView
 				object @default,
 				OptionChangedEvent changer)
 		{
-			//DSShared.Logfile.Log("Options.CreateOptionDefault()");
+			//DSShared.Logfile.Log("Options.CreateOptionDefault() key= " + key);
 			//DSShared.Logfile.Log(". key= " + key);
 			//DSShared.Logfile.Log(". default= " + @default);
 			//DSShared.Logfile.Log(". changer= " + changer);
@@ -142,12 +145,27 @@ namespace MapView
 		/// <param name="tw"></param>
 		internal void WriteOptions(string head, TextWriter tw)
 		{
+			//DSShared.Logfile.Log("Options.WriteOptions()");
+
 			tw.WriteLine(head);
 			tw.WriteLine("{");
 
+			object val; //string valstr;
 			foreach (string key in _options.Keys)
-				tw.WriteLine("\t" + key + ":" + Convert(this[key].Value));
+			{
+//				if ((val = this[key].Value) == null)
+//				{
+//					OptionsManager.error(key, OptionsManager.ERROR_WRITE);
+//					valstr = String.Empty;
+//				}
+//				else
+//					valstr = Convert(val);
+//
+//				tw.WriteLine("\t" + key + ":" + valstr);
 
+				val = this[key].Value;
+				tw.WriteLine("\t" + key + ":" + Convert(val));
+			}
 			tw.WriteLine("}");
 		}
 		#endregion Methods

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using DSShared;
 
 
-namespace MapView.Forms.MainView
+namespace MapView
 {
 	internal static class OptionsManager
 	{
@@ -47,10 +47,11 @@ namespace MapView.Forms.MainView
 		/// <param name="val"><c><see cref="Options"/></c></param>
 		/// <remarks>Is used by <c><see cref="MainViewF()"/></c> to assign
 		/// MainView's options-type and by
-		/// <c><see cref="ObserverManager"/>.LoadDefaultOptions()</c> to assign
-		/// TileView's, TopView's, and RouteView's options-types.</remarks>
+		/// <c><see cref="MapView.Forms.MainView.ObserverManager.CreateObservers()">ObserverManager.CreateObservers()</see></c>
+		/// to assign TileView's, TopView's, and RouteView's options-types.</remarks>
 		internal static void SetOptionsSection(string key, Options val)
 		{
+			//Logfile.Log("OptionsManager.SetOptionsSection() key= " + key);
 			_sections[key] = val;
 		}
 
@@ -86,11 +87,14 @@ namespace MapView.Forms.MainView
 		/// <param name="options"></param>
 		private static void ReadOptions(TextReader tr, Options options)
 		{
+			//Logfile.Log("OptionsManager.ReadOptions()");
 			string key;
 
 			KeyvalPair keyval;
 			while ((keyval = Varidia.getKeyvalPair(tr)) != null)
 			{
+				//Logfile.Log(". " + keyval.Key + ":" + keyval.Value);
+
 				switch (keyval.Key)
 				{
 					case "{": break;  // starting out
@@ -111,6 +115,8 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal static void SaveOptions()
 		{
+			//Logfile.Log("OptionsManager.SaveOptions()");
+
 			string pfe = ((PathInfo)SharedSpace.GetShareObject(SharedSpace.MapOptionsFile)).Fullpath; // gfl
 
 			string pfeT;
@@ -143,6 +149,43 @@ namespace MapView.Forms.MainView
 			foreach (var view in Viewers)
 				view.Close();
 		}
+
+
+/*		internal const int ERROR_READ  = 0;
+		internal const int ERROR_WRITE = 1;
+		internal const int ERROR_SET   = 2;
+
+		/// <summary>
+		/// Displays an option-error.
+		/// </summary>
+		/// <param name="key">the key of the <c><see cref="Option"/></c> that
+		/// failed</param>
+//		/// <param name="write"><c>true</c> if loading 'MapOptions.cfg' or user
+//		/// is changing an <c>Option</c></param>
+		/// <param name="et">the error type
+		/// <list type="bullet">
+		/// <item><c><see cref="ERROR_READ"/></c></item>
+		/// <item><c><see cref="ERROR_WRITE"/></c></item>
+		/// <item><c><see cref="ERROR_SET"/></c></item>
+		/// </list></param>
+		internal static void error(string key, int et)
+		{
+			string head;
+			switch (et)
+			{
+				case ERROR_READ:  head = "Option failed to load.";                            break;
+				case ERROR_WRITE: head = "Option failed to write to " + PathInfo.CFG_Options; break;
+				default:          head = "Option failed.";                                    break; // case ERROR_SET
+			}
+
+			using (var ib = new Infobox("Error",
+										head,
+										key,
+										InfoboxType.Error))
+			{
+				ib.ShowDialog(MainViewF.that);
+			}
+		} */
 		#endregion Methods (static)
 	}
 }

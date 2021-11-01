@@ -596,6 +596,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("RouteViewOptionables.OnOptionChanged()");
+
 			switch (key)
 			{
 				case str_GridLineColor:     GridLineColor     = (Color)val; ChangePenColor(key, val); break;
@@ -637,6 +639,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private void ChangeBruColor(string key, object val)
 		{
+			//DSShared.Logfile.Log("RouteViewOptionables.ChangeBruColor()");
+
 			var color = (Color)val;
 
 			switch (key)
@@ -681,6 +685,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private void ChangeBruOpaci(object val)
 		{
+			//DSShared.Logfile.Log("RouteViewOptionables.ChangeBruOpaci()");
+
 			Color color = Color.FromArgb((int)val, NodeColor);
 			RouteControl.RouteBrushes[str_NodeColor].Color = color;
 
@@ -700,6 +706,7 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("RouteViewOptionables.OnDescriptionHeightChanged()");
 			DescriptionHeight = (int)val;
 		}
 		#endregion Methods
@@ -713,6 +720,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenColor(string key, object val)
 		{
+			//DSShared.Logfile.Log("RouteViewOptionables.ChangePenColor()");
+
 			RouteControl.RoutePens[key].Color = (Color)val;
 
 			switch (key)
@@ -734,6 +743,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenWidth(string key, object val)
 		{
+			//DSShared.Logfile.Log("RouteViewOptionables.ChangePenWidth()");
+
 			RouteControl.RoutePens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)

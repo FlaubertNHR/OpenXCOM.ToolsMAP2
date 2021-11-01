@@ -293,14 +293,14 @@ namespace MapView.Forms.Observers
 
 
 		#region Options
-		/// <summary>
+/*		/// <summary>
 		/// Loads default options for <c>TileView</c>.
 		/// </summary>
 		internal static void LoadControlDefaultOptions()
 		{
-			//Logfile.Log("TileView.LoadControlDefaultOptions()");
+			Logfile.Log("TileView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
-		}
+		} */
 
 
 		internal static Form _foptions; // is static for no special reason

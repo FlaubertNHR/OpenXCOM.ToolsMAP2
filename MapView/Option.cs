@@ -35,12 +35,14 @@ namespace MapView
 			get { return _value; }
 			set
 			{
+				//DSShared.Logfile.Log("Option.Value.set");
+
 				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
 					Type type = _value.GetType();
-					if (_parsers.ContainsKey(type))
+					if (_parsers.ContainsKey(type)) // '_parsers' won't contain type of String.
 					{
-						string val = value as String;
+						string val = value as String; // will not be null if 'MapOptions.cfg' - can be null if PropertyGrid
 						if (val != null)
 						{
 							_value = _parsers[type](val);
@@ -50,6 +52,30 @@ namespace MapView
 					_value = value;
 				}
 			}
+/*			set
+			{
+				if (value != null)
+				{
+//					if (!_value.Equals(value))
+					if (!value.Equals(_value))
+					{
+//						Type type = _value.GetType();
+						Type type = value.GetType();
+						if (_parsers.ContainsKey(type))
+						{
+							string val = value as String;
+							if (val != null)
+							{
+								_value = _parsers[type](val);
+								return;
+							}
+						}
+						_value = value;
+					}
+				}
+				else
+					OptionsManager.error("n/a", OptionsManager.ERROR_SET);
+			} */
 		}
 
 		/// <summary>
@@ -71,9 +97,70 @@ namespace MapView
 		/// <param name="default"></param>
 		internal Option(object @default)
 		{
+			//DSShared.Logfile.Log("Option.Option() default= " + @default);
 			_value = @default; // TODO: Investigate whether that should run set_Value. uh no ...
 		}
 		#endregion cTor
+
+
+		#region Methods
+		// TODO: FxCop CA1030:UseEventsWhereAppropriate
+		/// <summary>
+		/// Called by
+		/// <c><see cref="OptionsManager">OptionsManager</see>.ReadOptions()</c>
+		/// when MapView loads or by
+		/// <c><see cref="OptionsPropertyGrid"></see>.OnPropertyValueChanged()</c>
+		/// when user changes the value of this <c>Option</c>.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		internal void SetValue(string key, object val)
+		{
+			//DSShared.Logfile.Log("Option.SetValue() key= " + key);
+
+			Value = val; // TODO: error check not null and value-type and -range are valid for this Option
+
+			if (OptionChanged != null)
+				OptionChanged(key, Value);
+
+
+//			if (!Value.Equals(val)) // TODO: Investigate that: (true != true) sic.
+//			{
+//				DSShared.Logfile.Log(". Value != val");
+//
+//				Type type = Value.GetType();
+//				if (_parsers.ContainsKey(type))
+//				{
+//					DSShared.Logfile.Log(". . parsers contains Type");
+//
+//					string str = val as String;
+//					if (str != null)
+//					{
+//						DSShared.Logfile.Log(". . . val is String");
+//
+//						Value = _parsers[type](str);
+//						OptionChanged(key, Value);
+//						return;
+//					}
+//				}
+//
+//				DSShared.Logfile.Log(". no parser OR not string");
+//				Value = val;
+//				OptionChanged(key, Value);
+//			}
+
+
+//			if (val != null) // && val.GetType() == Value.GetType())
+//			{
+//				Value = val; // TODO: error check not null and value-type and -range are valid for this Option
+//
+//				if (OptionChanged != null)
+//					OptionChanged(key, Value);
+//			}
+//			else
+//				OptionsManager.error(key, OptionsManager.ERROR_SET);
+		}
+		#endregion Methods
 
 
 		#region Methods (static)
@@ -82,13 +169,15 @@ namespace MapView
 		/// </summary>
 		internal static void InitializeParsers()
 		{
+			//DSShared.Logfile.Log("Option.InitializeParsers()");
+
 			_parsers[typeof(Boolean)] = ParseBoolean;
 			_parsers[typeof(Int32)]   = ParseInt32;
 			_parsers[typeof(Color)]   = ParseColor;
 		}
 
 		/// <summary>
-		/// Parses out user-defined booleans output by "MapOptions.Cfg".
+		/// Parses out user-defined booleans output by 'MapOptions.cfg'.
 		/// </summary>
 		/// <param name="val"></param>
 		/// <returns></returns>
@@ -102,7 +191,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Parses out user-defined ints output by "MapOptions.Cfg".
+		/// Parses out user-defined ints output by 'MapOptions.cfg'.
 		/// </summary>
 		/// <param name="val"></param>
 		/// <returns></returns>
@@ -116,7 +205,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Parses out user-defined colors output by "MapOptions.Cfg".
+		/// Parses out user-defined colors output by 'MapOptions.cfg'.
 		/// User-defined colors can be one of three formats.
 		/// <list type="bullet">
 		/// <item><c>(string)[color]</c></item>
@@ -190,26 +279,5 @@ namespace MapView
 			return true;
 		}
 		#endregion Methods (static)
-
-
-		#region Methods
-		// TODO: FxCop CA1030:UseEventsWhereAppropriate
-		/// <summary>
-		/// Called by
-		/// <c><see cref="MapView.Forms.MainView.OptionsManager">OptionsManager</see>.ReadOptions()</c>
-		/// when an <c><see cref="OptionsForm"/></c> loads or by
-		/// <c><see cref="OptionsPropertyGrid"></see>.OnPropertyValueChanged()</c>
-		/// when user changes an <c>Option</c>'s value.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
-		internal void SetValue(string key, object val)
-		{
-			Value = val;
-
-			if (OptionChanged != null)
-				OptionChanged(key, Value);
-		}
-		#endregion Methods
 	}
 }

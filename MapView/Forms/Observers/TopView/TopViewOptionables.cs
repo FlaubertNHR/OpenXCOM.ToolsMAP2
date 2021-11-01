@@ -450,6 +450,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnOptionChanged()");
+
 			bool invalidateQuads = false;
 
 			switch (key)
@@ -484,6 +486,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnQuadColorChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnQuadColorChanged()");
+
 			SelectedQuadColor =
 			QuadrantDrawService.Brush.Color = (Color)val;
 
@@ -498,6 +502,7 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnFlagChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnFlagChanged()");
 			EnableRightClickWaitTimer = (bool)val;
 		}
 
@@ -509,6 +514,7 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnDescriptionHeightChanged()");
 			DescriptionHeight = (int)val;
 		}
 		#endregion Events
@@ -522,6 +528,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangeBruColor(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.ChangeBruColor()");
+
 			TopControl.TopBrushes[key].Color = (Color)val;
 
 			if (key == str_ContentColor)
@@ -544,6 +552,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenColor(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.ChangePenColor()");
+
 			TopControl.TopPens[key].Color = (Color)val;
 
 			bool updateColorhelp = false;
@@ -574,6 +584,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenWidth(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.ChangePenWidth()");
+
 			TopControl.TopPens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)

@@ -130,7 +130,6 @@
     <Compile Include="Forms\MainView\MainViewOptionables.cs" />
     <Compile Include="Forms\MainView\ViewersMenuManager.cs" />
     <Compile Include="Forms\MainView\ObserverManager.cs" />
-    <Compile Include="Forms\MainView\OptionsManager.cs" />
     <Compile Include="Forms\MainView\ShowHideManager.cs" />
     <Compile Include="Forms\MainView\ToolstripFactory.cs" />
     <Compile Include="Forms\MainView\MainViewF.cs">
@@ -217,6 +216,7 @@
     </Compile>
     <Compile Include="Forms\TilepartSubstitution.cs" />
     <Compile Include="Option.cs" />
+    <Compile Include="OptionsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

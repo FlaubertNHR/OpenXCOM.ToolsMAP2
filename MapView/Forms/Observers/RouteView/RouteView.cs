@@ -2704,14 +2704,14 @@ namespace MapView.Forms.Observers
 		}
 
 
-		/// <summary>
+/*		/// <summary>
 		/// Loads default options for <c>RouteView</c>.
 		/// </summary>
 		internal static void LoadControlDefaultOptions()
 		{
-			//Logfile.Log("RouteView.LoadControlDefaultOptions()");
+			Logfile.Log("RouteView.LoadControlDefaultOptions()");
 			Optionables.LoadDefaults(Options);
-		}
+		} */
 
 
 		internal static Form _foptions;	// is static so that it will be used by both

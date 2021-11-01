@@ -277,15 +277,15 @@ namespace MapView
 			// https://docs.microsoft.com/en-us/dotnet/api/system.io.fileinfo?view=netframework-4.8
 			// ie. FileInfo.
 
-			var piOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);		// define a PathInfo for MapOptions.cfg
-			var piResources = new PathInfo(dirSetT, PathInfo.YML_Resources);	// define a PathInfo for MapResources.yml
-			var piTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);		// define a PathInfo for MapTilesets.yml
-			var piViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);		// define a PathInfo for MapViewers.yml
+			var piOptions   = new PathInfo(dirSetT, PathInfo.CFG_Options);		// define a PathInfo for 'MapOptions.cfg'
+			var piResources = new PathInfo(dirSetT, PathInfo.YML_Resources);	// define a PathInfo for 'MapResources.yml'
+			var piTilesets  = new PathInfo(dirSetT, PathInfo.YML_Tilesets);		// define a PathInfo for 'MapTilesets.yml'
+			var piViewers   = new PathInfo(dirSetT, PathInfo.YML_Viewers);		// define a PathInfo for 'MapViewers.yml'
 
-			SharedSpace.SetShare(SharedSpace.MapOptionsFile,   piOptions);		// set share for MapOptions.cfg
-			SharedSpace.SetShare(SharedSpace.MapResourcesFile, piResources);	// set share for MapResources.yml
-			SharedSpace.SetShare(SharedSpace.MapTilesetsFile,  piTilesets);		// set share for MapTilesets.yml
-			SharedSpace.SetShare(SharedSpace.MapViewersFile,   piViewers);		// set share for MapViewers.yml
+			SharedSpace.SetShare(SharedSpace.MapOptionsFile,   piOptions);		// set share for 'MapOptions.cfg'
+			SharedSpace.SetShare(SharedSpace.MapResourcesFile, piResources);	// set share for 'MapResources.yml'
+			SharedSpace.SetShare(SharedSpace.MapTilesetsFile,  piTilesets);		// set share for 'MapTilesets.yml'
+			SharedSpace.SetShare(SharedSpace.MapViewersFile,   piViewers);		// set share for 'MapViewers.yml'
 
 			//Logfile.Log("PathInfo cached.");
 
@@ -429,7 +429,8 @@ namespace MapView
 
 			OptionsManager.SetOptionsSection(RegistryInfo.MainView, Options);
 
-			LoadDefaultOptions();								// TODO: check if this should go after the managers load
+			Optionables.LoadDefaults(Options);
+//			LoadDefaultOptions();								// TODO: check if this should go after the managers load
 			//Logfile.Log("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
 																// when OnOptionsClick() runs ....
 
@@ -783,7 +784,7 @@ namespace MapView
 
 
 		#region Options
-		/// <summary>
+/*		/// <summary>
 		/// Loads user-settings into MainView's Options screen.
 		/// </summary>
 		private void LoadDefaultOptions()
@@ -804,7 +805,7 @@ namespace MapView
 //			}
 
 			Optionables.LoadDefaults(Options);
-		}
+		} */
 
 
 		internal static Form _foptions; // is static for no special reason

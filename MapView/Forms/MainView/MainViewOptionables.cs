@@ -846,7 +846,7 @@ namespace MapView.Forms.MainView
 		/// <param name="options"><c><see cref="MainViewF.Options">MainViewF.Options</see></c></param>
 		internal void LoadDefaults(Options options)
 		{
-			//DSShared.Logfile.Log("MainViewOptionables.LoadDefaults()");
+			//Logfile.Log("MainViewOptionables.LoadDefaults()");
 
 			Color color;
 
@@ -925,6 +925,10 @@ namespace MapView.Forms.MainView
 		/// particularly when loading user-options.</remarks>
 		internal void OnOptionChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnOptionChanged() key= " + key);
+
+//			if (val != null)
+//			{
 			switch (key)
 			{
 				case str_GridVisible: // F4 toggle
@@ -1018,6 +1022,9 @@ namespace MapView.Forms.MainView
 			}
 
 			_overlay.Invalidate();
+//			}
+//			else
+//				OptionsManager.error(key, OptionsManager.ERROR_READ);
 		}
 
 		/// <summary>
@@ -1028,6 +1035,8 @@ namespace MapView.Forms.MainView
 		/// <param name="val">the value to set it to</param>
 		internal void OnFlagChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnFlagChanged() key= " + key);
+
 			switch (key)
 			{
 				case str_StartTileView:
@@ -1104,6 +1113,8 @@ namespace MapView.Forms.MainView
 		/// <param name="val">the value to set it to</param>
 		internal void OnSpriteStateChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnSpriteStateChanged() key= " + key);
+
 			switch (key)
 			{
 				case str_AnimateSprites:
@@ -1158,6 +1169,8 @@ namespace MapView.Forms.MainView
 		/// <param name="val">the value to set it to</param>
 		private void OnSpriteShadeChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnSpriteShadeChanged() key= " + key);
+
 			SpriteShade = (int)val;
 
 			Invalidate();
@@ -1174,6 +1187,8 @@ namespace MapView.Forms.MainView
 		/// <param name="val">the value to set it to</param>
 		private void OnBaseCounttypeChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnBaseCounttypeChanged() key= " + key);
+
 			switch (key)
 			{
 				case str_Base1_xy: Base1_xy = (bool)val; break;
@@ -1212,6 +1227,7 @@ namespace MapView.Forms.MainView
 		/// <param name="val"></param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnDescriptionHeightChanged() key= " + key);
 			DescriptionHeight = (int)val;
 		}
 
