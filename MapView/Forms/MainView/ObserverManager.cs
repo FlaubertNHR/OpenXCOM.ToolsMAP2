@@ -70,9 +70,6 @@ namespace MapView.Forms.MainView
 			MapView.Forms.Observers.TileView .Optionables.LoadDefaults(MapView.Forms.Observers.TileView .Options);
 			MapView.Forms.Observers.TopView  .Optionables.LoadDefaults(MapView.Forms.Observers.TopView  .Options);
 			MapView.Forms.Observers.RouteView.Optionables.LoadDefaults(MapView.Forms.Observers.RouteView.Options);
-//			MapView.Forms.Observers.TileView .LoadControlDefaultOptions();
-//			MapView.Forms.Observers.TopView  .LoadControlDefaultOptions();
-//			MapView.Forms.Observers.RouteView.LoadControlDefaultOptions();
 
 			OptionsManager.SetOptionsSection(RegistryInfo.TileView,  Observers.TileView .Options);
 			OptionsManager.SetOptionsSection(RegistryInfo.TopView,   Observers.TopView  .Options);

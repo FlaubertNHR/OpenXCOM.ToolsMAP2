@@ -38,7 +38,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
-		private static ConnectNodes _conType = ConnectNodes.None; // safety - shall be set by LoadControlDefaultOptions()
+		private static ConnectNodes _conType = ConnectNodes.None; // safety - shall be set by Optionables.LoadDefaults()
 
 		private const string Go = "go";
 
@@ -2702,16 +2702,6 @@ namespace MapView.Forms.Observers
 				OnConnectTypeClicked(tsb, EventArgs.Empty); // that handles both RouteViews.
 			}
 		}
-
-
-/*		/// <summary>
-		/// Loads default options for <c>RouteView</c>.
-		/// </summary>
-		internal static void LoadControlDefaultOptions()
-		{
-			Logfile.Log("RouteView.LoadControlDefaultOptions()");
-			Optionables.LoadDefaults(Options);
-		} */
 
 
 		internal static Form _foptions;	// is static so that it will be used by both

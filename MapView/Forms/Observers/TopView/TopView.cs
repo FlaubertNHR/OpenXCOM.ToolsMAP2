@@ -400,16 +400,6 @@ namespace MapView.Forms.Observers
 
 
 		#region Options
-/*		/// <summary>
-		/// Loads default options for <c>TopView</c>.
-		/// </summary>
-		internal static void LoadControlDefaultOptions()
-		{
-			Logfile.Log("TopView.LoadControlDefaultOptions()");
-			Optionables.LoadDefaults(Options);
-		} */
-
-
 		internal static Form _foptions;	// is static so that it will be used by
 										// both TopView and TopRouteView(Top)
 		/// <summary>

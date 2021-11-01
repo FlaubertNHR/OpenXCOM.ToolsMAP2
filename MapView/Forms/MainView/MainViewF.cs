@@ -429,8 +429,7 @@ namespace MapView
 
 			OptionsManager.SetOptionsSection(RegistryInfo.MainView, Options);
 
-			Optionables.LoadDefaults(Options);
-//			LoadDefaultOptions();								// TODO: check if this should go after the managers load
+			Optionables.LoadDefaults(Options);					// TODO: check if this should go after the managers load
 			//Logfile.Log("MainView Default Options loaded.");	// since managers might be re-instantiating needlessly
 																// when OnOptionsClick() runs ....
 
@@ -803,8 +802,6 @@ namespace MapView
 //				keyMapView.Close();
 //				keySoftware.Close();
 //			}
-
-			Optionables.LoadDefaults(Options);
 		} */
 
 
