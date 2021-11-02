@@ -21,21 +21,6 @@ namespace MapView
 	/// </summary>
 	internal sealed class Options
 	{
-		#region Delegates
-		private delegate string ConvertEvent(object value);
-		#endregion Delegates
-
-
-		#region Fields (static)
-		/// <summary>
-		/// These converters are for taking a property as input and outputting
-		/// it as a string to 'MapOptions.cfg'.
-		/// </summary>
-		private static Dictionary<Type, ConvertEvent> _converters =
-				   new Dictionary<Type, ConvertEvent>();
-		#endregion Fields (static)
-
-
 		#region Fields
 		private readonly Dictionary<string, Option> _options =
 					 new Dictionary<string, Option>();
@@ -63,16 +48,6 @@ namespace MapView
 
 		#region Methods (static)
 		/// <summary>
-		/// Adds a <c><see cref="ConvertEvent"/></c> for <c>Color</c> to
-		/// <c><see cref="_converters"/></c>.
-		/// </summary>
-		internal static void InitializeConverters()
-		{
-			//DSShared.Logfile.Log("Options.InitializeConverters()");
-			_converters[typeof(Color)] = new ConvertEvent(GetColorString);
-		}
-
-		/// <summary>
 		/// Converts an <c>object</c> to a <c>string</c> for output to
 		/// 'MapOptions.cfg'.
 		/// </summary>
@@ -84,9 +59,8 @@ namespace MapView
 		{
 			//DSShared.Logfile.Log("Options.Convert()");
 
-			Type type = val.GetType();
-			if (_converters.ContainsKey(type))
-				return _converters[type](val);
+			if (val is Color)
+				return GetColorString((Color)val);
 
 			return val.ToString();
 		}
@@ -95,15 +69,13 @@ namespace MapView
 		/// Converts an <c>(object)Color</c> to a <c>string</c> for output to
 		/// 'MapOptions.cfg'.
 		/// </summary>
-		/// <param name="o"></param>
+		/// <param name="color"></param>
 		/// <returns></returns>
-		private static string GetColorString(object o)
+		private static string GetColorString(Color color)
 		{
-			var color = (Color)o;
 			if (!color.IsKnownColor && !color.IsNamedColor && !color.IsSystemColor)
-			{
 				return color.A + "," + color.R + "," + color.G + "," + color.B;
-			}
+
 			return color.Name;
 		}
 		#endregion Methods (static)

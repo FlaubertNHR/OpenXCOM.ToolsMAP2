@@ -411,8 +411,6 @@ namespace MapView
 			Optionables = new MainViewOptionables();
 			//Logfile.Log("MainView optionables initialized.");
 
-			Options.InitializeConverters();
-			//Logfile.Log("OptionsConverters initialized.");
 			Option.InitializeParsers();
 			//Logfile.Log("OptionParsers initialized.");
 
