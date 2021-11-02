@@ -150,7 +150,7 @@ namespace MapView
 			tw.WriteLine(head);
 			tw.WriteLine("{");
 
-			object val; //string valstr;
+//			object val; string valstr;
 			foreach (string key in _options.Keys)
 			{
 //				if ((val = this[key].Value) == null)
@@ -163,8 +163,7 @@ namespace MapView
 //
 //				tw.WriteLine("\t" + key + ":" + valstr);
 
-				val = this[key].Value;
-				tw.WriteLine("\t" + key + ":" + Convert(val));
+				tw.WriteLine("\t" + key + ":" + Convert(this[key].Value));
 			}
 			tw.WriteLine("}");
 		}
