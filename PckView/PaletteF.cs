@@ -27,14 +27,6 @@ namespace PckView
 		#endregion Properties
 
 
-		#region Properties (override)
-		protected override bool ShowWithoutActivation
-		{
-			get { return true; }
-		}
-		#endregion Properties (override)
-
-
 		#region cTor
 		/// <summary>
 		/// cTor.

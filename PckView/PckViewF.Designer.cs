@@ -35,13 +35,15 @@ namespace PckView
 		private MenuItem miQuit;
 		private MenuItem miCompare;
 
-		private MenuItem miBytesMenu;
-		private MenuItem miBytes;
-
 		private MenuItem miPaletteMenu;
 		private MenuItem miTransparent;
 		private MenuItem miSpriteShade;
 		private MenuItem miSeparator4;
+
+		private MenuItem miOptionsMenu;
+		private MenuItem miBytesTable;
+		private MenuItem miSeparator5;
+		private MenuItem miBringToFront;
 
 		private MenuItem miHelpMenu;
 		private MenuItem miHelp;
@@ -108,8 +110,10 @@ namespace PckView
 			this.miTransparent = new System.Windows.Forms.MenuItem();
 			this.miSpriteShade = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
-			this.miBytesMenu = new System.Windows.Forms.MenuItem();
-			this.miBytes = new System.Windows.Forms.MenuItem();
+			this.miOptionsMenu = new System.Windows.Forms.MenuItem();
+			this.miBytesTable = new System.Windows.Forms.MenuItem();
+			this.miSeparator5 = new System.Windows.Forms.MenuItem();
+			this.miBringToFront = new System.Windows.Forms.MenuItem();
 			this.miHelpMenu = new System.Windows.Forms.MenuItem();
 			this.miHelp = new System.Windows.Forms.MenuItem();
 			this.miAbout = new System.Windows.Forms.MenuItem();
@@ -129,7 +133,7 @@ namespace PckView
 			this.mmMainMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 			this.miFileMenu,
 			this.miPaletteMenu,
-			this.miBytesMenu,
+			this.miOptionsMenu,
 			this.miHelpMenu});
 			// 
 			// miFileMenu
@@ -332,19 +336,32 @@ namespace PckView
 			this.miSeparator4.Index = 2;
 			this.miSeparator4.Text = "-";
 			// 
-			// miBytesMenu
+			// miOptionsMenu
 			// 
-			this.miBytesMenu.Index = 2;
-			this.miBytesMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-			this.miBytes});
-			this.miBytesMenu.Text = "&Bytes";
+			this.miOptionsMenu.Index = 2;
+			this.miOptionsMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+			this.miBytesTable,
+			this.miSeparator5,
+			this.miBringToFront});
+			this.miOptionsMenu.Text = "&Options";
 			// 
-			// miBytes
+			// miBytesTable
 			// 
-			this.miBytes.Index = 0;
-			this.miBytes.Shortcut = System.Windows.Forms.Shortcut.F11;
-			this.miBytes.Text = "Show/hide &byte table";
-			this.miBytes.Click += new System.EventHandler(this.OnByteTableClick);
+			this.miBytesTable.Index = 0;
+			this.miBytesTable.Shortcut = System.Windows.Forms.Shortcut.F11;
+			this.miBytesTable.Text = "Show/hide &byte table";
+			this.miBytesTable.Click += new System.EventHandler(this.OnByteTableClick);
+			// 
+			// miSeparator5
+			// 
+			this.miSeparator5.Index = 1;
+			this.miSeparator5.Text = "-";
+			// 
+			// miBringToFront
+			// 
+			this.miBringToFront.Index = 2;
+			this.miBringToFront.Text = "Bring editor to &front";
+			this.miBringToFront.Click += new System.EventHandler(this.OnBringToFrontClick);
 			// 
 			// miHelpMenu
 			// 

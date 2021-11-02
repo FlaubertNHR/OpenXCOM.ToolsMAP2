@@ -19,8 +19,6 @@ namespace PckView
 		internal readonly PckViewF _f;
 		internal readonly PaletteF _fpalette;
 
-		private bool _bypassActivated;
-
 		internal int _scaler;
 		#endregion Fields
 
@@ -35,14 +33,6 @@ namespace PckView
 		internal SpritePanel SpritePanel
 		{ get; private set; }
 		#endregion Properties
-
-
-		#region Properties (override)
-		protected override bool ShowWithoutActivation
-		{
-			get { return true; }
-		}
-		#endregion Properties (override)
 
 
 		#region cTor
@@ -85,28 +75,24 @@ namespace PckView
 
 		#region Events (override)
 		/// <summary>
-		/// Overrides the <c>Activated</c> handler. Brings PaletteViewer to top
-		/// when this <c>SpriteEditorF</c> is activated.
+		/// Overrides the <c>Activated</c> handler. Brings
+		/// <c><see cref="_fpalette"/></c> to top when this <c>SpriteEditorF</c>
+		/// is activated.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
-			if (!_bypassActivated)
+			if (_f.Frontal && !PckViewF.BypassActivatedEvent && _fpalette.Visible)
 			{
-				_bypassActivated = true;
+				PckViewF.BypassActivatedEvent = true;
 
-				if (_fpalette.Visible)
-				{
-					_fpalette.TopMost = true;
-					_fpalette.TopMost = false;
-				}
+				_fpalette.BringToFront();
 
-				TopMost = true;		// req'd else this form won't activate at all
-				TopMost = false;	// unless user closes the PaletteViewer
+				TopMost = true;
+				TopMost = false;
 
-				_bypassActivated = false;
+				PckViewF.BypassActivatedEvent = false;
 			}
-			base.OnActivated(e);
 		}
 
 		/// <summary>
@@ -121,7 +107,6 @@ namespace PckView
 				e.Handled = e.SuppressKeyPress = true;
 				Close();
 			}
-			base.OnKeyDown(e);
 		}
 
 		/// <summary>
@@ -152,10 +137,13 @@ namespace PckView
 		/// <summary>
 		/// Sets the *proper* <c>ClientSize</c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c>this</c></item>
+		/// <item><c>null</c> - <c><see cref="size_click()">size_click()</see></c></item>
+		/// <item><c>null</c> - <c><see cref="PckViewF.EnableInterface()">PckViewF.EnableInterface()</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
-		/// <remarks>Also called by
-		/// <c><see cref="PckViewF.EnableInterface()">PckViewF.EnableInterface()</see></c>.</remarks>
 		internal void OnLoad(object sender, EventArgs e)
 		{
 			int w;
@@ -183,7 +171,7 @@ namespace PckView
 		/// <summary>
 		/// Sets the scale-factor of the sprite in the panel.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="bar_Scale"/></c></param>
 		/// <param name="e"></param>
 		private void trackbar_OnScroll(object sender, EventArgs e)
 		{
@@ -193,7 +181,7 @@ namespace PckView
 		/// <summary>
 		/// Reverses mousewheel direction on the trackbar.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="bar_Scale"/></c></param>
 		/// <param name="e"></param>
 		private void trackbar_OnMouseWheel(object sender, MouseEventArgs e)
 		{
@@ -215,7 +203,11 @@ namespace PckView
 		/// <summary>
 		/// Locks or enables the sprite for edits.
 		/// </summary>
-		/// <param name="sender"><c><see cref="la_EditMode"/></c></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="la_EditMode"/></c></item>
+		/// <item><c>null</c> - <c><see cref="PckViewF()">PckViewF.PckViewF()</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		internal void OnEditModeMouseClick(object sender, EventArgs e)
 		{
@@ -239,7 +231,7 @@ namespace PckView
 		/// <summary>
 		/// Disables the Palette it when editing LoFTs.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miPaletteMenu"/></c></param>
 		/// <param name="e"></param>
 		private void popup_Palette(object sender, EventArgs e)
 		{
@@ -249,10 +241,14 @@ namespace PckView
 		/// <summary>
 		/// Shows the palette-viewer or brings it to front if already shown.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="miPalette"/></c></item>
+		/// <item><c>null</c> - <c><see cref="PckViewF"/>.OnSpriteEditorClick()</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		/// <remarks>Has no effect if a LoFTset is loaded.</remarks>
-		private void OnShowPaletteClick(object sender, EventArgs e)
+		internal void OnShowPaletteClick(object sender, EventArgs e)
 		{
 			if (_f.SetType != SpritesetType.LoFT) // don't allow the Palette to show if editing LoFTs
 			{
@@ -269,7 +265,7 @@ namespace PckView
 		/// <summary>
 		/// <c><see cref="PaletteF"/> hides rather then closes.</c>
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="_fpalette"/></c></param>
 		/// <param name="e"></param>
 		/// <remarks>This fires after the palette's <c>FormClosing</c> event.</remarks>
 		private void OnPaletteFormClosing(object sender, CancelEventArgs e)
@@ -280,7 +276,11 @@ namespace PckView
 		/// <summary>
 		/// Overlays a dark grid on the sprite.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="miGridDark"/></c></item>
+		/// <item><c>null</c> - <c><see cref="PckViewF()">PckViewF.PckViewF()</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		internal void OnGridDarkClick(object sender, EventArgs e)
 		{
@@ -296,7 +296,11 @@ namespace PckView
 		/// <summary>
 		/// Overlays a light grid on the sprite.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="miGridLight"/></c></item>
+		/// <item><c>null</c> - <c><see cref="PckViewF()">PckViewF.PckViewF()</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		internal void OnGridLightClick(object sender, EventArgs e)
 		{
@@ -327,9 +331,10 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// 
+		/// Enables or disables <c><see cref="miMagReset"/> when the
+		/// Magnification menu opens.</c>
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miMagMenu"/></c></param>
 		/// <param name="e"></param>
 		private void popup_MagMenu(object sender, EventArgs e)
 		{
@@ -339,7 +344,7 @@ namespace PckView
 		/// <summary>
 		/// Resets the magnification factor to <c>+0</c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="miMagReset"/></c></param>
 		/// <param name="e"></param>
 		private void OnResetMagnification(object sender, EventArgs e)
 		{
@@ -350,7 +355,12 @@ namespace PckView
 		/// <summary>
 		/// Sets the magnification factor.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c>tsddb_Size_*</c></item>
+		/// <item><c>tsddb_Size_*</c> - <c><see cref="SetScale()">SetScale()</see></c></item>
+		/// <item><c><see cref="tsddb_Size_0"/></c> - <c><see cref="OnResetMagnification()">OnResetMagnification()</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void size_click(object sender, EventArgs e)
 		{
@@ -456,14 +466,6 @@ namespace PckView
 		internal void PrintPixelColor(string color)
 		{
 			tssl_ColorInfo.Text = color;
-		}
-
-		/// <summary>
-		/// Sets the Palette it checked.
-		/// </summary>
-		internal void SetPaletteChecked()
-		{
-			miPalette.Checked = true;
 		}
 
 		/// <summary>

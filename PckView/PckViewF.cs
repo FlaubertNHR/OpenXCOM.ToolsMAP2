@@ -106,7 +106,7 @@ namespace PckView
 
 //		private TabControl _tcTabs; // for OnCompareClick()
 
-		private ToolStripMenuItem _miEdit;
+		private ToolStripMenuItem _miEditor;
 		private ToolStripMenuItem _miAdd;
 		private ToolStripMenuItem _miInsertBefor;
 		private ToolStripMenuItem _miInsertAfter;
@@ -288,6 +288,16 @@ namespace PckView
 				}
 			}
 		}
+
+		/// <summary>
+		/// <c>true</c> to bring subwindows front when a parent window takes
+		/// focus.
+		/// </summary>
+		/// <remarks>This is optional since Windows10 fucks it up by not
+		/// allowing focus to return to the <c>Form</c> on which focus needs to
+		/// return.</remarks>
+		internal bool Frontal
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -388,6 +398,12 @@ namespace PckView
 									palselected = val_int;
 								}
 								break;
+
+							case "front":
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
+									Frontal = miBringToFront.Checked = val_bool;
+								break;
+
 
 							case "grid":
 								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
@@ -528,7 +544,7 @@ namespace PckView
 		// miTransparent		F9
 		// miSpriteShade		F10
 		// palette items		Ctrl1..Ctrl8
-		// miBytes				F11
+		// miBytesTable			F11
 		// miHelp				F1
 		//
 		// CONTEXT:
@@ -550,7 +566,7 @@ namespace PckView
 		/// <returns></returns>
 		private ContextMenuStrip CreateContext()
 		{
-			_miEdit        = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick);			// OnKeyDown Enter
+			_miEditor      = new ToolStripMenuItem("Edit",              null, OnSpriteEditorClick);			// OnKeyDown Enter
 			_miAdd         = new ToolStripMenuItem("Add ...",           null, OnAddSpritesClick);			// OnKeyDown d
 			_miInsertBefor = new ToolStripMenuItem("Insert before ...", null, OnInsertSpritesBeforeClick);	// OnKeyDown b
 			_miInsertAfter = new ToolStripMenuItem("Insert after ...",  null, OnInsertSpritesAfterClick);	// OnKeyDown a
@@ -562,7 +578,7 @@ namespace PckView
 			_miCreate      = new ToolStripMenuItem("create",            null, OnCreateSpriteClick);			// OnKeyDown t
 			_miClear       = new ToolStripMenuItem("clear",             null, OnClearSpriteClick);			// OnKeyDown c
 
-			_miEdit       .ShortcutKeyDisplayString = "Enter";
+			_miEditor     .ShortcutKeyDisplayString = "Enter";
 			_miAdd        .ShortcutKeyDisplayString = "d";
 			_miInsertBefor.ShortcutKeyDisplayString = "b";
 			_miInsertAfter.ShortcutKeyDisplayString = "a";
@@ -577,7 +593,7 @@ namespace PckView
 
 			var context = new ContextMenuStrip();
 
-			context.Items.Add(_miEdit);
+			context.Items.Add(_miEditor);
 			context.Items.Add(new ToolStripSeparator());
 			context.Items.Add(_miAdd);
 			context.Items.Add(_miInsertBefor);
@@ -667,28 +683,25 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
-			if (!BypassActivatedEvent)
+			if (Frontal && !BypassActivatedEvent
+				&& (SpriteEditor.Visible || SpriteEditor._fpalette.Visible))
 			{
 				BypassActivatedEvent = true;
 
-				if (SpriteEditor._fpalette.Visible)
-				{
-					SpriteEditor._fpalette.TopMost = true;
-					SpriteEditor._fpalette.TopMost = false;
-				}
-
 				if (SpriteEditor.Visible)
-				{
-					SpriteEditor.TopMost = true;
-					SpriteEditor.TopMost = false;
-				}
+					SpriteEditor.BringToFront();
 
-				TopMost = true;		// req'd else this form won't activate at all
-				TopMost = false;	// unless user closes the other forms
+				if (SpriteEditor._fpalette.Visible)
+					SpriteEditor._fpalette.BringToFront();
+
+				// TopMost true/false is the only thing I've found so far that
+				// will actually bring focus back to the main PckView window.
+
+				TopMost = true;
+				TopMost = false;
 
 				BypassActivatedEvent = false;
 			}
-			base.OnActivated(e);
 		}
 
 		/// <summary>
@@ -808,6 +821,7 @@ namespace PckView
 					sw.WriteLine("  transparent: " + miTransparent.Checked);
 					sw.WriteLine("  spriteshade: " + miSpriteShade.Checked);
 					sw.WriteLine("  palette: "     + pal);
+					sw.WriteLine("  front: "       + miBringToFront.Checked);
 
 					// SpriteEditorF
 					sw.WriteLine("  grid: "  + SpriteEditor.GetGridConfig());
@@ -957,6 +971,7 @@ namespace PckView
 					}
 					break;
 
+
 				case Keys.Escape:
 					if (TilePanel.Spriteset != null)
 					{
@@ -990,7 +1005,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender">
 		/// <list type="bullet">
-		/// <item><c><see cref="_miEdit"/></c> - <c>Click</c></item>
+		/// <item><c><see cref="_miEditor"/></c> - <c>Click</c></item>
 		/// <item><c><see cref="TilePanel"/></c> - <c>DoubleClick</c></item>
 		/// <item><c>null</c> - <c><see cref="OnKeyDown()">OnKeyDown()</see></c> <c>[Enter]</c></item>
 		/// </list></param>
@@ -1000,25 +1015,27 @@ namespace PckView
 		{
 			if (TilePanel.Spriteset != null)
 			{
-				if (!_miEdit.Checked)
+				if (!_miEditor.Checked)
 				{
-					_miEdit.Checked = true;
+					BypassActivatedEvent = true;
 
+					_miEditor.Checked = true;
 					SpriteEditor.Show();
 
-					if (SetType != SpritesetType.LoFT)
-					{
-						SpriteEditor.SetPaletteChecked();
-						SpriteEditor._fpalette.Show();
-					}
+					SpriteEditor.OnShowPaletteClick(null, EventArgs.Empty);
+
+					TopMost = true;
+					TopMost = false;
+
+					BypassActivatedEvent = false;
 				}
 				else
-					SpriteEditor.Activate();
+					SpriteEditor.BringToFront();
 			}
 		}
 
 		/// <summary>
-		/// Dechecks <c><see cref="_miEdit"/></c>.
+		/// Dechecks <c><see cref="_miEditor"/></c>.
 		/// </summary>
 		/// <param name="sender"><c><see cref="SpriteEditor"/></c></param>
 		/// <param name="e"></param>
@@ -1026,7 +1043,7 @@ namespace PckView
 		/// <seealso cref="SpriteEditorF"><c>SpriteEditorF</c></seealso>
 		private void OnSpriteEditorClosing(object sender, CancelEventArgs e)
 		{
-			_miEdit.Checked = false;
+			_miEditor.Checked = false;
 		}
 
 
@@ -2193,11 +2210,11 @@ namespace PckView
 		/// Shows a richtextbox with all the bytes of the currently selected
 		/// sprite laid out in a fairly readable fashion.
 		/// </summary>
-		/// <param name="sender"><c><see cref="miBytes"/></c></param>
+		/// <param name="sender"><c><see cref="miBytesTable"/></c></param>
 		/// <param name="e"></param>
 		private void OnByteTableClick(object sender, EventArgs e)
 		{
-			if (miBytes.Checked = !miBytes.Checked)
+			if (miBytesTable.Checked = !miBytesTable.Checked)
 			{
 				XCImage sprite;
 				if (TilePanel.Spriteset != null && TilePanel.Selid != -1)
@@ -2220,8 +2237,20 @@ namespace PckView
 		/// </summary>
 		private void BytesClosingCallback()
 		{
-			miBytes.Checked = false;
+			miBytesTable.Checked = false;
 		}
+
+		/// <summary>
+		/// Brings all windows to front when this <c>PckViewF</c> takes focus.
+		/// </summary>
+		/// <param name="sender"><c><see cref="miBringToFront"/></c></param>
+		/// <param name="e"></param>
+		private void OnBringToFrontClick(object sender, EventArgs e)
+		{
+			if (Frontal = (miBringToFront.Checked = !miBringToFront.Checked))
+				OnActivated(EventArgs.Empty);
+		}
+
 
 		/// <summary>
 		/// Shows the CHM helpfile.
@@ -2244,6 +2273,7 @@ namespace PckView
 		{
 			new About().ShowDialog(this);
 		}
+
 
 		/// <summary>
 		/// is disabled.
