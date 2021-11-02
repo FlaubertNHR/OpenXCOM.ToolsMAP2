@@ -411,9 +411,6 @@ namespace MapView
 			Optionables = new MainViewOptionables();
 			//Logfile.Log("MainView optionables initialized.");
 
-			Option.InitializeParsers();
-			//Logfile.Log("OptionParsers initialized.");
-
 
 			Palette.UfoBattle.SetTransparent(true); // WARNING: ufo/tftd Palettes created here ->
 			//Logfile.Log("ufo-battle Palette instantiated.");

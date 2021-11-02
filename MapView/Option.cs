@@ -17,20 +17,12 @@ namespace MapView
 	/// </summary>
 	internal sealed class Option
 	{
-		#region Delegates
-		private delegate object ParseEvent(string st);
-		#endregion Delegates
-
-
 		#region Events
 		internal event OptionChangedEvent OptionChanged;
 		#endregion Events
 
 
 		#region Fields (static)
-		private static Dictionary<Type, ParseEvent> _parsers =
-				   new Dictionary<Type, ParseEvent>();
-
 		private static string[] KnownColors = Enum.GetNames(typeof(KnownColor));
 		#endregion Fields (static)
 
@@ -44,45 +36,36 @@ namespace MapView
 			{
 				//DSShared.Logfile.Log("Option.Value.set");
 
+//				if (value != null)
+//				{
 				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
-					Type type = _value.GetType();
-					if (_parsers.ContainsKey(type)) // '_parsers' won't contain type of String.
+					string val;
+					if (_value is Boolean)
 					{
-						string val = value as String; // will not be null if 'MapOptions.cfg' - can be null if PropertyGrid
-						if (val != null)
-						{
-							_value = _parsers[type](val);
-							return;
-						}
+						val = value as String; // will be string if 'MapOptions.cfg' - can be null if PropertyGrid
+						if (val != null) _value = ParseBool(val);
+						else             _value = value;
 					}
-					_value = value;
-				}
-			}
-/*			set
-			{
-				if (value != null)
-				{
-//					if (!_value.Equals(value))
-					if (!value.Equals(_value))
+					else if (_value is Int32)
 					{
-//						Type type = _value.GetType();
-						Type type = value.GetType();
-						if (_parsers.ContainsKey(type))
-						{
-							string val = value as String;
-							if (val != null)
-							{
-								_value = _parsers[type](val);
-								return;
-							}
-						}
+						val = value as String; // will be string if 'MapOptions.cfg' - can be null if PropertyGrid
+						if (val != null) _value = ParseInt32(val);
+						else             _value = value;
+					}
+					else if (_value is Color)
+					{
+						val = value as String; // will be string if 'MapOptions.cfg' - can be null if PropertyGrid
+						if (val != null) _value = ParseColor(val);
+						else             _value = value;
+					}
+					else
 						_value = value;
-					}
 				}
-				else
-					OptionsManager.error("n/a", OptionsManager.ERROR_SET);
-			} */
+//				}
+//				else
+//					OptionsManager.error("n/a", OptionsManager.ERROR_SET);
+			}
 		}
 
 		/// <summary>
@@ -125,44 +108,12 @@ namespace MapView
 		{
 			//DSShared.Logfile.Log("Option.SetValue() key= " + key);
 
+//			if (val != null) // && val.GetType() == Value.GetType())
+//			{
 			Value = val; // TODO: error check not null and value-type and -range are valid for this Option
 
 //			if (OptionChanged != null) // safety. All Options shall subscribe to an OptionChangedEvent
 			OptionChanged(key, Value);
-
-
-//			if (!Value.Equals(val)) // TODO: Investigate that: (true != true) sic.
-//			{
-//				DSShared.Logfile.Log(". Value != val");
-//
-//				Type type = Value.GetType();
-//				if (_parsers.ContainsKey(type))
-//				{
-//					DSShared.Logfile.Log(". . parsers contains Type");
-//
-//					string str = val as String;
-//					if (str != null)
-//					{
-//						DSShared.Logfile.Log(". . . val is String");
-//
-//						Value = _parsers[type](str);
-//						OptionChanged(key, Value);
-//						return;
-//					}
-//				}
-//
-//				DSShared.Logfile.Log(". no parser OR not string");
-//				Value = val;
-//				OptionChanged(key, Value);
-//			}
-
-
-//			if (val != null) // && val.GetType() == Value.GetType())
-//			{
-//				Value = val; // TODO: error check not null and value-type and -range are valid for this Option
-//
-//				if (OptionChanged != null)
-//					OptionChanged(key, Value);
 //			}
 //			else
 //				OptionsManager.error(key, OptionsManager.ERROR_SET);
@@ -171,19 +122,6 @@ namespace MapView
 
 
 		#region Methods (static)
-		/// <summary>
-		/// Adds <c><see cref="_parsers"/></c> for <c>Types</c> <c>Boolean</c>,
-		/// <c>Int32</c>, and <c>Color</c>.
-		/// </summary>
-		internal static void InitializeParsers()
-		{
-			//DSShared.Logfile.Log("Option.InitializeParsers()");
-
-			_parsers[typeof(Boolean)] = ParseBool;
-			_parsers[typeof(Int32)]   = ParseInt32;
-			_parsers[typeof(Color)]   = ParseColor;
-		}
-
 		/// <summary>
 		/// Parses out user-defined booleans output by 'MapOptions.cfg'.
 		/// </summary>
