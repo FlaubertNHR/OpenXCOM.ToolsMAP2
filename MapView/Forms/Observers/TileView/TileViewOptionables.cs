@@ -11,8 +11,9 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Properties for <c><see cref="TileView"/></c> that appear in TileView's
-	/// <c><see cref="Options"/></c>.
+	/// Properties for
+	/// <c><see cref="TileView.Optionables">TileView.Optionables</see></c> that
+	/// appear in TileView's <c><see cref="Options"/></c>.
 	/// </summary>
 	internal sealed class TileViewOptionables
 	{

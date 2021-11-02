@@ -8,8 +8,9 @@ using MapView.Forms.MainView;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Properties for <see cref="RouteView"/> that appear in RouteView's
-	/// Options.
+	/// Properties for
+	/// <c><see cref="RouteView.Optionables">RouteView.Optionables</see></c>
+	/// that appear in RouteView's <c><see cref="Options"/></c>.
 	/// </summary>
 	internal sealed class RouteViewOptionables
 	{

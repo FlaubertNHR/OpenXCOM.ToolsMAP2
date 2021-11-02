@@ -6,7 +6,14 @@ using System.Drawing;
 namespace MapView
 {
 	/// <summary>
-	/// The option of an Optionable property.
+	/// The <c>Option</c> of an Optionable property. <c>Options</c> are stored
+	/// in
+	/// <list type="bullet">
+	/// <item><c><see cref="Forms.MainView.MainViewOptionables"/></c></item>
+	/// <item><c><see cref="Forms.Observers.TileViewOptionables"/></c></item>
+	/// <item><c><see cref="Forms.Observers.TopViewOptionables"/></c></item>
+	/// <item><c><see cref="Forms.Observers.RouteViewOptionables"/></c></item>
+	/// </list>
 	/// </summary>
 	internal sealed class Option
 	{

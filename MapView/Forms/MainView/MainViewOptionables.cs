@@ -14,8 +14,9 @@ using MapView.Forms.Observers;
 namespace MapView.Forms.MainView
 {
 	/// <summary>
-	/// Properties for <see cref="MainViewF"/> that appear in MainView's
-	/// Options.
+	/// Properties for
+	/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>
+	/// that appear in MainView's <c><see cref="Options"/></c>.
 	/// </summary>
 	internal sealed class MainViewOptionables
 	{
