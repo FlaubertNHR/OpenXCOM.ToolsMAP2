@@ -15,6 +15,13 @@ namespace PckView
 		:
 			Form
 	{
+		#region Fields (static)
+		private const int GRID_OFF   = 0;
+		private const int GRID_DARK  = 1;
+		private const int GRID_LIGHT = 2;
+		#endregion Fields (static)
+
+
 		#region Fields
 		internal readonly PckViewF _f;
 		internal readonly PaletteF _fpalette;
@@ -82,7 +89,7 @@ namespace PckView
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
 		{
-			if (_f.Frontal && !PckViewF.BypassActivatedEvent && _fpalette.Visible)
+			if (!PckViewF.BypassActivatedEvent && _f.Frontal && _fpalette.Visible)
 			{
 				PckViewF.BypassActivatedEvent = true;
 
@@ -318,16 +325,16 @@ namespace PckView
 		/// </summary>
 		/// <returns>
 		/// <list type="bullet">
-		/// <item><c>0</c> - no grid</item>
-		/// <item><c>1</c> - dark grid</item>
-		/// <item><c>2</c> - light grid</item>
-		/// </list>
-		/// </returns>
+		/// <item><c>0</c> - <c><see cref="GRID_OFF"/></c></item>
+		/// <item><c>1</c> - <c><see cref="GRID_DARK"/></c></item>
+		/// <item><c>2</c> - <c><see cref="GRID_LIGHT"/></c></item>
+		/// </list></returns>
 		internal int GetGridConfig()
 		{
-			if (miGridDark .Checked) return 1;
-			if (miGridLight.Checked) return 2;
-			return 0;
+			if (miGridDark .Checked) return GRID_DARK;
+			if (miGridLight.Checked) return GRID_LIGHT;
+
+			return GRID_OFF;
 		}
 
 		/// <summary>
