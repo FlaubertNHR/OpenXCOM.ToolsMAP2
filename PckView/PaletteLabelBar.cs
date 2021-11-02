@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace PckView
 {
 /// <summary>
-	/// The statusbar for 'PaletteF'.
+	/// The statusbar for <c><see cref="PaletteF"/></c>.
 	/// </summary>
 	internal sealed class PaletteLabelBar
 		:
@@ -40,12 +40,13 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Disposes the GraphicsPath.
-		/// @note I have no idea if this is really necessary despite hundreds of
-		/// hours reading about Dispose() et al. This class is a visual control
-		/// so it gets disposed when its parent closes, but does its private
-		/// field '_path3d' get disposed reliably ...
+		/// Disposes the <c>GraphicsPath</c>.
 		/// </summary>
+		/// <remarks>I have no idea if this is really necessary despite hundreds
+		/// of hours reading about <c>Dispose()</c> et al. This class is a
+		/// visual control so it gets disposed when its parent closes, but does
+		/// its private field <c><see cref="_path3d"/></c> get disposed reliably
+		/// ...</remarks>
 		internal void Destroy()
 		{
 			_path3d.Dispose();
