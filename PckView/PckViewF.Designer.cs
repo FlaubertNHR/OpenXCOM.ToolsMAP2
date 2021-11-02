@@ -349,7 +349,7 @@ namespace PckView
 			// 
 			this.miBytesTable.Index = 0;
 			this.miBytesTable.Shortcut = System.Windows.Forms.Shortcut.F11;
-			this.miBytesTable.Text = "Show/hide &byte table";
+			this.miBytesTable.Text = "&Byte table";
 			this.miBytesTable.Click += new System.EventHandler(this.OnByteTableClick);
 			// 
 			// miSeparator5
@@ -360,7 +360,7 @@ namespace PckView
 			// miBringToFront
 			// 
 			this.miBringToFront.Index = 2;
-			this.miBringToFront.Text = "Bring editor to &front";
+			this.miBringToFront.Text = "Bring editor/palette to &front";
 			this.miBringToFront.Click += new System.EventHandler(this.OnBringToFrontClick);
 			// 
 			// miHelpMenu
