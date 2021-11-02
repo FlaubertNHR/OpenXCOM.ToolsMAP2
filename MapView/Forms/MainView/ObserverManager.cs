@@ -67,9 +67,9 @@ namespace MapView.Forms.MainView
 			_observers.Add(TopRouteView);
 
 
-			MapView.Forms.Observers.TileView .Optionables.LoadDefaults(MapView.Forms.Observers.TileView .Options);
-			MapView.Forms.Observers.TopView  .Optionables.LoadDefaults(MapView.Forms.Observers.TopView  .Options);
-			MapView.Forms.Observers.RouteView.Optionables.LoadDefaults(MapView.Forms.Observers.RouteView.Options);
+			Observers.TileView .Optionables.LoadDefaults(Observers.TileView .Options);
+			Observers.TopView  .Optionables.LoadDefaults(Observers.TopView  .Options);
+			Observers.RouteView.Optionables.LoadDefaults(Observers.RouteView.Options);
 
 			OptionsManager.SetOptionsSection(RegistryInfo.TileView,  Observers.TileView .Options);
 			OptionsManager.SetOptionsSection(RegistryInfo.TopView,   Observers.TopView  .Options);
@@ -106,7 +106,7 @@ namespace MapView.Forms.MainView
 
 
 		/// <summary>
-		/// Closes each Observers' parent-Form.
+		/// Closes each Observers' parent <c>Form</c>.
 		/// <list>
 		/// <item><c><see cref="TileViewForm"/></c></item>
 		/// <item><c><see cref="TopViewForm"/></c></item>
