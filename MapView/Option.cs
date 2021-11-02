@@ -172,7 +172,8 @@ namespace MapView
 
 		#region Methods (static)
 		/// <summary>
-		/// Adds parsers for types <c>Boolean</c>, <c>Int32</c>, and <c>Color</c>.
+		/// Adds <c><see cref="_parsers"/></c> for <c>Types</c> <c>Boolean</c>,
+		/// <c>Int32</c>, and <c>Color</c>.
 		/// </summary>
 		internal static void InitializeParsers()
 		{
