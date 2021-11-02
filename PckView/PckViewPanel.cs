@@ -193,10 +193,10 @@ namespace PckView
 				}
 
 				// update the OverId and print info to the statusbar
-				var pt = PointToClient(Control.MousePosition);
+				Point pos = PointToClient(Control.MousePosition);
 				OnMouseMove(new MouseEventArgs(
 											MouseButtons.None,
-											0, pt.X,pt.Y, 0));
+											0, pos.X,pos.Y, 0));
 			}
 		}
 
@@ -482,7 +482,9 @@ namespace PckView
 
 		#region Events
 		/// <summary>
-		/// Handler for PaletteChanged. Invalidates this panel.
+		/// Handler for the
+		/// <c><see cref="PckViewF.PaletteChanged">PckViewF.PaletteChanged</see></c>
+		/// event. Invalidates this panel.
 		/// </summary>
 		private void OnPaletteChanged()
 		{
@@ -490,9 +492,9 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Fires when anything changes the Value of the scroll-bar.
+		/// Fires when anything changes the <c>Value</c> of the scroll-bar.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="_scrollBar"/></c></param>
 		/// <param name="e"></param>
 		private void OnScrollBarValueChanged(object sender, EventArgs e)
 		{
