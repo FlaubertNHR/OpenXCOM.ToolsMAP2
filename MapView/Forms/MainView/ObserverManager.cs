@@ -15,7 +15,7 @@ namespace MapView.Forms.MainView
 	{
 		#region Fields (static)
 		/// <summary>
-		/// A list of forms that shall be closed when MapView quits.
+		/// A list of <c>Forms</c> that shall be closed when MapView quits.
 		/// </summary>
 		private static readonly IList<Form> _observers = new List<Form>();
 		#endregion Fields (static)
