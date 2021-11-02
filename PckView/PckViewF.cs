@@ -681,9 +681,10 @@ namespace PckView
 		/// this <c>PckViewF</c> is activated.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <seealso cref="OnSpriteEditorClick()"><c>OnSpriteEditorClick()</c></seealso>
 		protected override void OnActivated(EventArgs e)
 		{
-			if (Frontal && !BypassActivatedEvent
+			if (!BypassActivatedEvent && Frontal
 				&& (SpriteEditor.Visible || SpriteEditor._fpalette.Visible))
 			{
 				BypassActivatedEvent = true;
@@ -787,7 +788,7 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// Saves user-configuration.
+		/// Saves user-configuration to 'settings/PckConfig.yml'.
 		/// </summary>
 		private void SaveConfiguration()
 		{
@@ -1011,6 +1012,7 @@ namespace PckView
 		/// </list></param>
 		/// <param name="e"></param>
 		/// <seealso cref="PckViewPanel"><c>PckViewPanel</c></seealso>
+		/// <seealso cref="OnActivated()"><c>OnActivated()</c></seealso>
 		private void OnSpriteEditorClick(object sender, EventArgs e)
 		{
 			if (TilePanel.Spriteset != null)

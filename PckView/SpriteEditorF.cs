@@ -87,6 +87,7 @@ namespace PckView
 		/// is activated.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <seealso cref="OnShowPaletteClick()"><c>OnShowPaletteClick()</c></seealso>
 		protected override void OnActivated(EventArgs e)
 		{
 			if (!PckViewF.BypassActivatedEvent && _f.Frontal && _fpalette.Visible)
@@ -255,6 +256,7 @@ namespace PckView
 		/// </list></param>
 		/// <param name="e"></param>
 		/// <remarks>Has no effect if a LoFTset is loaded.</remarks>
+		/// <seealso cref="OnActivated()"><c>OnActivated()</c></seealso>
 		internal void OnShowPaletteClick(object sender, EventArgs e)
 		{
 			if (_f.SetType != SpritesetType.LoFT) // don't allow the Palette to show if editing LoFTs
