@@ -131,7 +131,7 @@ namespace MapView
 
 			var option = new Option(@default);
 
-//			if (changer != null) // safety. All Options shall have an OptionChangedEvent
+//			if (changer != null) // safety. All Options shall subscribe to an OptionChangedEvent
 			option.OptionChanged += changer;
 
 			_options[key] = option;

@@ -127,7 +127,7 @@ namespace MapView
 
 			Value = val; // TODO: error check not null and value-type and -range are valid for this Option
 
-//			if (OptionChanged != null) // safety. All Options shall have an OptionChangedEvent
+//			if (OptionChanged != null) // safety. All Options shall subscribe to an OptionChangedEvent
 			OptionChanged(key, Value);
 
 
