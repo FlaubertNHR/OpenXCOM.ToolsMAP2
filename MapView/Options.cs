@@ -51,8 +51,8 @@ namespace MapView
 		/// Converts an <c>object</c> to a <c>string</c> for output to
 		/// 'MapOptions.cfg'.
 		/// </summary>
-		/// <param name="val">an <c><see cref="Option"/></c> as an <c>object</c></param>
-		/// <returns></returns>
+		/// <param name="val"><c><see cref="Option.Value">Option.Value</see></c></param>
+		/// <returns>a <c>string</c> presentation of the <c>object</c></returns>
 		/// <remarks>If <paramref name="val"/> is <c>null</c> this throws when
 		/// trying to write 'MapOptions.cfg'.</remarks>
 		private static string Convert(object val)
@@ -110,7 +110,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Writes this Options to 'MapOptionsFile' = "MapOptionsFile" -> MapOptions.cfg
+		/// Writes this <c>Options</c> to 'MapOptionsFile' = "MapOptionsFile" -> MapOptions.cfg
 		/// And you thought indirection was a bad thing.
 		/// </summary>
 		/// <param name="head"></param>
