@@ -40,24 +40,17 @@ namespace MapView
 //				{
 				if (!_value.Equals(value)) // TODO: Investigate that: (true != true) sic.
 				{
-					string val;
-					if (_value is Boolean)
+					// The Type of this Option's '_value' shall be set by LoadDefaults.
+					// - 'value' will be of type string if read from 'MapOptions.cfg'
+					// - 'value' will be of type string, boolean, int32, color if sent from a PropertyGrid.
+
+					var val = value as String;
+					if (val != null)
 					{
-						val = value as String; // will be string if 'MapOptions.cfg' - can be null if PropertyGrid
-						if (val != null) _value = ParseBool(val);
-						else             _value = value;
-					}
-					else if (_value is Int32)
-					{
-						val = value as String; // will be string if 'MapOptions.cfg' - can be null if PropertyGrid
-						if (val != null) _value = ParseInt32(val);
-						else             _value = value;
-					}
-					else if (_value is Color)
-					{
-						val = value as String; // will be string if 'MapOptions.cfg' - can be null if PropertyGrid
-						if (val != null) _value = ParseColor(val);
-						else             _value = value;
+						if      (_value is Boolean) _value = ParseBoole(val);
+						else if (_value is Int32)   _value = ParseInt32(val);
+						else if (_value is Color)   _value = ParseColor(val);
+						else                        _value = value;
 					}
 					else
 						_value = value;
@@ -127,7 +120,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="val"></param>
 		/// <returns></returns>
-		private static object ParseBool(string val)
+		private static object ParseBoole(string val)
 		{
 			bool result;
 			if (Boolean.TryParse(val, out result))
