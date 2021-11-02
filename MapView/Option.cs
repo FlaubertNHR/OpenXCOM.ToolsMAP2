@@ -178,7 +178,7 @@ namespace MapView
 		{
 			//DSShared.Logfile.Log("Option.InitializeParsers()");
 
-			_parsers[typeof(Boolean)] = ParseBoolean;
+			_parsers[typeof(Boolean)] = ParseBool;
 			_parsers[typeof(Int32)]   = ParseInt32;
 			_parsers[typeof(Color)]   = ParseColor;
 		}
@@ -188,7 +188,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="val"></param>
 		/// <returns></returns>
-		private static object ParseBoolean(string val)
+		private static object ParseBool(string val)
 		{
 			bool result;
 			if (Boolean.TryParse(val, out result))
