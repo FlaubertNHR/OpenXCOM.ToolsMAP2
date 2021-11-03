@@ -8,9 +8,9 @@ using DSShared;
 namespace MapView.Forms.MainView
 {
 	/// <summary>
-	/// Instantiates and manages items on MainView's "Viewers" menu: TileView,
-	/// TopView, RouteView, TopRouteView, and the ScanG viewer. As well as
-	/// minimize/restore all.
+	/// Instantiates and manages <c>MenuItems</c> on MainView's "Viewers" menu:
+	/// TileView, TopView, RouteView, TopRouteView, and the ScanG viewer. As
+	/// well as minimize/restore all.
 	/// </summary>
 	/// <remarks>See <c><see cref="ObserverManager"/></c> for instantiation of
 	/// the viewers.</remarks>
@@ -44,8 +44,8 @@ namespace MapView.Forms.MainView
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes MainView's menuitem "Viewers" and adds menuitems to its
-		/// dropdown list.
+		/// Initializes MainView's <c>MenuItem</c> "Viewers" and adds
+		/// <c>MenuItems</c> to its dropdown.
 		/// </summary>
 		/// <param name="it"><c><see cref="MainViewF"/>.menuViewers</c></param>
 		internal static void Initialize(MenuItem it)
@@ -78,15 +78,16 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Creates a menuitem for a specified viewer and tags the item with its
-		/// viewer's Form-object, etc.
+		/// Creates a <c>MenuItem</c> for a specified viewer and tags said
+		/// <c>MenuItem</c> with its viewer's <c>Form</c> etc.
 		/// </summary>
 		/// <param name="f"></param>
 		/// <param name="shortcut"></param>
 		/// <param name="options"></param>
 		/// <param name="default"><c>true</c> to have the viewer open on 1st run</param>
 		/// <param name="changer"></param>
-		/// <remarks>These forms never actually close until MapView closes.</remarks>
+		/// <remarks>These <c>Forms</c> never actually close until MapView
+		/// closes.</remarks>
 		private static void Create(
 				Form f,
 				Shortcut shortcut,
