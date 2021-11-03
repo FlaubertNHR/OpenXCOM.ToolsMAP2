@@ -167,7 +167,7 @@ namespace MapView.Forms.MainView
 			get { return _starttoproutepage; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_StartTopRoutePage].Value =
 					_starttoproutepage = value.Viceroy(0,3);
@@ -223,7 +223,7 @@ namespace MapView.Forms.MainView
 			get { return _gridLayerOpacity; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_GridLayerOpacity].Value =
 					_gridLayerOpacity = value.Viceroy(0,255);
@@ -261,7 +261,7 @@ namespace MapView.Forms.MainView
 			get { return _gridLineWidth; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,5);
@@ -299,7 +299,7 @@ namespace MapView.Forms.MainView
 			get { return _gridLine10Width; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,5);
@@ -340,7 +340,7 @@ namespace MapView.Forms.MainView
 			get { return _selectionBorderOpacity; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderOpacity].Value =
 					_selectionBorderOpacity = value.Viceroy(0,255);
@@ -364,7 +364,7 @@ namespace MapView.Forms.MainView
 			get { return _selectionBorderWidth; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectionBorderWidth].Value =
 					_selectionBorderWidth = value.Viceroy(1,5);
@@ -395,7 +395,7 @@ namespace MapView.Forms.MainView
 			get { return _selectedTileToner; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectedTileToner].Value =
 					_selectedTileToner = value.Viceroy(TONER_NONE, TONER_BLUE);
@@ -421,7 +421,7 @@ namespace MapView.Forms.MainView
 			get { return _selectedTonerBrightness; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SelectedTonerBrightness].Value =
 					_selectedTonerBrightness = value.Viceroy(0, 10);
@@ -449,7 +449,7 @@ namespace MapView.Forms.MainView
 			get { return _layerSelectionBorder; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_LayerSelectionBorder].Value =
 					_layerSelectionBorder = value.Viceroy(0,2);
@@ -498,7 +498,7 @@ namespace MapView.Forms.MainView
 			get { return _spriteShade; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SpriteShade].Value =
 					_spriteShade = value.Viceroy(0,99);
@@ -541,7 +541,7 @@ namespace MapView.Forms.MainView
 			get { return _spriteShadeCursor; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_SpriteShadeCursor].Value =
 					_spriteShadeCursor = value.Viceroy(0,99);
@@ -592,7 +592,7 @@ namespace MapView.Forms.MainView
 			get { return _interpolation; }
 			set
 			{
-				if ((MainViewF._foptions as OptionsF) == null) // on load
+				if (MainViewF._foptions == null) // on load
 				{
 					MainViewF.that.Options[str_Interpolation].Value =
 					_interpolation = value.Viceroy(0,7);
@@ -1067,7 +1067,7 @@ namespace MapView.Forms.MainView
 				case str_StartTopRoutePage:
 					StartTopRoutePage = (int)val;
 
-					if (MainViewF._foptions as OptionsF == null // on load
+					if (MainViewF._foptions == null // on load
 						|| StartTopRoutePage > 1)
 					{
 						ObserverManager.TopRouteView.SelectTabpage(StartTopRoutePage % 2); // 0,2 TopView; 1,3 RouteView

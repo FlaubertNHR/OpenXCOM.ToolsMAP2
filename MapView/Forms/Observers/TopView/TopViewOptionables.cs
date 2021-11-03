@@ -70,7 +70,7 @@ namespace MapView.Forms.Observers
 			get { return _gridLineWidth; }
 			set
 			{
-				if ((TopView._foptions as OptionsF) == null) // on load
+				if (TopView._foptions == null) // on load
 				{
 					TopView.Options[str_GridLineWidth].Value =
 					_gridLineWidth = value.Viceroy(1,5);
@@ -108,7 +108,7 @@ namespace MapView.Forms.Observers
 			get { return _gridLine10Width; }
 			set
 			{
-				if ((TopView._foptions as OptionsF) == null) // on load
+				if (TopView._foptions == null) // on load
 				{
 					TopView.Options[str_GridLine10Width].Value =
 					_gridLine10Width = value.Viceroy(1,5);
@@ -163,7 +163,7 @@ namespace MapView.Forms.Observers
 			get { return _westWidth; }
 			set
 			{
-				if ((TopView._foptions as OptionsF) == null) // on load
+				if (TopView._foptions == null) // on load
 				{
 					TopView.Options[str_WestWidth].Value =
 					_westWidth = value.Viceroy(1,10);
@@ -201,7 +201,7 @@ namespace MapView.Forms.Observers
 			get { return _northWidth; }
 			set
 			{
-				if ((TopView._foptions as OptionsF) == null) // on load
+				if (TopView._foptions == null) // on load
 				{
 					TopView.Options[str_NorthWidth].Value =
 					_northWidth = value.Viceroy(1,10);
@@ -256,7 +256,7 @@ namespace MapView.Forms.Observers
 			get { return _selectorWidth; }
 			set
 			{
-				if ((TopView._foptions as OptionsF) == null) // on load
+				if (TopView._foptions == null) // on load
 				{
 					TopView.Options[str_SelectorWidth].Value =
 					_selectorWidth = value.Viceroy(1,5);
@@ -294,7 +294,7 @@ namespace MapView.Forms.Observers
 			get { return _selectedWidth; }
 			set
 			{
-				if ((TopView._foptions as OptionsF) == null) // on load
+				if (TopView._foptions == null) // on load
 				{
 					TopView.Options[str_SelectedWidth].Value =
 					_selectedWidth = value.Viceroy(1,5);

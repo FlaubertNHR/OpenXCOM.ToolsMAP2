@@ -2704,8 +2704,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		internal static Form _foptions;	// is static so that it will be used by both
-										// RouteView and TopRouteView(Route)
+		internal static OptionsF _foptions;	// is static so that it will be used by both
+											// RouteView and TopRouteView(Route)
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an
 		/// <c><see cref="OptionsF"/></c>. Instantiates an <c>OptionsF</c> if

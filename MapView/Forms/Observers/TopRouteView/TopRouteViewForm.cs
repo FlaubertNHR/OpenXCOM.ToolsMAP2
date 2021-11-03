@@ -331,12 +331,8 @@ namespace MapView.Forms.Observers
 			{
 				MainViewF.Optionables.StartTopRoutePage = tabControl.SelectedIndex + 2;
 
-				Form foptions = MainViewF._foptions;
-				if (foptions != null)
-				{
-					OptionsPropertyGrid grid = (foptions as OptionsF).propertyGrid;
-					grid.Refresh(); // yes refresh the grid even if it's hidden.
-				}
+				if (MainViewF._foptions != null)
+					MainViewF._foptions.propertyGrid.Refresh(); // yes refresh the grid even if it's hidden.
 			}
 		}
 		#endregion Events

@@ -800,7 +800,7 @@ namespace MapView
 		} */
 
 
-		internal static Form _foptions; // is static for no special reason
+		internal static OptionsF _foptions; // is static for no special reason
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an
@@ -1299,7 +1299,7 @@ namespace MapView
 				Options[key].SetValue(key,val);
 
 				if (_foptions != null && _foptions.Visible)
-					(_foptions as OptionsF).propertyGrid.Refresh();
+					_foptions.propertyGrid.Refresh();
 			}
 			else if (menuViewers.Enabled)
 			{
@@ -2113,7 +2113,7 @@ namespace MapView
 				Options[key].SetValue(key,val);
 
 				if (_foptions != null && _foptions.Visible)
-					(_foptions as OptionsF).propertyGrid.Refresh();
+					_foptions.propertyGrid.Refresh();
 			}
 		}
 
@@ -3286,7 +3286,7 @@ namespace MapView
 						Optionables.OpenDoors = false;
 						SetDoorSpritesFullPhase(false);
 						if (_foptions != null && _foptions.Visible)
-						   (_foptions as OptionsF).propertyGrid.Refresh();
+							_foptions.propertyGrid.Refresh();
 
 						SelectToner(); // create toned spriteset(s) for selected-tile(s)
 

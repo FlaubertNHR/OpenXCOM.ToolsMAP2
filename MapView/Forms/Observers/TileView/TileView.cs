@@ -293,7 +293,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Options
-		internal static Form _foptions; // is static for no special reason
+		internal static OptionsF _foptions; // is static for no special reason
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an
