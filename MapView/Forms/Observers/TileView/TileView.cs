@@ -384,7 +384,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnExternalProcessClick(object sender, EventArgs e)
 		{
-			var pfe = new ExternalProcessService(Options).GetFullpath();
+			string pfe = new ExternalProcessService(Options).GetFullpath();
 			if (File.Exists(pfe))
 			{
 				// change to pfe-dir so that accessing MCDEdit.txt (eg) doesn't cause probls.

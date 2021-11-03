@@ -54,8 +54,7 @@ namespace MapView.ExternalProcess
 					{
 						if (File.Exists(volutar.InputString))
 						{
-							TileView.Optionables.ExternalProcess = fullpath = volutar.InputString;
-							option.Value = (object)fullpath;
+							option.SetValue(PROCESS, (fullpath = volutar.InputString));
 
 							if (TileView._foptions != null && TileView._foptions.Visible)
 								TileView._foptions.propertyGrid.Refresh();
