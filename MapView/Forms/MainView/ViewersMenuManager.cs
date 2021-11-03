@@ -167,29 +167,29 @@ namespace MapView.Forms.MainView
 			switch (e.KeyData)
 			{
 				case Keys.F5:
-				case Keys.Control | Keys.F5:
+				case Keys.F5 | Keys.Control:
 					id = MI_TILE;
 					break;
 
 				case Keys.F6:
-				case Keys.Control | Keys.F6:
+				case Keys.F6 | Keys.Control:
 					id = MI_TOP;
 					break;
 
 				case Keys.F7:
-				case Keys.Control | Keys.F7:
+				case Keys.F7 | Keys.Control:
 					id = MI_ROUTE;
 					break;
 
 				case Keys.F8:
-				case Keys.Control | Keys.F8:
+				case Keys.F8 | Keys.Control:
 					id = MI_TOPROUTE;
 					break;
 
-				case Keys.Shift | Keys.F5: // focus MainView
-				case Keys.Shift | Keys.F6:
-				case Keys.Shift | Keys.F7:
-				case Keys.Shift | Keys.F8:
+				case Keys.F5 | Keys.Shift: // focus MainView
+				case Keys.F6 | Keys.Shift:
+				case Keys.F7 | Keys.Shift:
+				case Keys.F8 | Keys.Shift:
 					e.SuppressKeyPress = true;
 
 					if (MainViewF.that.WindowState == FormWindowState.Minimized)
