@@ -317,7 +317,7 @@ namespace MapView.Forms.Observers
 										OptionableType.TileView);
 					_foptions.Text = "TileView Options";
 
-					OptionsManager.Viewers.Add(_foptions);
+					OptionsManager.Options.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{

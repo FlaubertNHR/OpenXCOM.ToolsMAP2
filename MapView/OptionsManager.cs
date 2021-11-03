@@ -22,7 +22,7 @@ namespace MapView
 
 
 		#region Properties (static)
-		private static IList<Form> _views = new List<Form>();
+		private static IList<Form> _options = new List<Form>();
 		/// <summary>
 		/// A <c>List</c> of <c><see cref="OptionsF"/></c> that are instantiated
 		/// by each viewer respectively.
@@ -30,9 +30,9 @@ namespace MapView
 		/// <remarks>The <c>List</c> is used only to close any open <c>Forms</c>
 		/// when MapView quits - such <c>Forms</c> last the lifetime of the app
 		/// after they are instantiated.</remarks>
-		internal static IList<Form> Viewers
+		internal static IList<Form> Options
 		{
-			get { return _views; }
+			get { return _options; }
 		}
 		#endregion Properties (static)
 
@@ -146,7 +146,7 @@ namespace MapView
 		/// </summary>
 		internal static void CloseOptions()
 		{
-			foreach (var f in Viewers)
+			foreach (var f in Options)
 				f.Close();
 		}
 

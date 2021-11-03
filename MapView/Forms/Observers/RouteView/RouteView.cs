@@ -2730,7 +2730,7 @@ namespace MapView.Forms.Observers
 										OptionableType.RouteView);
 					_foptions.Text = "RouteView Options";
 
-					OptionsManager.Viewers.Add(_foptions);
+					OptionsManager.Options.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>
 					{
