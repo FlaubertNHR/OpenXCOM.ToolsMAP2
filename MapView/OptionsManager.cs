@@ -146,8 +146,8 @@ namespace MapView
 		/// </summary>
 		internal static void CloseOptions()
 		{
-			foreach (var view in Viewers)
-				view.Close();
+			foreach (var f in Viewers)
+				f.Close();
 		}
 
 
