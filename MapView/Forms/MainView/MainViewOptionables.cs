@@ -93,9 +93,11 @@ namespace MapView.Forms.MainView
 //		[DefaultValue(...)]
 //		[Editor(...)]
 
-		// NOTE: Observers are added to MainView's Options by
-		// ViewersMenuManager.PopulateMenu(). They are used by
+
+		// Observers to track are added to MainView's Options by
+		// ViewersMenuManager.Initialize(). They are used by
 		// ViewersMenuManager.StartSecondStageBoosters().
+
 		private const string cat_Observers = "Observers";			// category in the PropertyPanel
 
 		private  const string str_StartTileView = "StartTileView";	// const string key of the Property
