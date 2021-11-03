@@ -803,11 +803,11 @@ namespace MapView
 		internal static Form _foptions; // is static for no special reason
 
 		/// <summary>
-		/// Handles a click on the Options button to show or hide an Options-
-		/// form. Instantiates an <c><see cref="OptionsF"/></c> if one
-		/// doesn't exist for this viewer. Also subscribes to a
+		/// Handles a click on the Options button to show or hide an
+		/// <c><see cref="OptionsF"/></c>. Instantiates an <c>OptionsF</c> if
+		/// one doesn't exist for this viewer. Also subscribes to a
 		/// <c>FormClosing</c> handler that will hide the <c>Form</c> unless
-		/// MapView is closing.
+		/// MapView is quitting.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
