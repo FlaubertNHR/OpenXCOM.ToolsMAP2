@@ -15,6 +15,8 @@ namespace MapView
 	/// <item><c><see cref="Forms.Observers.RouteViewOptionables"/></c></item>
 	/// </list>
 	/// </summary>
+	/// <remarks><c><see cref="Options"/></c> can be accessed by the user in an
+	/// <c><see cref="OptionsForm"/></c></remarks>
 	internal sealed class Option
 	{
 		#region Events
