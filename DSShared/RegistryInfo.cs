@@ -156,7 +156,7 @@ namespace DSShared
 				case "TopViewForm":      return TopView;		// is in manifest
 				case "RouteViewForm":    return RouteView;		// is in manifest
 				case "TopRouteViewForm": return TopRouteView;	// is in manifest
-				case "OptionsForm":      return Options;		// is in manifest
+				case "OptionsF":         return Options;		// is in manifest
 				case "TilesetEditor":    return TilesetEditor;	// is in manifest
 				case "ScanGViewer":      return ScanG;
 				case "ColorHelp":        return ColorHelp;

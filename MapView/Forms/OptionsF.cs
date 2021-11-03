@@ -33,13 +33,13 @@ namespace MapView
 	/// <c><see cref="TileView._foptions">TileView</see></c>,
 	/// <c><see cref="TopView._foptions">TopView</see></c>,
 	/// <c><see cref="RouteView._foptions">RouteView</see></c> each get their
-	/// own <c>OptionsForm</c>.
+	/// own <c>OptionsF</c>.
 	/// </summary>
 	/// <remarks><c>TopView</c> and <c>RouteView</c> share their respective
-	/// <c>OptionsForm</c> with
+	/// <c>OptionsF</c> with
 	/// <c><see cref="TopRouteViewForm.ControlTop">TopRouteViewForm.ControlTop</see></c> and
 	/// <c><see cref="TopRouteViewForm.ControlRoute">TopRouteViewForm.ControlRoute</see></c>.</remarks>
-	internal sealed class OptionsForm
+	internal sealed class OptionsF
 		:
 			Form
 	{
@@ -72,12 +72,12 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Constructs this <c>OptionsForm</c>.
+		/// cTor. Constructs this <c>OptionsF</c>.
 		/// </summary>
 		/// <param name="o">a class-object w/ Properties that are optionable</param>
 		/// <param name="options">its Options</param>
 		/// <param name="oType">its optionable type</param>
-		internal OptionsForm(
+		internal OptionsF(
 				object o,
 				Options options,
 				OptionableType oType)
@@ -126,7 +126,7 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Handles command-key processing. Closes this <c>OptionsForm</c> when
+		/// Handles command-key processing. Closes this <c>OptionsF</c> when
 		/// either of <c>[Esc]</c> or <c>[Ctrl+o]</c> is pressed.
 		/// </summary>
 		/// <param name="msg"></param>
@@ -175,7 +175,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>The cached metric of an <c>OptionsForm</c> is updated every
+		/// <remarks>The cached metric of an <c>OptionsF</c> is updated every
 		/// time the form is hidden, unlike other viewers that update their
 		/// metrics only when MapView quits.</remarks>
 		private void OnVisibleChanged(object sender, EventArgs e)
@@ -225,14 +225,14 @@ namespace MapView
 			this.propertyGrid.Size = new System.Drawing.Size(592, 374);
 			this.propertyGrid.TabIndex = 0;
 			// 
-			// OptionsForm
+			// OptionsF
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(592, 374);
 			this.Controls.Add(this.propertyGrid);
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.MinimumSize = new System.Drawing.Size(500, 300);
-			this.Name = "OptionsForm";
+			this.Name = "OptionsF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Custom PropertyGrid";
 			this.VisibleChanged += new System.EventHandler(this.OnVisibleChanged);

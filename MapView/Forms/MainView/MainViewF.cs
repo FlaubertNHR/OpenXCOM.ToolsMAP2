@@ -804,9 +804,10 @@ namespace MapView
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
-		/// form. Instantiates an <c><see cref="OptionsForm"/></c> if one
-		/// doesn't exist for this viewer. Also subscribes to a form-closing
-		/// handler that will hide the form unless MapView is closing.
+		/// form. Instantiates an <c><see cref="OptionsF"/></c> if one
+		/// doesn't exist for this viewer. Also subscribes to a
+		/// <c>FormClosing</c> handler that will hide the <c>Form</c> unless
+		/// MapView is closing.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -818,10 +819,10 @@ namespace MapView
 
 				if (_foptions == null)
 				{
-					_foptions = new OptionsForm(
-											Optionables,
-											Options,
-											OptionableType.MainView);
+					_foptions = new OptionsF(
+										Optionables,
+										Options,
+										OptionableType.MainView);
 					_foptions.Text = "MainView Options";
 
 					OptionsManager.Viewers.Add(_foptions);
@@ -1298,7 +1299,7 @@ namespace MapView
 				Options[key].SetValue(key,val);
 
 				if (_foptions != null && _foptions.Visible)
-					(_foptions as OptionsForm).propertyGrid.Refresh();
+					(_foptions as OptionsF).propertyGrid.Refresh();
 			}
 			else if (menuViewers.Enabled)
 			{
@@ -2112,7 +2113,7 @@ namespace MapView
 				Options[key].SetValue(key,val);
 
 				if (_foptions != null && _foptions.Visible)
-					(_foptions as OptionsForm).propertyGrid.Refresh();
+					(_foptions as OptionsF).propertyGrid.Refresh();
 			}
 		}
 
@@ -3285,7 +3286,7 @@ namespace MapView
 						Optionables.OpenDoors = false;
 						SetDoorSpritesFullPhase(false);
 						if (_foptions != null && _foptions.Visible)
-						   (_foptions as OptionsForm).propertyGrid.Refresh();
+						   (_foptions as OptionsF).propertyGrid.Refresh();
 
 						SelectToner(); // create toned spriteset(s) for selected-tile(s)
 

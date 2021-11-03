@@ -24,7 +24,7 @@ namespace MapView
 		#region Properties (static)
 		private static IList<Form> _views = new List<Form>();
 		/// <summary>
-		/// A list of the <c><see cref="OptionsForm">OptionsForms</see></c> that
+		/// A list of the <c><see cref="OptionsF">OptionsForms</see></c> that
 		/// are instantiated by each viewer respectively.
 		/// </summary>
 		/// <remarks>The list is used only to close any open forms when MapView
@@ -142,7 +142,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Closes all the <c><see cref="OptionsForm"/></c> windows.
+		/// Closes all the <c><see cref="OptionsF"/></c> windows.
 		/// </summary>
 		internal static void CloseOptions()
 		{

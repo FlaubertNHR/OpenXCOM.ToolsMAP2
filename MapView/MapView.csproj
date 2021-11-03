@@ -200,7 +200,7 @@
     <Compile Include="Forms\Observers\TopView\TopViewOptionables.cs" />
     <Compile Include="Forms\Observers\BlobColorTool.cs" />
     <Compile Include="Forms\Observers\BlobDrawService.cs" />
-    <Compile Include="Forms\OptionsForm.cs">
+    <Compile Include="Forms\OptionsF.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\OptionsPropertyGrid.cs" />
@@ -317,8 +317,8 @@
     <EmbeddedResource Include="Forms\Observers\TopView\TopViewForm.resx">
       <DependentUpon>TopViewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\OptionsF.resx">
+      <DependentUpon>OptionsF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Observers\RouteView\RouteView.resx">
       <SubType>Designer</SubType>

@@ -297,9 +297,9 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handles a click on the Options button to show or hide an Options-
-		/// form. Instantiates an <see cref="OptionsForm"/> if one doesn't exist
-		/// for this viewer. Also subscribes to a form-closing handler that will
-		/// hide the form unless MapView is quitting.
+		/// form. Instantiates an <c><see cref="OptionsF"/></c> if one doesn't
+		/// exist for this viewer. Also subscribes to a <c>FormClosing</c>
+		/// handler that will hide the <c>Form</c> unless MapView is quitting.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -310,10 +310,10 @@ namespace MapView.Forms.Observers
 			{
 				if (_foptions == null)
 				{
-					_foptions = new OptionsForm(
-											Optionables,
-											Options,
-											OptionableType.TileView);
+					_foptions = new OptionsF(
+										Optionables,
+										Options,
+										OptionableType.TileView);
 					_foptions.Text = "TileView Options";
 
 					OptionsManager.Viewers.Add(_foptions);

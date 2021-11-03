@@ -58,7 +58,7 @@ namespace MapView.ExternalProcess
 							option.Value = (object)fullpath;
 
 							if (TileView._foptions != null && TileView._foptions.Visible)
-							   (TileView._foptions as OptionsForm).propertyGrid.Refresh();
+							   (TileView._foptions as OptionsF).propertyGrid.Refresh();
 						}
 						else
 						{

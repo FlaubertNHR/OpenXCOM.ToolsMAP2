@@ -323,7 +323,7 @@ namespace MapView.Forms.Observers
 		/// Tracks the selected page in
 		/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tabControl"/></c></param>
 		/// <param name="e"></param>
 		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -331,10 +331,10 @@ namespace MapView.Forms.Observers
 			{
 				MainViewF.Optionables.StartTopRoutePage = tabControl.SelectedIndex + 2;
 
-				var foptions = MainViewF._foptions;
+				Form foptions = MainViewF._foptions;
 				if (foptions != null)
 				{
-					var grid = (foptions as OptionsForm).propertyGrid;
+					OptionsPropertyGrid grid = (foptions as OptionsF).propertyGrid;
 					grid.Refresh(); // yes refresh the grid even if it's hidden.
 				}
 			}
