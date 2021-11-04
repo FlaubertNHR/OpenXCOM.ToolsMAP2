@@ -6,7 +6,9 @@ using System.IO;
 
 namespace MapView
 {
+	#region Delegates
 	internal delegate void OptionChangedEvent(string key, object val);
+	#endregion Delegates
 
 
 	/// <summary>
@@ -29,7 +31,8 @@ namespace MapView
 
 		#region Indexers
 		/// <summary>
-		/// Gets an <c><see cref="Option"/></c> keyed by a specified key.
+		/// Gets an <c><see cref="Option"/></c> in this <c>Options</c> by a
+		/// specified key.
 		/// </summary>
 		/// <remarks>Ensure that <paramref name="key"/> is not <c>null</c>
 		/// before call.</remarks>

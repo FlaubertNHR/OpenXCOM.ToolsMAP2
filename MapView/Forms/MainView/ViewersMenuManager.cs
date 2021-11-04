@@ -17,7 +17,7 @@ namespace MapView.Forms.MainView
 	internal static class ViewersMenuManager
 	{
 		#region Fields (static)
-		private const string PropertyStartObserver = "Start";
+		private const string Start = "Start";
 		private const string Separator = "-";
 
 		internal const int MI_non      = -1;
@@ -109,7 +109,7 @@ namespace MapView.Forms.MainView
 			};
 
 			 // initialize MainView's Options w/ each viewer's default Start setting ->
-			string key = PropertyStartObserver + RegistryInfo.GetRegistryLabel(f);
+			string key = Start + RegistryInfo.GetRegistryLabel(f);
 			options.CreateOptionDefault(
 									key,
 									@default,
@@ -141,7 +141,7 @@ namespace MapView.Forms.MainView
 				if (id == MI_sep1) ++id; // skip the separator
 
 				MenuItem it = _it.MenuItems[id];
-				if (options[PropertyStartObserver + RegistryInfo.GetRegistryLabel(it.Tag as Form)].IsTrue)
+				if (options[Start + RegistryInfo.GetRegistryLabel(it.Tag as Form)].IsTrue)
 				{
 					OnMenuItemClick(it, EventArgs.Empty);
 				}
