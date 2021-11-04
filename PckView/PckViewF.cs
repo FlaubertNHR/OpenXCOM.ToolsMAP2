@@ -359,7 +359,9 @@ namespace PckView
 			int palselected = 0;
 			bool userconfig_spriteshade = true;
 
-			LoadConfiguration(piConfig.Fullpath, ref userconfig_spriteshade, ref palselected);
+			LoadConfiguration(piConfig.Fullpath,
+							  ref userconfig_spriteshade,
+							  ref palselected);
 
 			PopulatePaletteMenu(palselected); // WARNING: Palettes created here <-
 
