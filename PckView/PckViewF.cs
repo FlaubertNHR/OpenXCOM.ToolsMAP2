@@ -342,8 +342,6 @@ namespace PckView
 			PrintOver();
 
 
-			int palselected = 0;
-
 			// NOTE: Ben was a genius but this is fucked. He was devouring the
 			// c#/.net language/framework when he set this 'pattern' up ... and
 			// while his tactics were no doubt invaluable for research I've left
@@ -358,85 +356,10 @@ namespace PckView
 			// - SharedSpace.PckConfigFile
 			// - piConfig
 
+			int palselected = 0;
 			bool userconfig_spriteshade = true;
 
-			string pfe = piConfig.Fullpath;
-
-			using (var fs = FileService.OpenFile(pfe, true)) // don't warn user if not found.
-			if (fs != null)
-			using (var sr = new StreamReader(pfe))
-			{
-				var ys = new YamlStream();
-				ys.Load(sr);
-
-				bool val_bool; int val_int;
-
-				var root = ys.Documents[0].RootNode as YamlMappingNode;
-				foreach (var node in root.Children)
-				{
-					string label = (node.Key as YamlScalarNode).Value;
-
-					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
-					foreach (var keyval in keyvals)
-					{
-						switch (keyval.Key.ToString())
-						{
-							case "transparent": // NOTE: Try to set Transparent before the palette.
-								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
-									miTransparent.Checked = val_bool;
-								break;
-
-							case "spriteshade":
-								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
-									userconfig_spriteshade = val_bool;
-								break;
-
-							case "palette":
-								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
-									&& val_int > -1 && val_int < 8)
-								{
-									palselected = val_int;
-								}
-								break;
-
-							case "front":
-								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
-									Frontal = miBringToFront.Checked = val_bool;
-								break;
-
-
-							case "grid":
-								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
-									&& val_int > 0 && val_int < 3)
-								{
-									switch (val_int)
-									{
-										case 1: SpriteEditor.OnGridDarkClick( null, EventArgs.Empty); break;
-										case 2: SpriteEditor.OnGridLightClick(null, EventArgs.Empty); break;
-									}
-								}
-								break;
-
-							case "scale":
-								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
-									&& val_int > 0 && val_int < 11)
-								{
-									SpriteEditor.SetScale(val_int);
-								}
-								break;
-
-							case "edit":
-								switch (keyval.Value.ToString())
-								{
-									case SpriteEditorF.EditEnabled:
-										SpriteEditor.OnEditModeMouseClick(null, EventArgs.Empty);
-										break;
-								}
-								break;
-						}
-					}
-				}
-			}
+			LoadConfiguration(piConfig.Fullpath, ref userconfig_spriteshade, ref palselected);
 
 			PopulatePaletteMenu(palselected); // WARNING: Palettes created here <-
 
@@ -622,6 +545,91 @@ namespace PckView
 			_miClear      .Enabled = false;
 
 			return context;
+		}
+
+		/// <summary>
+		/// Loads user-configuration from 'settings/PckConfig.yml'.
+		/// </summary>
+		/// <param name="pfe"></param>
+		/// <param name="spriteshade"></param>
+		/// <param name="pal"></param>
+		private void LoadConfiguration(string pfe, ref bool spriteshade, ref int pal)
+		{
+			using (var fs = FileService.OpenFile(pfe, true)) // don't warn user if not found.
+			if (fs != null)
+			using (var sr = new StreamReader(pfe))
+			{
+				var ys = new YamlStream();
+				ys.Load(sr);
+
+				bool val_bool; int val_int;
+
+				var root = ys.Documents[0].RootNode as YamlMappingNode;
+				foreach (var node in root.Children)
+				{
+					string label = (node.Key as YamlScalarNode).Value;
+
+					var keyvals = root.Children[new YamlScalarNode(label)] as YamlMappingNode;
+					foreach (var keyval in keyvals)
+					{
+						switch (keyval.Key.ToString())
+						{
+							case "transparent":
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
+									miTransparent.Checked = val_bool;
+								break;
+
+							case "spriteshade":
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
+									spriteshade = val_bool;
+								break;
+
+							case "palette":
+								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
+									&& val_int > -1 && val_int < 8)
+								{
+									pal = val_int;
+								}
+								break;
+
+							case "front":
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
+									Frontal = miBringToFront.Checked = val_bool;
+								break;
+
+
+							case "grid":
+								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
+									&& val_int > 0 && val_int < 3)
+								{
+									switch (val_int)
+									{
+										case 1: SpriteEditor.OnGridDarkClick( null, EventArgs.Empty); break;
+										case 2: SpriteEditor.OnGridLightClick(null, EventArgs.Empty); break;
+									}
+								}
+								break;
+
+							case "scale":
+								if (Int32.TryParse(keyval.Value.ToString(), out val_int)
+									&& val_int > 0 && val_int < 11)
+								{
+									SpriteEditor.SetScale(val_int);
+								}
+								break;
+
+							case "edit":
+								switch (keyval.Value.ToString())
+								{
+									case SpriteEditorF.EditEnabled:
+										SpriteEditor.OnEditModeMouseClick(null, EventArgs.Empty);
+										break;
+								}
+								break;
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -2250,7 +2258,17 @@ namespace PckView
 		private void OnBringToFrontClick(object sender, EventArgs e)
 		{
 			if (Frontal = (miBringToFront.Checked = !miBringToFront.Checked))
+			{
 				OnActivated(EventArgs.Empty);
+
+				SpriteEditor.ShowInTaskbar =
+				SpriteEditor._fpalette.ShowInTaskbar = false;
+			}
+			else
+			{
+				SpriteEditor.ShowInTaskbar =
+				SpriteEditor._fpalette.ShowInTaskbar = true;
+			}
 		}
 
 

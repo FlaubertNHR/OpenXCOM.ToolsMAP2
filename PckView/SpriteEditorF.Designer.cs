@@ -335,7 +335,6 @@ namespace PckView
 			this.Menu = this.mmMainMenu;
 			this.MinimizeBox = false;
 			this.Name = "SpriteEditorF";
-			this.ShowInTaskbar = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Sprite Editor";
