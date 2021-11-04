@@ -593,8 +593,12 @@ namespace PckView
 								break;
 
 							case "front":
-								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool))
-									Frontal = miBringToFront.Checked = val_bool;
+								if (Boolean.TryParse(keyval.Value.ToString(), out val_bool)
+									&& (Frontal = miBringToFront.Checked = val_bool))
+								{
+									SpriteEditor.ShowInTaskbar =
+									SpriteEditor._fpalette.ShowInTaskbar = false;
+								}
 								break;
 
 
