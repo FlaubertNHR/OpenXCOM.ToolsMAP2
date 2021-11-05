@@ -329,7 +329,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="isInvoked"><c>true</c> if invoked via TileView</param>
 		/// <param name="spriteshade">if <paramref name="isInvoked"/> is true
-		/// you can pass in a the <c>SpriteShade</c> value from MapView</param>
+		/// you can pass in the <c>SpriteShade</c> value from MapView</param>
 		public PckViewF(bool isInvoked = false, int spriteshade = 0)
 		{
 			IsInvoked = isInvoked;
