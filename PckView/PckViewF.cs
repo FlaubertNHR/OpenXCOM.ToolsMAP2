@@ -88,6 +88,11 @@ namespace PckView
 
 		internal static bool Quit;
 
+		/// <summary>
+		/// <c>SpriteShadeFloat</c> is used by <c><see cref="Ia"/></c> to draw
+		/// sprites if <c><see cref="Shader"/></c> is enabled and is set to
+		/// <c><see cref="ShaderOn"/></c>.
+		/// </summary>
 		internal static float SpriteShadeFloat;
 
 		private  const int ShaderDisabled = 0;
@@ -118,10 +123,27 @@ namespace PckView
 		private ToolStripMenuItem _miCreate;
 		private ToolStripMenuItem _miClear;
 
+		/// <summary>
+		/// A <c>Dictionary</c> that contains
+		/// <c><see cref="Palette">Palettes</see></c> that are available under
+		/// the Palette menu.
+		/// </summary>
 		private readonly Dictionary<Palette, MenuItem> _itPalettes =
 					 new Dictionary<Palette, MenuItem>();
 
+		/// <summary>
+		/// Status of the spriteshade.
+		/// <list type="bullet">
+		/// <item><c><see cref="ShaderDisabled"/></c></item>
+		/// <item><c><see cref="ShaderOn"/></c></item>
+		/// <item><c><see cref="ShaderOff"/></c></item>
+		/// </list>
+		/// </summary>
 		internal int Shader;
+
+		/// <summary>
+		/// <c>ImageAttibutes</c> used to draw sprites with spriteshade.
+		/// </summary>
 		internal ImageAttributes Ia;
 
 
@@ -359,9 +381,10 @@ namespace PckView
 			int palselected = 0;
 			bool userconfig_spriteshade = true;
 
-			LoadConfiguration(piConfig.Fullpath,
-							  ref userconfig_spriteshade,
-							  ref palselected);
+			LoadConfiguration(
+							piConfig.Fullpath,
+							ref userconfig_spriteshade,
+							ref palselected);
 
 			PopulatePaletteMenu(palselected); // WARNING: Palettes created here <-
 
@@ -385,62 +408,12 @@ namespace PckView
 			ss_Status.Renderer = new CustomToolStripRenderer();
 
 
-			bool @set = false;
-			if (IsInvoked)
-			{
-				@set = spriteshade > 0;
-			}
-			else
-			{
-				string shade = GlobalsXC.GetSpriteShade(dirAppL); // get shade from MapView's options
-				if (shade != null)
-				{
-					@set = Int32.TryParse(shade, out spriteshade)
-						&& spriteshade > 0;
-				}
-			}
+			SetSpriteshade(
+						dirAppL,
+						spriteshade,
+						userconfig_spriteshade);
 
-			if (@set)
-			{
-				miSpriteShade.Enabled = true;
-
-				if (miSpriteShade.Checked = userconfig_spriteshade)
-					Shader = ShaderOn;
-				else
-					Shader = ShaderOff;
-
-				SpriteShadeFloat = (float)Math.Min(spriteshade, 99)
-								 * GlobalsXC.SpriteShadeCoefficient;
-
-				Ia = new ImageAttributes();
-				Ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
-			}
-
-
-			if (_args != null && _args.Length != 0)
-			{
-				string file = Path.GetFileNameWithoutExtension(_args[0]).ToLower();
-				switch (Path.GetExtension(_args[0]).ToLower())
-				{
-					case ".pck":
-						// NOTE: LoadSpriteset() will check for a TAB file and
-						// issue an error if not found.
-
-						LoadSpriteset(_args[0], file.Contains("bigobs"));
-						break;
-
-					case ".dat":
-						if (file.Contains("scang"))
-						{
-							LoadScanG(_args[0]);
-						}
-						else if (file.Contains("loftemps"))
-						{
-							LoadLoFT(_args[0]);
-						}
-						break;
-				}
-			}
+			LoadStartFile();
 
 #if !__MonoCS__
 			if (!isInvoked)
@@ -555,7 +528,10 @@ namespace PckView
 		/// <param name="pfe"></param>
 		/// <param name="spriteshade"></param>
 		/// <param name="pal"></param>
-		private void LoadConfiguration(string pfe, ref bool spriteshade, ref int pal)
+		private void LoadConfiguration(
+				string pfe,
+				ref bool spriteshade,
+				ref int pal)
 		{
 			using (var fs = FileService.OpenFile(pfe, true)) // don't warn user if not found.
 			if (fs != null)
@@ -685,6 +661,82 @@ namespace PckView
 			}
 
 			OnPaletteClick(_itPalettes[pals[sel]], EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Deters the status of <c><see cref="Shader"/></c> and the value for
+		/// <c><see cref="SpriteShadeFloat"/></c>.
+		/// </summary>
+		/// <param name="dirAppL">path to the application directory</param>
+		/// <param name="spriteshade">spriteshade passed into constructor</param>
+		/// <param name="userconfig_spriteshade"><c>true</c> if user-config turns on spriteshade</param>
+		private void SetSpriteshade(
+				string dirAppL,
+				int spriteshade,
+				bool userconfig_spriteshade)
+		{
+			bool @set = false;
+			if (IsInvoked)
+			{
+				@set = spriteshade > 0;
+			}
+			else
+			{
+				string shade = GlobalsXC.GetSpriteShade(dirAppL); // get shade from MapView's options
+				if (shade != null)
+				{
+					@set = Int32.TryParse(shade, out spriteshade)
+						&& spriteshade > 0;
+				}
+			}
+
+			if (@set)
+			{
+				miSpriteShade.Enabled = true;
+
+				if (miSpriteShade.Checked = userconfig_spriteshade)
+					Shader = ShaderOn;
+				else
+					Shader = ShaderOff;
+
+				SpriteShadeFloat = (float)Math.Min(spriteshade, 99)
+								 * GlobalsXC.SpriteShadeCoefficient;
+
+				Ia = new ImageAttributes();
+				Ia.SetGamma(SpriteShadeFloat, ColorAdjustType.Bitmap);
+			}
+		}
+
+		/// <summary>
+		/// Loads a file when PckView is started by a file association in
+		/// FileExplorer.
+		/// </summary>
+		private void LoadStartFile()
+		{
+			if (_args != null && _args.Length != 0)
+			{
+				string file = Path.GetFileNameWithoutExtension(_args[0]).ToLower();
+				switch (Path.GetExtension(_args[0]).ToLower())
+				{
+					case ".pck":
+						// NOTE: LoadSpriteset() will check for a TAB file and
+						// issue an error if not found.
+
+						LoadSpriteset(_args[0], file.Contains("bigobs"));
+						break;
+
+					case ".dat":
+						if (file.Contains("scang"))
+						{
+							LoadScanG(_args[0]);
+						}
+						else if (file.Contains("loftemps"))
+						{
+							LoadLoFT(_args[0]);
+						}
+						break;
+				}
+			}
 		}
 		#endregion cTor
 
