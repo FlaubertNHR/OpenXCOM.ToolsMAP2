@@ -16,7 +16,7 @@ namespace XCom
 
 
 	/// <summary>
-	/// This is the currently loaded Map.
+	/// This is the currently loaded Map and associated stuff for it.
 	/// </summary>
 	public sealed class MapFile
 	{

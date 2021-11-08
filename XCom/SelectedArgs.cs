@@ -1,7 +1,9 @@
 namespace XCom
 {
 	/// <summary>
-	/// Args for when a LocationSelected event fires.
+	/// Args for when a
+	/// <c><see cref="MapFile.LocationSelected">MapFile.LocationSelected</see></c>
+	/// event fires.
 	/// </summary>
 	public sealed class LocationSelectedArgs
 	{
@@ -26,7 +28,9 @@ namespace XCom
 
 
 	/// <summary>
-	/// Args for when a LevelSelected event fires.
+	/// Args for when a
+	/// <c><see cref="MapFile.LevelSelected">MapFile.LevelSelected</see></c>
+	/// event fires.
 	/// </summary>
 	public sealed class LevelSelectedArgs
 	{
