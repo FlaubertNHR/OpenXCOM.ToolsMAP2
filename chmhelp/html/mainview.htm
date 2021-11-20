@@ -102,11 +102,11 @@
 		<br>
 		<h3>Edit menu</h3>
 
-		<p>Modify Map Size [Ctrl+Z] - opens a dialog box for modifying the dimensions of the currently loaded Map.</p>
-		<p>Tileslot Substitution [Ctrl+U] - opens a dialog box for replacing tileparts of a given setId with tileparts of a different setId across the currently loaded Map. Tileparts of a given setId can optionally be cleared from a Map.</p>
-		<p>Terrain Swap [Ctrl+W] - opens a dialog box for rearranging the order of terrains in the current Map's terrainset without the tileset going all wtf.</p>
+		<p>modify mapsize [Ctrl+Z] - opens a dialog box for modifying the dimensions of the currently loaded Map.</p>
+		<p>substitute tileparts [Ctrl+U] - opens a dialog box for replacing tileparts of a given setId with tileparts of a different setId across the currently loaded Map. Tileparts of a given setId can optionally be cleared from a Map.</p>
+		<p>swap terrains [Ctrl+W] - opens a dialog box for rearranging the order of terrains in the current Map's terrainset without the tileset going all wtf.</p>
 
-		<p>Clear all BypassRecordsExceeded flags - clears all BypassRecordsExceeded flags over all tilesets. The checkbox for these flags is toggled near the bottom of the TilesetEditor. Its setting is specific to each tileset. Note that there is also a MainView Option IgnoreRecordsExceeded, which is a setting that globally overrules the BypassRecordsExceeded flags.</p>
+		<p>clear all BypassRecordsExceeded flags - clears all BypassRecordsExceeded flags over all tilesets. The checkbox for these flags is toggled near the bottom of the TilesetEditor. Its setting is specific to each tileset. Note that there is also a MainView Option IgnoreRecordsExceeded, which is a setting that globally overrules the BypassRecordsExceeded flags.</p>
 
 		<p>Configurator - opens the Configuration Editor. This is where to specify or modify the paths to your XCOM installation folder(s) for UFO and/or TFTD - or to your working folders if that's how you want to roll. It can also replace your Maptree file with a fresh one that comes hardcoded. WARNING: doing that would obliterate all customizations that have been done to the Maptree! Alternately, the Configurator can generate a file of the hardcoded, or default tileset-metadata to a template file. The template would be useful if MapView II had been configured for UFO (or TFTD), but you've deleted treenodes, and subsequently require the metadata for TFTD (or UFO) tilesets. The default metadata could then be copied directly from the template file into your <b>MapTilesets.yml</b> file.</p>
 		<p>Note that the tileset-data for both games will exist in your MapTilesets configuration unless/until the data that you don't want is deleted from the MapTree and the MapTree is saved.</p>
@@ -128,6 +128,15 @@
 		<p>restore all [F12] - restores all viewers.</p>
 
 		<p>ScanG view [Ctrl+G] - displays an overhead view of the currently loaded Map. Note that the graphics for this rely on ScanG.Dat in the GEODATA folder of the Configurator's basepath. The displayed level is synchronized with the other viewers and can be changed with the mousewheel or the [Add] and [Subtract] keys on the numeric keypad. RMB or the [L] key cycles the display among (1) default levels as seen in x-com, (2) only the current level of the Map, and (3) all levels locked visible. The [Enter] key reloads ScanG.Dat from disk.</p>
+
+		<br>
+		<h3>Toner menu</h3>
+
+		<p>none - selected tiles display in their usual colors</p>
+		<p>gray - selected tiles display in a grayscale palette</p>
+		<p>red - selected tiles display in a redscale palette</p>
+		<p>green - selected tiles display in a greenscale palette</p>
+		<p>blue - selected tiles display in a bluescale palette</p>
 
 		<br>
 		<h3>Help menu</h3>

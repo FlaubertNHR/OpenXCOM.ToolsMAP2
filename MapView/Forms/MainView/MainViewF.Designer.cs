@@ -278,7 +278,7 @@ namespace MapView
 			this.miModifySize.Enabled = false;
 			this.miModifySize.Index = 0;
 			this.miModifySize.Shortcut = System.Windows.Forms.Shortcut.CtrlZ;
-			this.miModifySize.Text = "Modify Mapsi&ze";
+			this.miModifySize.Text = "modify mapsi&ze";
 			this.miModifySize.Click += new System.EventHandler(this.OnMapResizeClick);
 			// 
 			// miTilepartSubstitution
@@ -286,7 +286,7 @@ namespace MapView
 			this.miTilepartSubstitution.Enabled = false;
 			this.miTilepartSubstitution.Index = 1;
 			this.miTilepartSubstitution.Shortcut = System.Windows.Forms.Shortcut.CtrlU;
-			this.miTilepartSubstitution.Text = "Tilepart S&ubstitution";
+			this.miTilepartSubstitution.Text = "s&ubstitute tileparts";
 			this.miTilepartSubstitution.Click += new System.EventHandler(this.OnTilepartSubstitutionClick);
 			// 
 			// miTerrainSwap
@@ -294,7 +294,7 @@ namespace MapView
 			this.miTerrainSwap.Enabled = false;
 			this.miTerrainSwap.Index = 2;
 			this.miTerrainSwap.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
-			this.miTerrainSwap.Text = "Terrain S&wap";
+			this.miTerrainSwap.Text = "s&wap terrains";
 			this.miTerrainSwap.Click += new System.EventHandler(this.OnTerrainSwapClick);
 			// 
 			// miSeparator8
@@ -305,7 +305,7 @@ namespace MapView
 			// miClearRecordsExceeded
 			// 
 			this.miClearRecordsExceeded.Index = 4;
-			this.miClearRecordsExceeded.Text = "Clear all BypassRecordsExceeded &flags";
+			this.miClearRecordsExceeded.Text = "clear all BypassRecordsExceeded &flags";
 			this.miClearRecordsExceeded.Click += new System.EventHandler(this.OnClearRecordsExceededClick);
 			// 
 			// miSeparator6
@@ -346,31 +346,31 @@ namespace MapView
 			// miNone
 			// 
 			this.miNone.Index = 0;
-			this.miNone.Text = "&None";
+			this.miNone.Text = "&none";
 			this.miNone.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miGray
 			// 
 			this.miGray.Index = 1;
-			this.miGray.Text = "Gr&ay";
+			this.miGray.Text = "gr&ay";
 			this.miGray.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miRed
 			// 
 			this.miRed.Index = 2;
-			this.miRed.Text = "&Red";
+			this.miRed.Text = "&red";
 			this.miRed.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miGreen
 			// 
 			this.miGreen.Index = 3;
-			this.miGreen.Text = "&Green";
+			this.miGreen.Text = "&green";
 			this.miGreen.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// miBlue
 			// 
 			this.miBlue.Index = 4;
-			this.miBlue.Text = "&Blue";
+			this.miBlue.Text = "&blue";
 			this.miBlue.Click += new System.EventHandler(this.OnTonerClick);
 			// 
 			// menuHelp
