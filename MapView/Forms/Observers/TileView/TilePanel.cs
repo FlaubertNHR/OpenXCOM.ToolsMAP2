@@ -693,13 +693,13 @@ namespace MapView.Forms.Observers
 			}
 			else
 			{
-				int qtyTiles = 0;
+				int tiles = 0;
 
 				for (int i = 0; i != parts.Count; ++i)
 					if (parts[i].Record.PartType == _partType)
-						++qtyTiles;
+						++tiles;
 
-				_parts = new Tilepart[qtyTiles + 1]; // +1 for the null-sprite
+				_parts = new Tilepart[tiles + 1]; // +1 for the null-sprite
 				_parts[0] = null;
 
 				for (int i = 0, j = 1; i != parts.Count; ++i)
