@@ -125,7 +125,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsddbTestPartslots.Name = "tsddbTestPartslots";
 			this.tsddbTestPartslots.Size = new System.Drawing.Size(187, 22);
-			this.tsddbTestPartslots.Text = "Test parts in tileslots";
+			this.tsddbTestPartslots.Text = "test parts in tileslots";
 			this.tsddbTestPartslots.Click += new System.EventHandler(this.OnTestPartslotsClick);
 			// 
 			// tsb_Options

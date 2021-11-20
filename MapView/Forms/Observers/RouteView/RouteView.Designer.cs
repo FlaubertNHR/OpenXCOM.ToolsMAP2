@@ -311,7 +311,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_ClearLinks.Name = "tsmi_ClearLinks";
 			this.tsmi_ClearLinks.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_ClearLinks.Text = "&Clear current Link data ...";
+			this.tsmi_ClearLinks.Text = "&clear current Link data ...";
 			this.tsmi_ClearLinks.Click += new System.EventHandler(this.OnClearLinksClick);
 			// 
 			// tss_2
@@ -323,35 +323,35 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_ZeroUnittypes.Name = "tsmi_ZeroUnittypes";
 			this.tsmi_ZeroUnittypes.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_ZeroUnittypes.Text = "Zero all unittypes ...";
+			this.tsmi_ZeroUnittypes.Text = "zero all unittypes ...";
 			this.tsmi_ZeroUnittypes.Click += new System.EventHandler(this.OnZeroUnittypesClick);
 			// 
 			// tsmi_ZeroNoderanks
 			// 
 			this.tsmi_ZeroNoderanks.Name = "tsmi_ZeroNoderanks";
 			this.tsmi_ZeroNoderanks.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_ZeroNoderanks.Text = "Zero all noderanks ...";
+			this.tsmi_ZeroNoderanks.Text = "zero all noderanks ...";
 			this.tsmi_ZeroNoderanks.Click += new System.EventHandler(this.OnZeroNoderanksClick);
 			// 
 			// tsmi_ZeroSpawnweights
 			// 
 			this.tsmi_ZeroSpawnweights.Name = "tsmi_ZeroSpawnweights";
 			this.tsmi_ZeroSpawnweights.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_ZeroSpawnweights.Text = "Zero all spawnweights ...";
+			this.tsmi_ZeroSpawnweights.Text = "zero all spawnweights ...";
 			this.tsmi_ZeroSpawnweights.Click += new System.EventHandler(this.OnZeroSpawnweightsClick);
 			// 
 			// tsmi_ZeroPatrolpriorities
 			// 
 			this.tsmi_ZeroPatrolpriorities.Name = "tsmi_ZeroPatrolpriorities";
 			this.tsmi_ZeroPatrolpriorities.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_ZeroPatrolpriorities.Text = "Zero all patrolpriorities ...";
+			this.tsmi_ZeroPatrolpriorities.Text = "zero all patrolpriorities ...";
 			this.tsmi_ZeroPatrolpriorities.Click += new System.EventHandler(this.OnZeroPatrolprioritiesClick);
 			// 
 			// tsmi_ZeroBaseattacks
 			// 
 			this.tsmi_ZeroBaseattacks.Name = "tsmi_ZeroBaseattacks";
 			this.tsmi_ZeroBaseattacks.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_ZeroBaseattacks.Text = "Zero all baseattacks ...";
+			this.tsmi_ZeroBaseattacks.Text = "zero all baseattacks ...";
 			this.tsmi_ZeroBaseattacks.Click += new System.EventHandler(this.OnZeroBaseattacksClick);
 			// 
 			// tss_3
@@ -363,7 +363,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_RecalcDist.Name = "tsmi_RecalcDist";
 			this.tsmi_RecalcDist.Size = new System.Drawing.Size(213, 22);
-			this.tsmi_RecalcDist.Text = "&Update all Link distances";
+			this.tsmi_RecalcDist.Text = "&update all Link distances";
 			this.tsmi_RecalcDist.Click += new System.EventHandler(this.OnRecalcDistClick);
 			// 
 			// tsddb_Debug
@@ -384,14 +384,14 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_TestPositions.Name = "tsmi_TestPositions";
 			this.tsmi_TestPositions.Size = new System.Drawing.Size(180, 22);
-			this.tsmi_TestPositions.Text = "Test node &positions";
+			this.tsmi_TestPositions.Text = "test node &positions";
 			this.tsmi_TestPositions.Click += new System.EventHandler(this.OnTestPositionsClick);
 			// 
 			// tsmi_TestNodeRanks
 			// 
 			this.tsmi_TestNodeRanks.Name = "tsmi_TestNodeRanks";
 			this.tsmi_TestNodeRanks.Size = new System.Drawing.Size(180, 22);
-			this.tsmi_TestNodeRanks.Text = "Test node &ranks";
+			this.tsmi_TestNodeRanks.Text = "test node &ranks";
 			this.tsmi_TestNodeRanks.Click += new System.EventHandler(this.OnTestNoderanksClick);
 			// 
 			// tsb_Options
