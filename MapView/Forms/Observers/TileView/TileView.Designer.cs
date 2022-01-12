@@ -17,7 +17,7 @@ namespace MapView.Forms.Observers
 		private TabPage tpNorthwalls;
 		private TabPage tpContents;
 
-		private ToolStrip tsMain;
+		private ToolStripOneclick tsMain;
 		private ToolStripDropDownButton tsddbExternal;
 		private ToolStripMenuItem tsmiEditPck;
 		private ToolStripMenuItem tsmiEditMcd;
@@ -43,7 +43,7 @@ namespace MapView.Forms.Observers
 			this.tpWestwalls = new System.Windows.Forms.TabPage();
 			this.tpNorthwalls = new System.Windows.Forms.TabPage();
 			this.tpContents = new System.Windows.Forms.TabPage();
-			this.tsMain = new System.Windows.Forms.ToolStrip();
+			this.tsMain = new DSShared.Controls.ToolStripOneclick();
 			this.tsddbExternal = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmiEditPck = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmiEditMcd = new System.Windows.Forms.ToolStripMenuItem();

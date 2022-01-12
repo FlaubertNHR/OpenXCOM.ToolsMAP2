@@ -1,16 +1,18 @@
 using System;
 using System.Windows.Forms;
 
+using DSShared.Controls;
+
 
 namespace MapView.Forms.Observers
 {
 	internal sealed partial class TopView
 	{
 		#region Designer
-		private ToolStrip tsTools;
+		private ToolStripOneclick tsTools;
 		private Panel pnlMain;
 		private ToolStripContainer tscPanel;
-		private ToolStrip tsMain;
+		private ToolStripOneclick tsMain;
 		private ToolStripDropDownButton tsddbVisibleQuads;
 		private ToolStripButton tsb_Options;
 		private ToolStripDropDownButton tsddbTest;
@@ -25,8 +27,8 @@ namespace MapView.Forms.Observers
 		{
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.pnlMain = new System.Windows.Forms.Panel();
-			this.tsTools = new System.Windows.Forms.ToolStrip();
-			this.tsMain = new System.Windows.Forms.ToolStrip();
+			this.tsTools = new DSShared.Controls.ToolStripOneclick();
+			this.tsMain = new DSShared.Controls.ToolStripOneclick();
 			this.tsddbVisibleQuads = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsddbTest = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsddbTestPartslots = new System.Windows.Forms.ToolStripMenuItem();

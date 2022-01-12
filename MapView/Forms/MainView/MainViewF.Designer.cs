@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using DSShared.Controls;
+
 
 namespace MapView
 {
@@ -61,7 +63,7 @@ namespace MapView
 		private MenuItem miMapInfo;
 
 
-		private ToolStrip tsTools;
+		private ToolStripOneclick tsTools;
 
 		private StatusStrip ssMain;
 
@@ -137,7 +139,7 @@ namespace MapView
 			this.tsslPosition = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsslSelectionSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
-			this.tsTools = new System.Windows.Forms.ToolStrip();
+			this.tsTools = new DSShared.Controls.ToolStripOneclick();
 			this.cmMapTreeMenu = new System.Windows.Forms.ContextMenu();
 			this.ssMain.SuspendLayout();
 			this.tscPanel.TopToolStripPanel.SuspendLayout();

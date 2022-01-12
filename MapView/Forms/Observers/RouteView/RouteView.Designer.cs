@@ -2,6 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
+using DSShared.Controls;
+
 
 namespace MapView.Forms.Observers
 {
@@ -10,7 +12,7 @@ namespace MapView.Forms.Observers
 		#region Designer
 		private IContainer components;
 
-		private ToolStrip ts_Main;
+		private ToolStripOneclick ts_Main;
 
 		private ToolStripDropDownButton tsddb_File;
 		private ToolStripMenuItem tsmi_Export;
@@ -125,7 +127,7 @@ namespace MapView.Forms.Observers
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.ts_Main = new System.Windows.Forms.ToolStrip();
+			this.ts_Main = new DSShared.Controls.ToolStripOneclick();
 			this.tsddb_File = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmi_Export = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_Import = new System.Windows.Forms.ToolStripMenuItem();
