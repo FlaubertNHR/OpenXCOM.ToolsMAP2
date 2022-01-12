@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the sectoids")]
 [assembly: AssemblyProduct("McdView")]
-[assembly: AssemblyCopyright("2019-2021")]
+[assembly: AssemblyCopyright("2019-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

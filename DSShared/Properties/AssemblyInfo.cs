@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the grays")]
 [assembly: AssemblyProduct("DSShared")]
-[assembly: AssemblyCopyright("2017-2021")]
+[assembly: AssemblyCopyright("2017-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
