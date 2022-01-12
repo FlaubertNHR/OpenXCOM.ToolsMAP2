@@ -53,6 +53,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tscPanel.LeftToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
 			this.tscPanel.Location = new System.Drawing.Point(0, 25);
+			this.tscPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tscPanel.Name = "tscPanel";
 			// 
 			// tscPanel.RightToolStripPanel
@@ -124,7 +125,7 @@ namespace MapView.Forms.Observers
 			// tsddbTestPartslots
 			// 
 			this.tsddbTestPartslots.Name = "tsddbTestPartslots";
-			this.tsddbTestPartslots.Size = new System.Drawing.Size(187, 22);
+			this.tsddbTestPartslots.Size = new System.Drawing.Size(184, 22);
 			this.tsddbTestPartslots.Text = "test parts in tileslots";
 			this.tsddbTestPartslots.Click += new System.EventHandler(this.OnTestPartslotsClick);
 			// 
