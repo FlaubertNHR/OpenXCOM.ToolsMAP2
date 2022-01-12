@@ -9,7 +9,7 @@ namespace DSShared.Controls
 			ToolStrip
 	{
 		#region Fields (static)
-		const int WM_MOUSEACTIVATE = 0x0021;
+		const int WM_MOUSEACTIVATE = 0x21;
 		#endregion Fields (static)
 
 
@@ -20,7 +20,7 @@ namespace DSShared.Controls
 		/// <param name="m"></param>
 		protected override void WndProc(ref Message m)
 		{
-			if (m.Msg == WM_MOUSEACTIVATE && CanFocus && !Focused)
+			if (m.Msg == WM_MOUSEACTIVATE) // && CanFocus && !Focused
 				Focus();
 
 			base.WndProc(ref m);
