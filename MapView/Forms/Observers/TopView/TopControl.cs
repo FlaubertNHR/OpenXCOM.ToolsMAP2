@@ -396,6 +396,28 @@ namespace MapView.Forms.Observers
 
 
 		#region Events (override)
+		const int WM_MOUSEACTIVATE = 0x21;
+
+		/// <summary>
+		/// Allows an inactive TopView window to accept click(s) on this
+		/// <c>TopControl</c>.
+		/// </summary>
+		/// <param name="m"></param>
+		protected override void WndProc(ref Message m)
+		{
+			if (m.Msg == WM_MOUSEACTIVATE) // && CanFocus && !Focused
+			{
+				Focus();
+
+				Point pos = PointToClient(Cursor.Position);
+				SetTileLocation(pos.X, pos.Y);
+
+				_col = _loc.X;
+				_row = _loc.Y;
+			}
+			base.WndProc(ref m);
+		}
+
 		/// <summary>
 		/// Forwards edit-operations or a Mapfile-save to MainView. Can also
 		/// perform some Quad-panel operations.

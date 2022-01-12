@@ -61,6 +61,10 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Add(this);
 
 			Control.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+
+			// note that if user clicks on TopControl to activate this
+			// TopViewForm then TopControl.WndProc() will have already focused
+			// TopControl ->
 			Control.TopControl.Focus();
 		}
 
