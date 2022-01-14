@@ -13,7 +13,7 @@ namespace MapView
 		private IContainer components;
 
 
-		private ContextMenu cmMapTreeMenu;
+		private ContextMenuStrip cms_MapTreeContext;
 
 		internal ToolStripContainer tscPanel;
 
@@ -140,7 +140,7 @@ namespace MapView
 			this.tsslSelectionSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.tsTools = new DSShared.Controls.ToolStripOneclick();
-			this.cmMapTreeMenu = new System.Windows.Forms.ContextMenu();
+			this.cms_MapTreeContext = new System.Windows.Forms.ContextMenuStrip();
 			this.ssMain.SuspendLayout();
 			this.tscPanel.TopToolStripPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();

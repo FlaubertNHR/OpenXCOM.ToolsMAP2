@@ -2540,39 +2540,39 @@ namespace MapView
 					{
 						_bypassChanged = false;
 
-						cmMapTreeMenu.MenuItems.Clear();
+						cms_MapTreeContext.Items.Clear();
 
-						cmMapTreeMenu.MenuItems.Add("Add Group ...", OnAddGroupClick);
+						cms_MapTreeContext.Items.Add("Add Group ...", null, OnAddGroupClick);
 
 						if (MapTree.SelectedNode != null)
 						{
 							switch (MapTree.SelectedNode.Level)
 							{
 								case TREELEVEL_GROUP:
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Edit Group ...",   OnEditGroupClick);
-									cmMapTreeMenu.MenuItems.Add("Delete Group",     OnDeleteGroupClick);
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Add Category ...", OnAddCategoryClick);
+									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+									cms_MapTreeContext.Items.Add("Edit Group ...",   null, OnEditGroupClick);
+									cms_MapTreeContext.Items.Add("Delete Group",     null, OnDeleteGroupClick);
+									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+									cms_MapTreeContext.Items.Add("Add Category ...", null, OnAddCategoryClick);
 									break;
 
 								case TREELEVEL_CATEGORY:
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Edit Category ...", OnEditCategoryClick);
-									cmMapTreeMenu.MenuItems.Add("Delete Category",   OnDeleteCategoryClick);
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Add Tileset ...",   OnAddTilesetClick);
+									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+									cms_MapTreeContext.Items.Add("Edit Category ...", null, OnEditCategoryClick);
+									cms_MapTreeContext.Items.Add("Delete Category",   null, OnDeleteCategoryClick);
+									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+									cms_MapTreeContext.Items.Add("Add Tileset ...",   null, OnAddTilesetClick);
 									break;
 
 								case TREELEVEL_TILESET:
-									cmMapTreeMenu.MenuItems.Add("-");
-									cmMapTreeMenu.MenuItems.Add("Edit Tileset ...",  OnEditTilesetClick);
-									cmMapTreeMenu.MenuItems.Add("Delete Tileset",    OnDeleteTilesetClick);
+									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+									cms_MapTreeContext.Items.Add("Edit Tileset ...", null, OnEditTilesetClick);
+									cms_MapTreeContext.Items.Add("Delete Tileset",   null, OnDeleteTilesetClick);
 									break;
 							}
 						}
 
-						cmMapTreeMenu.Show(MapTree, e.Location);
+						cms_MapTreeContext.Show(MapTree, e.Location);
 					}
 					else
 					{
