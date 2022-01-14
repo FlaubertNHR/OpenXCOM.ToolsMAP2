@@ -203,7 +203,6 @@ namespace MapView.Forms.Observers
 			ssStatus.Renderer = new CustomToolStripRenderer();
 
 			CreateContext();
-			
 
 			_t1.Tick += t1_OnTick;			// Because the mouse OnLeave event doesn't
 			_t1.Interval = Globals.PERIOD;	// fire when the mouse moves out of a
