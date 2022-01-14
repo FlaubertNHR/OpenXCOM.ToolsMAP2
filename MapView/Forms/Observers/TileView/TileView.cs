@@ -28,12 +28,12 @@ namespace MapView.Forms.Observers
 		internal void DisposeObserver()
 		{
 			//Logfile.Log("TileView.DisposeObserver()");
-			if (ContextMenu != null)
+			if (ContextMenuStrip != null)
 			{
 				DisposeContext(); // paranoia ... this is .net disposal stuff after all.
 
-				ContextMenu.Dispose();
-				ContextMenu = null;
+				ContextMenuStrip.Dispose();
+				ContextMenuStrip = null;
 			}
 
 			if (McdInfo != null)
@@ -59,16 +59,16 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DisposeContext()
 		{
-			ContextMenu.MenuItems[3].Click -= OnMcdInfoClick; // CONTEXT_MI_MCDINFO
-			ContextMenu.MenuItems[3].Dispose();
+			ContextMenuStrip.Items[3].Click -= OnMcdInfoClick; // CONTEXT_MI_MCDINFO
+			ContextMenuStrip.Items[3].Dispose();
 
-			ContextMenu.MenuItems[2].Dispose();
+			ContextMenuStrip.Items[2].Dispose();
 
-			ContextMenu.MenuItems[1].Click -= OnMcdViewClick;
-			ContextMenu.MenuItems[1].Dispose();
+			ContextMenuStrip.Items[1].Click -= OnMcdViewClick;
+			ContextMenuStrip.Items[1].Dispose();
 
-			ContextMenu.MenuItems[0].Click -= OnPckViewClick;
-			ContextMenu.MenuItems[0].Dispose();
+			ContextMenuStrip.Items[0].Click -= OnPckViewClick;
+			ContextMenuStrip.Items[0].Dispose();
 		}
 
 
@@ -203,6 +203,7 @@ namespace MapView.Forms.Observers
 			ssStatus.Renderer = new CustomToolStripRenderer();
 
 			CreateContext();
+			
 
 			_t1.Tick += t1_OnTick;			// Because the mouse OnLeave event doesn't
 			_t1.Interval = Globals.PERIOD;	// fire when the mouse moves out of a
@@ -210,16 +211,31 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Builds the ContextMenu.
+		/// Builds the ContextMenuStrip.
 		/// </summary>
 		private void CreateContext()
 		{
-			ContextMenu = new ContextMenu();
+			ContextMenuStrip = new ContextMenuStrip();
 
-			ContextMenu.MenuItems.Add(new MenuItem("open in PckView", OnPckViewClick, Shortcut.F9));	// 0
-			ContextMenu.MenuItems.Add(new MenuItem("open in McdView", OnMcdViewClick, Shortcut.F10));	// 1
-			ContextMenu.MenuItems.Add(new MenuItem("-"));												// 2
-			ContextMenu.MenuItems.Add(new MenuItem("MCD record", OnMcdInfoClick));						// 3 //null, EventArgs.Empty
+			var it = new ToolStripMenuItem();			// 0
+			it.Text = "open in PckView";
+			it.ShortcutKeys = Keys.F9;
+			it.Click += OnPckViewClick;
+			ContextMenuStrip.Items.Add(it);
+
+			it = new ToolStripMenuItem();				// 1
+			it.Text = "open in McdView";
+			it.ShortcutKeys = Keys.F10;
+			it.Click += OnMcdViewClick;
+			ContextMenuStrip.Items.Add(it);
+
+			var separator = new ToolStripSeparator();	// 2
+			ContextMenuStrip.Items.Add(separator);
+
+			it = new ToolStripMenuItem();				// 3 - CONTEXT_MI_MCDINFO
+			it.Text = "MCD record";
+			it.Click += OnMcdInfoClick; //null, EventArgs.Empty
+			ContextMenuStrip.Items.Add(it);
 		}
 		#endregion cTor
 
@@ -361,7 +377,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
-			MenuItem it = ContextMenu.MenuItems[CONTEXT_MI_MCDINFO];
+			var it = ContextMenuStrip.Items[CONTEXT_MI_MCDINFO] as ToolStripMenuItem;
 			if (it.Checked = !it.Checked)
 			{
 				if (McdInfo == null)
