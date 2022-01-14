@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -210,7 +211,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Builds the ContextMenuStrip.
+		/// Builds the <c>ContextMenuStrip</c>.
 		/// </summary>
 		private void CreateContext()
 		{
@@ -235,11 +236,25 @@ namespace MapView.Forms.Observers
 			it.Text = "MCD record";
 			it.Click += OnMcdInfoClick; //null, EventArgs.Empty
 			ContextMenuStrip.Items.Add(it);
+
+			ContextMenuStrip.Opening += context_OnOpening;
 		}
 		#endregion cTor
 
 
 		#region Events
+		/// <summary>
+		/// Cancels opening the <c>ContextMenuStrip</c> if the cursor is not
+		/// inside the bounds of a <c><see cref="TilePanel"/></c>.
+		/// </summary>
+		/// <param name="sender"><c>ContextMenuStrip</c></param>
+		/// <param name="e"></param>
+		private void context_OnOpening(object sender, CancelEventArgs e)
+		{
+			if (!_allTiles.ClientRectangle.Contains(_allTiles.PointToClient(Cursor.Position)))
+				e.Cancel = true;
+		}
+
 		/// <summary>
 		/// Clears OverInfo on the statusbar when the cursor is not in a panel.
 		/// </summary>
