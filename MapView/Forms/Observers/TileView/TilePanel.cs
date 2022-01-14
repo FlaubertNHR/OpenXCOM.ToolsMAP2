@@ -370,15 +370,23 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			int id = GetOverId(e);
-			if (id != -1 && id < _parts.Length)
+			switch (e.Button)
 			{
-				_id = id;
+				case MouseButtons.Left:
+				case MouseButtons.Right:
+				{
+					int id = GetOverId(e);
+					if (id != -1 && id < _parts.Length)
+					{
+						_id = id;
 
-				TileView.SelectTilepart(SelectedTilepart);
+						TileView.SelectTilepart(SelectedTilepart);
 
-				ScrollToTile();
-				Invalidate();
+						ScrollToTile();
+						Invalidate();
+					}
+					break;
+				}
 			}
 		}
 
