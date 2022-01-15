@@ -492,13 +492,14 @@ namespace MapView.Forms.Observers
 				int id = GetOverId(e);
 				if (id != -1 && id < _parts.Length)
 				{
-					TileView.OnMcdInfoClick(null, EventArgs.Empty);
+					TileView.OnMcdInfoClick(this, EventArgs.Empty); // 'this' prevents McdInfo from hiding on a double-click
 				}
 			}
 		}
 
 		/// <summary>
-		/// Opens the <see cref="McdInfoF"/> dialog when [i] is key-upped.
+		/// Opens/shows or hides the <see cref="McdInfoF"/> dialog when [i] is
+		/// key-upped.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyUp(KeyEventArgs e)

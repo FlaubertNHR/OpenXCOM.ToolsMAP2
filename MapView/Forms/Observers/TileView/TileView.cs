@@ -234,7 +234,7 @@ namespace MapView.Forms.Observers
 
 			it = new ToolStripMenuItem();				// 3 - CONTEXT_MI_MCDINFO
 			it.Text = "MCD record";
-			it.Click += OnMcdInfoClick; //null, EventArgs.Empty
+			it.Click += OnMcdInfoClick;
 			ContextMenuStrip.Items.Add(it);
 
 			ContextMenuStrip.Opening += context_OnOpening;
@@ -402,8 +402,11 @@ namespace MapView.Forms.Observers
 				if (McdInfo.WindowState == FormWindowState.Minimized)
 					McdInfo.WindowState  = FormWindowState.Normal;
 			}
-			else
+			else if (sender == null
+				|| !(sender is TilePanel)) // (sender is TilePanel) prevents McdInfo from hiding on a double-clicked tilepart.
+			{
 				McdInfo.Hide();
+			}
 		}
 
 		/// <summary>
