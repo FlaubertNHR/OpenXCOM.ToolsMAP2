@@ -392,8 +392,10 @@ namespace MapView.Forms.Observers
 		internal void OnMcdInfoClick(object sender, EventArgs e)
 		{
 			var it = ContextMenuStrip.Items[CONTEXT_MI_MCDINFO] as ToolStripMenuItem;
-			if (it.Checked = !it.Checked)
+			if (!it.Checked)
 			{
+				it.Checked = true;
+
 				if (McdInfo == null)
 					McdInfo = new McdInfoF();
 
@@ -405,6 +407,7 @@ namespace MapView.Forms.Observers
 			else if (sender == null
 				|| !(sender is TilePanel)) // (sender is TilePanel) prevents McdInfo from hiding on a double-clicked tilepart.
 			{
+				it.Checked = false;
 				McdInfo.Hide();
 			}
 		}
