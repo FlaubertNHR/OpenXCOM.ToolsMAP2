@@ -487,11 +487,13 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
 		{
-			int id = GetOverId(e);
-			if (id != -1 && id < _parts.Length
-				&& e.Button == MouseButtons.Left)
+			if (e.Button == MouseButtons.Left)
 			{
-				TileView.OnMcdInfoClick(null, EventArgs.Empty);
+				int id = GetOverId(e);
+				if (id != -1 && id < _parts.Length)
+				{
+					TileView.OnMcdInfoClick(null, EventArgs.Empty);
+				}
 			}
 		}
 
