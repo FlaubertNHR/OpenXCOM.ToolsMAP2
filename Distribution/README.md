@@ -10,6 +10,9 @@ notes for Mono/Linux/Mac users
 
 Built against .NET 4.5.1
 
+2022 January 18<br>
+https://github.com/kevL/OpenXCOM.Tools/releases/tag/220118
+
 2021 November 3<br>
 https://github.com/kevL/OpenXCOM.Tools/releases/tag/211103
 
