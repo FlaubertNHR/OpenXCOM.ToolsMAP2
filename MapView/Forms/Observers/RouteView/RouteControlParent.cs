@@ -277,8 +277,8 @@ namespace MapView.Forms.Observers
 					int width  = _file.Cols * HalfWidth  + _file.Rows * HalfWidth;
 					int height = _file.Cols * HalfHeight + _file.Rows * HalfHeight;
 
-					_scaleOffsetX = Math.Max(0 - width  + Width  / 2, Math.Min(_scaleOffsetX, Width  / 2));
-					_scaleOffsetY = Math.Max(0 - height + Height / 2, Math.Min(_scaleOffsetY, Height / 2));
+					_scaleOffsetX = Math.Max(Width  / 2 - width,  Math.Min(_scaleOffsetX, Width  / 2));
+					_scaleOffsetY = Math.Max(Height / 2 - height, Math.Min(_scaleOffsetY, Height / 2));
 
 					Invalidate();
 				}
