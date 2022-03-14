@@ -569,30 +569,30 @@ namespace MapView.Forms.Observers
 		private void DrawGridLines()
 		{
 			Pen pen;
-			for (int i = 0; i <= _file.Rows; ++i)
+			for (int r = 0; r <= _file.Rows; ++r)
 			{
-				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
+				if (r % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
 				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
 
 				_graphics.DrawLine(
 								pen,
-								Origin.X - i * HalfWidth  + _scaleOffsetX,
-								Origin.Y + i * HalfHeight + _scaleOffsetY,
-								Origin.X + (_file.Cols - i) * HalfWidth  + _scaleOffsetX,
-								Origin.Y + (_file.Cols + i) * HalfHeight + _scaleOffsetY);
+								Origin.X - r * HalfWidth  + _scaleOffsetX,
+								Origin.Y + r * HalfHeight + _scaleOffsetY,
+								Origin.X + (_file.Cols - r) * HalfWidth  + _scaleOffsetX,
+								Origin.Y + (_file.Cols + r) * HalfHeight + _scaleOffsetY);
 			}
 
-			for (int i = 0; i <= _file.Cols; ++i)
+			for (int c = 0; c <= _file.Cols; ++c)
 			{
-				if (i % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
+				if (c % 10 != 0) pen = RoutePens[RouteViewOptionables.str_GridLineColor];
 				else             pen = RoutePens[RouteViewOptionables.str_GridLine10Color];
 
 				_graphics.DrawLine(
 								pen,
-								Origin.X + i * HalfWidth  + _scaleOffsetX,
-								Origin.Y + i * HalfHeight + _scaleOffsetY,
-							   (Origin.X + i * HalfWidth)  - _file.Rows * HalfWidth  + _scaleOffsetX,
-							   (Origin.Y + i * HalfHeight) + _file.Rows * HalfHeight + _scaleOffsetY);
+								Origin.X + c * HalfWidth  + _scaleOffsetX,
+								Origin.Y + c * HalfHeight + _scaleOffsetY,
+							   (Origin.X + c * HalfWidth)  - _file.Rows * HalfWidth  + _scaleOffsetX,
+							   (Origin.Y + c * HalfHeight) + _file.Rows * HalfHeight + _scaleOffsetY);
 			}
 		}
 
