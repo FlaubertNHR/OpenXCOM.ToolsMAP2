@@ -42,6 +42,10 @@ namespace MapView.Forms.Observers
 		private ToolStripButton tsb_connect1;
 		private ToolStripButton tsb_connect2;
 
+		private ToolStripSeparator tss_4;
+
+		private ToolStripButton tsb_x2;
+
 		private ToolStripButton tsb_Options;
 
 		private Panel pa_DataFields;
@@ -152,6 +156,8 @@ namespace MapView.Forms.Observers
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
 			this.tsb_connect1 = new System.Windows.Forms.ToolStripButton();
 			this.tsb_connect2 = new System.Windows.Forms.ToolStripButton();
+			this.tss_4 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsb_x2 = new System.Windows.Forms.ToolStripButton();
 			this._pnlRoutes = new DSShared.Controls.CompositedPanel();
 			this.pa_DataFields = new System.Windows.Forms.Panel();
 			this.pa_DataFieldsLeft = new System.Windows.Forms.Panel();
@@ -228,7 +234,9 @@ namespace MapView.Forms.Observers
 			this.tss_0,
 			this.tsb_connect0,
 			this.tsb_connect1,
-			this.tsb_connect2});
+			this.tsb_connect2,
+			this.tss_4,
+			this.tsb_x2});
 			this.ts_Main.Location = new System.Drawing.Point(0, 0);
 			this.ts_Main.Name = "ts_Main";
 			this.ts_Main.Size = new System.Drawing.Size(640, 25);
@@ -293,78 +301,78 @@ namespace MapView.Forms.Observers
 			// tsmi_RaiseNode
 			// 
 			this.tsmi_RaiseNode.Name = "tsmi_RaiseNode";
-			this.tsmi_RaiseNode.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_RaiseNode.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_RaiseNode.Text = "node &up 1 level";
 			this.tsmi_RaiseNode.Click += new System.EventHandler(this.OnNodeRaise);
 			// 
 			// tsmi_LowerNode
 			// 
 			this.tsmi_LowerNode.Name = "tsmi_LowerNode";
-			this.tsmi_LowerNode.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_LowerNode.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_LowerNode.Text = "node &down 1 level";
 			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
 			// 
 			// tss_1
 			// 
 			this.tss_1.Name = "tss_1";
-			this.tss_1.Size = new System.Drawing.Size(210, 6);
+			this.tss_1.Size = new System.Drawing.Size(208, 6);
 			// 
 			// tsmi_ClearLinks
 			// 
 			this.tsmi_ClearLinks.Name = "tsmi_ClearLinks";
-			this.tsmi_ClearLinks.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ClearLinks.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_ClearLinks.Text = "&clear current Link data ...";
 			this.tsmi_ClearLinks.Click += new System.EventHandler(this.OnClearLinksClick);
 			// 
 			// tss_2
 			// 
 			this.tss_2.Name = "tss_2";
-			this.tss_2.Size = new System.Drawing.Size(210, 6);
+			this.tss_2.Size = new System.Drawing.Size(208, 6);
 			// 
 			// tsmi_ZeroUnittypes
 			// 
 			this.tsmi_ZeroUnittypes.Name = "tsmi_ZeroUnittypes";
-			this.tsmi_ZeroUnittypes.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroUnittypes.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_ZeroUnittypes.Text = "zero all unittypes ...";
 			this.tsmi_ZeroUnittypes.Click += new System.EventHandler(this.OnZeroUnittypesClick);
 			// 
 			// tsmi_ZeroNoderanks
 			// 
 			this.tsmi_ZeroNoderanks.Name = "tsmi_ZeroNoderanks";
-			this.tsmi_ZeroNoderanks.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroNoderanks.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_ZeroNoderanks.Text = "zero all noderanks ...";
 			this.tsmi_ZeroNoderanks.Click += new System.EventHandler(this.OnZeroNoderanksClick);
 			// 
 			// tsmi_ZeroSpawnweights
 			// 
 			this.tsmi_ZeroSpawnweights.Name = "tsmi_ZeroSpawnweights";
-			this.tsmi_ZeroSpawnweights.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroSpawnweights.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_ZeroSpawnweights.Text = "zero all spawnweights ...";
 			this.tsmi_ZeroSpawnweights.Click += new System.EventHandler(this.OnZeroSpawnweightsClick);
 			// 
 			// tsmi_ZeroPatrolpriorities
 			// 
 			this.tsmi_ZeroPatrolpriorities.Name = "tsmi_ZeroPatrolpriorities";
-			this.tsmi_ZeroPatrolpriorities.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroPatrolpriorities.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_ZeroPatrolpriorities.Text = "zero all patrolpriorities ...";
 			this.tsmi_ZeroPatrolpriorities.Click += new System.EventHandler(this.OnZeroPatrolprioritiesClick);
 			// 
 			// tsmi_ZeroBaseattacks
 			// 
 			this.tsmi_ZeroBaseattacks.Name = "tsmi_ZeroBaseattacks";
-			this.tsmi_ZeroBaseattacks.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_ZeroBaseattacks.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_ZeroBaseattacks.Text = "zero all baseattacks ...";
 			this.tsmi_ZeroBaseattacks.Click += new System.EventHandler(this.OnZeroBaseattacksClick);
 			// 
 			// tss_3
 			// 
 			this.tss_3.Name = "tss_3";
-			this.tss_3.Size = new System.Drawing.Size(210, 6);
+			this.tss_3.Size = new System.Drawing.Size(208, 6);
 			// 
 			// tsmi_RecalcDist
 			// 
 			this.tsmi_RecalcDist.Name = "tsmi_RecalcDist";
-			this.tsmi_RecalcDist.Size = new System.Drawing.Size(213, 22);
+			this.tsmi_RecalcDist.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_RecalcDist.Text = "&update all Link distances";
 			this.tsmi_RecalcDist.Click += new System.EventHandler(this.OnRecalcDistClick);
 			// 
@@ -385,14 +393,14 @@ namespace MapView.Forms.Observers
 			// tsmi_TestPositions
 			// 
 			this.tsmi_TestPositions.Name = "tsmi_TestPositions";
-			this.tsmi_TestPositions.Size = new System.Drawing.Size(180, 22);
+			this.tsmi_TestPositions.Size = new System.Drawing.Size(177, 22);
 			this.tsmi_TestPositions.Text = "test node &positions";
 			this.tsmi_TestPositions.Click += new System.EventHandler(this.OnTestPositionsClick);
 			// 
 			// tsmi_TestNodeRanks
 			// 
 			this.tsmi_TestNodeRanks.Name = "tsmi_TestNodeRanks";
-			this.tsmi_TestNodeRanks.Size = new System.Drawing.Size(180, 22);
+			this.tsmi_TestNodeRanks.Size = new System.Drawing.Size(177, 22);
 			this.tsmi_TestNodeRanks.Text = "test node &ranks";
 			this.tsmi_TestNodeRanks.Click += new System.EventHandler(this.OnTestNoderanksClick);
 			// 
@@ -451,6 +459,23 @@ namespace MapView.Forms.Observers
 			this.tsb_connect2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.tsb_connect2.ToolTipText = "link forward and back";
 			this.tsb_connect2.Click += new System.EventHandler(this.OnConnectTypeClicked);
+			// 
+			// tss_4
+			// 
+			this.tss_4.Name = "tss_4";
+			this.tss_4.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsb_x2
+			// 
+			this.tsb_x2.CheckOnClick = true;
+			this.tsb_x2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsb_x2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsb_x2.Margin = new System.Windows.Forms.Padding(2, 1, 0, 1);
+			this.tsb_x2.Name = "tsb_x2";
+			this.tsb_x2.Size = new System.Drawing.Size(23, 23);
+			this.tsb_x2.Text = "x2";
+			this.tsb_x2.ToolTipText = "[Ctrl]+LMB - center on cursor";
+			this.tsb_x2.Click += new System.EventHandler(this.OnScaleClick);
 			// 
 			// _pnlRoutes
 			// 

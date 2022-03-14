@@ -188,20 +188,6 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Repaths the selected-lozenge on the Resize event.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnResize(EventArgs e)
-		{
-			if (_file != null)
-			{
-				base.OnResize(e);
-				PathSelectedLozenge();
-			}
-		}
-
-
-		/// <summary>
 		/// You know the drill ... Paint it, Black
 		/// black as night
 		/// </summary>
@@ -229,8 +215,8 @@ namespace MapView.Forms.Observers
 
 				if (NodeSelected != null)
 					DrawLinkLines(
-							Origin.X + (NodeSelected.Col - NodeSelected.Row)     * HalfWidth,
-							Origin.Y + (NodeSelected.Col + NodeSelected.Row + 1) * HalfHeight,
+							Origin.X + (NodeSelected.Col - NodeSelected.Row)     * HalfWidth  + _scaleOffsetX,
+							Origin.Y + (NodeSelected.Col + NodeSelected.Row + 1) * HalfHeight + _scaleOffsetY,
 							NodeSelected, true);
 
 				DrawNodes();
@@ -240,8 +226,8 @@ namespace MapView.Forms.Observers
 				if (Focused && _col != -1) // draw the selector lozenge
 				{
 					PathSelectorLozenge(
-									Origin.X + (_col - _row) * HalfWidth,
-									Origin.Y + (_col + _row) * HalfHeight);
+									Origin.X + (_col - _row) * HalfWidth  + _scaleOffsetX,
+									Origin.Y + (_col + _row) * HalfHeight + _scaleOffsetY);
 					using (var pen = new Pen( // TODO: Make selector-pen a separate Option.
 											RouteView.Optionables.GridLineColor,
 											RouteView.Optionables.GridLineWidth + 1))
@@ -250,8 +236,9 @@ namespace MapView.Forms.Observers
 					}
 				}
 
-				if (MainViewOverlay.that.FirstClick)
+				if (MainViewOverlay.that.FirstClick && MainViewOverlay.that.DragBeg.X != -1)
 				{
+					PathSelectedLozenge();
 					using (var pen = new Pen( // TODO: Make selected-pen a separate Option.
 											RouteView.Optionables.NodeSelectedColor,
 											RouteView.Optionables.GridLineWidth + 1))
@@ -261,8 +248,8 @@ namespace MapView.Forms.Observers
 						if (_spot.X > -1)
 						{
 							PathSpottedLozenge(
-											Origin.X + (_spot.X - _spot.Y) * HalfWidth,
-											Origin.Y + (_spot.X + _spot.Y) * HalfHeight);
+											Origin.X + (_spot.X - _spot.Y) * HalfWidth  + _scaleOffsetX,
+											Origin.Y + (_spot.X + _spot.Y) * HalfHeight + _scaleOffsetY);
 							_graphics.DrawPath(pen, _lozSpotted); // TODO: Make spotted-pen a separate Option.
 						}
 					}
@@ -295,8 +282,8 @@ namespace MapView.Forms.Observers
 			MapTile tile;
 			for (int
 					r = 0,
-						startX = Origin.X,
-						startY = Origin.Y;
+						startX = Origin.X + _scaleOffsetX,
+						startY = Origin.Y + _scaleOffsetY;
 					r != _file.Rows;
 					++r,
 						startX -= HalfWidth,
@@ -335,8 +322,8 @@ namespace MapView.Forms.Observers
 
 			for (int
 					rSrc = 0,
-						x = Origin.X,
-						y = Origin.Y;
+						x = Origin.X + _scaleOffsetX,
+						y = Origin.Y + _scaleOffsetY;
 					rSrc != _file.Rows;
 					++rSrc,
 						x -= HalfWidth,
@@ -429,8 +416,8 @@ namespace MapView.Forms.Observers
 								continue;
 							}
 
-							xDst = Origin.X + (dest.Col - dest.Row)     * HalfWidth;
-							yDst = Origin.Y + (dest.Col + dest.Row + 1) * HalfHeight;
+							xDst = Origin.X + (dest.Col - dest.Row)     * HalfWidth  + _scaleOffsetX;
+							yDst = Origin.Y + (dest.Col + dest.Row + 1) * HalfHeight + _scaleOffsetY;
 							break;
 					}
 
@@ -483,8 +470,8 @@ namespace MapView.Forms.Observers
 			BrushNodeSelected = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 
 
-			int startX = Origin.X;
-			int startY = Origin.Y;
+			int startX = Origin.X + _scaleOffsetX;
+			int startY = Origin.Y + _scaleOffsetY;
 
 			RouteNode node, dest;
 			Link link;
@@ -589,10 +576,10 @@ namespace MapView.Forms.Observers
 
 				_graphics.DrawLine(
 								pen,
-								Origin.X - i * HalfWidth,
-								Origin.Y + i * HalfHeight,
-								Origin.X + (_file.Cols - i) * HalfWidth,
-								Origin.Y + (_file.Cols + i) * HalfHeight);
+								Origin.X - i * HalfWidth  + _scaleOffsetX,
+								Origin.Y + i * HalfHeight + _scaleOffsetY,
+								Origin.X + (_file.Cols - i) * HalfWidth  + _scaleOffsetX,
+								Origin.Y + (_file.Cols + i) * HalfHeight + _scaleOffsetY);
 			}
 
 			for (int i = 0; i <= _file.Cols; ++i)
@@ -602,10 +589,10 @@ namespace MapView.Forms.Observers
 
 				_graphics.DrawLine(
 								pen,
-								Origin.X + i * HalfWidth,
-								Origin.Y + i * HalfHeight,
-							   (Origin.X + i * HalfWidth)  - _file.Rows * HalfWidth,
-							   (Origin.Y + i * HalfHeight) + _file.Rows * HalfHeight);
+								Origin.X + i * HalfWidth  + _scaleOffsetX,
+								Origin.Y + i * HalfHeight + _scaleOffsetY,
+							   (Origin.X + i * HalfWidth)  - _file.Rows * HalfWidth  + _scaleOffsetX,
+							   (Origin.Y + i * HalfHeight) + _file.Rows * HalfHeight + _scaleOffsetY);
 			}
 		}
 
@@ -614,8 +601,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawNodeMeters()
 		{
-			int startX = Origin.X;
-			int startY = Origin.Y;
+			int startX = Origin.X + _scaleOffsetX;
+			int startY = Origin.Y + _scaleOffsetY;
 
 			RouteNode node;
 
@@ -804,8 +791,8 @@ namespace MapView.Forms.Observers
 
 				if (RouteView.Optionables.ReduceDraws)
 				{
-					rect.X = Origin.X + (_col * HalfWidth)  - (_row * HalfHeight * 2); // heh nailed it.
-					rect.Y = Origin.Y + (_row * HalfHeight) + (_col * HalfWidth  / 2);
+					rect.X = Origin.X + (_col * HalfWidth)  - (_row * HalfHeight * 2) + _scaleOffsetX; // heh nailed it.
+					rect.Y = Origin.Y + (_row * HalfHeight) + (_col * HalfWidth  / 2) + _scaleOffsetY;
 
 					rect.X += HalfWidth;
 					rect.Y += HalfHeight / 2;
@@ -907,25 +894,23 @@ namespace MapView.Forms.Observers
 			int halfHeight = BlobService.HalfHeight;
 
 			var p0 = new Point(
-							Origin.X + (a.X - a.Y) * halfWidth,
-							Origin.Y + (a.X + a.Y) * halfHeight);
+							Origin.X + (a.X - a.Y) * halfWidth  + _scaleOffsetX,
+							Origin.Y + (a.X + a.Y) * halfHeight + _scaleOffsetY);
 			var p1 = new Point(
-							Origin.X + (b.X - a.Y) * halfWidth  + halfWidth,
-							Origin.Y + (b.X + a.Y) * halfHeight + halfHeight);
+							Origin.X + (b.X - a.Y) * halfWidth  + halfWidth  + _scaleOffsetX,
+							Origin.Y + (b.X + a.Y) * halfHeight + halfHeight + _scaleOffsetY);
 			var p2 = new Point(
-							Origin.X + (b.X - b.Y) * halfWidth,
-							Origin.Y + (b.X + b.Y) * halfHeight + halfHeight * 2);
+							Origin.X + (b.X - b.Y) * halfWidth                   + _scaleOffsetX,
+							Origin.Y + (b.X + b.Y) * halfHeight + halfHeight * 2 + _scaleOffsetY);
 			var p3 = new Point(
-							Origin.X + (a.X - b.Y) * halfWidth  - halfWidth,
-							Origin.Y + (a.X + b.Y) * halfHeight + halfHeight);
+							Origin.X + (a.X - b.Y) * halfWidth  - halfWidth  + _scaleOffsetX,
+							Origin.Y + (a.X + b.Y) * halfHeight + halfHeight + _scaleOffsetY);
 
 			_lozSelected.Reset();
 			_lozSelected.AddLine(p0, p1);
 			_lozSelected.AddLine(p1, p2);
 			_lozSelected.AddLine(p2, p3);
 			_lozSelected.CloseFigure();
-
-			Refresh(); // fast update for drag-selection.
 		}
 
 		/// <summary>

@@ -258,6 +258,8 @@ namespace MapView.Forms.Observers
 				UpdateNodeInformation();
 			}
 
+			tsb_x2.Checked = false;
+
 			RouteControl.SetMapFile(_file);
 		}
 
@@ -1979,7 +1981,12 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles clicking on any of the three ConnectType toolstrip buttons.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="tsb_connect0"/></c></item>
+		/// <item><c><see cref="tsb_connect1"/></c></item>
+		/// <item><c><see cref="tsb_connect2"/></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnConnectTypeClicked(object sender, EventArgs e)
 		{
@@ -2038,6 +2045,17 @@ namespace MapView.Forms.Observers
 				}
 			}
 			RouteControl.Select();
+		}
+
+
+		/// <summary>
+		/// Handles the Scale toolstrip button/toggle.
+		/// </summary>
+		/// <param name="sender"><c><see cref="tsb_x2"/></c></param>
+		/// <param name="e"></param>
+		private void OnScaleClick(object sender, EventArgs e)
+		{
+			RouteControl.doScaleResize((sender as ToolStripButton).Checked);
 		}
 
 

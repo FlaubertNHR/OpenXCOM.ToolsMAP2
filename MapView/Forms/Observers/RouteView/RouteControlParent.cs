@@ -33,8 +33,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
-		protected const int OffsetX = 2; // these track the offset between the panel border
-		protected const int OffsetY = 3; // and the lozenge-tip.
+		protected const int OffsetX = 2; // offset the left lozenge-tip away from the left side of the panel to account for the 3d-border
+		protected const int OffsetY = 3; // offset the top  lozenge-tip away from the top  side of the panel to account for the 3d-border
 		#endregion Fields (static)
 
 
@@ -96,7 +96,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// The top-left point of the panel.
+		/// Tracks the position of the top lozenge-tip wrt the panel.
 		/// </summary>
 		protected Point Origin
 		{ get; set; }
@@ -119,6 +119,15 @@ namespace MapView.Forms.Observers
 			get { return _halfheight; }
 			set { _halfheight = value; }
 		}
+
+		/// <summary>
+		/// <c>true</c> if the Scale button is checked.
+		/// </summary>
+		private bool IsScale
+		{ get; set; }
+
+		protected int _scaleOffsetX;
+		protected int _scaleOffsetY;
 
 
 		private readonly BlobDrawService _blobService = new BlobDrawService();
@@ -180,13 +189,32 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Fires from <c><see cref="RouteControl"/></c>.
+		/// Calls <c><see cref="OnResize()">OnResize()</see></c> to deal with
+		/// the state of <c><see cref="IsScale"/></c>.
+		/// </summary>
+		/// <param name="isScale"><c>true</c> if the Scale button is checked</param>
+		internal void doScaleResize(bool isScale)
+		{
+			IsScale = isScale;
+			OnResize(EventArgs.Empty);
+
+			Invalidate();
+			Select();
+		}
+
+		/// <summary>
+		/// Overrides the <c>Resize</c> eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
 		{
-			if (_file != null) // safety.
+			if (ParentForm != null // <- init is null
+				&& ParentForm.WindowState != FormWindowState.Minimized
+				&& _file != null)
 			{
+				_scaleOffsetX = 0;
+				_scaleOffsetY = 0;
+
 				int width  = Width  - OffsetX * 2;
 				int height = Height - OffsetY * 2;
 
@@ -197,15 +225,20 @@ namespace MapView.Forms.Observers
 					if (HalfWidth % 2 != 0)
 						--HalfWidth;
 
+					if (IsScale) HalfWidth *= 2;
+
 					HalfHeight = HalfWidth / 2;
 				}
 				else // use height
 				{
 					HalfHeight = height / (_file.Rows + _file.Cols);
-					HalfWidth  = HalfHeight * 2;
+
+					if (IsScale) HalfHeight *= 2;
+
+					HalfWidth = HalfHeight * 2;
 				}
 
-				Origin = new Point( // offset the left and top edges to account for the 3d panel border
+				Origin = new Point(
 								OffsetX + _file.Rows * HalfWidth,
 								OffsetY);
 
@@ -215,7 +248,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Selects a tile on the mouse-down event.
+		/// Selects a tile on the <c>MouseDown</c> event.
 		/// 
 		/// 
 		/// Fires
@@ -232,7 +265,18 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			if (_col != -1)
+			if (IsScale
+				&& e.Button == MouseButtons.Left
+				&& (ModifierKeys & Keys.Control) == Keys.Control)
+			{
+				_scaleOffsetX -= e.X - Width  / 2;
+				_scaleOffsetY -= e.Y - Height / 2;
+
+				// TODO: limit offsets to (0-gridwidth) and (0+gridwidth)
+
+				Invalidate();
+			}
+			else if (_col != -1)
 			{
 				MainViewOverlay.that._keyDeltaX =
 				MainViewOverlay.that._keyDeltaY = 0;
@@ -311,7 +355,7 @@ namespace MapView.Forms.Observers
 		internal void SetMapFile(MapFile file)
 		{
 			_file = file;
-			OnResize(EventArgs.Empty);
+			doScaleResize(false);
 		}
 
 		/// <summary>
@@ -501,8 +545,8 @@ namespace MapView.Forms.Observers
 		{
 			if (_file != null) // safety.
 			{
-				x -= Origin.X;
-				y -= Origin.Y;
+				x -= Origin.X + _scaleOffsetX;
+				y -= Origin.Y + _scaleOffsetY;
 
 				double xd = (double)x / (HalfWidth  * 2)
 						  + (double)y / (HalfHeight * 2);
