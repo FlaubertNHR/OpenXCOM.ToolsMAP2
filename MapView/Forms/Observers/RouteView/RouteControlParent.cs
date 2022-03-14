@@ -265,33 +265,40 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			if (IsScale
-				&& e.Button == MouseButtons.Left
-				&& (ModifierKeys & Keys.Control) == Keys.Control)
+			if (_file != null)
 			{
-				_scaleOffsetX -= e.X - Width  / 2;
-				_scaleOffsetY -= e.Y - Height / 2;
+				if (IsScale
+					&& e.Button == MouseButtons.Left
+					&& (ModifierKeys & Keys.Control) == Keys.Control)
+				{
+					_scaleOffsetX -= e.X - Width  / 2;
+					_scaleOffsetY -= e.Y - Height / 2;
 
-				// TODO: limit offsets to (0-gridwidth) and (0+gridwidth)
+					int width  = _file.Cols * HalfWidth  + _file.Rows * HalfWidth;
+					int height = _file.Cols * HalfHeight + _file.Rows * HalfHeight;
 
-				Invalidate();
-			}
-			else if (_col != -1)
-			{
-				MainViewOverlay.that._keyDeltaX =
-				MainViewOverlay.that._keyDeltaY = 0;
+					_scaleOffsetX = Math.Max(0 - width  + Width  / 2, Math.Min(_scaleOffsetX, Width  / 2));
+					_scaleOffsetY = Math.Max(0 - height + Height / 2, Math.Min(_scaleOffsetY, Height / 2));
 
-				_file.Location = new MapLocation(								// fire LocationSelected
-											_col, _row,
-											_file.Level);
+					Invalidate();
+				}
+				else if (_col != -1)
+				{
+					MainViewOverlay.that._keyDeltaX =
+					MainViewOverlay.that._keyDeltaY = 0;
 
-				MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
-																	// NOTE: drag-selection is not allowed here.
-				var args = new RouteControlEventArgs(
-												e.Button,
-												_file.GetTile(_col, _row),
-												_file.Location);
-				RouteControlMouseDownEvent(this, args);							// fire RouteView.OnRouteControlMouseDown()
+					_file.Location = new MapLocation(								// fire LocationSelected
+												_col, _row,
+												_file.Level);
+
+					MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
+																		// NOTE: drag-selection is not allowed here.
+					var args = new RouteControlEventArgs(
+													e.Button,
+													_file.GetTile(_col, _row),
+													_file.Location);
+					RouteControlMouseDownEvent(this, args);							// fire RouteView.OnRouteControlMouseDown()
+				}
 			}
 		}
 
