@@ -336,10 +336,12 @@ namespace MapView.Forms.Observers
 					int height = _file.Cols * HalfHeight + _file.Rows * HalfHeight;
 
 					_scaleOffsetX =
-					_scaleOffsetX_cached = Math.Max(Width  / 2 - width,  Math.Min(_scaleOffsetX, Width  / 2));
+					_scaleOffsetX_cached = Math.Max(Width - width - OffsetX * 2, Math.Min(_scaleOffsetX, 0));
+//					_scaleOffsetX_cached = Math.Max(Width / 2 - width, Math.Min(_scaleOffsetX, Width / 2));
 
 					_scaleOffsetY =
-					_scaleOffsetY_cached = Math.Max(Height / 2 - height, Math.Min(_scaleOffsetY, Height / 2));
+					_scaleOffsetY_cached = Math.Max(Height - height - OffsetY * 2, Math.Min(_scaleOffsetY, 0));
+//					_scaleOffsetY_cached = Math.Max(Height / 2 - height, Math.Min(_scaleOffsetY, Height / 2));
 
 					Invalidate();
 				}
