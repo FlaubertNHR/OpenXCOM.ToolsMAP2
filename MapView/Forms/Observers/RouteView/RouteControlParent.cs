@@ -27,8 +27,8 @@ namespace MapView.Forms.Observers
 
 
 		#region Events
-		public event EventHandler<RouteControlEventArgs> RouteControlMouseDownEvent;
-		public event EventHandler<RouteControlEventArgs> RouteControlMouseUpEvent;
+		internal event EventHandler<RouteControlEventArgs> RouteControlMouseDownEvent;
+		internal event EventHandler<RouteControlEventArgs> RouteControlMouseUpEvent;
 		#endregion Events
 
 
@@ -40,6 +40,13 @@ namespace MapView.Forms.Observers
 
 		#region Fields
 		protected MapFile _file;
+
+		/// <summary>
+		/// Is set <c>true</c> in
+		/// <c><see cref="OnMouseDown()">OnMouseDown()</see></c> to bypass
+		/// <c><see cref="OnMouseUp()">OnMouseUp()</see></c>.
+		/// </summary>
+		bool _isScaleCenterClick;
 
 		/// <summary>
 		/// <c>_col</c> and <c>_row</c> track the location of the last
@@ -271,6 +278,8 @@ namespace MapView.Forms.Observers
 					&& e.Button == MouseButtons.Left
 					&& (ModifierKeys & Keys.Control) == Keys.Control)
 				{
+					_isScaleCenterClick = true;
+
 					_scaleOffsetX -= e.X - Width  / 2;
 					_scaleOffsetY -= e.Y - Height / 2;
 
@@ -282,22 +291,27 @@ namespace MapView.Forms.Observers
 
 					Invalidate();
 				}
-				else if (_col != -1)
+				else
 				{
-					MainViewOverlay.that._keyDeltaX =
-					MainViewOverlay.that._keyDeltaY = 0;
+					_isScaleCenterClick = false;
 
-					_file.Location = new MapLocation(								// fire LocationSelected
-												_col, _row,
-												_file.Level);
+					if (_col != -1)
+					{
+						MainViewOverlay.that._keyDeltaX =
+						MainViewOverlay.that._keyDeltaY = 0;
 
-					MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
-																		// NOTE: drag-selection is not allowed here.
-					var args = new RouteControlEventArgs(
-													e.Button,
-													_file.GetTile(_col, _row),
-													_file.Location);
-					RouteControlMouseDownEvent(this, args);							// fire RouteView.OnRouteControlMouseDown()
+						_file.Location = new MapLocation(								// fire LocationSelected
+													_col, _row,
+													_file.Level);
+
+						MainViewOverlay.that.ProcessSelection(_loc, _loc);	// set selected location for other viewers.
+																			// NOTE: drag-selection is not allowed here.
+						var args = new RouteControlEventArgs(
+														e.Button,
+														_file.GetTile(_col, _row),
+														_file.Location);
+						RouteControlMouseDownEvent(this, args);							// fire RouteView.OnRouteControlMouseDown()
+					}
 				}
 			}
 		}
@@ -312,7 +326,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
-			if (_col != -1)
+			if (_file != null && !_isScaleCenterClick && _col != -1)
 			{
 				_file.Location = new MapLocation(								// fire LocationSelected
 											_col, _row,
