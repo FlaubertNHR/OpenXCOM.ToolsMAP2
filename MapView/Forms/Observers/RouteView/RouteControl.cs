@@ -199,8 +199,6 @@ namespace MapView.Forms.Observers
 			_graphics = e.Graphics;
 			_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
-
 			if (_file != null)
 			{
 				BlobService.HalfWidth  = HalfWidth;
@@ -269,6 +267,8 @@ namespace MapView.Forms.Observers
 					RouteView.ClearOveredInfoStatic();
 				}
 			}
+
+			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 		}
 		#endregion Events (override)
 

@@ -1339,8 +1339,6 @@ namespace MapView.Forms.MainView
 				// Image Processing using C# - https://www.codeproject.com/Articles/33838/Image-Processing-using-C
 				// ColorMatrix Guide - https://docs.rainmeter.net/tips/colormatrix-guide/
 
-				ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
-
 
 				_cols = _file.Cols;
 				_rows = _file.Rows;
@@ -1373,6 +1371,8 @@ namespace MapView.Forms.MainView
 				{
 					PrintSelectorLocation();
 				}
+
+				ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 			}
 		}
 

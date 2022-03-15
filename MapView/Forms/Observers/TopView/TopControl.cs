@@ -273,8 +273,6 @@ namespace MapView.Forms.Observers
 			_graphics = graphics;
 			_graphics.FillRectangle(SystemBrushes.Control, ClientRectangle);
 
-			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
-
 			if (_file != null)
 			{
 				int halfWidth  = _blobService.HalfWidth;
@@ -353,6 +351,8 @@ namespace MapView.Forms.Observers
 				if (MainViewOverlay.that.FirstClick)
 					_graphics.DrawPath(TopPens[TopViewOptionables.str_SelectedColor], _lozSelected);
 			}
+
+			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 		}
 
 		/// <summary>
