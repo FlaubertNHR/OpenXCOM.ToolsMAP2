@@ -46,7 +46,36 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="OnMouseDown()">OnMouseDown()</see></c> to bypass
 		/// <c><see cref="OnMouseUp()">OnMouseUp()</see></c>.
 		/// </summary>
-		bool _isScaleCenterClick;
+		private bool _isScaleCenterClick;
+
+		/// <summary>
+		/// The x-offset when the grid is scaled.
+		/// </summary>
+		protected int _scaleOffsetX;
+		/// <summary>
+		/// The y-offset when the grid is scaled.
+		/// </summary>
+		protected int _scaleOffsetY;
+
+		/// <summary>
+		/// The x-offset cached for returning to user's previous offset when
+		/// the x2 button is toggled.
+		/// </summary>
+		private int _scaleOffsetX_cached;
+		/// <summary>
+		/// The y-offset cached for returning to user's previous offset when
+		/// the x2 button is toggled.
+		/// </summary>
+		private int _scaleOffsetY_cached;
+
+		/// <summary>
+		/// <c>true</c> to bypass resetting the cached offsets when the x2
+		/// button is toggled.
+		/// </summary>
+		/// <remarks>The caches shall be reset when loading MapView, loading or
+		/// resizing a Mapfile, or resizing the RouteView window.</remarks>
+		private bool _bypassScaleReset;
+
 
 		/// <summary>
 		/// <c>_col</c> and <c>_row</c> track the location of the last
@@ -133,9 +162,6 @@ namespace MapView.Forms.Observers
 		private bool IsScale
 		{ get; set; }
 
-		protected int _scaleOffsetX;
-		protected int _scaleOffsetY;
-
 
 		private readonly BlobDrawService _blobService = new BlobDrawService();
 		protected BlobDrawService BlobService
@@ -195,13 +221,18 @@ namespace MapView.Forms.Observers
 			t1_Tick(this, e);
 		}
 
+
 		/// <summary>
 		/// Calls <c><see cref="OnResize()">OnResize()</see></c> to deal with
 		/// the state of <c><see cref="IsScale"/></c>.
 		/// </summary>
 		/// <param name="isScale"><c>true</c> if the Scale button is checked</param>
-		internal void doScaleResize(bool isScale)
+		/// <param name="bypassScaleReset"><c>true</c> to not reset the cached
+		/// scale-offsets</param>
+		internal void doScaleResize(bool isScale = false, bool bypassScaleReset = false)
 		{
+			_bypassScaleReset = bypassScaleReset;
+
 			IsScale = isScale;
 			OnResize(EventArgs.Empty);
 
@@ -219,8 +250,26 @@ namespace MapView.Forms.Observers
 				&& ParentForm.WindowState != FormWindowState.Minimized
 				&& _file != null)
 			{
-				_scaleOffsetX = 0;
-				_scaleOffsetY = 0;
+				if (_bypassScaleReset)	// OnResize() has been called by the x2 button.
+				{
+					_bypassScaleReset = false;
+
+					if (IsScale)	// scale has been activated
+					{
+						_scaleOffsetX = _scaleOffsetX_cached;
+						_scaleOffsetY = _scaleOffsetY_cached;
+					}
+					else			// scale has been deactivated
+					{
+						_scaleOffsetX =
+						_scaleOffsetY = 0;
+					}
+				}
+				else					// OnResize() has been called by Resize or re/load Map.
+				{
+					_scaleOffsetX = _scaleOffsetX_cached =
+					_scaleOffsetY = _scaleOffsetY_cached = 0;
+				}
 
 				int width  = Width  - OffsetX * 2;
 				int height = Height - OffsetY * 2;
@@ -286,8 +335,11 @@ namespace MapView.Forms.Observers
 					int width  = _file.Cols * HalfWidth  + _file.Rows * HalfWidth;
 					int height = _file.Cols * HalfHeight + _file.Rows * HalfHeight;
 
-					_scaleOffsetX = Math.Max(Width  / 2 - width,  Math.Min(_scaleOffsetX, Width  / 2));
-					_scaleOffsetY = Math.Max(Height / 2 - height, Math.Min(_scaleOffsetY, Height / 2));
+					_scaleOffsetX =
+					_scaleOffsetX_cached = Math.Max(Width  / 2 - width,  Math.Min(_scaleOffsetX, Width  / 2));
+
+					_scaleOffsetY =
+					_scaleOffsetY_cached = Math.Max(Height / 2 - height, Math.Min(_scaleOffsetY, Height / 2));
 
 					Invalidate();
 				}
@@ -376,7 +428,7 @@ namespace MapView.Forms.Observers
 		internal void SetMapFile(MapFile file)
 		{
 			_file = file;
-			doScaleResize(false);
+			doScaleResize();
 		}
 
 		/// <summary>

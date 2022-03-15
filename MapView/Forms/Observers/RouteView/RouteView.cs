@@ -2055,7 +2055,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnScaleClick(object sender, EventArgs e)
 		{
-			RouteControl.doScaleResize((sender as ToolStripButton).Checked);
+			RouteControl.doScaleResize((sender as ToolStripButton).Checked, true);
 		}
 
 
