@@ -231,7 +231,7 @@ namespace McdView
 
 		private int _selid = -1;
 		/// <summary>
-		/// The currently selected <see cref="Parts"/> ID.
+		/// The currently selected <c><see cref="Parts"/></c> ID.
 		/// </summary>
 		internal int Selid
 		{
@@ -942,6 +942,7 @@ namespace McdView
 			Tilepart[] parts = TilepartFactory.CreateTileparts(label, dir);
 			if (parts != null)
 			{
+				Selid = -1;
 				CacheLoad.SetCacheSaved(Parts = parts);
 
 				Label = label;
@@ -956,8 +957,6 @@ namespace McdView
 				miReload.Enabled = true;
 
 				Spriteset = SpritesetManager.CreateSpriteset(Label, dir, Pal);
-
-				Selid = -1;
 			}
 		}
 
@@ -1386,6 +1385,7 @@ namespace McdView
 					}
 
 					Copier.Label = Path.GetFileNameWithoutExtension(Copier.PfeMcd = ofd.FileName);
+					Copier.SelId = -1;
 
 					string dir = Path.GetDirectoryName(Copier.PfeMcd);
 
@@ -1400,8 +1400,6 @@ namespace McdView
 																		Pal);
 					}
 					Copier.cb_IalSprites.Enabled = (Copier.Spriteset != null);
-
-					Copier.SelId = -1;
 				}
 				else
 				{
