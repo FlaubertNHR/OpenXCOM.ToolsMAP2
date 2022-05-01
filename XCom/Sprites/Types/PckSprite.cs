@@ -23,6 +23,11 @@ namespace XCom
 		/// A marker that is inserted into the file-data that indicates that an
 		/// image's data has ended.
 		/// </summary>
+		/// <remarks>The PCK-file uses <c>0xFF</c> to flag the end of each
+		/// sprite. The only other place that it is allowed is after a
+		/// <c><see cref="MarkerRle"/></c> flag. That is it is *not* a color-id
+		/// entry; it's just a marker in the Pck-file. Stop using it as a
+		/// color-id entry.</remarks>
 		public const byte MarkerEos = 0xFF;
 
 		/// <summary>
@@ -30,8 +35,8 @@ namespace XCom
 		/// next byte is a quantity of pixels that are transparent. This is part
 		/// of the RLE-compression.
 		/// </summary>
-		/// <remarks>The PCK-file uses 0xFE to flag a succeeding quantity of
-		/// pixels as transparent. That is it is *not* a color-id entry; it's
+		/// <remarks>The PCK-file uses <c>0xFE</c> to flag a succeeding quantity
+		/// of pixels as transparent. That is it is *not* a color-id entry; it's
 		/// just a marker in the Pck-file. Stop using it as a color-id entry.</remarks>
 		public const byte MarkerRle = 0xFE;
 
@@ -113,6 +118,7 @@ namespace XCom
 			_width   = width;
 			_height  = height;
 			_bindata = new byte[_width * _height];
+			//Logfile.Log(". _bindata.Length= " + _bindata.Length);
 
 			int dst = bindata[0] * _width; // first byte is count of transparent rows
 			for (int src = 1; src != bindata.Length; ++src)
@@ -120,24 +126,31 @@ namespace XCom
 				switch (bindata[src])
 				{
 					case MarkerEos: // end of sprite
-						//Logfile.Log(". EoS");
+						if (src != bindata.Length - 1)
+						{
+							_spriteset.Failr = Spriteset.Fail.eos;
+							_spriteset.Failid = Id;
+							return;
+						}
+						//Logfile.Log(src + " . EoS");
 						break;
 
 					case MarkerRle: // skip quantity of pixels
 						dst += bindata[++src];
-						//Logfile.Log(". dst= " + dst);
+						//Logfile.Log(src + " . dst= " + dst + " - skip " + bindata[src]);
 						break;
 
 					default:
 						if (dst >= _bindata.Length)
 						{
-							//Logfile.Log(". . FAIL dst= " + dst);
-							_spriteset.Failr = Spriteset.Fail.pck;
+							//Logfile.Log(src + " . . FAIL dst= " + dst);
+							_spriteset.Failr = Spriteset.Fail.ovr;
+							_spriteset.Failid = Id;
 							return;
 						}
 
+						//Logfile.Log(src + " . dst= " + dst);
 						_bindata[dst++] = bindata[src];
-						//Logfile.Log(". dst= " + dst);
 						break;
 				}
 			}
@@ -348,7 +361,8 @@ namespace XCom
 		//
 		// You just don't need Tabfiles if you follow a few rules ....
 		// a) a sprite is a minimum of 2 bytes
-		// b) the first byte in a sprite shall not be FE or FF
+		// b) the first byte in a sprite shall not be FE or FF (safety - in
+		//    practice keep the value of the first byte <= sprite_height)
 		// c) the first byte shall always be a quantity of transparent fullrows
 		// d) the final byte of a sprite shall be FF
 		// e) FE shall be followed by a byte that is a quantity of transparent

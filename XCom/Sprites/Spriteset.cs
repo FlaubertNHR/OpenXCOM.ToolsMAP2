@@ -30,24 +30,32 @@ namespace XCom
 		public enum Fail
 		{
 			/// <summary>
-			/// successful
+			/// Success.
 			/// </summary>
 			non,
 
 			/// <summary>
-			/// overflow in the Pckfile
+			/// Pck data (uncompressed) overflowed a sprite's length.
 			/// </summary>
-			pck,
+			ovr,
 
 			/// <summary>
-			/// overflow in the Tabfile
+			/// Pck vs Tab count mismatch.
 			/// </summary>
-			tab,
+			qty,
 
 			/// <summary>
-			/// Pck vs Tab count mismatch
+			/// End_of_sprite marker before Pck data's length.
 			/// </summary>
-			qty
+			/// <remarks>Technically this will never occur. Either a
+			/// <c><see cref="qty"/></c> or a <c><see cref="pck"/></c>
+			/// <c><see cref="Failr"/></c> will be encountered beforehand.</remarks>
+			eos,
+
+			/// <summary>
+			/// Pck data does not end with End_of_Sprite marker.
+			/// </summary>
+			pck
 		}
 		#endregion Enums (public)
 
@@ -162,6 +170,13 @@ namespace XCom
 		/// </summary>
 		internal int CountOffsets
 		{ get; private set; }
+
+		/// <summary>
+		/// This value can be set to a sprite-id if uncompressing a <c>PCK</c>
+		/// sprite or spriteset fails.
+		/// </summary>
+		internal int Failid
+		{ get; set; }
 		#endregion Properties
 
 
@@ -309,13 +324,8 @@ namespace XCom
 				bool createToned  = false)
 		{
 			//Logfile.Log("Spriteset label= " + label + " pal= " + pal + " tabwordLength= " + tabwordLength);
-
-			if (bytesTab.Length % tabwordLength != 0)
-			{
-				Failr = Fail.tab;
-				return;
-			}
-
+			//Logfile.Log(". bytesTab.Length= " + bytesTab.Length);
+			//Logfile.Log(". tabwordLength= " + tabwordLength);
 
 			switch (SpritesetManager.GetCursor())
 			{
@@ -354,7 +364,7 @@ namespace XCom
 					pos += TabwordLength;
 				}
 			}
-			else // (TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2)
+			else // TabwordLength == SpritesetManager.TAB_WORD_LENGTH_2
 			{
 				while (pos != bytesTab.Length)
 				{
@@ -372,6 +382,11 @@ namespace XCom
 			// TODO: Apparently MCDEdit can and will output a 1-byte Pck sprite
 			// w/ only "FF" if a blank sprite is in its internal spriteset when
 			// a save happens.
+			//
+			// But unfortunately the official OxC code @ Engine/SurfaceSet.cpp
+			// void SurfaceSet::loadPck(const std::string &pck, const std::string &tab)
+			// expects the first byte of a compressed PCK sprite to be the count
+			// of transparent rows.
 //			if (bytesPck.Length == 1)
 //			{}
 //			else
@@ -387,70 +402,79 @@ namespace XCom
 					}
 				}
 
+				// test ->
+/*				if (true) // rewrite the Tabfile ->
+				{
+					string dir = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
+					string pfe = Path.Combine(dir, "file.TAB");
+
+					using (var fsTab = FileService.CreateFile(pfe))
+					if (fsTab != null)
+					using (var bwTab = new BinaryWriter(fsTab))
+					{
+						pos = 0;
+
+						uint u = 0;
+						for (int id = 0; id != CountSprites; ++id)
+						{
+							if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
+							{
+								// "The size of the encoded sprite-data has grown too large to
+								// be stored correctly in a Tab file. Try deleting sprite(s)
+								// or (less effective) using more transparency in the sprites."
+								return;
+							}
+
+							bwTab.Write((ushort)u);
+
+							while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
+								++u;
+
+							++u;
+						}
+					}
+				} */
+				// <- test end.
+
 				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
 					Failr = Fail.qty;
-
-//					if (true) // rewrite the Tabfile ->
-//					{
-//						string dir = Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
-//						string pfe = Path.Combine(dir, "tabfile.TAB");
-//
-//						using (var fsTab = FileService.CreateFile(pfe))
-//						if (fsTab != null)
-//						using (var bwTab = new BinaryWriter(fsTab))
-//						{
-//							pos = 0;
-//
-//							uint u = 0;
-//							for (int id = 0; id != CountSprites; ++id)
-//							{
-//								if (u > UInt16.MaxValue) // bork. Psst, happens at ~150 sprites.
-//								{
-//									// "The size of the encoded sprite-data has grown too large to
-//									// be stored correctly in a Tab file. Try deleting sprite(s)
-//									// or (less effective) using more transparency in the sprites."
-//									return;
-//								}
-//
-//								bwTab.Write((ushort)u);
-//
-//								while (++pos != bytesPck.Length && bytesPck[pos - 1] != 0xFF) // note does not handle "FE FF"
-//									++u;
-//
-//								++u;
-//							}
-//						}
-//					}
+					return;
 				}
-				else
+
+
+				offsets[offsets.Length - 1] = (uint)bytesPck.Length;
+
+				byte[] bindata;
+
+				for (int i = 0; i != offsets.Length - 1; ++i)
 				{
-					offsets[offsets.Length - 1] = (uint)bytesPck.Length;
+					bindata = new byte[offsets[i + 1] - offsets[i]];
 
-					byte[] bindata;
+					for (int j = 0; j != bindata.Length; ++j)
+						bindata[j] = bytesPck[offsets[i] + j];
 
-					for (int i = 0; i != offsets.Length - 1; ++i)
+					if (bindata[bindata.Length - 1] != PckSprite.MarkerEos)
 					{
-						bindata = new byte[offsets[i + 1] - offsets[i]];
-
-						for (int j = 0; j != bindata.Length; ++j)
-							bindata[j] = bytesPck[offsets[i] + j];
-
-						//Logfile.Log("sprite #" + i);
-						var sprite = new PckSprite(
-												bindata,
-												SpriteWidth,
-												SpriteHeight,
-												Pal,
-												i,
-												this,
-												createToned);
-
-						if (Failr == Fail.pck)
-							return;
-
-						Sprites.Add(sprite);
+						Failr = Fail.pck;
+						Failid = i;
+						return;
 					}
+
+					//Logfile.Log("sprite #" + i);
+					var sprite = new PckSprite(
+											bindata,
+											SpriteWidth,
+											SpriteHeight,
+											Pal,
+											i,
+											this,
+											createToned);
+
+					if (Failr == Fail.ovr)
+						return;
+
+					Sprites.Add(sprite);
 				}
 			}
 			else

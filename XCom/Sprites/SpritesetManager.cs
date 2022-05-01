@@ -156,43 +156,78 @@ namespace XCom
 					byte[] bytesTab = FileService.ReadFile(pf + GlobalsXC.TabExt);
 					if (bytesTab != null && bytesTab.Length != 0)
 					{
-						var spriteset = new Spriteset(
-													label,
-													pal,
-													bytesPck,
-													bytesTab,
-													spritewidth,
-													spriteheight,
-													GetTabwordLength(bytesTab),
-													createToned);
-
-						switch (spriteset.Failr)
+						int tabwordLength;
+						if (!GetTabwordLength(bytesTab, out tabwordLength))
 						{
-							default: // case Spriteset.Fail.non
-								if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
-									Spritesets.Add(spriteset);
+							head = "Tab data is not factorable by the wordLength.";
+							copy = pf + GlobalsXC.PckExt + Environment.NewLine
+								 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
+								 + "file length = " + bytesTab.Length + Environment.NewLine
+								 + "word length = ";
 
-								return spriteset;
+							switch (tabwordLength)
+							{
+								case TAB_WORD_LENGTH_0:
+									copy += "borked";
+									break;
 
-							case Spriteset.Fail.tab:
-								head = "File data overflowed the TabwordLength.";
-								copy = pf + GlobalsXC.TabExt;
-								break;
+								case TAB_WORD_LENGTH_2:
+								case TAB_WORD_LENGTH_4:
+									copy += tabwordLength;
+									break;
+							}
+						}
+						else
+						{
+							var spriteset = new Spriteset(
+														label,
+														pal,
+														bytesPck,
+														bytesTab,
+														spritewidth,
+														spriteheight,
+														tabwordLength,
+														createToned);
 
-							case Spriteset.Fail.qty:
-								head = Infobox.SplitString("The count of sprites in the PCK file ["
-															+ spriteset.CountSprites + "] does not match"
-															+ " the count of sprites expected by the TAB file ["
-															+ spriteset.CountOffsets + "].");
-								copy = pf + GlobalsXC.PckExt + Environment.NewLine
-									 + pf + GlobalsXC.TabExt;
-								break;
+							switch (spriteset.Failr)
+							{
+								default: // case Spriteset.Fail.non
+									if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
+										Spritesets.Add(spriteset);
 
-							case Spriteset.Fail.pck:
-								spriteset.Dispose();
-								head = "File data overflowed a sprite's length.";
-								copy = pf + GlobalsXC.PckExt;
-								break;
+									return spriteset;
+
+								case Spriteset.Fail.qty:
+									head = Infobox.SplitString("The count of sprites in the Pck file does not match the count expected by the Tab file.");
+									copy = pf + GlobalsXC.PckExt + Environment.NewLine
+										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
+										 + "sprites = " + spriteset.CountSprites + Environment.NewLine
+										 + "offsets = " + spriteset.CountOffsets;
+									break;
+
+								case Spriteset.Fail.ovr:
+									head = "Pck data (uncompressed) overflowed a sprite's length.";
+									copy = pf + GlobalsXC.PckExt + Environment.NewLine
+										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
+										 + "sprite id " + spriteset.Failid;
+									break;
+
+								case Spriteset.Fail.eos:
+									head = "End_of_Sprite marker [0xFF] before Pck data ended.";
+									copy = pf + GlobalsXC.PckExt + Environment.NewLine
+										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
+										 + "sprite id " + spriteset.Failid;
+									break;
+
+								case Spriteset.Fail.pck:
+									head = "Pck data does not end with End_of_Sprite marker [0xFF].";
+									copy = pf + GlobalsXC.PckExt + Environment.NewLine
+										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
+										 + "sprite id " + spriteset.Failid;
+									break;
+							}
+
+							spriteset.Dispose();
 						}
 					}
 					else
@@ -225,11 +260,12 @@ namespace XCom
 
 
 		/// <summary>
-		/// Gets whether the array of bytes of a Tabfile has 2-byte or 4-byte
-		/// TabwordLength.
+		/// Gets whether the array of bytes of a Tabfile is valid.
 		/// </summary>
 		/// <param name="bytesTab">a little-endian array of bytes</param>
-		/// <returns>its TabwordLength</returns>
+		/// <param name="tabwordLength">pointer to hold the TabwordLength</param>
+		/// <returns>true if the <c>Length</c> of <paramref name="bytesTab"/> is
+		/// factorable by the estimated TabwordLength</returns>
 		/// <remarks>The Tabfile uses little-endian words. If an array of bytes
 		/// has more than 2 bytes and the values of the 3rd and 4th bytes is
 		/// <c>0</c> the TabwordLength is <c><see cref="TAB_WORD_LENGTH_4"/></c>
@@ -238,25 +274,35 @@ namespace XCom
 		/// <c><see cref="TAB_WORD_LENGTH_2"/></c>. The first sprite in the
 		/// corresponding Pckfile always has an offset of <c>0</c> - but the
 		/// second sprite if it exists always has a nonzero offset.
+		/// 
+		/// 
+		/// Eg. first four bytes
 		/// <code>
 		/// TAB_WORD_LENGTH_2 : 00 00 01 00
 		/// TAB_WORD_LENGTH_4 : 00 00 00 00
 		/// </code>
 		/// </remarks>
-		public static int GetTabwordLength(byte[] bytesTab)
+		private static bool GetTabwordLength(byte[] bytesTab, out int tabwordLength)
 		{
-			// NOTE: This can throw if the Tabfile is malformed.
-			if (bytesTab.Length % 2 != 0)
-				return TAB_WORD_LENGTH_0; // <- ERROR
+			if (bytesTab.Length != 3)	// return TAB_WORD_LENGTH_0 'unknown' since it takes 4 bytes to make
+			{							// a decent guestimation (unless the length is exactly 2 bytes)
+				if (bytesTab.Length >= TAB_WORD_LENGTH_4
+					&& bytesTab[2] == (byte)0
+					&& bytesTab[3] == (byte)0)
+				{
+					tabwordLength = TAB_WORD_LENGTH_4;
+					return bytesTab.Length % TAB_WORD_LENGTH_4 == 0;
+				}
 
-
-			if (bytesTab.Length > TAB_WORD_LENGTH_2
-				&& bytesTab[2] == (byte)0
-				&& bytesTab[3] == (byte)0)
-			{
-				return TAB_WORD_LENGTH_4;
+				if (bytesTab.Length >= TAB_WORD_LENGTH_2)
+				{
+					tabwordLength = TAB_WORD_LENGTH_2;
+					return bytesTab.Length % TAB_WORD_LENGTH_2 == 0;
+				}
 			}
-			return TAB_WORD_LENGTH_2;
+
+			tabwordLength = TAB_WORD_LENGTH_0;
+			return false;
 		}
 
 
