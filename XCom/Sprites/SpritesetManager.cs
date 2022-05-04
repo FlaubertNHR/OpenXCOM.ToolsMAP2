@@ -285,7 +285,7 @@ namespace XCom
 		private static bool GetTabwordLength(byte[] bytesTab, out int tabwordLength)
 		{
 			if (bytesTab.Length != 3)	// return TAB_WORD_LENGTH_0 'unknown' since it takes 4 bytes to make
-			{							// a decent guestimation (unless the length is exactly 2 bytes)
+			{							// a decent guesstimation (unless the length is exactly 2 bytes)
 				if (bytesTab.Length >= TAB_WORD_LENGTH_4
 					&& bytesTab[2] == (byte)0
 					&& bytesTab[3] == (byte)0)
