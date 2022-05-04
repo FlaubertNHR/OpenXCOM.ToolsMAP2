@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/mapview.css">
+	</head>
+
+	<body>
+		<h2>Pck + Tab specification</h2>
+
+		<p>What follows is MapView2's specification for PCK spriteset files and their TAB offset files. If a PCK file does not have a corresponding TAB file it contains only one sprite and therefore does not need a TAB file. At present, MapView2 does not handle PCK files that do not have a corresponding TAB file.</p>
+
+		<p>The filenames of a PCK + TAB pair shall be the same only with different extensions: PCK files have extension .PCK and TAB files have extension .TAB.</p>
+
+		<h3>Pck files</h3>
+
+		<p>PCK sprites use an RLE codec (compression/decompression). Since I am unaware of a rigorous specification for the PCK codec I [kevL] had to devise one that is compatible with the OpenXcom engine at least. This is my take on the matter ...<br>
+		<br>
+		- each sprite in a PCK spriteset is a minimum of 2 bytes<br>
+		- the first byte shall be a count of transparent rows at the start of the sprite<br>
+		- the final byte of each sprite shall be FF<br>
+		- between the first and final bytes FE is a special marker that shall be followed by a byte that is a count of transparent pixels (FF is allowed as a count)<br>
+		- therefore FE should never be used as a palette id<br>
+		- technically FF can be used as a palette id in this specification but this would require that the offsets in the PCK file's corresponding TAB file are absolutely correct under the current specification; that is not always the case. Various decompression algorithms additionally rely on FF not being used as a palette id. Therefore, as with FE, FF should never be used as a palette id<br>
+		- a decompression algorithm shall initialize the entire buffer of a sprite with transparent pixels<br>
+		- therefore a contiguous sequence of transparent pixels that fill a sprite to its final FF marker do not need to be written<br>
+		- uncompressed data that overflows the count of pixels in a sprite shall be handled by the decompression algorithm</p>
+
+		<p>Following those rules makes TAB files redundant. However, MapView2 will continue to insist on valid TAB files if for no reason other than backward compatibility.</p>
+
+		<h3>Tab files</h3>
+
+		<p>TAB files contain offsets to each sprite in a PCK spriteset. These offsets are written little-endian in either 2-byte or 4-byte words. The size of the words in a TAB file depends on what the spriteset is used for.</p>
+
+		<p>For instance<br>
+		<br>
+		- 2 byte words: terrain, bigobs, ufo-units<br>
+		- 4 byte words: tftd-units</p>
+
+		<p>To find out what the word-length in a TAB file is open it with a hex editor. The offset of the first sprite in a TAB file's corresponding PCK file is always 0. Therefore if the data has at least 4 bytes and the first 4 bytes are 00 then it uses 4-byte words, otherwise it uses 2-byte words.</p>
+
+		<p>TAB files that have zero length or contain an odd count of bytes are invalid.</p>
+
+		<br>
+	</body>
+</html>
