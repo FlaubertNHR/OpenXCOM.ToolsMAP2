@@ -24,6 +24,8 @@ namespace PckView
 		private MenuItem miOpenScanG;
 		private MenuItem miOpenLoFT;
 		private MenuItem miSeparator1;
+		private MenuItem miCreateTab;
+		private MenuItem miSeparator6;
 		private MenuItem miSave;
 		private MenuItem miSaveAs;
 		private MenuItem miSeparator2;
@@ -96,6 +98,8 @@ namespace PckView
 			this.miOpenScanG = new System.Windows.Forms.MenuItem();
 			this.miOpenLoFT = new System.Windows.Forms.MenuItem();
 			this.miSeparator1 = new System.Windows.Forms.MenuItem();
+			this.miCreateTab = new System.Windows.Forms.MenuItem();
+			this.miSeparator6 = new System.Windows.Forms.MenuItem();
 			this.miSave = new System.Windows.Forms.MenuItem();
 			this.miSaveAs = new System.Windows.Forms.MenuItem();
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
@@ -151,6 +155,8 @@ namespace PckView
 			this.miOpenScanG,
 			this.miOpenLoFT,
 			this.miSeparator1,
+			this.miCreateTab,
+			this.miSeparator6,
 			this.miSave,
 			this.miSaveAs,
 			this.miSeparator2,
@@ -234,10 +240,21 @@ namespace PckView
 			this.miSeparator1.Index = 10;
 			this.miSeparator1.Text = "-";
 			// 
+			// miCreateTab
+			// 
+			this.miCreateTab.Index = 11;
+			this.miCreateTab.Text = "Create Tabfile for ...";
+			this.miCreateTab.Click += new System.EventHandler(this.OnCreateTab);
+			// 
+			// miSeparator6
+			// 
+			this.miSeparator6.Index = 12;
+			this.miSeparator6.Text = "-";
+			// 
 			// miSave
 			// 
 			this.miSave.Enabled = false;
-			this.miSave.Index = 11;
+			this.miSave.Index = 13;
 			this.miSave.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
 			this.miSave.Text = "&Save";
 			this.miSave.Click += new System.EventHandler(this.OnSaveClick);
@@ -245,20 +262,20 @@ namespace PckView
 			// miSaveAs
 			// 
 			this.miSaveAs.Enabled = false;
-			this.miSaveAs.Index = 12;
+			this.miSaveAs.Index = 14;
 			this.miSaveAs.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
 			this.miSaveAs.Text = "Sav&e As ...";
 			this.miSaveAs.Click += new System.EventHandler(this.OnSaveAsClick);
 			// 
 			// miSeparator2
 			// 
-			this.miSeparator2.Index = 13;
+			this.miSeparator2.Index = 15;
 			this.miSeparator2.Text = "-";
 			// 
 			// miExportSprites
 			// 
 			this.miExportSprites.Enabled = false;
-			this.miExportSprites.Index = 14;
+			this.miExportSprites.Index = 16;
 			this.miExportSprites.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
 			this.miExportSprites.Text = "Ex&port Sprites ...";
 			this.miExportSprites.Click += new System.EventHandler(this.OnExportSpritesClick);
@@ -266,7 +283,7 @@ namespace PckView
 			// miExportSpritesheet
 			// 
 			this.miExportSpritesheet.Enabled = false;
-			this.miExportSpritesheet.Index = 15;
+			this.miExportSpritesheet.Index = 17;
 			this.miExportSpritesheet.Shortcut = System.Windows.Forms.Shortcut.F5;
 			this.miExportSpritesheet.Text = "E&xport Spritesheet ...";
 			this.miExportSpritesheet.Click += new System.EventHandler(this.OnExportSpritesheetClick);
@@ -274,7 +291,7 @@ namespace PckView
 			// miImportSheetReplace
 			// 
 			this.miImportSheetReplace.Enabled = false;
-			this.miImportSheetReplace.Index = 16;
+			this.miImportSheetReplace.Index = 18;
 			this.miImportSheetReplace.Shortcut = System.Windows.Forms.Shortcut.F6;
 			this.miImportSheetReplace.Text = "I&mport Spritesheet (replace set) ...";
 			this.miImportSheetReplace.Click += new System.EventHandler(this.OnImportSpritesheetClick);
@@ -282,26 +299,26 @@ namespace PckView
 			// miImportSheetAdd
 			// 
 			this.miImportSheetAdd.Enabled = false;
-			this.miImportSheetAdd.Index = 17;
+			this.miImportSheetAdd.Index = 19;
 			this.miImportSheetAdd.Shortcut = System.Windows.Forms.Shortcut.F7;
 			this.miImportSheetAdd.Text = "I&mport Spritesheet (add to set) ...";
 			this.miImportSheetAdd.Click += new System.EventHandler(this.OnImportSpritesheetClick);
 			// 
 			// miSeparator3
 			// 
-			this.miSeparator3.Index = 18;
+			this.miSeparator3.Index = 20;
 			this.miSeparator3.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 19;
+			this.miQuit.Index = 21;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
 			// 
 			// miCompare
 			// 
-			this.miCompare.Index = 20;
+			this.miCompare.Index = 22;
 			this.miCompare.Text = "Compare";
 			this.miCompare.Visible = false;
 			this.miCompare.Click += new System.EventHandler(this.OnCompareClick);

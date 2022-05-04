@@ -110,6 +110,10 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateTabD.cs" />
+    <Compile Include="CreateTabD.Designer.cs">
+      <DependentUpon>CreateTabD.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileDialogStrings.cs" />
     <Compile Include="PaletteF.cs">
       <SubType>Form</SubType>
@@ -153,6 +157,9 @@
   <ItemGroup>
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateTabD.resx">
+      <DependentUpon>CreateTabD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PaletteF.resx">
       <DependentUpon>PaletteF.cs</DependentUpon>

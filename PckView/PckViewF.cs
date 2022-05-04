@@ -1866,6 +1866,19 @@ namespace PckView
 		}
 
 		/// <summary>
+		/// Opens a dialog to create a Tabfile based on a Pckfile.
+		/// </summary>
+		/// <param name="sender"><c><see cref="miCreateTab"/></c></param>
+		/// <param name="e"></param>
+		private void OnCreateTab(object sender, EventArgs e)
+		{
+			using (var ctd = new CreateTabD())
+			{
+				ctd.ShowDialog(this);
+			}
+		}
+
+		/// <summary>
 		/// Saves all the sprites to the currently loaded <c>PCK+TAB</c> files
 		/// if terrain/unit/bigobs or to the currently loaded <c>DAT</c> file if
 		/// ScanG or LoFT.
