@@ -25,6 +25,8 @@ namespace PckView
 
 		private const string WARNING = "This is not guaranteed to be valid.";
 		private const string SUCCESS = "Tabfile was written to the directory of the Pckfile.";
+
+		private const string ERROR_TITLE = "Pckfile is bonky";
 		#endregion Fields (static)
 
 
@@ -90,9 +92,10 @@ namespace PckView
 				if (bytes.Length < 2)
 				{
 					using (var f = new Infobox(
-											"Pckfile is bonky",
-											"input file requires at least 2 bytes: one for the Min count of transparent"
-										  + " rows in the first sprite and another for an End_of_Sprite marker.",
+											ERROR_TITLE,
+											Infobox.SplitString("input file requires at least 2 bytes: one for"
+															  + " the Min count of transparent rows in the first"
+															  + " sprite and another for an End_of_Sprite marker."),
 											"00 FF",
 											InfoboxType.Error))
 					{
@@ -104,7 +107,7 @@ namespace PckView
 				if (bytes[bytes.Length - 1] != PckSprite.MarkerEos)
 				{
 					using (var f = new Infobox(
-											"Pckfile is bonky",
+											ERROR_TITLE,
 											"final sprite does not end with a stop-byte",
 											"offset " + getoffset((uint)bytes.Length - 1),
 											InfoboxType.Error))
@@ -123,7 +126,7 @@ namespace PckView
 						if (i == bytes.Length - 1 && bytes[i] == PckSprite.MarkerEos)
 						{
 							using (var f = new Infobox(
-													"Pckfile is bonky",
+													ERROR_TITLE,
 													"final sprite does not end with a valid stop-byte",
 													"offset " + getoffset(i),
 													InfoboxType.Error))
@@ -135,23 +138,10 @@ namespace PckView
 					}
 					else if (bytes[i] == PckSprite.MarkerRle)	// rle-byte
 					{
-						if (i == bytes.Length - 1)
-						{
-							using (var f = new Infobox(
-													"Pckfile is bonky",
-													"final sprite ends with an rle-byte",
-													"offset " + getoffset(i),
-													InfoboxType.Error))
-							{
-								f.ShowDialog(this);
-								return;
-							}
-						}
-
 						if (i == bytes.Length - 2)
 						{
 							using (var f = new Infobox(
-													"Pckfile is bonky",
+													ERROR_TITLE,
 													"final sprite does not end with a valid stop-byte",
 													"offset " + getoffset(i),
 													InfoboxType.Error))
@@ -171,14 +161,13 @@ namespace PckView
 
 							if (rb_2byte.Checked && offset > UInt16.MaxValue)
 							{
-								string head = Infobox.SplitString("The size (in bytes) of the encoded Pckfile is too"
-																+ " large for the offsets of its sprites to be written"
-																+ " in a 2-byte Tabfile. Try deleting sprite-data or"
-																+ " optimizing transparent pixels in a hex editor.");
+								string head = Infobox.SplitString("The size (in bytes) of the encoded Pckfile"
+																+ " is too large for the offsets of its sprites"
+																+ " to be written in a 2-byte Tabfile.");
 								using (var f = new Infobox(
-														"Pckfile is bonky",
+														ERROR_TITLE,
 														head,
-														"offset (max) 0x" + UInt16.MaxValue.ToString("X4"),
+														"offset " + getoffset(i),
 														InfoboxType.Error))
 								{
 									f.ShowDialog(this);
