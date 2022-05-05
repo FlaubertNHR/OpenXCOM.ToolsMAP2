@@ -1870,7 +1870,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"><c><see cref="miCreateTab"/></c></param>
 		/// <param name="e"></param>
-		private void OnCreateTab(object sender, EventArgs e)
+		private void OnCreateTabClick(object sender, EventArgs e)
 		{
 			using (var ctd = new CreateTabD())
 			{

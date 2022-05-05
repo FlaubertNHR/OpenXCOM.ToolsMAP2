@@ -244,7 +244,7 @@ namespace PckView
 			// 
 			this.miCreateTab.Index = 11;
 			this.miCreateTab.Text = "Create Tabfile for ...";
-			this.miCreateTab.Click += new System.EventHandler(this.OnCreateTab);
+			this.miCreateTab.Click += new System.EventHandler(this.OnCreateTabClick);
 			// 
 			// miSeparator6
 			// 
