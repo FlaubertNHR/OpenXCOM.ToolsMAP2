@@ -23,6 +23,8 @@ namespace PckView
 		private static string _lastfile;
 		private static string _lastdir;
 
+		private static bool _2byte = true;
+
 		private const string WARNING = "This is not guaranteed to be valid.";
 		private const string SUCCESS = "Tabfile was written to the directory of the Pckfile.";
 
@@ -37,6 +39,9 @@ namespace PckView
 		internal CreateTabD()
 		{
 			InitializeComponent();
+
+			if (_2byte) rb_2byte.Checked = true;
+			else        rb_4byte.Checked = true;
 
 			tb_input.BackColor = Color.GhostWhite;
 
@@ -246,6 +251,19 @@ namespace PckView
 		private void OnInputTextchanged(object sender, EventArgs e)
 		{
 			bu_create.Enabled = File.Exists(_lastfile = tb_input.Text);
+
+			la_warn.ForeColor = Color.DarkSalmon;
+			la_warn.Text = WARNING;
+		}
+
+		/// <summary>
+		/// Caches the state of the TabwordLength radio buttons.
+		/// </summary>
+		/// <param name="sender"><c><see cref="rb_2byte"/></c></param>
+		/// <param name="e"></param>
+		private void OnTabwordLengthCheckedChanged(object sender, EventArgs e)
+		{
+			_2byte = rb_2byte.Checked;
 
 			la_warn.ForeColor = Color.DarkSalmon;
 			la_warn.Text = WARNING;

@@ -70,15 +70,14 @@ namespace PckView
 			// 
 			// rb_2byte
 			// 
-			this.rb_2byte.Checked = true;
 			this.rb_2byte.Location = new System.Drawing.Point(10, 48);
 			this.rb_2byte.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_2byte.Name = "rb_2byte";
 			this.rb_2byte.Size = new System.Drawing.Size(100, 20);
 			this.rb_2byte.TabIndex = 3;
-			this.rb_2byte.TabStop = true;
 			this.rb_2byte.Text = "2 byte offsets";
 			this.rb_2byte.UseVisualStyleBackColor = true;
+			this.rb_2byte.CheckedChanged += new System.EventHandler(this.OnTabwordLengthCheckedChanged);
 			// 
 			// rb_4byte
 			// 
