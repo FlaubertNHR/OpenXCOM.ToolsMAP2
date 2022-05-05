@@ -35,9 +35,11 @@
 		- 2 byte words: terrain, bigobs, ufo-units<br>
 		- 4 byte words: tftd-units</p>
 
-		<p>To find out what the word-length in a TAB file is open it with a hex editor. The offset of the first sprite in a TAB file's corresponding PCK file is always 0. Therefore if the data has at least 4 bytes and the first 4 bytes are 00 then it uses 4-byte words, otherwise it uses 2-byte words.</p>
+		<p>To find out what the word-length in a TAB file is open it with a hex editor. The offset of the first sprite in a TAB's corresponding PCK file is always 0; the offset of the second sprite is always nonzero. Therefore if the data has at least 4 bytes and the first 4 bytes are 00 then it uses 4-byte words, otherwise it uses 2-byte words.</p>
 
 		<p>TAB files that have zero length or contain an odd count of bytes are invalid.</p>
+
+		<p>Note that the maximum value of an offset in a 2-byte TAB file is FFFF (65,535). This is very roughly 150 sprites although it depends heavily on the amount of transparent pixels in the spriteset. The maximum value in a 4-byte TAB is close to 4.3 billion (so don't worry about that).</p>
 
 		<br>
 	</body>
