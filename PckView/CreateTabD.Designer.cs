@@ -113,7 +113,7 @@ namespace PckView
 			this.bu_create.TabIndex = 6;
 			this.bu_create.Text = "Create";
 			this.bu_create.UseVisualStyleBackColor = true;
-			this.bu_create.Click += new System.EventHandler(this.OnCreateClick);
+			this.bu_create.Click += new System.EventHandler(this.OnCreateTabClick);
 			// 
 			// bu_cancel
 			// 

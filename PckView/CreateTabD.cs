@@ -90,7 +90,7 @@ namespace PckView
 		/// </summary>
 		/// <param name="sender"><c><see cref="bu_create"/></c></param>
 		/// <param name="e"></param>
-		private void OnCreateClick(object sender, EventArgs e)
+		private void OnCreateTabClick(object sender, EventArgs e)
 		{
 			byte[] bytes = FileService.ReadFile(tb_input.Text);
 			if (bytes != null)
@@ -173,7 +173,7 @@ namespace PckView
 								using (var f = new Infobox(
 														ERROR_TITLE,
 														head,
-														"offset " + getoffset(i),
+														"offset " + getoffset(offset),
 														InfoboxType.Error))
 								{
 									f.ShowDialog(this);
@@ -232,7 +232,8 @@ namespace PckView
 		}
 
 		/// <summary>
-		/// helper for <c><see cref="OnCreateClick()">OnCreateClick()</see></c>
+		/// helper for
+		/// <c><see cref="OnCreateTabClick()">OnCreateTabClick()</see></c>
 		/// </summary>
 		/// <returns></returns>
 		private string getoffset(uint offset)
