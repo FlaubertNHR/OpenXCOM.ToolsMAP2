@@ -67,6 +67,7 @@ namespace PckView
 				ofd.Filter = FileDialogStrings.GetFilterPck();
 
 				ofd.RestoreDirectory = true;
+				ofd.AutoUpgradeEnabled = false;
 
 				if (Directory.Exists(_lastdir))
 					ofd.InitialDirectory = _lastdir;
