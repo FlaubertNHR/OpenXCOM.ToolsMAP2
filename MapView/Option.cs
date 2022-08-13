@@ -83,7 +83,7 @@ namespace MapView
 		internal Option(object @default)
 		{
 			//DSShared.Logfile.Log("Option.Option() default= " + @default);
-			_value = @default; // TODO: Investigate whether that should run set_Value. uh no ...
+			_value = @default;
 		}
 		#endregion cTor
 

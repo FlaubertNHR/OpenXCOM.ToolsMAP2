@@ -104,14 +104,17 @@ namespace MapView
 					propertyGrid.SelectedObject = o as MainViewOptionables;
 					_desc.Height = MainViewF.Optionables.DescriptionHeight;
 					break;
+
 				case OptionableType.TileView:
 					propertyGrid.SelectedObject = o as TileViewOptionables;
 					_desc.Height = TileView.Optionables.DescriptionHeight;
 					break;
+
 				case OptionableType.TopView:
 					propertyGrid.SelectedObject = o as TopViewOptionables;
 					_desc.Height = TopView.Optionables.DescriptionHeight;
 					break;
+
 				case OptionableType.RouteView:
 					propertyGrid.SelectedObject = o as RouteViewOptionables;
 					_desc.Height = RouteView.Optionables.DescriptionHeight;
