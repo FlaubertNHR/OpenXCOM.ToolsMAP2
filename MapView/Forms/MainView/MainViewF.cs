@@ -108,11 +108,23 @@ namespace MapView
 		/// are valid ... and MainView attempts to paint <c>MainViewOverlay</c>
 		/// as the dialog is displayed.</remarks>
 		internal static bool Dontdrawyougits;
+
+
+		internal static Pen   TreenodeLine_def    = new Pen(SystemColors.Control);
+		internal static Brush TreenodeFill_def    = new SolidBrush(SystemColors.Control);
+
+		internal static Pen   TreenodeLine_sel    = new Pen(Color.SlateBlue);
+
+		internal static Brush TreenodeFill_selfoc = new SolidBrush(Color.BurlyWood);
+		internal static Brush TreenodeFill_selunf = new SolidBrush(Color.PeachPuff);
+
+		internal static Brush TreenodeFill_serfoc = new SolidBrush(Color.LightSteelBlue);
+		internal static Brush TreenodeFill_serunf = new SolidBrush(Color.PaleTurquoise);
 		#endregion Fields (static)
 
 
 		#region Fields
-		private CompositedTreeView MapTree;
+		internal CompositedTreeView MapTree;
 
 		internal Options Options = new Options();
 
@@ -1042,6 +1054,14 @@ namespace MapView
 
 
 			// static
+			TreenodeLine_def   .Dispose();
+			TreenodeFill_def   .Dispose();
+			TreenodeLine_sel   .Dispose();
+			TreenodeFill_selfoc.Dispose();
+			TreenodeFill_selunf.Dispose();
+			TreenodeFill_serfoc.Dispose();
+			TreenodeFill_serunf.Dispose();
+
 			Palette             .DisposeMonoBrushes();
 
 			QuadrantControl     .DisposeControl();
@@ -1333,53 +1353,49 @@ namespace MapView
 			{
 				Graphics graphics = e.Graphics;
 
-				Brush fillbrush; Pen border;
-				Color textcolor;
+				Brush colorfill; Pen colorline; Color colortext;
 
-				if ((e.State & TreeNodeStates.Focused) != 0) // WARNING: May require 'HideSelection' false.
+				if (node == Searched)
 				{
-					fillbrush = Brushes.Wheat;
-					border    = Pens.SlateBlue;
+					colorline = TreenodeLine_sel;
+
+					if (MapTree.Focused) colorfill = TreenodeFill_serfoc;
+					else                 colorfill = TreenodeFill_serunf;
+				}
+				else if ((e.State & TreeNodeStates.Focused) != 0) // WARNING: May require 'HideSelection' false.
+				{
+					colorline = TreenodeLine_sel;
+					colorfill = TreenodeFill_selfoc;
 				}
 				else if ((e.State & TreeNodeStates.Selected) != 0) // WARNING: Requires 'HideSelection' false.
 				{
-					fillbrush = Brushes.AntiqueWhite;
-					border    = Pens.SlateBlue;
-				}
-				else if (node == Searched)
-				{
-					border = Pens.SlateBlue;
-
-					if (MapTree.Focused)
-						fillbrush = Brushes.LightSkyBlue;
-					else
-						fillbrush = Brushes.AliceBlue;
+					colorline = TreenodeLine_sel;
+					colorfill = TreenodeFill_selunf;
 				}
 				else
 				{
-					fillbrush = SystemBrushes.Control;
-					border    = SystemPens.Control;
+					colorline = TreenodeLine_def;
+					colorfill = TreenodeFill_def;
 				}
 
 				if (node.Tag == null || (node.Tag as Descriptor).FileValid)
-					textcolor = SystemColors.ControlText;
+					colortext = Optionables.TreeForecolor;
 				else
-					textcolor = Color.MediumVioletRed;
+					colortext = Optionables.TreeForecolorInvalidFile;
 
 
 				Rectangle rect = e.Bounds;
 
-				int width = TextRenderer.MeasureText(node.Text, node.TreeView.Font).Width;
-				while (width / 70 != 0)
+				int w = TextRenderer.MeasureText(node.Text, node.TreeView.Font).Width;
+				while (w / 70 != 0)
 				{
-					width -= 70;
-					++rect.Width;
+					++rect.Width; w -= 70;
 				}
 
 				rect.Width += 4;						// conceal .NET glitch.
-				graphics.FillRectangle(fillbrush, rect);
+				graphics.FillRectangle(colorfill, rect);
 				rect.Height -= 1;						// keep border inside bounds
-				graphics.DrawRectangle(border, rect);
+				graphics.DrawRectangle(colorline, rect);
 
 				rect = e.Bounds;
 				rect.X += 2;							// re-align text due to .NET glitch.
@@ -1388,7 +1404,7 @@ namespace MapView
 									node.Text,
 									node.TreeView.Font,
 									rect,
-									textcolor);
+									colortext);
 			}
 		}
 

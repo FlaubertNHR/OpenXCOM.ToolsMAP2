@@ -40,7 +40,8 @@ namespace MapView.Forms.MainView
 
 
 		#region Fields
-		private readonly MainViewOverlay _overlay;
+		private readonly MainViewOverlay  _overlay;
+		private readonly MainViewUnderlay _undrlay;
 		#endregion Fields
 
 
@@ -50,7 +51,8 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		internal MainViewOptionables()
 		{
-			_overlay = MainViewOverlay.that;
+			_overlay = MainViewOverlay .that;
+			_undrlay = MainViewUnderlay.that;
 		}
 		#endregion cTor
 
@@ -835,6 +837,163 @@ namespace MapView.Forms.MainView
 				_descriptionHeight = value;
 			}
 		}
+
+
+
+		private const string cat_PanelColors = "PanelColors";
+
+		private const string str_PanelBackcolor = "PanelBackcolor";
+		private static Color def_PanelBackcolor = Color.Transparent;
+
+		private Color _panelBackcolor = def_PanelBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel background (default Transparent)")]
+		[DefaultValue(typeof(Color), "Transparent")]
+		public Color PanelBackcolor
+		{
+			get { return _panelBackcolor; }
+			set { _panelBackcolor = value; }
+		}
+
+
+		private const string str_PanelForecolor = "PanelForecolor";
+		private static Color def_PanelForecolor = SystemColors.ControlText;
+
+		private Color _panelForecolor = def_PanelForecolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel font (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color PanelForecolor
+		{
+			get { return _panelForecolor; }
+			set { _panelForecolor = value; }
+		}
+
+
+		private const string str_TreeBackcolor = "TreeBackcolor";
+		private static Color def_TreeBackcolor = SystemColors.Control;
+
+		private Color _treeBackcolor = def_TreeBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the Maptree background (default System.Control)")]
+		[DefaultValue(typeof(Color), "Control")]
+		public Color TreeBackcolor
+		{
+			get { return _treeBackcolor; }
+			set { _treeBackcolor = value; }
+		}
+
+
+		private const string str_TreeForecolor = "TreeForecolor";
+		private static Color def_TreeForecolor = SystemColors.ControlText;
+
+		private Color _treeForecolor = def_TreeForecolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the Maptree font (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color TreeForecolor
+		{
+			get { return _treeForecolor; }
+			set { _treeForecolor = value; }
+		}
+
+
+		private const string str_TreeForecolorInvalidFile = "TreeForecolorInvalidFile";
+		private static Color def_TreeForecolorInvalidFile = Color.Crimson;
+
+		private Color _treeForecolorInvalid = def_TreeForecolorInvalidFile;
+		[Category(cat_PanelColors)]
+		[Description("Color of the Maptree font for invalid file (default Crimson)")]
+		[DefaultValue(typeof(Color), "Crimson")]
+		public Color TreeForecolorInvalidFile
+		{
+			get { return _treeForecolorInvalid; }
+			set { _treeForecolorInvalid = value; }
+		}
+
+
+		private const string str_TreenodeBackcolor = "TreenodeBackcolor";
+		private static Color def_TreenodeBackcolor = SystemColors.Control;
+
+		private Color _treenodeBackcolor = def_TreenodeBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the Maptree nodes' background (default System.Control)")]
+		[DefaultValue(typeof(Color), "Control")]
+		public Color TreenodeBackcolor
+		{
+			get { return _treenodeBackcolor; }
+			set { _treenodeBackcolor = value; }
+		}
+
+
+		private const string str_TreenodeSelectedBordercolor = "TreenodeSelectedBordercolor";
+		private static Color def_TreenodeSelectedBordercolor = Color.SlateBlue;
+
+		private Color _treenodeSelectedBordercolor = def_TreenodeSelectedBordercolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of selected Maptree nodes' border (default SlateBlue)")]
+		[DefaultValue(typeof(Color), "SlateBlue")]
+		public Color TreenodeSelectedBordercolor
+		{
+			get { return _treenodeSelectedBordercolor; }
+			set { _treenodeSelectedBordercolor = value; }
+		}
+
+
+		private const string str_TreenodeSelectedBackcolor_foc = "TreenodeSelectedBackcolor_foc";
+		private static Color def_TreenodeSelectedBackcolor_foc = Color.BurlyWood;
+
+		private Color _treenodeSelectedBackcolor_foc = def_TreenodeSelectedBackcolor_foc;
+		[Category(cat_PanelColors)]
+		[Description("Color of selected Maptree nodes' background if the tree is focused (default BurlyWood)")]
+		[DefaultValue(typeof(Color), "BurlyWood")]
+		public Color TreenodeSelectedBackcolor_foc
+		{
+			get { return _treenodeSelectedBackcolor_foc; }
+			set { _treenodeSelectedBackcolor_foc = value; }
+		}
+
+
+		private const string str_TreenodeSelectedBackcolor_unf = "TreenodeSelectedBackcolor_unf";
+		private static Color def_TreenodeSelectedBackcolor_unf = Color.PeachPuff;
+
+		private Color _treenodeSelectedBackcolor_unf = def_TreenodeSelectedBackcolor_unf;
+		[Category(cat_PanelColors)]
+		[Description("Color of selected Maptree nodes' background if the tree is unfocused (default PeachPuff)")]
+		[DefaultValue(typeof(Color), "PeachPuff")]
+		public Color TreenodeSelectedBackcolor_unf
+		{
+			get { return _treenodeSelectedBackcolor_unf; }
+			set { _treenodeSelectedBackcolor_unf = value; }
+		}
+
+
+		private const string str_TreenodeSearchedBackcolor_foc = "TreenodeSearchedBackcolor_foc";
+		private static Color def_TreenodeSearchedBackcolor_foc = Color.LightSteelBlue;
+
+		private Color _treenodeSearchedBackcolor_foc = def_TreenodeSearchedBackcolor_foc;
+		[Category(cat_PanelColors)]
+		[Description("Color of searched Maptree nodes' background if the tree is focused (default LightSteelBlue)")]
+		[DefaultValue(typeof(Color), "LightSteelBlue")]
+		public Color TreenodeSearchedBackcolor_foc
+		{
+			get { return _treenodeSearchedBackcolor_foc; }
+			set { _treenodeSearchedBackcolor_foc = value; }
+		}
+
+
+		private const string str_TreenodeSearchedBackcolor_unf = "TreenodeSearchedBackcolor_unf";
+		private static Color def_TreenodeSearchedBackcolor_unf = Color.PaleTurquoise;
+
+		private Color _treenodeSearchedBackcolor_unf = def_TreenodeSearchedBackcolor_unf;
+		[Category(cat_PanelColors)]
+		[Description("Color of searched Maptree nodes' background if the tree is unfocused (default PaleTurquoise)")]
+		[DefaultValue(typeof(Color), "PaleTurquoise")]
+		public Color TreenodeSearchedBackcolor_unf
+		{
+			get { return _treenodeSearchedBackcolor_unf; }
+			set { _treenodeSearchedBackcolor_unf = value; }
+		}
 		#endregion Properties (optionable)
 
 
@@ -862,6 +1021,32 @@ namespace MapView.Forms.MainView
 			color = Color.FromArgb(def_SelectionBorderOpacity, def_SelectionBorderColor);
 			_overlay.PenSelect = new Pen(color, def_SelectionBorderWidth);
 
+			_undrlay.BackColor = def_PanelBackcolor;
+
+			MainViewOverlay.LocationBrush.Dispose();
+			MainViewOverlay.LocationBrush = new SolidBrush(def_PanelForecolor);
+
+			MainViewF.that.MapTree.BackColor = def_TreeBackcolor;
+			MainViewF.that.MapTree.ForeColor = def_TreeForecolor;
+
+			MainViewF.TreenodeLine_def.Dispose();
+			MainViewF.TreenodeFill_def.Dispose();
+			MainViewF.TreenodeLine_def = new Pen(def_TreenodeBackcolor);
+			MainViewF.TreenodeFill_def = new SolidBrush(def_TreenodeBackcolor);
+
+			MainViewF.TreenodeLine_sel.Dispose();
+			MainViewF.TreenodeLine_sel = new Pen(def_TreenodeSelectedBordercolor);
+
+			MainViewF.TreenodeFill_selfoc.Dispose();
+			MainViewF.TreenodeFill_selunf.Dispose();
+			MainViewF.TreenodeFill_selfoc = new SolidBrush(def_TreenodeSelectedBackcolor_foc);
+			MainViewF.TreenodeFill_selunf = new SolidBrush(def_TreenodeSelectedBackcolor_unf);
+
+			MainViewF.TreenodeFill_serfoc.Dispose();
+			MainViewF.TreenodeFill_serunf.Dispose();
+			MainViewF.TreenodeFill_serfoc = new SolidBrush(def_TreenodeSearchedBackcolor_foc);
+			MainViewF.TreenodeFill_serunf = new SolidBrush(def_TreenodeSearchedBackcolor_unf);
+
 
 			OptionChangedEvent changer0 = OnOptionChanged;
 			OptionChangedEvent changer1 = OnFlagChanged;
@@ -869,6 +1054,19 @@ namespace MapView.Forms.MainView
 			OptionChangedEvent changer3 = OnSpriteShadeChanged;
 			OptionChangedEvent changer4 = OnBaseCounttypeChanged;
 			OptionChangedEvent changer5 = OnDescriptionHeightChanged;
+			OptionChangedEvent changer6 = OnPanelColorChanged;
+
+			options.CreateOptionDefault(str_PanelBackcolor,                def_PanelBackcolor,                changer6);
+			options.CreateOptionDefault(str_PanelForecolor,                def_PanelForecolor,                changer6);
+			options.CreateOptionDefault(str_TreeBackcolor,                 def_TreeBackcolor,                 changer6);
+			options.CreateOptionDefault(str_TreeForecolor,                 def_TreeForecolor,                 changer6);
+			options.CreateOptionDefault(str_TreeForecolorInvalidFile,      def_TreeForecolorInvalidFile,      changer6);
+			options.CreateOptionDefault(str_TreenodeBackcolor,             def_TreenodeBackcolor,             changer6);
+			options.CreateOptionDefault(str_TreenodeSelectedBordercolor,   def_TreenodeSelectedBordercolor,   changer6);
+			options.CreateOptionDefault(str_TreenodeSelectedBackcolor_foc, def_TreenodeSelectedBackcolor_foc, changer6);
+			options.CreateOptionDefault(str_TreenodeSelectedBackcolor_unf, def_TreenodeSelectedBackcolor_unf, changer6);
+			options.CreateOptionDefault(str_TreenodeSearchedBackcolor_foc, def_TreenodeSearchedBackcolor_foc, changer6);
+			options.CreateOptionDefault(str_TreenodeSearchedBackcolor_unf, def_TreenodeSearchedBackcolor_unf, changer6);
 
 			options.CreateOptionDefault(str_StartTileView,           def_StartTileView,           changer1);
 			options.CreateOptionDefault(str_StartTopView,            def_StartTopView,            changer1);
@@ -919,6 +1117,82 @@ namespace MapView.Forms.MainView
 
 		#region Events
 		/// <summary>
+		/// Changes the colors of MainView's panel and Maptree. Invalidates the
+		/// Maptree if required.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnPanelColorChanged(string key, object val)
+		{
+			switch (key)
+			{
+				case str_PanelBackcolor:
+					_undrlay.BackColor = (PanelBackcolor = (Color)val);
+					return;
+
+				case str_PanelForecolor:
+					MainViewOverlay.LocationBrush.Dispose();
+					MainViewOverlay.LocationBrush = new SolidBrush(PanelForecolor = (Color)val);
+					return;
+
+				case str_TreeBackcolor:
+					MainViewF.that.MapTree.BackColor = (TreeBackcolor = (Color)val);
+					return;
+
+				case str_TreeForecolor:
+					MainViewF.that.MapTree.ForeColor = (TreeForecolor = (Color)val);
+					return;
+
+				case str_TreeForecolorInvalidFile:
+					TreeForecolorInvalidFile = (Color)val;
+					break;
+
+				case str_TreenodeBackcolor:
+					TreenodeBackcolor = (Color)val;
+
+					MainViewF.TreenodeFill_def.Dispose();
+					MainViewF.TreenodeLine_def.Dispose();
+					MainViewF.TreenodeFill_def = new SolidBrush(TreenodeBackcolor);
+					MainViewF.TreenodeLine_def = new Pen(TreenodeBackcolor);
+					break;
+
+				case str_TreenodeSelectedBordercolor:
+					MainViewF.TreenodeLine_sel = new Pen(TreenodeSelectedBordercolor = (Color)val);
+					break;
+
+				case str_TreenodeSelectedBackcolor_foc:
+					TreenodeSelectedBackcolor_foc = (Color)val;
+
+					MainViewF.TreenodeFill_selfoc.Dispose();
+					MainViewF.TreenodeFill_selfoc = new SolidBrush(TreenodeSelectedBackcolor_foc);
+					break;
+
+				case str_TreenodeSelectedBackcolor_unf:
+					TreenodeSelectedBackcolor_unf = (Color)val;
+
+					MainViewF.TreenodeFill_selunf.Dispose();
+					MainViewF.TreenodeFill_selunf = new SolidBrush(TreenodeSelectedBackcolor_unf);
+					break;
+
+				case str_TreenodeSearchedBackcolor_foc:
+					TreenodeSearchedBackcolor_foc = (Color)val;
+
+					MainViewF.TreenodeFill_serfoc.Dispose();
+					MainViewF.TreenodeFill_serfoc = new SolidBrush(TreenodeSearchedBackcolor_foc);
+					break;
+
+				case str_TreenodeSearchedBackcolor_unf:
+					TreenodeSearchedBackcolor_unf = (Color)val;
+
+					MainViewF.TreenodeFill_serunf.Dispose();
+					MainViewF.TreenodeFill_serunf = new SolidBrush(TreenodeSearchedBackcolor_unf);
+					break;
+			}
+
+			MainViewF.that.MapTree.Invalidate();
+		}
+
+		/// <summary>
 		/// Sets the value of an optionable property and invalidates
 		/// <c><see cref="MainViewOverlay"/></c>.
 		/// </summary>
@@ -926,7 +1200,7 @@ namespace MapView.Forms.MainView
 		/// <param name="val">the value to set it to</param>
 		/// <remarks>If <paramref name="val"/> is <c>null</c> this borks badly -
 		/// particularly when loading user-options.</remarks>
-		internal void OnOptionChanged(string key, object val)
+		private void OnOptionChanged(string key, object val)
 		{
 			//Logfile.Log("MainViewOptionables.OnOptionChanged() key= " + key);
 
@@ -1114,7 +1388,7 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
-		internal void OnSpriteStateChanged(string key, object val)
+		private void OnSpriteStateChanged(string key, object val)
 		{
 			//Logfile.Log("MainViewOptionables.OnSpriteStateChanged() key= " + key);
 

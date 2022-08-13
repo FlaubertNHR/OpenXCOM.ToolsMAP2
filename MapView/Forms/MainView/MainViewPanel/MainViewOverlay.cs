@@ -29,9 +29,10 @@ namespace MapView.Forms.MainView
 		internal void DisposeOverlay()
 		{
 			//Logfile.Log("MainViewOverlay.DisposeOverlay()");
-			LocationFont.Dispose();
-			_layerFill  .Dispose();
-			_t1         .Dispose();
+			LocationFont .Dispose();
+			LocationBrush.Dispose();
+			_layerFill   .Dispose();
+			_t1          .Dispose();
 		}
 
 
@@ -49,8 +50,8 @@ namespace MapView.Forms.MainView
 		internal const int HalfWidthConst  = 16;
 		internal const int HalfHeightConst =  8;
 
-		private static readonly Font  LocationFont  = new Font("Verdana", 7F, FontStyle.Bold);
-		private static readonly Brush LocationBrush = SystemBrushes.ControlText;
+		private static readonly Font LocationFont = new Font("Verdana", 7F, FontStyle.Bold);
+		internal static Brush LocationBrush = new SolidBrush(SystemColors.ControlText);
 		#endregion Fields (static)
 
 
@@ -1154,7 +1155,7 @@ namespace MapView.Forms.MainView
 				}
 				else
 				{
-					var loc = GetTileLocation(e.X, e.Y);
+					Point loc = GetTileLocation(e.X, e.Y);
 					if (loc.X != _col || loc.Y != _row)
 					{
 						_col = loc.X;
