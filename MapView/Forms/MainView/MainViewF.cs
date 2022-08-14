@@ -2019,8 +2019,7 @@ namespace MapView
 						case DialogResult.Retry:
 							if (MapFile != null)
 							{
-								if (MapFile.MapChanged
-									&& MapFile.SaveMap())
+								if (MapFile.MapChanged && MapFile.SaveMap())
 								{
 									MapChanged = false;
 
@@ -2028,8 +2027,7 @@ namespace MapView
 										ForceMapReload();		// because the current Map is *probably* going to change. I think ...
 								}
 
-								if (MapFile.RoutesChanged
-									&& MapFile.SaveRoutes())
+								if (MapFile.RoutesChanged && MapFile.SaveRoutes())
 								{
 									RouteView.RoutesChangedCoordinator = false;
 								}
@@ -2100,10 +2098,10 @@ namespace MapView
 		/// <summary>
 		/// Selects a selected-tile toner color. It does this by changing the
 		/// option and firing
-		/// <c><see cref="MainViewOptionables.OnOptionChanged()">MainViewOptionables.OnOptionChanged()</see></c>
-		/// which calls <c><see cref="SelectToner()">SelectToner()</see></c>
-		/// which sets an alternate set of sprites with the toner-palette and
-		/// also checks the it in MainView's Toner menu. so bite
+		/// <c><see cref="MainViewOptionables"/>.OnOptionChanged()</c> which
+		/// calls <c><see cref="SelectToner()">SelectToner()</see></c> which
+		/// sets an alternate set of sprites with the toner-palette and also
+		/// checks the it in MainView's Toner menu. so bite
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2584,7 +2582,7 @@ namespace MapView
 
 						cms_MapTreeContext.Show(MapTree, e.Location);
 					}
-					else
+					else // MapFile != null && !_bypassChanged && (MapFile.MapChanged || MapFile.RoutesChanged)
 					{
 						string info = GetChangedInfo();
 
@@ -2609,8 +2607,7 @@ namespace MapView
 									return;
 
 								case DialogResult.Retry:
-									if (MapFile.MapChanged
-										&& MapFile.SaveMap())
+									if (MapFile.MapChanged && MapFile.SaveMap())
 									{
 										MapChanged = false;
 
@@ -2618,8 +2615,7 @@ namespace MapView
 											ForceMapReload();		// because the current Map is *probably* going to change. I think ...
 									}
 
-									if (MapFile.RoutesChanged
-										&& MapFile.SaveRoutes())
+									if (MapFile.RoutesChanged && MapFile.SaveRoutes())
 									{
 										RouteView.RoutesChangedCoordinator = false;
 									}
@@ -2631,7 +2627,7 @@ namespace MapView
 							}
 						}
 
-						OnMapTreeMouseDown(null, e); // RECURSE^
+						OnMapTreeMouseDown(sender, e); // RECURSE^
 					}
 					break;
 
@@ -2983,7 +2979,11 @@ namespace MapView
 					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 					@group.DeleteTileset(labelTileset, labelCategory);
 
+//					_bypassChanged = true;
+					MapChanged = RouteView.RoutesChangedCoordinator = false;
+
 					CreateTree();
+
 					SelectTilesetNodeTop(labelGroup, labelCategory);
 				}
 			}
@@ -3265,6 +3265,17 @@ namespace MapView
 						routesChanged = false;
 					}
 
+					// try this in case MapFile.LoadMapfile() needs to show a
+					// dialog about partIds exceeding the allocated terrainset.
+					// I think the crippled sprites aren't ready to go yet and
+					// .net tries to draw the Map and throws up when when
+					// returning from that dialog. Then likely due to a
+					// redundancy of calls to the draw-routine the Map gets
+					// drawn correctly anyway after the crippled sprites are
+					// ready ->
+
+					Dontdrawyougits = true;
+
 					MapFile file = MapFileService.LoadDescriptor(
 															descriptor,
 															ref browseMapfile,
@@ -3272,6 +3283,9 @@ namespace MapView
 															routes,
 															_selected);
 					if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
+
+					Dontdrawyougits = false;
+
 
 					if (file != null)
 					{
