@@ -28,7 +28,8 @@ namespace MapView.Forms.Observers
 		NorthwestCorner,
 		NortheastCorner,
 		SouthwestCorner,
-		SoutheastCorner
+		SoutheastCorner,
+		Crippled
 	}
 
 
@@ -60,86 +61,89 @@ namespace MapView.Forms.Observers
 			McdRecord record = part.Record;
 			if (record != null)
 			{
-				_loftList = record.LoftList;
-
-				// Floor
-				if (isFloor())
-					return BlobType.Floor;
-
-
-				// East
-				if (allGroup(new byte[]{24,26})) // 28,30,32,34
-					return BlobType.EastWall;
-
-				// South
-				if (allGroup(new byte[]{23,25})) // 27,29,31,33
-					return BlobType.SouthWall;
-
-
-				// North ->
-				if (anyLoft(38)
-					&& allGroup(new byte[]{8,10,12,14,38}))
+				if ((_loftList = record.LoftList) != null) // crippled tileparts have an invalid 'LoftList'
 				{
-					return BlobType.NorthWallWindow;
+					// Floor
+					if (isFloor())
+						return BlobType.Floor;
+
+
+					// East
+					if (allGroup(new byte[]{24,26})) // 28,30,32,34
+						return BlobType.EastWall;
+
+					// South
+					if (allGroup(new byte[]{23,25})) // 27,29,31,33
+						return BlobType.SouthWall;
+
+
+					// North ->
+					if (anyLoft(38)
+						&& allGroup(new byte[]{8,10,12,14,38}))
+					{
+						return BlobType.NorthWallWindow;
+					}
+
+					if (anyLoft(0)
+						&& allGroup(new byte[]{0,8,10,12,14,38,39,77})) // 40,41
+					{
+						return BlobType.NorthWallFence;
+					}
+
+					if (allGroup(new byte[]{8,10,12,14})) // 16,18,20,21
+						return BlobType.NorthWall;
+
+
+					// West ->
+					if (anyLoft(37)
+						&& allGroup(new byte[]{7,9,11,13,37}))
+					{
+						return BlobType.WestWallWindow;
+					}
+
+					if (anyLoft(0)
+						&& allGroup(new byte[]{0,7,9,11,13,37,39,76})) // 40,41
+					{
+						return BlobType.WestWallFence;
+					}
+
+					if (allGroup(new byte[]{7,9,11,13})) // 15,17,19,22
+						return BlobType.WestWall;
+
+
+					// diagonals ->
+//					if (CheckAllAreLoftExcludeFloor(35))
+					if (allLoft(35))
+						return BlobType.NorthwestSoutheast;
+
+//					if (CheckAllAreLoftExcludeFloor(36))
+					if (allLoft(36))
+						return BlobType.NortheastSouthwest;
+
+
+					// corners ->
+					if (allGroup(new byte[]{39,40,41,103})) // 102,101
+						return BlobType.NorthwestCorner;
+
+					if (allLoft(100)) // 99,98
+						return BlobType.NortheastCorner;
+
+					if (allLoft(106)) // 105,104
+						return BlobType.SouthwestCorner;
+
+					if (allLoft(109)) // 108,107
+						return BlobType.SoutheastCorner;
+
+
+
+					if (allGroup(new byte[]{0,110}))
+						return BlobType.NorthWallFence;
+	
+					if (allGroup(new byte[]{0,111}))
+						return BlobType.WestWallFence;
 				}
-
-				if (anyLoft(0)
-					&& allGroup(new byte[]{0,8,10,12,14,38,39,77})) // 40,41
-				{
-					return BlobType.NorthWallFence;
-				}
-
-				if (allGroup(new byte[]{8,10,12,14})) // 16,18,20,21
-					return BlobType.NorthWall;
-
-
-				// West ->
-				if (anyLoft(37)
-					&& allGroup(new byte[]{7,9,11,13,37}))
-				{
-					return BlobType.WestWallWindow;
-				}
-
-				if (anyLoft(0)
-					&& allGroup(new byte[]{0,7,9,11,13,37,39,76})) // 40,41
-				{
-					return BlobType.WestWallFence;
-				}
-
-				if (allGroup(new byte[]{7,9,11,13})) // 15,17,19,22
-					return BlobType.WestWall;
-
-
-				// diagonals ->
-//				if (CheckAllAreLoftExcludeFloor(35))
-				if (allLoft(35))
-					return BlobType.NorthwestSoutheast;
-
-//				if (CheckAllAreLoftExcludeFloor(36))
-				if (allLoft(36))
-					return BlobType.NortheastSouthwest;
-
-
-				// corners ->
-				if (allGroup(new byte[]{39,40,41,103})) // 102,101
-					return BlobType.NorthwestCorner;
-
-				if (allLoft(100)) // 99,98
-					return BlobType.NortheastCorner;
-
-				if (allLoft(106)) // 105,104
-					return BlobType.SouthwestCorner;
-
-				if (allLoft(109)) // 108,107
-					return BlobType.SoutheastCorner;
-
-
-
-				if (allGroup(new byte[]{0,110}))
-					return BlobType.NorthWallFence;
-
-				if (allGroup(new byte[]{0,111}))
-					return BlobType.WestWallFence;
+				else
+					return BlobType.Crippled;
 			}
 			return BlobType.Content;
 		}
@@ -159,7 +163,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Checks if all entries in '_loftList' are among 'contingent'.
+		/// Checks if all entries in <c><see cref="_loftList"/></c> are among
+		/// <paramref name="contingent"/>.
 		/// </summary>
 		/// <param name="contingent"></param>
 		/// <returns></returns>
@@ -183,7 +188,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Checks if all entries in '_loftList' match 'necessary'.
+		/// Checks if all entries in <c><see cref="_loftList"/></c> match
+		/// <paramref name="necessary"/>.
 		/// </summary>
 		/// <param name="necessary"></param>
 		/// <returns></returns>
@@ -197,7 +203,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Checks if any entry in '_loftList' matches 'necessary'.
+		/// Checks if any entry in <c><see cref="_loftList"/></c> matches
+		/// <paramref name="necessary"/>.
 		/// </summary>
 		/// <param name="necessary"></param>
 		/// <returns></returns>

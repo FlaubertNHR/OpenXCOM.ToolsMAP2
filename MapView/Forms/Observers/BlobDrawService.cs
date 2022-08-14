@@ -262,6 +262,8 @@ namespace MapView.Forms.Observers
 									Point.Add(pL(x,y), new Size(0, -Offset)),
 									Point.Add(pL(x,y), new Size(0,  Offset)));
 					break;
+
+//				case BlobType.Crippled: break;
 			}
 		}
 
