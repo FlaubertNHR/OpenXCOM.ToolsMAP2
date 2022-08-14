@@ -360,6 +360,16 @@ namespace XCom
 
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "Tilepart _terId= " + _terId + " _setId= " + _setId;
+		}
+
+
+		/// <summary>
 		/// When a <c><see cref="MapFile"/></c> contains
 		/// <c><see cref="MapFile.Parts"/></c> with ids that are beyond the
 		/// count of parts in its current terrainset do not null those parts. To

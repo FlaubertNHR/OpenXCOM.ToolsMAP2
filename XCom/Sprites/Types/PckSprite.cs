@@ -235,7 +235,7 @@ namespace XCom
 			else
 				ret = String.Empty;
 
-			ret += Id + Environment.NewLine;
+			ret += Id; /* + Environment.NewLine;
 
 			for (int i = 0; i != _bindata.Length; ++i)
 			{
@@ -251,7 +251,7 @@ namespace XCom
 						ret += " ";
 						break;
 				}
-			}
+			} */
 			return ret;
 		}
 		#endregion Methods (override)
