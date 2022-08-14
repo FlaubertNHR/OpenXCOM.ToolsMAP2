@@ -2068,12 +2068,14 @@ namespace MapView.Forms.MainView
 		/// <param name="rect">destination rectangle</param>
 		private void DrawSprite(Image sprite, Rectangle rect)
 		{
+//			if (sprite != null) {
 			_graphics.DrawImage(
 							sprite,
 							rect,
 							0,0, Spriteset.SpriteWidth32, Spriteset.SpriteHeight40,
 							GraphicsUnit.Pixel,
 							Globals.Ia);
+//			}
 		}
 #else
 		/// <summary>
