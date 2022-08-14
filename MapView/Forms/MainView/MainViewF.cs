@@ -358,11 +358,7 @@ namespace MapView
 			MapTree.Name          = "MapTree";
 			MapTree.Dock          = DockStyle.Left;
 			MapTree.DrawMode      = TreeViewDrawMode.OwnerDrawText;
-			MapTree.ForeColor     = SystemColors.ControlText;
-			MapTree.BackColor     = SystemColors.Control;
 			MapTree.Indent        = 15;
-			MapTree.Location      = new Point(0, 0);
-			MapTree.Size          = new Size(240, 454);
 			MapTree.Margin        = new Padding(0);
 			MapTree.TabIndex      = 0;
 			MapTree.HideSelection = false;
@@ -1387,10 +1383,7 @@ namespace MapView
 				Rectangle rect = e.Bounds;
 
 				int w = TextRenderer.MeasureText(node.Text, node.TreeView.Font).Width;
-				while (w / 70 != 0)
-				{
-					++rect.Width; w -= 70;
-				}
+				while (w / 70 != 0) { ++rect.Width; w -= 70; }
 
 				rect.Width += 4;						// conceal .NET glitch.
 				graphics.FillRectangle(colorfill, rect);
@@ -1398,6 +1391,7 @@ namespace MapView
 				graphics.DrawRectangle(colorline, rect);
 
 				rect = e.Bounds;
+
 				rect.X += 2;							// re-align text due to .NET glitch.
 				TextRenderer.DrawText(
 									graphics,
@@ -2763,7 +2757,7 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					var @group = TileGroupManager.TileGroups[labelGroup];
+					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 					@group.AddCategory(f.Label);
 
 					CreateTree();
@@ -2794,7 +2788,7 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					var @group = TileGroupManager.TileGroups[labelGroup];
+					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 					@group.EditCategory(f.Label, labelCategory);
 
 					CreateTree();
@@ -2833,7 +2827,7 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					var @group = TileGroupManager.TileGroups[labelGroup];
+					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 					@group.DeleteCategory(labelCategory);
 
 					CreateTree();
@@ -2986,11 +2980,11 @@ namespace MapView
 				{
 					MaptreeChanged = true;
 
-					var @group = TileGroupManager.TileGroups[labelGroup];
+					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
 					@group.DeleteTileset(labelTileset, labelCategory);
 
 					CreateTree();
-					SelectTilesetNodeTop(labelCategory);
+					SelectTilesetNodeTop(labelGroup, labelCategory);
 				}
 			}
 		}
@@ -3005,7 +2999,7 @@ namespace MapView
 		private void SelectGroupNodeTop()
 		{
 			if (MapTree.Nodes.Count != 0)
-				MapTree.SelectedNode = MapTree.Nodes[0];
+				(MapTree.SelectedNode = MapTree.Nodes[0]).Expand();
 		}
 
 		/// <summary>
@@ -3021,9 +3015,13 @@ namespace MapView
 			{
 				if (nodeGroup.Text == labelGroup)
 				{
-					var groupCollection = nodeGroup.Nodes;
-					MapTree.SelectedNode = (groupCollection.Count != 0) ? groupCollection[0]
-																		: nodeGroup;
+					if (nodeGroup.Nodes.Count != 0)
+						MapTree.SelectedNode = nodeGroup.Nodes[0];
+					else
+						MapTree.SelectedNode = nodeGroup;
+
+					MapTree.SelectedNode.Expand();
+					return;
 				}
 			}
 		}
@@ -3032,22 +3030,31 @@ namespace MapView
 		/// Selects the top tileset treenode in the <c><see cref="MapTree"/></c>
 		/// if one exists under a given category treenode.
 		/// </summary>
+		/// <param name="labelGroup"></param>
 		/// <param name="labelCategory"></param>
 		/// <remarks>Assumes that the parent-parent-group and parent-category
 		/// nodes are valid.</remarks>
-		private void SelectTilesetNodeTop(string labelCategory)
+		private void SelectTilesetNodeTop(string labelGroup, string labelCategory)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
-				var groupCollection = nodeGroup.Nodes;
-				foreach (TreeNode nodeCategory in groupCollection)
+				if (nodeGroup.Text == labelGroup)
 				{
-					if (nodeCategory.Text == labelCategory)
+					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
 					{
-						var categoryCollection = nodeCategory.Nodes;
-						MapTree.SelectedNode = (categoryCollection.Count != 0) ? categoryCollection[0]
-																			   : nodeCategory;
+						if (nodeCategory.Text == labelCategory)
+						{
+							if (nodeCategory.Nodes.Count != 0)
+								MapTree.SelectedNode = nodeCategory.Nodes[0];
+							else
+								(MapTree.SelectedNode = nodeCategory).Expand();
+
+							return;
+						}
 					}
+
+					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
+					return;
 				}
 			}
 		}
@@ -3063,8 +3070,7 @@ namespace MapView
 			{
 				if (nodeGroup.Text == labelGroup)
 				{
-					MapTree.SelectedNode = nodeGroup;
-					nodeGroup.Expand();
+					(MapTree.SelectedNode = nodeGroup).Expand();
 					return;
 				}
 			}
@@ -3082,16 +3088,17 @@ namespace MapView
 			{
 				if (nodeGroup.Text == labelGroup)
 				{
-					var groupCollection = nodeGroup.Nodes;
-					foreach (TreeNode nodeCategory in groupCollection)
+					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
 					{
 						if (nodeCategory.Text == labelCategory)
 						{
-							MapTree.SelectedNode = nodeCategory;
-							nodeCategory.Expand();
+							(MapTree.SelectedNode = nodeCategory).Expand();
 							return;
 						}
 					}
+
+					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
+					return;
 				}
 			}
 		}
@@ -3109,13 +3116,11 @@ namespace MapView
 			{
 				if (nodeGroup.Text == labelGroup)
 				{
-					var groupCollection = nodeGroup.Nodes;
-					foreach (TreeNode nodeCategory in groupCollection)
+					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
 					{
 						if (nodeCategory.Text == labelCategory)
 						{
-							var categoryCollection = nodeCategory.Nodes;
-							foreach (TreeNode nodeTileset in categoryCollection)
+							foreach (TreeNode nodeTileset in nodeCategory.Nodes)
 							{
 								if (nodeTileset.Text == labelTileset)
 								{
@@ -3124,8 +3129,14 @@ namespace MapView
 									return;
 								}
 							}
+
+							(MapTree.SelectedNode = nodeCategory).Expand(); // safety ->
+							return;
 						}
 					}
+
+					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
+					return;
 				}
 			}
 		}
@@ -3428,7 +3439,7 @@ namespace MapView
 						break;
 				}
 
-				foreach (var spriteset in SpritesetManager.Spritesets)
+				foreach (Spriteset spriteset in SpritesetManager.Spritesets)
 				for (int id = 0; id != spriteset.Count; ++id)
 				{
 					(spriteset[id] as PckSprite).SpriteToned.Palette = table; // lovely.
