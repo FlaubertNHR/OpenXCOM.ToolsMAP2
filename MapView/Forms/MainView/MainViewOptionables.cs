@@ -912,20 +912,6 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_TreenodeBackcolor = "TreenodeBackcolor";
-		private static Color def_TreenodeBackcolor = SystemColors.Control;
-
-		private Color _treenodeBackcolor = def_TreenodeBackcolor;
-		[Category(cat_PanelColors)]
-		[Description("Color of the Maptree nodes' background (default System.Control)")]
-		[DefaultValue(typeof(Color), "Control")]
-		public Color TreenodeBackcolor
-		{
-			get { return _treenodeBackcolor; }
-			set { _treenodeBackcolor = value; }
-		}
-
-
 		private const string str_TreenodeSelectedBordercolor = "TreenodeSelectedBordercolor";
 		private static Color def_TreenodeSelectedBordercolor = Color.SlateBlue;
 
@@ -1031,8 +1017,8 @@ namespace MapView.Forms.MainView
 
 			MainViewF.TreenodeLine_def.Dispose();
 			MainViewF.TreenodeFill_def.Dispose();
-			MainViewF.TreenodeLine_def = new Pen(def_TreenodeBackcolor);
-			MainViewF.TreenodeFill_def = new SolidBrush(def_TreenodeBackcolor);
+			MainViewF.TreenodeLine_def = new Pen(def_TreeBackcolor);
+			MainViewF.TreenodeFill_def = new SolidBrush(def_TreeBackcolor);
 
 			MainViewF.TreenodeLine_sel.Dispose();
 			MainViewF.TreenodeLine_sel = new Pen(def_TreenodeSelectedBordercolor);
@@ -1061,7 +1047,6 @@ namespace MapView.Forms.MainView
 			options.CreateOptionDefault(str_TreeBackcolor,                 def_TreeBackcolor,                 changer6);
 			options.CreateOptionDefault(str_TreeForecolor,                 def_TreeForecolor,                 changer6);
 			options.CreateOptionDefault(str_TreeForecolorInvalidFile,      def_TreeForecolorInvalidFile,      changer6);
-			options.CreateOptionDefault(str_TreenodeBackcolor,             def_TreenodeBackcolor,             changer6);
 			options.CreateOptionDefault(str_TreenodeSelectedBordercolor,   def_TreenodeSelectedBordercolor,   changer6);
 			options.CreateOptionDefault(str_TreenodeSelectedBackcolor_foc, def_TreenodeSelectedBackcolor_foc, changer6);
 			options.CreateOptionDefault(str_TreenodeSelectedBackcolor_unf, def_TreenodeSelectedBackcolor_unf, changer6);
@@ -1137,6 +1122,11 @@ namespace MapView.Forms.MainView
 
 				case str_TreeBackcolor:
 					MainViewF.that.MapTree.BackColor = (TreeBackcolor = (Color)val);
+
+					MainViewF.TreenodeFill_def.Dispose();
+					MainViewF.TreenodeLine_def.Dispose();
+					MainViewF.TreenodeFill_def = new SolidBrush(TreeBackcolor);
+					MainViewF.TreenodeLine_def = new Pen(TreeBackcolor);
 					return;
 
 				case str_TreeForecolor:
@@ -1145,15 +1135,6 @@ namespace MapView.Forms.MainView
 
 				case str_TreeForecolorInvalidFile:
 					TreeForecolorInvalidFile = (Color)val;
-					break;
-
-				case str_TreenodeBackcolor:
-					TreenodeBackcolor = (Color)val;
-
-					MainViewF.TreenodeFill_def.Dispose();
-					MainViewF.TreenodeLine_def.Dispose();
-					MainViewF.TreenodeFill_def = new SolidBrush(TreenodeBackcolor);
-					MainViewF.TreenodeLine_def = new Pen(TreenodeBackcolor);
 					break;
 
 				case str_TreenodeSelectedBordercolor:
