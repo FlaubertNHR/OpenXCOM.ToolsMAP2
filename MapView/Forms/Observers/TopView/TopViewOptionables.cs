@@ -26,8 +26,6 @@ namespace MapView.Forms.Observers
 			TopControl.ToolWest   .Dispose();
 			TopControl.ToolNorth  .Dispose();
 			TopControl.ToolContent.Dispose();
-
-			QuadrantDrawService.Brush.Dispose();
 		}
 
 
@@ -307,20 +305,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_SelectedQuadColor = "SelectedQuadColor";
-		private static Color def_SelectedQuadColor = Color.PowderBlue;
-
-		private Color _selectedQuadColor = def_SelectedQuadColor;
-		[Category(cat_Selects)]
-		[Description("Background color of the selected parttype (default PowderBlue)")]
-		[DefaultValue(typeof(Color), "PowderBlue")]
-		public Color SelectedQuadColor
-		{
-			get { return _selectedQuadColor; }
-			set { _selectedQuadColor = value; }
-		}
-
-
 
 		private const string cat_General = "General";
 
@@ -366,6 +350,107 @@ namespace MapView.Forms.Observers
 				_descriptionHeight = value;
 			}
 		}
+
+
+
+		private const string cat_PanelColors = "PanelColors";
+
+		private const string str_PanelBackcolor = "PanelBackcolor";
+		private static Color def_PanelBackcolor = Color.Transparent;
+
+		private Color _panelBackcolor = def_PanelBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel background (default Transparent)")]
+		[DefaultValue(typeof(Color), "Transparent")]
+		public Color PanelBackcolor
+		{
+			get { return _panelBackcolor; }
+			set { _panelBackcolor = value; }
+		}
+
+
+		private const string str_PanelForecolor = "PanelForecolor";
+		private static Color def_PanelForecolor = SystemColors.ControlText;
+
+		private Color _panelForecolor = def_PanelForecolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel font (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color PanelForecolor
+		{
+			get { return _panelForecolor; }
+			set { _panelForecolor = value; }
+		}
+
+
+		private const string str_QuadrantForecolor = "QuadrantForecolor";
+		private static Color def_QuadrantForecolor = SystemColors.ControlText;
+
+		private Color _quadrantForecolor = def_QuadrantForecolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the quadrant panel font (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color QuadrantForecolor
+		{
+			get { return _quadrantForecolor; }
+			set { _quadrantForecolor = value; }
+		}
+
+
+		private const string str_QuadrantBackcolor = "QuadrantBackcolor";
+		private static Color def_QuadrantBackcolor = SystemColors.Control;
+
+		private Color _quadrantBackcolor = def_QuadrantBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the quadrant panel background (System.Control)")]
+		[DefaultValue(typeof(Color), "Control")]
+		public Color QuadrantBackcolor
+		{
+			get { return _quadrantBackcolor; }
+			set { _quadrantBackcolor = value; }
+		}
+
+
+		private const string str_QuadrantSelected = "QuadrantSelected";
+		private static Color def_QuadrantSelected = Color.PowderBlue;
+
+		private Color _quadrantSelected = def_QuadrantSelected;
+		[Category(cat_PanelColors)]
+		[Description("Color of the selected quadrant (default PowderBlue)")]
+		[DefaultValue(typeof(Color), "PowderBlue")]
+		public Color QuadrantSelected
+		{
+			get { return _quadrantSelected; }
+			set { _quadrantSelected = value; }
+		}
+
+
+		private const string str_QuadrantDisabled = "QuadrantDisabled";
+		private static Color def_QuadrantDisabled = Color.LightGray;
+
+		private Color _quadrantDisabled = def_QuadrantDisabled;
+		[Category(cat_PanelColors)]
+		[Description("Color of disabled quadrants (default LightGray)")]
+		[DefaultValue(typeof(Color), "LightGray")]
+		public Color QuadrantDisabled
+		{
+			get { return _quadrantDisabled; }
+			set { _quadrantDisabled = value; }
+		}
+
+
+		private const string str_QuadrantBorder = "QuadrantBorder";
+		private static Color def_QuadrantBorder = SystemColors.ControlText;
+
+		private Color _quadrantBorder = def_QuadrantBorder;
+		[Category(cat_PanelColors)]
+		[Description("Color for the border of the quadrants (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color QuadrantBorder
+		{
+			get { return _quadrantBorder; }
+			set { _quadrantBorder = value; }
+		}
 		#endregion Properties (optionable)
 
 
@@ -410,13 +495,30 @@ namespace MapView.Forms.Observers
 			pen = new Pen(def_SelectedColor, def_SelectedWidth);
 			TopControl.TopPens.Add(str_SelectedColor, pen);
 
-			QuadrantDrawService.Brush = new SolidBrush(def_SelectedQuadColor);
+
+			TopControl         .PanelFill    .Color = def_PanelBackcolor;
+			QuadrantDrawService.SelectorBrush.Color = def_PanelForecolor;
+			QuadrantDrawService.SelectedBrush.Color = def_QuadrantForecolor;
+			QuadrantControl.SetBackcolorCoordinator(def_QuadrantBackcolor);
+
+			QuadrantDrawService.QuadrantSelected.Color = def_QuadrantSelected;
+			QuadrantDrawService.QuadrantDisabled.Color = def_QuadrantDisabled;
+			QuadrantDrawService.QuadrantBorder  .Color = def_QuadrantBorder;
+
 
 
 			OptionChangedEvent changer0 = OnOptionChanged;
-			OptionChangedEvent changer1 = OnQuadColorChanged;
-			OptionChangedEvent changer2 = OnFlagChanged;
-			OptionChangedEvent changer3 = OnDescriptionHeightChanged;
+			OptionChangedEvent changer1 = OnFlagChanged;
+			OptionChangedEvent changer2 = OnDescriptionHeightChanged;
+			OptionChangedEvent changer3 = OnPanelColorChanged;
+
+			options.CreateOptionDefault(str_PanelBackcolor,            def_PanelBackcolor,            changer3);
+			options.CreateOptionDefault(str_PanelForecolor,            def_PanelForecolor,            changer3);
+			options.CreateOptionDefault(str_QuadrantForecolor,         def_QuadrantForecolor,         changer3);
+			options.CreateOptionDefault(str_QuadrantBackcolor,         def_QuadrantBackcolor,         changer3);
+			options.CreateOptionDefault(str_QuadrantSelected,          def_QuadrantSelected,          changer3);
+			options.CreateOptionDefault(str_QuadrantDisabled,          def_QuadrantDisabled,          changer3);
+			options.CreateOptionDefault(str_QuadrantBorder,            def_QuadrantBorder,            changer3);
 
 			options.CreateOptionDefault(str_GridLineColor,             def_GridLineColor,             changer0);
 			options.CreateOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer0);
@@ -434,16 +536,60 @@ namespace MapView.Forms.Observers
 			options.CreateOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer0);
 			options.CreateOptionDefault(str_SelectedColor,             def_SelectedColor,             changer0);
 			options.CreateOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer0);
-			options.CreateOptionDefault(str_SelectedQuadColor,         def_SelectedQuadColor,         changer1);
 
-			options.CreateOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer2);
+			options.CreateOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer1);
 
-			options.CreateOptionDefault(str_DescriptionHeight,         def_DescriptionHeight,         changer3);
+			options.CreateOptionDefault(str_DescriptionHeight,         def_DescriptionHeight,         changer2);
 		}
 		#endregion Methods
 
 
 		#region Events
+		/// <summary>
+		/// Changes the colors of TopView's panel and Quadrant panel.
+		/// Invalidates the control(s) if required.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="val"></param>
+		private void OnPanelColorChanged(string key, object val)
+		{
+			switch (key)
+			{
+				case str_PanelBackcolor:
+					TopControl.PanelFill.Color = (PanelBackcolor = (Color)val);
+					ObserverManager.InvalidateTopControls();
+					break;
+
+				case str_PanelForecolor:
+					QuadrantDrawService.SelectorBrush.Color = (PanelForecolor = (Color)val);
+					break;
+
+				case str_QuadrantForecolor:
+					QuadrantDrawService.SelectedBrush.Color = (QuadrantForecolor = (Color)val);
+					ObserverManager.InvalidateQuadrantControls();
+					break;
+
+				case str_QuadrantBackcolor:
+					QuadrantControl.SetBackcolorCoordinator(QuadrantBackcolor = (Color)val);
+					break;
+
+				case str_QuadrantSelected:
+					QuadrantDrawService.QuadrantSelected.Color = (QuadrantSelected = (Color)val);
+					ObserverManager.InvalidateQuadrantControls();
+					break;
+
+				case str_QuadrantDisabled:
+					QuadrantDrawService.QuadrantDisabled.Color = (QuadrantDisabled = (Color)val);
+					ObserverManager.InvalidateQuadrantControls();
+					break;
+
+				case str_QuadrantBorder:
+					QuadrantDrawService.QuadrantBorder.Color = (QuadrantBorder = (Color)val);
+					ObserverManager.InvalidateQuadrantControls();
+					break;
+			}
+		}
+
 		/// <summary>
 		/// Sets the value of an optionable property and invalidates the TopView
 		/// and TopRouteView(Top) controls.
@@ -452,8 +598,6 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
-			//DSShared.Logfile.Log("TopViewOptionables.OnOptionChanged()");
-
 			bool invalidateQuads = false;
 
 			switch (key)
@@ -481,22 +625,6 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets the value of SelectedQuadColor and invalidates the TopView
-		/// and TopRouteView(Top) controls.
-		/// </summary>
-		/// <param name="key">one of the standard keys of an optionable</param>
-		/// <param name="val">the value to set it to</param>
-		private void OnQuadColorChanged(string key, object val)
-		{
-			//DSShared.Logfile.Log("TopViewOptionables.OnQuadColorChanged()");
-
-			SelectedQuadColor =
-			QuadrantDrawService.Brush.Color = (Color)val;
-
-			ObserverManager.InvalidateQuadrantControls();
-		}
-
-		/// <summary>
 		/// Sets the value of an optionable property but doesn't invalidate
 		/// anything.
 		/// </summary>
@@ -504,7 +632,6 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnFlagChanged(string key, object val)
 		{
-			//DSShared.Logfile.Log("TopViewOptionables.OnFlagChanged()");
 			EnableRightClickWaitTimer = (bool)val;
 		}
 
@@ -516,7 +643,6 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
-			//DSShared.Logfile.Log("TopViewOptionables.OnDescriptionHeightChanged()");
 			DescriptionHeight = (int)val;
 		}
 		#endregion Events
@@ -530,8 +656,6 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangeBruColor(string key, object val)
 		{
-			//DSShared.Logfile.Log("TopViewOptionables.ChangeBruColor()");
-
 			TopControl.TopBrushes[key].Color = (Color)val;
 
 			if (key == str_ContentColor)
@@ -554,8 +678,6 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenColor(string key, object val)
 		{
-			//DSShared.Logfile.Log("TopViewOptionables.ChangePenColor()");
-
 			TopControl.TopPens[key].Color = (Color)val;
 
 			bool updateColorhelp = false;
@@ -586,8 +708,6 @@ namespace MapView.Forms.Observers
 		/// <param name="val"></param>
 		private static void ChangePenWidth(string key, object val)
 		{
-			//DSShared.Logfile.Log("TopViewOptionables.ChangePenWidth()");
-
 			TopControl.TopPens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)

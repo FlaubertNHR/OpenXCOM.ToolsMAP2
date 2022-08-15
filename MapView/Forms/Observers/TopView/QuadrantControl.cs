@@ -78,7 +78,6 @@ namespace MapView.Forms.Observers
 		#region cTor
 		/// <summary>
 		/// cTor.
-		/// TODO: This should be a static class.
 		/// </summary>
 		/// <remarks>There are 2 QuadrantControls - one in TopView and another
 		/// in TopRouteView(Top).</remarks>
@@ -87,6 +86,8 @@ namespace MapView.Forms.Observers
 			Name   = "QuadrantControl";
 			Height = 70;
 			Dock   = DockStyle.Bottom;
+
+			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
 			MainViewUnderlay.PhaseEvent += OnPhaseEvent;
 
@@ -206,7 +207,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Overrides
 		/// <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaintControl()</see></c>
-		/// - ie, <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaint()</see></c>.
+		/// - ie. <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaint()</see></c>.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <remarks>Calls the draw-function in
@@ -313,5 +314,19 @@ namespace MapView.Forms.Observers
 			}
 		}
 		#endregion Methods
+
+
+		#region Methods (static)
+		/// <summary>
+		/// Coordinates the <c>BackColor</c> between TopView and
+		/// TopRouteView(Top).
+		/// </summary>
+		/// <param name="color"></param>
+		internal static void SetBackcolorCoordinator(Color color)
+		{
+			ObserverManager.TopView     .Control   .QuadrantControl.BackColor =
+			ObserverManager.TopRouteView.ControlTop.QuadrantControl.BackColor = color;
+		}
+		#endregion Methods (static)
 	}
 }

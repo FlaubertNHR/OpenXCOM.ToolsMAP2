@@ -30,6 +30,8 @@ namespace MapView.Forms.Observers
 			_lozSelected.Dispose();
 
 			_blobService.Dispose();
+
+			PanelFill   .Dispose();
 		}
 
 
@@ -40,6 +42,8 @@ namespace MapView.Forms.Observers
 		internal static BlobColorTool ToolWest;
 		internal static BlobColorTool ToolNorth;
 		internal static BlobColorTool ToolContent;
+
+		internal static SolidBrush PanelFill = new SolidBrush(Color.Transparent);
 		#endregion Fields (static)
 
 
@@ -69,8 +73,10 @@ namespace MapView.Forms.Observers
 		#region Properties
 		private TopView TopView
 		{ get; set; }
+		#endregion Properties
 
 
+		#region Properties (static)
 		private static readonly Dictionary<string, Pen> _pens =
 							new Dictionary<string, Pen>();
 		/// <summary>
@@ -90,7 +96,7 @@ namespace MapView.Forms.Observers
 		{
 			get { return _brushes; }
 		}
-		#endregion Properties
+		#endregion Properties (static)
 
 
 		#region cTor
@@ -249,8 +255,7 @@ namespace MapView.Forms.Observers
 		/// <seealso cref="ClearSelectorLozengeStatic()"><c>ClearSelectorLozengeStatic()</c></seealso>
 		internal void ClearSelectorLozenge()
 		{
-			_col =
-			_row = -1;
+			_col = _row = -1;
 		}
 
 		/// <summary>
@@ -271,7 +276,7 @@ namespace MapView.Forms.Observers
 		protected override void OnPaintControl(Graphics graphics)
 		{
 			_graphics = graphics;
-			_graphics.FillRectangle(SystemBrushes.Control, ClientRectangle);
+			_graphics.FillRectangle(PanelFill, ClientRectangle);
 
 			if (_file != null)
 			{
@@ -465,7 +470,6 @@ namespace MapView.Forms.Observers
 			TopView.QuadrantControl.doMouseDown(
 											new MouseEventArgs(button, clicks, 0,0, 0),
 											slot);
-//			base.OnKeyDown(e);
 		}
 
 
@@ -512,7 +516,6 @@ namespace MapView.Forms.Observers
 					}
 				}
 			}
-//			base.OnMouseDown(e);
 		}
 
 		/// <summary>
@@ -547,7 +550,6 @@ namespace MapView.Forms.Observers
 		protected override void OnMouseUp(MouseEventArgs e)
 		{
 			_isMouseDrag = false;
-//			base.OnMouseUp(e);
 		}
 
 		/// <summary>
@@ -574,7 +576,6 @@ namespace MapView.Forms.Observers
 				else
 					Invalidate();
 			}
-//			base.OnMouseMove(e);
 		}
 		#endregion Events (override)
 

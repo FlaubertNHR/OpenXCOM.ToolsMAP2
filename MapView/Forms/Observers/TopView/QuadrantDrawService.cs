@@ -21,15 +21,19 @@ namespace MapView.Forms.Observers
 		internal static void DisposeService()
 		{
 			//DSShared.Logfile.Log("QuadrantDrawService.DisposeService() static");
-			_pathFloor   .Dispose();
-			_pathWest    .Dispose();
-			_pathNorth   .Dispose();
-			_pathContent .Dispose();
-			_pathPart    .Dispose();
+			_pathFloor      .Dispose();
+			_pathWest       .Dispose();
+			_pathNorth      .Dispose();
+			_pathContent    .Dispose();
+			_pathPart       .Dispose();
 
-			Font         .Dispose();
-			LocationFont .Dispose();
-			LocationBrush.Dispose();
+			QuadrantFont    .Dispose();
+			LocationFont    .Dispose();
+			SelectorBrush   .Dispose();
+			SelectedBrush   .Dispose();
+			QuadrantSelected.Dispose();
+			QuadrantDisabled.Dispose();
+			QuadrantBorder  .Dispose();
 		}
 
 
@@ -87,17 +91,15 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
-		/// <summary>
-		/// The background color of the selected quadrant.
-		/// </summary>
-		/// <remarks>Set in <c><see cref="TopViewOptionables"/></c>.</remarks>
-		internal static SolidBrush Brush
-		{ get; set; }
+		private static readonly Font QuadrantFont = new Font("Comic Sans MS", 7F);
+		private static readonly Font LocationFont = new Font("Verdana", 7F, FontStyle.Bold);
 
-		private static Font Font = new Font("Comic Sans MS", 7);
+		internal static SolidBrush SelectorBrush    = new SolidBrush(SystemColors.ControlText);
+		internal static SolidBrush SelectedBrush    = new SolidBrush(SystemColors.ControlText);
+		internal static SolidBrush QuadrantSelected = new SolidBrush(Color.PowderBlue);
+		internal static SolidBrush QuadrantDisabled = new SolidBrush(Color.LightGray);
 
-		private static readonly Font       LocationFont  = new Font("Verdana", 7F, FontStyle.Bold);
-		private static readonly SolidBrush LocationBrush = new SolidBrush(SystemColors.ControlText);
+		internal static Pen QuadrantBorder = new Pen(SystemColors.ControlText);
 
 
 		/// <summary>
@@ -220,12 +222,12 @@ namespace MapView.Forms.Observers
 
 				TopViewControl = ObserverManager.TopView.Control;
 
-				TextWidth_door    = (int)_graphics.MeasureString(Door,    Font).Width;
-				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   Font).Width;
-				TextWidth_west    = (int)_graphics.MeasureString(West,    Font).Width;
-				TextWidth_north   = (int)_graphics.MeasureString(North,   Font).Width;
-				TextWidth_content = (int)_graphics.MeasureString(Content, Font).Width;
-				TextWidth_part    = (int)_graphics.MeasureString(Part,    Font).Width;
+				TextWidth_door    = (int)_graphics.MeasureString(Door,    QuadrantFont).Width;
+				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   QuadrantFont).Width;
+				TextWidth_west    = (int)_graphics.MeasureString(West,    QuadrantFont).Width;
+				TextWidth_north   = (int)_graphics.MeasureString(North,   QuadrantFont).Width;
+				TextWidth_content = (int)_graphics.MeasureString(Content, QuadrantFont).Width;
+				TextWidth_part    = (int)_graphics.MeasureString(Part,    QuadrantFont).Width;
 			}
 
 			// fill the background of the selected quadrant type
@@ -233,37 +235,37 @@ namespace MapView.Forms.Observers
 			{
 				case PartType.Floor:
 					if (TopViewControl.it_Floor.Checked)
-						_graphics.FillPath(Brush, _pathFloor);
+						_graphics.FillPath(QuadrantSelected, _pathFloor);
 					break;
 
 				case PartType.West:
 					if (TopViewControl.it_West.Checked)
-						_graphics.FillPath(Brush, _pathWest);
+						_graphics.FillPath(QuadrantSelected, _pathWest);
 					break;
 
 				case PartType.North:
 					if (TopViewControl.it_North.Checked)
-						_graphics.FillPath(Brush, _pathNorth);
+						_graphics.FillPath(QuadrantSelected, _pathNorth);
 					break;
 
 				case PartType.Content:
 					if (TopViewControl.it_Content.Checked)
-						_graphics.FillPath(Brush, _pathContent);
+						_graphics.FillPath(QuadrantSelected, _pathContent);
 					break;
 			}
 
 			// fill the background of !Visible quads incl/ the selected-quad
 			if (!TopViewControl.it_Floor.Checked)
-				_graphics.FillPath(Brushes.Silver, _pathFloor);
+				_graphics.FillPath(QuadrantDisabled, _pathFloor);
 
 			if (!TopViewControl.it_West.Checked)
-				_graphics.FillPath(Brushes.Silver, _pathWest);
+				_graphics.FillPath(QuadrantDisabled, _pathWest);
 
 			if (!TopViewControl.it_North.Checked)
-				_graphics.FillPath(Brushes.Silver, _pathNorth);
+				_graphics.FillPath(QuadrantDisabled, _pathNorth);
 
 			if (!TopViewControl.it_Content.Checked)
-				_graphics.FillPath(Brushes.Silver, _pathContent);
+				_graphics.FillPath(QuadrantDisabled, _pathContent);
 
 
 			// draw the Sprites
@@ -327,11 +329,11 @@ namespace MapView.Forms.Observers
 
 
 			// draw each quadrant's bounding rectangle
-			_graphics.DrawPath(Pens.Black, _pathFloor);
-			_graphics.DrawPath(Pens.Black, _pathWest);
-			_graphics.DrawPath(Pens.Black, _pathNorth);
-			_graphics.DrawPath(Pens.Black, _pathContent);
-			_graphics.DrawPath(Pens.Black, _pathPart);
+			_graphics.DrawPath(QuadrantBorder, _pathFloor);
+			_graphics.DrawPath(QuadrantBorder, _pathWest);
+			_graphics.DrawPath(QuadrantBorder, _pathNorth);
+			_graphics.DrawPath(QuadrantBorder, _pathContent);
+			_graphics.DrawPath(QuadrantBorder, _pathPart);
 
 			// draw the quad-type label under each quadrant
 			DrawTypeString(Floor,   TextWidth_floor,   (int)PartType.Floor);
@@ -430,10 +432,10 @@ namespace MapView.Forms.Observers
 		{
 			_graphics.DrawString(
 							Door,
-							Font,
+							QuadrantFont,
 							Brushes.Black,
 							StartX + (Spriteset.SpriteWidth32 - TextWidth_door) / 2 + Quadwidth * quad + 1,
-							StartY +  Spriteset.SpriteHeight40 - Font.Height + PrintOffsetY);
+							StartY +  Spriteset.SpriteHeight40 - QuadrantFont.Height + PrintOffsetY);
 		}
 
 		/// <summary>
@@ -446,8 +448,8 @@ namespace MapView.Forms.Observers
 		{
 			_graphics.DrawString(
 							type,
-							Font,
-							Brushes.Black,
+							QuadrantFont,
+							SelectedBrush,
 							StartX + (Spriteset.SpriteWidth32 - width) / 2 + Quadwidth * slot + 1,
 							StartY +  Spriteset.SpriteHeight40 + MarginVert);
 		}
@@ -463,7 +465,7 @@ namespace MapView.Forms.Observers
 								brush,
 								new RectangleF(
 											StartX + Quadwidth * (int)slot,
-											StartY + Spriteset.SpriteHeight40 + MarginVert + Font.Height + 1,
+											StartY + Spriteset.SpriteHeight40 + MarginVert + QuadrantFont.Height + 1,
 											Spriteset.SpriteWidth32,
 											SwatchHeight));
 		}
@@ -490,7 +492,7 @@ namespace MapView.Forms.Observers
 				_graphics.DrawString(
 								loc,
 								LocationFont,
-								LocationBrush,
+								SelectedBrush,
 								panelwidth - w, StartY);
 			}
 		}
@@ -520,7 +522,7 @@ namespace MapView.Forms.Observers
 			_graphics.DrawString(
 							loc,
 							LocationFont,
-							LocationBrush,
+							SelectorBrush,
 							x,y);
 		}
 		#endregion Methods (static)
