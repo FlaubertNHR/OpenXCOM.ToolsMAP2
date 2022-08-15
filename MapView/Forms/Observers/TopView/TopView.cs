@@ -387,7 +387,11 @@ namespace MapView.Forms.Observers
 		internal void OnOptionsClick(object sender, EventArgs e)
 		{
 			var tsb = sender as ToolStripButton;
-			if (!tsb.Checked)
+			if (tsb.Checked && _foptions.WindowState == FormWindowState.Minimized)
+			{
+				_foptions.WindowState = FormWindowState.Normal;
+			}
+			else if (!tsb.Checked)
 			{
 				setOptionsChecked(true);
 

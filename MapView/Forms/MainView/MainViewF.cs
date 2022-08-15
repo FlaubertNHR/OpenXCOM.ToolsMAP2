@@ -813,7 +813,11 @@ namespace MapView
 		/// <param name="e"></param>
 		internal void OnOptionsClick(object sender, EventArgs e)
 		{
-			if (miOptions.Checked = !miOptions.Checked)
+			if (miOptions.Checked && _foptions.WindowState == FormWindowState.Minimized)
+			{
+				_foptions.WindowState = FormWindowState.Normal;
+			}
+			else if (miOptions.Checked = !miOptions.Checked)
 			{
 				ObserverManager.ToolFactory.GetOptionsButton().Checked = true;
 
