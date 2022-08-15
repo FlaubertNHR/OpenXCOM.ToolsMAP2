@@ -2660,9 +2660,7 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
 					TileGroupManager.AddTileGroup(ib.Label);
-
 					CreateTree();
 					SelectGroupNode(ib.Label);
 				}
@@ -2690,10 +2688,7 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
-					TileGroupManager.EditTileGroup(
-												ib.Label,
-												labelGroup);
+					TileGroupManager.EditTileGroup(ib.Label, labelGroup);
 					CreateTree();
 					SelectGroupNode(ib.Label);
 				}
@@ -2725,11 +2720,9 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
 					TileGroupManager.DeleteTileGroup(labelGroup);
-
+					// TODO: Close the Map, Routes, Tiles, Topview, etc ...
 					CreateTree();
-					SelectGroupNodeTop();
 				}
 			}
 		}
@@ -2752,12 +2745,9 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
-					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
-					@group.AddCategory(ib.Label);
-
+					TileGroupManager.TileGroups[labelGroup].AddCategory(ib.Label);
 					CreateTree();
-					SelectCategoryNode(@group.Label, ib.Label);
+					SelectCategoryNode(labelGroup, ib.Label);
 				}
 			}
 		}
@@ -2783,12 +2773,9 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
-					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
-					@group.EditCategory(ib.Label, labelCategory);
-
+					TileGroupManager.TileGroups[labelGroup].EditCategory(ib.Label, labelCategory);
 					CreateTree();
-					SelectCategoryNode(@group.Label, ib.Label);
+					SelectCategoryNode(labelGroup, ib.Label);
 				}
 			}
 		}
@@ -2822,12 +2809,10 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
-					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
-					@group.DeleteCategory(labelCategory);
-
+					TileGroupManager.TileGroups[labelGroup].DeleteCategory(labelCategory);
+					// TODO: Close the Map, Routes, Tiles, Topview, etc ...
 					CreateTree();
-					SelectCategoryNodeTop(labelGroup);
+					SelectGroupNode(labelGroup);
 				}
 			}
 		}
@@ -2857,10 +2842,8 @@ namespace MapView
 						Dontdrawyougits = true;
 
 						MaptreeChanged = true;
-
 						_bypassChanged = true;
 						CreateTree();
-
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 
 						Dontdrawyougits = false;
@@ -2895,10 +2878,8 @@ namespace MapView
 						Dontdrawyougits = true;
 
 						MaptreeChanged = true;
-
 						_bypassChanged = true;
 						CreateTree();
-
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 
 						Dontdrawyougits = false;
@@ -2927,10 +2908,8 @@ namespace MapView
 
 			if (SharedSpace.GetShareString(key) == null)
 			{
-				if (@group.GroupType == GroupType.Tftd)
-					key = "TFTD";
-				else
-					key = "UFO";
+				if (@group.GroupType == GroupType.Tftd) key = "TFTD";
+				else                                    key = "UFO";
 
 				using (var ib = new Infobox(
 										"Error",
@@ -2975,89 +2954,15 @@ namespace MapView
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
-
-					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
-					@group.DeleteTileset(labelTileset, labelCategory);
-
-//					_bypassChanged = true;
+					TileGroupManager.TileGroups[labelGroup].DeleteTileset(labelTileset, labelCategory);
 					MapChanged = RouteView.RoutesChangedCoordinator = false;
-
+					// TODO: Close the Map, Routes, Tiles, Topview, etc ...
 					CreateTree();
-
-					SelectTilesetNodeTop(labelGroup, labelCategory);
+					SelectCategoryNode(labelGroup, labelCategory);
 				}
 			}
 		}
 
-
-		// TODO: consolidate the select node functions into a single function.
-
-		/// <summary>
-		/// Selects the top treenode in the <c><see cref="MapTree"/></c> if one
-		/// exists.
-		/// </summary>
-		private void SelectGroupNodeTop()
-		{
-			if (MapTree.Nodes.Count != 0)
-				(MapTree.SelectedNode = MapTree.Nodes[0]).Expand();
-		}
-
-		/// <summary>
-		/// Selects the top category treenode in the
-		/// <c><see cref="MapTree"/></c> if one exists under a given group
-		/// treenode.
-		/// </summary>
-		/// <param name="labelGroup"></param>
-		/// <remarks>Assumes that the parent-group node is valid.</remarks>
-		private void SelectCategoryNodeTop(string labelGroup)
-		{
-			foreach (TreeNode nodeGroup in MapTree.Nodes)
-			{
-				if (nodeGroup.Text == labelGroup)
-				{
-					if (nodeGroup.Nodes.Count != 0)
-						MapTree.SelectedNode = nodeGroup.Nodes[0];
-					else
-						MapTree.SelectedNode = nodeGroup;
-
-					MapTree.SelectedNode.Expand();
-					return;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Selects the top tileset treenode in the <c><see cref="MapTree"/></c>
-		/// if one exists under a given category treenode.
-		/// </summary>
-		/// <param name="labelGroup"></param>
-		/// <param name="labelCategory"></param>
-		/// <remarks>Assumes that the parent-parent-group and parent-category
-		/// nodes are valid.</remarks>
-		private void SelectTilesetNodeTop(string labelGroup, string labelCategory)
-		{
-			foreach (TreeNode nodeGroup in MapTree.Nodes)
-			{
-				if (nodeGroup.Text == labelGroup)
-				{
-					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
-					{
-						if (nodeCategory.Text == labelCategory)
-						{
-							if (nodeCategory.Nodes.Count != 0)
-								MapTree.SelectedNode = nodeCategory.Nodes[0];
-							else
-								(MapTree.SelectedNode = nodeCategory).Expand();
-
-							return;
-						}
-					}
-
-					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
-					return;
-				}
-			}
-		}
 
 		/// <summary>
 		/// Selects a treenode in the <c><see cref="MapTree"/></c> given
@@ -3141,6 +3046,76 @@ namespace MapView
 				}
 			}
 		}
+
+
+		// TODO: consolidate the select node functions into a single function.
+
+/*		/// <summary>
+		/// Selects the top treenode in the <c><see cref="MapTree"/></c> if one
+		/// exists.
+		/// </summary>
+		private void SelectGroupNodeTop()
+		{
+			if (MapTree.Nodes.Count != 0)
+				(MapTree.SelectedNode = MapTree.Nodes[0]).Expand();
+		} */
+
+/*		/// <summary>
+		/// Selects the top category treenode in the
+		/// <c><see cref="MapTree"/></c> if one exists under a given group
+		/// treenode.
+		/// </summary>
+		/// <param name="labelGroup"></param>
+		/// <remarks>Assumes that the parent-group node is valid.</remarks>
+		private void SelectCategoryNodeTop(string labelGroup)
+		{
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
+			{
+				if (nodeGroup.Text == labelGroup)
+				{
+					if (nodeGroup.Nodes.Count != 0)
+						MapTree.SelectedNode = nodeGroup.Nodes[0];
+					else
+						MapTree.SelectedNode = nodeGroup;
+
+					MapTree.SelectedNode.Expand();
+					return;
+				}
+			}
+		} */
+
+/*		/// <summary>
+		/// Selects the top tileset treenode in the <c><see cref="MapTree"/></c>
+		/// if one exists under a given category treenode.
+		/// </summary>
+		/// <param name="labelGroup"></param>
+		/// <param name="labelCategory"></param>
+		/// <remarks>Assumes that the parent-parent-group and parent-category
+		/// nodes are valid.</remarks>
+		private void SelectTilesetNodeTop(string labelGroup, string labelCategory)
+		{
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
+			{
+				if (nodeGroup.Text == labelGroup)
+				{
+					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
+					{
+						if (nodeCategory.Text == labelCategory)
+						{
+							if (nodeCategory.Nodes.Count != 0)
+								MapTree.SelectedNode = nodeCategory.Nodes[0];
+							else
+								(MapTree.SelectedNode = nodeCategory).Expand();
+
+							return;
+						}
+					}
+
+					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
+					return;
+				}
+			}
+		} */
 
 
 		/// <summary>
