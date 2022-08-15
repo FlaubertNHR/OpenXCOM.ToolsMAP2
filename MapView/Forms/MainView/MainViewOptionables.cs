@@ -1009,29 +1009,21 @@ namespace MapView.Forms.MainView
 
 			_undrlay.BackColor = def_PanelBackcolor;
 
-			MainViewOverlay.LocationBrush.Dispose();
-			MainViewOverlay.LocationBrush = new SolidBrush(def_PanelForecolor);
+			MainViewOverlay.LocationBrush.Color = def_PanelForecolor;
 
 			MainViewF.that.MapTree.BackColor = def_TreeBackcolor;
 			MainViewF.that.MapTree.ForeColor = def_TreeForecolor;
 
-			MainViewF.TreenodeLine_def.Dispose();
-			MainViewF.TreenodeFill_def.Dispose();
-			MainViewF.TreenodeLine_def = new Pen(def_TreeBackcolor);
-			MainViewF.TreenodeFill_def = new SolidBrush(def_TreeBackcolor);
+			MainViewF.TreenodeLine_def.Color = def_TreeBackcolor;
+			MainViewF.TreenodeFill_def.Color = def_TreeBackcolor;
 
-			MainViewF.TreenodeLine_sel.Dispose();
-			MainViewF.TreenodeLine_sel = new Pen(def_TreenodeSelectedBordercolor);
+			MainViewF.TreenodeLine_sel.Color = def_TreenodeSelectedBordercolor;
 
-			MainViewF.TreenodeFill_selfoc.Dispose();
-			MainViewF.TreenodeFill_selunf.Dispose();
-			MainViewF.TreenodeFill_selfoc = new SolidBrush(def_TreenodeSelectedBackcolor_foc);
-			MainViewF.TreenodeFill_selunf = new SolidBrush(def_TreenodeSelectedBackcolor_unf);
+			MainViewF.TreenodeFill_selfoc.Color = def_TreenodeSelectedBackcolor_foc;
+			MainViewF.TreenodeFill_selunf.Color = def_TreenodeSelectedBackcolor_unf;
 
-			MainViewF.TreenodeFill_serfoc.Dispose();
-			MainViewF.TreenodeFill_serunf.Dispose();
-			MainViewF.TreenodeFill_serfoc = new SolidBrush(def_TreenodeSearchedBackcolor_foc);
-			MainViewF.TreenodeFill_serunf = new SolidBrush(def_TreenodeSearchedBackcolor_unf);
+			MainViewF.TreenodeFill_serfoc.Color = def_TreenodeSearchedBackcolor_foc;
+			MainViewF.TreenodeFill_serunf.Color = def_TreenodeSearchedBackcolor_unf;
 
 
 			OptionChangedEvent changer0 = OnOptionChanged;
@@ -1116,17 +1108,14 @@ namespace MapView.Forms.MainView
 					return;
 
 				case str_PanelForecolor:
-					MainViewOverlay.LocationBrush.Dispose();
-					MainViewOverlay.LocationBrush = new SolidBrush(PanelForecolor = (Color)val);
+					MainViewOverlay.LocationBrush.Color = (PanelForecolor = (Color)val);
 					return;
 
 				case str_TreeBackcolor:
 					MainViewF.that.MapTree.BackColor = (TreeBackcolor = (Color)val);
 
-					MainViewF.TreenodeFill_def.Dispose();
-					MainViewF.TreenodeLine_def.Dispose();
-					MainViewF.TreenodeFill_def = new SolidBrush(TreeBackcolor);
-					MainViewF.TreenodeLine_def = new Pen(TreeBackcolor);
+					MainViewF.TreenodeLine_def.Color = TreeBackcolor;
+					MainViewF.TreenodeFill_def.Color = TreeBackcolor;
 					return;
 
 				case str_TreeForecolor:
@@ -1138,35 +1127,23 @@ namespace MapView.Forms.MainView
 					break;
 
 				case str_TreenodeSelectedBordercolor:
-					MainViewF.TreenodeLine_sel = new Pen(TreenodeSelectedBordercolor = (Color)val);
+					MainViewF.TreenodeLine_sel.Color = (TreenodeSelectedBordercolor = (Color)val);
 					break;
 
 				case str_TreenodeSelectedBackcolor_foc:
-					TreenodeSelectedBackcolor_foc = (Color)val;
-
-					MainViewF.TreenodeFill_selfoc.Dispose();
-					MainViewF.TreenodeFill_selfoc = new SolidBrush(TreenodeSelectedBackcolor_foc);
+					MainViewF.TreenodeFill_selfoc.Color = (TreenodeSelectedBackcolor_foc = (Color)val);
 					break;
 
 				case str_TreenodeSelectedBackcolor_unf:
-					TreenodeSelectedBackcolor_unf = (Color)val;
-
-					MainViewF.TreenodeFill_selunf.Dispose();
-					MainViewF.TreenodeFill_selunf = new SolidBrush(TreenodeSelectedBackcolor_unf);
+					MainViewF.TreenodeFill_selunf.Color = (TreenodeSelectedBackcolor_unf = (Color)val);
 					break;
 
 				case str_TreenodeSearchedBackcolor_foc:
-					TreenodeSearchedBackcolor_foc = (Color)val;
-
-					MainViewF.TreenodeFill_serfoc.Dispose();
-					MainViewF.TreenodeFill_serfoc = new SolidBrush(TreenodeSearchedBackcolor_foc);
+					MainViewF.TreenodeFill_serfoc.Color = (TreenodeSearchedBackcolor_foc = (Color)val);
 					break;
 
 				case str_TreenodeSearchedBackcolor_unf:
-					TreenodeSearchedBackcolor_unf = (Color)val;
-
-					MainViewF.TreenodeFill_serunf.Dispose();
-					MainViewF.TreenodeFill_serunf = new SolidBrush(TreenodeSearchedBackcolor_unf);
+					MainViewF.TreenodeFill_serunf.Color = (TreenodeSearchedBackcolor_unf = (Color)val);
 					break;
 			}
 

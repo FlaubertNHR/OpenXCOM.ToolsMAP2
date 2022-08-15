@@ -25,5 +25,24 @@ namespace DSShared.Controls
 			}
 		}
 		#endregion Properties (override)
+
+
+		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		public CompositedTreeView()
+		{
+			Name          = "MapTree";
+			Dock          = DockStyle.Left;
+			DrawMode      = TreeViewDrawMode.OwnerDrawText;
+			Indent        = 15;
+			Margin        = new Padding(0);
+			TabIndex      = 0;
+			HideSelection = false;
+
+			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+		}
+		#endregion cTor
 	}
 }

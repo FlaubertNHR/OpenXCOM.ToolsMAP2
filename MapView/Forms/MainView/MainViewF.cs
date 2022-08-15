@@ -110,16 +110,16 @@ namespace MapView
 		internal static bool Dontdrawyougits;
 
 
-		internal static Pen   TreenodeLine_def    = new Pen(SystemColors.Control);
-		internal static Brush TreenodeFill_def    = new SolidBrush(SystemColors.Control);
+		internal static Pen        TreenodeLine_def    = new Pen(SystemColors.Control);
+		internal static SolidBrush TreenodeFill_def    = new SolidBrush(SystemColors.Control);
 
-		internal static Pen   TreenodeLine_sel    = new Pen(Color.SlateBlue);
+		internal static Pen        TreenodeLine_sel    = new Pen(Color.SlateBlue);
 
-		internal static Brush TreenodeFill_selfoc = new SolidBrush(Color.BurlyWood);
-		internal static Brush TreenodeFill_selunf = new SolidBrush(Color.PeachPuff);
+		internal static SolidBrush TreenodeFill_selfoc = new SolidBrush(Color.BurlyWood);
+		internal static SolidBrush TreenodeFill_selunf = new SolidBrush(Color.PeachPuff);
 
-		internal static Brush TreenodeFill_serfoc = new SolidBrush(Color.LightSteelBlue);
-		internal static Brush TreenodeFill_serunf = new SolidBrush(Color.PaleTurquoise);
+		internal static SolidBrush TreenodeFill_serfoc = new SolidBrush(Color.LightSteelBlue);
+		internal static SolidBrush TreenodeFill_serunf = new SolidBrush(Color.PaleTurquoise);
 		#endregion Fields (static)
 
 
@@ -354,14 +354,6 @@ namespace MapView
 			Controls.Add(splitter);
 
 			MapTree = new CompositedTreeView();
-
-			MapTree.Name          = "MapTree";
-			MapTree.Dock          = DockStyle.Left;
-			MapTree.DrawMode      = TreeViewDrawMode.OwnerDrawText;
-			MapTree.Indent        = 15;
-			MapTree.Margin        = new Padding(0);
-			MapTree.TabIndex      = 0;
-			MapTree.HideSelection = false;
 
 			MapTree.DrawNode       += OnMapTreeDrawNode;
 			MapTree.GotFocus       += OnMapTreeFocusChanged;
