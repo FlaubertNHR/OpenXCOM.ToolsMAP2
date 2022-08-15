@@ -496,17 +496,6 @@ namespace MapView.Forms.Observers
 			TopControl.TopPens.Add(str_SelectedColor, pen);
 
 
-			TopControl         .PanelFill    .Color = def_PanelBackcolor;
-			QuadrantDrawService.SelectorBrush.Color = def_PanelForecolor;
-			QuadrantDrawService.SelectedBrush.Color = def_QuadrantForecolor;
-			QuadrantControl.SetBackcolorCoordinator(def_QuadrantBackcolor);
-
-			QuadrantDrawService.QuadrantSelected.Color = def_QuadrantSelected;
-			QuadrantDrawService.QuadrantDisabled.Color = def_QuadrantDisabled;
-			QuadrantDrawService.QuadrantBorder  .Color = def_QuadrantBorder;
-
-
-
 			OptionChangedEvent changer0 = OnOptionChanged;
 			OptionChangedEvent changer1 = OnFlagChanged;
 			OptionChangedEvent changer2 = OnDescriptionHeightChanged;
@@ -549,10 +538,12 @@ namespace MapView.Forms.Observers
 		/// Changes the colors of TopView's panel and Quadrant panel.
 		/// Invalidates the control(s) if required.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void OnPanelColorChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnPanelColorChanged() key= " + key);
+
 			switch (key)
 			{
 				case str_PanelBackcolor:
@@ -598,6 +589,8 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnOptionChanged() key= " + key);
+
 			bool invalidateQuads = false;
 
 			switch (key)
@@ -632,6 +625,7 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnFlagChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnFlagChanged() key= " + key);
 			EnableRightClickWaitTimer = (bool)val;
 		}
 
@@ -639,10 +633,11 @@ namespace MapView.Forms.Observers
 		/// Stores the property panel's Description area's height when the user
 		/// changes it.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.OnDescriptionHeightChanged() key= " + key);
 			DescriptionHeight = (int)val;
 		}
 		#endregion Events
@@ -652,10 +647,12 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Fires when a brush-color changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private static void ChangeBruColor(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.ChangeBruColor() key= " + key);
+
 			TopControl.TopBrushes[key].Color = (Color)val;
 
 			if (key == str_ContentColor)
@@ -674,10 +671,12 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Fires when a pen-color changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private static void ChangePenColor(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.ChangePenColor() key= " + key);
+
 			TopControl.TopPens[key].Color = (Color)val;
 
 			bool updateColorhelp = false;
@@ -704,10 +703,12 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Fires when a pen-width changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private static void ChangePenWidth(string key, object val)
 		{
+			//DSShared.Logfile.Log("TopViewOptionables.ChangePenWidth() key= " + key);
+
 			TopControl.TopPens[key = WidthToColor(key)].Width = (int)val;
 
 			switch (key)
@@ -730,7 +731,7 @@ namespace MapView.Forms.Observers
 		/// width-keys.
 		/// </summary>
 		/// <param name="width">width-key</param>
-		/// <returns>the width-keys corresponding color-key</returns>
+		/// <returns>the width-key's corresponding color-key</returns>
 		private static string WidthToColor(string width)
 		{
 			switch (width)

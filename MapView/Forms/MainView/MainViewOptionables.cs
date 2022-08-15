@@ -1007,24 +1007,6 @@ namespace MapView.Forms.MainView
 			color = Color.FromArgb(def_SelectionBorderOpacity, def_SelectionBorderColor);
 			_overlay.PenSelect = new Pen(color, def_SelectionBorderWidth);
 
-			_undrlay.BackColor = def_PanelBackcolor;
-
-			MainViewOverlay.LocationBrush.Color = def_PanelForecolor;
-
-			MainViewF.that.MapTree.BackColor = def_TreeBackcolor;
-			MainViewF.that.MapTree.ForeColor = def_TreeForecolor;
-
-			MainViewF.TreenodeLine_def.Color = def_TreeBackcolor;
-			MainViewF.TreenodeFill_def.Color = def_TreeBackcolor;
-
-			MainViewF.TreenodeLine_sel.Color = def_TreenodeSelectedBordercolor;
-
-			MainViewF.TreenodeFill_selfoc.Color = def_TreenodeSelectedBackcolor_foc;
-			MainViewF.TreenodeFill_selunf.Color = def_TreenodeSelectedBackcolor_unf;
-
-			MainViewF.TreenodeFill_serfoc.Color = def_TreenodeSearchedBackcolor_foc;
-			MainViewF.TreenodeFill_serunf.Color = def_TreenodeSearchedBackcolor_unf;
-
 
 			OptionChangedEvent changer0 = OnOptionChanged;
 			OptionChangedEvent changer1 = OnFlagChanged;
@@ -1097,10 +1079,12 @@ namespace MapView.Forms.MainView
 		/// Changes the colors of MainView's panel and Maptree. Invalidates the
 		/// Maptree if required.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void OnPanelColorChanged(string key, object val)
 		{
+			//Logfile.Log("MainViewOptionables.OnPanelColorChanged() key= " + key);
+
 			switch (key)
 			{
 				case str_PanelBackcolor:
@@ -1458,8 +1442,8 @@ namespace MapView.Forms.MainView
 		/// Stores the property panel's <c>Description</c> area's height when
 		/// the user changes it.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
 			//Logfile.Log("MainViewOptionables.OnDescriptionHeightChanged() key= " + key);
