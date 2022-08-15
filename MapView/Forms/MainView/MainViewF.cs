@@ -884,15 +884,15 @@ namespace MapView
 
 				case 2:
 					SelectCategoryNode(
-									Program.Args[TREELEVEL_CATEGORY],
-									Program.Args[TREELEVEL_GROUP]);
+									Program.Args[TREELEVEL_GROUP],
+									Program.Args[TREELEVEL_CATEGORY]);
 					break;
 
 				case 3:
 					SelectTilesetNode(
-									Program.Args[TREELEVEL_TILESET],
+									Program.Args[TREELEVEL_GROUP],
 									Program.Args[TREELEVEL_CATEGORY],
-									Program.Args[TREELEVEL_GROUP]);
+									Program.Args[TREELEVEL_TILESET]);
 					break;
 			}
 
@@ -2649,7 +2649,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnAddGroupClick(object sender, EventArgs e)
 		{
-			using (var f = new MapTreeInputBox(
+			using (var ib = new MapTreeInputBox(
 											"Enter the label for a new Map group."
 												+ " It needs to start with UFO or TFTD (case insensitive) since"
 												+ " the prefix will set the default path and palette of its tilesets.",
@@ -2657,14 +2657,14 @@ namespace MapView
 											TreeboxType.AddGroup,
 											String.Empty))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
-					TileGroupManager.AddTileGroup(f.Label);
+					TileGroupManager.AddTileGroup(ib.Label);
 
 					CreateTree();
-					SelectGroupNode(f.Label);
+					SelectGroupNode(ib.Label);
 				}
 			}
 		}
@@ -2676,7 +2676,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnEditGroupClick(object sender, EventArgs e)
 		{
-			using (var f = new MapTreeInputBox(
+			using (var ib = new MapTreeInputBox(
 											"Enter a new label for the Map group."
 												+ " It needs to start with UFO or TFTD (case insensitive) since"
 												+ " the prefix will set the default path and palette of its tilesets.",
@@ -2686,16 +2686,16 @@ namespace MapView
 			{
 				string labelGroup = MapTree.SelectedNode.Text;
 
-				f.Label = labelGroup;
-				if (f.ShowDialog(this) == DialogResult.OK)
+				ib.Label = labelGroup;
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
 					TileGroupManager.EditTileGroup(
-												f.Label,
+												ib.Label,
 												labelGroup);
 					CreateTree();
-					SelectGroupNode(f.Label);
+					SelectGroupNode(ib.Label);
 				}
 			}
 		}
@@ -2715,14 +2715,14 @@ namespace MapView
 
 			string labelGroup = MapTree.SelectedNode.Text;
 
-			using (var f = new Infobox(
+			using (var ib = new Infobox(
 									"Warning",
 									head,
 									"group - " + labelGroup,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
@@ -2743,21 +2743,21 @@ namespace MapView
 		{
 			string labelGroup = MapTree.SelectedNode.Text;
 
-			using (var f = new MapTreeInputBox(
+			using (var ib = new MapTreeInputBox(
 											"Enter the label for a new Map category.",
 											"Note that categories that do not contain tilesets will not be saved.",
 											TreeboxType.AddCategory,
 											labelGroup))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
 					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
-					@group.AddCategory(f.Label);
+					@group.AddCategory(ib.Label);
 
 					CreateTree();
-					SelectCategoryNode(f.Label, @group.Label);
+					SelectCategoryNode(@group.Label, ib.Label);
 				}
 			}
 		}
@@ -2771,7 +2771,7 @@ namespace MapView
 		{
 			string labelGroup = MapTree.SelectedNode.Parent.Text;
 
-			using (var f = new MapTreeInputBox(
+			using (var ib = new MapTreeInputBox(
 											"Enter a new label for the Map category.",
 											"Note that categories that do not contain tilesets will not be saved.",
 											TreeboxType.EditCategory,
@@ -2779,16 +2779,16 @@ namespace MapView
 			{
 				string labelCategory = MapTree.SelectedNode.Text;
 
-				f.Label = labelCategory;
-				if (f.ShowDialog(this) == DialogResult.OK)
+				ib.Label = labelCategory;
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
 					TileGroup @group = TileGroupManager.TileGroups[labelGroup];
-					@group.EditCategory(f.Label, labelCategory);
+					@group.EditCategory(ib.Label, labelCategory);
 
 					CreateTree();
-					SelectCategoryNode(f.Label, @group.Label);
+					SelectCategoryNode(@group.Label, ib.Label);
 				}
 			}
 		}
@@ -2812,14 +2812,14 @@ namespace MapView
 			string copyable = "group    - " + labelGroup + Environment.NewLine
 							+ "category - " + labelCategory;
 
-			using (var f = new Infobox(
+			using (var ib = new Infobox(
 									"Warning",
 									head,
 									copyable,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
@@ -2846,13 +2846,13 @@ namespace MapView
 				string labelCategory = MapTree.SelectedNode.Text;
 				string labelTileset  = String.Empty;
 
-				using (var f = new TilesetEditor(
+				using (var te = new TilesetEditor(
 											TilesetEdit.CreateDescriptor,
 											labelGroup,
 											labelCategory,
 											labelTileset))
 				{
-					if (f.ShowDialog(this) == DialogResult.OK)
+					if (te.ShowDialog(this) == DialogResult.OK)
 					{
 						Dontdrawyougits = true;
 
@@ -2861,7 +2861,7 @@ namespace MapView
 						_bypassChanged = true;
 						CreateTree();
 
-						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
+						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 
 						Dontdrawyougits = false;
 						_overlay.Invalidate();
@@ -2884,13 +2884,13 @@ namespace MapView
 				string labelCategory = MapTree.SelectedNode.Parent.Text;
 				string labelTileset  = MapTree.SelectedNode.Text;
 
-				using (var f = new TilesetEditor(
+				using (var te = new TilesetEditor(
 											TilesetEdit.DescriptorExists,
 											labelGroup,
 											labelCategory,
 											labelTileset))
 				{
-					if (f.ShowDialog(this) == DialogResult.OK)
+					if (te.ShowDialog(this) == DialogResult.OK)
 					{
 						Dontdrawyougits = true;
 
@@ -2899,7 +2899,7 @@ namespace MapView
 						_bypassChanged = true;
 						CreateTree();
 
-						SelectTilesetNode(f.TilesetLabel, labelCategory, labelGroup);
+						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 
 						Dontdrawyougits = false;
 						_overlay.Invalidate();
@@ -2932,13 +2932,13 @@ namespace MapView
 				else
 					key = "UFO";
 
-				using (var f = new Infobox(
+				using (var ib = new Infobox(
 										"Error",
 										key + " is not configured.",
 										null,
 										InfoboxType.Error))
 				{
-					f.ShowDialog(this);
+					ib.ShowDialog(this);
 				}
 				return false;
 			}
@@ -2965,14 +2965,14 @@ namespace MapView
 							+ "category - " + labelCategory + Environment.NewLine
 							+ "tileset  - " + labelTileset;
 
-			using (var f = new Infobox(
+			using (var ib = new Infobox(
 									"Warning",
 									head,
 									copyable,
 									InfoboxType.Warn,
 									InfoboxButtons.CancelOkay))
 			{
-				if (f.ShowDialog(this) == DialogResult.OK)
+				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
 					MaptreeChanged = true;
 
@@ -3060,8 +3060,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the <c><see cref="MapTree"/></c> given a
-		/// group-label.
+		/// Selects a treenode in the <c><see cref="MapTree"/></c> given
+		/// <paramref name="labelGroup"/>.
 		/// </summary>
 		/// <param name="labelGroup"></param>
 		private void SelectGroupNode(string labelGroup)
@@ -3077,12 +3077,12 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the <c><see cref="MapTree"/></c> given a
-		/// category-label.
+		/// Selects a treenode in the <c><see cref="MapTree"/></c> given
+		/// <paramref name="labelGroup"/> and <paramref name="labelCategory"/>.
 		/// </summary>
-		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
-		private void SelectCategoryNode(string labelCategory, string labelGroup)
+		/// <param name="labelCategory"></param>
+		private void SelectCategoryNode(string labelGroup, string labelCategory)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
@@ -3104,13 +3104,14 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects a treenode in the <c><see cref="MapTree"/></c> given a
-		/// tileset-label and Category.
+		/// Selects a treenode in the <c><see cref="MapTree"/></c> given
+		/// <paramref name="labelGroup"/> and <paramref name="labelCategory"/>
+		/// and <paramref name="labelTileset"/>.
 		/// </summary>
-		/// <param name="labelTileset"></param>
-		/// <param name="labelCategory"></param>
 		/// <param name="labelGroup"></param>
-		private void SelectTilesetNode(string labelTileset, string labelCategory, string labelGroup)
+		/// <param name="labelCategory"></param>
+		/// <param name="labelTileset"></param>
+		private void SelectTilesetNode(string labelGroup, string labelCategory, string labelTileset)
 		{
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
