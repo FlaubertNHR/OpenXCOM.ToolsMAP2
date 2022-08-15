@@ -234,37 +234,37 @@ namespace MapView.Forms.Observers
 			switch (partType)
 			{
 				case PartType.Floor:
-					if (TopViewControl.it_Floor.Checked)
+					if (!TopViewControl.it_Floor.Checked)
 						_graphics.FillPath(QuadrantSelected, _pathFloor);
 					break;
 
 				case PartType.West:
-					if (TopViewControl.it_West.Checked)
+					if (!TopViewControl.it_West.Checked)
 						_graphics.FillPath(QuadrantSelected, _pathWest);
 					break;
 
 				case PartType.North:
-					if (TopViewControl.it_North.Checked)
+					if (!TopViewControl.it_North.Checked)
 						_graphics.FillPath(QuadrantSelected, _pathNorth);
 					break;
 
 				case PartType.Content:
-					if (TopViewControl.it_Content.Checked)
+					if (!TopViewControl.it_Content.Checked)
 						_graphics.FillPath(QuadrantSelected, _pathContent);
 					break;
 			}
 
-			// fill the background of !Visible quads incl/ the selected-quad
-			if (!TopViewControl.it_Floor.Checked)
+			// fill the background of Disabled quads incl/ the selected-quad
+			if (TopViewControl.it_Floor.Checked)
 				_graphics.FillPath(QuadrantDisabled, _pathFloor);
 
-			if (!TopViewControl.it_West.Checked)
+			if (TopViewControl.it_West.Checked)
 				_graphics.FillPath(QuadrantDisabled, _pathWest);
 
-			if (!TopViewControl.it_North.Checked)
+			if (TopViewControl.it_North.Checked)
 				_graphics.FillPath(QuadrantDisabled, _pathNorth);
 
-			if (!TopViewControl.it_Content.Checked)
+			if (TopViewControl.it_Content.Checked)
 				_graphics.FillPath(QuadrantDisabled, _pathContent);
 
 

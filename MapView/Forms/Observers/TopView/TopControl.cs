@@ -21,9 +21,14 @@ namespace MapView.Forms.Observers
 			DoubleBufferedControl
 	{
 		/// <summary>
-		/// Disposes the GraphicsPaths.
+		/// Disposes this <c>TopControl's</c> disposables.
 		/// </summary>
-		public void DisposeControl()
+		/// <remarks>Do NOT use <c>public void Dispose()</c> or else you'll have
+		/// one Fuck of a time trying to trace usage.
+		/// Use <c>public void Dispose()</c> only for Designer code w/
+		/// <c>components</c>. Thank yourself for heeding this piece of ornery
+		/// advice later.</remarks>
+		internal void DisposeControl()
 		{
 			//DSShared.Logfile.Log("TopControl.DisposeControl()");
 			_lozSelector.Dispose();
@@ -370,27 +375,27 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				int x, int y)
 		{
-			if (TopView.it_Floor.Checked && tile.Floor != null)
+			if (!TopView.it_Floor.Checked && tile.Floor != null)
 				_blobService.Draw(
 								_graphics,
 								TopBrushes[TopViewOptionables.str_FloorColor],
 								x,y);
 
-			if (TopView.it_Content.Checked && tile.Content != null)
+			if (!TopView.it_Content.Checked && tile.Content != null)
 				_blobService.Draw(
 								_graphics,
 								ToolContent,
 								x,y,
 								tile.Content);
 
-			if (TopView.it_West.Checked && tile.West != null)
+			if (!TopView.it_West.Checked && tile.West != null)
 				_blobService.Draw(
 								_graphics,
 								ToolWest,
 								x,y,
 								tile.West);
 
-			if (TopView.it_North.Checked && tile.North != null)
+			if (!TopView.it_North.Checked && tile.North != null)
 				_blobService.Draw(
 								_graphics,
 								ToolNorth,

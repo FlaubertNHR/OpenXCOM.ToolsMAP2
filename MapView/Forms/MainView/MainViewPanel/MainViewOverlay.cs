@@ -475,7 +475,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears all tileparts from any currently selected tiles.
 		/// </summary>
-		/// <remarks><c>ClearSelection()</c> respects quadrant visibility unlike
+		/// <remarks><c>ClearSelection()</c> respects quadrant disability unlike
 		/// <c><see cref="ClearSelectedQuadrants()">ClearSelectedQuadrants()</see></c>.</remarks>
 		private void ClearSelection()
 		{
@@ -493,10 +493,10 @@ namespace MapView.Forms.MainView
 				{
 					tile = _file.GetTile(col, row);
 
-					if (_visFloor)   tile.Floor   = null;
-					if (_visWest)    tile.West    = null;
-					if (_visNorth)   tile.North   = null;
-					if (_visContent) tile.Content = null;
+					if (!_disFloor)   tile.Floor   = null;
+					if (!_disWest)    tile.West    = null;
+					if (!_disNorth)   tile.North   = null;
+					if (!_disContent) tile.Content = null;
 
 					tile.Vacancy();
 				}
@@ -580,7 +580,7 @@ namespace MapView.Forms.MainView
 		/// nearly so).
 		/// 
 		/// 
-		/// <c>Paste()</c> respects quadrant visibility unlike
+		/// <c>Paste()</c> respects quadrant disability unlike
 		/// <c><see cref="FillSelectedQuadrants()">FillSelectedQuadrants()</see></c>.</remarks>
 		private void Paste()
 		{
@@ -605,28 +605,28 @@ namespace MapView.Forms.MainView
 					{
 						tile = _file.GetTile(col, row);
 
-						if (_visFloor)
+						if (!_disFloor)
 						{
 							if (partids[c,r] != -1) tile.Floor = _file.Parts[partids[c,r]];
 							else                    tile.Floor = null;
 						}
 
 						++r;
-						if (_visWest)
+						if (!_disWest)
 						{
 							if (partids[c,r] != -1) tile.West = _file.Parts[partids[c,r]];
 							else                    tile.West = null;
 						}
 
 						++r;
-						if (_visNorth)
+						if (!_disNorth)
 						{
 							if (partids[c,r] != -1) tile.North = _file.Parts[partids[c,r]];
 							else                    tile.North = null;
 						}
 
 						++r;
-						if (_visContent)
+						if (!_disContent)
 						{
 							if (partids[c,r] != -1) tile.Content = _file.Parts[partids[c,r]];
 							else                    tile.Content = null;
@@ -704,7 +704,7 @@ namespace MapView.Forms.MainView
 		/// Fills the selected quadrant of the currently selected tile(s) with
 		/// the currently selected tilepart from <c><see cref="TileView"/></c>.
 		/// </summary>
-		/// <remarks><c>FillSelectedQuadrants()</c> ignores quadrant visibility
+		/// <remarks><c>FillSelectedQuadrants()</c> ignores quadrant disability
 		/// unlike <c><see cref="Paste()">Paste()</see></c>.</remarks>
 		internal void FillSelectedQuadrants()
 		{
@@ -752,7 +752,7 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears the selected quadrant of the currently selected tile(s).
 		/// </summary>
-		/// <remarks><c>ClearSelectedQuadrants()</c> ignores quadrant visibility
+		/// <remarks><c>ClearSelectedQuadrants()</c> ignores quadrant disability
 		/// unlike <c><see cref="ClearSelection()">ClearSelection()</see></c>.</remarks>
 		internal void ClearSelectedQuadrants()
 		{
@@ -1869,45 +1869,45 @@ namespace MapView.Forms.MainView
 		}
 #endif
 
-		bool _visFloor   = true;
-		bool _visWest    = true;
-		bool _visNorth   = true;
-		bool _visContent = true;
+		bool _disFloor;
+		bool _disWest;
+		bool _disNorth;
+		bool _disContent;
 
 		/// <summary>
-		/// Sets the floor-visibility flag.
+		/// Sets the floor-disabled flag.
 		/// </summary>
-		/// <param name="visible"><c>true</c> if quadrant is visible</param>
-		internal void SetFloorVisibility(bool visible)
+		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
+		internal void SetFloorDisabled(bool disabled)
 		{
-			_visFloor = visible;
+			_disFloor = disabled;
 		}
 
 		/// <summary>
-		/// Sets the westwall-visibility flag.
+		/// Sets the westwall-disabled flag.
 		/// </summary>
-		/// <param name="visible"><c>true</c> if quadrant is visible</param>
-		internal void SetWestVisibility(bool visible)
+		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
+		internal void SetWestDisabled(bool disabled)
 		{
-			_visWest = visible;
+			_disWest = disabled;
 		}
 
 		/// <summary>
-		/// Sets the northwall-visibility flag.
+		/// Sets the northwall-disabled flag.
 		/// </summary>
-		/// <param name="visible"><c>true</c> if quadrant is visible</param>
-		internal void SetNorthVisibility(bool visible)
+		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
+		internal void SetNorthDisabled(bool disabled)
 		{
-			_visNorth = visible;
+			_disNorth = disabled;
 		}
 
 		/// <summary>
-		/// Sets the content-visibility flag.
+		/// Sets the content-disabled flag.
 		/// </summary>
-		/// <param name="visible"><c>true</c> if quadrant is visible</param>
-		internal void SetContentVisibility(bool visible)
+		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
+		internal void SetContentDisabled(bool disabled)
 		{
-			_visContent = visible;
+			_disContent = disabled;
 		}
 
 		/// <summary>
@@ -1931,28 +1931,28 @@ namespace MapView.Forms.MainView
 
 			Tilepart part;
 
-			if (_visFloor && (part = tile.Floor) != null)
+			if (!_disFloor && (part = tile.Floor) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (_visWest && (part = tile.West) != null)
+			if (!_disWest && (part = tile.West) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (_visNorth && (part = tile.North) != null)
+			if (!_disNorth && (part = tile.North) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
 						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
 			}
 
-			if (_visContent && (part = tile.Content) != null)
+			if (!_disContent && (part = tile.Content) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
@@ -1983,25 +1983,25 @@ namespace MapView.Forms.MainView
 
 			if (toned)
 			{
-				if (_visFloor && (part = tile.Floor) != null)
+				if (!_disFloor && (part = tile.Floor) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 
-				if (_visWest && (part = tile.West) != null)
+				if (!_disWest && (part = tile.West) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 
-				if (_visNorth && (part = tile.North) != null)
+				if (!_disNorth && (part = tile.North) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 
-				if (_visContent && (part = tile.Content) != null)
+				if (!_disContent && (part = tile.Content) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
@@ -2009,25 +2009,25 @@ namespace MapView.Forms.MainView
 			}
 			else
 			{
-				if (_visFloor && (part = tile.Floor) != null)
+				if (!_disFloor && (part = tile.Floor) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 
-				if (_visWest && (part = tile.West) != null)
+				if (!_disWest && (part = tile.West) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 
-				if (_visNorth && (part = tile.North) != null)
+				if (!_disNorth && (part = tile.North) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 
-				if (_visContent && (part = tile.Content) != null)
+				if (!_disContent && (part = tile.Content) != null)
 				{
 					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);

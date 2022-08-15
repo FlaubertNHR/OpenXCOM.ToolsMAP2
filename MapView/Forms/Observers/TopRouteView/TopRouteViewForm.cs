@@ -304,7 +304,7 @@ namespace MapView.Forms.Observers
 				{
 					//Logfile.Log("TopRouteViewForm.OnFormClosing()");
 					RegistryInfo.UpdateRegistry(this);
-					ControlTop.DisposeObserver();
+					ControlTop  .TopControl  .DisposeControl();
 					ControlRoute.RouteControl.DisposeControl();
 				}
 				else

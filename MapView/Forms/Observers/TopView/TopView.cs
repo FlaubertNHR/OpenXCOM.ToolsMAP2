@@ -15,21 +15,6 @@ namespace MapView.Forms.Observers
 		:
 			UserControl
 	{
-		/// <summary>
-		/// Disposes <see cref="TopControl"/>.
-		/// </summary>
-		/// <remarks>Do NOT use <c>public void Dispose()</c> or else you'll have
-		/// one Fuck of a time trying to trace usage.
-		/// Use <c>public void Dispose()</c> only for Designer code w/
-		/// <c>components</c>. Thank yourself for heeding this piece of ornery
-		/// advice later.</remarks>
-		internal void DisposeObserver()
-		{
-			//Logfile.Log("TopView.DisposeObserver()");
-			TopControl.DisposeControl();
-		}
-
-
 		#region Fields (static)
 		/// <summary>
 		/// The TestPartslots dialog - a nonmodal <see cref="Infobox"/>.
@@ -109,7 +94,8 @@ namespace MapView.Forms.Observers
 			// designer ... uh, apparently
 			tscPanel.LeftToolStripPanel.Controls.Add(tsTools);
 
-			CreateQuadrantPanel();
+			QuadrantControl = new QuadrantControl();
+			Controls.Add(QuadrantControl);
 
 			TopControl = new TopControl(this);
 			TopControl.Dock = DockStyle.Fill;
@@ -119,33 +105,20 @@ namespace MapView.Forms.Observers
 																	pnlMain.Width,
 																	pnlMain.Height);
 
-			it_Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantVisibilityClick, Keys.F1);
-			it_West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantVisibilityClick, Keys.F2);
-			it_North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantVisibilityClick, Keys.F3);
-			it_Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantVisibilityClick, Keys.F4);
+			it_Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantDisabilityClick, Keys.F1);
+			it_West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantDisabilityClick, Keys.F2);
+			it_North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantDisabilityClick, Keys.F3);
+			it_Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantDisabilityClick, Keys.F4);
 
-			ToolStripItemCollection tsic_visQuads = tsddbVisibleQuads.DropDown.Items;
-
-			tsic_visQuads.Add(it_Floor);
-			tsic_visQuads.Add(it_West);
-			tsic_visQuads.Add(it_North);
-			tsic_visQuads.Add(it_Content);
-
-			it_Floor  .Checked =
-			it_West   .Checked =
-			it_North  .Checked =
-			it_Content.Checked = true;
+			tsddbDisabledQuads.DropDown.Items.AddRange(new []
+			{
+				it_Floor,
+				it_West,
+				it_North,
+				it_Content
+			});
 
 			ResumeLayout();
-		}
-
-		/// <summary>
-		/// Instantiates and initializes the <see cref="QuadrantControl"/>.
-		/// </summary>
-		private void CreateQuadrantPanel()
-		{
-			QuadrantControl = new QuadrantControl();
-			Controls.Add(QuadrantControl);
 		}
 		#endregion cTor
 
@@ -200,7 +173,7 @@ namespace MapView.Forms.Observers
 		/// <item>by setting/checking a respective <c>bool</c> in
 		/// <c><see cref="MainViewOverlay"/></c></item>
 		/// </list></remarks>
-		internal void OnQuadrantVisibilityClick(object sender, EventArgs e)
+		internal void OnQuadrantDisabilityClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
 			if (it == it_Floor)
@@ -208,29 +181,29 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopView     .Control   .it_Floor.Checked =
 				ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = !it.Checked;
 
-				MainViewOverlay.that.SetFloorVisibility(it.Checked);
-				_file.CalculateOccultations(!it.Checked);
+				MainViewOverlay.that.SetFloorDisabled(it.Checked);
+				_file.CalculateOccultations(it.Checked);
 			}
 			else if (it == it_West)
 			{
 				ObserverManager.TopView     .Control   .it_West.Checked =
 				ObserverManager.TopRouteView.ControlTop.it_West.Checked = !it.Checked;
 
-				MainViewOverlay.that.SetWestVisibility(it.Checked);
+				MainViewOverlay.that.SetWestDisabled(it.Checked);
 			}
 			else if (it == it_North)
 			{
 				ObserverManager.TopView     .Control   .it_North.Checked =
 				ObserverManager.TopRouteView.ControlTop.it_North.Checked = !it.Checked;
 
-				MainViewOverlay.that.SetNorthVisibility(it.Checked);
+				MainViewOverlay.that.SetNorthDisabled(it.Checked);
 			}
 			else // it_Content
 			{
 				ObserverManager.TopView     .Control   .it_Content.Checked =
 				ObserverManager.TopRouteView.ControlTop.it_Content.Checked = !it.Checked;
 
-				MainViewOverlay.that.SetContentVisibility(it.Checked);
+				MainViewOverlay.that.SetContentDisabled(it.Checked);
 			}
 
 			MainViewOverlay.that.Invalidate();

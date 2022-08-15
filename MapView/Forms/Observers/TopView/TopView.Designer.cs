@@ -13,7 +13,7 @@ namespace MapView.Forms.Observers
 		private Panel pnlMain;
 		private ToolStripContainer tscPanel;
 		private ToolStripOneclick tsMain;
-		private ToolStripDropDownButton tsddbVisibleQuads;
+		private ToolStripDropDownButton tsddbDisabledQuads;
 		private ToolStripButton tsb_Options;
 		private ToolStripDropDownButton tsddbTest;
 		private ToolStripMenuItem tsddbTestPartslots;
@@ -29,7 +29,7 @@ namespace MapView.Forms.Observers
 			this.pnlMain = new System.Windows.Forms.Panel();
 			this.tsTools = new DSShared.Controls.ToolStripOneclick();
 			this.tsMain = new DSShared.Controls.ToolStripOneclick();
-			this.tsddbVisibleQuads = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsddbDisabledQuads = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsddbTest = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsddbTestPartslots = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
@@ -92,7 +92,7 @@ namespace MapView.Forms.Observers
 			this.tsMain.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsddbVisibleQuads,
+			this.tsddbDisabledQuads,
 			this.tsddbTest,
 			this.tsb_Options});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
@@ -101,16 +101,16 @@ namespace MapView.Forms.Observers
 			this.tsMain.TabIndex = 0;
 			this.tsMain.TabStop = true;
 			// 
-			// tsddbVisibleQuads
+			// tsddbDisabledQuads
 			// 
-			this.tsddbVisibleQuads.AutoToolTip = false;
-			this.tsddbVisibleQuads.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-			this.tsddbVisibleQuads.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsddbVisibleQuads.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
-			this.tsddbVisibleQuads.Name = "tsddbVisibleQuads";
-			this.tsddbVisibleQuads.Size = new System.Drawing.Size(54, 23);
-			this.tsddbVisibleQuads.Text = "&Visible";
-			this.tsddbVisibleQuads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.tsddbDisabledQuads.AutoToolTip = false;
+			this.tsddbDisabledQuads.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsddbDisabledQuads.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddbDisabledQuads.Margin = new System.Windows.Forms.Padding(3, 1, 0, 1);
+			this.tsddbDisabledQuads.Name = "tsddbDisabledQuads";
+			this.tsddbDisabledQuads.Size = new System.Drawing.Size(66, 23);
+			this.tsddbDisabledQuads.Text = "&Disabled";
+			this.tsddbDisabledQuads.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// tsddbTest
 			// 

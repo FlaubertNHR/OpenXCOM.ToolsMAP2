@@ -696,28 +696,40 @@ namespace XCom
 		/// <summary>
 		/// Generates occultation data for all tiles in the Map.
 		/// </summary>
-		/// <param name="forceVis"><c>true</c> to force visibility</param>
-		public void CalculateOccultations(bool forceVis = false)
+		/// <param name="floorsdisabled"><c>true</c> to force visibility for all
+		/// tiles</param>
+		public void CalculateOccultations(bool floorsdisabled = false)
 		{
 			if (Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
 			{
-				for (int lev = Levs - 1; lev != 0; --lev)
-				for (int row = 0; row != Rows - 2; ++row)
-				for (int col = 0; col != Cols - 2; ++col)
+				if (!floorsdisabled)
 				{
-					Tiles.GetTile(col, row, lev).Occulted = !forceVis
-														 && Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
+					for (int lev = Levs - 1; lev != 0; --lev)
+					for (int row = 0; row != Rows - 2; ++row)
+					for (int col = 0; col != Cols - 2; ++col)
+					{
+						Tiles.GetTile(col, row, lev).Occulted = Tiles.GetTile(col,     row,     lev - 1).Floor != null // above
 
-														 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
-														 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
+															 && Tiles.GetTile(col,     row + 1, lev - 1).Floor != null // south
+															 && Tiles.GetTile(col,     row + 2, lev - 1).Floor != null
 
-														 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
-														 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
+															 && Tiles.GetTile(col + 1, row,     lev - 1).Floor != null // east
+															 && Tiles.GetTile(col + 2, row,     lev - 1).Floor != null
 
-														 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
-														 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
-														 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
-														 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
+															 && Tiles.GetTile(col + 1, row + 1, lev - 1).Floor != null // southeast
+															 && Tiles.GetTile(col + 2, row + 1, lev - 1).Floor != null
+															 && Tiles.GetTile(col + 1, row + 2, lev - 1).Floor != null
+															 && Tiles.GetTile(col + 2, row + 2, lev - 1).Floor != null;
+					}
+				}
+				else
+				{
+					for (int lev = Levs - 1; lev != 0; --lev)
+					for (int row = 0; row != Rows - 2; ++row)
+					for (int col = 0; col != Cols - 2; ++col)
+					{
+						Tiles.GetTile(col, row, lev).Occulted = false;
+					}
 				}
 			}
 		}

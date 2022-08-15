@@ -11,10 +11,10 @@
 		<p>Left of the viewer panel are buttons for<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level up [mousewheel up]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level down [mousewheel down]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+X] (respects Visibility toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+X] (respects Disability toggles)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- copy a selected area [Ctrl+C]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+V] (respects Visibility toggles)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete] (respects Visibility toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+V] (respects Disability toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete] (respects Disability toggles)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- fill a selected area with the currently selected tilepart from TileView [F]</p>
 
 		<p>Please note that pasting copied parts from one Map to a different Map usually requires that the allocated terrains of both Maps be identical.</p>
@@ -72,11 +72,11 @@
 		<p>[Shift] can be held down to create a selection area.</p>
 
 		<br>
-		<h3>Visible menu</h3>
+		<h3>Disabled menu</h3>
 
-		<p>These four operations toggle the visibility of the four possible tilepart types for TopView and MainView. They can be used for checking out flooring that's concealed behind a wall, for example. When a type is toggled off, the background color of its slot changes to dark gray - the parts are still modifiable in the parttype slots below the panel, however Cut/Paste/Delete operations consider visible parttypes only. A Copy operation copies all selected tileparts regardless of visibility.</p>
+		<p>These four operations toggle the disability of the four possible tilepart types for TopView and MainView. When a parttype is disabled, the background color of its slot changes to dark gray. Tileparts of a disabled type will not be visible and will not be considered for the standard edit operations Cut/Paste/Delete. A Copy operation copies all selected tileparts regardless of disability. It's important to note however that such partslots will still be modified by nonstandard edit operations such as rightclick, double rightclick, and Fill both on the panel and in the parttype slots below the panel and by their keyboard shortcuts.</p>
 
-		<p>The visibility settings have no effect when saving a Map file, all parts are saved whether they're currently visible or not. Note that the visibility of tileparts can also be toggled on and off with the function keys F1..F4.</p>
+		<p>The disability settings have no effect when saving a Map file, all parts are saved whether they're currently disabled or not. Note that the disability of tileparts can also be toggled on and off with the function keys F1..F4.</p>
 
 		<br>
 		<h3>Test menu</h3>

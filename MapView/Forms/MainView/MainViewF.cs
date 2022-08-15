@@ -1185,7 +1185,7 @@ namespace MapView
 
 			switch (e.KeyData)
 			{
-				case Keys.Space: // open Context
+				case Keys.Space:				// open Context
 					if (MapTree.Focused && _selected != null)
 					{
 						e.SuppressKeyPress = true;
@@ -1195,7 +1195,7 @@ namespace MapView
 					}
 					break;
 
-				case Keys.Enter: // load Descriptor (do NOT reload)
+				case Keys.Enter:				// load Descriptor (do NOT reload)
 					if (MapTree.Focused && _selected != null)
 					{
 						e.SuppressKeyPress = true;
@@ -1218,7 +1218,7 @@ namespace MapView
 					}
 					break;
 
-				case Keys.Shift | Keys.Enter: // open MapBrowserDialog
+				case Keys.Shift | Keys.Enter:	// open MapBrowserDialog
 					if (MapTree.Focused
 						&& _selected != null
 						&& _selected.Level == TREELEVEL_TILESET)
@@ -1233,22 +1233,22 @@ namespace MapView
 					}
 					break;
 
-				case Keys.F9: // cycle LayerSelectionBorder
+				case Keys.F9:					// cycle LayerSelectionBorder
 					key = MainViewOptionables.str_LayerSelectionBorder;
 					val = (Optionables.LayerSelectionBorder + 1) % 3;
 					break;
 
-				case Keys.F9 | Keys.Control: // toggle OneTileDraw
+				case Keys.F9 | Keys.Control:	// toggle OneTileDraw
 					key = MainViewOptionables.str_OneTileDraw;
 					val = !Optionables.OneTileDraw;
 					break;
 
-				case Keys.F10:				// cycle tiletoner option forward
+				case Keys.F10:					// cycle tiletoner option forward
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(+1);
 					break;
 
-				case Keys.F10 | Keys.Shift:	// cycle tiletoner option reverse
+				case Keys.F10 | Keys.Shift:		// cycle tiletoner option reverse
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(-1);
 					break;
@@ -1322,7 +1322,7 @@ namespace MapView
 				if (it != null)
 				{
 					e.SuppressKeyPress = true;
-					ObserverManager.TopView.Control.OnQuadrantVisibilityClick(it, EventArgs.Empty);
+					ObserverManager.TopView.Control.OnQuadrantDisabilityClick(it, EventArgs.Empty);
 				}
 				else if (id != ViewersMenuManager.MI_non)
 				{
