@@ -2752,6 +2752,9 @@ namespace MapView.Forms.Observers
 										OptionableType.RouteView);
 					_foptions.Text = "RouteView Options";
 
+//					if (MainViewF.Optionables.OptionsOnTop)
+//						_foptions.Owner = ObserverManager.RouteView;
+
 					OptionsManager.Options.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>

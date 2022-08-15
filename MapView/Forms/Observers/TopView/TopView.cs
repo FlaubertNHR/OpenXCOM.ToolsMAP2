@@ -403,6 +403,9 @@ namespace MapView.Forms.Observers
 										OptionableType.TopView);
 					_foptions.Text = "TopView Options";
 
+//					if (MainViewF.Optionables.OptionsOnTop)
+//						_foptions.Owner = ObserverManager.TopView;
+
 					OptionsManager.Options.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>

@@ -829,6 +829,9 @@ namespace MapView
 										OptionableType.MainView);
 					_foptions.Text = "MainView Options";
 
+//					if (Optionables.OptionsOnTop)
+//						MainViewF._foptions.Owner = this;
+
 					OptionsManager.Options.Add(_foptions);
 
 					_foptions.FormClosing += (sender1, e1) =>

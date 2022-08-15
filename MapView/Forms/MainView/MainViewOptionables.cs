@@ -817,6 +817,26 @@ namespace MapView.Forms.MainView
 		}
 
 
+		// This (ownership of the Options dialogs) creates HUGE problems when
+		// closing the app ->
+		// Eg. workaround a Maptree draw exception to get a RouteView timertick
+		// exception to get yet another exception ...
+		// Is not worth the trouble.
+
+//		private const string str_OptionsOnTop = "OptionsOnTop";
+//		private const bool   def_OptionsOnTop = false;
+//
+//		private bool _optionsOnTop = def_OptionsOnTop;
+//		[Category(cat_Global)]
+//		[Description("If true each Options dialog will be owned by its parent viewer (default false)")]	// - the dialog stays on top of its parent
+//		[DefaultValue(def_OptionsOnTop)]																// - both minimize and restore together
+//		public bool OptionsOnTop																		// - the dialog hides when its owner hides
+//		{
+//			get { return _optionsOnTop; }
+//			set { _optionsOnTop = value; }
+//		}
+
+
 
 		private const string cat_nonBrowsable = "nonBrowsable";
 
@@ -1066,6 +1086,7 @@ namespace MapView.Forms.MainView
 			options.CreateOptionDefault(str_Base1_z,                 def_Base1_z,                 changer4);
 			options.CreateOptionDefault(str_IgnoreRecordsExceeded,   def_IgnoreRecordsExceeded,   changer1);
 			options.CreateOptionDefault(str_InvertMousewheel,        def_InvertMousewheel,        changer1);
+//			options.CreateOptionDefault(str_OptionsOnTop,            def_OptionsOnTop,            changer1);
 
 			options.CreateOptionDefault(str_PreferTftdTargeter,      def_PreferTftdTargeter,      changer0);
 
@@ -1318,6 +1339,25 @@ namespace MapView.Forms.MainView
 				case str_InvertMousewheel:
 					InvertMousewheel = (bool)val;
 					break;
+
+//				case str_OptionsOnTop:
+//					OptionsOnTop = (bool)val;
+//
+//					if (OptionsOnTop)
+//					{
+//						if (MainViewF._foptions != null) MainViewF._foptions.Owner = MainViewF.that;
+//						if (TileView ._foptions != null) TileView ._foptions.Owner = ObserverManager.TileView;
+//						if (TopView  ._foptions != null) TopView  ._foptions.Owner = ObserverManager.TopView;
+//						if (RouteView._foptions != null) RouteView._foptions.Owner = ObserverManager.RouteView;
+//					}
+//					else
+//					{
+//						if (MainViewF._foptions != null) MainViewF._foptions.Owner = null;
+//						if (TileView ._foptions != null) TileView ._foptions.Owner = null;
+//						if (TopView  ._foptions != null) TopView  ._foptions.Owner = null;
+//						if (RouteView._foptions != null) RouteView._foptions.Owner = null;
+//					}
+//					break;
 			}
 		}
 
