@@ -130,7 +130,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Properties (static)
-		internal static Options Options = new Options();
+		internal static readonly Options Options = new Options();
 
 		/// <summary>
 		/// A class-object that holds TileView's optionable Properties.

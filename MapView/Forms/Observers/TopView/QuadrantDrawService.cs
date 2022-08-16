@@ -86,7 +86,7 @@ namespace MapView.Forms.Observers
 		private static Graphics _graphics;
 		private static bool _inited;
 
-		private static IList<Brush> _brushes = new List<Brush>();
+		private static IList<Brush> _brushes;
 		#endregion Fields (static)
 
 
@@ -94,12 +94,12 @@ namespace MapView.Forms.Observers
 		private static readonly Font QuadrantFont = new Font("Comic Sans MS", 7F);
 		private static readonly Font LocationFont = new Font("Verdana", 7F, FontStyle.Bold);
 
-		internal static SolidBrush SelectorBrush    = new SolidBrush(SystemColors.ControlText);
-		internal static SolidBrush SelectedBrush    = new SolidBrush(SystemColors.ControlText);
-		internal static SolidBrush QuadrantSelected = new SolidBrush(Color.PowderBlue);
-		internal static SolidBrush QuadrantDisabled = new SolidBrush(Color.LightGray);
+		internal static readonly SolidBrush SelectorBrush    = new SolidBrush(SystemColors.ControlText);
+		internal static readonly SolidBrush SelectedBrush    = new SolidBrush(SystemColors.ControlText);
+		internal static readonly SolidBrush QuadrantSelected = new SolidBrush(Color.PowderBlue);
+		internal static readonly SolidBrush QuadrantDisabled = new SolidBrush(Color.LightGray);
 
-		internal static Pen QuadrantBorder = new Pen(SystemColors.ControlText);
+		internal static readonly Pen QuadrantBorder = new Pen(SystemColors.ControlText);
 
 
 		/// <summary>

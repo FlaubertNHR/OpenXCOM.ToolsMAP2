@@ -110,23 +110,23 @@ namespace MapView
 		internal static bool Dontdrawyougits;
 
 
-		internal static Pen        TreenodeLine_def    = new Pen(SystemColors.Control);
-		internal static SolidBrush TreenodeFill_def    = new SolidBrush(SystemColors.Control);
+		internal static readonly Pen        TreenodeLine_def    = new Pen(SystemColors.Control);
+		internal static readonly SolidBrush TreenodeFill_def    = new SolidBrush(SystemColors.Control);
 
-		internal static Pen        TreenodeLine_sel    = new Pen(Color.SlateBlue);
+		internal static readonly Pen        TreenodeLine_sel    = new Pen(Color.SlateBlue);
 
-		internal static SolidBrush TreenodeFill_selfoc = new SolidBrush(Color.BurlyWood);
-		internal static SolidBrush TreenodeFill_selunf = new SolidBrush(Color.PeachPuff);
+		internal static readonly SolidBrush TreenodeFill_selfoc = new SolidBrush(Color.BurlyWood);
+		internal static readonly SolidBrush TreenodeFill_selunf = new SolidBrush(Color.PeachPuff);
 
-		internal static SolidBrush TreenodeFill_serfoc = new SolidBrush(Color.LightSteelBlue);
-		internal static SolidBrush TreenodeFill_serunf = new SolidBrush(Color.PaleTurquoise);
+		internal static readonly SolidBrush TreenodeFill_serfoc = new SolidBrush(Color.LightSteelBlue);
+		internal static readonly SolidBrush TreenodeFill_serunf = new SolidBrush(Color.PaleTurquoise);
 		#endregion Fields (static)
 
 
 		#region Fields
 		internal CompositedTreeView MapTree;
 
-		internal Options Options = new Options();
+		internal readonly Options Options = new Options();
 
 		internal ColorHelp     _fcolors;
 		private  About         _fabout;
