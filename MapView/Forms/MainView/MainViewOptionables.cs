@@ -828,9 +828,9 @@ namespace MapView.Forms.MainView
 //
 //		private bool _optionsOnTop = def_OptionsOnTop;
 //		[Category(cat_Global)]
-//		[Description("If true each Options dialog will be owned by its parent viewer (default false)")]	// - the dialog stays on top of its parent
-//		[DefaultValue(def_OptionsOnTop)]																// - both minimize and restore together
-//		public bool OptionsOnTop																		// - the dialog hides when its owner hides
+//		[Description("If true each Options dialog will be owned by its parent viewer (default false)")]
+//		[DefaultValue(def_OptionsOnTop)]
+//		public bool OptionsOnTop
 //		{
 //			get { return _optionsOnTop; }
 //			set { _optionsOnTop = value; }
@@ -1340,6 +1340,9 @@ namespace MapView.Forms.MainView
 					InvertMousewheel = (bool)val;
 					break;
 
+				// - the dialog stays on top of its parent
+				// - both minimize and restore together
+				// - the dialog hides when its owner hides
 //				case str_OptionsOnTop:
 //					OptionsOnTop = (bool)val;
 //
