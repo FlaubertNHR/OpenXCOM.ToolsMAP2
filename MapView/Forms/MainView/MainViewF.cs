@@ -919,23 +919,19 @@ namespace MapView
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			if (   MainViewF.Optionables != null
-				&& MainViewF.Optionables.BringAllToFront)
+			if (!BypassActivatedEvent && Optionables != null && Optionables.BringAllToFront) // don't let 'TopMost_set' (etc) fire the OnActivated event.
 			{
-				if (!BypassActivatedEvent)			// don't let 'TopMost_set' (etc) fire the OnActivated event.
+				BypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
+												// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
+
+				IList<Form> zOrder = ShowHideManager.getZorderList();
+				foreach (var f in zOrder)
 				{
-					BypassActivatedEvent = true;	// don't let the loop over the viewers re-trigger this activated event.
-													// NOTE: 'TopMost_set' won't, but other calls like BringToFront() or Select() can/will.
-
-					IList<Form> zOrder = ShowHideManager.getZorderList();
-					foreach (var f in zOrder)
-					{
-						f.TopMost = true;
-						f.TopMost = false;
-					}
-
-					BypassActivatedEvent = false;
+					f.TopMost = true;
+					f.TopMost = false;
 				}
+
+				BypassActivatedEvent = false;
 			}
 
 			if (FirstActivated)
