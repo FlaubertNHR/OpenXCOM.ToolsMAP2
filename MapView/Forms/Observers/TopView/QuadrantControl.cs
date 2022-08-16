@@ -34,7 +34,7 @@ namespace MapView.Forms.Observers
 		/// duration has elapsed. That is, don't do 1-click RMB processing if
 		/// 2-clicks are inc.
 		/// </summary>
-		/// <remarks>w/ Thanks to Natxo
+		/// <remarks>w/ Thanks to Natxo<br/>
 		/// https://stackoverflow.com/questions/2086213/how-can-i-catch-both-single-click-and-double-click-events-on-wpf-frameworkelement/2087517#2087517</remarks>
 		private static readonly System.Timers.Timer _t1 = new System.Timers.Timer(SystemInformation.DoubleClickTime);
 
