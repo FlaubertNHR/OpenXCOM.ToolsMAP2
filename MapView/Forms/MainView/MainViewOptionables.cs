@@ -241,12 +241,12 @@ namespace MapView.Forms.MainView
 
 
 		private const string str_GridLineColor = "GridLineColor";
-		private static Color def_GridLineColor = Color.Black;
+		private static Color def_GridLineColor = SystemColors.ControlText;
 
 		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
-		[Description("Color of the lines that draw the grid (default Black)")]
-		[DefaultValue(typeof(Color), "Black")]
+		[Description("Color of the grid lines (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
 		public Color GridLineColor
 		{
 			get { return _gridLineColor; }
@@ -279,12 +279,12 @@ namespace MapView.Forms.MainView
 
 
 		private const string str_GridLine10Color = "GridLine10Color";
-		private static Color def_GridLine10Color = Color.Black;
+		private static Color def_GridLine10Color = SystemColors.ControlText;
 
 		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
-		[Description("Color of every tenth line on the grid (default Black)")]
-		[DefaultValue(typeof(Color), "Black")]
+		[Description("Color of every tenth grid line (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
 		public Color GridLine10Color
 		{
 			get { return _gridLine10Color; }
