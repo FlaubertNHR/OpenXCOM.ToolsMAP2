@@ -68,10 +68,6 @@ namespace MapView.Forms.Observers
 
 		internal static readonly SolidBrush BrushRose = new SolidBrush(SystemColors.ControlText);
 
-		private static SolidBrush BrushNode;
-		private static SolidBrush BrushNodeSpawn;
-		private static SolidBrush BrushNodeSelected;
-
 		private static Pen PenLink;
 		private static Pen PenLinkSelected;
 
@@ -430,15 +426,7 @@ namespace MapView.Forms.Observers
 
 						if (_spot.X != -1)
 						{
-							if (dest != null)
-							{
-								if (   _spot.X != dest.Col
-									|| _spot.Y != dest.Row)
-								{
-									pen = PenLink;
-								}
-							}
-							else
+							if (dest == null)
 							{
 								switch (destId) // see RouteView.SpotGoDestination() for def'n of the following spot-positions
 								{
@@ -447,6 +435,11 @@ namespace MapView.Forms.Observers
 									case Link.ExitSouth: if (_spot.X != -4) pen = PenLink; break;
 									case Link.ExitWest:  if (_spot.X != -5) pen = PenLink; break;
 								}
+							}
+							else if (  _spot.X != dest.Col
+									|| _spot.Y != dest.Row)
+							{
+								pen = PenLink;
 							}
 						}
 						_graphics.DrawLine(
@@ -468,11 +461,6 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawNodes()
 		{
-			BrushNode         = RouteBrushes[RouteViewOptionables.str_NodeColor];
-			BrushNodeSpawn    = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
-			BrushNodeSelected = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
-
-
 			int startX = Origin.X + _scaleOffsetX;
 			int startY = Origin.Y + _scaleOffsetY;
 
@@ -509,14 +497,14 @@ namespace MapView.Forms.Observers
 							&& c == NodeSelected.Col
 							&& r == NodeSelected.Row)
 						{
-							brush = BrushNodeSelected;
+							brush = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 						}
 						else if (node.Spawn != SpawnWeight.None)
 						{
-							brush = BrushNodeSpawn;
+							brush = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
 						}
 						else
-							brush = BrushNode;
+							brush = RouteBrushes[RouteViewOptionables.str_NodeColor];
 
 						_graphics.FillPath(brush, _nodeFill);
 
