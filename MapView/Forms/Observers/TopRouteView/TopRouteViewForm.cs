@@ -64,7 +64,7 @@ namespace MapView.Forms.Observers
 			ControlRoute.Name       = "RouteViewControl";
 			ControlRoute.Dock       = DockStyle.Fill;
 			ControlRoute.TabIndex   = 0;
-			ControlRoute.isToproute = true;
+			ControlRoute.isToproute = true; // TODO: that all over <-
 			tp_Route.Controls.Add(ControlRoute);
 		}
 		#endregion cTor
