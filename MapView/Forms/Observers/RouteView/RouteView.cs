@@ -2693,6 +2693,12 @@ namespace MapView.Forms.Observers
 				if ((bu = control as Button) != null)
 					bu.ForeColor = SystemColors.ControlText;
 			}
+
+			foreach (var control in gb_NodeEditor.Controls)
+			{
+				if ((bu = control as Button) != null)
+					bu.ForeColor = SystemColors.ControlText;
+			}
 		}
 		#endregion Update UI (options)
 
