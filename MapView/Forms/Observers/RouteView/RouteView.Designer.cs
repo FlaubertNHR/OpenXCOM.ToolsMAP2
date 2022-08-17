@@ -1118,6 +1118,7 @@ namespace MapView.Forms.Observers
 			this.bu_Cut.Size = new System.Drawing.Size(65, 30);
 			this.bu_Cut.TabIndex = 0;
 			this.bu_Cut.Text = "Cut";
+			this.bu_Cut.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Cut, "deletes the selected node and copies its Node data (not Link data)");
 			this.bu_Cut.Click += new System.EventHandler(this.OnCutClick);
 			// 
@@ -1130,6 +1131,7 @@ namespace MapView.Forms.Observers
 			this.bu_Copy.Size = new System.Drawing.Size(65, 30);
 			this.bu_Copy.TabIndex = 1;
 			this.bu_Copy.Text = "Copy";
+			this.bu_Copy.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Copy, "copies Node data of the selected node");
 			this.bu_Copy.Click += new System.EventHandler(this.OnCopyClick);
 			// 
@@ -1142,6 +1144,7 @@ namespace MapView.Forms.Observers
 			this.bu_Paste.Size = new System.Drawing.Size(65, 30);
 			this.bu_Paste.TabIndex = 2;
 			this.bu_Paste.Text = "Paste";
+			this.bu_Paste.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Paste, "pastes copied Node data to the selected node");
 			this.bu_Paste.Click += new System.EventHandler(this.OnPasteClick);
 			// 
@@ -1154,6 +1157,7 @@ namespace MapView.Forms.Observers
 			this.bu_Delete.Size = new System.Drawing.Size(65, 30);
 			this.bu_Delete.TabIndex = 3;
 			this.bu_Delete.Text = "Delete";
+			this.bu_Delete.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Delete, "deletes the selected node");
 			this.bu_Delete.Click += new System.EventHandler(this.OnDeleteClick);
 			// 
