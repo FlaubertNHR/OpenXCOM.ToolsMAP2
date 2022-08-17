@@ -478,7 +478,8 @@ namespace MapView.Forms.Observers
 
 		private Color _fieldsForecolor = def_FieldsForecolor;
 		[Category(cat_PanelColors)]
-		[Description("Color of the fields font (default System.ControlText)")]
+		[Description(@"Color of the fields font (default System.ControlText)
+This does not affect the color of fields if they are disabled (ie. no node is currently selected)")]
 		[DefaultValue(typeof(Color), "ControlText")]
 		public Color FieldsForecolor
 		{
