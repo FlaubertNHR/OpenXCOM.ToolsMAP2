@@ -247,12 +247,12 @@ namespace MapView.Forms.Observers
 		private const string cat_Links = "Links";
 
 		internal const string str_LinkColor = "LinkColor";
-		private static Color  def_LinkColor = Color.OrangeRed;
+		private static Color  def_LinkColor = Color.DarkOrange;
 
 		private Color _linkColor = def_LinkColor;
 		[Category(cat_Links)]
-		[Description("Color of unselected link lines (default OrangeRed)")]
-		[DefaultValue(typeof(Color), "OrangeRed")]
+		[Description("Color of unselected link lines (default DarkOrange)")]
+		[DefaultValue(typeof(Color), "DarkOrange")]
 		public Color LinkColor
 		{
 			get { return _linkColor; }
