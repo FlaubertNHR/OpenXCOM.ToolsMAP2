@@ -593,7 +593,7 @@ namespace MapView.Forms.Observers
 			// co_Type
 			// 
 			this.co_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.co_Type.Location = new System.Drawing.Point(100, 15);
+			this.co_Type.Location = new System.Drawing.Point(99, 15);
 			this.co_Type.Margin = new System.Windows.Forms.Padding(0);
 			this.co_Type.Name = "co_Type";
 			this.co_Type.Size = new System.Drawing.Size(140, 20);
@@ -604,7 +604,7 @@ namespace MapView.Forms.Observers
 			// co_Rank
 			// 
 			this.co_Rank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.co_Rank.Location = new System.Drawing.Point(100, 40);
+			this.co_Rank.Location = new System.Drawing.Point(99, 40);
 			this.co_Rank.Margin = new System.Windows.Forms.Padding(0);
 			this.co_Rank.Name = "co_Rank";
 			this.co_Rank.Size = new System.Drawing.Size(140, 20);
@@ -616,7 +616,7 @@ namespace MapView.Forms.Observers
 			// co_Spawn
 			// 
 			this.co_Spawn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.co_Spawn.Location = new System.Drawing.Point(100, 65);
+			this.co_Spawn.Location = new System.Drawing.Point(99, 65);
 			this.co_Spawn.Margin = new System.Windows.Forms.Padding(0);
 			this.co_Spawn.Name = "co_Spawn";
 			this.co_Spawn.Size = new System.Drawing.Size(140, 20);
@@ -627,7 +627,7 @@ namespace MapView.Forms.Observers
 			// co_Patrol
 			// 
 			this.co_Patrol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.co_Patrol.Location = new System.Drawing.Point(100, 90);
+			this.co_Patrol.Location = new System.Drawing.Point(99, 90);
 			this.co_Patrol.Margin = new System.Windows.Forms.Padding(0);
 			this.co_Patrol.Name = "co_Patrol";
 			this.co_Patrol.Size = new System.Drawing.Size(140, 20);
@@ -638,7 +638,7 @@ namespace MapView.Forms.Observers
 			// co_Attack
 			// 
 			this.co_Attack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.co_Attack.Location = new System.Drawing.Point(100, 115);
+			this.co_Attack.Location = new System.Drawing.Point(99, 115);
 			this.co_Attack.Margin = new System.Windows.Forms.Padding(0);
 			this.co_Attack.Name = "co_Attack";
 			this.co_Attack.Size = new System.Drawing.Size(140, 20);
@@ -1118,8 +1118,8 @@ namespace MapView.Forms.Observers
 			this.bu_Cut.Size = new System.Drawing.Size(65, 30);
 			this.bu_Cut.TabIndex = 0;
 			this.bu_Cut.Text = "Cut";
-			this.bu_Cut.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Cut, "deletes the selected node and copies its Node data (not Link data)");
+			this.bu_Cut.UseVisualStyleBackColor = true;
 			this.bu_Cut.Click += new System.EventHandler(this.OnCutClick);
 			// 
 			// bu_Copy
@@ -1131,8 +1131,8 @@ namespace MapView.Forms.Observers
 			this.bu_Copy.Size = new System.Drawing.Size(65, 30);
 			this.bu_Copy.TabIndex = 1;
 			this.bu_Copy.Text = "Copy";
-			this.bu_Copy.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Copy, "copies Node data of the selected node");
+			this.bu_Copy.UseVisualStyleBackColor = true;
 			this.bu_Copy.Click += new System.EventHandler(this.OnCopyClick);
 			// 
 			// bu_Paste
@@ -1144,8 +1144,8 @@ namespace MapView.Forms.Observers
 			this.bu_Paste.Size = new System.Drawing.Size(65, 30);
 			this.bu_Paste.TabIndex = 2;
 			this.bu_Paste.Text = "Paste";
-			this.bu_Paste.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Paste, "pastes copied Node data to the selected node");
+			this.bu_Paste.UseVisualStyleBackColor = true;
 			this.bu_Paste.Click += new System.EventHandler(this.OnPasteClick);
 			// 
 			// bu_Delete
@@ -1157,8 +1157,8 @@ namespace MapView.Forms.Observers
 			this.bu_Delete.Size = new System.Drawing.Size(65, 30);
 			this.bu_Delete.TabIndex = 3;
 			this.bu_Delete.Text = "Delete";
-			this.bu_Delete.UseVisualStyleBackColor = true;
 			this.toolTip1.SetToolTip(this.bu_Delete, "deletes the selected node");
+			this.bu_Delete.UseVisualStyleBackColor = true;
 			this.bu_Delete.Click += new System.EventHandler(this.OnDeleteClick);
 			// 
 			// bu_Save
