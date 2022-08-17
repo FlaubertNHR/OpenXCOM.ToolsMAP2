@@ -37,6 +37,7 @@ namespace MapView.Forms.Observers
 			BrushOverlayLight.Dispose();
 			FontOverlay      .Dispose();
 			FontRose         .Dispose();
+			BrushRose        .Dispose();
 		}
 
 		#region Fields (static)
@@ -63,7 +64,9 @@ namespace MapView.Forms.Observers
 		private static readonly Brush BrushOverlayLight = new SolidBrush(Color.FromArgb( 90, Color.AntiqueWhite));
 
 		private static readonly Font FontOverlay = new Font("Verdana",      7F, FontStyle.Bold);
-		private static readonly Font FontRose    = new Font("Courier New", 22F, FontStyle.Bold);
+		private static readonly Font FontRose    = new Font("Courier New", 21F, FontStyle.Bold);
+
+		internal static readonly SolidBrush BrushRose = new SolidBrush(SystemColors.ControlText);
 
 		private static SolidBrush BrushNode;
 		private static SolidBrush BrushNodeSpawn;
@@ -264,7 +267,7 @@ namespace MapView.Forms.Observers
 				if (   ObserverManager.RouteView   .Control     .RouteControl._col == -1
 					&& ObserverManager.TopRouteView.ControlRoute.RouteControl._col == -1)
 				{
-					RouteView.ClearOveredInfoStatic();
+					RouteView.ClearOverInfo();
 				}
 			}
 
@@ -687,25 +690,25 @@ namespace MapView.Forms.Observers
 			_graphics.DrawString(
 							TextWest,
 							FontRose,
-							Brushes.Black,
+							BrushRose,
 							RoseMarginX,
 							RoseMarginY);
 			_graphics.DrawString(
 							TextNorth,
 							FontRose,
-							Brushes.Black,
+							BrushRose,
 							Width - _widthNorth - RoseMarginX,
 							RoseMarginY);
 			_graphics.DrawString(
 							TextSouth,
 							FontRose,
-							Brushes.Black,
+							BrushRose,
 							RoseMarginX,
 							Height - FontRose.Height - RoseMarginY);
 			_graphics.DrawString(
 							TextEast,
 							FontRose,
-							Brushes.Black,
+							BrushRose,
 							Width - _widthEast - RoseMarginX,
 							Height - FontRose.Height - RoseMarginY);
 		}

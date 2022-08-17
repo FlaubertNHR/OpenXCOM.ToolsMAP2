@@ -50,7 +50,7 @@ namespace MapView.Forms.Observers
 		/// there were a Back button) since only nodes that were selected by the
 		/// Go button get pushed onto the stack.
 		/// </summary>
-		private static Stack<int> _ogIds = new Stack<int>();
+		private static readonly Stack<int> _ogIds = new Stack<int>();
 
 		private static        byte _selRank;
 		private static SpawnWeight _selWeight;
@@ -91,12 +91,16 @@ namespace MapView.Forms.Observers
 			LinkType.NotUsed
 		};
 
+		/// <summary>
+		/// <c>true</c> if this <c>RouteView</c> is in
+		/// <c><see cref="TopRouteViewForm"/></c>.
+		/// </summary>
 		internal bool isToproute;
 		#endregion Fields
 
 
 		#region Properties (static)
-		internal static Options Options = new Options();
+		internal static readonly Options Options = new Options();
 
 		/// <summary>
 		/// A class-object that holds RouteView's optionable Properties.
@@ -127,7 +131,7 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="RouteControlParent"></see>.NodeSelected</c>.</remarks>
 		internal static RouteNode NodeSelected
 		{
-			private get { return _nodeSelected; }
+			get { return _nodeSelected; }
 			set
 			{
 				RouteControlParent.SetNodeSelected(_nodeSelected = value);
@@ -141,8 +145,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Coordinates the <see cref="RoutesChanged"/> flag between RouteView
-		/// and TopRouteView(Route).
+		/// Coordinates the <c><see cref="RoutesChanged"/></c> flag between
+		/// RouteView and TopRouteView(Route).
 		/// </summary>
 		internal static bool RoutesChangedCoordinator
 		{
@@ -266,7 +270,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Updates node-info fields below the panel itself.
 		/// </summary>
-		internal void UpdateNodeInformation()
+		private void UpdateNodeInformation()
 		{
 			SuspendLayout();
 
@@ -276,20 +280,9 @@ namespace MapView.Forms.Observers
 
 			if (NodeSelected == null)
 			{
-				bu_Cut       .Enabled =
-				bu_Copy      .Enabled =
-				bu_Paste     .Enabled =
-				bu_Delete    .Enabled =
-
 				gb_NodeData  .Enabled =
 				gb_LinkData  .Enabled =
-				gb_NodeEditor.Enabled =
-
-				bu_GoLink1   .Enabled =
-				bu_GoLink2   .Enabled =
-				bu_GoLink3   .Enabled =
-				bu_GoLink4   .Enabled =
-				bu_GoLink5   .Enabled = false;
+				gb_NodeEditor.Enabled = false;
 
 				bu_GoLink1.Text =
 				bu_GoLink2.Text =
@@ -326,12 +319,6 @@ namespace MapView.Forms.Observers
 				la_Link3Dist.Text =
 				la_Link4Dist.Text =
 				la_Link5Dist.Text = String.Empty;
-
-				la_Link1.ForeColor =
-				la_Link2.ForeColor =
-				la_Link3.ForeColor =
-				la_Link4.ForeColor =
-				la_Link5.ForeColor = SystemColors.ControlText;
 			}
 			else // selected node is valid ->
 			{
@@ -378,7 +365,7 @@ namespace MapView.Forms.Observers
 				ComboBox co_unit, co_dest;
 				Label la_dist;
 				Button bu_go;
-				Label la_text;
+				Label la_link;
 
 				Link link;
 				byte dest;
@@ -392,7 +379,7 @@ namespace MapView.Forms.Observers
 							co_dest = co_Link1Dest;
 							la_dist = la_Link1Dist;
 							bu_go   = bu_GoLink1;
-							la_text = la_Link1;
+							la_link = la_Link1;
 							break;
 
 						case 1:
@@ -400,7 +387,7 @@ namespace MapView.Forms.Observers
 							co_dest = co_Link2Dest;
 							la_dist = la_Link2Dist;
 							bu_go   = bu_GoLink2;
-							la_text = la_Link2;
+							la_link = la_Link2;
 							break;
 
 						case 2:
@@ -408,7 +395,7 @@ namespace MapView.Forms.Observers
 							co_dest = co_Link3Dest;
 							la_dist = la_Link3Dist;
 							bu_go   = bu_GoLink3;
-							la_text = la_Link3;
+							la_link = la_Link3;
 							break;
 
 						case 3:
@@ -416,7 +403,7 @@ namespace MapView.Forms.Observers
 							co_dest = co_Link4Dest;
 							la_dist = la_Link4Dist;
 							bu_go   = bu_GoLink4;
-							la_text = la_Link4;
+							la_link = la_Link4;
 							break;
 
 						default: // case 4
@@ -424,7 +411,7 @@ namespace MapView.Forms.Observers
 							co_dest = co_Link5Dest;
 							la_dist = la_Link5Dist;
 							bu_go   = bu_GoLink5;
-							la_text = la_Link5;
+							la_link = la_Link5;
 							break;
 					}
 
@@ -444,15 +431,15 @@ namespace MapView.Forms.Observers
 
 							if (RouteCheckService.OutsideBounds(_file.Routes[dest], _file))
 							{
-								la_text.ForeColor = Color.Chocolate;
+								la_link.ForeColor = Optionables.FieldsForecolorHighlight;
 							}
 							else
-								la_text.ForeColor = SystemColors.ControlText;
+								la_link.ForeColor = Optionables.FieldsForecolor;
 						}
 						else
 						{
 							co_dest.SelectedItem = (LinkType)dest;
-							la_text.ForeColor = SystemColors.ControlText;
+							la_link.ForeColor = Optionables.FieldsForecolor;
 						}
 					}
 					else
@@ -460,7 +447,7 @@ namespace MapView.Forms.Observers
 						bu_go  .Text =
 						la_dist.Text = String.Empty;
 						co_dest.SelectedItem = (LinkType)dest;
-						la_text.ForeColor = SystemColors.ControlText;
+						la_link.ForeColor = Optionables.FieldsForecolor;
 					}
 				}
 			}
@@ -533,8 +520,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>This will fire twice whenever the location changes: once by
 		/// RouteView and again by TopRouteView(Route). This is desired behavior
 		/// since it updates the selected-location in both viewers.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// A route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to (or press [Enter] when the tile is
@@ -554,8 +540,7 @@ namespace MapView.Forms.Observers
 		/// that the mousecursor is currently in should have the
 		/// location-string's color updated; the condition to allow that update
 		/// is (RouteControl._col != -1).
-		/// 
-		/// 
+		/// <br/><br/>
 		/// The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
 		/// either clicked or keyboarded to (or press [Enter] when the tile is
@@ -565,36 +550,7 @@ namespace MapView.Forms.Observers
 		{
 			//Logfile.Log("RouteView.OnLevelSelectedObserver() " + Tag);
 
-			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
-			{
-				//Logfile.Log(". do overinfo");
-
-				Color color; int id;
-
-				RouteNode node = _file.GetTile(RouteControl._col,
-											   RouteControl._row).Node;
-				if (node == null)
-				{
-					id = -1;
-					color = SystemColors.ControlText;
-				}
-				else
-				{
-					id = node.Id;
-
-					if (node.Spawn == SpawnWeight.None)
-					{
-						color = Optionables.NodeColor;
-					}
-					else
-						color = Optionables.NodeSpawnColor;
-				}
-
-				la_Over.ForeColor = color;
-
-				PrintOverInfo(id);
-			}
-
+			PrintOverInfo(RouteControl._col, RouteControl._row);
 			PrintSelectedInfo();
 
 			Refresh(); // req'd to force the other RouteView panel to redraw.
@@ -604,183 +560,14 @@ namespace MapView.Forms.Observers
 
 		#region Methods (print TileData)
 		/// <summary>
-		/// Clears the selected tile-info text when another Map loads.
+		/// Clears the currently selected tile-info's text in <c>RouteView</c>
+		/// and <c>TopRouteView(Route)</c>.
 		/// </summary>
-		/// <seealso cref="ClearOveredInfoStatic()"><c>ClearOveredInfoStatic()</c></seealso>
-		private void ClearOveredInfo()
+		internal static void ClearSelectedInfo()
 		{
-			la_Over.Text = String.Empty;
+			ObserverManager.RouteView   .Control     .la_Selected.Text =
+			ObserverManager.TopRouteView.ControlRoute.la_Selected.Text = String.Empty;
 		}
-
-		/// <summary>
-		/// Synchs
-		/// <c><see cref="ClearOveredInfo()">ClearOveredInfo()</see></c>
-		/// in <c>TopView</c> and <c>TopRouteView</c>.
-		/// </summary>
-		internal static void ClearOveredInfoStatic()
-		{
-			ObserverManager.RouteView   .Control     .ClearOveredInfo();
-			ObserverManager.TopRouteView.ControlRoute.ClearOveredInfo();
-		}
-
-		/// <summary>
-		/// Clears the selected tile-info text when another Map loads.
-		/// </summary>
-		/// <seealso cref="ClearSelectedInfoStatic()"><c>ClearSelectedInfoStatic()</c></seealso>
-		private void ClearSelectedInfo()
-		{
-			la_Selected.Text = String.Empty;
-		}
-
-		/// <summary>
-		/// Synchs
-		/// <c><see cref="ClearSelectedInfo()">ClearSelectedInfo()</see></c>
-		/// in <c>TopView</c> and <c>TopRouteView</c>.
-		/// </summary>
-		internal static void ClearSelectedInfoStatic()
-		{
-			ObserverManager.RouteView   .Control     .ClearSelectedInfo();
-			ObserverManager.TopRouteView.ControlRoute.ClearSelectedInfo();
-		}
-
-		/// <summary>
-		/// Updates the selected node's textcolor when the Option changes.
-		/// </summary>
-		/// <remarks>Called by Options only.</remarks>
-		internal static void SetInfoSelectedColor()
-		{
-			Color color;
-			if (NodeSelected == null)
-			{
-				color = SystemColors.ControlText;
-			}
-			else
-				color = Optionables.NodeSelectedColor;
-
-			ObserverManager.RouteView   .Control     .la_Selected.ForeColor =
-			ObserverManager.TopRouteView.ControlRoute.la_Selected.ForeColor = color;
-		}
-
-		/// <summary>
-		/// Updates the overed node's textcolor when the Option changes.
-		/// </summary>
-		/// <remarks>Called by Options only.</remarks>
-		internal void SetInfoOverColor()
-		{
-			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
-			{
-				Color color;
-
-				RouteNode node = _file.GetTile(RouteControl._col,
-											   RouteControl._row).Node;
-				if (node == null)
-				{
-					color = SystemColors.ControlText;
-				}
-				else if (node.Spawn == SpawnWeight.None)
-				{
-					color = Optionables.NodeColor;
-				}
-				else
-					color = Optionables.NodeSpawnColor;
-
-				la_Over.ForeColor = color; // set color in the overed viewer only.
-			}
-		}
-
-		/// <summary>
-		/// Updates the overed node's info and textcolor when a node is dragged.
-		/// </summary>
-		internal void SetInfoOverText()
-		{
-			if (RouteControl._col != -1) // find the Control that the mousecursor is in (if either)
-			{
-				Color color; int id;
-
-				RouteNode node = _file.GetTile(RouteControl._col,
-											   RouteControl._row).Node;
-				if (node == null)
-				{
-					id = -1;
-					color = SystemColors.ControlText;
-				}
-				else
-				{
-					id = node.Id;
-
-					if (node.Spawn == SpawnWeight.None)
-					{
-						color = Optionables.NodeColor;
-					}
-					else
-						color = Optionables.NodeSpawnColor;
-				}
-
-				la_Over.ForeColor = color;
-
-				PrintOverInfo(id);
-			}
-		}
-
-		/// <summary>
-		/// Prints the currently mouseovered tile-id and -location to the
-		/// TileData groupbox.
-		/// </summary>
-		/// <param name="id"></param>
-		private void PrintOverInfo(int id)
-		{
-			string info;
-
-			if (id != -1)
-				info = "Over " + id;
-			else
-				info = String.Empty;
-
-			if (RouteControl._col != -1)
-			{
-				info += Environment.NewLine
-					 + Globals.GetLocationString(
-											RouteControl._col,
-											RouteControl._row,
-											_file.Level,
-											_file.Levs);
-			}
-
-			ObserverManager.RouteView   .Control     .la_Over.Text =
-			ObserverManager.TopRouteView.ControlRoute.la_Over.Text = info;
-		}
-
-		/// <summary>
-		/// Prints mouseovered Go (or Og) button link-node info to the TileData
-		/// groupbox.
-		/// </summary>
-		/// <param name="node"></param>
-		/// <param name="isog"></param>
-		private void PrintGoInfo(RouteNode node, bool isog)
-		{
-			Color color;
-			if (node.Spawn == SpawnWeight.None)
-			{
-				color = Optionables.NodeColor;
-			}
-			else
-				color = Optionables.NodeSpawnColor;
-
-			la_Over.ForeColor = color;
-
-			string info;
-
-			if (isog) info = "Og ";
-			else      info = "Link ";
-
-			la_Over.Text = info + node.Id + Environment.NewLine // only this RouteView.
-						 + Globals.GetLocationString(
-												node.Col,
-												node.Row,
-												node.Lev,
-												_file.Levs);
-		}
-
 
 		/// <summary>
 		/// Prints the currently selected tile-info to the TileData groupbox.
@@ -798,7 +585,7 @@ namespace MapView.Forms.Observers
 				{
 					info  = String.Empty;
 					level = _file.Level;
-					color = SystemColors.ControlText;
+					color = Optionables.FieldsForecolor;
 				}
 				else
 				{
@@ -818,6 +605,88 @@ namespace MapView.Forms.Observers
 				la_Selected.Text = info;
 				la_Selected.Refresh(); // fast update.
 			}
+		}
+
+
+		/// <summary>
+		/// Clears mouseovered tile-info's text in <c>RouteView</c> and
+		/// <c>TopRouteView(Route)</c>.
+		/// </summary>
+		internal static void ClearOverInfo()
+		{
+			ObserverManager.RouteView   .Control     .la_Over.Text =
+			ObserverManager.TopRouteView.ControlRoute.la_Over.Text = String.Empty;
+		}
+
+		/// <summary>
+		/// Prints mouseovered tile-info to the TileData groupbox.
+		/// </summary>
+		internal void PrintOverInfo(int c, int r)
+		{
+			if (c != -1)
+			{
+				string info; Color color;
+
+				RouteNode node = _file.GetTile(c,r).Node;
+				if (node == null)
+				{
+					info = String.Empty;
+					color = Optionables.FieldsForecolor;
+				}
+				else
+				{
+					info = "Over " + node.Id;
+
+					if (node.Spawn == SpawnWeight.None) color = Optionables.NodeColor;
+					else                                color = Optionables.NodeSpawnColor;
+				}
+
+				if (isToproute)
+				{
+					ObserverManager.TopRouteView.ControlRoute.la_Over.ForeColor = color;
+					ObserverManager.RouteView   .Control     .la_Over.ForeColor = Optionables.FieldsForecolor;
+				}
+				else
+				{
+					ObserverManager.TopRouteView.ControlRoute.la_Over.ForeColor = Optionables.FieldsForecolor;
+					ObserverManager.RouteView   .Control     .la_Over.ForeColor = color;
+				}
+
+				info += Environment.NewLine
+					 + Globals.GetLocationString(c,r, _file.Level, _file.Levs);
+
+				ObserverManager.RouteView   .Control     .la_Over.Text =
+				ObserverManager.TopRouteView.ControlRoute.la_Over.Text = info;
+			}
+		}
+
+
+		/// <summary>
+		/// Prints mouseovered Go (or Og) button link-node info to the TileData
+		/// groupbox.
+		/// </summary>
+		/// <param name="node"></param>
+		/// <param name="og"></param>
+		private void PrintGoInfo(RouteNode node, bool og)
+		{
+			if (RouteCheckService.OutsideBounds(node, _file))
+			{
+				la_Over.ForeColor = Optionables.FieldsForecolorHighlight;
+			}
+			else if (node.Spawn == SpawnWeight.None)
+			{
+				la_Over.ForeColor = Optionables.NodeColor;
+			}
+			else
+				la_Over.ForeColor = Optionables.NodeSpawnColor;
+
+			string info;
+
+			if (og) info = "Og ";
+			else    info = "Go ";
+
+			la_Over.Text = info + node.Id + Environment.NewLine // only this RouteView.
+						 + Globals.GetLocationString(node.Col, node.Row, node.Lev, _file.Levs);
 		}
 		#endregion Methods (print TileData)
 
@@ -904,7 +773,7 @@ namespace MapView.Forms.Observers
 					ObserverManager.RouteView   .Control     .UpdateLinkDistances();
 					ObserverManager.TopRouteView.ControlRoute.UpdateLinkDistances();
 
-					SetInfoOverText();
+					PrintOverInfo(RouteControl._col, RouteControl._row);
 				}
 				else if (args.Location.Col != (int)Dragnode.Col
 					||   args.Location.Row != (int)Dragnode.Row
@@ -933,7 +802,7 @@ namespace MapView.Forms.Observers
 		{
 			RouteControl.SetOver(new Point(args.X, args.Y));
 
-			SetInfoOverText();
+			PrintOverInfo(RouteControl._col, RouteControl._row);
 
 			ObserverManager.RouteView   .Control     .la_Over.Refresh(); // fast update. // NOTE: Only RouteView not TopRouteView(Route)
 			ObserverManager.TopRouteView.ControlRoute.la_Over.Refresh(); // fast update. // wants fast update. go figure
@@ -1289,7 +1158,7 @@ namespace MapView.Forms.Observers
 				RoutesChangedCoordinator = true;
 
 				int slot;
-				Label la_dist;
+				Label la_dist, la_link;
 				Button bu_go;
 
 				var co = sender as ComboBox;
@@ -1298,39 +1167,42 @@ namespace MapView.Forms.Observers
 					slot    = 0;
 					la_dist = la_Link1Dist;
 					bu_go   = bu_GoLink1;
+					la_link = la_Link1;
 				}
 				else if (co == co_Link2Dest)
 				{
 					slot    = 1;
 					la_dist = la_Link2Dist;
 					bu_go   = bu_GoLink2;
+					la_link = la_Link2;
 				}
 				else if (co == co_Link3Dest)
 				{
 					slot    = 2;
 					la_dist = la_Link3Dist;
 					bu_go   = bu_GoLink3;
+					la_link = la_Link3;
 				}
 				else if (co == co_Link4Dest)
 				{
 					slot    = 3;
 					la_dist = la_Link4Dist;
 					bu_go   = bu_GoLink4;
+					la_link = la_Link4;
 				}
 				else // co == co_Link5Dest
 				{
 					slot    = 4;
 					la_dist = la_Link5Dist;
 					bu_go   = bu_GoLink5;
+					la_link = la_Link5;
 				}
 
 				var dest = co.SelectedItem as byte?; // check for id or compass pt/not used.
 				if (!dest.HasValue)
 					dest = (byte?)(co.SelectedItem as LinkType?);
 
-				bool enable, text;
-
-				var link = NodeSelected[slot];
+				Link link = NodeSelected[slot];
 				switch (link.Destination = dest.Value)
 				{
 					case Link.NotUsed:
@@ -1339,8 +1211,9 @@ namespace MapView.Forms.Observers
 						la_dist.Text = String.Empty;
 						link.Distance = 0;
 
-						enable =
-						text   = false;
+						bu_go.Enabled = false;
+						bu_go.Text = String.Empty;
+						la_link.ForeColor = Optionables.FieldsForecolor;
 						break;
 
 					case Link.ExitWest:
@@ -1350,23 +1223,30 @@ namespace MapView.Forms.Observers
 						la_dist.Text = "0";
 						link.Distance = 0;
 
-						enable = false;
-						text   = true;
+						bu_go.Enabled = false;
+						bu_go.Text = Go;
+						la_link.ForeColor = Optionables.FieldsForecolor;
 						break;
 
 					default:
+					{
+						RouteNode nodeDest = _file.Routes[link.Destination];
 						link.Distance = CalculateLinkDistance(
 															NodeSelected,
-															_file.Routes[link.Destination],
+															nodeDest,
 															la_dist,
 															slot);
-						enable =
-						text   = true;
-						break;
-				}
+						bu_go.Enabled = true;
+						bu_go.Text = Go;
 
-				bu_go.Enabled = enable;
-				bu_go.Text = text ? Go : String.Empty;
+						if (RouteCheckService.OutsideBounds(nodeDest, _file))			// NOTE: 'la_link.ForeColor' changes on both RouteView and
+							la_link.ForeColor = Optionables.FieldsForecolorHighlight;	// TopRouteView(Route) without additional facility req'd.
+						else
+							la_link.ForeColor = Optionables.FieldsForecolor;
+
+						break;
+					}
+				}
 
 				RouteControl.SetSpot(new Point(-1,-1));
 
@@ -1376,7 +1256,7 @@ namespace MapView.Forms.Observers
 																		slot,
 																		co.SelectedIndex,
 																		la_dist.Text,
-																		enable,
+																		bu_go.Enabled,
 																		bu_go.Text);
 				}
 				else
@@ -1385,7 +1265,7 @@ namespace MapView.Forms.Observers
 																				slot,
 																				co.SelectedIndex,
 																				la_dist.Text,
-																				enable,
+																				bu_go.Enabled,
 																				bu_go.Text);
 				}
 
@@ -1905,9 +1785,6 @@ namespace MapView.Forms.Observers
 				DeselectNodeStatic();
 				UpdateNodeInfo();
 
-				gb_NodeData.Enabled =
-				gb_LinkData.Enabled = false;
-
 				// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
 
 				RefreshControls();
@@ -1953,10 +1830,6 @@ namespace MapView.Forms.Observers
 			else
 			{
 				UpdateNodeInfo();
-
-				gb_NodeData.Enabled =
-				gb_LinkData.Enabled = false;
-
 				RouteControl.Invalidate();
 			}
 		}
@@ -2800,6 +2673,73 @@ namespace MapView.Forms.Observers
 			return tsb_Options;
 		}
 		#endregion Options
+
+
+		#region Update UI (options)
+		/// <summary>
+		/// Sets the color of datafield texts to
+		/// <c><see cref="RouteViewOptionables.FieldsForecolor">RouteViewOptionables.FieldsForecolor</see></c>.
+		/// </summary>
+		internal void SetFieldsForecolor()
+		{
+			gb_TileData  .ForeColor =
+			gb_NodeData  .ForeColor =
+			gb_LinkData  .ForeColor =
+			gb_NodeEditor.ForeColor = Optionables.FieldsForecolor;
+
+			Button bu;
+			foreach (var control in gb_LinkData.Controls)
+			{
+				if ((bu = control as Button) != null)
+					bu.ForeColor = SystemColors.ControlText;
+			}
+		}
+		#endregion Update UI (options)
+
+
+		#region Update UI (options)(static)
+		/// <summary>
+		/// Sets the color of the datafields background to
+		/// <c><see cref="RouteViewOptionables.FieldsBackcolor">RouteViewOptionables.FieldsBackcolor</see></c>.
+		/// </summary>
+		internal static void SetFieldsBackcolor()
+		{
+			ObserverManager.RouteView   .Control     .pa_DataFields.BackColor =
+			ObserverManager.TopRouteView.ControlRoute.pa_DataFields.BackColor = Optionables.FieldsBackcolor;
+		}
+
+		/// <summary>
+		/// Sets the color of highlighted text to
+		/// <c><see cref="RouteViewOptionables.FieldsForecolorHighlight">RouteViewOptionables.FieldsForecolorHighlight</see></c>.
+		/// </summary>
+		internal static void SetFieldsForecolorHighlight()
+		{
+			ObserverManager.RouteView   .Control     .bu_Save.ForeColor =
+			ObserverManager.TopRouteView.ControlRoute.bu_Save.ForeColor = Optionables.FieldsForecolorHighlight;
+
+			if (NodeSelected != null)
+				UpdateNodeInfo(); // TODO: update 'link out of bounds' textcolor only
+		}
+
+		/// <summary>
+		/// Sets the currently selected tile-info's textcolor when the Option
+		/// changes.
+		/// </summary>
+		/// <param name="updatenodeinfo"><c>true</c> to update node-info</param>
+		/// <remarks>Called by Options only.</remarks>
+		internal static void SetSelectedInfoColor(bool updatenodeinfo = false)
+		{
+			Color color;
+			if (NodeSelected == null) color = Optionables.FieldsForecolor;
+			else                      color = Optionables.NodeSelectedColor;
+
+			ObserverManager.RouteView   .Control     .la_Selected.ForeColor =
+			ObserverManager.TopRouteView.ControlRoute.la_Selected.ForeColor = color;
+
+			if (updatenodeinfo && NodeSelected != null)
+				UpdateNodeInfo(); // TODO: update link texts' textcolor only
+		}
+		#endregion Update UI (options)(static)
 
 
 		#region Update UI (static)

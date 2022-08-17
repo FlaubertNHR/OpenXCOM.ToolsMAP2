@@ -1796,7 +1796,7 @@ namespace MapView
 
 						_overlay.FirstClick = false;
 
-						RouteView.ClearSelectedInfoStatic();
+						RouteView.ClearSelectedInfo();
 
 						ObserverManager.ToolFactory.EnableLevelers(MapFile.Level, MapFile.Levs);
 
@@ -3292,7 +3292,7 @@ namespace MapView
 						if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
 						file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
-						RouteView.ClearSelectedInfoStatic();
+						RouteView.ClearSelectedInfo();
 
 						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
 						Optionables.OpenDoors = false;

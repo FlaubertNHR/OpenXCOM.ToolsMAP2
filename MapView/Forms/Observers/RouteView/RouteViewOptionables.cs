@@ -43,12 +43,12 @@ namespace MapView.Forms.Observers
 		private const string cat_Grid = "Grid";
 
 		internal const string str_GridLineColor = "GridLineColor";
-		private static Color  def_GridLineColor = Color.Black;
+		private static Color  def_GridLineColor = SystemColors.ControlText;
 
 		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_Grid)]
-		[Description("Color of the grid lines (default Black)")]
-		[DefaultValue(typeof(Color), "Black")]
+		[Description("Color of the grid lines (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
 		public Color GridLineColor
 		{
 			get { return _gridLineColor; }
@@ -81,12 +81,12 @@ namespace MapView.Forms.Observers
 
 
 		internal const string str_GridLine10Color = "GridLine10Color";
-		private static Color  def_GridLine10Color = Color.Black;
+		private static Color  def_GridLine10Color = SystemColors.ControlText;
 
 		private Color _gridLine10Color = def_GridLine10Color;
 		[Category(cat_Grid)]
-		[Description("Color of every tenth grid line (default Black)")]
-		[DefaultValue(typeof(Color), "Black")]
+		[Description("Color of every tenth grid line (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
 		public Color GridLine10Color
 		{
 			get { return _gridLine10Color; }
@@ -428,6 +428,81 @@ namespace MapView.Forms.Observers
 		}
 
 
+
+		private const string cat_PanelColors = "PanelColors";
+
+		private const string str_PanelBackcolor = "PanelBackcolor";
+		private static Color def_PanelBackcolor = SystemColors.Control;
+
+		private Color _panelBackcolor = def_PanelBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel background (default System.Control)")]
+		[DefaultValue(typeof(Color), "Control")]
+		public Color PanelBackcolor
+		{
+			get { return _panelBackcolor; }
+			set { _panelBackcolor = value; }
+		}
+
+
+		private const string str_PanelForecolor = "PanelForecolor";
+		private static Color def_PanelForecolor = SystemColors.ControlText;
+
+		private Color _panelForecolor = def_PanelForecolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel font (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color PanelForecolor
+		{
+			get { return _panelForecolor; }
+			set { _panelForecolor = value; }
+		}
+
+
+		private const string str_FieldsBackcolor = "FieldsBackcolor";
+		private static Color def_FieldsBackcolor = SystemColors.Control;
+
+		private Color _fieldsBackcolor = def_FieldsBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the fields background (default System.Control)")]
+		[DefaultValue(typeof(Color), "Control")]
+		public Color FieldsBackcolor
+		{
+			get { return _fieldsBackcolor; }
+			set { _fieldsBackcolor = value; }
+		}
+
+
+		private const string str_FieldsForecolor = "FieldsForecolor";
+		private static Color def_FieldsForecolor = SystemColors.ControlText;
+
+		private Color _fieldsForecolor = def_FieldsForecolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the fields font (default System.ControlText)")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color FieldsForecolor
+		{
+			get { return _fieldsForecolor; }
+			set { _fieldsForecolor = value; }
+		}
+
+
+		private const string str_FieldsForecolorHighlight = "FieldsForecolorHighlight";
+		private static Color def_FieldsForecolorHighlight = Color.MediumVioletRed;
+
+		private Color _fieldsForecolorHighlight = def_FieldsForecolorHighlight;
+		[Category(cat_PanelColors)]
+		[Description(@"Color of the fields font highlight (default MediumVioletRed)
+This is the color of the text on the Save button (if enabled) and the color for out-of-bounds link destinations")]
+		[DefaultValue(typeof(Color), "MediumVioletRed")]
+		public Color FieldsForecolorHighlight
+		{
+			get { return _fieldsForecolorHighlight; }
+			set { _fieldsForecolorHighlight = value; }
+		}
+
+
+
 /*		private const string cat_Selects = "Selects";
 
 		internal const string str_SelectorColor = "SelectorColor";
@@ -557,38 +632,86 @@ namespace MapView.Forms.Observers
 
 			OptionChangedEvent changer0 = OnOptionChanged;
 			OptionChangedEvent changer1 = OnDescriptionHeightChanged;
+			OptionChangedEvent changer2 = OnPanelColorChanged;
 
-			options.CreateOptionDefault(str_GridLineColor,     def_GridLineColor,     changer0);
-			options.CreateOptionDefault(str_GridLineWidth,     def_GridLineWidth,     changer0);
-			options.CreateOptionDefault(str_GridLine10Color,   def_GridLine10Color,   changer0);
-			options.CreateOptionDefault(str_GridLine10Width,   def_GridLine10Width,   changer0);
+			options.CreateOptionDefault(str_PanelBackcolor,           def_PanelBackcolor,           changer2);
+			options.CreateOptionDefault(str_PanelForecolor,           def_PanelForecolor,           changer2);
+			options.CreateOptionDefault(str_FieldsBackcolor,          def_FieldsBackcolor,          changer2);
+			options.CreateOptionDefault(str_FieldsForecolor,          def_FieldsForecolor,          changer2);
+			options.CreateOptionDefault(str_FieldsForecolorHighlight, def_FieldsForecolorHighlight, changer2);
 
-			options.CreateOptionDefault(str_WallColor,         def_WallColor,         changer0);
-			options.CreateOptionDefault(str_WallWidth,         def_WallWidth,         changer0);
-			options.CreateOptionDefault(str_ContentColor,      def_ContentColor,      changer0);
+			options.CreateOptionDefault(str_GridLineColor,            def_GridLineColor,            changer0);
+			options.CreateOptionDefault(str_GridLineWidth,            def_GridLineWidth,            changer0);
+			options.CreateOptionDefault(str_GridLine10Color,          def_GridLine10Color,          changer0);
+			options.CreateOptionDefault(str_GridLine10Width,          def_GridLine10Width,          changer0);
 
-			options.CreateOptionDefault(str_NodeColor,         def_NodeColor,         changer0);
-			options.CreateOptionDefault(str_NodeSpawnColor,    def_NodeSpawnColor,    changer0);
-			options.CreateOptionDefault(str_NodeSelectedColor, def_NodeSelectedColor, changer0);
-			options.CreateOptionDefault(str_NodeOpacity,       def_NodeOpacity,       changer0);
+			options.CreateOptionDefault(str_WallColor,                def_WallColor,                changer0);
+			options.CreateOptionDefault(str_WallWidth,                def_WallWidth,                changer0);
+			options.CreateOptionDefault(str_ContentColor,             def_ContentColor,             changer0);
 
-			options.CreateOptionDefault(str_LinkColor,         def_LinkColor,         changer0);
-			options.CreateOptionDefault(str_LinkWidth,         def_LinkWidth,         changer0);
-			options.CreateOptionDefault(str_LinkSelectedColor, def_LinkSelectedColor, changer0);
-			options.CreateOptionDefault(str_LinkSelectedWidth, def_LinkSelectedWidth, changer0);
+			options.CreateOptionDefault(str_NodeColor,                def_NodeColor,                changer0);
+			options.CreateOptionDefault(str_NodeSpawnColor,           def_NodeSpawnColor,           changer0);
+			options.CreateOptionDefault(str_NodeSelectedColor,        def_NodeSelectedColor,        changer0);
+			options.CreateOptionDefault(str_NodeOpacity,              def_NodeOpacity,              changer0);
 
-			options.CreateOptionDefault(str_ShowOverlay,       def_ShowOverlay,       changer0);
-			options.CreateOptionDefault(str_ShowPriorityBars,  def_ShowPriorityBars,  changer0);
-			options.CreateOptionDefault(str_ReduceDraws,       def_ReduceDraws,       changer0);
+			options.CreateOptionDefault(str_LinkColor,                def_LinkColor,                changer0);
+			options.CreateOptionDefault(str_LinkWidth,                def_LinkWidth,                changer0);
+			options.CreateOptionDefault(str_LinkSelectedColor,        def_LinkSelectedColor,        changer0);
+			options.CreateOptionDefault(str_LinkSelectedWidth,        def_LinkSelectedWidth,        changer0);
 
-			options.CreateOptionDefault(str_StartConnector,    def_StartConnector,    changer0);
+			options.CreateOptionDefault(str_ShowOverlay,              def_ShowOverlay,              changer0);
+			options.CreateOptionDefault(str_ShowPriorityBars,         def_ShowPriorityBars,         changer0);
+			options.CreateOptionDefault(str_ReduceDraws,              def_ReduceDraws,              changer0);
 
-			options.CreateOptionDefault(str_DescriptionHeight, def_DescriptionHeight, changer1);
+			options.CreateOptionDefault(str_StartConnector,           def_StartConnector,           changer0);
+
+			options.CreateOptionDefault(str_DescriptionHeight,        def_DescriptionHeight,        changer1);
 		}
 		#endregion Methods
 
 
 		#region Events
+		/// <summary>
+		/// Changes the colors of RouteView's panel.
+		/// </summary>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
+		private void OnPanelColorChanged(string key, object val)
+		{
+			//Logfile.Log("RouteViewOptionables.OnPanelColorChanged() key= " + key);
+
+			switch (key)
+			{
+				case str_PanelBackcolor:
+					ObserverManager.RouteView   .Control     .RouteControl.BackColor =
+					ObserverManager.TopRouteView.ControlRoute.RouteControl.BackColor = (PanelBackcolor = (Color)val);
+					break;
+
+				case str_PanelForecolor:
+					RouteControl.BrushRose.Color = (PanelForecolor = (Color)val);
+					RouteView.InvalidatePanels();
+					break;
+
+				case str_FieldsBackcolor:
+					FieldsBackcolor = (Color)val;
+					RouteView.SetFieldsBackcolor();
+					break;
+
+				case str_FieldsForecolor:
+					FieldsForecolor = (Color)val;
+					ObserverManager.RouteView   .Control     .SetFieldsForecolor();
+					ObserverManager.TopRouteView.ControlRoute.SetFieldsForecolor();
+
+					RouteView.SetSelectedInfoColor(true);
+					break;
+
+				case str_FieldsForecolorHighlight:
+					FieldsForecolorHighlight = (Color)val;
+					RouteView.SetFieldsForecolorHighlight();
+					break;
+			}
+		}
+
 		/// <summary>
 		/// Sets the value of an optionable property and refreshes the RouteView
 		/// and TopRouteView(Route) controls.
@@ -597,7 +720,7 @@ namespace MapView.Forms.Observers
 		/// <param name="val">the value to set it to</param>
 		private void OnOptionChanged(string key, object val)
 		{
-			//DSShared.Logfile.Log("RouteViewOptionables.OnOptionChanged()");
+			//DSShared.Logfile.Log("RouteViewOptionables.OnOptionChanged() key= " + key);
 
 			switch (key)
 			{
@@ -620,11 +743,11 @@ namespace MapView.Forms.Observers
 				case str_LinkSelectedColor: LinkSelectedColor = (Color)val; ChangePenColor(key, val); break;
 				case str_LinkSelectedWidth: LinkSelectedWidth =   (int)val; ChangePenWidth(key, val); break;
 
-				case str_ShowOverlay:       ShowOverlay       =  (bool)val;                           break;
-				case str_ShowPriorityBars:  ShowPriorityBars  =  (bool)val;                           break;
-				case str_ReduceDraws:       ReduceDraws       =  (bool)val;                           return;
+				case str_ShowOverlay:       ShowOverlay       =  (bool)val; break;
+				case str_ShowPriorityBars:  ShowPriorityBars  =  (bool)val; break;
+				case str_ReduceDraws:       ReduceDraws       =  (bool)val; return;
 
-				case str_StartConnector:    StartConnector    =   (int)val;                           return;
+				case str_StartConnector:    StartConnector    =   (int)val; return;
 			}
 
 			RouteView.RefreshControls();
@@ -636,47 +759,37 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Fires when a brush-color changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void ChangeBruColor(string key, object val)
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.ChangeBruColor()");
 
 			var color = (Color)val;
 
-			switch (key)
+			if (key == str_ContentColor) // do not apply alpha to ContentColor
 			{
-				case str_ContentColor:
-					// Do not apply alpha to ContentColor.
-					RouteControl.RouteBrushes[str_ContentColor].Color = color;
+				RouteControl.RouteBrushes[str_ContentColor].Color = color;
 
-					RouteControl.ToolContent.Dispose();
-					RouteControl.ToolContent = new BlobColorTool(
-															RouteControl.RouteBrushes[str_ContentColor],
-															BlobDrawService.LINEWIDTH_CONTENT);
-//															"RouteToolContent");
+				RouteControl.ToolContent.Dispose();
+				RouteControl.ToolContent = new BlobColorTool(
+														RouteControl.RouteBrushes[str_ContentColor],
+														BlobDrawService.LINEWIDTH_CONTENT);
+//														"RouteToolContent");
 
-					if (MainViewF.that._fcolors != null)
-						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
-					break;
+				if (MainViewF.that._fcolors != null)
+					MainViewF.that._fcolors.UpdateRouteViewBlobColors();
+			}
+			else // is Node color
+			{
+				color = Color.FromArgb(NodeOpacity, color);
+				RouteControl.RouteBrushes[key].Color = color;
 
-				default: // is Node color
-					color = Color.FromArgb(NodeOpacity, color);
-					RouteControl.RouteBrushes[key].Color = color;
+				if (key == str_NodeSelectedColor)
+					RouteView.SetSelectedInfoColor();
 
-					switch (key)
-					{
-						case str_NodeColor:
-						case str_NodeSpawnColor:
-							ObserverManager.RouteView   .Control     .SetInfoOverColor();
-							ObserverManager.TopRouteView.ControlRoute.SetInfoOverColor();
-							break;
-
-						case str_NodeSelectedColor:
-							RouteView.SetInfoSelectedColor();
-							break;
-					}
-					break;
+//				str_NodeColor:
+//				str_NodeSpawnColor:
 			}
 		}
 
@@ -703,11 +816,11 @@ namespace MapView.Forms.Observers
 		/// Stores the property panel's Description area's height when the user
 		/// changes it.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private void OnDescriptionHeightChanged(string key, object val)
 		{
-			//DSShared.Logfile.Log("RouteViewOptionables.OnDescriptionHeightChanged()");
+			//DSShared.Logfile.Log("RouteViewOptionables.OnDescriptionHeightChanged() key= " + key);
 			DescriptionHeight = (int)val;
 		}
 		#endregion Methods
@@ -717,43 +830,39 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Fires when a pen-color changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private static void ChangePenColor(string key, object val)
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.ChangePenColor()");
 
 			RouteControl.RoutePens[key].Color = (Color)val;
 
-			switch (key)
+			if (key == str_WallColor)
 			{
-				case str_WallColor:
-					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
+				RouteControl.ToolWall.Dispose();
+				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
 
-					if (MainViewF.that._fcolors != null)
-						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
-					break;
+				if (MainViewF.that._fcolors != null)
+					MainViewF.that._fcolors.UpdateRouteViewBlobColors();
 			}
 		}
 
 		/// <summary>
 		/// Fires when a pen-width changes in Options.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="val"></param>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
 		private static void ChangePenWidth(string key, object val)
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.ChangePenWidth()");
 
 			RouteControl.RoutePens[key = WidthToColor(key)].Width = (int)val;
 
-			switch (key)
+			if (key == str_WallColor) // doh!
 			{
-				case str_WallColor: // doh!
-					RouteControl.ToolWall.Dispose();
-					RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
-					break;
+				RouteControl.ToolWall.Dispose();
+				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
 			}
 		}
 

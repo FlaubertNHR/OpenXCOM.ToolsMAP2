@@ -305,8 +305,7 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Selects a tile on the <c>MouseDown</c> event.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// Fires
 		/// <c><see cref="RouteControl.RouteControlMouseDownEvent">RouteControl.RouteControlMouseDownEvent</see></c>
 		/// which is handled by
@@ -354,7 +353,7 @@ namespace MapView.Forms.Observers
 						MainViewOverlay.that._keyDeltaX =
 						MainViewOverlay.that._keyDeltaY = 0;
 
-						_file.Location = new MapLocation(								// fire LocationSelected
+						_file.Location = new MapLocation(					// fire LocationSelected
 													_col, _row,
 													_file.Level);
 
@@ -364,7 +363,9 @@ namespace MapView.Forms.Observers
 														e.Button,
 														_file.GetTile(_col, _row),
 														_file.Location);
-						RouteControlMouseDownEvent(this, args);							// fire RouteView.OnRouteControlMouseDown()
+						RouteControlMouseDownEvent(this, args);				// fire RouteView.OnRouteControlMouseDown()
+
+						RouteView.InvalidatePanels();
 					}
 				}
 			}
@@ -565,7 +566,8 @@ namespace MapView.Forms.Observers
 							RouteControlMouseUpEvent(this, args);				// fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
-							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
+							ObserverManager.RouteView.Control.PrintOverInfo(_col, _row);
+
 						}
 					}
 					else if (vert != MapFile.LEVEL_no)
@@ -592,7 +594,7 @@ namespace MapView.Forms.Observers
 							RouteControlMouseUpEvent(this, args);				// fire RouteView.OnRouteControlMouseUp()
 							invalidate = true;
 
-							ObserverManager.RouteView.Control.SetInfoOverText(); // update both viewers.
+							ObserverManager.RouteView.Control.PrintOverInfo(_col, _row);
 
 							ObserverManager.RouteView   .Control     .PrintSelectedInfo();
 							ObserverManager.TopRouteView.ControlRoute.PrintSelectedInfo();
@@ -600,11 +602,7 @@ namespace MapView.Forms.Observers
 					}
 				}
 
-				if (invalidate)
-				{
-					ObserverManager.RouteView   .Control     .RouteControl.Invalidate();
-					ObserverManager.TopRouteView.ControlRoute.RouteControl.Invalidate();
-				}
+				if (invalidate) RouteView.InvalidatePanels();
 			}
 		}
 
