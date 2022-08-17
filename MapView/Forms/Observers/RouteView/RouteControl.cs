@@ -69,7 +69,6 @@ namespace MapView.Forms.Observers
 		internal static readonly SolidBrush BrushRose = new SolidBrush(SystemColors.ControlText);
 
 		private static Pen PenLink;
-		private static Pen PenLinkSelected;
 
 		internal static BlobColorTool ToolWall;
 		internal static BlobColorTool ToolContent;
@@ -203,8 +202,7 @@ namespace MapView.Forms.Observers
 				BlobService.HalfWidth  = HalfWidth;
 				BlobService.HalfHeight = HalfHeight;
 
-				PenLink         = RoutePens[RouteViewOptionables.str_LinkColor];
-				PenLinkSelected = RoutePens[RouteViewOptionables.str_LinkSelectedColor];
+				PenLink = RoutePens[RouteViewOptionables.str_LinkColor];
 
 				DrawBlobs();
 
@@ -422,7 +420,7 @@ namespace MapView.Forms.Observers
 
 					if (selected) // draw link-lines for a selected node ->
 					{
-						var pen = PenLinkSelected;
+						var pen = RoutePens[RouteViewOptionables.str_LinkSelectedColor];
 
 						if (_spot.X != -1)
 						{
