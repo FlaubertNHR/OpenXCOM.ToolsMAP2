@@ -323,13 +323,13 @@ namespace MapView.Forms.Observers
 
 
 
-		private const string cat_Miscellaneous = "Miscellaneous";
+		private const string cat_General = "General";
 
 		private const string str_ShowPriorityBars = "ShowPriorityBars";
 		private const bool   def_ShowPriorityBars = true;
 
 		private bool _showPriorityBars = def_ShowPriorityBars;
-		[Category(cat_Miscellaneous)]
+		[Category(cat_General)]
 		[Description("True to display the spawn/patrol bars (default True)")]
 		[DefaultValue(true)]
 		public bool ShowPriorityBars
@@ -347,7 +347,7 @@ namespace MapView.Forms.Observers
 		private const int    def_StartConnector = LinkOff;
 
 		private int _startConnector = def_StartConnector;
-		[Category(cat_Miscellaneous)]
+		[Category(cat_General)]
 		[Description(@"The selected connector button when Mapview starts.
 0 - auto-link off (default)
 1 - link forward
