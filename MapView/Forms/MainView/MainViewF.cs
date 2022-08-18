@@ -1380,7 +1380,7 @@ namespace MapView
 				int w = TextRenderer.MeasureText(node.Text, node.TreeView.Font).Width;
 				while (w / 70 != 0) { ++rect.Width; w -= 70; }
 
-				rect.Width += 4;						// conceal .NET glitch.
+				rect.Width += 3;						// conceal .NET glitch.
 				graphics.FillRectangle(colorfill, rect);
 				rect.Height -= 1;						// keep border inside bounds
 				graphics.DrawRectangle(colorline, rect);
