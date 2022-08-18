@@ -323,27 +323,13 @@ namespace MapView.Forms.Observers
 
 
 
-		private const string cat_Panel = "Panel";
-
-		private const string str_ShowOverlay = "ShowOverlay";
-		private const bool   def_ShowOverlay = true;
-
-		private bool _showOverlay = def_ShowOverlay;
-		[Category(cat_Panel)]
-		[Description("True to display cursor info (default True)")]
-		[DefaultValue(true)]
-		public bool ShowOverlay
-		{
-			get { return _showOverlay; }
-			set { _showOverlay = value; }
-		}
-
+		private const string cat_Miscellaneous = "Miscellaneous";
 
 		private const string str_ShowPriorityBars = "ShowPriorityBars";
 		private const bool   def_ShowPriorityBars = true;
 
 		private bool _showPriorityBars = def_ShowPriorityBars;
-		[Category(cat_Panel)]
+		[Category(cat_Miscellaneous)]
 		[Description("True to display the spawn/patrol bars (default True)")]
 		[DefaultValue(true)]
 		public bool ShowPriorityBars
@@ -353,27 +339,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_ReduceDraws = "ReduceDraws";
-		private const bool   def_ReduceDraws = false;
-
-		private bool _reduceDraws = def_ReduceDraws;
-		[Category(cat_Panel)]
-		[Description("True to reduce the frequency of draw-calls to the panel."
-					+ " If so the InfoOverlay doesn't track exactly with the"
-					+ " cursor but the panel feels solid. Note that when option "
-					+ str_ShowOverlay + " is false draws will be reduced"
-					+ " regardless (default False)")]
-		[DefaultValue(false)]
-		public bool ReduceDraws
-		{
-			get { return _reduceDraws; }
-			set { _reduceDraws = value; }
-		}
-
-
-
-		private const string cat_Connector = "Connector";
-
 		private const int LinkOff     = 0;
 //		private const int LinkForward = 1;
 		private const int LinkForBac  = 2;
@@ -382,7 +347,7 @@ namespace MapView.Forms.Observers
 		private const int    def_StartConnector = LinkOff;
 
 		private int _startConnector = def_StartConnector;
-		[Category(cat_Connector)]
+		[Category(cat_Miscellaneous)]
 		[Description(@"The selected connector button when Mapview starts.
 0 - auto-link off (default)
 1 - link forward
@@ -445,8 +410,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_PanelForecolor = "PanelForecolor";
-		private static Color def_PanelForecolor = SystemColors.ControlText;
+		private  const string str_PanelForecolor = "PanelForecolor";
+		internal static Color def_PanelForecolor = SystemColors.ControlText;
 
 		private Color _panelForecolor = def_PanelForecolor;
 		[Category(cat_PanelColors)]
@@ -500,6 +465,108 @@ This is the color of the text on the Save button (if enabled) and the color for 
 		{
 			get { return _fieldsForecolorHighlight; }
 			set { _fieldsForecolorHighlight = value; }
+		}
+
+
+
+		private const string cat_Overlay = "Overlay";
+
+		private const string str_ShowOverlay = "ShowOverlay";
+		private const bool   def_ShowOverlay = true;
+
+		private bool _showOverlay = def_ShowOverlay;
+		[Category(cat_Overlay)]
+		[Description("True to display info overlay (default True)")]
+		[DefaultValue(true)]
+		public bool ShowOverlay
+		{
+			get { return _showOverlay; }
+			set { _showOverlay = value; }
+		}
+
+
+		private const string str_ReduceDraws = "ReduceDraws";
+		private const bool   def_ReduceDraws = false;
+
+		private bool _reduceDraws = def_ReduceDraws;
+		[Category(cat_Overlay)]
+		[Description("True to reduce the frequency of draw-calls to the panel."
+					+ " If so the InfoOverlay doesn't track exactly with the"
+					+ " cursor but the panel feels solid. Note that when option "
+					+ str_ShowOverlay + " is false draws will be reduced"
+					+ " regardless (default False)")]
+		[DefaultValue(false)]
+		public bool ReduceDraws
+		{
+			get { return _reduceDraws; }
+			set { _reduceDraws = value; }
+		}
+
+
+		private  const string str_OverlayForecolor = "OverlayForecolor";
+		internal static Color def_OverlayForecolor = Color.Yellow;
+
+		private Color _overlayForecolor = def_OverlayForecolor;
+		[Category(cat_Overlay)]
+		[Description("Color of the overlay's text (default Yellow)")]
+		[DefaultValue(typeof(Color), "Yellow")]
+		public Color OverlayForecolor
+		{
+			get {return _overlayForecolor; }
+			set { _overlayForecolor = value; }
+		}
+
+
+		private  const string str_OverlayBorderColor = "OverlayBorderColor";
+		internal static Color def_OverlayBorderColor = Color.Black;
+
+		private Color _overlayBorderColor = def_OverlayBorderColor;
+		[Category(cat_Overlay)]
+		[Description("Color of the overlay's border (default Black)")]
+		[DefaultValue(typeof(Color), "Black")]
+		public Color OverlayBorderColor
+		{
+			get {return _overlayBorderColor; }
+			set { _overlayBorderColor = value; }
+		}
+
+
+		private  const string str_OverlayFillColor = "OverlayFillColor";
+		internal static Color def_OverlayFillColor = Color.DarkSlateBlue;
+
+		private Color _overlayFillColor = def_OverlayFillColor;
+		[Category(cat_Overlay)]
+		[Description("Color of the overlay (default DarkSlateBlue)")]
+		[DefaultValue(typeof(Color), "DarkSlateBlue")]
+		public Color OverlayFillColor
+		{
+			get {return _overlayFillColor; }
+			set { _overlayFillColor = value; }
+		}
+
+
+		private  const string str_OverlayFillOpacity = "OverlayFillOpacity";
+		internal const int    def_OverlayFillOpacity = 200;
+
+		private int _overlayFillOpacity = def_OverlayFillOpacity;
+		[Category(cat_Overlay)]
+		[Description("Opacity of the overlay (0..255 default 200)")]
+		[DefaultValue(def_OverlayFillOpacity)]
+		public int OverlayFillOpacity
+		{
+			get { return _overlayFillOpacity; }
+			set
+			{
+				if (RouteView._foptions == null) // on load
+				{
+					RouteView.Options[str_OverlayFillOpacity].Value =
+					_overlayFillOpacity = value.Viceroy(0,255);
+				}
+				else if ((_overlayFillOpacity = value.Viceroy(0,255)) != value) // on user-changed
+				{
+					RouteView.Options[str_OverlayFillOpacity].Value = _overlayFillOpacity;
+				}
+			}
 		}
 
 
@@ -580,6 +647,8 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				}
 			}
 		} */
+
+ 		// + SpotColor
 		#endregion Properties (optionable)
 
 
@@ -641,6 +710,13 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_FieldsForecolor,          def_FieldsForecolor,          changer2);
 			options.CreateOptionDefault(str_FieldsForecolorHighlight, def_FieldsForecolorHighlight, changer2);
 
+			options.CreateOptionDefault(str_ShowOverlay,              def_ShowOverlay,              changer0);
+			options.CreateOptionDefault(str_ReduceDraws,              def_ReduceDraws,              changer0);
+			options.CreateOptionDefault(str_OverlayForecolor,         def_OverlayForecolor,         changer2);
+			options.CreateOptionDefault(str_OverlayBorderColor,       def_OverlayBorderColor,       changer2);
+			options.CreateOptionDefault(str_OverlayFillColor,         def_OverlayFillColor,         changer2);
+			options.CreateOptionDefault(str_OverlayFillOpacity,       def_OverlayFillOpacity,       changer2);
+
 			options.CreateOptionDefault(str_GridLineColor,            def_GridLineColor,            changer0);
 			options.CreateOptionDefault(str_GridLineWidth,            def_GridLineWidth,            changer0);
 			options.CreateOptionDefault(str_GridLine10Color,          def_GridLine10Color,          changer0);
@@ -660,10 +736,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_LinkSelectedColor,        def_LinkSelectedColor,        changer0);
 			options.CreateOptionDefault(str_LinkSelectedWidth,        def_LinkSelectedWidth,        changer0);
 
-			options.CreateOptionDefault(str_ShowOverlay,              def_ShowOverlay,              changer0);
 			options.CreateOptionDefault(str_ShowPriorityBars,         def_ShowPriorityBars,         changer0);
-			options.CreateOptionDefault(str_ReduceDraws,              def_ReduceDraws,              changer0);
-
 			options.CreateOptionDefault(str_StartConnector,           def_StartConnector,           changer0);
 
 			options.CreateOptionDefault(str_DescriptionHeight,        def_DescriptionHeight,        changer1);
@@ -689,9 +762,10 @@ This is the color of the text on the Save button (if enabled) and the color for 
 					break;
 
 				case str_PanelForecolor:
-					RouteControl.BrushRose.Color = (PanelForecolor = (Color)val);
+					RouteControl.RosaryBrush.Color = (PanelForecolor = (Color)val);
 					RouteView.InvalidatePanels();
 					break;
+
 
 				case str_FieldsBackcolor:
 					FieldsBackcolor = (Color)val;
@@ -709,6 +783,23 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_FieldsForecolorHighlight:
 					FieldsForecolorHighlight = (Color)val;
 					RouteView.SetFieldsForecolorHighlight();
+					break;
+
+
+				case str_OverlayForecolor:
+					RouteControl.OverlayForecolor.Color = (OverlayForecolor = (Color)val);
+					break;
+
+				case str_OverlayBorderColor:
+					RouteControl.OverlayBorder.Color = (OverlayBorderColor = (Color)val);
+					break;
+
+				case str_OverlayFillColor:
+					RouteControl.OverlayFill.Color = Color.FromArgb(OverlayFillOpacity, (OverlayFillColor = (Color)val));
+					break;
+
+				case str_OverlayFillOpacity:
+					RouteControl.OverlayFill.Color = Color.FromArgb((OverlayFillOpacity = (int)val), OverlayFillColor);
 					break;
 			}
 		}
@@ -747,7 +838,6 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_ShowOverlay:       ShowOverlay       =  (bool)val; break;
 				case str_ShowPriorityBars:  ShowPriorityBars  =  (bool)val; break;
 				case str_ReduceDraws:       ReduceDraws       =  (bool)val; return;
-
 				case str_StartConnector:    StartConnector    =   (int)val; return;
 			}
 

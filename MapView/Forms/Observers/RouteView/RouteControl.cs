@@ -33,11 +33,12 @@ namespace MapView.Forms.Observers
 		internal static void DisposeControlStatics()
 		{
 			//DSShared.Logfile.Log("RouteControl.DisposeControlStatics() static");
-			BrushOverlayBlue .Dispose();
-			BrushOverlayLight.Dispose();
-			FontOverlay      .Dispose();
-			FontRose         .Dispose();
-			BrushRose        .Dispose();
+			OverlayForecolor.Dispose();
+			OverlayBorder   .Dispose();
+			OverlayFill     .Dispose();
+			FontOverlay     .Dispose();
+			FontRosary      .Dispose();
+			RosaryBrush     .Dispose();
 		}
 
 		#region Fields (static)
@@ -60,13 +61,14 @@ namespace MapView.Forms.Observers
 		private const string TextEast  = "E";
 		private const string TextWest  = "W";
 
-		private static readonly Brush BrushOverlayBlue  = new SolidBrush(Color.FromArgb(205, Color.DarkSlateBlue));
-		private static readonly Brush BrushOverlayLight = new SolidBrush(Color.FromArgb( 90, Color.AntiqueWhite));
+		internal static readonly SolidBrush OverlayForecolor = new SolidBrush(               RouteViewOptionables.def_OverlayForecolor);
+		internal static readonly Pen        OverlayBorder    = new Pen(                      RouteViewOptionables.def_OverlayBorderColor);
+		internal static readonly SolidBrush OverlayFill      = new SolidBrush(Color.FromArgb(RouteViewOptionables.def_OverlayFillOpacity,
+																							 RouteViewOptionables.def_OverlayFillColor));
+		internal static readonly SolidBrush RosaryBrush      = new SolidBrush(               RouteViewOptionables.def_PanelForecolor);
 
 		private static readonly Font FontOverlay = new Font("Verdana",      7F, FontStyle.Bold);
-		private static readonly Font FontRose    = new Font("Courier New", 21F, FontStyle.Bold);
-
-		internal static readonly SolidBrush BrushRose = new SolidBrush(SystemColors.ControlText);
+		private static readonly Font FontRosary  = new Font("Courier New", 21F, FontStyle.Bold);
 
 		private static Pen PenLink;
 
@@ -177,8 +179,8 @@ namespace MapView.Forms.Observers
 	
 				_heightoverlaytext = (int)graphics.MeasureString(TextNorth, FontOverlay).Height + 1;
 	
-				_widthNorth = (int)graphics.MeasureString(TextNorth, FontRose).Width;
-				_widthEast  = (int)graphics.MeasureString(TextEast,  FontRose).Width;
+				_widthNorth = (int)graphics.MeasureString(TextNorth, FontRosary).Width;
+				_widthEast  = (int)graphics.MeasureString(TextEast,  FontRosary).Width;
 			}
 		}
 		#endregion cTor
@@ -223,8 +225,8 @@ namespace MapView.Forms.Observers
 					PathSelectorLozenge(
 									Origin.X + (_col - _row) * HalfWidth  + _scaleOffsetX,
 									Origin.Y + (_col + _row) * HalfHeight + _scaleOffsetY);
-					using (var pen = new Pen( // TODO: Make selector-pen a separate Option.
-											RouteView.Optionables.GridLineColor,
+					using (var pen = new Pen(
+											RouteView.Optionables.GridLineColor,		// TODO: Make selector-pen a separate Option.
 											RouteView.Optionables.GridLineWidth + 1))
 					{
 						_graphics.DrawPath(pen, _lozSelector);
@@ -234,8 +236,8 @@ namespace MapView.Forms.Observers
 				if (MainViewOverlay.that.FirstClick && MainViewOverlay.that.DragBeg.X != -1)
 				{
 					PathSelectedLozenge();
-					using (var pen = new Pen( // TODO: Make selected-pen a separate Option.
-											RouteView.Optionables.NodeSelectedColor,
+					using (var pen = new Pen(
+											RouteView.Optionables.NodeSelectedColor,	// TODO: Make selected-pen a separate Option.
 											RouteView.Optionables.GridLineWidth + 1))
 					{
 						_graphics.DrawPath(pen, _lozSelected);
@@ -245,7 +247,8 @@ namespace MapView.Forms.Observers
 							PathSpottedLozenge(
 											Origin.X + (_spot.X - _spot.Y) * HalfWidth  + _scaleOffsetX,
 											Origin.Y + (_spot.X + _spot.Y) * HalfHeight + _scaleOffsetY);
-							_graphics.DrawPath(pen, _lozSpotted); // TODO: Make spotted-pen a separate Option.
+
+							_graphics.DrawPath(pen, _lozSpotted);						// TODO: Make spotted-pen a separate Option.
 						}
 					}
 				}
@@ -675,28 +678,28 @@ namespace MapView.Forms.Observers
 		{
 			_graphics.DrawString(
 							TextWest,
-							FontRose,
-							BrushRose,
+							FontRosary,
+							RosaryBrush,
 							RoseMarginX,
 							RoseMarginY);
 			_graphics.DrawString(
 							TextNorth,
-							FontRose,
-							BrushRose,
+							FontRosary,
+							RosaryBrush,
 							Width - _widthNorth - RoseMarginX,
 							RoseMarginY);
 			_graphics.DrawString(
 							TextSouth,
-							FontRose,
-							BrushRose,
+							FontRosary,
+							RosaryBrush,
 							RoseMarginX,
-							Height - FontRose.Height - RoseMarginY);
+							Height - FontRosary.Height - RoseMarginY);
 			_graphics.DrawString(
 							TextEast,
-							FontRose,
-							BrushRose,
+							FontRosary,
+							RosaryBrush,
 							Width - _widthEast - RoseMarginX,
-							Height - FontRose.Height - RoseMarginY);
+							Height - FontRosary.Height - RoseMarginY);
 		}
 
 		/// <summary>
@@ -801,13 +804,14 @@ namespace MapView.Forms.Observers
 						rect.Y = _over.Y - rect.Height;
 				}
 
-				_graphics.FillRectangle(BrushOverlayBlue, rect);
 				_graphics.FillRectangle(
-									BrushOverlayLight,
-									rect.X + 2,
-									rect.Y + 2,
-									rect.Width  - 4,
-									rect.Height - 4);
+									OverlayFill,
+									rect.X,
+									rect.Y,
+									rect.Width  - 1,
+									rect.Height - 1);
+				_graphics.DrawRectangle(OverlayBorder, rect);
+				_graphics.DrawLine(OverlayBorder, rect.X - 1, rect.Y, rect.X, rect.Y); // fill 1px glitch in topleft corner
 
 				int textLeft = rect.X + 4;
 				int textTop  = rect.Y + 3;
@@ -815,29 +819,29 @@ namespace MapView.Forms.Observers
 				int colRight = textLeft + OverlayColPad;
 				if (node != null) colRight += _widthoverlayleft;
 
-				_graphics.DrawString(textLoc, FontOverlay, Brushes.Yellow, colRight, textTop);
+				_graphics.DrawString(textLoc, FontOverlay, OverlayForecolor, colRight, textTop);
 
 				if (node != null)
 				{
-					_graphics.DrawString(Over,       FontOverlay, Brushes.Yellow, textLeft, textTop + _heightoverlaytext);
-					_graphics.DrawString(textOver,   FontOverlay, Brushes.Yellow, colRight, textTop + _heightoverlaytext);
+					_graphics.DrawString(Over,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext);
+					_graphics.DrawString(textOver,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext);
 
-					_graphics.DrawString(Unit,       FontOverlay, Brushes.Yellow, textLeft, textTop + _heightoverlaytext * 2);
-					_graphics.DrawString(textUnit,   FontOverlay, Brushes.Yellow, colRight, textTop + _heightoverlaytext * 2);
+					_graphics.DrawString(Unit,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 2);
+					_graphics.DrawString(textUnit,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 2);
 
-					_graphics.DrawString(Rank,       FontOverlay, Brushes.Yellow, textLeft, textTop + _heightoverlaytext * 3);
-					_graphics.DrawString(textRank,   FontOverlay, Brushes.Yellow, colRight, textTop + _heightoverlaytext * 3);
+					_graphics.DrawString(Rank,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 3);
+					_graphics.DrawString(textRank,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 3);
 
-					_graphics.DrawString(Spawn,      FontOverlay, Brushes.Yellow, textLeft, textTop + _heightoverlaytext * 4);
-					_graphics.DrawString(textSpawn,  FontOverlay, Brushes.Yellow, colRight, textTop + _heightoverlaytext * 4);
+					_graphics.DrawString(Spawn,      FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 4);
+					_graphics.DrawString(textSpawn,  FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 4);
 
-					_graphics.DrawString(Patrol,     FontOverlay, Brushes.Yellow, textLeft, textTop + _heightoverlaytext * 5);
-					_graphics.DrawString(textPatrol, FontOverlay, Brushes.Yellow, colRight, textTop + _heightoverlaytext * 5);
+					_graphics.DrawString(Patrol,     FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 5);
+					_graphics.DrawString(textPatrol, FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 5);
 
 					if (node.Attack != 0)
 					{
-						_graphics.DrawString(Attack,     FontOverlay, Brushes.Yellow, textLeft, textTop + _heightoverlaytext * 6);
-						_graphics.DrawString(textAttack, FontOverlay, Brushes.Yellow, colRight, textTop + _heightoverlaytext * 6);
+						_graphics.DrawString(Attack,     FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 6);
+						_graphics.DrawString(textAttack, FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 6);
 					}
 				}
 			}
