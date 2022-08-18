@@ -31,6 +31,7 @@ namespace MapView.Forms.Observers
 			LocationFont    .Dispose();
 			SelectorBrush   .Dispose();
 			SelectedBrush   .Dispose();
+			QuadrantStandard.Dispose();
 			QuadrantSelected.Dispose();
 			QuadrantDisabled.Dispose();
 			QuadrantBorder  .Dispose();
@@ -96,6 +97,7 @@ namespace MapView.Forms.Observers
 
 		internal static readonly SolidBrush SelectorBrush    = new SolidBrush(TopViewOptionables.def_PanelForecolor);
 		internal static readonly SolidBrush SelectedBrush    = new SolidBrush(TopViewOptionables.def_QuadrantForecolor);
+		internal static readonly SolidBrush QuadrantStandard = new SolidBrush(TopViewOptionables.def_QuadrantColor);
 		internal static readonly SolidBrush QuadrantSelected = new SolidBrush(TopViewOptionables.def_QuadrantSelected);
 		internal static readonly SolidBrush QuadrantDisabled = new SolidBrush(TopViewOptionables.def_QuadrantDisabled);
 
@@ -230,45 +232,34 @@ namespace MapView.Forms.Observers
 				TextWidth_part    = (int)_graphics.MeasureString(Part,    QuadrantFont).Width;
 			}
 
-			// fill the background of the selected quadrant type
-			switch (partType)
-			{
-				case PartType.Floor:
-					if (!TopViewControl.it_Floor.Checked)
-						_graphics.FillPath(QuadrantSelected, _pathFloor);
-					break;
 
-				case PartType.West:
-					if (!TopViewControl.it_West.Checked)
-						_graphics.FillPath(QuadrantSelected, _pathWest);
-					break;
+			// fill the background of the quad-slots
+			Brush brush;
 
-				case PartType.North:
-					if (!TopViewControl.it_North.Checked)
-						_graphics.FillPath(QuadrantSelected, _pathNorth);
-					break;
+			if (TopViewControl.it_Floor.Checked)   brush = QuadrantDisabled;
+			else if (partType == PartType.Floor)   brush = QuadrantSelected;
+			else                                   brush = QuadrantStandard;
+			_graphics.FillPath(brush, _pathFloor);
 
-				case PartType.Content:
-					if (!TopViewControl.it_Content.Checked)
-						_graphics.FillPath(QuadrantSelected, _pathContent);
-					break;
-			}
+			if (TopViewControl.it_West.Checked)    brush = QuadrantDisabled;
+			else if (partType == PartType.West)    brush = QuadrantSelected;
+			else                                   brush = QuadrantStandard;
+			_graphics.FillPath(brush, _pathWest);
 
-			// fill the background of Disabled quads incl/ the selected-quad
-			if (TopViewControl.it_Floor.Checked)
-				_graphics.FillPath(QuadrantDisabled, _pathFloor);
+			if (TopViewControl.it_North.Checked)   brush = QuadrantDisabled;
+			else if (partType == PartType.North)   brush = QuadrantSelected;
+			else                                   brush = QuadrantStandard;
+			_graphics.FillPath(brush, _pathNorth);
 
-			if (TopViewControl.it_West.Checked)
-				_graphics.FillPath(QuadrantDisabled, _pathWest);
+			if (TopViewControl.it_Content.Checked) brush = QuadrantDisabled;
+			else if (partType == PartType.Content) brush = QuadrantSelected;
+			else                                   brush = QuadrantStandard;
+			_graphics.FillPath(brush, _pathContent);
 
-			if (TopViewControl.it_North.Checked)
-				_graphics.FillPath(QuadrantDisabled, _pathNorth);
-
-			if (TopViewControl.it_Content.Checked)
-				_graphics.FillPath(QuadrantDisabled, _pathContent);
+			_graphics.FillPath(QuadrantStandard, _pathPart);
 
 
-			// draw the Sprites
+			// draw the sprites
 			int phase = MainViewUnderlay.Phase;
 
 			if (MainViewF.Optionables.UseMono)

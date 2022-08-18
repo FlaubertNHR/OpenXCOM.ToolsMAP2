@@ -411,6 +411,20 @@ namespace MapView.Forms.Observers
 		}
 
 
+		private  const string str_QuadrantColor = "QuadrantColor";
+		internal static Color def_QuadrantColor = Color.Transparent;
+
+		private Color _quadrantColor = def_QuadrantColor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the quadrants (default Transparent)")]
+		[DefaultValue(typeof(Color), "Transparent")]
+		public Color QuadrantColor
+		{
+			get { return _quadrantColor; }
+			set { _quadrantColor = value; }
+		}
+
+
 		private  const string str_QuadrantSelected = "QuadrantSelected";
 		internal static Color def_QuadrantSelected = Color.PowderBlue;
 
@@ -505,6 +519,7 @@ namespace MapView.Forms.Observers
 			options.CreateOptionDefault(str_PanelForecolor,            def_PanelForecolor,            changer3);
 			options.CreateOptionDefault(str_QuadrantForecolor,         def_QuadrantForecolor,         changer3);
 			options.CreateOptionDefault(str_QuadrantBackcolor,         def_QuadrantBackcolor,         changer3);
+			options.CreateOptionDefault(str_QuadrantColor,             def_QuadrantColor,             changer3);
 			options.CreateOptionDefault(str_QuadrantSelected,          def_QuadrantSelected,          changer3);
 			options.CreateOptionDefault(str_QuadrantDisabled,          def_QuadrantDisabled,          changer3);
 			options.CreateOptionDefault(str_QuadrantBorder,            def_QuadrantBorder,            changer3);
@@ -563,6 +578,11 @@ namespace MapView.Forms.Observers
 				case str_QuadrantBackcolor:
 					QuadrantBackcolor = (Color)val;
 					QuadrantControl.SetBackcolorCoordinator();
+					break;
+
+				case str_QuadrantColor:
+					QuadrantDrawService.QuadrantStandard.Color = (QuadrantColor = (Color)val);
+					ObserverManager.InvalidateQuadrantControls();
 					break;
 
 				case str_QuadrantSelected:
