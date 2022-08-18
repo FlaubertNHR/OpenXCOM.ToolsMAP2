@@ -94,12 +94,12 @@ namespace MapView.Forms.Observers
 		private static readonly Font QuadrantFont = new Font("Comic Sans MS", 7F);
 		private static readonly Font LocationFont = new Font("Verdana", 7F, FontStyle.Bold);
 
-		internal static readonly SolidBrush SelectorBrush    = new SolidBrush(SystemColors.ControlText);
-		internal static readonly SolidBrush SelectedBrush    = new SolidBrush(SystemColors.ControlText);
-		internal static readonly SolidBrush QuadrantSelected = new SolidBrush(Color.PowderBlue);
-		internal static readonly SolidBrush QuadrantDisabled = new SolidBrush(Color.LightGray);
+		internal static readonly SolidBrush SelectorBrush    = new SolidBrush(TopViewOptionables.def_PanelForecolor);
+		internal static readonly SolidBrush SelectedBrush    = new SolidBrush(TopViewOptionables.def_QuadrantForecolor);
+		internal static readonly SolidBrush QuadrantSelected = new SolidBrush(TopViewOptionables.def_QuadrantSelected);
+		internal static readonly SolidBrush QuadrantDisabled = new SolidBrush(TopViewOptionables.def_QuadrantDisabled);
 
-		internal static readonly Pen QuadrantBorder = new Pen(SystemColors.ControlText);
+		internal static readonly Pen QuadrantBorder = new Pen(TopViewOptionables.def_QuadrantBorder);
 
 
 		/// <summary>

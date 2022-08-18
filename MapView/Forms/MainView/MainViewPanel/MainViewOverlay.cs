@@ -51,7 +51,7 @@ namespace MapView.Forms.MainView
 		internal const int HalfHeightConst =  8;
 
 		private static readonly Font LocationFont = new Font("Verdana", 7F, FontStyle.Bold);
-		internal static readonly SolidBrush LocationBrush = new SolidBrush(SystemColors.ControlText);
+		internal static readonly SolidBrush LocationBrush = new SolidBrush(MainViewOptionables.def_PanelForecolor);
 		#endregion Fields (static)
 
 

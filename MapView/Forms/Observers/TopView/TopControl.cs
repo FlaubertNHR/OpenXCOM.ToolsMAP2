@@ -48,7 +48,7 @@ namespace MapView.Forms.Observers
 		internal static BlobColorTool ToolNorth;
 		internal static BlobColorTool ToolContent;
 
-		internal static readonly SolidBrush PanelFill = new SolidBrush(Color.Transparent);
+		internal static readonly SolidBrush PanelFill = new SolidBrush(TopViewOptionables.def_PanelBackcolor);
 		#endregion Fields (static)
 
 

@@ -141,6 +141,7 @@ namespace MapView.Forms.MainView
 			set { _startrouteview = value; }
 		}
 
+
 		private  const string str_StartTopRouteView = "StartTopRouteView";
 		internal const bool   def_StartTopRouteView = false;
 
@@ -153,7 +154,6 @@ namespace MapView.Forms.MainView
 			get { return _starttoprouteview; }
 			set { _starttoprouteview = value; }
 		}
-
 
 		private const string str_StartTopRoutePage = "StartTopRoutePage";
 		private const int    def_StartTopRoutePage = 0;
@@ -411,7 +411,6 @@ namespace MapView.Forms.MainView
 			}
 		}
 
-
 		internal const string str_SelectedTonerBrightness = "SelectedTonerBrightness";
 		private  const int    def_SelectedTonerBrightness = 5;
 
@@ -464,6 +463,7 @@ namespace MapView.Forms.MainView
 				}
 			}
 		}
+
 
 		internal const string str_OneTileDraw = "OneTileDraw";
 		private  const bool   def_OneTileDraw = false;
@@ -739,7 +739,6 @@ namespace MapView.Forms.MainView
 
 		private const string cat_Global = "Global";
 
-
 		private const string str_BringAllToFront = "BringAllToFront";
 		private const bool   def_BringAllToFront = false;
 
@@ -757,6 +756,7 @@ namespace MapView.Forms.MainView
 			set { _bringAllToFront = value; }
 		}
 
+
 		private const string str_Base1_xy = "Base1_xy";
 		private const bool   def_Base1_xy = false;
 
@@ -770,7 +770,6 @@ namespace MapView.Forms.MainView
 			get { return _base1_xy; }
 			set { _base1_xy = value; }
 		}
-
 
 		private const string str_Base1_z = "Base1_z";
 		private const bool   def_Base1_z = false;
@@ -875,9 +874,8 @@ namespace MapView.Forms.MainView
 			set { _panelBackcolor = value; }
 		}
 
-
-		private const string str_PanelForecolor = "PanelForecolor";
-		private static Color def_PanelForecolor = SystemColors.ControlText;
+		private  const string str_PanelForecolor = "PanelForecolor";
+		internal static Color def_PanelForecolor = SystemColors.ControlText;
 
 		private Color _panelForecolor = def_PanelForecolor;
 		[Category(cat_PanelColors)]
@@ -890,8 +888,8 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_TreeBackcolor = "TreeBackcolor";
-		private static Color def_TreeBackcolor = SystemColors.Control;
+		private  const string str_TreeBackcolor = "TreeBackcolor";
+		internal static Color def_TreeBackcolor = SystemColors.Control;
 
 		private Color _treeBackcolor = def_TreeBackcolor;
 		[Category(cat_PanelColors)]
@@ -902,7 +900,6 @@ namespace MapView.Forms.MainView
 			get { return _treeBackcolor; }
 			set { _treeBackcolor = value; }
 		}
-
 
 		private const string str_TreeForecolor = "TreeForecolor";
 		private static Color def_TreeForecolor = SystemColors.ControlText;
@@ -916,7 +913,6 @@ namespace MapView.Forms.MainView
 			get { return _treeForecolor; }
 			set { _treeForecolor = value; }
 		}
-
 
 		private const string str_TreeForecolorInvalidFile = "TreeForecolorInvalidFile";
 		private static Color def_TreeForecolorInvalidFile = Color.Crimson;
@@ -932,8 +928,8 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_TreenodeSelectedBordercolor = "TreenodeSelectedBordercolor";
-		private static Color def_TreenodeSelectedBordercolor = Color.SlateBlue;
+		private  const string str_TreenodeSelectedBordercolor = "TreenodeSelectedBordercolor";
+		internal static Color def_TreenodeSelectedBordercolor = Color.SlateBlue;
 
 		private Color _treenodeSelectedBordercolor = def_TreenodeSelectedBordercolor;
 		[Category(cat_PanelColors)]
@@ -946,8 +942,8 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_TreenodeSelectedBackcolor_foc = "TreenodeSelectedBackcolor_foc";
-		private static Color def_TreenodeSelectedBackcolor_foc = Color.BurlyWood;
+		private  const string str_TreenodeSelectedBackcolor_foc = "TreenodeSelectedBackcolor_foc";
+		internal static Color def_TreenodeSelectedBackcolor_foc = Color.BurlyWood;
 
 		private Color _treenodeSelectedBackcolor_foc = def_TreenodeSelectedBackcolor_foc;
 		[Category(cat_PanelColors)]
@@ -959,9 +955,8 @@ namespace MapView.Forms.MainView
 			set { _treenodeSelectedBackcolor_foc = value; }
 		}
 
-
-		private const string str_TreenodeSelectedBackcolor_unf = "TreenodeSelectedBackcolor_unf";
-		private static Color def_TreenodeSelectedBackcolor_unf = Color.PeachPuff;
+		private  const string str_TreenodeSelectedBackcolor_unf = "TreenodeSelectedBackcolor_unf";
+		internal static Color def_TreenodeSelectedBackcolor_unf = Color.PeachPuff;
 
 		private Color _treenodeSelectedBackcolor_unf = def_TreenodeSelectedBackcolor_unf;
 		[Category(cat_PanelColors)]
@@ -974,8 +969,8 @@ namespace MapView.Forms.MainView
 		}
 
 
-		private const string str_TreenodeSearchedBackcolor_foc = "TreenodeSearchedBackcolor_foc";
-		private static Color def_TreenodeSearchedBackcolor_foc = Color.LightSteelBlue;
+		private  const string str_TreenodeSearchedBackcolor_foc = "TreenodeSearchedBackcolor_foc";
+		internal static Color def_TreenodeSearchedBackcolor_foc = Color.LightSteelBlue;
 
 		private Color _treenodeSearchedBackcolor_foc = def_TreenodeSearchedBackcolor_foc;
 		[Category(cat_PanelColors)]
@@ -987,9 +982,8 @@ namespace MapView.Forms.MainView
 			set { _treenodeSearchedBackcolor_foc = value; }
 		}
 
-
-		private const string str_TreenodeSearchedBackcolor_unf = "TreenodeSearchedBackcolor_unf";
-		private static Color def_TreenodeSearchedBackcolor_unf = Color.PaleTurquoise;
+		private  const string str_TreenodeSearchedBackcolor_unf = "TreenodeSearchedBackcolor_unf";
+		internal static Color def_TreenodeSearchedBackcolor_unf = Color.PaleTurquoise;
 
 		private Color _treenodeSearchedBackcolor_unf = def_TreenodeSearchedBackcolor_unf;
 		[Category(cat_PanelColors)]

@@ -321,11 +321,10 @@ namespace MapView.Forms.Observers
 		/// Coordinates the <c>BackColor</c> between TopView and
 		/// TopRouteView(Top).
 		/// </summary>
-		/// <param name="color"></param>
-		internal static void SetBackcolorCoordinator(Color color)
+		internal static void SetBackcolorCoordinator()
 		{
 			ObserverManager.TopView     .Control   .QuadrantControl.BackColor =
-			ObserverManager.TopRouteView.ControlTop.QuadrantControl.BackColor = color;
+			ObserverManager.TopRouteView.ControlTop.QuadrantControl.BackColor = TopView.Optionables.QuadrantBackcolor;
 		}
 		#endregion Methods (static)
 	}

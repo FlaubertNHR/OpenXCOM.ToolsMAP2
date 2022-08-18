@@ -110,16 +110,16 @@ namespace MapView
 		internal static bool Dontdrawyougits;
 
 
-		internal static readonly Pen        TreenodeLine_def    = new Pen(SystemColors.Control);
-		internal static readonly SolidBrush TreenodeFill_def    = new SolidBrush(SystemColors.Control);
+		internal static readonly Pen        TreenodeLine_def    = new Pen(       MainViewOptionables.def_TreeBackcolor);
+		internal static readonly SolidBrush TreenodeFill_def    = new SolidBrush(MainViewOptionables.def_TreeBackcolor);
 
-		internal static readonly Pen        TreenodeLine_sel    = new Pen(Color.SlateBlue);
+		internal static readonly Pen        TreenodeLine_sel    = new Pen(       MainViewOptionables.def_TreenodeSelectedBordercolor);
 
-		internal static readonly SolidBrush TreenodeFill_selfoc = new SolidBrush(Color.BurlyWood);
-		internal static readonly SolidBrush TreenodeFill_selunf = new SolidBrush(Color.PeachPuff);
+		internal static readonly SolidBrush TreenodeFill_selfoc = new SolidBrush(MainViewOptionables.def_TreenodeSelectedBackcolor_foc);
+		internal static readonly SolidBrush TreenodeFill_selunf = new SolidBrush(MainViewOptionables.def_TreenodeSelectedBackcolor_unf);
 
-		internal static readonly SolidBrush TreenodeFill_serfoc = new SolidBrush(Color.LightSteelBlue);
-		internal static readonly SolidBrush TreenodeFill_serunf = new SolidBrush(Color.PaleTurquoise);
+		internal static readonly SolidBrush TreenodeFill_serfoc = new SolidBrush(MainViewOptionables.def_TreenodeSearchedBackcolor_foc);
+		internal static readonly SolidBrush TreenodeFill_serunf = new SolidBrush(MainViewOptionables.def_TreenodeSearchedBackcolor_unf);
 		#endregion Fields (static)
 
 

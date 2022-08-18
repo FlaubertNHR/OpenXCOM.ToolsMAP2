@@ -355,8 +355,8 @@ namespace MapView.Forms.Observers
 
 		private const string cat_PanelColors = "PanelColors";
 
-		private const string str_PanelBackcolor = "PanelBackcolor";
-		private static Color def_PanelBackcolor = Color.Transparent;
+		private  const string str_PanelBackcolor = "PanelBackcolor";
+		internal static Color def_PanelBackcolor = Color.Transparent;
 
 		private Color _panelBackcolor = def_PanelBackcolor;
 		[Category(cat_PanelColors)]
@@ -369,8 +369,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_PanelForecolor = "PanelForecolor";
-		private static Color def_PanelForecolor = SystemColors.ControlText;
+		private  const string str_PanelForecolor = "PanelForecolor";
+		internal static Color def_PanelForecolor = SystemColors.ControlText;
 
 		private Color _panelForecolor = def_PanelForecolor;
 		[Category(cat_PanelColors)]
@@ -383,8 +383,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_QuadrantForecolor = "QuadrantForecolor";
-		private static Color def_QuadrantForecolor = SystemColors.ControlText;
+		private  const string str_QuadrantForecolor = "QuadrantForecolor";
+		internal static Color def_QuadrantForecolor = SystemColors.ControlText;
 
 		private Color _quadrantForecolor = def_QuadrantForecolor;
 		[Category(cat_PanelColors)]
@@ -411,8 +411,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_QuadrantSelected = "QuadrantSelected";
-		private static Color def_QuadrantSelected = Color.PowderBlue;
+		private  const string str_QuadrantSelected = "QuadrantSelected";
+		internal static Color def_QuadrantSelected = Color.PowderBlue;
 
 		private Color _quadrantSelected = def_QuadrantSelected;
 		[Category(cat_PanelColors)]
@@ -425,8 +425,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_QuadrantDisabled = "QuadrantDisabled";
-		private static Color def_QuadrantDisabled = Color.LightGray;
+		private  const string str_QuadrantDisabled = "QuadrantDisabled";
+		internal static Color def_QuadrantDisabled = Color.LightGray;
 
 		private Color _quadrantDisabled = def_QuadrantDisabled;
 		[Category(cat_PanelColors)]
@@ -439,8 +439,8 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_QuadrantBorder = "QuadrantBorder";
-		private static Color def_QuadrantBorder = SystemColors.ControlText;
+		private  const string str_QuadrantBorder = "QuadrantBorder";
+		internal static Color def_QuadrantBorder = SystemColors.ControlText;
 
 		private Color _quadrantBorder = def_QuadrantBorder;
 		[Category(cat_PanelColors)]
@@ -561,7 +561,8 @@ namespace MapView.Forms.Observers
 					break;
 
 				case str_QuadrantBackcolor:
-					QuadrantControl.SetBackcolorCoordinator(QuadrantBackcolor = (Color)val);
+					QuadrantBackcolor = (Color)val;
+					QuadrantControl.SetBackcolorCoordinator();
 					break;
 
 				case str_QuadrantSelected:
