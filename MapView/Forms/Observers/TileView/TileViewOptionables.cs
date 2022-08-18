@@ -39,7 +39,7 @@ namespace MapView.Forms.Observers
 			Color.IndianRed,		//  2 - PowerSource		IonBeamAccel
 			Color.Turquoise,		//  3 - Navigation
 			Color.Khaki,			//  4 - Construction
-			Color.Snow,				//  5 - Food			Cryo
+			Color.LavenderBlush,	//  5 - Food			Cryo
 			Color.Aquamarine,		//  6 - Reproduction	Clon
 			Color.DeepSkyBlue,		//  7 - Entertainment	LearnArrays
 			Color.Thistle,			//  8 - Surgery			Implant
@@ -131,8 +131,8 @@ Color of TFTD Alien Sub Construction parts
 		[Category(cat_SpecialPropertyColors)]
 		[Description(@"Color of UFO Alien Food parts
 Color of TFTD Alien Cryogenics parts
-(default Snow)")]
-		[DefaultValue(typeof(Color), "Snow")]
+(default LavenderBlush)")]
+		[DefaultValue(typeof(Color), "LavenderBlush")]
 		public Color Food
 		{
 			get { return _colorFood; }
@@ -281,6 +281,89 @@ The path specified can be used to start an application or to open a specified"
 				_descriptionHeight = value;
 			}
 		}
+
+
+
+		private const string cat_PanelColors = "PanelColors";
+
+		private const string str_PanelBackcolor = "PanelBackcolor";
+		private static Color def_PanelBackcolor = SystemColors.Control;
+
+		private Color _panelBackcolor = def_PanelBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the panel background (default System.Control")]
+		[DefaultValue(typeof(Color), "Control")]
+		public Color PanelBackcolor
+		{
+			get { return _panelBackcolor; }
+			set { _panelBackcolor = value; }
+		}
+
+
+		private  const string str_GridLineColor = "GridLineColor";
+		internal static Color def_GridLineColor = SystemColors.ControlText;
+
+		private Color _gridLineColor = def_GridLineColor;
+		[Category(cat_PanelColors)]
+		[Description("Color of the grid lines (default System.ControlText")]
+		[DefaultValue(typeof(Color), "ControlText")]
+		public Color GridLineColor
+		{
+			get { return _gridLineColor; }
+			set { _gridLineColor = value; }
+		}
+
+
+		private  const string str_SelectedPartBorderColor = "SelectedPartBorderColor";
+		internal static Color def_SelectedPartBorderColor = Color.Red;
+
+		private Color _selectedPartBorderColor = def_SelectedPartBorderColor;
+		[Category(cat_PanelColors)]
+		[Description("Color for the border of the currently selected tilepart (default Red")]
+		[DefaultValue(typeof(Color), "Red")]
+		public Color SelectedPartBorderColor
+		{
+			get { return _selectedPartBorderColor; }
+			set { _selectedPartBorderColor = value; }
+		}
+
+		private  const string str_SelectedPartBorderWidth = "SelectedPartBorderWidth";
+		internal const int    def_SelectedPartBorderWidth = 3;
+
+		private int _selectedPartBorderWidth = def_SelectedPartBorderWidth;
+		[Category(cat_PanelColors)]
+		[Description("Width of the border of the currently selected tile in pixels (1..5 default 3)")]
+		[DefaultValue(def_SelectedPartBorderWidth)]
+		public int SelectedPartBorderWidth
+		{
+			get { return _selectedPartBorderWidth; }
+			set
+			{
+				if (TileView._foptions == null) // on load
+				{
+					TileView.Options[str_SelectedPartBorderWidth].Value =
+					_selectedPartBorderWidth = value.Viceroy(1,5);
+				}
+				else if ((_selectedPartBorderWidth = value.Viceroy(1,5)) != value) // on user-changed
+				{
+					TileView.Options[str_SelectedPartBorderWidth].Value = _selectedPartBorderWidth;
+				}
+			}
+		}
+
+
+		private  const string str_EraserBackcolor = "EraserBackcolor";
+		internal static Color def_EraserBackcolor = Color.AliceBlue;
+
+		private Color _eraserBackcolor = def_EraserBackcolor;
+		[Category(cat_PanelColors)]
+		[Description("Color for the background of the eraser (default AliceBlue")]
+		[DefaultValue(typeof(Color), "AliceBlue")]
+		public Color EraserBackcolor
+		{
+			get { return _eraserBackcolor; }
+			set { _eraserBackcolor = value; }
+		}
 		#endregion Properties (optionable)
 
 
@@ -313,11 +396,57 @@ The path specified can be used to start an application or to open a specified"
 			options.CreateOptionDefault(ExternalProcessService.PROCESS, String.Empty, OnExternalProcessChanged);
 
 			options.CreateOptionDefault(str_DescriptionHeight, def_DescriptionHeight, OnDescriptionHeightChanged);
+
+
+			changer = OnPanelColorChanged;
+
+			options.CreateOptionDefault(str_PanelBackcolor,          def_PanelBackcolor,          changer);
+			options.CreateOptionDefault(str_GridLineColor,           def_GridLineColor,           changer);
+			options.CreateOptionDefault(str_SelectedPartBorderColor, def_SelectedPartBorderColor, changer);
+			options.CreateOptionDefault(str_SelectedPartBorderWidth, def_SelectedPartBorderWidth, changer);
+			options.CreateOptionDefault(str_EraserBackcolor,         def_EraserBackcolor,         changer);
 		}
 		#endregion Methods
 
 
 		#region Events
+		/// <summary>
+		/// Changes the colors of TopView's panels. Invalidates the current
+		/// panel if req'd.
+		/// </summary>
+		/// <param name="key">one of the standard keys of an optionable</param>
+		/// <param name="val">the value to set it to</param>
+		private void OnPanelColorChanged(string key, object val)
+		{
+			//Logfile.Log("TileViewOptionables.OnPanelColorChanged() key= " + key);
+
+			switch (key)
+			{
+				case str_PanelBackcolor:
+					PanelBackcolor = (Color)val;
+					ObserverManager.TileView.Control.SetPanelsBackcolor();
+					return;
+
+				case str_GridLineColor:
+					TilePanel.GridLineBrush.Color = (GridLineColor = (Color)val);
+					break;
+
+				case str_SelectedPartBorderColor:
+					TilePanel.SelectedPartBorder.Color = (SelectedPartBorderColor = (Color)val);
+					break;
+
+				case str_SelectedPartBorderWidth:
+					TilePanel.SelectedPartBorder.Width = (SelectedPartBorderWidth = (int)val);
+					break;
+
+				case str_EraserBackcolor:
+					TilePanel.Eraser.Color = (EraserBackcolor = (Color)val);
+					break;
+			}
+
+			ObserverManager.TileView.Control.GetSelectedPanel().Invalidate();
+		}
+
 		/// <summary>
 		/// Sets a color for a <see cref="TilePanel.SpecialBrushes">SpecialBrush</see>
 		/// and invalidates the current <see cref="TileView"/> panel.

@@ -23,11 +23,9 @@ namespace MapView.Forms.Observers
 		internal static void DisposePanels()
 		{
 			//DSShared.Logfile.Log("TilePanel.DisposePanels() static");
-			if (PenSelectedPartBorder != null)
-			{
-				PenSelectedPartBorder.Dispose();
-				PenSelectedPartBorder = null;
-			}
+			GridLineBrush     .Dispose();
+			SelectedPartBorder.Dispose();
+			Eraser            .Dispose();
 		}
 
 /*		#region IDisposable interface
@@ -163,11 +161,10 @@ namespace MapView.Forms.Observers
 		internal static readonly Dictionary<SpecialType, SolidBrush> SpecialBrushes =
 							 new Dictionary<SpecialType, SolidBrush>();
 
-		/// <summary>
-		/// The pen used to draw a highlighted border around the
-		/// <c><see cref="SelectedTilepart"/></c>.
-		/// </summary>
-		private static Pen PenSelectedPartBorder = new Pen(Color.Red, 3);
+		internal static readonly Pen GridLineBrush      = new Pen(  TileViewOptionables.def_GridLineColor);
+		internal static readonly Pen SelectedPartBorder = new Pen(  TileViewOptionables.def_SelectedPartBorderColor,
+																    TileViewOptionables.def_SelectedPartBorderWidth);
+		internal static readonly SolidBrush Eraser = new SolidBrush(TileViewOptionables.def_EraserBackcolor);
 
 		internal const string Door = "door";
 		internal static int TextWidth;
@@ -641,7 +638,7 @@ namespace MapView.Forms.Observers
 					}
 					else // draw the eraser ->
 					{
-						graphics.FillRectangle(Brushes.AliceBlue, rectOuter);
+						graphics.FillRectangle(Eraser, rectOuter);
 						graphics.DrawImage(
 										MainViewF.MonotoneSprites[QuadrantDrawService.MonoTONE_ERASER].Sprite,
 										L,T);
@@ -656,28 +653,25 @@ namespace MapView.Forms.Observers
 									Width - _scrollBar.Width - 1, 0,
 									Width - _scrollBar.Width - 1, Height);
 
-				graphics.FillRectangle(
-									Brushes.Black,
-									TableOffset - 1,
-									TableOffset + _startY - 1,
-									1,1); // so bite me.
+				graphics.DrawLine(GridLineBrush, TableOffset - 1, TableOffset + _startY,
+												 TableOffset,     TableOffset + _startY);
 
 				int height = GetTableHeight();
 
 				for (int i = 0; i <= _tilesX; ++i)								// draw vertical lines
 					graphics.DrawLine(
-									Pens.Black,
+									GridLineBrush,
 									TableOffset + SpriteWidth * i, TableOffset + _startY,
 									TableOffset + SpriteWidth * i, /*TableOffset +*/ _startY + height);
 
 				for (int i = 0; i <= height; i += SpriteHeight)					// draw horizontal lines
 					graphics.DrawLine(
-									Pens.Black,
+									GridLineBrush,
 									TableOffset,                         TableOffset + _startY + i,
 									TableOffset + SpriteWidth * _tilesX, TableOffset + _startY + i);
 
 				graphics.DrawRectangle(											// draw selected rectangle
-									PenSelectedPartBorder,
+									SelectedPartBorder,
 									TableOffset + _id % _tilesX * SpriteWidth,
 									TableOffset + _id / _tilesX * SpriteHeight + _startY,
 									SpriteWidth, SpriteHeight);

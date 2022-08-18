@@ -733,6 +733,7 @@ namespace MapView.Forms.Observers
 					 + "  setId " + part.SetId;
 			}
 			tsslOver.Text = info;
+			ssStatus.Refresh(); // fast update for if the Options panel is open and focused.
 		}
 
 		/// <summary>
@@ -756,6 +757,15 @@ namespace MapView.Forms.Observers
 		internal TilePanel GetSelectedPanel()
 		{
 			return _panels[tcPartTypes.SelectedIndex];
+		}
+
+		/// <summary>
+		/// Sets <c>BackColor</c> for all panels.
+		/// </summary>
+		internal void SetPanelsBackcolor()
+		{
+			foreach (var panel in _panels)
+				panel.BackColor = Optionables.PanelBackcolor;
 		}
 		#endregion Methods
 	}
