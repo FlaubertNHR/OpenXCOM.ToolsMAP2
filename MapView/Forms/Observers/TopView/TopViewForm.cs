@@ -26,7 +26,7 @@ namespace MapView.Forms.Observers
 		/// Gets/Sets <c><see cref="TopView"/></c>.
 		/// </summary>
 		internal TopView Control
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 

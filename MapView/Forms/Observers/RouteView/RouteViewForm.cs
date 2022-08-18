@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 		/// Gets/Sets <c><see cref="RouteView"/></c>.
 		/// </summary>
 		internal RouteView Control
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 

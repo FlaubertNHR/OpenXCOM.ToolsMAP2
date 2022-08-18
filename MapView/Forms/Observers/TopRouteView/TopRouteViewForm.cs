@@ -34,13 +34,13 @@ namespace MapView.Forms.Observers
 		/// Gets/Sets <c><see cref="TopView"/></c>.
 		/// </summary>
 		internal TopView ControlTop
-		{ get; set; }
+		{ get; private set; }
 
 		/// <summary>
 		/// Gets/Sets <c><see cref="RouteView"/></c>.
 		/// </summary>
 		internal RouteView ControlRoute
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 

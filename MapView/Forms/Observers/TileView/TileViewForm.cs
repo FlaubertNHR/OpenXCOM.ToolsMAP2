@@ -24,7 +24,7 @@ namespace MapView.Forms.Observers
 		/// Gets/Sets <c><see cref="TileView"/></c>.
 		/// </summary>
 		internal TileView Control
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 
@@ -54,8 +54,6 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Add(this);
 
 			Control.GetSelectedPanel().Focus();
-
-//			base.OnActivated(e);
 		}
 
 		/// <summary>
