@@ -197,12 +197,11 @@ namespace MapView
 
 		/// <summary>
 		/// Gets a contrasting color based on the input color.
-		/// See also
-		/// <c><see cref="XCom.Palette">Palette.CreateTonescaledPalettes()</see></c>.
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
 		/// <remarks>Does not check alpha.</remarks>
+		/// <seealso cref="XCom.Palette"><c>XCom.Palette.CreateTonescaledPalettes()</c></seealso>
 		private static Color GetTextColor(Color color)
 		{
 			if ((int)color.R + color.G + color.B > 485)
