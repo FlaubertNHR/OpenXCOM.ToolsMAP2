@@ -1376,18 +1376,21 @@ namespace MapView
 
 
 				Rectangle rect = e.Bounds;
+				rect.Width += 30;
+				graphics.FillRectangle(TreenodeFill_def, rect);	// draw over TreeView's glitchy default node-selection rect.
+				rect.Width -= 30;
 
 				int w = TextRenderer.MeasureText(node.Text, node.TreeView.Font).Width;
 				while (w / 70 != 0) { ++rect.Width; w -= 70; }
 
-				rect.Width += 3;						// conceal .NET glitch.
+				rect.Width  += 3;								// widen the custom node-selection rect a bit.
+				rect.Height -= 1;								// keep border inside bot-bound
 				graphics.FillRectangle(colorfill, rect);
-				rect.Height -= 1;						// keep border inside bounds
 				graphics.DrawRectangle(colorline, rect);
 
 				rect = e.Bounds;
 
-				rect.X += 2;							// re-align text due to .NET glitch.
+				rect.X += 2;									// re-align text due to .net glitch.
 				TextRenderer.DrawText(
 									graphics,
 									node.Text,
