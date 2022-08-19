@@ -52,7 +52,8 @@ namespace MapView
 
 		#region Fields
 		/// <summary>
-		/// The viewer that this belongs to as an <c><see cref="OptionableType"/></c>.
+		/// The viewer that this belongs to as an
+		/// <c><see cref="OptionableType"/></c>.
 		/// </summary>
 		private OptionableType _oType;
 
@@ -123,6 +124,8 @@ namespace MapView
 
 			RegistryInfo.RegisterProperties(this); // NOTE: 1 metric for all four types
 			_init = false;
+
+			ActiveControl = propertyGrid;
 		}
 		#endregion cTor
 
@@ -174,7 +177,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Handles this form's VisibleChanged event.
+		/// Handles this form's <c>VisibleChanged</c> event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
