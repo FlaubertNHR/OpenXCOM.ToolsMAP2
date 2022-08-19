@@ -137,9 +137,6 @@ namespace DSShared
 
 		/// <summary>
 		/// Gets the registry-label of a specified Form.
-		/// TODO: MCDInfo, MapInfo, McdRecordsExceeded, etc etc. RouteInfo, RouteCheckInfobox ...
-		/// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
-		/// TODO: PckView's BytesViewer
 		/// </summary>
 		/// <param name="f">a form for which to get the registry-label</param>
 		/// <returns>the registry-label or null if not found</returns>
@@ -149,6 +146,10 @@ namespace DSShared
 		/// types in "settings/MapViewers.yml".</remarks>
 		public static string GetRegistryLabel(Control f)
 		{
+			// TODO: MCDInfo, MapInfo, McdRecordsExceeded, etc etc. RouteInfo, RouteCheckInfobox ...
+			// TODO: McdView's Spriteset, ScanGset, LoFTset viewers.
+			// TODO: PckView's BytesViewer
+
 			switch (f.Name) // <- not a wise practice.
 			{
 				case "MainViewF":        return MainView;		// is in manifest
