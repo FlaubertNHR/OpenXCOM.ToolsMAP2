@@ -15,8 +15,7 @@ namespace MapView
 {
 	/// <summary>
 	/// A simplistic presentation of the XCOM MiniMap.
-	/// 
-	/// 
+	/// <br/><br/>
 	/// A ScanG entry is 4x4 pixels and represents an overhead view of a single
 	/// tile of the Map. The floor-part is drawn first, followed by the
 	/// westwall-part, the northwall-part, and finally the content-part.
