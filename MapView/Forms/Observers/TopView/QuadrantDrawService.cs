@@ -86,8 +86,6 @@ namespace MapView.Forms.Observers
 
 		private static Graphics _graphics;
 		private static bool _inited;
-
-		private static IList<Brush> _brushes;
 		#endregion Fields (static)
 
 
@@ -261,16 +259,6 @@ namespace MapView.Forms.Observers
 
 			// draw the sprites
 			int phase = MainViewUnderlay.Phase;
-
-			if (MainViewF.Optionables.UseMono)
-			{
-				if (MainViewF.that.MapFile.Descriptor.GroupType == GroupType.Tftd)
-					_brushes = Palette.BrushesTftdBattle;
-				else
-					_brushes = Palette.BrushesUfoBattle;
-			}
-
-
 			Tilepart part;
 
 			// Floor ->
@@ -359,7 +347,7 @@ namespace MapView.Forms.Observers
 					if ((palid = bindata[++i]) != Palette.Tid)
 					{
 						_graphics.FillRectangle(
-											_brushes[palid],
+											Palette.MonoBrushes[palid],
 											x + StartX + offset_x,
 											y + StartY - offset_y,
 											1,1);
@@ -401,7 +389,7 @@ namespace MapView.Forms.Observers
 					if ((palid = bindata[++i]) != Palette.Tid)
 					{
 						_graphics.FillRectangle(
-											_brushes[palid],
+											Palette.MonoBrushes[palid],
 											x + StartX + offset_x,
 											y + StartY,
 											1,1);

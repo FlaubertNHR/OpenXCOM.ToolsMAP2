@@ -86,14 +86,6 @@ namespace MapView.Forms.MainView
 		/// </summary>
 		private int _row = -1;
 
-		/// <summary>
-		/// A list of <c>SolidBrushes</c> used to draw sprites using
-		/// <c><see cref="XCImage"></see>._bindata</c> for Mono.
-		/// </summary>
-		/// <remarks>Can be either <c>Palette.BrushesUfoBattle</c> or
-		/// <c>Palette.BrushesTftdBattle</c>.</remarks>
-		private IList<Brush> _brushes;
-
 
 		private Timer _t1 = new Timer();
 		private int _phase;
@@ -260,17 +252,6 @@ namespace MapView.Forms.MainView
 
 				_copy.isDescriptor = false;
 			}
-		}
-
-		/// <summary>
-		/// Sets the <c>SolidBrushes</c> to use when drawing in Mono.
-		/// </summary>
-		/// <param name="brushes"></param>
-		/// <remarks>Can be either <c>Palette.BrushesUfoBattle</c> or
-		/// <c>Palette.BrushesTftdBattle</c>.</remarks>
-		internal void SetMonoBrushes(IList<Brush> brushes)
-		{
-			_brushes = brushes;
 		}
 		#endregion Methods
 
@@ -2053,7 +2034,7 @@ namespace MapView.Forms.MainView
 				if (palid != Palette.Tid) // <- this is the fix for Mono.
 				{
 					_graphics.FillRectangle(
-										_brushes[palid],
+										Palette.MonoBrushes[palid],
 										x + (int)(w * Globals.Scale),
 										y + (int)(h * Globals.Scale),
 										_d, _d);

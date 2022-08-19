@@ -561,17 +561,6 @@ namespace MapView.Forms.Observers
 					rectInner.Height = Spriteset.SpriteHeight40;
 				}
 
-				IList<Brush> brushes; // TODO: set these when the Mapfile loads
-				if (MainViewF.Optionables.UseMono)
-				{
-					if (MainViewF.that.MapFile.Descriptor.GroupType == GroupType.Tftd)
-						brushes = Palette.BrushesTftdBattle;
-					else
-						brushes = Palette.BrushesUfoBattle;
-				}
-				else
-					brushes = null;
-
 				int x = 0;
 				int y = 0;
 				int L,T; // left,top
@@ -606,7 +595,7 @@ namespace MapView.Forms.Observers
 									if ((palid = bindata[++i]) != Palette.Tid)
 									{
 										graphics.FillRectangle(
-															brushes[palid],
+															Palette.MonoBrushes[palid],
 															L + w + 2,
 															T + h + 2,
 															1,1);

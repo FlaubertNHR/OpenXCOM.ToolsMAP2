@@ -3270,12 +3270,12 @@ namespace MapView
 						if (descriptor.GroupType == GroupType.Tftd)
 						{
 							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
-							_overlay.SetMonoBrushes(Palette.BrushesTftdBattle); // used by Mono only
+							Palette.MonoBrushes = Palette.BrushesTftdBattle; // used by Mono only
 						}
 						else // default to ufo-battle palette
 						{
 							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
-							_overlay.SetMonoBrushes(Palette.BrushesUfoBattle); // used by Mono only
+							Palette.MonoBrushes = Palette.BrushesUfoBattle; // used by Mono only
 						}
 
 

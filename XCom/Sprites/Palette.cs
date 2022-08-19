@@ -272,6 +272,18 @@ namespace XCom
 		{
 			get { return _brushesTftdBattle; }
 		}
+
+		/// <summary>
+		/// Brushes for Mono builds.
+		/// </summary>
+		/// <remarks>Used by
+		/// <list type="bullet">
+		/// <item><c>MainViewOverlay</c></item>
+		/// <item><c>TilePanel</c></item>
+		/// <item><c>QuadrantDrawService</c></item>
+		/// </list></remarks>
+		public static IList<Brush> MonoBrushes
+		{ get; set; }
 		#endregion Properties (static)
 
 
