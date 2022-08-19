@@ -97,6 +97,8 @@ namespace MapView.Forms.Observers
 			QuadrantControl = new QuadrantControl();
 			Controls.Add(QuadrantControl);
 
+			QuadrantDrawService.SetTopViewControl(this);
+
 			TopControl = new TopControl(this);
 			TopControl.Dock = DockStyle.Fill;
 

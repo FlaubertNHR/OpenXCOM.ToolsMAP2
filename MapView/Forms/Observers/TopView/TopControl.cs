@@ -275,7 +275,9 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Overrides DoubleBufferedControl.OnPaintControl() - ie, OnPaint().
+		/// Overrides
+		/// <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaintControl()</see></c>
+		/// - ie. <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaint()</see></c>.
 		/// </summary>
 		/// <param name="graphics"></param>
 		protected override void OnPaintControl(Graphics graphics)
@@ -353,8 +355,7 @@ namespace MapView.Forms.Observers
 					_graphics.DrawPath(TopPens[TopViewOptionables.str_SelectorColor], _lozSelector);
 
 					// print mouseover location ->
-					QuadrantDrawService.SetGraphics(_graphics);
-					QuadrantDrawService.PrintSelectorLocation(_loc, Width, Height, _file);
+					QuadrantDrawService.PrintSelectorLocation(_graphics, _loc, Width, Height, _file);
 				}
 
 				// draw tiles-selected lozenge ->

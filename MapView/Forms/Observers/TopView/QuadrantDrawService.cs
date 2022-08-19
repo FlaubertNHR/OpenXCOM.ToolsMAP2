@@ -85,7 +85,7 @@ namespace MapView.Forms.Observers
 		private static TopView TopViewControl;
 
 		private static Graphics _graphics;
-		private static bool _inited;
+		private static bool _init;
 		#endregion Fields (static)
 
 
@@ -197,12 +197,33 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Sets the graphics object.
+		/// Sets <c><see cref="TopViewControl"/></c>.
+		/// </summary>
+		internal static void SetTopViewControl(TopView control)
+		{
+			TopViewControl = control;
+		}
+
+
+		/// <summary>
+		/// Sets the graphics object and stuff.
 		/// </summary>
 		/// <param name="graphics"></param>
 		internal static void SetGraphics(Graphics graphics)
 		{
 			_graphics = graphics;
+
+			if (!_init)
+			{
+				_init = true;
+
+				TextWidth_door    = (int)_graphics.MeasureString(Door,    QuadrantFont).Width;
+				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   QuadrantFont).Width;
+				TextWidth_west    = (int)_graphics.MeasureString(West,    QuadrantFont).Width;
+				TextWidth_north   = (int)_graphics.MeasureString(North,   QuadrantFont).Width;
+				TextWidth_content = (int)_graphics.MeasureString(Content, QuadrantFont).Width;
+				TextWidth_part    = (int)_graphics.MeasureString(Part,    QuadrantFont).Width;
+			}
 		}
 
 		/// <summary>
@@ -215,21 +236,6 @@ namespace MapView.Forms.Observers
 				PartType partType)
 		{
 			if (MainViewF.Dontdrawyougits) return;
-
-			if (!_inited) // TODO: break that out ->
-			{
-				_inited = true;
-
-				TopViewControl = ObserverManager.TopView.Control;
-
-				TextWidth_door    = (int)_graphics.MeasureString(Door,    QuadrantFont).Width;
-				TextWidth_floor   = (int)_graphics.MeasureString(Floor,   QuadrantFont).Width;
-				TextWidth_west    = (int)_graphics.MeasureString(West,    QuadrantFont).Width;
-				TextWidth_north   = (int)_graphics.MeasureString(North,   QuadrantFont).Width;
-				TextWidth_content = (int)_graphics.MeasureString(Content, QuadrantFont).Width;
-				TextWidth_part    = (int)_graphics.MeasureString(Part,    QuadrantFont).Width;
-			}
-
 
 			// fill the background of the quad-slots
 			Brush brush;
@@ -479,12 +485,14 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Prints the selector's current tile location.
 		/// </summary>
+		/// <param name="graphics"></param>
 		/// <param name="location"></param>
 		/// <param name="panelwidth">the width of TopControl</param>
 		/// <param name="panelheight">the width of TopControl</param>
 		/// <param name="file"></param>
 		/// <remarks>This is called by <see cref="TopControl"/>.</remarks>
 		internal static void PrintSelectorLocation(
+				Graphics graphics,
 				Point location,
 				int panelwidth,
 				int panelheight,
@@ -498,7 +506,7 @@ namespace MapView.Forms.Observers
 
 			int x = panelwidth - TextRenderer.MeasureText(loc, LocationFont).Width;
 			int y = panelheight - 20;
-			_graphics.DrawString(
+			graphics.DrawString(
 							loc,
 							LocationFont,
 							SelectorBrush,
