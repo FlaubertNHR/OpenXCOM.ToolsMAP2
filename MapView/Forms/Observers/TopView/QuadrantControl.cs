@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -205,17 +204,15 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Overrides
-		/// <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaintControl()</see></c>
-		/// - ie. <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaint()</see></c>.
+		/// Overrides the <c>Paint</c> event.
 		/// </summary>
-		/// <param name="graphics"></param>
-		/// <remarks>Calls the draw-function in
-		/// <c><see cref="QuadrantDrawService"/></c>.</remarks>
-		protected override void OnPaintControl(Graphics graphics)
+		/// <param name="e"></param>
+		/// <remarks>Passes all paint-duties to
+		/// <c><see cref="QuadrantDrawService"/></c> - because why not.</remarks>
+		protected override void OnPaint(PaintEventArgs e)
 		{
-			QuadrantDrawService.SetGraphics(graphics);
-			QuadrantDrawService.Draw(Tile, SelectedQuadrant);
+			QuadrantDrawService.SetGraphics(e.Graphics);
+			QuadrantDrawService.Paint(Tile, SelectedQuadrant);
 
 			if (SelectedLocation != null)
 				QuadrantDrawService.PrintSelectedLocation(SelectedLocation, Width);

@@ -274,15 +274,16 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlTop.TopControl.ClearSelectorLozenge();
 		}
 
+
 		/// <summary>
-		/// Overrides
-		/// <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaintControl()</see></c>
-		/// - ie. <c><see cref="DSShared.Controls.DoubleBufferedControl">DoubleBufferedControl.OnPaint()</see></c>.
+		/// Overrides the <c>Paint</c> event.
 		/// </summary>
-		/// <param name="graphics"></param>
-		protected override void OnPaintControl(Graphics graphics)
+		/// <param name="e"></param>
+		protected override void OnPaint(PaintEventArgs e)
 		{
-			_graphics = graphics;
+			_graphics = e.Graphics;
+			_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
 			_graphics.FillRectangle(PanelFill, ClientRectangle);
 
 			if (_file != null)

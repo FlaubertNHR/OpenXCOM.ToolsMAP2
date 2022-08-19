@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
@@ -112,9 +111,9 @@ namespace MapView.Forms.Observers
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes the graphics paths of each quadrant-slot outline.
+		/// Sets <c>GraphicsPaths</c> for each quad-slot outline.
 		/// </summary>
-		internal static void CacheQuadrantPaths()
+		internal static void SetQuadrantPaths()
 		{
 			Point p0,p1,p2,p3,p4;
 
@@ -212,6 +211,7 @@ namespace MapView.Forms.Observers
 		internal static void SetGraphics(Graphics graphics)
 		{
 			_graphics = graphics;
+			_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
 			if (!_init)
 			{
@@ -231,7 +231,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="tile"></param>
 		/// <param name="partType"></param>
-		internal static void Draw(
+		internal static void Paint(
 				MapTile tile,
 				PartType partType)
 		{

@@ -393,7 +393,7 @@ namespace MapView
 			MinimumSize = new Size(0,0); // fu.net
 
 
-			QuadrantDrawService.CacheQuadrantPaths();
+			QuadrantDrawService.SetQuadrantPaths();
 			//Logfile.Log("Quadrant panel graphics paths cached.");
 
 
