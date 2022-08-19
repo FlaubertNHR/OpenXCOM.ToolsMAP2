@@ -1414,13 +1414,11 @@ namespace MapView.Forms.Observers
 		private void OnLinkGoClick(object sender, EventArgs e)
 		{
 			int slot;
-
-			var bu = sender as Button;
-			if      (bu == bu_GoLink1) slot = 0;
-			else if (bu == bu_GoLink2) slot = 1;
-			else if (bu == bu_GoLink3) slot = 2;
-			else if (bu == bu_GoLink4) slot = 3;
-			else                       slot = 4; // bu == bu_GoLink5
+			if      (sender == bu_GoLink1) slot = 0;
+			else if (sender == bu_GoLink2) slot = 1;
+			else if (sender == bu_GoLink3) slot = 2;
+			else if (sender == bu_GoLink4) slot = 3;
+			else                           slot = 4; // sender == bu_GoLink5
 
 			byte dest = NodeSelected[slot].Destination;
 			RouteNode node = _file.Routes[dest];
@@ -1466,7 +1464,8 @@ namespace MapView.Forms.Observers
 		/// <remarks>Any changes that are done here regarding node-selection
 		/// should be reflected in
 		/// <c><see cref="RouteControlParent"/>.OnMouseDown()</c> since that is
-		/// an alternate way to select a tile/node.</remarks>
+		/// an alternate way to select a tile/node. Except that
+		/// <c>OnMouseDown()</c> never causes a level change.</remarks>
 		private void SelectNode(int id)
 		{
 			RouteNode node = _file.Routes[id];
@@ -1488,6 +1487,8 @@ namespace MapView.Forms.Observers
 			OnRouteControlMouseDown(null, args);
 
 			InvalidateControls();
+
+			ObserverManager.ToolFactory.EnableLevelers(_file.Level, _file.Levs);
 		}
 
 		/// <summary>

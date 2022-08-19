@@ -315,7 +315,8 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		/// <remarks>Any changes that are done here regarding node-selection
 		/// should be reflected in <c><see cref="RouteView"/>.SelectNode()</c>
-		/// since that is an alternate way to select a tile/node.</remarks>
+		/// since that is an alternate way to select a tile/node. Except that
+		/// <c>SelectNode()</c> can cause a level change.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			Select();
