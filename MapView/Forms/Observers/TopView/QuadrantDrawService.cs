@@ -150,7 +150,7 @@ namespace MapView.Forms.Observers
 				path.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
 			}
 
-			// skip a space between the Content quadslot and the Current quadslot
+			// skip a space between the Content quad-slot and the Current quad-slot
 			p0 = new Point(
 						StartX + Quadwidth * QuadrantPart - 1,
 						StartY);
@@ -428,14 +428,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="width"></param>
-		/// <param name="slot"></param>
-		private static void DrawTypeString(string type, int width, int slot)
+		/// <param name="quad"></param>
+		private static void DrawTypeString(string type, int width, int quad)
 		{
 			_graphics.DrawString(
 							type,
 							QuadrantFont,
 							SelectedBrush,
-							StartX + (Spriteset.SpriteWidth32 - width) / 2 + Quadwidth * slot + 1,
+							StartX + (Spriteset.SpriteWidth32 - width) / 2 + Quadwidth * quad + 1,
 							StartY +  Spriteset.SpriteHeight40 + MarginVert);
 		}
 
@@ -443,13 +443,13 @@ namespace MapView.Forms.Observers
 		/// Fills the swatch under a given quadrant.
 		/// </summary>
 		/// <param name="brush"></param>
-		/// <param name="slot"></param>
-		private static void FillSwatchColor(Brush brush, PartType slot)
+		/// <param name="quad"></param>
+		private static void FillSwatchColor(Brush brush, PartType quad)
 		{
 			_graphics.FillRectangle(
 								brush,
 								new RectangleF(
-											StartX + Quadwidth * (int)slot,
+											StartX + Quadwidth * (int)quad,
 											StartY + Spriteset.SpriteHeight40 + MarginVert + QuadrantFont.Height + 1,
 											Spriteset.SpriteWidth32,
 											SwatchHeight));
