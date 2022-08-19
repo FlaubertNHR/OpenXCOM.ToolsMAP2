@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 
@@ -40,6 +41,7 @@ namespace DSShared.Controls
 			Margin        = new Padding(0);
 			TabIndex      = 0;
 			HideSelection = false;
+			BackColor     = SystemColors.Control;
 
 			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 		}
