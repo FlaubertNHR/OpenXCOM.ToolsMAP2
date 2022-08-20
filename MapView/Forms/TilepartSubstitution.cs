@@ -59,13 +59,24 @@ namespace MapView
 
 			_highid = Math.Min(file.Parts.Count - 1, MapFile.MaxTerrainId);
 
-			la_head.Text = "Change all tileparts between setIds"
-						 + Environment.NewLine
-						 + "inclusive - if stop is blank use start id"
-						 + Environment.NewLine + Environment.NewLine
-						 + "Highest placeable id in the terrainset = " + _highid
-						 + Environment.NewLine
-						 + "Highest (valid) tilepart id detected = " + HighId(file);
+			int valid   = Int32.MinValue;
+			int invalid = Int32.MinValue;
+			DeterHighIds(file, ref valid, ref invalid);
+
+			string head = "Change all tileparts between setIds"
+						+ Environment.NewLine
+						+ "inclusive - if stop id is blank use start id"
+						+ Environment.NewLine + Environment.NewLine
+						+ "Highest placeable id in the terrainset = " + _highid;
+
+			if (valid != Int32.MinValue)
+				head += Environment.NewLine + "Highest valid tilepart id detected = " + valid;
+
+			if (invalid != Int32.MinValue)
+				head += Environment.NewLine + "Highest invalid tilepart id detected = " + invalid;
+
+			la_head.Text = head;
+
 
 			tb_Src0.BackColor =
 			tb_Src1.BackColor = Color.Wheat;
@@ -107,7 +118,7 @@ namespace MapView
 			{
 				case TilepartSubstitutionType.Clear: rb_clear.Checked = true; break;
 				case TilepartSubstitutionType.Desti: rb_dst  .Checked = true; break;
-				case TilepartSubstitutionType.Shift: ForceBlasterInitShift(); break; //rb_shift.Checked = true;
+				case TilepartSubstitutionType.Shift: ForceBlasterInitShift(); break; // rb_shift.Checked = true
 			}
 
 			tb_Src0.Select(); // set '_text'
@@ -115,15 +126,13 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets the highest valid setId placed in the current tileset.
+		/// Deters the highest valid and invalid setId(s) placed in the current
+		/// tileset.
 		/// </summary>
 		/// <returns></returns>
-		private static int HighId(MapFile file)
+		private static void DeterHighIds(MapFile file, ref int valid, ref int invalid)
 		{
-			int id = -1;
-
-			MapTile tile;
-			Tilepart part;
+			MapTile tile; Tilepart part;
 
 			for (int lev = 0; lev != file.Levs; ++lev)
 			for (int row = 0; row != file.Rows; ++row)
@@ -131,36 +140,51 @@ namespace MapView
 			{
 				if (!(tile = file.GetTile(col, row, lev)).Vacant)
 				{
-					if (  (part = tile.Floor)   != null
-						&& part.Record.PartType != PartType.Invalid // bypass crippled parts
-						&& part.SetId > id)
+					if ((part = tile.Floor) != null)
 					{
-						id = part.SetId;
+						if (part.Record.PartType != PartType.Invalid) // not a crippled part
+						{
+							if (part.SetId > valid)
+								valid = part.SetId;
+						}
+						else if (part.SetId > invalid)
+							invalid = part.SetId;
 					}
 
-					if (  (part = tile.West)    != null
-						&& part.Record.PartType != PartType.Invalid
-						&& part.SetId > id)
+					if ((part = tile.West) != null)
 					{
-						id = part.SetId;
+						if (part.Record.PartType != PartType.Invalid) // not a crippled part
+						{
+							if (part.SetId > valid)
+								valid = part.SetId;
+						}
+						else if (part.SetId > invalid)
+							invalid = part.SetId;
 					}
 
-					if (  (part = tile.North)   != null
-						&& part.Record.PartType != PartType.Invalid
-						&& part.SetId > id)
+					if ((part = tile.North) != null)
 					{
-						id = part.SetId;
+						if (part.Record.PartType != PartType.Invalid) // not a crippled part
+						{
+							if (part.SetId > valid)
+								valid = part.SetId;
+						}
+						else if (part.SetId > invalid)
+							invalid = part.SetId;
 					}
 
-					if (  (part = tile.Content) != null
-						&& part.Record.PartType != PartType.Invalid
-						&& part.SetId > id)
+					if ((part = tile.Content) != null)
 					{
-						id = part.SetId;
+						if (part.Record.PartType != PartType.Invalid) // not a crippled part
+						{
+							if (part.SetId > valid)
+								valid = part.SetId;
+						}
+						else if (part.SetId > invalid)
+							invalid = part.SetId;
 					}
 				}
 			}
-			return id;
 		}
 		#endregion cTor
 
@@ -218,10 +242,11 @@ namespace MapView
 		/// <summary>
 		/// holy fc genius
 		/// https://stackoverflow.com/questions/24997658/tab-index-is-not-working-on-radio-buttons#answer-31063124
-		/// @note The radiobuttons need to be selected (once) before this works.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>The radiobuttons need to be selected (once) before this
+		/// works.</remarks>
 		private void rb_TabStopChanged(object sender, EventArgs e)
 		{
 			(sender as Control).TabStop = true;
@@ -259,7 +284,7 @@ namespace MapView
 						tb_dst  .BackColor = Color.LightGreen;
 						tb_shift.BackColor = SystemColors.Control;
 					}
-					else //if (rb == rb_shift)
+					else // rb == rb_shift
 					{
 						rb_selected = TilepartSubstitutionType.Shift;
 
@@ -276,8 +301,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Lord knows why rb_CheckedChanged() does not fire when trying to init
-		/// w/ 'RadioSelected.Shift'.
+		/// Lord knows why
+		/// <c><see cref="rb_CheckedChanged()">rb_CheckedChanged()</see></c>
+		/// does not fire when trying to init w/ RadioSelected.Shift.
+		/// <br/><br/>
 		/// @note thanks ...
 		/// </summary>
 		private void ForceBlasterInitShift()
@@ -321,7 +348,7 @@ namespace MapView
 
 				int result = Int32.MaxValue;
 
-				if (!String.IsNullOrEmpty(text)
+				if (text.Length != 0
 					&& (!rb_shift.Checked || text != "-"))		// allow shift to be a "-"
 				{
 					if (!Int32.TryParse(text, out result))		// shall be an integer
@@ -364,7 +391,7 @@ namespace MapView
 		/// <summary>
 		/// Sets the values of static variables that are used both for
 		/// re-insantiation and for MapView to deal with on return w/
-		/// 'DialogResult.OK'.
+		/// <c>DialogResult.OK</c>.
 		/// </summary>
 		/// <param name="tb"></param>
 		/// <param name="result"></param>
@@ -373,21 +400,21 @@ namespace MapView
 			if      (tb == tb_Src0) src0  = result;
 			else if (tb == tb_Src1) src1  = result;
 			else if (tb == tb_dst)  dst   = result;
-			else                    shift = result; // (tb == tb_shift)
+			else                    shift = result; // tb == tb_shift
 		}
 
 		/// <summary>
 		/// Dis/enables the Ok button.
-		/// @note The input values src0/src1 are allowed to exceed the MaxId in
-		/// the current terrainset but the output shall not be allowed to exceed
-		/// the MaxId.
 		/// </summary>
+		/// <remarks>The input values src0/src1 are allowed to exceed the MaxId
+		/// in the current terrainset but the output shall not be allowed to
+		/// exceed the MaxId.</remarks>
 		private void Enable()
 		{
 			bu_ok.Enabled =  src0 != Int32.MaxValue
 						 && (src1 == Int32.MaxValue || src1 >= src0)
 						 && (    rb_clear.Checked
-							 || (rb_dst  .Checked && dst   != Int32.MaxValue && (dst != src0 || (src1 != Int32.MaxValue && src1 != src0)))
+							 || (rb_dst  .Checked &&   dst != Int32.MaxValue && (dst != src0 || (src1 != Int32.MaxValue && src1 != src0)))
 							 || (rb_shift.Checked && shift != Int32.MaxValue && shift != 0
 								 && shift + src0 > -1 && ((src1 == Int32.MaxValue && shift + src0 <= _highid)
 													   || (src1 != Int32.MaxValue && shift + src1 <= _highid))));
@@ -441,7 +468,7 @@ namespace MapView
 			this.la_head.Location = new System.Drawing.Point(0, 0);
 			this.la_head.Margin = new System.Windows.Forms.Padding(0);
 			this.la_head.Name = "la_head";
-			this.la_head.Size = new System.Drawing.Size(274, 75);
+			this.la_head.Size = new System.Drawing.Size(274, 90);
 			this.la_head.TabIndex = 0;
 			this.la_head.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.la_head.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaintHead);
@@ -449,7 +476,7 @@ namespace MapView
 			// tb_Src0
 			// 
 			this.tb_Src0.HideSelection = false;
-			this.tb_Src0.Location = new System.Drawing.Point(50, 80);
+			this.tb_Src0.Location = new System.Drawing.Point(50, 95);
 			this.tb_Src0.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Src0.Name = "tb_Src0";
 			this.tb_Src0.Size = new System.Drawing.Size(50, 19);
@@ -463,7 +490,7 @@ namespace MapView
 			// 
 			this.tb_dst.Enabled = false;
 			this.tb_dst.HideSelection = false;
-			this.tb_dst.Location = new System.Drawing.Point(110, 130);
+			this.tb_dst.Location = new System.Drawing.Point(110, 145);
 			this.tb_dst.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_dst.Name = "tb_dst";
 			this.tb_dst.Size = new System.Drawing.Size(50, 19);
@@ -478,7 +505,7 @@ namespace MapView
 			this.bu_ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.bu_ok.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.bu_ok.Enabled = false;
-			this.bu_ok.Location = new System.Drawing.Point(172, 193);
+			this.bu_ok.Location = new System.Drawing.Point(172, 208);
 			this.bu_ok.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_ok.Name = "bu_ok";
 			this.bu_ok.Size = new System.Drawing.Size(95, 25);
@@ -488,7 +515,7 @@ namespace MapView
 			// 
 			// la_dotdot
 			// 
-			this.la_dotdot.Location = new System.Drawing.Point(105, 85);
+			this.la_dotdot.Location = new System.Drawing.Point(105, 100);
 			this.la_dotdot.Margin = new System.Windows.Forms.Padding(0);
 			this.la_dotdot.Name = "la_dotdot";
 			this.la_dotdot.Size = new System.Drawing.Size(15, 15);
@@ -499,7 +526,7 @@ namespace MapView
 			// tb_Src1
 			// 
 			this.tb_Src1.HideSelection = false;
-			this.tb_Src1.Location = new System.Drawing.Point(160, 80);
+			this.tb_Src1.Location = new System.Drawing.Point(160, 95);
 			this.tb_Src1.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_Src1.Name = "tb_Src1";
 			this.tb_Src1.Size = new System.Drawing.Size(50, 19);
@@ -513,7 +540,7 @@ namespace MapView
 			// 
 			this.tb_shift.Enabled = false;
 			this.tb_shift.HideSelection = false;
-			this.tb_shift.Location = new System.Drawing.Point(110, 150);
+			this.tb_shift.Location = new System.Drawing.Point(110, 165);
 			this.tb_shift.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_shift.Name = "tb_shift";
 			this.tb_shift.Size = new System.Drawing.Size(50, 19);
@@ -525,7 +552,7 @@ namespace MapView
 			// 
 			// rb_clear
 			// 
-			this.rb_clear.Location = new System.Drawing.Point(15, 110);
+			this.rb_clear.Location = new System.Drawing.Point(15, 125);
 			this.rb_clear.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_clear.Name = "rb_clear";
 			this.rb_clear.Size = new System.Drawing.Size(95, 20);
@@ -537,7 +564,7 @@ namespace MapView
 			// 
 			// rb_dst
 			// 
-			this.rb_dst.Location = new System.Drawing.Point(15, 130);
+			this.rb_dst.Location = new System.Drawing.Point(15, 145);
 			this.rb_dst.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_dst.Name = "rb_dst";
 			this.rb_dst.Size = new System.Drawing.Size(95, 20);
@@ -549,7 +576,7 @@ namespace MapView
 			// 
 			// rb_shift
 			// 
-			this.rb_shift.Location = new System.Drawing.Point(15, 150);
+			this.rb_shift.Location = new System.Drawing.Point(15, 165);
 			this.rb_shift.Margin = new System.Windows.Forms.Padding(0);
 			this.rb_shift.Name = "rb_shift";
 			this.rb_shift.Size = new System.Drawing.Size(95, 20);
@@ -563,7 +590,7 @@ namespace MapView
 			// 
 			this.bu_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.bu_cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.bu_cancel.Location = new System.Drawing.Point(7, 198);
+			this.bu_cancel.Location = new System.Drawing.Point(7, 213);
 			this.bu_cancel.Margin = new System.Windows.Forms.Padding(0);
 			this.bu_cancel.Name = "bu_cancel";
 			this.bu_cancel.Size = new System.Drawing.Size(85, 20);
@@ -573,7 +600,7 @@ namespace MapView
 			// 
 			// la_start
 			// 
-			this.la_start.Location = new System.Drawing.Point(15, 85);
+			this.la_start.Location = new System.Drawing.Point(15, 100);
 			this.la_start.Margin = new System.Windows.Forms.Padding(0);
 			this.la_start.Name = "la_start";
 			this.la_start.Size = new System.Drawing.Size(35, 15);
@@ -583,7 +610,7 @@ namespace MapView
 			// 
 			// la_stop
 			// 
-			this.la_stop.Location = new System.Drawing.Point(125, 85);
+			this.la_stop.Location = new System.Drawing.Point(125, 100);
 			this.la_stop.Margin = new System.Windows.Forms.Padding(0);
 			this.la_stop.Name = "la_stop";
 			this.la_stop.Size = new System.Drawing.Size(30, 15);
@@ -594,7 +621,7 @@ namespace MapView
 			// la_note
 			// 
 			this.la_note.ForeColor = System.Drawing.Color.PaleVioletRed;
-			this.la_note.Location = new System.Drawing.Point(58, 177);
+			this.la_note.Location = new System.Drawing.Point(58, 192);
 			this.la_note.Margin = new System.Windows.Forms.Padding(0);
 			this.la_note.Name = "la_note";
 			this.la_note.Size = new System.Drawing.Size(214, 15);
@@ -606,7 +633,7 @@ namespace MapView
 			// 
 			this.AcceptButton = this.bu_ok;
 			this.CancelButton = this.bu_cancel;
-			this.ClientSize = new System.Drawing.Size(274, 221);
+			this.ClientSize = new System.Drawing.Size(274, 236);
 			this.Controls.Add(this.la_stop);
 			this.Controls.Add(this.la_start);
 			this.Controls.Add(this.bu_ok);
