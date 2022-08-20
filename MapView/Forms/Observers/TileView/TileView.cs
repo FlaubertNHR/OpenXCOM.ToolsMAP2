@@ -111,7 +111,8 @@ namespace MapView.Forms.Observers
 		/// <c>TileView</c> switches to the ALL tabpage and selects the
 		/// appropriate <c><see cref="Tilepart"/></c> per
 		/// <c><see cref="TilePanel.SelectedTilepart">TilePanel.SelectedTilepart</see></c>
-		/// when a quad is selected in the <c>QuadrantControl</c>.</remarks>
+		/// when a quad is selected in the <c>QuadrantControl</c>. Otherwise use
+		/// <c><see cref="SelectTilepart()">SelectTilepart()</see></c>.</remarks>
 		internal Tilepart SelectedTilepart
 		{
 			get { return GetSelectedPanel().SelectedTilepart; }
@@ -685,19 +686,38 @@ namespace MapView.Forms.Observers
 		/// <param name="file">a <c><see cref="MapFile"/></c></param>
 		internal void SetMapfile(MapFile file)
 		{
-			IList<Tilepart> parts = (_file = file).Parts;
+			if ((_file = file) != null)
+			{
+				IList<Tilepart> parts = _file.Parts;
 
-			for (int id = 0; id != _panels.Length; ++id)
-				_panels[id].PopulatePanel(parts);
+				for (int id = 0; id != _panels.Length; ++id)
+					_panels[id].PopulatePanel(parts);
 
-			tsslTotal.Text = "Total " + parts.Count;
+				tsslTotal.Text = "Total " + parts.Count;
 
-			if (parts.Count > MapFile.MaxTerrainId)
-				tsslTotal.ForeColor = Color.MediumVioletRed;
+				if (parts.Count > MapFile.MaxTerrainId)
+					tsslTotal.ForeColor = Color.MediumVioletRed;
+				else
+					tsslTotal.ForeColor = SystemColors.ControlText;
+
+				OnResize(null);
+			}
 			else
-				tsslTotal.ForeColor = SystemColors.ControlText;
+			{
+				for (int id = 0; id != _panels.Length; ++id)
+					_panels[id].ClearPanel();
 
-			OnResize(null);
+				tsslTotal.Text = String.Empty;
+			}
+		}
+
+		/// <summary>
+		/// Gets the current <c><see cref="MapFile"/></c>.
+		/// </summary>
+		/// <returns></returns>
+		internal MapFile GetMapfile()
+		{
+			return _file;
 		}
 
 
@@ -709,7 +729,7 @@ namespace MapView.Forms.Observers
 		private void SetTitleText(Tilepart part)
 		{
 			string title = TITLE;
-			if (part != null)
+			if (_file != null && part != null)
 			{
 				title += " - " + GetTerrainLabel()
 					   + "  terId " + part.Id
@@ -726,7 +746,7 @@ namespace MapView.Forms.Observers
 		{
 			string info = String.Empty;
 
-			if (part != null)
+			if (_file != null && part != null)
 			{
 				info = _file.GetTerrainLabel(part)
 					 + "  terId " + part.Id
@@ -741,6 +761,8 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="SelectedTilepart"/></c>.
 		/// </summary>
 		/// <returns></returns>
+		/// <remarks>Ensure that <c><see cref="_file"/></c> is valid before
+		/// call.</remarks>
 		internal string GetTerrainLabel()
 		{
 			if (SelectedTilepart != null)

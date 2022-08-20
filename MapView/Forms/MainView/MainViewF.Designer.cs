@@ -30,6 +30,7 @@ namespace MapView
 		private MenuItem miSaveMaptree;
 		private MenuItem miSeparator3;
 		private MenuItem miReload;
+		private MenuItem miClose;
 		private MenuItem miSeparator4;
 		private MenuItem miScreenshot;
 		private MenuItem miSeparator5;
@@ -106,6 +107,7 @@ namespace MapView
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
 			this.miReload = new System.Windows.Forms.MenuItem();
+			this.miClose = new System.Windows.Forms.MenuItem();
 			this.miSeparator4 = new System.Windows.Forms.MenuItem();
 			this.miScreenshot = new System.Windows.Forms.MenuItem();
 			this.miSeparator5 = new System.Windows.Forms.MenuItem();
@@ -140,7 +142,7 @@ namespace MapView
 			this.tsslSelectionSize = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tscPanel = new System.Windows.Forms.ToolStripContainer();
 			this.tsTools = new DSShared.Controls.ToolStripOneclick();
-			this.cms_MapTreeContext = new System.Windows.Forms.ContextMenuStrip();
+			this.cms_MapTreeContext = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.ssMain.SuspendLayout();
 			this.tscPanel.TopToolStripPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();
@@ -168,6 +170,7 @@ namespace MapView
 			this.miSaveMaptree,
 			this.miSeparator3,
 			this.miReload,
+			this.miClose,
 			this.miSeparator4,
 			this.miScreenshot,
 			this.miSeparator5,
@@ -236,27 +239,34 @@ namespace MapView
 			this.miReload.Text = "Re&load";
 			this.miReload.Click += new System.EventHandler(this.OnReloadClick);
 			// 
+			// miClose
+			// 
+			this.miClose.Enabled = false;
+			this.miClose.Index = 9;
+			this.miClose.Text = "Clo&se";
+			this.miClose.Click += new System.EventHandler(this.OnCloseClick);
+			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 9;
+			this.miSeparator4.Index = 10;
 			this.miSeparator4.Text = "-";
 			// 
 			// miScreenshot
 			// 
 			this.miScreenshot.Enabled = false;
-			this.miScreenshot.Index = 10;
+			this.miScreenshot.Index = 11;
 			this.miScreenshot.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
 			this.miScreenshot.Text = "Scree&nshot ...";
 			this.miScreenshot.Click += new System.EventHandler(this.OnScreenshotClick);
 			// 
 			// miSeparator5
 			// 
-			this.miSeparator5.Index = 11;
+			this.miSeparator5.Index = 12;
 			this.miSeparator5.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 12;
+			this.miQuit.Index = 13;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);
@@ -513,6 +523,11 @@ namespace MapView
 			this.tsTools.Size = new System.Drawing.Size(792, 25);
 			this.tsTools.Stretch = true;
 			this.tsTools.TabIndex = 0;
+			// 
+			// cms_MapTreeContext
+			// 
+			this.cms_MapTreeContext.Name = "cms_MapTreeContext";
+			this.cms_MapTreeContext.Size = new System.Drawing.Size(61, 4);
 			// 
 			// MainViewF
 			// 

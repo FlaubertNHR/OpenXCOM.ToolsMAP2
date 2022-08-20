@@ -1119,7 +1119,21 @@ namespace MapView
 			}
 
 
-			if (_overlay.Focused)
+			if (!_overlay.Focused)
+			{
+				switch (keyData)
+				{
+					case Keys.F3:		// panel must *not* have focus (F3 also toggles doors)
+						Search(ObserverManager.ToolFactory.GetSearchText());
+						return true;
+
+					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
+						_overlay.Focus();
+						_overlay.Invalidate();
+						return true;
+				}
+			}
+			else if (_file != null)
 			{
 				switch (keyData)
 				{
@@ -1132,20 +1146,6 @@ namespace MapView
 					case Keys.Shift | Keys.Up:
 					case Keys.Shift | Keys.Down:
 						_overlay.Navigate(keyData);
-						return true;
-				}
-			}
-			else
-			{
-				switch (keyData)
-				{
-					case Keys.F3:		// panel must *not* have focus (F3 also toggles doors)
-						Search(ObserverManager.ToolFactory.GetSearchText());
-						return true;
-
-					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
-						_overlay.Focus();
-						_overlay.Invalidate();
 						return true;
 				}
 			}
@@ -1586,6 +1586,73 @@ namespace MapView
 			_loadReady = LOADREADY_STAGE_2;
 			LoadSelectedDescriptor(false, true);
 		}
+
+
+		/// <summary>
+		/// Closes the current tileset.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCloseClick(object sender, EventArgs e)
+		{
+			EnableMenuIts(false);
+			ViewersMenuManager.EnableScanG(false);
+
+			if (ScanG != null)
+				ScanG.Close();
+
+			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
+			{
+				TopView._fpartslots.Close();
+				TopView._fpartslots = null;
+			}
+
+//			McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
+//			if (fMcdInfo != null)
+//				fMcdInfo.UpdateData();
+
+			if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
+				RouteView.SpawnInfo.Close();
+
+			if (_finfo != null)
+			{
+				_finfo.Close();
+				DecheckMapInfo();
+			}
+
+			RouteView.DeselectNodeStatic(true);
+
+
+			ObserverManager.AssignMapfile(MapFile = null);
+
+			ObserverManager.ToolFactory.EnableLevelers(0,1);
+			ObserverManager.ToolFactory.EnableEditors(false);
+			ObserverManager.ToolFactory.EnablePasters(false);
+			ObserverManager.ToolFactory.EnableAutoscale(false);
+			ObserverManager.ToolFactory.EnableScalein(false);
+			ObserverManager.ToolFactory.EnableScaleout(false);
+
+			tsslMapLabel     .Text =
+			tsslDimensions   .Text =
+			tsslPosition     .Text =
+			tsslScale        .Text =
+			tsslSelectionSize.Text = String.Empty;
+
+			ObserverManager.TileView.Control.SelectedTilepart = null;
+			ObserverManager.TileView.Control.SelectTilepart(null);
+
+			ResetQuadrantPanel();
+
+			RouteView.ClearSelectedInfo();
+
+			if (sender != null)
+			{
+				_group    = MapTree.SelectedNode.Parent.Parent.Text;
+				_category = MapTree.SelectedNode.Parent.Text;
+			}
+			SelectCategoryNode(_group, _category);
+		}
+		private string _group, _category;
 
 
 		private string _lastScreenshotDirectory;
@@ -2532,6 +2599,7 @@ namespace MapView
 		/// use <c>MouseDown</c>.</remarks>
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
+			//Logfile.Log();
 			//Logfile.Log("MainViewF.OnMapTreeMouseDown() _bypassChanged= " + _bypassChanged);
 
 			switch (e.Button)
@@ -2952,9 +3020,12 @@ namespace MapView
 					MaptreeChanged = true;
 					TileGroupManager.TileGroups[labelGroup].DeleteTileset(labelTileset, labelCategory);
 					MapChanged = RouteView.RoutesChangedCoordinator = false;
-					// TODO: Close the Map, Routes, Tiles, Topview, etc ...
+
 					CreateTree();
-					SelectCategoryNode(labelGroup, labelCategory);
+
+					_group    = labelGroup;
+					_category = labelCategory;
+					OnCloseClick(null, EventArgs.Empty);
 				}
 			}
 		}
@@ -3141,7 +3212,7 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnMapTreeNodeMouseClick() _loadReady= " + _loadReady);
 
-			if (e.Node == _selected)
+			if (_selected != null && e.Node == _selected)
 			{
 				var descriptor = _selected.Tag as Descriptor;
 				if (descriptor != null
@@ -3183,14 +3254,24 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnMapTreeAfterSelect() _loadReady= " + _loadReady);
 
-			ClearSearched();
+			if (e.Node.Level == TREELEVEL_TILESET)
+			{
+				ClearSearched();
 
-			if (_loadReady == LOADREADY_STAGE_1)
-				_loadReady  = LOADREADY_STAGE_2;
+				if (_loadReady == LOADREADY_STAGE_1)
+					_loadReady  = LOADREADY_STAGE_2;
 
-			LoadSelectedDescriptor();
+				LoadSelectedDescriptor();
 
-			_selected = e.Node;
+				_selected = e.Node;
+			}
+			else
+			{
+				_selected = null;
+
+				if (MapFile != null)
+					OnCloseClick(null, EventArgs.Empty);
+			}
 		}
 		#endregion Events (load)
 
@@ -3207,8 +3288,6 @@ namespace MapView
 		/// </summary>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
-			//Logfile.Log("");
-			//Logfile.Log("");
 			//Logfile.Log("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
 			//Logfile.Log(". browseMapfile= " + browseMapfile);
 
@@ -3260,7 +3339,7 @@ namespace MapView
 
 					if (file != null)
 					{
-						EnableMenuIts();
+						EnableMenuIts(true);
 
 						_overlay.FirstClick = false;
 
@@ -3278,7 +3357,7 @@ namespace MapView
 
 						MapFile = file;
 
-						ObserverManager.ToolFactory.EnableAutoscale();
+						ObserverManager.ToolFactory.EnableAutoscale(true);
 						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
 
 						Text = TITLE + " " + descriptor.Basepath;
@@ -3349,20 +3428,22 @@ namespace MapView
 		/// <c><see cref="mmMain">MainMenu</see></c> when a
 		/// <c><see cref="MapFile"/></c> loads.
 		/// </summary>
+		/// <param name="enable"><c>true</c> to enable</param>
 		/// <remarks>Helper for
 		/// <c><see cref="LoadSelectedDescriptor()">LoadSelectedDescriptor()</see></c></remarks>
-		private void EnableMenuIts()
+		private void EnableMenuIts(bool enable)
 		{
 			miSaveAll             .Enabled =
 			miSaveMap             .Enabled =
 			miSaveRoutes          .Enabled =
 			miExport              .Enabled =
 			miReload              .Enabled =
+			miClose               .Enabled =
 			miScreenshot          .Enabled =
 			miModifySize          .Enabled =
 			miTilepartSubstitution.Enabled =
 			miTerrainSwap         .Enabled =
-			miMapInfo             .Enabled = true;
+			miMapInfo             .Enabled = enable;
 		}
 
 		/// <summary>
@@ -3434,7 +3515,7 @@ namespace MapView
 
 		/// <summary>
 		/// Resets the <c><see cref="QuadrantControl"/></c> when either a Map
-		/// loads or gets resized.
+		/// loads or gets resized or gets closed.
 		/// </summary>
 		private static void ResetQuadrantPanel()
 		{

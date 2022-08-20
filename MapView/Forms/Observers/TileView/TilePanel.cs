@@ -196,8 +196,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets the current <c>SelectedTilepart</c>.
-		/// 
+		/// Gets the current <c>SelectedTilepart</c>.<br/>
 		/// Sets the <c>SelectedTilepart</c> when a valid
 		/// <c><see cref="QuadrantControl"/></c> quad gets selected.
 		/// </summary>
@@ -205,24 +204,30 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="TileView.SelectedTilepart">TileView.SelectedTilepart</see></c>.</remarks>
 		internal Tilepart SelectedTilepart
 		{
+			// TODO: refactor this conglomeration by storing an actual Tilepart
+			// and store '_id' separately (setting '_id' can set 'SelectedTilepart' or vice versa)
 			get
 			{
-				if (_id > -1 && _id < _parts.Length)
+				if (_parts != null
+					&& _id > -1 // TODO: <- is not likely (see setter)
+					&& _id < _parts.Length)
+				{
 					return _parts[_id];
-
+				}
 				return null;
 			}
 			set
 			{
 				if (value != null						// crippled parts shall not be selected here
+//					&& value.SetId > -1					// <- is not likely (perhaps crippled tileparts, but they shouldn't appear in the tilepanels, or perhaps by a bork in TilepartSubstitution).
 					&& value.SetId < _parts.Length - 1)	// -1 to account for the null-sprite
 				{
 					_id = value.SetId + 1;				// +1 to account for the null-sprite.
 				}
 				else
-					_id = 0;
+					_id = 0;							// the null-sprite (ie. the eraser)
 
-				TileView.SelectTilepart(SelectedTilepart);
+				TileView.SelectTilepart(SelectedTilepart); // TODO: not that. <-
 
 				ScrollToTile();
 			}
@@ -367,22 +372,25 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			switch (e.Button)
+			if (TileView.GetMapfile() != null)
 			{
-				case MouseButtons.Left:
-				case MouseButtons.Right:
+				switch (e.Button)
 				{
-					int id = GetOverId(e);
-					if (id != -1 && id < _parts.Length)
+					case MouseButtons.Left:
+					case MouseButtons.Right:
 					{
-						_id = id;
+						int id = GetOverId(e);
+						if (id != -1 && id < _parts.Length)
+						{
+							_id = id;
 
-						TileView.SelectTilepart(SelectedTilepart);
+							TileView.SelectTilepart(SelectedTilepart);
 
-						ScrollToTile();
-						Invalidate();
+							ScrollToTile();
+							Invalidate();
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
@@ -394,86 +402,89 @@ namespace MapView.Forms.Observers
 		/// <param name="keyData"></param>
 		internal void Navigate(Keys keyData)
 		{
-			int id = -1;
-
-			switch (keyData)
+			if (TileView.GetMapfile() != null)
 			{
-				case Keys.Left:
-					id = _id - 1;
-					break;
+				int id = -1;
 
-				case Keys.Right:
-					id = _id + 1;
-					break;
+				switch (keyData)
+				{
+					case Keys.Left:
+						id = _id - 1;
+						break;
 
-				case Keys.Up:
-					id = _id - _tilesX;
-					break;
+					case Keys.Right:
+						id = _id + 1;
+						break;
 
-				case Keys.Down:
-					id = _id + _tilesX;
-					break;
+					case Keys.Up:
+						id = _id - _tilesX;
+						break;
 
-				case Keys.Home:
-					id = _id / _tilesX * _tilesX;
-					break;
+					case Keys.Down:
+						id = _id + _tilesX;
+						break;
 
-				case Keys.End:
-					id = _id / _tilesX * _tilesX + _tilesX - 1;
-					if (id >= _parts.Length)
-						id =  _parts.Length - 1;
-					break;
+					case Keys.Home:
+						id = _id / _tilesX * _tilesX;
+						break;
 
-				case (Keys.Home | Keys.Control):
-					id = 0;
-					break;
-
-				case (Keys.End | Keys.Control):
-					id = _parts.Length - 1;
-					break;
-
-				case Keys.PageUp:
-					if (_id >= _tilesX)
-					{
-						int vert = Height / SpriteHeight * _tilesX;
-						if (vert < _tilesX)
-							vert = _tilesX;
-
-						int tileX = _id % _tilesX;
-						id = _id / _tilesX * _tilesX + tileX - vert;
-
-						if (id < tileX)
-							id = tileX;
-					}
-					break;
-
-				case Keys.PageDown:
-					if (_id < _parts.Length / _tilesX * _tilesX)
-					{
-						int vert = Height / SpriteHeight * _tilesX;
-						if (vert < _tilesX)
-							vert = _tilesX;
-
-						int tileX = _id % _tilesX;
-						id = _id / _tilesX * _tilesX + tileX + vert;
+					case Keys.End:
+						id = _id / _tilesX * _tilesX + _tilesX - 1;
 						if (id >= _parts.Length)
+							id =  _parts.Length - 1;
+						break;
+
+					case (Keys.Home | Keys.Control):
+						id = 0;
+						break;
+
+					case (Keys.End | Keys.Control):
+						id = _parts.Length - 1;
+						break;
+
+					case Keys.PageUp:
+						if (_id >= _tilesX)
 						{
-							id = _parts.Length / _tilesX * _tilesX + tileX;
-							if (id >= _parts.Length)
-								id = (_parts.Length / _tilesX - 1) * _tilesX + tileX;
+							int vert = Height / SpriteHeight * _tilesX;
+							if (vert < _tilesX)
+								vert = _tilesX;
+
+							int tileX = _id % _tilesX;
+							id = _id / _tilesX * _tilesX + tileX - vert;
+
+							if (id < tileX)
+								id = tileX;
 						}
-					}
-					break;
-			}
+						break;
 
-			if (id > -1 && id < _parts.Length)
-			{
-				_id = id;
+					case Keys.PageDown:
+						if (_id < _parts.Length / _tilesX * _tilesX)
+						{
+							int vert = Height / SpriteHeight * _tilesX;
+							if (vert < _tilesX)
+								vert = _tilesX;
 
-				TileView.SelectTilepart(SelectedTilepart);
+							int tileX = _id % _tilesX;
+							id = _id / _tilesX * _tilesX + tileX + vert;
+							if (id >= _parts.Length)
+							{
+								id = _parts.Length / _tilesX * _tilesX + tileX;
+								if (id >= _parts.Length)
+									id = (_parts.Length / _tilesX - 1) * _tilesX + tileX;
+							}
+						}
+						break;
+				}
 
-				ScrollToTile();
-				Invalidate();
+				if (id > -1 && id < _parts.Length)
+				{
+					_id = id;
+
+					TileView.SelectTilepart(SelectedTilepart);
+
+					ScrollToTile();
+					Invalidate();
+				}
 			}
 		}
 
@@ -677,7 +688,7 @@ namespace MapView.Forms.Observers
 		/// <param name="parts">a list of <c>Tileparts</c></param>
 		internal void PopulatePanel(IList<Tilepart> parts)
 		{
-			if (_partType == PartType.Invalid)
+			if (_partType == PartType.Invalid) // is ALL parts panel ->
 			{
 				_parts = new Tilepart[parts.Count + 1]; // +1 for the null-sprite
 				_parts[0] = null;
@@ -685,7 +696,7 @@ namespace MapView.Forms.Observers
 				for (int i = 0; i != parts.Count; ++i)
 					_parts[i + 1] = parts[i];
 			}
-			else
+			else // is Floor,West,North,Content panel ->
 			{
 				int tiles = 0;
 
@@ -706,6 +717,14 @@ namespace MapView.Forms.Observers
 
 			_resetTrack = true;
 			OnResize(null);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		internal void ClearPanel()
+		{
+			_parts = null;
 		}
 
 		/// <summary>

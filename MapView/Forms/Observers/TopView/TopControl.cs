@@ -488,7 +488,8 @@ namespace MapView.Forms.Observers
 		{
 			Select();
 
-			if (   _col > -1 && _col < _file.Cols
+			if (_file != null
+				&& _col > -1 && _col < _file.Cols
 				&& _row > -1 && _row < _file.Rows)
 			{
 				SelectMapLocation(); // NOTE: Will select a tile on any mousebutton down.
@@ -531,7 +532,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>Helper for <c><see cref="OnMouseDown()"/></c>.</remarks>
 		private void SelectMapLocation()
 		{
-			RouteView.DeselectNodeStatic(false);
+			RouteView.DeselectNodeStatic(true);
 
 			MainViewOverlay.that._keyDeltaX =
 			MainViewOverlay.that._keyDeltaY = 0;
@@ -594,9 +595,10 @@ namespace MapView.Forms.Observers
 		/// <param name="file">a <c><see cref="MapFile"/></c></param>
 		internal void SetMapfile(MapFile file)
 		{
-			_file = file;
-
-			_blobService.HalfWidth = 8;
+			if ((_file = file) != null)
+			{
+				_blobService.HalfWidth = 8;
+			}
 
 			ResizeObserver(Parent.Width, Parent.Height);
 			Refresh();

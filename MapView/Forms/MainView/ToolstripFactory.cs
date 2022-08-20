@@ -243,9 +243,10 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Enables the auto-scale button.
 		/// </summary>
-		internal void EnableAutoscale()
+		/// <param name="enable"><c>true</c> to enable</param>
+		internal void EnableAutoscale(bool enable)
 		{
-			_tsbScale.Enabled = true;
+			_tsbScale.Enabled = enable;
 		}
 
 		/// <summary>

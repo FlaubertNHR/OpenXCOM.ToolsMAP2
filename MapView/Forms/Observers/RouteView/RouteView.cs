@@ -1815,24 +1815,22 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Deselects any currently selected node.
 		/// </summary>
-		/// <param name="clearloc"><c>true</c> if the node is deleted from
-		/// <c>RouteView</c> itself - <c>false</c> if a location is selected in
+		/// <param name="updatefields"><c>true</c> if a location is selected in
 		/// <c>MainView</c> or <c>TopView</c> (even if it's still the node's
-		/// location)</param>
+		/// location) - <c>false</c> if the node is deleted from
+		/// <c>RouteView</c> itself</param>
 		/// <seealso cref="DeselectNodeStatic()"><c>DeselectNodeStatic()</c></seealso>
-		private void DeselectNode(bool clearloc = true)
+		private void DeselectNode(bool updatefields = false)
 		{
 			NodeSelected = null;
 
-			if (clearloc)
-			{
-				RouteControl.Select();
-			}
-			else
+			if (updatefields)
 			{
 				UpdateNodeInfo();
 				RouteControl.Invalidate();
 			}
+			else
+				RouteControl.Select();
 		}
 
 		/// <summary>
@@ -1840,14 +1838,14 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="DeselectNode()">DeselectNode()</see></c> in
 		/// <c>TopView</c> and <c>TopRouteView</c>.
 		/// </summary>
-		/// <param name="clearloc"><c>true</c> if the node is deleted from
-		/// <c>RouteView</c> itself - <c>false</c> if a location is selected in
+		/// <param name="updatefields"><c>true</c> if a location is selected in
 		/// <c>MainView</c> or <c>TopView</c> (even if it's still the node's
-		/// location)</param>
-		internal static void DeselectNodeStatic(bool clearloc = true)
+		/// location) - <c>false</c> if the node is deleted from
+		/// <c>RouteView</c> itself</param>
+		internal static void DeselectNodeStatic(bool updatefields = false)
 		{
-			ObserverManager.RouteView   .Control     .DeselectNode(clearloc);
-			ObserverManager.TopRouteView.ControlRoute.DeselectNode(clearloc);
+			ObserverManager.RouteView   .Control     .DeselectNode(updatefields);
+			ObserverManager.TopRouteView.ControlRoute.DeselectNode(updatefields);
 		}
 
 

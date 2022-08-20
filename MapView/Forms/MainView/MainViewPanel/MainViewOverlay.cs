@@ -935,7 +935,7 @@ namespace MapView.Forms.MainView
 							int r = _file.Location.Row + loc.Y;
 							if (r > -1 && r < _file.Rows)
 							{
-								RouteView.DeselectNodeStatic(false);
+								RouteView.DeselectNodeStatic(true);
 
 								_keyDeltaX =
 								_keyDeltaY = 0;
@@ -979,7 +979,7 @@ namespace MapView.Forms.MainView
 
 					if (loc.X != 0 || loc.Y != 0)
 					{
-						RouteView.DeselectNodeStatic(false);
+						RouteView.DeselectNodeStatic(true);
 
 						_targeterForced = !top;
 
@@ -996,10 +996,10 @@ namespace MapView.Forms.MainView
 						ProcessSelection(DragBeg, loc);
 					}
 				}
-			}
 
-			if (!top)		// force redraw on every step when MainView is the active viewer
-				Refresh();	// else the selector-sprite stops then jumps to the end on key up.
+				if (!top)		// force redraw on every step when MainView is the active viewer
+					Refresh();	// else the selector-sprite stops then jumps to the end on key up.
+			}
 		}
 
 		internal int _keyDeltaX;
@@ -1077,7 +1077,7 @@ namespace MapView.Forms.MainView
 						if (   _col > -1 && _col < _file.Cols
 							&& _row > -1 && _row < _file.Rows)
 						{
-							RouteView.DeselectNodeStatic(false);
+							RouteView.DeselectNodeStatic(true);
 
 							_keyDeltaX =
 							_keyDeltaY = 0;
