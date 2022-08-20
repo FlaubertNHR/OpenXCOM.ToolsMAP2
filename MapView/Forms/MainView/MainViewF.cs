@@ -1545,14 +1545,12 @@ namespace MapView
 		/// Reloads the Map/Routes/Terrains when a save is done in PckView or
 		/// McdView via <c><see cref="TileView"/>.OnPckViewClick()</c>
 		/// or <c><see cref="TileView"/>.OnMcdViewClick()</c>.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// TODO: Neither event really needs to reload the Map/Routes (in fact
 		/// it would be better if it didn't so that the SaveAlerts could be
 		/// bypassed) - so this function ought be reworked to reload only the
 		/// Terrains (MCDs/PCKs/TABs). But that's a headache and a half ...
-		/// 
-		/// 
+		/// <br/><br/>
 		/// TODO: Actually there should be a separate ReloadTerrains() funct.
 		/// </summary>
 		/// <remarks>Is double-purposed to reload the Map/Routes/Terrains when
@@ -1564,12 +1562,12 @@ namespace MapView
 
 			if (!cancel)
 			{
-				Dontdrawyougits = true;
+//				Dontdrawyougits = true; // TODO: probably redundant.
 
 				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
 
-				Dontdrawyougits = false;
+//				Dontdrawyougits = false; // TODO: probably redundant.
 				_overlay.Invalidate();
 			}
 		}
@@ -2837,15 +2835,15 @@ namespace MapView
 				{
 					if (te.ShowDialog(this) == DialogResult.OK)
 					{
-						Dontdrawyougits = true;
+//						Dontdrawyougits = true; // TODO: probably redundant.
 
 						MaptreeChanged = true;
 						_bypassChanged = true;
 						CreateTree();
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 
-						Dontdrawyougits = false;
-						_overlay.Invalidate();
+						Dontdrawyougits = false; // TODO: probably redundant.
+//						_overlay.Invalidate();
 					}
 				}
 			}
@@ -2873,14 +2871,14 @@ namespace MapView
 				{
 					if (te.ShowDialog(this) == DialogResult.OK)
 					{
-						Dontdrawyougits = true;
+//						Dontdrawyougits = true; // TODO: probably redundant.
 
 						MaptreeChanged = true;
 						_bypassChanged = true;
 						CreateTree();
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 
-						Dontdrawyougits = false;
+//						Dontdrawyougits = false; // TODO: probably redundant.
 						_overlay.Invalidate();
 					}
 				}
@@ -3242,11 +3240,10 @@ namespace MapView
 					// try this in case MapFile.LoadMapfile() needs to show a
 					// dialog about partIds exceeding the allocated terrainset.
 					// I think the crippled sprites aren't ready to go yet and
-					// .net tries to draw the Map and throws up when when
-					// returning from that dialog. Then likely due to a
-					// redundancy of calls to the draw-routine the Map gets
-					// drawn correctly anyway after the crippled sprites are
-					// ready ->
+					// .net tries to draw the Map and throws up when returning
+					// from that dialog. Then likely due to a redundancy of
+					// calls to the draw-routine the Map gets drawn correctly
+					// anyway after the crippled sprites are ready ->
 
 					Dontdrawyougits = true;
 
