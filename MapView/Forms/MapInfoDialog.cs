@@ -38,6 +38,10 @@ namespace MapView
 
 
 		#region cTor
+		/// <summary>
+		/// cTor.
+		/// </summary>
+		/// <param name="f"></param>
 		internal MapInfoDialog(MainViewF f)
 		{
 			InitializeComponent();
