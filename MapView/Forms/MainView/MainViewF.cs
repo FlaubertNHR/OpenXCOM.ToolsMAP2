@@ -3243,7 +3243,7 @@ namespace MapView
 					// .net tries to draw the Map and throws up when returning
 					// from that dialog. Then likely due to a redundancy of
 					// calls to the draw-routine the Map gets drawn correctly
-					// anyway after the crippled sprites are ready ->
+					// anyway after the crippled sprites are then ready ->
 
 					Dontdrawyougits = true;
 
