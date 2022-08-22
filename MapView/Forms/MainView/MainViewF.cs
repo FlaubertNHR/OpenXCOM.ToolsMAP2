@@ -1171,9 +1171,12 @@ namespace MapView
 		/// <br/><br/>
 		/// Edit/Save keys are handled by
 		/// <c><see cref="MainViewOverlay">MainViewOverlay</see>.OnKeyDown()</c>.</remarks>
+		/// <seealso cref="DontBeep()"><c>DontBeep()</c></seealso>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData + " _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData);
+
+			_loadReady = false;
 
 			string key = null; object val = null;
 			ToolStripMenuItem it = null;
@@ -1576,15 +1579,13 @@ namespace MapView
 		/// user chooses to reload the current Map et al. on the File menu.</remarks>
 		private void OnReloadDescriptor()
 		{
-			//Logfile.Log("MainViewF.OnReloadDescriptor() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnReloadDescriptor()");
 
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
 			if (!cancel)
 			{
-				//Logfile.Log(". LOADREADY_STAGE_2");
-				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
 				_overlay.Invalidate();
 			}
@@ -1599,12 +1600,9 @@ namespace MapView
 		/// <c><see cref="RouteNodes"/></c>.</remarks>
 		private void ForceMapReload()
 		{
-			//Logfile.Log("MainViewF.OnReloadDescriptor() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnReloadDescriptor()");
 
 			MapFile.ForceReload = false;
-
-			//Logfile.Log(". LOADREADY_STAGE_2");
-			_loadReady = LOADREADY_STAGE_2;
 			LoadSelectedDescriptor(false, true);
 		}
 
@@ -1968,7 +1966,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainSwapClick(object sender, EventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnTerrainSwapClick() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnTerrainSwapClick()");
 
 			if (MaptreeChanged || MapFile.MapChanged)
 			{
@@ -1996,8 +1994,6 @@ namespace MapView
 						// NOTE: There ought be no need to reload the Map.
 						// Except that if another TerrainSwap is performed; the terrainset's setids are whack.
 						// so force reload (keep Routes) ->
-						//Logfile.Log(". LOADREADY_STAGE_2");
-						_loadReady = LOADREADY_STAGE_2;
 						LoadSelectedDescriptor(false, true);
 					}
 				}
@@ -2561,16 +2557,20 @@ namespace MapView
 		private bool _bypassChanged;
 
 		/// <summary>
-		/// By keeping this value below 2 until either (a) a leftclick is
-		/// confirmed on a treenode with a tileset or (b) keydown <c>[Enter]</c>
-		/// the <c><see cref="MapTree"/></c> can be navigated by keyboard
-		/// without loading every darn Map whose treenode gets selected during
-		/// keyboard navigation.
+		/// To allow the <c><see cref="MapTree"/></c> to be navigated by
+		/// keyboard without loading every darn tileset whose treenode gets
+		/// selected during keyboard navigation this value shall be <c>false</c>
+		/// unless
+		/// <list type="bullet">
+		/// <item>a <c>TreeNode</c> is clicked explicitly</item>
+		/// <item><c>[Enter]</c> is pressed on the <c>MapTree</c> with a
+		/// tileset-node already selected</item>
+		/// <item><c><see cref="SelectTilesetNode()">SelectTilesetNode()</see></c></item>
+		/// </list>
 		/// </summary>
-		private int _loadReady;
-		const int LOADREADY_STAGE_0 = 0; // totally undecided
-		const int LOADREADY_STAGE_1 = 1; // definitely a leftclick, but still not sure if it's on a Tileset node
-		const int LOADREADY_STAGE_2 = 2; // a tileset node is currently selected in the Maptree - ok to load descriptor
+		/// <remarks>The value is checked in
+		/// <c><see cref="OnMaptreeAfterSelect()">OnMaptreeAfterSelect()</see></c>.</remarks>
+		private bool _loadReady;
 
 
 		/// <summary>
@@ -2583,13 +2583,14 @@ namespace MapView
 		/// the files are valid.</item>
 		/// </list>
 		/// </summary>
+		/// <seealso cref="OnKeyDown()"><c>OnKeyDown()</c></seealso>
 		private void DontBeep()
 		{
 			//Logfile.Log("MainViewF.DontBeep()");
 
 			switch (_dontbeeptype)
 			{
-				case DontBeepType.OpenContext:
+				case DontBeepType.OpenContext:		// [Space]
 				{
 					Rectangle nodebounds = _selected.Bounds;
 					var args = new MouseEventArgs(
@@ -2601,15 +2602,15 @@ namespace MapView
 					break;
 				}
 
-				case DontBeepType.LoadDescriptor:
+				case DontBeepType.LoadDescriptor:	// [Enter]
 				{
-					//Logfile.Log(". LOADREADY_STAGE_2");
-					_loadReady = LOADREADY_STAGE_2;
+					//Logfile.Log(". _loadReady");
+					_loadReady = true;
 					OnMaptreeAfterSelect(null, new TreeViewEventArgs(_selected));
 					break;
 				}
 
-				case DontBeepType.MapBrowserDialog:
+				case DontBeepType.MapBrowserDialog:	// [Shift+Enter]
 				{
 					var args = new TreeNodeMouseClickEventArgs(
 															_selected,
@@ -2637,8 +2638,7 @@ namespace MapView
 		/// use <c>MouseDown</c>.</remarks>
 		private void OnMaptreeMouseDown(object sender, MouseEventArgs e)
 		{
-			//Logfile.Log();
-			//Logfile.Log("MainViewF.OnMaptreeMouseDown() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeMouseDown()");
 
 			switch (e.Button)
 			{
@@ -2649,8 +2649,8 @@ namespace MapView
 					if (info.Location == TreeViewHitTestLocations.Label
 						&& info.Node != null && info.Node.Level == TREELEVEL_TILESET)
 					{
-						//Logfile.Log(". LOADREADY_STAGE_1");
-						_loadReady = LOADREADY_STAGE_1;
+						//Logfile.Log(". _loadReady");
+						_loadReady = true;
 					}
 					break;
 				}
@@ -3128,7 +3128,7 @@ namespace MapView
 		/// <param name="labelTileset"></param>
 		private void SelectTilesetNode(string labelGroup, string labelCategory, string labelTileset)
 		{
-			//Logfile.Log("MainViewF.SelectTilesetNode() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.SelectTilesetNode()");
 
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
@@ -3142,8 +3142,8 @@ namespace MapView
 							{
 								if (nodeTileset.Text == labelTileset)
 								{
-									//Logfile.Log(". LOADREADY_STAGE_2");
-									_loadReady = LOADREADY_STAGE_2;
+									//Logfile.Log(". _loadReady");
+									_loadReady = true;
 									MapTree.SelectedNode = nodeTileset;
 									return;
 								}
@@ -3244,7 +3244,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMaptreeFocusChanged(object sender, EventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeFocusChanged() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeFocusChanged()");
 
 			if ((_loaded != null && MapTree.SelectedNode != _loaded)
 				|| Searched != null)
@@ -3263,22 +3263,15 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMaptreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick()");
 
 			if (e.Node.Level == TREELEVEL_TILESET // ie. (_selected.Tag as Descriptor) != null
 				&& _selected != null && e.Node == _selected
-				&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor))
+				&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor)
+				&& (sender == null // [Shift+Enter]
+					|| MapTree.HitTest(e.Location).Location == TreeViewHitTestLocations.Label))
 			{
-				TreeViewHitTestInfo info = MapTree.HitTest(e.Location);
-				//Logfile.Log(". node= " + info.Node + " loc= " + info.Location);
-				if (info.Location == TreeViewHitTestLocations.Label)
-				{
-					ClearSearched();
-
-					//Logfile.Log(". LOADREADY_STAGE_2");
-					_loadReady = LOADREADY_STAGE_2;
-					LoadSelectedDescriptor(true);
-				}
+				LoadSelectedDescriptor(true);
 			}
 		}
 
@@ -3290,7 +3283,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMaptreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect()");
 
 			// TODO: do not clear changed flags unless the current file gets closed.
 
@@ -3318,14 +3311,8 @@ namespace MapView
 
 			if (e.Node.Level == TREELEVEL_TILESET)
 			{
-				ClearSearched();
-
-				if (_loadReady == LOADREADY_STAGE_1)
-				{
-					//Logfile.Log(". LOADREADY_STAGE_2");
-					_loadReady  = LOADREADY_STAGE_2;
-				}
-				LoadSelectedDescriptor();
+				if (_loadReady)
+					LoadSelectedDescriptor();
 			}
 			else if (MapFile != null)
 			{
@@ -3347,7 +3334,9 @@ namespace MapView
 		/// </summary>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
-			//Logfile.Log("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.LoadSelectedDescriptor()");
+
+			ClearSearched();
 
 			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
 			{
@@ -3356,137 +3345,131 @@ namespace MapView
 			}
 
 
-			if (_loadReady == LOADREADY_STAGE_2)
+			_bypassChanged = false;
+
+			RouteNodes routes; bool routesChanged;
+			if (keepRoutes)
 			{
-				_bypassChanged = false;
-
-				var descriptor = MapTree.SelectedNode.Tag as Descriptor;
-				if (descriptor != null)
-				{
-					RouteNodes routes; bool routesChanged;
-					if (keepRoutes)
-					{
-						routes        = MapFile.Routes;
-						routesChanged = MapFile.RoutesChanged;
-					}
-					else
-					{
-						routes = null;
-						routesChanged = false;
-					}
-
-					// try this in case MapFile.LoadMapfile() needs to show a
-					// dialog about partIds exceeding the allocated terrainset.
-					// I think the crippled sprites aren't ready to go yet and
-					// .net tries to draw the Map and throws up when returning
-					// from that dialog. Then likely due to a redundancy of
-					// calls to the draw-routine the Map gets drawn correctly
-					// anyway after the crippled sprites are then ready ->
-
-					Dontdrawyougits = true;
-
-					MapFile file = MapFileService.LoadDescriptor(
-															descriptor,
-															ref browseMapfile,
-															Optionables.IgnoreRecordsExceeded,
-															routes,
-															_selected);
-					if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
-
-					Dontdrawyougits = false;
-
-
-					if (file != null)
-					{
-						_loaded = _selected;
-
-						if (file.TerrainsetCountExceeded != 0) // don't ask why 'cause I don't know ...
-							MapTree.Invalidate();
-
-
-						EnableMenuIts(true);
-
-						_overlay.FirstClick = false;
-
-						if (descriptor.GroupType == GroupType.Tftd)
-						{
-							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
-							Palette.MonoBrushes = Palette.BrushesTftdBattle; // used by Mono only
-						}
-						else // default to ufo-battle palette
-						{
-							ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
-							Palette.MonoBrushes = Palette.BrushesUfoBattle; // used by Mono only
-						}
-
-
-						MapFile = file;
-
-						ObserverManager.ToolFactory.EnableAutoscale(true);
-						ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
-
-						Text = TITLE + " " + descriptor.Basepath;
-						if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
-
-						tsslMapLabel     .Text = descriptor.Label;
-						tsslDimensions   .Text = file.SizeString;
-						tsslPosition     .Text =
-						tsslSelectionSize.Text = String.Empty;
-
-						if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
-						file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
-
-						RouteView.ClearSelectedInfo();
-
-						Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
-						Optionables.OpenDoors = false;
-						SetDoorSpritesFullPhase(false);
-						if (_foptions != null && _foptions.Visible)
-							_foptions.propertyGrid.Refresh();
-
-						SelectToner(); // create toned spriteset(s) for selected-tile(s)
-
-						if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-							ViewersMenuManager.StartSecondStageBoosters();
-
-						ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
-
-						RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
-												MainViewF.Optionables.Base1_xy,
-												MainViewF.Optionables.Base1_z);
-
-						if (RouteCheckService.CheckNodeBounds(file) == DialogResult.Yes)
-						{
-							RouteView.RoutesChangedCoordinator = true;
-
-							foreach (RouteNode node in RouteCheckService.Invalids)
-								file.Routes.DeleteNode(node);
-						}
-
-						if (routesChanged && !file.RoutesChanged)
-							RouteView.RoutesChangedCoordinator = true;
-
-						Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
-
-						if (ScanG != null) // update ScanG viewer if open
-							ScanG.LoadMapfile(file);
-
-						McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
-						if (fMcdInfo != null)
-							fMcdInfo.UpdateData();
-
-						if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
-							RouteView.SpawnInfo.Initialize(file);
-
-						ResetQuadrantPanel(); // update the Quadrant panel
-
-						FirstActivated = false;
-						Activate();
-					}
-				}
+				routes        = MapFile.Routes;
+				routesChanged = MapFile.RoutesChanged;
 			}
-			//Logfile.Log(". LOADREADY_STAGE_0");
-			_loadReady = LOADREADY_STAGE_0;
+			else
+			{
+				routes = null;
+				routesChanged = false;
+			}
+
+
+			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor shall be valid.
+
+			// try this in case MapFile.LoadMapfile() needs to show a
+			// dialog about partIds exceeding the allocated terrainset.
+			// I think the crippled sprites aren't ready to go yet and
+			// .net tries to draw the Map and throws up when returning
+			// from that dialog. Then likely due to a redundancy of
+			// calls to the draw-routine the Map gets drawn correctly
+			// anyway after the crippled sprites are then ready ->
+
+			Dontdrawyougits = true;
+
+			MapFile file = MapFileService.LoadDescriptor(
+													descriptor,
+													ref browseMapfile,
+													Optionables.IgnoreRecordsExceeded,
+													routes,
+													_selected);
+			if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
+
+			Dontdrawyougits = false;
+
+
+			if (file != null)
+			{
+				_loaded = _selected;
+
+				if (file.TerrainsetCountExceeded != 0) // don't ask why 'cause I don't know ...
+					MapTree.Invalidate();
+
+
+				EnableMenuIts(true);
+
+				_overlay.FirstClick = false;
+
+				if (descriptor.GroupType == GroupType.Tftd)
+				{
+					ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
+					Palette.MonoBrushes = Palette.BrushesTftdBattle; // used by Mono only
+				}
+				else // default to ufo-battle palette
+				{
+					ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
+					Palette.MonoBrushes = Palette.BrushesUfoBattle; // used by Mono only
+				}
+
+
+				MapFile = file;
+
+				ObserverManager.ToolFactory.EnableAutoscale(true);
+				ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
+
+				Text = TITLE + " " + descriptor.Basepath;
+				if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
+
+				tsslMapLabel     .Text = descriptor.Label;
+				tsslDimensions   .Text = file.SizeString;
+				tsslPosition     .Text =
+				tsslSelectionSize.Text = String.Empty;
+
+				if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
+				file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
+
+				RouteView.ClearSelectedInfo();
+
+				Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
+				Optionables.OpenDoors = false;
+				SetDoorSpritesFullPhase(false);
+				if (_foptions != null && _foptions.Visible)
+					_foptions.propertyGrid.Refresh();
+
+				SelectToner(); // create toned spriteset(s) for selected-tile(s)
+
+				if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
+					ViewersMenuManager.StartSecondStageBoosters();
+
+				ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
+
+				RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
+										MainViewF.Optionables.Base1_xy,
+										MainViewF.Optionables.Base1_z);
+
+				if (RouteCheckService.CheckNodeBounds(file) == DialogResult.Yes)
+				{
+					RouteView.RoutesChangedCoordinator = true;
+
+					foreach (RouteNode node in RouteCheckService.Invalids)
+						file.Routes.DeleteNode(node);
+				}
+
+				if (routesChanged && !file.RoutesChanged)
+					RouteView.RoutesChangedCoordinator = true;
+
+				Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
+
+				if (ScanG != null) // update ScanG viewer if open
+					ScanG.LoadMapfile(file);
+
+				McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
+				if (fMcdInfo != null)
+					fMcdInfo.UpdateData();
+
+				if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
+					RouteView.SpawnInfo.Initialize(file);
+
+				ResetQuadrantPanel(); // update the Quadrant panel
+
+				FirstActivated = false;
+				Activate();
+			}
 		}
 
 		/// <summary>
