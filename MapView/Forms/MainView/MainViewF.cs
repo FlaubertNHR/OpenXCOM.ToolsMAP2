@@ -1084,7 +1084,7 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			//Logfile.Log("MainViewF.ProcessCmdKey() " + keyData);
+			//Logfile.Log("MainViewF.ProcessCmdKey() " + keyData + " _loadReady= " + _loadReady);
 
 			bool invalidate = false;
 			bool focusearch = false;
@@ -1157,8 +1157,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Requires <c>KeyPreview</c>.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// This differs from the Viewers-menu item-click/key in that
 		/// <c>[Ctrl]</c> is used to focus a subsidiary viewer instead of doing
 		/// show/hide. See also <c>OnKeyDown()</c> in
@@ -1166,13 +1165,12 @@ namespace MapView
 		/// <c><see cref="RouteViewForm"/></c>, and
 		/// <c><see cref="TopRouteViewForm"/></c> ->
 		/// <c><see cref="ViewersMenuManager.ViewerKeyDown()">ViewersMenuManager.ViewerKeyDown()</see></c>.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// Edit/Save keys are handled by
 		/// <c><see cref="MainViewOverlay">MainViewOverlay</see>.OnKeyDown()</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData);
+			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData + " _loadReady= " + _loadReady);
 
 			string key = null; object val = null;
 			ToolStripMenuItem it = null;
@@ -1185,8 +1183,12 @@ namespace MapView
 					{
 						e.SuppressKeyPress = true;
 
-						_dontbeeptype = DontBeepType.OpenContext;
-						BeginInvoke(DontBeepEvent);
+						if (_selected.Level != TREELEVEL_TILESET
+							|| _selected == _loaded)
+						{
+							_dontbeeptype = DontBeepType.OpenContext;
+							BeginInvoke(DontBeepEvent);
+						}
 					}
 					break;
 
@@ -1214,13 +1216,12 @@ namespace MapView
 					break;
 
 				case Keys.Shift | Keys.Enter:	// open MapBrowserDialog
-					if (MapTree.Focused
-						&& _selected != null
-						&& _selected.Level == TREELEVEL_TILESET)
+					if (MapTree.Focused && _selected != null)
 					{
 						e.SuppressKeyPress = true;
 
-						if (!(_selected.Tag as Descriptor).FileValid)
+						if (_selected.Level == TREELEVEL_TILESET
+							&& !(_selected.Tag as Descriptor).FileValid)
 						{
 							_dontbeeptype = DontBeepType.MapBrowserDialog;
 							BeginInvoke(DontBeepEvent);
@@ -1356,12 +1357,27 @@ namespace MapView
 				else if ((e.State & TreeNodeStates.Focused) != 0) // WARNING: May require 'HideSelection' false.
 				{
 					colorline = TreenodeLine_sel;
-					colorfill = TreenodeFill_selfoc;
+
+					if (node.Level != TREELEVEL_TILESET || node == _loaded)
+						colorfill = TreenodeFill_selfoc;
+					else
+						colorfill = TreenodeFill_def;
 				}
 				else if ((e.State & TreeNodeStates.Selected) != 0) // WARNING: Requires 'HideSelection' false.
 				{
 					colorline = TreenodeLine_sel;
-					colorfill = TreenodeFill_selunf;
+
+					if (node.Level != TREELEVEL_TILESET || node == _loaded)
+						colorfill = TreenodeFill_selunf;
+					else
+						colorfill = TreenodeFill_def;
+				}
+				else if (node == _loaded)
+				{
+					colorline = TreenodeLine_def;
+
+					if (MapTree.Focused) colorfill = TreenodeFill_selfoc;
+					else                 colorfill = TreenodeFill_selunf;
 				}
 				else
 				{
@@ -1369,7 +1385,7 @@ namespace MapView
 					colorfill = TreenodeFill_def;
 				}
 
-				if (node.Tag == null || (node.Tag as Descriptor).FileValid)
+				if (node.Level != TREELEVEL_TILESET || (node.Tag as Descriptor).FileValid)
 					colortext = Optionables.TreeForecolor;
 				else
 					colortext = Optionables.TreeForecolorInvalidFile;
@@ -1557,6 +1573,8 @@ namespace MapView
 		/// user chooses to reload the current Map et al. on the File menu.</remarks>
 		private void OnReloadDescriptor()
 		{
+			//Logfile.Log("MainViewF.OnReloadDescriptor() _loadReady= " + _loadReady);
+
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
@@ -1564,6 +1582,7 @@ namespace MapView
 			{
 //				Dontdrawyougits = true; // TODO: probably redundant.
 
+				//Logfile.Log(". LOADREADY_STAGE_2");
 				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
 
@@ -1581,8 +1600,11 @@ namespace MapView
 		/// <c><see cref="RouteNodes"/></c>.</remarks>
 		private void ForceMapReload()
 		{
+			//Logfile.Log("MainViewF.OnReloadDescriptor() _loadReady= " + _loadReady);
+
 			MapFile.ForceReload = false;
 
+			//Logfile.Log(". LOADREADY_STAGE_2");
 			_loadReady = LOADREADY_STAGE_2;
 			LoadSelectedDescriptor(false, true);
 		}
@@ -1645,14 +1667,19 @@ namespace MapView
 
 			RouteView.ClearSelectedInfo();
 
-			if (sender != null)
-			{
-				_group    = MapTree.SelectedNode.Parent.Parent.Text;
-				_category = MapTree.SelectedNode.Parent.Text;
-			}
-			SelectCategoryNode(_group, _category);
+
+//			if (sender != null)
+//			{
+//				_group = MapTree.SelectedNode.Parent.Parent.Text;
+//				_catgr = MapTree.SelectedNode.Parent.Text;
+//			}
+			if (sender == null) // tileset has been deleted from the Maptree ->
+				SelectCategoryNode(_group, _catgr);
+
+			_loaded = null;
+			MapTree.Invalidate(); // req'd to handle (_loaded == null)
 		}
-		private string _group, _category;
+		private string _group, _catgr;
 
 
 		private string _lastScreenshotDirectory;
@@ -1939,6 +1966,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainSwapClick(object sender, EventArgs e)
 		{
+			//Logfile.Log("MainViewF.OnTerrainSwapClick() _loadReady= " + _loadReady);
+
 			if (MaptreeChanged || MapFile.MapChanged)
 			{
 				const string head = "Terrain swapping changes the tileset's data and"
@@ -1965,6 +1994,7 @@ namespace MapView
 						// NOTE: There ought be no need to reload the Map.
 						// Except that if another TerrainSwap is performed; the terrainset's setids are whack.
 						// so force reload (keep Routes) ->
+						//Logfile.Log(". LOADREADY_STAGE_2");
 						_loadReady = LOADREADY_STAGE_2;
 						LoadSelectedDescriptor(false, true);
 					}
@@ -2406,11 +2436,11 @@ namespace MapView
 
 					if (start != null) // jic.
 					{
-						var node = SearchTreeview(
-												text.ToLower(),
-												MapTree.Nodes,
-												start,
-												start0);
+						TreeNode node = SearchTreeview(
+													text.ToLower(),
+													MapTree.Nodes,
+													start,
+													start0);
 						if (node != null)
 						{
 							Searched = node;
@@ -2501,11 +2531,14 @@ namespace MapView
 		// MainViewF.LoadSelectedDescriptor()
 
 		/// <summary>
-		/// Tracks the currently selected treenode. Is used to determine if a
-		/// MapBrowserDialog should popup on <c>[Shift+Enter]</c> - iff the
-		/// MAP+RMP files are invalid.
+		/// Tracks the currently selected treenode.
 		/// </summary>
 		private TreeNode _selected;
+
+		/// <summary>
+		/// Tracks the currently loaded treenode.
+		/// </summary>
+		private TreeNode _loaded;
 
 		/// <summary>
 		/// just because you have billions of dollars doesn't mean you can beep
@@ -2543,18 +2576,20 @@ namespace MapView
 		/// <list type="bullet">
 		/// <item><c>[Space]</c> opens the Context menu</item>
 		/// <item><c>[Enter]</c> loads a <c><see cref="Descriptor"/></c></item>
-		/// <item><c>[Shift+Enter]</c> opens the MapBrowserDialog if a tileset's
-		/// files are invalid; will also load a <c>Descriptor</c> if the files
-		/// are valid.</item>
+		/// <item><c>[Shift+Enter]</c> opens a <c>FolderBrowserDialog</c> if a
+		/// tileset's files are invalid; will also load a <c>Descriptor</c> if
+		/// the files are valid.</item>
 		/// </list>
 		/// </summary>
 		private void FireContext()
 		{
+			//Logfile.Log("MainViewF.FireContext()");
+
 			switch (_dontbeeptype)
 			{
 				case DontBeepType.OpenContext:
 				{
-					var nodebounds = _selected.Bounds;
+					Rectangle nodebounds = _selected.Bounds;
 					var args = new MouseEventArgs(
 												MouseButtons.Right,
 												1,
@@ -2566,6 +2601,7 @@ namespace MapView
 
 				case DontBeepType.LoadDescriptor:
 				{
+					//Logfile.Log(". LOADREADY_STAGE_2");
 					_loadReady = LOADREADY_STAGE_2;
 					OnMapTreeAfterSelect(null, new TreeViewEventArgs(_selected));
 					break;
@@ -2600,10 +2636,24 @@ namespace MapView
 		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
 		{
 			//Logfile.Log();
-			//Logfile.Log("MainViewF.OnMapTreeMouseDown() _bypassChanged= " + _bypassChanged);
+			//Logfile.Log("MainViewF.OnMapTreeMouseDown() _loadReady= " + _loadReady);
 
 			switch (e.Button)
 			{
+				case MouseButtons.Left:
+				{
+					TreeViewHitTestInfo info = MapTree.HitTest(e.Location);
+					//Logfile.Log(". node= " + info.Node);
+					//Logfile.Log(". loc= " + info.Location);
+					if (info.Location == TreeViewHitTestLocations.Label
+						&& info.Node != null && info.Node.Level == TREELEVEL_TILESET)
+					{
+						//Logfile.Log(". LOADREADY_STAGE_1");
+						_loadReady = LOADREADY_STAGE_1;
+					}
+					break;
+				}
+
 				case MouseButtons.Right:
 					if (MapFile == null					// prevent a bunch of problems, like looping dialogs when returning from
 						|| _bypassChanged				// the Tileset Editor and the Maptree-node gets re-selected, causing
@@ -2694,14 +2744,6 @@ namespace MapView
 						OnMapTreeMouseDown(sender, e); // RECURSE^
 					}
 					break;
-
-				case MouseButtons.Left:
-				{
-					TreeNode node = MapTree.GetNodeAt(e.Location);
-					if (node != null && node.Level == TREELEVEL_TILESET)
-						_loadReady = LOADREADY_STAGE_1;
-					break;
-				}
 			}
 		}
 
@@ -3023,8 +3065,8 @@ namespace MapView
 
 					CreateTree();
 
-					_group    = labelGroup;
-					_category = labelCategory;
+					_group = labelGroup;
+					_catgr = labelCategory;
 					OnCloseClick(null, EventArgs.Empty);
 				}
 			}
@@ -3085,6 +3127,8 @@ namespace MapView
 		/// <param name="labelTileset"></param>
 		private void SelectTilesetNode(string labelGroup, string labelCategory, string labelTileset)
 		{
+			//Logfile.Log("MainViewF.SelectTilesetNode() _loadReady= " + _loadReady);
+
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (nodeGroup.Text == labelGroup)
@@ -3097,6 +3141,7 @@ namespace MapView
 							{
 								if (nodeTileset.Text == labelTileset)
 								{
+									//Logfile.Log(". LOADREADY_STAGE_2");
 									_loadReady = LOADREADY_STAGE_2;
 									MapTree.SelectedNode = nodeTileset;
 									return;
@@ -3189,15 +3234,22 @@ namespace MapView
 		/// For an ungodly reason when the <c><see cref="MapTree"/></c>
 		/// gains/loses focus
 		/// <c><see cref="OnMapTreeDrawNode()">OnMapTreeDrawNode()</see></c>
-		/// re-colors selected and focused treenodes correctly but does not
-		/// re-color a <c><see cref="Searched"/></c> treenode.
+		/// re-colors selected/ focused treenodes correctly but does not
+		/// re-color a <c><see cref="Searched"/></c> treenode or a
+		/// <c><see cref="_loaded"/></c> treenode if it's not also selected/
+		/// focused.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnMapTreeFocusChanged(object sender, EventArgs e)
 		{
-			if (Searched != null)
+			//Logfile.Log("MainViewF.OnMapTreeFocusChanged() _loadReady= " + _loadReady);
+
+			if ((_loaded != null && MapTree.SelectedNode != _loaded)
+				|| Searched != null)
+			{
 				MapTree.Invalidate();
+			}
 		}
 
 		/// <summary>
@@ -3212,15 +3264,19 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnMapTreeNodeMouseClick() _loadReady= " + _loadReady);
 
-			if (_selected != null && e.Node == _selected)
+			if (e.Node.Level == TREELEVEL_TILESET // ie. (_selected.Tag as Descriptor) != null
+				&& _selected != null && e.Node == _selected)
 			{
-				var descriptor = _selected.Tag as Descriptor;
-				if (descriptor != null
-					&& (   MapFile == null
-						|| MapFile.Descriptor != descriptor))
+				TreeViewHitTestInfo info = MapTree.HitTest(e.Location);
+				//Logfile.Log(". node= " + info.Node);
+				//Logfile.Log(". loc= " + info.Location);
+
+				if (info.Location == TreeViewHitTestLocations.Label
+					&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor))
 				{
 					ClearSearched();
 
+					//Logfile.Log(". LOADREADY_STAGE_2");
 					_loadReady = LOADREADY_STAGE_2;
 					LoadSelectedDescriptor(true);
 				}
@@ -3234,7 +3290,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeBeforeSelect() _bypassChanged= " + _bypassChanged);
+			//Logfile.Log("MainViewF.OnMapTreeBeforeSelect() _loadReady= " + _loadReady);
 
 			if (!_bypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
@@ -3259,19 +3315,17 @@ namespace MapView
 				ClearSearched();
 
 				if (_loadReady == LOADREADY_STAGE_1)
+				{
+					//Logfile.Log(". LOADREADY_STAGE_2");
 					_loadReady  = LOADREADY_STAGE_2;
-
+				}
 				LoadSelectedDescriptor();
-
-				_selected = e.Node;
 			}
-			else
+			else if (MapFile != null)
 			{
-				_selected = null;
-
-				if (MapFile != null)
-					OnCloseClick(null, EventArgs.Empty);
+				OnCloseClick(miClose, EventArgs.Empty);
 			}
+			_selected = e.Node;
 		}
 		#endregion Events (load)
 
@@ -3289,7 +3343,6 @@ namespace MapView
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
 			//Logfile.Log("MainViewF.LoadSelectedDescriptor() _loadReady= " + _loadReady);
-			//Logfile.Log(". browseMapfile= " + browseMapfile);
 
 			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
 			{
@@ -3339,6 +3392,12 @@ namespace MapView
 
 					if (file != null)
 					{
+						_loaded = MapTree.SelectedNode; // do not use '_selected' here its not ready.
+
+						if (file.TerrainsetCountExceeded != 0) // don't ask why 'cause I don't know ...
+							MapTree.Invalidate();
+
+
 						EnableMenuIts(true);
 
 						_overlay.FirstClick = false;
@@ -3420,6 +3479,7 @@ namespace MapView
 					}
 				}
 			}
+			//Logfile.Log(". LOADREADY_STAGE_0");
 			_loadReady = LOADREADY_STAGE_0;
 		}
 
