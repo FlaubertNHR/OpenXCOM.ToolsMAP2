@@ -157,7 +157,10 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			_overlay.Select();
+			if (MainViewF.that.MapFile != null)
+				_overlay.Select();
+			else
+				MainViewF.that.MapTree.Select();
 		}
 		#endregion Events (override)
 

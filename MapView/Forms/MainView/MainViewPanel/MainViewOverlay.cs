@@ -1066,10 +1066,10 @@ namespace MapView.Forms.MainView
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			Select();
-
 			if (_file != null)
 			{
+				Select();
+
 				switch (e.Button)
 				{
 					case MouseButtons.Left:
@@ -1100,6 +1100,8 @@ namespace MapView.Forms.MainView
 						break;
 				}
 			}
+			else
+				MainViewF.that.MapTree.Select();
 		}
 
 		/// <summary>
