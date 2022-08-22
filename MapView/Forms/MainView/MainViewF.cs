@@ -669,7 +669,6 @@ namespace MapView
 		/// </summary>
 		private void CreateTree()
 		{
-			//Logfile.Log();
 			//Logfile.Log("MainViewF.CreateTree()");
 
 			MapTree.BeginUpdate();
@@ -1600,7 +1599,7 @@ namespace MapView
 		/// <c><see cref="RouteNodes"/></c>.</remarks>
 		private void ForceMapReload()
 		{
-			//Logfile.Log("MainViewF.OnReloadDescriptor()");
+			//Logfile.Log("MainViewF.ForceMapReload()");
 
 			MapFile.ForceReload = false;
 			LoadSelectedDescriptor(false, true);
@@ -1966,8 +1965,6 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnTerrainSwapClick(object sender, EventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnTerrainSwapClick()");
-
 			if (MaptreeChanged || MapFile.MapChanged)
 			{
 				const string head = "Terrain swapping changes the tileset's data and"
@@ -2563,8 +2560,6 @@ namespace MapView
 		/// unless
 		/// <list type="bullet">
 		/// <item>a <c>TreeNode</c> is clicked explicitly</item>
-		/// <item><c>[Enter]</c> is pressed on the <c>MapTree</c> with a
-		/// tileset-node already selected</item>
 		/// <item><c><see cref="SelectTilesetNode()">SelectTilesetNode()</see></c></item>
 		/// </list>
 		/// </summary>
@@ -2586,7 +2581,7 @@ namespace MapView
 		/// <seealso cref="OnKeyDown()"><c>OnKeyDown()</c></seealso>
 		private void DontBeep()
 		{
-			//Logfile.Log("MainViewF.DontBeep()");
+			//Logfile.Log("MainViewF.DontBeep() _dontbeeptype= " + _dontbeeptype);
 
 			switch (_dontbeeptype)
 			{
@@ -2604,8 +2599,6 @@ namespace MapView
 
 				case DontBeepType.LoadDescriptor:	// [Enter]
 				{
-					//Logfile.Log(". _loadready");
-					_loadready = true;
 					OnMaptreeAfterSelect(null, new TreeViewEventArgs(_selected));
 					break;
 				}
@@ -2614,7 +2607,7 @@ namespace MapView
 				{
 					var args = new TreeNodeMouseClickEventArgs(
 															_selected,
-															MouseButtons.None,
+															MouseButtons.Left,
 															0, 0,0);
 					OnMaptreeNodeMouseClick(null, args);
 					break;
@@ -2636,115 +2629,106 @@ namespace MapView
 		/// selected Map will change before a context-menu is shown, which is
 		/// good. A <c>MouseClick</c> event won't work if the tree is blank. So
 		/// use <c>MouseDown</c>.</remarks>
+		/// <seealso cref="OnMaptreeNodeMouseClick()"><c>OnMaptreeNodeMouseClick()</c></seealso>
 		private void OnMaptreeMouseDown(object sender, MouseEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnMaptreeMouseDown()");
 
-			switch (e.Button)
+			if (e.Button == MouseButtons.Right)
 			{
-				case MouseButtons.Left:
+				// prevent a bunch of problems like looping dialogs when returning from
+				// the Tileset Editor and the Maptree-node gets re-selected causing
+				// this class-object to react as if a different Map is going to load ...
+				// vid. LoadSelectedDescriptor()
+
+				if (MapFile == null
+					|| _bypassChanged
+					|| (   !MapFile.MapChanged
+						&& !MapFile.RoutesChanged))
 				{
-					TreeViewHitTestInfo info = MapTree.HitTest(e.Location);
-					//Logfile.Log(". node= " + info.Node + " loc= " + info.Location);
-					if (info.Location == TreeViewHitTestLocations.Label
-						&& info.Node != null && info.Node.Level == TREELEVEL_TILESET)
+					_bypassChanged = false;
+
+					cms_MapTreeContext.Items.Clear();
+
+					cms_MapTreeContext.Items.Add("Add Group ...", null, OnAddGroupClick);
+
+					if (MapTree.SelectedNode != null)
 					{
-						//Logfile.Log(". _loadready");
-						_loadready = true;
+						switch (MapTree.SelectedNode.Level)
+						{
+							case TREELEVEL_GROUP:
+								cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+								cms_MapTreeContext.Items.Add("Edit Group ...",   null, OnEditGroupClick);
+								cms_MapTreeContext.Items.Add("Delete Group",     null, OnDeleteGroupClick);
+								cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+								cms_MapTreeContext.Items.Add("Add Category ...", null, OnAddCategoryClick);
+								break;
+
+							case TREELEVEL_CATEGORY:
+								cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+								cms_MapTreeContext.Items.Add("Edit Category ...", null, OnEditCategoryClick);
+								cms_MapTreeContext.Items.Add("Delete Category",   null, OnDeleteCategoryClick);
+								cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+								cms_MapTreeContext.Items.Add("Add Tileset ...",   null, OnAddTilesetClick);
+								break;
+
+							case TREELEVEL_TILESET:
+								cms_MapTreeContext.Items.Add(new ToolStripSeparator());
+								cms_MapTreeContext.Items.Add("Edit Tileset ...", null, OnEditTilesetClick);
+								cms_MapTreeContext.Items.Add("Delete Tileset",   null, OnDeleteTilesetClick);
+								break;
+						}
 					}
-					break;
+
+					cms_MapTreeContext.Show(MapTree, e.Location);
 				}
+				else // MapFile != null && !_bypassChanged && (MapFile.MapChanged || MapFile.RoutesChanged)
+				{
+					string info = GetChangedInfo();
 
-				case MouseButtons.Right:
-					if (MapFile == null					// prevent a bunch of problems, like looping dialogs when returning from
-						|| _bypassChanged				// the Tileset Editor and the Maptree-node gets re-selected, causing
-						|| (   !MapFile.MapChanged		// this class-object to react as if a different Map is going to load ...
-							&& !MapFile.RoutesChanged))	// vid. LoadSelectedDescriptor()
+					string head = Infobox.SplitString("Modifying the Maptree can cause the Tilesets"
+								+ " to reload. The current " + info + " should be saved or else any"
+								+ " changes will be lost. How do you wish to proceed?", 80);
+
+					string copyable = "retry  - save changes and show the Maptree-menu"        + Environment.NewLine
+									+ "ok     - risk losing changes and show the Maptree-menu" + Environment.NewLine
+									+ "cancel - return to state";
+
+					using (var f = new Infobox(
+											"Changes detected",
+											head,
+											copyable,
+											InfoboxType.Warn,
+											InfoboxButtons.CancelOkayRetry))
 					{
-						_bypassChanged = false;
-
-						cms_MapTreeContext.Items.Clear();
-
-						cms_MapTreeContext.Items.Add("Add Group ...", null, OnAddGroupClick);
-
-						if (MapTree.SelectedNode != null)
+						switch (f.ShowDialog(this))
 						{
-							switch (MapTree.SelectedNode.Level)
-							{
-								case TREELEVEL_GROUP:
-									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
-									cms_MapTreeContext.Items.Add("Edit Group ...",   null, OnEditGroupClick);
-									cms_MapTreeContext.Items.Add("Delete Group",     null, OnDeleteGroupClick);
-									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
-									cms_MapTreeContext.Items.Add("Add Category ...", null, OnAddCategoryClick);
-									break;
+							default: // DialogResult.Cancel:
+								return;
 
-								case TREELEVEL_CATEGORY:
-									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
-									cms_MapTreeContext.Items.Add("Edit Category ...", null, OnEditCategoryClick);
-									cms_MapTreeContext.Items.Add("Delete Category",   null, OnDeleteCategoryClick);
-									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
-									cms_MapTreeContext.Items.Add("Add Tileset ...",   null, OnAddTilesetClick);
-									break;
+							case DialogResult.Retry:
+								if (MapFile.MapChanged && MapFile.SaveMap())
+								{
+									MapChanged = false;
 
-								case TREELEVEL_TILESET:
-									cms_MapTreeContext.Items.Add(new ToolStripSeparator());
-									cms_MapTreeContext.Items.Add("Edit Tileset ...", null, OnEditTilesetClick);
-									cms_MapTreeContext.Items.Add("Delete Tileset",   null, OnDeleteTilesetClick);
-									break;
-							}
+									if (MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
+										ForceMapReload();		// because the current Map is *probably* going to change. I think ...
+								}
+
+								if (MapFile.RoutesChanged && MapFile.SaveRoutes())
+								{
+									RouteView.RoutesChangedCoordinator = false;
+								}
+								break;
+
+							case DialogResult.OK:
+								_bypassChanged = true;
+								break;
 						}
-
-						cms_MapTreeContext.Show(MapTree, e.Location);
 					}
-					else // MapFile != null && !_bypassChanged && (MapFile.MapChanged || MapFile.RoutesChanged)
-					{
-						string info = GetChangedInfo();
 
-						string head = Infobox.SplitString("Modifying the Maptree can cause the Tilesets"
-									+ " to reload. The current " + info + " should be saved or else any"
-									+ " changes will be lost. How do you wish to proceed?", 80);
-
-						string copyable = "retry  - save changes and show the Maptree-menu"        + Environment.NewLine
-										+ "ok     - risk losing changes and show the Maptree-menu" + Environment.NewLine
-										+ "cancel - return to state";
-
-						using (var f = new Infobox(
-												"Changes detected",
-												head,
-												copyable,
-												InfoboxType.Warn,
-												InfoboxButtons.CancelOkayRetry))
-						{
-							switch (f.ShowDialog(this))
-							{
-								default: // DialogResult.Cancel:
-									return;
-
-								case DialogResult.Retry:
-									if (MapFile.MapChanged && MapFile.SaveMap())
-									{
-										MapChanged = false;
-
-										if (MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
-											ForceMapReload();		// because the current Map is *probably* going to change. I think ...
-									}
-
-									if (MapFile.RoutesChanged && MapFile.SaveRoutes())
-									{
-										RouteView.RoutesChangedCoordinator = false;
-									}
-									break;
-
-								case DialogResult.OK:
-									_bypassChanged = true;
-									break;
-							}
-						}
-
-						OnMaptreeMouseDown(sender, e); // RECURSE^
-					}
-					break;
+					OnMaptreeMouseDown(sender, e); // RECURSE^
+				}
 			}
 		}
 
@@ -3062,8 +3046,11 @@ namespace MapView
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
-					MapChanged = RouteView.RoutesChangedCoordinator = false;
-					OnCloseClick(null, EventArgs.Empty);
+					if (MapFile != null)
+					{
+						MapChanged = RouteView.RoutesChangedCoordinator = false;
+						OnCloseClick(null, EventArgs.Empty);
+					}
 
 					MaptreeChanged = true;
 					TileGroupManager.TileGroups[labelGroup].DeleteTileset(labelTileset, labelCategory);
@@ -3128,8 +3115,6 @@ namespace MapView
 		/// <param name="labelTileset"></param>
 		private void SelectTilesetNode(string labelGroup, string labelCategory, string labelTileset)
 		{
-			//Logfile.Log("MainViewF.SelectTilesetNode()");
-
 			foreach (TreeNode nodeGroup in MapTree.Nodes)
 			{
 				if (nodeGroup.Text == labelGroup)
@@ -3142,7 +3127,6 @@ namespace MapView
 							{
 								if (nodeTileset.Text == labelTileset)
 								{
-									//Logfile.Log(". _loadready");
 									_loadready = true;
 									MapTree.SelectedNode = nodeTileset;
 									return;
@@ -3159,76 +3143,6 @@ namespace MapView
 				}
 			}
 		}
-
-
-		// TODO: consolidate the select node functions into a single function.
-
-/*		/// <summary>
-		/// Selects the top treenode in the <c><see cref="MapTree"/></c> if one
-		/// exists.
-		/// </summary>
-		private void SelectGroupNodeTop()
-		{
-			if (MapTree.Nodes.Count != 0)
-				(MapTree.SelectedNode = MapTree.Nodes[0]).Expand();
-		} */
-
-/*		/// <summary>
-		/// Selects the top category treenode in the
-		/// <c><see cref="MapTree"/></c> if one exists under a given group
-		/// treenode.
-		/// </summary>
-		/// <param name="labelGroup"></param>
-		/// <remarks>Assumes that the parent-group node is valid.</remarks>
-		private void SelectCategoryNodeTop(string labelGroup)
-		{
-			foreach (TreeNode nodeGroup in MapTree.Nodes)
-			{
-				if (nodeGroup.Text == labelGroup)
-				{
-					if (nodeGroup.Nodes.Count != 0)
-						MapTree.SelectedNode = nodeGroup.Nodes[0];
-					else
-						MapTree.SelectedNode = nodeGroup;
-
-					MapTree.SelectedNode.Expand();
-					return;
-				}
-			}
-		} */
-
-/*		/// <summary>
-		/// Selects the top tileset treenode in the <c><see cref="MapTree"/></c>
-		/// if one exists under a given category treenode.
-		/// </summary>
-		/// <param name="labelGroup"></param>
-		/// <param name="labelCategory"></param>
-		/// <remarks>Assumes that the parent-parent-group and parent-category
-		/// nodes are valid.</remarks>
-		private void SelectTilesetNodeTop(string labelGroup, string labelCategory)
-		{
-			foreach (TreeNode nodeGroup in MapTree.Nodes)
-			{
-				if (nodeGroup.Text == labelGroup)
-				{
-					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
-					{
-						if (nodeCategory.Text == labelCategory)
-						{
-							if (nodeCategory.Nodes.Count != 0)
-								MapTree.SelectedNode = nodeCategory.Nodes[0];
-							else
-								(MapTree.SelectedNode = nodeCategory).Expand();
-
-							return;
-						}
-					}
-
-					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
-					return;
-				}
-			}
-		} */
 
 
 		/// <summary>
@@ -3261,17 +3175,26 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <seealso cref="OnMaptreeMouseDown()"><c>OnMaptreeMouseDown()</c></seealso>
 		private void OnMaptreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick()");
 
-			if (e.Node.Level == TREELEVEL_TILESET // ie. (_selected.Tag as Descriptor) != null
-				&& _selected != null && e.Node == _selected
-				&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor)
+			if (e.Button == MouseButtons.Left
+				&& e.Node.Level == TREELEVEL_TILESET
 				&& (sender == null // [Shift+Enter]
 					|| MapTree.HitTest(e.Location).Location == TreeViewHitTestLocations.Label))
 			{
-				LoadSelectedDescriptor(true);
+//				bool browseForMapfile = _selected != null && !(_selected.Tag as Descriptor).FileValid;
+
+				if (_selected != null && e.Node == _selected
+					&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor))
+				{
+					//Logfile.Log(". browseForMapfile");
+					LoadSelectedDescriptor(true);
+				}
+				else
+					_loadready = true;
 			}
 		}
 
@@ -3297,9 +3220,10 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Loads the currently selected treenode's Map or closes the currently
-		/// open Map if the selected node's level is not
-		/// <c><see cref="MainViewF.TREELEVEL_TILESET">MainViewF.TREELEVEL_TILESET</see></c>.
+		/// Loads the currently selected treenode's tileset or closes the
+		/// currently open tileset if the selected node's level is not
+		/// <c><see cref="MainViewF.TREELEVEL_TILESET">MainViewF.TREELEVEL_TILESET</see></c>
+		/// or if the selected tileset fails to load.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3309,10 +3233,10 @@ namespace MapView
 
 			_selected = e.Node;
 
-			if (e.Node.Level == TREELEVEL_TILESET)
+			if (e.Node.Level == TREELEVEL_TILESET
+				&& (sender == null || _loadready))
 			{
-				if (_loadready)
-					LoadSelectedDescriptor();
+				LoadSelectedDescriptor();
 			}
 			else if (MapFile != null)
 			{
@@ -3324,14 +3248,14 @@ namespace MapView
 
 		#region Methods
 		/// <summary>
-		/// Loads the tileset that's selected in the
+		/// Tries to load the tileset that's selected in the
 		/// <c><see cref="MapTree"/></c>.
+		/// </summary>
 		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
 		/// dialog</param>
 		/// <param name="keepRoutes"><c>true</c> to keep the current
 		/// <c><see cref="RouteNodes"/></c> - see
 		/// <c><see cref="ForceMapReload()">ForceMapReload()</see></c></param>
-		/// </summary>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
 			//Logfile.Log("MainViewF.LoadSelectedDescriptor()");
@@ -3344,132 +3268,149 @@ namespace MapView
 				TopView._fpartslots = null;
 			}
 
+			_bypassChanged = false; // TODO: where does that belong
 
-			_bypassChanged = false;
 
-			RouteNodes routes; bool routesChanged;
-			if (keepRoutes)
+			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor shall be valid. nope.
+			if (descriptor != null)
 			{
-				routes        = MapFile.Routes;
-				routesChanged = MapFile.RoutesChanged;
-			}
-			else
-			{
-				routes = null;
-				routesChanged = false;
-			}
+				//Logfile.Log(". descriptor Valid");
 
-
-			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor shall be valid.
-
-			// try this in case MapFile.LoadMapfile() needs to show a
-			// dialog about partIds exceeding the allocated terrainset.
-			// I think the crippled sprites aren't ready to go yet and
-			// .net tries to draw the Map and throws up when returning
-			// from that dialog. Then likely due to a redundancy of
-			// calls to the draw-routine the Map gets drawn correctly
-			// anyway after the crippled sprites are then ready ->
-
-			Dontdrawyougits = true;
-
-			MapFile file = MapFileService.LoadDescriptor(
-													descriptor,
-													ref browseMapfile,
-													Optionables.IgnoreRecordsExceeded,
-													routes,
-													_selected);
-			if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
-
-			Dontdrawyougits = false;
-
-
-			if (file != null)
-			{
-				_loaded = _selected;
-
-				if (file.TerrainsetCountExceeded != 0) // don't ask why 'cause I don't know ...
-					MapTree.Invalidate();
-
-
-				EnableMenuIts(true);
-
-				_overlay.FirstClick = false;
-
-				if (descriptor.GroupType == GroupType.Tftd)
+				RouteNodes routes; bool routesChanged;
+				if (keepRoutes)
 				{
-					ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
-					Palette.MonoBrushes = Palette.BrushesTftdBattle; // used by Mono only
+					routes        = MapFile.Routes;
+					routesChanged = MapFile.RoutesChanged;
 				}
-				else // default to ufo-battle palette
+				else
 				{
-					ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
-					Palette.MonoBrushes = Palette.BrushesUfoBattle; // used by Mono only
+					routes = null;
+					routesChanged = false;
 				}
 
 
-				MapFile = file;
+				// try this in case MapFile.LoadMapfile() needs to show a
+				// dialog about partIds exceeding the allocated terrainset.
+				// I think the crippled sprites aren't ready to go yet and
+				// .net tries to draw the Map and throws up when returning
+				// from that dialog. Then likely due to a redundancy of
+				// calls to the draw-routine the Map gets drawn correctly
+				// anyway after the crippled sprites are then ready ->
 
-				ObserverManager.ToolFactory.EnableAutoscale(true);
-				ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
+				Dontdrawyougits = true;
 
-				Text = TITLE + " " + descriptor.Basepath;
-				if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
+				MapFile file = MapFileService.LoadDescriptor(
+														descriptor,
+														ref browseMapfile,
+														Optionables.IgnoreRecordsExceeded,
+														routes,
+														_selected);
+				if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
 
-				tsslMapLabel     .Text = descriptor.Label;
-				tsslDimensions   .Text = file.SizeString;
-				tsslPosition     .Text =
-				tsslSelectionSize.Text = String.Empty;
+				Dontdrawyougits = false;
 
-				if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
-				file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
-				RouteView.ClearSelectedInfo();
-
-				Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
-				Optionables.OpenDoors = false;
-				SetDoorSpritesFullPhase(false);
-				if (_foptions != null && _foptions.Visible)
-					_foptions.propertyGrid.Refresh();
-
-				SelectToner(); // create toned spriteset(s) for selected-tile(s)
-
-				if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
-					ViewersMenuManager.StartSecondStageBoosters();
-
-				ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
-
-				RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
-										MainViewF.Optionables.Base1_xy,
-										MainViewF.Optionables.Base1_z);
-
-				if (RouteCheckService.CheckNodeBounds(file) == DialogResult.Yes)
+				if (file != null)
 				{
-					RouteView.RoutesChangedCoordinator = true;
+					Logfile.Log(". file Valid");
 
-					foreach (RouteNode node in RouteCheckService.Invalids)
-						file.Routes.DeleteNode(node);
+					_loaded = _selected;
+
+					descriptor.FileValid = true;
+
+					if (file.TerrainsetCountExceeded != 0) // don't ask why 'cause I don't know ...
+						MapTree.Invalidate();
+
+
+					EnableMenuIts(true);
+
+					_overlay.FirstClick = false;
+
+					if (descriptor.GroupType == GroupType.Tftd)
+					{
+						ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
+						Palette.MonoBrushes = Palette.BrushesTftdBattle; // used by Mono only
+					}
+					else // default to ufo-battle palette
+					{
+						ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGufo() != null);
+						Palette.MonoBrushes = Palette.BrushesUfoBattle; // used by Mono only
+					}
+
+
+					MapFile = file;
+
+					ObserverManager.ToolFactory.EnableAutoscale(true);
+					ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
+
+					Text = TITLE + " " + descriptor.Basepath;
+					if (MaptreeChanged) MaptreeChanged = MaptreeChanged; // maniacal laugh YOU figure it out.
+
+					tsslMapLabel     .Text = descriptor.Label;
+					tsslDimensions   .Text = file.SizeString;
+					tsslPosition     .Text =
+					tsslSelectionSize.Text = String.Empty;
+
+					if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
+					file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
+
+					RouteView.ClearSelectedInfo();
+
+					Options[MainViewOptionables.str_OpenDoors].Value = // close doors; not necessary but keeps user's head on straight.
+					Optionables.OpenDoors = false;
+					SetDoorSpritesFullPhase(false);
+					if (_foptions != null && _foptions.Visible)
+						_foptions.propertyGrid.Refresh();
+
+					SelectToner(); // create toned spriteset(s) for selected-tile(s)
+
+					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
+						ViewersMenuManager.StartSecondStageBoosters();
+
+					ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
+
+					RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
+											MainViewF.Optionables.Base1_xy,
+											MainViewF.Optionables.Base1_z);
+
+					if (RouteCheckService.CheckNodeBounds(file) == DialogResult.Yes)
+					{
+						RouteView.RoutesChangedCoordinator = true;
+
+						foreach (RouteNode node in RouteCheckService.Invalids)
+							file.Routes.DeleteNode(node);
+					}
+
+					if (routesChanged && !file.RoutesChanged)
+						RouteView.RoutesChangedCoordinator = true;
+
+					Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
+
+					if (ScanG != null) // update ScanG viewer if open
+						ScanG.LoadMapfile(file);
+
+					McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
+					if (fMcdInfo != null)
+						fMcdInfo.UpdateData();
+
+					if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
+						RouteView.SpawnInfo.Initialize(file);
+
+					ResetQuadrantPanel(); // update the Quadrant panel
+
+					FirstActivated = false;
+					Activate();
+
+					return;
 				}
 
-				if (routesChanged && !file.RoutesChanged)
-					RouteView.RoutesChangedCoordinator = true;
-
-				Globals.Scale = Globals.Scale; // enable/disable the scale-in/scale-out buttons
-
-				if (ScanG != null) // update ScanG viewer if open
-					ScanG.LoadMapfile(file);
-
-				McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
-				if (fMcdInfo != null)
-					fMcdInfo.UpdateData();
-
-				if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
-					RouteView.SpawnInfo.Initialize(file);
-
-				ResetQuadrantPanel(); // update the Quadrant panel
-
-				FirstActivated = false;
-				Activate();
+				descriptor.FileValid = false;
+				//Logfile.Log(". file NOT Valid");
 			}
+			//else Logfile.Log(". descriptor NOT Valid");
+
+			if (MapFile != null)
+				OnCloseClick(null, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -3774,3 +3715,73 @@ namespace MapView
 		#endregion Methods
 	}
 }
+
+
+		// TODO: consolidate the select node functions into a single function.
+
+/*		/// <summary>
+		/// Selects the top treenode in the <c><see cref="MapTree"/></c> if one
+		/// exists.
+		/// </summary>
+		private void SelectGroupNodeTop()
+		{
+			if (MapTree.Nodes.Count != 0)
+				(MapTree.SelectedNode = MapTree.Nodes[0]).Expand();
+		} */
+
+/*		/// <summary>
+		/// Selects the top category treenode in the
+		/// <c><see cref="MapTree"/></c> if one exists under a given group
+		/// treenode.
+		/// </summary>
+		/// <param name="labelGroup"></param>
+		/// <remarks>Assumes that the parent-group node is valid.</remarks>
+		private void SelectCategoryNodeTop(string labelGroup)
+		{
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
+			{
+				if (nodeGroup.Text == labelGroup)
+				{
+					if (nodeGroup.Nodes.Count != 0)
+						MapTree.SelectedNode = nodeGroup.Nodes[0];
+					else
+						MapTree.SelectedNode = nodeGroup;
+
+					MapTree.SelectedNode.Expand();
+					return;
+				}
+			}
+		} */
+
+/*		/// <summary>
+		/// Selects the top tileset treenode in the <c><see cref="MapTree"/></c>
+		/// if one exists under a given category treenode.
+		/// </summary>
+		/// <param name="labelGroup"></param>
+		/// <param name="labelCategory"></param>
+		/// <remarks>Assumes that the parent-parent-group and parent-category
+		/// nodes are valid.</remarks>
+		private void SelectTilesetNodeTop(string labelGroup, string labelCategory)
+		{
+			foreach (TreeNode nodeGroup in MapTree.Nodes)
+			{
+				if (nodeGroup.Text == labelGroup)
+				{
+					foreach (TreeNode nodeCategory in nodeGroup.Nodes)
+					{
+						if (nodeCategory.Text == labelCategory)
+						{
+							if (nodeCategory.Nodes.Count != 0)
+								MapTree.SelectedNode = nodeCategory.Nodes[0];
+							else
+								(MapTree.SelectedNode = nodeCategory).Expand();
+
+							return;
+						}
+					}
+
+					(MapTree.SelectedNode = nodeGroup).Expand(); // safety ->
+					return;
+				}
+			}
+		} */
