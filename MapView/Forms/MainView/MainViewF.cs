@@ -355,13 +355,13 @@ namespace MapView
 
 			MapTree = new CompositedTreeView();
 
-			MapTree.DrawNode       += OnMapTreeDrawNode;
-			MapTree.GotFocus       += OnMapTreeFocusChanged;
-			MapTree.LostFocus      += OnMapTreeFocusChanged;
-			MapTree.MouseDown      += OnMapTreeMouseDown;
-			MapTree.BeforeSelect   += OnMapTreeBeforeSelect;
-			MapTree.AfterSelect    += OnMapTreeAfterSelect;
-			MapTree.NodeMouseClick += OnMapTreeNodeMouseClick;
+			MapTree.DrawNode       += OnMaptreeDrawNode;
+			MapTree.GotFocus       += OnMaptreeFocusChanged;
+			MapTree.LostFocus      += OnMaptreeFocusChanged;
+			MapTree.MouseDown      += OnMaptreeMouseDown;
+			MapTree.BeforeSelect   += OnMaptreeBeforeSelect;
+			MapTree.AfterSelect    += OnMaptreeAfterSelect;
+			MapTree.NodeMouseClick += OnMaptreeNodeMouseClick;
 //			MapTree.NodeMouseClick += (sender, args) => MapTree.SelectedNode = args.Node;
 
 			Controls.Add(MapTree);
@@ -623,7 +623,7 @@ namespace MapView
 			ShiftSplitter();
 
 
-			DontBeepEvent += FireContext;
+			DontBeepEvent += DontBeep;
 
 			ssMain.Renderer = new CustomToolStripRenderer();
 
@@ -1338,7 +1338,7 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMapTreeDrawNode(object sender, DrawTreeNodeEventArgs e)
+		private void OnMaptreeDrawNode(object sender, DrawTreeNodeEventArgs e)
 		{
 			TreeNode node = e.Node;
 			if (node != null)
@@ -2524,10 +2524,10 @@ namespace MapView
 
 		#region Events (load)
 		// __Sequence of Events__
-		// MainViewF.OnMapTreeMouseDown()
-		// MainViewF.OnMapTreeNodeMouseClick()
-		// MainViewF.OnMapTreeBeforeSelect()
-		// MainViewF.OnMapTreeAfterSelect()
+		// MainViewF.OnMaptreeMouseDown()
+		// MainViewF.OnMaptreeNodeMouseClick()
+		// MainViewF.OnMaptreeBeforeSelect()
+		// MainViewF.OnMaptreeAfterSelect()
 		// MainViewF.LoadSelectedDescriptor()
 
 		/// <summary>
@@ -2581,9 +2581,9 @@ namespace MapView
 		/// the files are valid.</item>
 		/// </list>
 		/// </summary>
-		private void FireContext()
+		private void DontBeep()
 		{
-			//Logfile.Log("MainViewF.FireContext()");
+			//Logfile.Log("MainViewF.DontBeep()");
 
 			switch (_dontbeeptype)
 			{
@@ -2595,7 +2595,7 @@ namespace MapView
 												1,
 												nodebounds.X + 15, nodebounds.Y + 5,
 												0);
-					OnMapTreeMouseDown(null, args);
+					OnMaptreeMouseDown(null, args);
 					break;
 				}
 
@@ -2603,7 +2603,7 @@ namespace MapView
 				{
 					//Logfile.Log(". LOADREADY_STAGE_2");
 					_loadReady = LOADREADY_STAGE_2;
-					OnMapTreeAfterSelect(null, new TreeViewEventArgs(_selected));
+					OnMaptreeAfterSelect(null, new TreeViewEventArgs(_selected));
 					break;
 				}
 
@@ -2613,7 +2613,7 @@ namespace MapView
 															_selected,
 															MouseButtons.None,
 															0, 0,0);
-					OnMapTreeNodeMouseClick(null, args);
+					OnMaptreeNodeMouseClick(null, args);
 					break;
 				}
 			}
@@ -2633,10 +2633,10 @@ namespace MapView
 		/// selected Map will change before a context-menu is shown, which is
 		/// good. A <c>MouseClick</c> event won't work if the tree is blank. So
 		/// use <c>MouseDown</c>.</remarks>
-		private void OnMapTreeMouseDown(object sender, MouseEventArgs e)
+		private void OnMaptreeMouseDown(object sender, MouseEventArgs e)
 		{
 			//Logfile.Log();
-			//Logfile.Log("MainViewF.OnMapTreeMouseDown() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeMouseDown() _loadReady= " + _loadReady);
 
 			switch (e.Button)
 			{
@@ -2741,7 +2741,7 @@ namespace MapView
 							}
 						}
 
-						OnMapTreeMouseDown(sender, e); // RECURSE^
+						OnMaptreeMouseDown(sender, e); // RECURSE^
 					}
 					break;
 			}
@@ -3233,7 +3233,7 @@ namespace MapView
 		/// <summary>
 		/// For an ungodly reason when the <c><see cref="MapTree"/></c>
 		/// gains/loses focus
-		/// <c><see cref="OnMapTreeDrawNode()">OnMapTreeDrawNode()</see></c>
+		/// <c><see cref="OnMaptreeDrawNode()">OnMaptreeDrawNode()</see></c>
 		/// re-colors selected/ focused treenodes correctly but does not
 		/// re-color a <c><see cref="Searched"/></c> treenode or a
 		/// <c><see cref="_loaded"/></c> treenode if it's not also selected/
@@ -3241,9 +3241,9 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMapTreeFocusChanged(object sender, EventArgs e)
+		private void OnMaptreeFocusChanged(object sender, EventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeFocusChanged() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeFocusChanged() _loadReady= " + _loadReady);
 
 			if ((_loaded != null && MapTree.SelectedNode != _loaded)
 				|| Searched != null)
@@ -3260,9 +3260,9 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMapTreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		private void OnMaptreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeNodeMouseClick() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick() _loadReady= " + _loadReady);
 
 			if (e.Node.Level == TREELEVEL_TILESET // ie. (_selected.Tag as Descriptor) != null
 				&& _selected != null && e.Node == _selected)
@@ -3288,9 +3288,9 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMapTreeBeforeSelect(object sender, CancelEventArgs e)
+		private void OnMaptreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeBeforeSelect() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect() _loadReady= " + _loadReady);
 
 			if (!_bypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
@@ -3306,9 +3306,9 @@ namespace MapView
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMapTreeAfterSelect(object sender, TreeViewEventArgs e)
+		private void OnMaptreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMapTreeAfterSelect() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() _loadReady= " + _loadReady);
 
 			if (e.Node.Level == TREELEVEL_TILESET)
 			{
