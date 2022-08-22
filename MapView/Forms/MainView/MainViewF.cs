@@ -935,7 +935,10 @@ namespace MapView
 			}
 
 			if (FirstActivated)
-				_overlay.Focus();
+			{
+				if (MapFile != null) _overlay.Select();
+				else                  MapTree.Select();
+			}
 			else
 				FirstActivated = true;
 		}
@@ -1580,13 +1583,9 @@ namespace MapView
 
 			if (!cancel)
 			{
-//				Dontdrawyougits = true; // TODO: probably redundant.
-
 				//Logfile.Log(". LOADREADY_STAGE_2");
 				_loadReady = LOADREADY_STAGE_2;
 				LoadSelectedDescriptor();
-
-//				Dontdrawyougits = false; // TODO: probably redundant.
 				_overlay.Invalidate();
 			}
 		}
@@ -1617,69 +1616,72 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnCloseClick(object sender, EventArgs e)
 		{
-			EnableMenuIts(false);
-			ViewersMenuManager.EnableScanG(false);
+			bool cancel = false;
 
-			if (ScanG != null)
-				ScanG.Close();
-
-			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
+			if (sender != null) // bypass SaveAlert iff group/category/tileset is deleted from the Maptree
 			{
-				TopView._fpartslots.Close();
-				TopView._fpartslots = null;
+				cancel  = (SaveAlertMap()    == DialogResult.Cancel);
+				cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 			}
 
-//			McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
-//			if (fMcdInfo != null)
-//				fMcdInfo.UpdateData();
 
-			if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
-				RouteView.SpawnInfo.Close();
-
-			if (_finfo != null)
+			if (!cancel)
 			{
-				_finfo.Close();
-				DecheckMapInfo();
+				EnableMenuIts(false);
+				ViewersMenuManager.EnableScanG(false);
+
+				if (ScanG != null)
+					ScanG.Close();
+
+				if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
+				{
+					TopView._fpartslots.Close();
+					TopView._fpartslots = null;
+				}
+
+//				McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
+//				if (fMcdInfo != null) fMcdInfo.UpdateData();
+
+				if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
+					RouteView.SpawnInfo.Close();
+
+				if (_finfo != null)
+				{
+					_finfo.Close();
+					DecheckMapInfo();
+				}
+
+				RouteView.DeselectNodeStatic(true);
+
+				ObserverManager.AssignMapfile(MapFile = null);
+
+				ObserverManager.ToolFactory.EnableLevelers(0,1);
+				ObserverManager.ToolFactory.EnableEditors(false);
+				ObserverManager.ToolFactory.EnablePasters(false);
+				ObserverManager.ToolFactory.EnableAutoscale(false);
+				ObserverManager.ToolFactory.EnableScalein(false);
+				ObserverManager.ToolFactory.EnableScaleout(false);
+
+				tsslMapLabel     .Text =
+				tsslDimensions   .Text =
+				tsslPosition     .Text =
+				tsslScale        .Text =
+				tsslSelectionSize.Text = String.Empty;
+
+				ObserverManager.TileView.Control.SelectedTilepart = null;
+				ObserverManager.TileView.Control.SelectTilepart(null);
+
+				ResetQuadrantPanel();
+
+				RouteView.ClearSelectedInfo();
+
+				_loaded = null;
+				MapTree.Invalidate();
+				MapTree.Select();
 			}
-
-			RouteView.DeselectNodeStatic(true);
-
-
-			ObserverManager.AssignMapfile(MapFile = null);
-
-			ObserverManager.ToolFactory.EnableLevelers(0,1);
-			ObserverManager.ToolFactory.EnableEditors(false);
-			ObserverManager.ToolFactory.EnablePasters(false);
-			ObserverManager.ToolFactory.EnableAutoscale(false);
-			ObserverManager.ToolFactory.EnableScalein(false);
-			ObserverManager.ToolFactory.EnableScaleout(false);
-
-			tsslMapLabel     .Text =
-			tsslDimensions   .Text =
-			tsslPosition     .Text =
-			tsslScale        .Text =
-			tsslSelectionSize.Text = String.Empty;
-
-			ObserverManager.TileView.Control.SelectedTilepart = null;
-			ObserverManager.TileView.Control.SelectTilepart(null);
-
-			ResetQuadrantPanel();
-
-			RouteView.ClearSelectedInfo();
-
-
-//			if (sender != null)
-//			{
-//				_group = MapTree.SelectedNode.Parent.Parent.Text;
-//				_catgr = MapTree.SelectedNode.Parent.Text;
-//			}
-			if (sender == null) // tileset has been deleted from the Maptree ->
-				SelectCategoryNode(_group, _catgr);
-
-			_loaded = null;
-			MapTree.Invalidate(); // req'd to handle (_loaded == null)
+			else
+				_overlay.Select();
 		}
-		private string _group, _catgr;
 
 
 		private string _lastScreenshotDirectory;
@@ -2643,8 +2645,7 @@ namespace MapView
 				case MouseButtons.Left:
 				{
 					TreeViewHitTestInfo info = MapTree.HitTest(e.Location);
-					//Logfile.Log(". node= " + info.Node);
-					//Logfile.Log(". loc= " + info.Location);
+					//Logfile.Log(". node= " + info.Node + " loc= " + info.Location);
 					if (info.Location == TreeViewHitTestLocations.Label
 						&& info.Node != null && info.Node.Level == TREELEVEL_TILESET)
 					{
@@ -2825,9 +2826,14 @@ namespace MapView
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
+					if (MapFile != null)
+					{
+						MapChanged = RouteView.RoutesChangedCoordinator = false;
+						OnCloseClick(null, EventArgs.Empty);
+					}
+
 					MaptreeChanged = true;
 					TileGroupManager.DeleteTileGroup(labelGroup);
-					// TODO: Close the Map, Routes, Tiles, Topview, etc ...
 					CreateTree();
 				}
 			}
@@ -2914,9 +2920,14 @@ namespace MapView
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
+					if (MapFile != null)
+					{
+						MapChanged = RouteView.RoutesChangedCoordinator = false;
+						OnCloseClick(null, EventArgs.Empty);
+					}
+
 					MaptreeChanged = true;
 					TileGroupManager.TileGroups[labelGroup].DeleteCategory(labelCategory);
-					// TODO: Close the Map, Routes, Tiles, Topview, etc ...
 					CreateTree();
 					SelectGroupNode(labelGroup);
 				}
@@ -2945,15 +2956,11 @@ namespace MapView
 				{
 					if (te.ShowDialog(this) == DialogResult.OK)
 					{
-//						Dontdrawyougits = true; // TODO: probably redundant.
-
 						MaptreeChanged = true;
 						_bypassChanged = true;
 						CreateTree();
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
-
-						Dontdrawyougits = false; // TODO: probably redundant.
-//						_overlay.Invalidate();
+						_overlay.Invalidate();
 					}
 				}
 			}
@@ -2981,14 +2988,10 @@ namespace MapView
 				{
 					if (te.ShowDialog(this) == DialogResult.OK)
 					{
-//						Dontdrawyougits = true; // TODO: probably redundant.
-
 						MaptreeChanged = true;
 						_bypassChanged = true;
 						CreateTree();
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
-
-//						Dontdrawyougits = false; // TODO: probably redundant.
 						_overlay.Invalidate();
 					}
 				}
@@ -3059,15 +3062,13 @@ namespace MapView
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
+					MapChanged = RouteView.RoutesChangedCoordinator = false;
+					OnCloseClick(null, EventArgs.Empty);
+
 					MaptreeChanged = true;
 					TileGroupManager.TileGroups[labelGroup].DeleteTileset(labelTileset, labelCategory);
-					MapChanged = RouteView.RoutesChangedCoordinator = false;
-
 					CreateTree();
-
-					_group = labelGroup;
-					_catgr = labelCategory;
-					OnCloseClick(null, EventArgs.Empty);
+					SelectCategoryNode(labelGroup, labelCategory);
 				}
 			}
 		}
@@ -3265,14 +3266,12 @@ namespace MapView
 			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick() _loadReady= " + _loadReady);
 
 			if (e.Node.Level == TREELEVEL_TILESET // ie. (_selected.Tag as Descriptor) != null
-				&& _selected != null && e.Node == _selected)
+				&& _selected != null && e.Node == _selected
+				&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor))
 			{
 				TreeViewHitTestInfo info = MapTree.HitTest(e.Location);
-				//Logfile.Log(". node= " + info.Node);
-				//Logfile.Log(". loc= " + info.Location);
-
-				if (info.Location == TreeViewHitTestLocations.Label
-					&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor))
+				//Logfile.Log(". node= " + info.Node + " loc= " + info.Location);
+				if (info.Location == TreeViewHitTestLocations.Label)
 				{
 					ClearSearched();
 
@@ -3284,13 +3283,16 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Asks user to save before switching Maps if applicable.
+		/// Asks user to save Map and Routes before selecting a treenode if
+		/// applicable.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnMaptreeBeforeSelect(object sender, CancelEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect() _loadReady= " + _loadReady);
+
+			// TODO: do not clear changed flags unless the current file gets closed.
 
 			if (!_bypassChanged) // is true on TilesetEditor DialogResult.OK
 			{
@@ -3302,13 +3304,17 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Loads the selected Map.
+		/// Loads the currently selected treenode's Map or closes the currently
+		/// open Map if the selected node's level is not
+		/// <c><see cref="MainViewF.TREELEVEL_TILESET">MainViewF.TREELEVEL_TILESET</see></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnMaptreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() _loadReady= " + _loadReady);
+
+			_selected = e.Node;
 
 			if (e.Node.Level == TREELEVEL_TILESET)
 			{
@@ -3323,9 +3329,8 @@ namespace MapView
 			}
 			else if (MapFile != null)
 			{
-				OnCloseClick(miClose, EventArgs.Empty);
+				OnCloseClick(null, EventArgs.Empty);
 			}
-			_selected = e.Node;
 		}
 		#endregion Events (load)
 
@@ -3349,6 +3354,7 @@ namespace MapView
 				TopView._fpartslots.Close();
 				TopView._fpartslots = null;
 			}
+
 
 			if (_loadReady == LOADREADY_STAGE_2)
 			{
@@ -3392,7 +3398,7 @@ namespace MapView
 
 					if (file != null)
 					{
-						_loaded = MapTree.SelectedNode; // do not use '_selected' here its not ready.
+						_loaded = _selected;
 
 						if (file.TerrainsetCountExceeded != 0) // don't ask why 'cause I don't know ...
 							MapTree.Invalidate();
@@ -3507,8 +3513,9 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Selects the toned <c><see cref="Palette"/></c> to be used for drawing
-		/// <c><see cref="Tilepart">Tileparts</see></c> of selected tiles.
+		/// Selects the toned <c><see cref="Palette"/></c> to be used for
+		/// drawing <c><see cref="Tilepart">Tileparts</see></c> of selected
+		/// tiles.
 		/// </summary>
 		/// <remarks>See
 		/// <c><see cref="MainViewOptionables.TONER_NONE">MainViewOptionables.TONER_*</see></c>
