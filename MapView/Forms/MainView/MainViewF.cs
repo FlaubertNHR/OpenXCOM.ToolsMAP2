@@ -1087,7 +1087,7 @@ namespace MapView
 		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
-			//Logfile.Log("MainViewF.ProcessCmdKey() " + keyData + " _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.ProcessCmdKey() " + keyData + " _loadready= " + _loadready);
 
 			bool invalidate = false;
 			bool focusearch = false;
@@ -1176,7 +1176,7 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnKeyDown() " + e.KeyData);
 
-			_loadReady = false;
+			_loadready = false;
 
 			string key = null; object val = null;
 			ToolStripMenuItem it = null;
@@ -2520,7 +2520,7 @@ namespace MapView
 		#endregion Events
 
 
-		#region Events (load)
+		#region Events (tree)
 		// __Sequence of Events__
 		// MainViewF.OnMaptreeMouseDown()
 		// MainViewF.OnMaptreeNodeMouseClick()
@@ -2570,7 +2570,7 @@ namespace MapView
 		/// </summary>
 		/// <remarks>The value is checked in
 		/// <c><see cref="OnMaptreeAfterSelect()">OnMaptreeAfterSelect()</see></c>.</remarks>
-		private bool _loadReady;
+		private bool _loadready;
 
 
 		/// <summary>
@@ -2604,8 +2604,8 @@ namespace MapView
 
 				case DontBeepType.LoadDescriptor:	// [Enter]
 				{
-					//Logfile.Log(". _loadReady");
-					_loadReady = true;
+					//Logfile.Log(". _loadready");
+					_loadready = true;
 					OnMaptreeAfterSelect(null, new TreeViewEventArgs(_selected));
 					break;
 				}
@@ -2649,8 +2649,8 @@ namespace MapView
 					if (info.Location == TreeViewHitTestLocations.Label
 						&& info.Node != null && info.Node.Level == TREELEVEL_TILESET)
 					{
-						//Logfile.Log(". _loadReady");
-						_loadReady = true;
+						//Logfile.Log(". _loadready");
+						_loadready = true;
 					}
 					break;
 				}
@@ -3142,8 +3142,8 @@ namespace MapView
 							{
 								if (nodeTileset.Text == labelTileset)
 								{
-									//Logfile.Log(". _loadReady");
-									_loadReady = true;
+									//Logfile.Log(". _loadready");
+									_loadready = true;
 									MapTree.SelectedNode = nodeTileset;
 									return;
 								}
@@ -3305,13 +3305,13 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMaptreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() _loadReady= " + _loadReady);
+			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() _loadready= " + _loadready);
 
 			_selected = e.Node;
 
 			if (e.Node.Level == TREELEVEL_TILESET)
 			{
-				if (_loadReady)
+				if (_loadready)
 					LoadSelectedDescriptor();
 			}
 			else if (MapFile != null)
@@ -3319,7 +3319,7 @@ namespace MapView
 				OnCloseClick(null, EventArgs.Empty);
 			}
 		}
-		#endregion Events (load)
+		#endregion Events (tree)
 
 
 		#region Methods
