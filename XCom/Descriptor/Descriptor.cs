@@ -121,7 +121,7 @@ namespace XCom
 			else // the Share can return null if the resource-type is notconfigured
 				_dirTerr = String.Empty;
 
-			FileValid = CheckMapfilePath();
+			FileValid = GetMapfilePath() != null;
 
 			BypassRecordsExceeded = bypassRecordsExceeded;
 		}
@@ -130,31 +130,15 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Checks the fullpath to the Mapfile for this <c>Descriptor</c>.
-		/// </summary>
-		/// <returns><c>true</c> if the Mapfile exists on the hardrive</returns>
-		private bool CheckMapfilePath()
-		{
-			if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
-			{
-				string path = Path.Combine(Basepath, GlobalsXC.MapsDir);
-				path = Path.Combine(path, Label + GlobalsXC.MapExt);
-
-				return File.Exists(path);
-			}
-			return false;
-		}
-
-		/// <summary>
 		/// Gets the fullpath to the Mapfile for this <c>Descriptor</c>.
 		/// </summary>
 		/// <returns>the path to the Mapfile else <c>null</c></returns>
-		public string GetMapfilePath()
+		internal string GetMapfilePath()
 		{
 			if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
 			{
-				string path = Path.Combine(Basepath, GlobalsXC.MapsDir);
-				path = Path.Combine(path, Label + GlobalsXC.MapExt);
+				string path = Path.Combine(Basepath,     GlobalsXC.MapsDir);
+					   path = Path.Combine(path, Label + GlobalsXC.MapExt);
 
 				if (File.Exists(path))
 					return path;
