@@ -1131,7 +1131,7 @@ namespace MapView
 						return true;
 
 					case Keys.Escape:	// panel must *not* have focus (Escape also cancels multi-tile selection)
-						_overlay.Focus();
+						_overlay.Select();
 						_overlay.Invalidate();
 						return true;
 				}
