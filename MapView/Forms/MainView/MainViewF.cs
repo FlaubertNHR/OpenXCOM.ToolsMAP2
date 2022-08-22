@@ -3312,7 +3312,7 @@ namespace MapView
 
 				if (file != null)
 				{
-					Logfile.Log(". file Valid");
+					//Logfile.Log(". file Valid");
 
 					_loaded = _selected;
 
