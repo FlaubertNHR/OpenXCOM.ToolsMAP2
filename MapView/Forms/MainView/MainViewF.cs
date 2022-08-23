@@ -2551,7 +2551,7 @@ namespace MapView
 		/// <c><see cref="TilesetEditor"/></c> while maintaining the current
 		/// state of the actual changed-flags.
 		/// </summary>
-		private bool _bypassChanged;
+		private bool _bypassSavealert;
 
 		/// <summary>
 		/// To allow the <c><see cref="MapTree"/></c> to be navigated by
@@ -2642,11 +2642,11 @@ namespace MapView
 				// vid. LoadSelectedDescriptor()
 
 				if (MapFile == null
-					|| _bypassChanged
+					|| _bypassSavealert
 					|| (   !MapFile.MapChanged
 						&& !MapFile.RoutesChanged))
 				{
-					_bypassChanged = false;
+					_bypassSavealert = false;
 
 					cms_MapTreeContext.Items.Clear();
 
@@ -2682,7 +2682,7 @@ namespace MapView
 
 					cms_MapTreeContext.Show(MapTree, e.Location);
 				}
-				else // MapFile != null && !_bypassChanged && (MapFile.MapChanged || MapFile.RoutesChanged)
+				else // MapFile != null && !_bypassSavealert && (MapFile.MapChanged || MapFile.RoutesChanged)
 				{
 					string info = GetChangedInfo();
 
@@ -2722,7 +2722,7 @@ namespace MapView
 								break;
 
 							case DialogResult.OK:
-								_bypassChanged = true;
+								_bypassSavealert = true;
 								break;
 						}
 					}
@@ -2940,8 +2940,8 @@ namespace MapView
 				{
 					if (te.ShowDialog(this) == DialogResult.OK)
 					{
-						MaptreeChanged = true;
-						_bypassChanged = true;
+						MaptreeChanged = _bypassSavealert = true;
+
 						CreateTree();
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 						_overlay.Invalidate();
@@ -2972,8 +2972,8 @@ namespace MapView
 				{
 					if (te.ShowDialog(this) == DialogResult.OK)
 					{
-						MaptreeChanged = true;
-						_bypassChanged = true;
+						MaptreeChanged = _bypassSavealert = true;
+
 						CreateTree();
 						SelectTilesetNode(labelGroup, labelCategory, te.TilesetLabel);
 						_overlay.Invalidate();
@@ -3208,22 +3208,19 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect()");
 
-			// TODO: do not clear changed flags unless the current file gets closed.
-
-			if (!_bypassChanged) // is true on TilesetEditor DialogResult.OK
+			if (!_bypassSavealert) // is true on TilesetEditor DialogResult.OK
 			{
 				e.Cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				e.Cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 			}
 //			else
-//				_bypassChanged = false;
+//				_bypassSavealert = false;
 		}
 
 		/// <summary>
 		/// Loads the currently selected treenode's tileset or closes the
 		/// currently open tileset if the selected node's level is not
-		/// <c><see cref="MainViewF.TREELEVEL_TILESET">MainViewF.TREELEVEL_TILESET</see></c>
-		/// or if the selected tileset fails to load.
+		/// <c><see cref="MainViewF.TREELEVEL_TILESET">MainViewF.TREELEVEL_TILESET</see></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3268,7 +3265,7 @@ namespace MapView
 				TopView._fpartslots = null;
 			}
 
-			_bypassChanged = false; // TODO: where does that belong
+			_bypassSavealert = false; // TODO: where does that belong
 
 
 			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor shall be valid. nope.
