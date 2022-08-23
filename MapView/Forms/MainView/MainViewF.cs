@@ -2630,7 +2630,9 @@ namespace MapView
 		{
 			//Logfile.Log("MainViewF.OnMaptreeMouseDown()");
 
-			if (e.Button == MouseButtons.Right)
+			if (e.Button == MouseButtons.Right && MapTree.SelectedNode != null // safety.
+				&& (MapTree.SelectedNode.Level != TREELEVEL_TILESET
+					|| MapTree.SelectedNode == _loaded))
 			{
 				// prevent a bunch of problems like looping dialogs when returning from
 				// the Tileset Editor and the Maptree-node gets re-selected causing
