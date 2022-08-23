@@ -1184,12 +1184,12 @@ namespace MapView
 			switch (e.KeyData)
 			{
 				case Keys.Space:				// open Context
-					if (MapTree.Focused && _selected != null)
+					if (MapTree.Focused && MapTree.SelectedNode != null)
 					{
 						e.SuppressKeyPress = true;
 
-						if (_selected.Level != TREELEVEL_TILESET
-							|| _selected == _loaded)
+						if (MapTree.SelectedNode.Level != TREELEVEL_TILESET
+							|| MapTree.SelectedNode == _loaded)
 						{
 							_dontbeeptype = DontBeepType.OpenContext;
 							BeginInvoke(DontBeepEvent);
@@ -1198,35 +1198,35 @@ namespace MapView
 					break;
 
 				case Keys.Enter:				// load Descriptor (do NOT reload)
-					if (MapTree.Focused && _selected != null)
+					if (MapTree.Focused && MapTree.SelectedNode != null)
 					{
 						e.SuppressKeyPress = true;
 
-						if (_selected.Level == TREELEVEL_TILESET)
+						if (MapTree.SelectedNode.Level == TREELEVEL_TILESET)
 						{
 							if (   MapFile == null
-								|| MapFile.Descriptor != _selected.Tag as Descriptor)
+								|| MapFile.Descriptor != MapTree.SelectedNode.Tag as Descriptor)
 							{
 								_dontbeeptype = DontBeepType.LoadDescriptor;
 								BeginInvoke(DontBeepEvent);
 							}
 						}
-						else if (!_selected.IsExpanded)
+						else if (!MapTree.SelectedNode.IsExpanded)
 						{
-							_selected.Expand();
+							MapTree.SelectedNode.Expand();
 						}
 						else
-							_selected.Collapse();
+							MapTree.SelectedNode.Collapse();
 					}
 					break;
 
 				case Keys.Shift | Keys.Enter:	// open MapBrowserDialog
-					if (MapTree.Focused && _selected != null)
+					if (MapTree.Focused && MapTree.SelectedNode != null)
 					{
 						e.SuppressKeyPress = true;
 
-						if (_selected.Level == TREELEVEL_TILESET
-							&& !(_selected.Tag as Descriptor).FileValid)
+						if (MapTree.SelectedNode.Level == TREELEVEL_TILESET
+							&& !(MapTree.SelectedNode.Tag as Descriptor).FileValid)
 						{
 							_dontbeeptype = DontBeepType.MapBrowserDialog;
 							BeginInvoke(DontBeepEvent);
@@ -2526,11 +2526,6 @@ namespace MapView
 		// MainViewF.LoadSelectedDescriptor()
 
 		/// <summary>
-		/// Tracks the currently selected treenode.
-		/// </summary>
-		private TreeNode _selected;
-
-		/// <summary>
 		/// Tracks the currently loaded treenode.
 		/// </summary>
 		private TreeNode _loaded;
@@ -2587,7 +2582,7 @@ namespace MapView
 			{
 				case DontBeepType.OpenContext:		// [Space]
 				{
-					Rectangle nodebounds = _selected.Bounds;
+					Rectangle nodebounds = MapTree.SelectedNode.Bounds;
 					var args = new MouseEventArgs(
 												MouseButtons.Right,
 												1,
@@ -2599,14 +2594,14 @@ namespace MapView
 
 				case DontBeepType.LoadDescriptor:	// [Enter]
 				{
-					OnMaptreeAfterSelect(null, new TreeViewEventArgs(_selected));
+					OnMaptreeAfterSelect(null, new TreeViewEventArgs(MapTree.SelectedNode));
 					break;
 				}
 
 				case DontBeepType.MapBrowserDialog:	// [Shift+Enter]
 				{
 					var args = new TreeNodeMouseClickEventArgs(
-															_selected,
+															MapTree.SelectedNode,
 															MouseButtons.Left,
 															0, 0,0);
 					OnMaptreeNodeMouseClick(null, args);
@@ -3168,27 +3163,26 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// If user clicks on the already <c><see cref="_selected"/></c>
-		/// treenode for which the Mapfile has not been loaded
+		/// If user clicks on an already selected treenode for which the Mapfile
+		/// has not been loaded
 		/// <c><see cref="MapFileService"/>.LoadDescriptor()</c> offers to show
-		/// a dialog for the user to browse to the file.
+		/// a dialog for the user to browse to the file. Otherwise it just loads
+		/// the Mapfile for the clicked treenode.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		/// <seealso cref="OnMaptreeMouseDown()"><c>OnMaptreeMouseDown()</c></seealso>
 		private void OnMaptreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick()");
+			//Logfile.Log("MainViewF.OnMaptreeNodeMouseClick() " + MapTree.SelectedNode);
 
 			if (e.Button == MouseButtons.Left
 				&& e.Node.Level == TREELEVEL_TILESET
 				&& (sender == null // [Shift+Enter]
 					|| MapTree.HitTest(e.Location).Location == TreeViewHitTestLocations.Label))
 			{
-//				bool browseForMapfile = _selected != null && !(_selected.Tag as Descriptor).FileValid;
-
-				if (_selected != null && e.Node == _selected
-					&& (MapFile == null || MapFile.Descriptor != _selected.Tag as Descriptor))
+				if (MapTree.SelectedNode != null && e.Node == MapTree.SelectedNode
+					&& (MapFile == null || MapFile.Descriptor != MapTree.SelectedNode.Tag as Descriptor))
 				{
 					//Logfile.Log(". browseForMapfile");
 					LoadSelectedDescriptor(true);
@@ -3206,7 +3200,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMaptreeBeforeSelect(object sender, CancelEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect()");
+			//Logfile.Log("MainViewF.OnMaptreeBeforeSelect() " + MapTree.SelectedNode);
 
 			if (!_bypassSavealert) // is true on TilesetEditor DialogResult.OK
 			{
@@ -3226,9 +3220,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnMaptreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
-			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() _loadready= " + _loadready);
-
-			_selected = e.Node;
+			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() " + MapTree.SelectedNode);
 
 			if (e.Node.Level == TREELEVEL_TILESET
 				&& (sender == null || _loadready))
@@ -3255,7 +3247,7 @@ namespace MapView
 		/// <c><see cref="ForceMapReload()">ForceMapReload()</see></c></param>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
-			//Logfile.Log("MainViewF.LoadSelectedDescriptor()");
+			//Logfile.Log("MainViewF.LoadSelectedDescriptor() " + MapTree.SelectedNode);
 
 			ClearSearched();
 
@@ -3301,7 +3293,7 @@ namespace MapView
 														ref browseMapfile,
 														Optionables.IgnoreRecordsExceeded,
 														routes,
-														_selected);
+														MapTree.SelectedNode);
 				if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
 
 				Dontdrawyougits = false;
@@ -3311,7 +3303,7 @@ namespace MapView
 				{
 					//Logfile.Log(". file Valid");
 
-					_loaded = _selected;
+					_loaded = MapTree.SelectedNode;
 
 					descriptor.FileValid = true;
 
