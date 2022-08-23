@@ -3149,7 +3149,7 @@ namespace MapView
 		/// <c><see cref="_loaded"/></c> treenode if it's not also selected/
 		/// focused.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="MapTree"/></c></param>
 		/// <param name="e"></param>
 		private void OnMaptreeFocusChanged(object sender, EventArgs e)
 		{
@@ -3169,8 +3169,10 @@ namespace MapView
 		/// a dialog for the user to browse to the file. Otherwise it just loads
 		/// the Mapfile for the clicked treenode.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="MapTree"/></c></param>
 		/// <param name="e"></param>
+		/// <remarks><paramref name="sender"/> is <c>null</c> on
+		/// <c>[Shift+Enter]</c> keypress.</remarks>
 		/// <seealso cref="OnMaptreeMouseDown()"><c>OnMaptreeMouseDown()</c></seealso>
 		private void OnMaptreeNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
@@ -3196,7 +3198,7 @@ namespace MapView
 		/// Asks user to save Map and Routes before selecting a treenode if
 		/// applicable.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="MapTree"/></c></param>
 		/// <param name="e"></param>
 		private void OnMaptreeBeforeSelect(object sender, CancelEventArgs e)
 		{
@@ -3216,8 +3218,10 @@ namespace MapView
 		/// currently open tileset if the selected node's level is not
 		/// <c><see cref="MainViewF.TREELEVEL_TILESET">MainViewF.TREELEVEL_TILESET</see></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="MapTree"/></c></param>
 		/// <param name="e"></param>
+		/// <remarks><paramref name="sender"/> is <c>null</c> on <c>[Enter]</c>
+		/// keypress.</remarks>
 		private void OnMaptreeAfterSelect(object sender, TreeViewEventArgs e)
 		{
 			//Logfile.Log("MainViewF.OnMaptreeAfterSelect() " + MapTree.SelectedNode);
