@@ -1624,7 +1624,8 @@ namespace MapView
 
 			if (!cancel)
 			{
-				EnableMenuIts(false);
+				EnableMenus(false);
+				EnableObservers(false);
 				ViewersMenuManager.EnableScanG(false);
 
 				if (ScanG != null)
@@ -3315,7 +3316,8 @@ namespace MapView
 						MapTree.Invalidate();
 
 
-					EnableMenuIts(true);
+					EnableMenus(true);
+					EnableObservers(true);
 
 					_overlay.FirstClick = false;
 
@@ -3412,9 +3414,7 @@ namespace MapView
 		/// <c><see cref="MapFile"/></c> loads.
 		/// </summary>
 		/// <param name="enable"><c>true</c> to enable</param>
-		/// <remarks>Helper for
-		/// <c><see cref="LoadSelectedDescriptor()">LoadSelectedDescriptor()</see></c></remarks>
-		private void EnableMenuIts(bool enable)
+		private void EnableMenus(bool enable)
 		{
 			miSaveAll             .Enabled =
 			miSaveMap             .Enabled =
@@ -3428,6 +3428,20 @@ namespace MapView
 			miTerrainSwap         .Enabled =
 			miMapInfo             .Enabled = enable;
 		}
+
+		/// <summary>
+		/// Dis/enables <c>ToolStrips</c> on the observers.
+		/// </summary>
+		/// <param name="enable"><c>true</c> to enable</param>
+		private void EnableObservers(bool enable)
+		{
+			ObserverManager.TileView    .Control     .Enable(enable);
+			ObserverManager.TopView     .Control     .Enable(enable);
+			ObserverManager.TopRouteView.ControlTop  .Enable(enable);
+			ObserverManager.RouteView   .Control     .Enable(enable);
+			ObserverManager.TopRouteView.ControlRoute.Enable(enable);
+		}
+
 
 		/// <summary>
 		/// Selects the toned <c><see cref="Palette"/></c> to be used for

@@ -268,6 +268,15 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Dis/enables the <c>ToolStrip</c>.
+		/// </summary>
+		/// <param name="enable"><c>true</c> to enable</param>
+		internal void Enable(bool enable)
+		{
+			ts_Main.Enabled = enable;
+		}
+
+		/// <summary>
 		/// Updates node-info fields below the panel itself.
 		/// </summary>
 		private void UpdateNodeInformation()

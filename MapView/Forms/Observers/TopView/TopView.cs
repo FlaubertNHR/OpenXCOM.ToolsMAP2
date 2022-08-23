@@ -332,6 +332,15 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Dis/enables the <c>ToolStrip</c>.
+		/// </summary>
+		/// <param name="enable"><c>true</c> to enable</param>
+		internal void Enable(bool enable)
+		{
+			tsMain.Enabled = enable;
+		}
+
+		/// <summary>
 		/// Adds the tool-objects in the toolstrip.
 		/// </summary>
 		internal void AddToolstripControls()

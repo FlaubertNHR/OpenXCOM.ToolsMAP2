@@ -720,6 +720,15 @@ namespace MapView.Forms.Observers
 			return _file;
 		}
 
+		/// <summary>
+		/// Dis/enables the <c>ToolStrip</c>.
+		/// </summary>
+		/// <param name="enable"><c>true</c> to enable</param>
+		internal void Enable(bool enable)
+		{
+			tsMain.Enabled = enable;
+		}
+
 
 		/// <summary>
 		/// Sets the title-text to a string that's appropriate for the currently
