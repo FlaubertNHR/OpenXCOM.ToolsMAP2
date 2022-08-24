@@ -6,6 +6,30 @@ using System.Windows.Forms;
 
 namespace DSShared.Controls
 {
+	/// <summary>
+	/// Derived class for a <c>TabControl</c>.
+	/// </summary>
+	public sealed class CompositedTabControl
+		:
+			TabControl
+	{
+		#region Properties (override)
+		/// <summary>
+		/// Prevents flicker.
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+	}
+
+
 	// https://stackoverflow.com/questions/7768555/tabcontrol-and-borders-visual-glitch/7785745#7785745
 	/// <summary>
 	/// A <c>NativeWindow</c> that hides the ugly border around tab-pages.
@@ -114,30 +138,5 @@ namespace DSShared.Controls
 			}
 		}
 		#endregion Methods (override)
-	}
-
-
-
-	/// <summary>
-	/// Derived class for a <c>TabControl</c>.
-	/// </summary>
-	public sealed class CompositedTabControl
-		:
-			TabControl
-	{
-		#region Properties (override)
-		/// <summary>
-		/// Prevents flicker.
-		/// </summary>
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				CreateParams cp = base.CreateParams;
-				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
-				return cp;
-			}
-		}
-		#endregion Properties (override)
 	}
 }

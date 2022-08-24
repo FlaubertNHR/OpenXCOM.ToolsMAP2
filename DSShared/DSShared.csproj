@@ -115,7 +115,7 @@
     <Compile Include="Controls\DoubleBufferedControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\TabPageBorder.cs" />
+    <Compile Include="Controls\CompositedTabControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="keyFile.snk" />
