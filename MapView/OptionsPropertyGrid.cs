@@ -1,18 +1,32 @@
 ﻿using System;
 using System.Windows.Forms;
 
-using DSShared.Controls;
-
 
 namespace MapView
 {
 	/// <summary>
-	/// Derived class of <c><see cref="CompositedPropertyGrid"/></c>.
+	/// Derived class of a <c>PropertyGrid</c>.
 	/// </summary>
 	public sealed class OptionsPropertyGrid
 		:
-			CompositedPropertyGrid
+			PropertyGrid
 	{
+		#region Properties (override)
+		/// <summary>
+		/// Prevents flicker.
+		/// </summary>
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000; // enable 'WS_EX_COMPOSITED'
+				return cp;
+			}
+		}
+		#endregion Properties (override)
+
+
 		#region Properties
 		internal Options Options
 		{ private get; set; }
