@@ -108,7 +108,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SharedSpace.cs" />
-    <Compile Include="Controls\BufferedPanel.cs" />
+    <Compile Include="Controls\CompositedPanel.cs" />
     <Compile Include="Controls\CollapsibleSplitter.cs">
       <SubType>Component</SubType>
     </Compile>

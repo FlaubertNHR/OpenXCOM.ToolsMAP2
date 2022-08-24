@@ -5,24 +5,6 @@ using System.Windows.Forms;
 namespace DSShared.Controls
 {
 	/// <summary>
-	/// A derived Panel that flags DoubleBuffered and ResizeRedraw.
-	/// </summary>
-	public class BufferedPanel
-		:
-			Panel
-	{
-		#region cTor
-		public BufferedPanel()
-		{
-			DoubleBuffered = true;
-			ResizeRedraw   = true;
-		}
-		#endregion cTor
-	}
-
-
-
-	/// <summary>
 	/// A derived Panel that flags WS_EX_COMPOSITED.
 	/// </summary>
 	public class CompositedPanel
@@ -43,6 +25,23 @@ namespace DSShared.Controls
 			}
 		}
 		#endregion Properties (override)
+	}
+
+
+	/// <summary>
+	/// A derived Panel that flags DoubleBuffered and ResizeRedraw.
+	/// </summary>
+	public class BufferedPanel
+		:
+			Panel
+	{
+		#region cTor
+		public BufferedPanel()
+		{
+			DoubleBuffered = true;
+			ResizeRedraw   = true;
+		}
+		#endregion cTor
 	}
 }
 
