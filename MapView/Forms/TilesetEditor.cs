@@ -13,16 +13,6 @@ using XCom;
 namespace MapView
 {
 	/// <summary>
-	/// The possible <c>EditModes</c> of the <c><see cref="TilesetEditor"/></c>.
-	/// </summary>
-	internal enum TilesetEdit
-	{
-		CreateDescriptor,	// 0
-		DescriptorExists	// 1
-	}
-
-
-	/// <summary>
 	/// This is the <c>TilesetEditor</c> for MapView ii. It replaces the Paths
 	/// Editor of MapView i.
 	/// </summary>
@@ -633,7 +623,7 @@ namespace MapView
 					{
 						basepath = GlobalsXC.BASEPATH;
 					}
-					else //if (rb_ConfigBasepath.Checked) // getting terrainlist from the Configurator's basepath
+					else // rb_ConfigBasepath.Checked // getting terrainlist from the Configurator's basepath
 					{
 						basepath = String.Empty;
 					}
@@ -1792,5 +1782,16 @@ namespace MapView
 		{
 			return Terrain;
 		}
+	}
+
+
+
+	/// <summary>
+	/// The possible <c>EditModes</c> of the <c><see cref="TilesetEditor"/></c>.
+	/// </summary>
+	internal enum TilesetEdit
+	{
+		CreateDescriptor,	// 0
+		DescriptorExists	// 1
 	}
 }
