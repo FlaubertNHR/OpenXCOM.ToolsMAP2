@@ -1436,7 +1436,10 @@ namespace MapView
 					MapChanged = false;
 
 					if (MapFile.ForceReload)
-						ForceMapReload();
+					{
+						MapFile.ForceReload = false;
+						LoadSelectedDescriptor(false, true);
+					}
 				}
 
 				if (MapFile.SaveRoutes())
@@ -1457,7 +1460,10 @@ namespace MapView
 				MapChanged = false;
 
 				if (MapFile.ForceReload)
-					ForceMapReload();
+				{
+					MapFile.ForceReload = false;
+					LoadSelectedDescriptor(false, true);
+				}
 			}
 		}
 
@@ -1578,8 +1584,6 @@ namespace MapView
 		/// user chooses to reload the current Map et al. on the File menu.</remarks>
 		private void OnReloadDescriptor()
 		{
-			//Logfile.Log("MainViewF.OnReloadDescriptor()");
-
 			bool cancel  = (SaveAlertMap()    == DialogResult.Cancel);
 				 cancel |= (SaveAlertRoutes() == DialogResult.Cancel); // NOTE: that bitwise had better execute ....
 
@@ -1588,21 +1592,6 @@ namespace MapView
 				LoadSelectedDescriptor();
 				_overlay.Invalidate();
 			}
-		}
-
-		/// <summary>
-		/// Call this only when crippled
-		/// <c><see cref="Tilepart">Tileparts</see></c> got wiped during a
-		/// successfully save of the Mapfile.
-		/// </summary>
-		/// <remarks>The forced reload shall keep its
-		/// <c><see cref="RouteNodes"/></c>.</remarks>
-		private void ForceMapReload()
-		{
-			//Logfile.Log("MainViewF.ForceMapReload()");
-
-			MapFile.ForceReload = false;
-			LoadSelectedDescriptor(false, true);
 		}
 
 
@@ -2113,7 +2102,10 @@ namespace MapView
 									MapChanged = false;
 
 									if (MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
-										ForceMapReload();		// because the current Map is *probably* going to change. I think ...
+									{							// because the current Map is *probably* going to change. I think ...
+										MapFile.ForceReload = false;
+										LoadSelectedDescriptor(false, true);
+									}
 								}
 
 								if (MapFile.RoutesChanged && MapFile.SaveRoutes())
@@ -2710,7 +2702,10 @@ namespace MapView
 									MapChanged = false;
 
 									if (MapFile.ForceReload)	// NOTE: Forcing reload is probably not necessary here
-										ForceMapReload();		// because the current Map is *probably* going to change. I think ...
+									{							// because the current Map is *probably* going to change. I think ...
+										MapFile.ForceReload = false;
+										LoadSelectedDescriptor(false, true);
+									}
 								}
 
 								if (MapFile.RoutesChanged && MapFile.SaveRoutes())
@@ -3250,13 +3245,15 @@ namespace MapView
 		/// <param name="browseMapfile"><c>true</c> to force the find Mapfile
 		/// dialog</param>
 		/// <param name="keepRoutes"><c>true</c> to keep the current
-		/// <c><see cref="RouteNodes"/></c> - see
-		/// <c><see cref="ForceMapReload()">ForceMapReload()</see></c></param>
+		/// <c><see cref="RouteNodes"/></c> - pass <c>true</c> only when
+		/// crippled <c><see cref="Tilepart">Tileparts</see></c> got wiped
+		/// during a successfully save of the <c><see cref="MapFile"/></c></param>
 		private void LoadSelectedDescriptor(bool browseMapfile = false, bool keepRoutes = false)
 		{
 			//Logfile.Log("MainViewF.LoadSelectedDescriptor() " + MapTree.SelectedNode);
 
 			ClearSearched();
+			_bypassSavealert = false;
 
 			if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed) // close the TestPartslots dialog
 			{
@@ -3264,10 +3261,7 @@ namespace MapView
 				TopView._fpartslots = null;
 			}
 
-			_bypassSavealert = false; // TODO: where does that belong
-
-
-			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor shall be valid. nope.
+			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor can be null if !Mapfile.FileValid
 			if (descriptor != null)
 			{
 				//Logfile.Log(". descriptor Valid");
