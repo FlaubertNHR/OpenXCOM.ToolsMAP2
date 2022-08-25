@@ -188,7 +188,7 @@ namespace XCom
 		{
 			byte c = Col;
 			byte r = Row;
-			byte l = (byte)(levels - Lev);
+			int  l = levels - Lev;
 
 			if (RouteCheckService.Base1_xy) { ++c; ++r; }
 			if (!RouteCheckService.Base1_z) { --l; }
