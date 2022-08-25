@@ -738,7 +738,7 @@ namespace MapView.Forms.Observers
 			// 
 			// la_Dist
 			// 
-			this.la_Dist.Location = new System.Drawing.Point(220, 10);
+			this.la_Dist.Location = new System.Drawing.Point(219, 10);
 			this.la_Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Dist.Name = "la_Dist";
 			this.la_Dist.Size = new System.Drawing.Size(30, 15);
@@ -938,10 +938,10 @@ namespace MapView.Forms.Observers
 			// 
 			// la_Link1Dist
 			// 
-			this.la_Link1Dist.Location = new System.Drawing.Point(220, 25);
+			this.la_Link1Dist.Location = new System.Drawing.Point(218, 25);
 			this.la_Link1Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Link1Dist.Name = "la_Link1Dist";
-			this.la_Link1Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link1Dist.Size = new System.Drawing.Size(36, 20);
 			this.la_Link1Dist.TabIndex = 6;
 			this.la_Link1Dist.Tag = "L1";
 			this.la_Link1Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -950,10 +950,10 @@ namespace MapView.Forms.Observers
 			// 
 			// la_Link2Dist
 			// 
-			this.la_Link2Dist.Location = new System.Drawing.Point(220, 50);
+			this.la_Link2Dist.Location = new System.Drawing.Point(218, 50);
 			this.la_Link2Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Link2Dist.Name = "la_Link2Dist";
-			this.la_Link2Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link2Dist.Size = new System.Drawing.Size(36, 20);
 			this.la_Link2Dist.TabIndex = 11;
 			this.la_Link2Dist.Tag = "L2";
 			this.la_Link2Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -962,10 +962,10 @@ namespace MapView.Forms.Observers
 			// 
 			// la_Link3Dist
 			// 
-			this.la_Link3Dist.Location = new System.Drawing.Point(220, 75);
+			this.la_Link3Dist.Location = new System.Drawing.Point(218, 75);
 			this.la_Link3Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Link3Dist.Name = "la_Link3Dist";
-			this.la_Link3Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link3Dist.Size = new System.Drawing.Size(36, 20);
 			this.la_Link3Dist.TabIndex = 16;
 			this.la_Link3Dist.Tag = "L3";
 			this.la_Link3Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -974,10 +974,10 @@ namespace MapView.Forms.Observers
 			// 
 			// la_Link4Dist
 			// 
-			this.la_Link4Dist.Location = new System.Drawing.Point(220, 100);
+			this.la_Link4Dist.Location = new System.Drawing.Point(218, 100);
 			this.la_Link4Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Link4Dist.Name = "la_Link4Dist";
-			this.la_Link4Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link4Dist.Size = new System.Drawing.Size(36, 20);
 			this.la_Link4Dist.TabIndex = 21;
 			this.la_Link4Dist.Tag = "L4";
 			this.la_Link4Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -986,10 +986,10 @@ namespace MapView.Forms.Observers
 			// 
 			// la_Link5Dist
 			// 
-			this.la_Link5Dist.Location = new System.Drawing.Point(220, 125);
+			this.la_Link5Dist.Location = new System.Drawing.Point(218, 125);
 			this.la_Link5Dist.Margin = new System.Windows.Forms.Padding(0);
 			this.la_Link5Dist.Name = "la_Link5Dist";
-			this.la_Link5Dist.Size = new System.Drawing.Size(33, 20);
+			this.la_Link5Dist.Size = new System.Drawing.Size(36, 20);
 			this.la_Link5Dist.TabIndex = 26;
 			this.la_Link5Dist.Tag = "L5";
 			this.la_Link5Dist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

@@ -484,10 +484,10 @@ namespace MapView.Forms.Observers
 				if (dest != null) // safety.
 				{
 					if (NodeSelected.Lev > dest.Lev)
-						return " \u2191"; // up arrow
+						return "\u2191"; // up arrow
 	
 					if (NodeSelected.Lev < dest.Lev)
-						return " \u2193"; // down arrow
+						return "\u2193"; // down arrow
 				}
 			}
 			return String.Empty;
@@ -1356,6 +1356,10 @@ namespace MapView.Forms.Observers
 									Math.Pow(nodeA.Col - nodeB.Col, 2) +
 									Math.Pow(nodeA.Row - nodeB.Row, 2) +
 									Math.Pow(nodeA.Lev - nodeB.Lev, 2));
+
+			if (dist > Byte.MaxValue)
+				dist = Byte.MaxValue;
+
 			if (textBox != null)
 				textBox.Text = dist + GetDistanceArrow(slot);
 
