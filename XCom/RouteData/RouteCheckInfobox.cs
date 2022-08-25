@@ -88,7 +88,6 @@ namespace XCom
 			this.rtb_Text.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.rtb_Text.BackColor = System.Drawing.SystemColors.Control;
 			this.rtb_Text.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.rtb_Text.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.rtb_Text.ForeColor = System.Drawing.SystemColors.ControlText;
