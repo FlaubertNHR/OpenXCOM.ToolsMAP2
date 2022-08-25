@@ -176,51 +176,90 @@ namespace XCom
 					+ Environment.NewLine + Environment.NewLine
 					+ "Do you want " + (singular ? "it" : "them") + " deleted?";
 
+				int[] pads = GetPads(file);
+
 				string text = String.Empty;
 				int total = file.Routes.Nodes.Count;
 				int val;
 				foreach (RouteNode node in Invalids)
 				{
 					text += "id ";
-
-					if (total > 99)
-					{
-						if      (node.Id <  10) text += "  ";
-						else if (node.Id < 100) text += " ";
-					}
-					else if (total > 9)
-					{
-						if (node.Id < 10) text += " ";
-					}
-					text += node.Id + " :  c ";
+					text += node.Id.ToString().PadLeft(pads[0]) + " :  c ";
 
 					val = (int)node.Col;
 					if (Base1_xy) ++val;
-
-					if (val < 10) text += " ";
-					text += val + "  r ";
+					text += val.ToString().PadLeft(pads[1]) + "  r ";
 
 					val = (int)node.Row;
 					if (Base1_z) ++val;
-
-					if (val < 10) text += " ";
-					text += val + "  L ";
+					text += val.ToString().PadLeft(pads[2]) + "  L ";
 
 					val = file.Levs - node.Lev;
 					if (!Base1_z) --val;
-
-					// if level goes out of bounds 'loc' can be less than 0 here
-					if      (val <   0) text += " ";
-					else if (val <  10) text += "  ";
-					else if (val < 100) text += " ";
-
-					text += val + Environment.NewLine;
+					text += val.ToString().PadLeft(pads[3]) + Environment.NewLine;
 				}
 
 				rci.SetTexts(label, text);
-
 				return rci.ShowDialog();
 			}
+		}
+
+		/// <summary>
+		/// Gets an array of <c>PadLeft()</c> values for
+		/// <c><see cref="dialog_Invalids()">dialog_Invalids()</see></c>.
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
+		private static int[] GetPads(MapFile file)
+		{
+			int[] pads = {0,0,0,0};
+
+			int pad, val, pad0 = 3, pad1 = 3, pad2 = 3, pad3 = 4;
+			foreach (RouteNode node in Invalids)
+			{
+				pad = 2; val = node.Id;
+				while ((val /= 10) != 0) --pad;
+				if (pad < pad0) pad0 = pad;
+
+				pad += node.Id.ToString().Length;
+				if (pads[0] < pad) pads[0] = pad;
+
+
+				pad = 2; val = (int)node.Col;
+				if (Base1_xy) ++val;
+				while ((val /= 10) != 0) --pad;
+				if (pad < pad1) pad1 = pad;
+
+				pad += node.Col.ToString().Length;
+				if (pads[1] < pad) pads[1] = pad;
+
+
+				pad = 2; val = (int)node.Row;
+				if (Base1_xy) ++val;
+				while ((val /= 10) != 0) --pad;
+				if (pad < pad2) pad2 = pad;
+
+				pad += node.Row.ToString().Length;
+				if (pads[2] < pad) pads[2] = pad;
+
+
+				pad = 3; val = file.Levs - node.Lev; // if node-level goes out of bounds 'val' can be less than 0 here ->
+				if (!Base1_z) --val;
+
+				bool n = val < 0;
+				val = Math.Abs(val);
+				while ((val /= 10) != 0) --pad;
+				if (n) --pad;
+				if (pad < pad3) pad3 = pad;
+
+				pad += (file.Levs - node.Lev).ToString().Length;
+				if (pads[3] < pad) pads[3] = pad;
+			}
+
+			pads[0] -= pad0; pads[1] -= pad1;
+			pads[2] -= pad2; pads[3] -= pad3;
+
+			return pads;
 		}
 		#endregion Methods (static)
 	}
