@@ -211,6 +211,8 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="QuadrantDrawService"/></c> - because why not.</remarks>
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			if (MainViewF.Dontdrawyougits) return;
+
 			QuadrantDrawService.SetGraphics(e.Graphics);
 			QuadrantDrawService.Paint(Tile, SelectedQuadrant);
 

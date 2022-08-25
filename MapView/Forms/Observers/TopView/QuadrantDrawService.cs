@@ -235,8 +235,6 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				PartType partType)
 		{
-			if (MainViewF.Dontdrawyougits) return;
-
 			// fill the background of the quad-slots
 			Brush brush;
 
