@@ -178,53 +178,43 @@ namespace XCom
 
 				string text = String.Empty;
 				int total = file.Routes.Nodes.Count;
-				int loc;
+				int val;
 				foreach (RouteNode node in Invalids)
 				{
 					text += "id ";
 
 					if (total > 99)
 					{
-						if (node.Id < 10)
-							text += "  ";
-						else if (node.Id < 100)
-							text += " ";
+						if      (node.Id <  10) text += "  ";
+						else if (node.Id < 100) text += " ";
 					}
 					else if (total > 9)
 					{
-						if (node.Id < 10)
-							text += " ";
+						if (node.Id < 10) text += " ";
 					}
 					text += node.Id + " :  c ";
 
-					loc = (int)node.Col;
-					if (Base1_xy) ++loc;
+					val = (int)node.Col;
+					if (Base1_xy) ++val;
 
-					if (loc < 10)
-						text += " ";
+					if (val < 10) text += " ";
+					text += val + "  r ";
 
-					text += loc + "  r ";
+					val = (int)node.Row;
+					if (Base1_z) ++val;
 
-					loc = (int)node.Row;
-					if (Base1_z) ++loc;
+					if (val < 10) text += " ";
+					text += val + "  L ";
 
-					if (loc < 10)
-						text += " ";
-
-					text += loc + "  L ";
-
-					loc = file.Levs - node.Lev;
-					if (!Base1_z) --loc;
+					val = file.Levs - node.Lev;
+					if (!Base1_z) --val;
 
 					// if level goes out of bounds 'loc' can be less than 0 here
-					if (loc < 0)
-						text += " ";
-					else if (loc < 10)
-						text += "  ";
-					else if (loc < 100)
-						text += " ";
+					if      (val <   0) text += " ";
+					else if (val <  10) text += "  ";
+					else if (val < 100) text += " ";
 
-					text += loc + Environment.NewLine;
+					text += val + Environment.NewLine;
 				}
 
 				rci.SetTexts(label, text);
