@@ -194,11 +194,11 @@ namespace MapView.Forms.Observers
 
 		#region Events
 		/// <summary>
-		/// A ticker that checks if the cursor has left the building. See also
-		/// <c><see cref="RouteView"/>.OnRouteControlMouseLeave()</c>.
+		/// A ticker that checks if the cursor has left the building.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <seealso cref="RouteView"><c>RouteView.OnRouteControlMouseLeave()</c></seealso>
 		private void t1_Tick(object sender, EventArgs e)
 		{
 			if (!Bounds.Contains(PointToClient(Control.MousePosition)))

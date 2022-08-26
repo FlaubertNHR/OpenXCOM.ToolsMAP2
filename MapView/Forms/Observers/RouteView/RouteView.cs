@@ -822,10 +822,11 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Handler that hides the info-overlay when the mouse leaves this
-		/// control. See also RouteControlParent.t1_Tick().
+		/// control.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <seealso cref="RouteControlParent"><c>RouteControlParent.t1_Tick()</c></seealso>
 		private void OnRouteControlMouseLeave(object sender, EventArgs e)
 		{
 			// TODO: perhaps fire RouteControlParent.OnMouseMove()
