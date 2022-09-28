@@ -176,32 +176,172 @@ namespace MapView.Forms.Observers
 
 		private const string cat_Nodes = "Nodes";
 
-		internal const string str_NodeColor = "NodeColor";
-		private static Color  def_NodeColor = Color.MediumSeaGreen;
+		internal const string str_NodeColor0 = "NodeColor0";
+		private static Color  def_NodeColor0 = Color.LawnGreen;
 
-		private Color _nodeColor = def_NodeColor;
+		private Color _nodeColor0 = def_NodeColor0;
 		[Category(cat_Nodes)]
-		[Description("Color of unselected nodes (default MediumSeaGreen)")]
-		[DefaultValue(typeof(Color), "MediumSeaGreen")]
-		public Color NodeColor
+		[Description("Color of nodes of Rank 0 Civilian/Scout (default LawnGreen)")]
+		[DefaultValue(typeof(Color), "LawnGreen")]
+		public Color NodeColor0
 		{
-			get { return _nodeColor; }
-			set { _nodeColor = value; }
+			get { return _nodeColor0; }
+			set { _nodeColor0 = value; }
 		}
 
 
-		internal const string str_NodeSpawnColor = "NodeSpawnColor";
-		private static Color  def_NodeSpawnColor = Color.GreenYellow;
+		internal const string str_NodeColor1 = "NodeColor1";
+		private static Color  def_NodeColor1 = Color.Yellow;
 
-		private Color _nodeSpawnColor = def_NodeSpawnColor;
+		private Color _nodeColor1 = def_NodeColor1;
 		[Category(cat_Nodes)]
-		[Description("Color of spawn nodes (default GreenYellow)")]
-		[DefaultValue(typeof(Color), "GreenYellow")]
-		public Color NodeSpawnColor
+		[Description("Color of nodes of Rank 1 XCOM (default Yellow)")]
+		[DefaultValue(typeof(Color), "Yellow")]
+		public Color NodeColor1
 		{
-			get { return _nodeSpawnColor; }
-			set { _nodeSpawnColor = value; }
+			get { return _nodeColor1; }
+			set { _nodeColor1 = value; }
 		}
+
+
+		internal const string str_NodeColor2 = "NodeColor2";
+		private static Color  def_NodeColor2 = Color.MediumAquamarine;
+
+		private Color _nodeColor2 = def_NodeColor2;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 2 Soldier (default MediumAquamarine)")]
+		[DefaultValue(typeof(Color), "MediumAquamarine")]
+		public Color NodeColor2
+		{
+			get { return _nodeColor2; }
+			set { _nodeColor2 = value; }
+		}
+
+
+		internal const string str_NodeColor3 = "NodeColor3";
+		private static Color  def_NodeColor3 = Color.Lavender;
+
+		private Color _nodeColor3 = def_NodeColor3;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 3 Navigator/SquadLeader (default Lavender)")]
+		[DefaultValue(typeof(Color), "Lavender")]
+		public Color NodeColor3
+		{
+			get { return _nodeColor3; }
+			set { _nodeColor3 = value; }
+		}
+
+
+		internal const string str_NodeColor4 = "NodeColor4";
+		private static Color  def_NodeColor4 = Color.Violet;
+
+		private Color _nodeColor4 = def_NodeColor4;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 4 Leader/Commander (default Violet)")]
+		[DefaultValue(typeof(Color), "Violet")]
+		public Color NodeColor4
+		{
+			get { return _nodeColor4; }
+			set { _nodeColor4 = value; }
+		}
+
+
+		internal const string str_NodeColor5 = "NodeColor5";
+		private static Color  def_NodeColor5 = Color.Thistle;
+
+		private Color _nodeColor5 = def_NodeColor5;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 5 Engineer (default Thistle)")] // Engineer/Medic
+		[DefaultValue(typeof(Color), "Thistle")]
+		public Color NodeColor5
+		{
+			get { return _nodeColor5; }
+			set { _nodeColor5 = value; }
+		}
+
+
+		internal const string str_NodeColor6 = "NodeColor6";
+		private static Color  def_NodeColor6 = Color.LightSkyBlue;
+
+		private Color _nodeColor6 = def_NodeColor6;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 6 Terrorist1 (default LightSkyBlue)")]
+		[DefaultValue(typeof(Color), "LightSkyBlue")]
+		public Color NodeColor6
+		{
+			get { return _nodeColor6; }
+			set { _nodeColor6 = value; }
+		}
+
+
+		internal const string str_NodeColor7 = "NodeColor7";
+		private static Color  def_NodeColor7 = Color.LightCoral;
+
+		private Color _nodeColor7 = def_NodeColor7;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 7 Medic/Technician (default LightCoral)")]
+		[DefaultValue(typeof(Color), "LightCoral")]
+		public Color NodeColor7
+		{
+			get { return _nodeColor7; }
+			set { _nodeColor7 = value; }
+		}
+
+
+		internal const string str_NodeColor8 = "NodeColor8";
+		private static Color  def_NodeColor8 = Color.LightSteelBlue;
+
+		private Color _nodeColor8 = def_NodeColor8;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes of Rank 8 Terrorist2 (default LightSteelBlue)")]
+		[DefaultValue(typeof(Color), "LightSteelBlue")]
+		public Color NodeColor8
+		{
+			get { return _nodeColor8; }
+			set { _nodeColor8 = value; }
+		}
+
+
+		internal const string str_NodeColorGhosted = "NodeColorGhosted";
+		private static Color  def_NodeColorGhosted = Color.Gainsboro;
+
+		private Color _nodeColorGhosted = def_NodeColorGhosted;
+		[Category(cat_Nodes)]
+		[Description("Color of nonspawn nodes when ghosted (default Gainsboro)")]
+		[DefaultValue(typeof(Color), "Gainsboro")]
+		public Color NodeColorGhosted
+		{
+			get { return _nodeColorGhosted; }
+			set { _nodeColorGhosted = value; }
+		}
+
+
+//		internal const string str_NodeColor = "NodeColor";
+//		private static Color  def_NodeColor = Color.MediumSeaGreen;
+//
+//		private Color _nodeColor = def_NodeColor;
+//		[Category(cat_Nodes)]
+//		[Description("Color of unselected nodes (default MediumSeaGreen)")]
+//		[DefaultValue(typeof(Color), "MediumSeaGreen")]
+//		public Color NodeColor
+//		{
+//			get { return _nodeColor; }
+//			set { _nodeColor = value; }
+//		}
+
+
+//		internal const string str_NodeSpawnColor = "NodeSpawnColor";
+//		private static Color  def_NodeSpawnColor = Color.GreenYellow;
+//
+//		private Color _nodeSpawnColor = def_NodeSpawnColor;
+//		[Category(cat_Nodes)]
+//		[Description("Color of spawn nodes (default GreenYellow)")]
+//		[DefaultValue(typeof(Color), "GreenYellow")]
+//		public Color NodeSpawnColor
+//		{
+//			get { return _nodeSpawnColor; }
+//			set { _nodeSpawnColor = value; }
+//		}
 
 
 		internal const string str_NodeSelectedColor = "NodeSelectedColor";
@@ -681,13 +821,53 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			RouteControl.RouteBrushes[str_ContentColor] = brush;
 			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);//, "RouteToolContent");
 
-			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor0);
 			brush = new SolidBrush(color);
-			RouteControl.RouteBrushes[str_NodeColor] = brush;
+			RouteControl.RouteBrushes[str_NodeColor0] = brush;
 
-			color = Color.FromArgb(def_NodeOpacity, def_NodeSpawnColor);
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor1);
 			brush = new SolidBrush(color);
-			RouteControl.RouteBrushes[str_NodeSpawnColor] = brush;
+			RouteControl.RouteBrushes[str_NodeColor1] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor2);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor2] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor3);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor3] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor4);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor4] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor5);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor5] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor6);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor6] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor7);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor7] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColor8);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColor8] = brush;
+
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColorGhosted);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColorGhosted] = brush;
+
+//			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
+//			brush = new SolidBrush(color);
+//			RouteControl.RouteBrushes[str_NodeColor] = brush;
+
+//			color = Color.FromArgb(def_NodeOpacity, def_NodeSpawnColor);
+//			brush = new SolidBrush(color);
+//			RouteControl.RouteBrushes[str_NodeSpawnColor] = brush;
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeSelectedColor);
 			brush = new SolidBrush(color);
@@ -726,8 +906,18 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_WallWidth,                def_WallWidth,                changer0);
 			options.CreateOptionDefault(str_ContentColor,             def_ContentColor,             changer0);
 
-			options.CreateOptionDefault(str_NodeColor,                def_NodeColor,                changer0);
-			options.CreateOptionDefault(str_NodeSpawnColor,           def_NodeSpawnColor,           changer0);
+			options.CreateOptionDefault(str_NodeColor0,               def_NodeColor0,               changer0);
+			options.CreateOptionDefault(str_NodeColor1,               def_NodeColor1,               changer0);
+			options.CreateOptionDefault(str_NodeColor2,               def_NodeColor2,               changer0);
+			options.CreateOptionDefault(str_NodeColor3,               def_NodeColor3,               changer0);
+			options.CreateOptionDefault(str_NodeColor4,               def_NodeColor4,               changer0);
+			options.CreateOptionDefault(str_NodeColor5,               def_NodeColor5,               changer0);
+			options.CreateOptionDefault(str_NodeColor6,               def_NodeColor6,               changer0);
+			options.CreateOptionDefault(str_NodeColor7,               def_NodeColor7,               changer0);
+			options.CreateOptionDefault(str_NodeColor8,               def_NodeColor8,               changer0);
+			options.CreateOptionDefault(str_NodeColorGhosted,         def_NodeColorGhosted,         changer0);
+//			options.CreateOptionDefault(str_NodeColor,                def_NodeColor,                changer0);
+//			options.CreateOptionDefault(str_NodeSpawnColor,           def_NodeSpawnColor,           changer0);
 			options.CreateOptionDefault(str_NodeSelectedColor,        def_NodeSelectedColor,        changer0);
 			options.CreateOptionDefault(str_NodeOpacity,              def_NodeOpacity,              changer0);
 
@@ -825,8 +1015,18 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_WallWidth:         WallWidth         =   (int)val; ChangePenWidth(key, val); break;
 				case str_ContentColor:      ContentColor      = (Color)val; ChangeBruColor(key, val); break;
 
-				case str_NodeColor:         NodeColor         = (Color)val; ChangeBruColor(key, val); break;
-				case str_NodeSpawnColor:    NodeSpawnColor    = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor0:        NodeColor0        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor1:        NodeColor1        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor2:        NodeColor2        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor3:        NodeColor3        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor4:        NodeColor4        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor5:        NodeColor5        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor6:        NodeColor6        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor7:        NodeColor7        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColor8:        NodeColor8        = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColorGhosted:  NodeColorGhosted  = (Color)val; ChangeBruColor(key, val); break;
+//				case str_NodeColor:         NodeColor         = (Color)val; ChangeBruColor(key, val); break;
+//				case str_NodeSpawnColor:    NodeSpawnColor    = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeSelectedColor: NodeSelectedColor = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeOpacity:       NodeOpacity       =   (int)val; ChangeBruOpaci(     val); break;
 
@@ -858,29 +1058,45 @@ This is the color of the text on the Save button (if enabled) and the color for 
 
 			var color = (Color)val;
 
-			if (key == str_ContentColor) // do not apply alpha to ContentColor
+			switch (key)
 			{
-				RouteControl.RouteBrushes[str_ContentColor].Color = color;
+				case str_ContentColor: // do not apply alpha to ContentColor
+					RouteControl.RouteBrushes[str_ContentColor].Color = color;
+	
+					RouteControl.ToolContent.Dispose();
+					RouteControl.ToolContent = new BlobColorTool(
+															RouteControl.RouteBrushes[str_ContentColor],
+															BlobDrawService.LINEWIDTH_CONTENT);
+//															"RouteToolContent");
 
-				RouteControl.ToolContent.Dispose();
-				RouteControl.ToolContent = new BlobColorTool(
-														RouteControl.RouteBrushes[str_ContentColor],
-														BlobDrawService.LINEWIDTH_CONTENT);
-//														"RouteToolContent");
+					if (MainViewF.that._fcolors != null)
+						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
+					break;
 
-				if (MainViewF.that._fcolors != null)
-					MainViewF.that._fcolors.UpdateRouteViewBlobColors();
-			}
-			else // is Node color
-			{
-				color = Color.FromArgb(NodeOpacity, color);
-				RouteControl.RouteBrushes[key].Color = color;
+				default: // is Node color
+					color = Color.FromArgb(NodeOpacity, color);
+					RouteControl.RouteBrushes[key].Color = color;
 
-				if (key == str_NodeSelectedColor)
-					RouteView.SetSelectedInfoColor();
+					if (key == str_NodeSelectedColor)
+						RouteView.SetSelectedInfoColor(); // TODO <-
 
-//				str_NodeColor:
-//				str_NodeSpawnColor:
+//					str_NodeColor:
+//					str_NodeSpawnColor:
+					break;
+
+				case str_NodeColor0:
+				case str_NodeColor1:
+				case str_NodeColor2:
+				case str_NodeColor3:
+				case str_NodeColor4:
+				case str_NodeColor5:
+				case str_NodeColor6:
+				case str_NodeColor7:
+				case str_NodeColor8:
+				case str_NodeColorGhosted:
+					color = Color.FromArgb(NodeOpacity, color);
+					RouteControl.RouteBrushes[key].Color = color;
+					break;
 			}
 		}
 
@@ -892,11 +1108,41 @@ This is the color of the text on the Save button (if enabled) and the color for 
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.ChangeBruOpaci()");
 
-			Color color = Color.FromArgb((int)val, NodeColor);
-			RouteControl.RouteBrushes[str_NodeColor].Color = color;
+			Color color = Color.FromArgb((int)val, NodeColor0);
+			RouteControl.RouteBrushes[str_NodeColor0].Color = color;
 
-			color = Color.FromArgb((int)val, NodeSpawnColor);
-			RouteControl.RouteBrushes[str_NodeSpawnColor].Color = color;
+			color = Color.FromArgb((int)val, NodeColor1);
+			RouteControl.RouteBrushes[str_NodeColor1].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor2);
+			RouteControl.RouteBrushes[str_NodeColor2].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor3);
+			RouteControl.RouteBrushes[str_NodeColor3].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor4);
+			RouteControl.RouteBrushes[str_NodeColor4].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor5);
+			RouteControl.RouteBrushes[str_NodeColor5].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor6);
+			RouteControl.RouteBrushes[str_NodeColor6].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor7);
+			RouteControl.RouteBrushes[str_NodeColor7].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColor8);
+			RouteControl.RouteBrushes[str_NodeColor8].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColorGhosted);
+			RouteControl.RouteBrushes[str_NodeColorGhosted].Color = color;
+
+//			color = Color.FromArgb((int)val, NodeColor);
+//			RouteControl.RouteBrushes[str_NodeColor].Color = color;
+
+//			color = Color.FromArgb((int)val, NodeSpawnColor);
+//			RouteControl.RouteBrushes[str_NodeSpawnColor].Color = color;
 
 			color = Color.FromArgb((int)val, NodeSelectedColor);
 			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = color;

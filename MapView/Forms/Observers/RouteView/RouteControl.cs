@@ -500,12 +500,33 @@ namespace MapView.Forms.Observers
 						{
 							brush = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 						}
-						else if (node.Spawn != SpawnWeight.None)
+						else if (RouteView.GhostNodesCoordinator && node.Spawn == SpawnWeight.None)
 						{
-							brush = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
+							brush = RouteBrushes[RouteViewOptionables.str_NodeColorGhosted];
 						}
 						else
-							brush = RouteBrushes[RouteViewOptionables.str_NodeColor];
+						{
+							switch (node.Rank)
+							{
+								case 0: brush = RouteBrushes[RouteViewOptionables.str_NodeColor0]; break;
+								case 1: brush = RouteBrushes[RouteViewOptionables.str_NodeColor1]; break;
+								case 2: brush = RouteBrushes[RouteViewOptionables.str_NodeColor2]; break;
+								case 3: brush = RouteBrushes[RouteViewOptionables.str_NodeColor3]; break;
+								case 4: brush = RouteBrushes[RouteViewOptionables.str_NodeColor4]; break;
+								case 5: brush = RouteBrushes[RouteViewOptionables.str_NodeColor5]; break;
+								case 6: brush = RouteBrushes[RouteViewOptionables.str_NodeColor6]; break;
+								case 7: brush = RouteBrushes[RouteViewOptionables.str_NodeColor7]; break;
+								case 8: brush = RouteBrushes[RouteViewOptionables.str_NodeColor8]; break;
+
+								default: brush = RouteBrushes[RouteViewOptionables.str_NodeColorGhosted]; break; // TODO <-
+							}
+						}
+//						else if (node.Spawn != SpawnWeight.None)
+//						{
+//							brush = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
+//						}
+//						else
+//							brush = RouteBrushes[RouteViewOptionables.str_NodeColor];
 
 						_graphics.FillPath(brush, _nodeFill);
 

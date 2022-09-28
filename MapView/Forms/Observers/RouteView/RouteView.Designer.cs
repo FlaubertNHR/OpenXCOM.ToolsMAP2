@@ -21,6 +21,8 @@ namespace MapView.Forms.Observers
 		private ToolStripDropDownButton tsddb_Edit;
 		private ToolStripMenuItem tsmi_RaiseNode;
 		private ToolStripMenuItem tsmi_LowerNode;
+		private ToolStripSeparator tss_5;
+		private ToolStripMenuItem tsmi_GhostNodes;
 		private ToolStripSeparator tss_1;
 		private ToolStripMenuItem tsmi_ClearLinks;
 		private ToolStripSeparator tss_2;
@@ -138,6 +140,8 @@ namespace MapView.Forms.Observers
 			this.tsddb_Edit = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmi_RaiseNode = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_LowerNode = new System.Windows.Forms.ToolStripMenuItem();
+			this.tss_5 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsmi_GhostNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmi_ClearLinks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_2 = new System.Windows.Forms.ToolStripSeparator();
@@ -279,6 +283,8 @@ namespace MapView.Forms.Observers
 			this.tsddb_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsmi_RaiseNode,
 			this.tsmi_LowerNode,
+			this.tss_5,
+			this.tsmi_GhostNodes,
 			this.tss_1,
 			this.tsmi_ClearLinks,
 			this.tss_2,
@@ -311,6 +317,18 @@ namespace MapView.Forms.Observers
 			this.tsmi_LowerNode.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_LowerNode.Text = "node &down 1 level";
 			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
+			// 
+			// tss_5
+			// 
+			this.tss_5.Name = "tss_5";
+			this.tss_5.Size = new System.Drawing.Size(208, 6);
+			// 
+			// tsmi_GhostNodes
+			// 
+			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
+			this.tsmi_GhostNodes.Size = new System.Drawing.Size(211, 22);
+			this.tsmi_GhostNodes.Text = "highlight Spawn nodes only";
+			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
 			// 
 			// tss_1
 			// 

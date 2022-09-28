@@ -156,6 +156,20 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.RoutesChanged = value;
 			}
 		}
+
+		static bool _ghostnodes;
+		/// <summary>
+		/// <c>true</c> to render nonspawn nodes in a ghosted color.
+		/// </summary>
+		internal static bool GhostNodesCoordinator
+		{
+			get { return _ghostnodes; }
+			private set
+			{
+				ObserverManager.RouteView   .Control     .tsmi_GhostNodes.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_GhostNodes.Checked = (_ghostnodes = value);
+			}
+		}
 		#endregion Properties (static)
 
 
@@ -646,8 +660,9 @@ namespace MapView.Forms.Observers
 				{
 					info = "Over " + node.Id;
 
-					if (node.Spawn == SpawnWeight.None) color = Optionables.NodeColor;
-					else                                color = Optionables.NodeSpawnColor;
+					color = Optionables.NodeSelectedColor;
+//					if (node.Spawn == SpawnWeight.None) color = Optionables.NodeColor;
+//					else                                color = Optionables.NodeSpawnColor;
 				}
 
 				if (isToproute)
@@ -682,12 +697,13 @@ namespace MapView.Forms.Observers
 			{
 				la_Over.ForeColor = Optionables.FieldsForecolorHighlight;
 			}
-			else if (node.Spawn == SpawnWeight.None)
-			{
-				la_Over.ForeColor = Optionables.NodeColor;
-			}
+//			else if (node.Spawn == SpawnWeight.None)
+//			{
+//				la_Over.ForeColor = Optionables.NodeColor;
+//			}
 			else
-				la_Over.ForeColor = Optionables.NodeSpawnColor;
+//				la_Over.ForeColor = Optionables.NodeSpawnColor;
+				la_Over.ForeColor = Optionables.NodeSelectedColor;
 
 			string info;
 
@@ -2106,6 +2122,16 @@ namespace MapView.Forms.Observers
 			OnRouteControlMouseUp(null, args);
 
 			SelectNode(NodeSelected.Id);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnGhostNodesClick(object sender, EventArgs e)
+		{
+			GhostNodesCoordinator = !tsmi_GhostNodes.Checked;
 		}
 
 		/// <summary>
