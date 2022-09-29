@@ -16,9 +16,9 @@
 
 		<p>The color-blobs that appear on the Map are simplistic representations of the various parts that have been placed on tiles. Floor parts are not represented however.</p>
 
-		<p>Route nodes may be presented in different colors depending on whether or not they have a spawn-weight (non-zero). Colored lines are drawn between linked nodes. A selected node and its link-lines may appear in yet another color. Colors can be set in Options, as with the other viewers.</p>
+		<p>Route nodes are presented in different colors depending on their currently assigned node rank. Colored lines are drawn between linked nodes. A selected node and its link-lines appear in yet another color. Colors can be set in Options, as with the other viewers.</p>
 
-		<p>An overlay appears with tile position and node data as the mouse moves over the Map. Also, two small vertical bars are shown at each node - the left bar (red) presents the spawn weight and the right bar (blue) presents the patrol priority. The info-overlay and importance-meters can be toggled on and off separately in Options.</p>
+		<p>An overlay appears with tile position and node data as the mouse moves over the Map. Also, two small vertical bars are shown at each node - the left bar (red) presents the spawn weight and the right bar (blue) presents the patrol priority. The info-overlay and weight/priority meters can be toggled on and off in Options.</p>
 
 		<p>The menubar along the top of the panel has buttons representing three connection-types.<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;DontConnect - no automatic node-linking is performed.<br>
@@ -109,6 +109,12 @@
 
 		<p>test node positions - tests for nodes that are outside the Map's boundaries.</p>
 		<p>test node ranks - tests for invalid node ranks.</p>
+
+		<br>
+		<h3>Highlights menu</h3>
+
+		<p>highlight Spawn nodes only [Ctrl+h] - ghosts nodes with spawnweight:None so that only nodes with a weight are left colored. The center panel must be focused for the hotkey to work. The ghost-color can be chosen in Options.</p>
+		<p>highlight Rank* only [0..8] - ghosts all nodes that do not have the given noderank so that only nodes of that rank are left colored. The center panel must be focused for the hotkeys to work. The ghost-color can be chosen in Options.</p>
 
 		<br>
 		<p>Options [Ctrl+O] - opens and closes the Options for RouteView. Descriptions for the entries appear at the bottom of that window.</p>
