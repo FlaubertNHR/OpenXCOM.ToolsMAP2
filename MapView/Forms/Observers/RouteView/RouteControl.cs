@@ -500,6 +500,10 @@ namespace MapView.Forms.Observers
 						{
 							brush = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 						}
+						else if (node.Rank == (byte)9) // OobRank
+						{
+							brush = RouteBrushes[RouteViewOptionables.str_NodeColorInvalid];
+						}
 						else if ((RouteView.GhostNodesCoordinator && node.Spawn == SpawnWeight.None)
 							|| (RouteView.NoderankHighlighted != Byte.MaxValue && node.Rank != RouteView.NoderankHighlighted))
 						{
@@ -519,7 +523,7 @@ namespace MapView.Forms.Observers
 								case 7: brush = RouteBrushes[RouteViewOptionables.str_NodeColor7]; break;
 								case 8: brush = RouteBrushes[RouteViewOptionables.str_NodeColor8]; break;
 
-								default: brush = RouteBrushes[RouteViewOptionables.str_NodeColorGhosted]; break; // TODO <-
+								default: brush = null; break; // should never happen. See RouteNode.cTor[0]
 							}
 						}
 //						else if (node.Spawn != SpawnWeight.None)

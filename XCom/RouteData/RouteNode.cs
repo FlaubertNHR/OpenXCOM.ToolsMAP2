@@ -55,7 +55,7 @@ namespace XCom
 
 		/// <summary>
 		/// Catches an out-of-bounds Rank value if it tries to load from the
-		/// .RMP.
+		/// <c>RMP</c> file.
 		/// </summary>
 		/// <remarks>TFTD appears to have ~10 Maps that have OobRanks.</remarks>
 		public byte OobRank
@@ -91,11 +91,11 @@ namespace XCom
 				offset += 3;
 			}
 
-			Unit   = (UnitType)bindata[19];
-			Rank   = bindata[20];
+			Unit   =       (UnitType)bindata[19];
+			Rank   =                 bindata[20];
 			Patrol = (PatrolPriority)bindata[21];
-			Attack = (AttackBase)bindata[22];
-			Spawn  = (SpawnWeight)bindata[23];
+			Attack =     (AttackBase)bindata[22];
+			Spawn  =    (SpawnWeight)bindata[23];
 
 			if (Rank > (byte)8) // NodeRanks are 0..8 (if valid.)
 			{

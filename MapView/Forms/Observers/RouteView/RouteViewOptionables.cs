@@ -316,6 +316,20 @@ namespace MapView.Forms.Observers
 		}
 
 
+		internal const string str_NodeColorInvalid = "NodeColorInvalid";
+		private static Color  def_NodeColorInvalid = Color.Indigo;
+
+		private Color _nodeColorInvalid = def_NodeColorInvalid;
+		[Category(cat_Nodes)]
+		[Description("Color of nodes with an invalid rank (default Indigo)")]
+		[DefaultValue(typeof(Color), "Indigo")]
+		public Color NodeColorInvalid
+		{
+			get { return _nodeColorInvalid; }
+			set { _nodeColorInvalid = value; }
+		}
+
+
 //		internal const string str_NodeColor = "NodeColor";
 //		private static Color  def_NodeColor = Color.MediumSeaGreen;
 //
@@ -861,6 +875,10 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			brush = new SolidBrush(color);
 			RouteControl.RouteBrushes[str_NodeColorGhosted] = brush;
 
+			color = Color.FromArgb(def_NodeOpacity, def_NodeColorInvalid);
+			brush = new SolidBrush(color);
+			RouteControl.RouteBrushes[str_NodeColorInvalid] = brush;
+
 //			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
 //			brush = new SolidBrush(color);
 //			RouteControl.RouteBrushes[str_NodeColor] = brush;
@@ -916,6 +934,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_NodeColor7,               def_NodeColor7,               changer0);
 			options.CreateOptionDefault(str_NodeColor8,               def_NodeColor8,               changer0);
 			options.CreateOptionDefault(str_NodeColorGhosted,         def_NodeColorGhosted,         changer0);
+			options.CreateOptionDefault(str_NodeColorInvalid,         def_NodeColorInvalid,         changer0);
 //			options.CreateOptionDefault(str_NodeColor,                def_NodeColor,                changer0);
 //			options.CreateOptionDefault(str_NodeSpawnColor,           def_NodeSpawnColor,           changer0);
 			options.CreateOptionDefault(str_NodeSelectedColor,        def_NodeSelectedColor,        changer0);
@@ -1025,6 +1044,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_NodeColor7:        NodeColor7        = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeColor8:        NodeColor8        = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeColorGhosted:  NodeColorGhosted  = (Color)val; ChangeBruColor(key, val); break;
+				case str_NodeColorInvalid:  NodeColorInvalid  = (Color)val; ChangeBruColor(key, val); break;
 //				case str_NodeColor:         NodeColor         = (Color)val; ChangeBruColor(key, val); break;
 //				case str_NodeSpawnColor:    NodeSpawnColor    = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeSelectedColor: NodeSelectedColor = (Color)val; ChangeBruColor(key, val); break;
@@ -1073,15 +1093,16 @@ This is the color of the text on the Save button (if enabled) and the color for 
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
 					break;
 
-				default: // is Node color
+//				default: // is Node color ->
+//				str_NodeColor:
+//				str_NodeSpawnColor:
+				case str_NodeSelectedColor:
 					color = Color.FromArgb(NodeOpacity, color);
 					RouteControl.RouteBrushes[key].Color = color;
 
-					if (key == str_NodeSelectedColor)
-						RouteView.SetSelectedInfoColor(); // TODO <-
+//					if (key == str_NodeSelectedColor)
+					RouteView.SetSelectedInfoColor(); // TODO <-
 
-//					str_NodeColor:
-//					str_NodeSpawnColor:
 					break;
 
 				case str_NodeColor0:
@@ -1094,6 +1115,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_NodeColor7:
 				case str_NodeColor8:
 				case str_NodeColorGhosted:
+				case str_NodeColorInvalid:
 					color = Color.FromArgb(NodeOpacity, color);
 					RouteControl.RouteBrushes[key].Color = color;
 					break;
@@ -1137,6 +1159,9 @@ This is the color of the text on the Save button (if enabled) and the color for 
 
 			color = Color.FromArgb((int)val, NodeColorGhosted);
 			RouteControl.RouteBrushes[str_NodeColorGhosted].Color = color;
+
+			color = Color.FromArgb((int)val, NodeColorInvalid);
+			RouteControl.RouteBrushes[str_NodeColorInvalid].Color = color;
 
 //			color = Color.FromArgb((int)val, NodeColor);
 //			RouteControl.RouteBrushes[str_NodeColor].Color = color;
