@@ -458,7 +458,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
 			this.tsmi_GhostNodes.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_GhostNodes.Text = "highlight Spawn nodes only";
+			this.tsmi_GhostNodes.Text = "highlight Spawn nodes";
 			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
 			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
 			// 
@@ -471,7 +471,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank0.Name = "tsmi_Noderank0";
 			this.tsmi_Noderank0.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank0.Text = "highlight Rank0 (Civilian/Scout) only";
+			this.tsmi_Noderank0.Text = "highlight Rank0";
 			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
 			// 
@@ -479,7 +479,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank1.Name = "tsmi_Noderank1";
 			this.tsmi_Noderank1.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank1.Text = "highlight Rank1 (XCOM) only";
+			this.tsmi_Noderank1.Text = "highlight Rank1";
 			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
 			// 
@@ -487,7 +487,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank2.Name = "tsmi_Noderank2";
 			this.tsmi_Noderank2.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank2.Text = "highlight Rank2 (Soldier) only";
+			this.tsmi_Noderank2.Text = "highlight Rank2";
 			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
 			// 
@@ -495,7 +495,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank3.Name = "tsmi_Noderank3";
 			this.tsmi_Noderank3.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank3.Text = "highlight Rank3 (Navigator/Squad Leader) only";
+			this.tsmi_Noderank3.Text = "highlight Rank3";
 			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
 			// 
@@ -503,7 +503,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank4.Name = "tsmi_Noderank4";
 			this.tsmi_Noderank4.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank4.Text = "highlight Rank4 (Leader/Commander) only";
+			this.tsmi_Noderank4.Text = "highlight Rank4";
 			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
 			// 
@@ -511,7 +511,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank5.Name = "tsmi_Noderank5";
 			this.tsmi_Noderank5.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank5.Text = "highlight Rank5 (Engineer/Medic) only";
+			this.tsmi_Noderank5.Text = "highlight Rank5";
 			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
 			// 
@@ -519,7 +519,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank6.Name = "tsmi_Noderank6";
 			this.tsmi_Noderank6.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank6.Text = "highlight Rank6 (Terrorist1) only";
+			this.tsmi_Noderank6.Text = "highlight Rank6";
 			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
 			// 
@@ -527,7 +527,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank7.Name = "tsmi_Noderank7";
 			this.tsmi_Noderank7.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank7.Text = "highlight Rank7 (Medic/Technician) only";
+			this.tsmi_Noderank7.Text = "highlight Rank7";
 			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
 			// 
@@ -535,7 +535,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank8.Name = "tsmi_Noderank8";
 			this.tsmi_Noderank8.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_Noderank8.Text = "highlight Rank8 (Terrorist2) only";
+			this.tsmi_Noderank8.Text = "highlight Rank8";
 			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnNoderankClick);
 			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
 			// 

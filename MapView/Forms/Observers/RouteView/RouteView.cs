@@ -279,6 +279,46 @@ namespace MapView.Forms.Observers
 			tsb_x2.Checked = false;
 
 			RouteControl.SetMapFile(_file);
+
+			if (_file != null)
+			{
+				if (_file.Descriptor.GroupType == GroupType.Tftd)
+				{
+					tsmi_Noderank0.Text = "highlight " + RouteNodes.civscout;
+					tsmi_Noderank1.Text = "highlight " + RouteNodes.xcom;
+					tsmi_Noderank2.Text = "highlight " + RouteNodes.soldier;
+					tsmi_Noderank3.Text = "highlight " + RouteNodes.squadldr;
+					tsmi_Noderank4.Text = "highlight " + RouteNodes.lc;
+					tsmi_Noderank5.Text = "highlight " + RouteNodes.medicTftD;
+					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
+					tsmi_Noderank7.Text = "highlight " + RouteNodes.techie;
+					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
+				}
+				else
+				{
+					tsmi_Noderank0.Text = "highlight " + RouteNodes.civscout;
+					tsmi_Noderank1.Text = "highlight " + RouteNodes.xcom;
+					tsmi_Noderank2.Text = "highlight " + RouteNodes.soldier;
+					tsmi_Noderank3.Text = "highlight " + RouteNodes.navigator;
+					tsmi_Noderank4.Text = "highlight " + RouteNodes.lc;
+					tsmi_Noderank5.Text = "highlight " + RouteNodes.engineer;
+					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
+					tsmi_Noderank7.Text = "highlight " + RouteNodes.medic;
+					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
+				}
+			}
+			else // this never actually happens since the it shall be disabled ->
+			{
+				tsmi_Noderank0.Text = "highlight Rank0";
+				tsmi_Noderank1.Text = "highlight Rank1";
+				tsmi_Noderank2.Text = "highlight Rank2";
+				tsmi_Noderank3.Text = "highlight Rank3";
+				tsmi_Noderank4.Text = "highlight Rank4";
+				tsmi_Noderank5.Text = "highlight Rank5";
+				tsmi_Noderank6.Text = "highlight Rank6";
+				tsmi_Noderank7.Text = "highlight Rank7";
+				tsmi_Noderank8.Text = "highlight Rank8";
+			}
 		}
 
 		/// <summary>

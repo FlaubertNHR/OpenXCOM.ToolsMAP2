@@ -20,18 +20,18 @@ namespace XCom
 		#region Fields (static)
 		private const int Length_Routenode = 24; // each node has 24 bytes
 
-		private const string civscout  = "0 : Civilian/Scout";
-		private const string xcom      = "1 : XCOM";
-		private const string soldier   = "2 : Soldier";
-		private const string navigator = "3 : Navigator";
-		private const string squadldr  = "3 : Squad Leader";
-		private const string lc        = "4 : Leader/Commander";
-		private const string engineer  = "5 : Engineer";
-		private const string medicTftD = "5 : Medic";
-		private const string ter1      = "6 : Terrorist1";
-		private const string medic     = "7 : Medic";
-		private const string techie    = "7 : Technician";
-		private const string ter2      = "8 : Terrorist2";
+		public const string civscout  = "0 : Civilian/Scout";
+		public const string xcom      = "1 : XCOM";
+		public const string soldier   = "2 : Soldier";
+		public const string navigator = "3 : Navigator";
+		public const string squadldr  = "3 : Squad Leader";
+		public const string lc        = "4 : Leader/Commander";
+		public const string engineer  = "5 : Engineer";
+		public const string medicTftD = "5 : Medic";
+		public const string ter1      = "6 : Terrorist1";
+		public const string medic     = "7 : Medic";
+		public const string techie    = "7 : Technician";
+		public const string ter2      = "8 : Terrorist2";
 
 		/// <summary>
 		/// Workaround for several bugged Routefiles in TftD.
