@@ -421,6 +421,73 @@ namespace MapView.Forms.Observers
 			// The InfoOverlay moves freely.
 			base.OnMouseMove(e);												// fire RouteView.OnRouteControlMouseMove()
 		}
+
+
+		/// <summary>
+		/// Handles highlights for nodes in <c><see cref="RouteView"/></c>.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			//DSShared.Logfile.Log("RouteControlParent.OnKeyDown() KeyData= " + e.KeyData);
+			switch (e.KeyData)
+			{
+				case Keys.H | Keys.Control:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.OnGhostNodesClick(null, EventArgs.Empty);
+					RouteView.InvalidatePanels();
+					break;
+
+				case Keys.D0:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D0);
+					break;
+
+				case Keys.D1:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D1);
+					break;
+
+				case Keys.D2:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D2);
+					break;
+
+				case Keys.D3:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D3);
+					break;
+
+				case Keys.D4:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D4);
+					break;
+
+				case Keys.D5:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D5);
+					break;
+
+				case Keys.D6:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D6);
+					break;
+
+				case Keys.D7:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D7);
+					break;
+
+				case Keys.D8:
+					e.SuppressKeyPress = true;
+					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D8);
+					break;
+
+				default:
+					base.OnKeyDown(e);
+					break;
+			}
+		}
 		#endregion Events (override)
 
 

@@ -21,8 +21,6 @@ namespace MapView.Forms.Observers
 		private ToolStripDropDownButton tsddb_Edit;
 		private ToolStripMenuItem tsmi_RaiseNode;
 		private ToolStripMenuItem tsmi_LowerNode;
-		private ToolStripSeparator tss_5;
-		private ToolStripMenuItem tsmi_GhostNodes;
 		private ToolStripSeparator tss_1;
 		private ToolStripMenuItem tsmi_ClearLinks;
 		private ToolStripSeparator tss_2;
@@ -37,6 +35,19 @@ namespace MapView.Forms.Observers
 		private ToolStripDropDownButton tsddb_Debug;
 		private ToolStripMenuItem tsmi_TestPositions;
 		private ToolStripMenuItem tsmi_TestNodeRanks;
+
+		private ToolStripDropDownButton tsddb_Highlights;
+		private ToolStripMenuItem tsmi_GhostNodes;
+		private ToolStripSeparator tss_5;
+		private ToolStripMenuItem tsmi_Noderank0;
+		private ToolStripMenuItem tsmi_Noderank1;
+		private ToolStripMenuItem tsmi_Noderank2;
+		private ToolStripMenuItem tsmi_Noderank3;
+		private ToolStripMenuItem tsmi_Noderank4;
+		private ToolStripMenuItem tsmi_Noderank5;
+		private ToolStripMenuItem tsmi_Noderank6;
+		private ToolStripMenuItem tsmi_Noderank7;
+		private ToolStripMenuItem tsmi_Noderank8;
 
 		private ToolStripSeparator tss_0;
 
@@ -140,8 +151,6 @@ namespace MapView.Forms.Observers
 			this.tsddb_Edit = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmi_RaiseNode = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_LowerNode = new System.Windows.Forms.ToolStripMenuItem();
-			this.tss_5 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsmi_GhostNodes = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_1 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmi_ClearLinks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_2 = new System.Windows.Forms.ToolStripSeparator();
@@ -155,6 +164,18 @@ namespace MapView.Forms.Observers
 			this.tsddb_Debug = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsmi_TestPositions = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_TestNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsddb_Highlights = new System.Windows.Forms.ToolStripDropDownButton();
+			this.tsmi_GhostNodes = new System.Windows.Forms.ToolStripMenuItem();
+			this.tss_5 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsmi_Noderank0 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank3 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank4 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank5 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank6 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank7 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_Noderank8 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tss_0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
@@ -234,6 +255,7 @@ namespace MapView.Forms.Observers
 			this.tsddb_File,
 			this.tsddb_Edit,
 			this.tsddb_Debug,
+			this.tsddb_Highlights,
 			this.tsb_Options,
 			this.tss_0,
 			this.tsb_connect0,
@@ -283,8 +305,6 @@ namespace MapView.Forms.Observers
 			this.tsddb_Edit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsmi_RaiseNode,
 			this.tsmi_LowerNode,
-			this.tss_5,
-			this.tsmi_GhostNodes,
 			this.tss_1,
 			this.tsmi_ClearLinks,
 			this.tss_2,
@@ -317,18 +337,6 @@ namespace MapView.Forms.Observers
 			this.tsmi_LowerNode.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_LowerNode.Text = "node &down 1 level";
 			this.tsmi_LowerNode.Click += new System.EventHandler(this.OnNodeLower);
-			// 
-			// tss_5
-			// 
-			this.tss_5.Name = "tss_5";
-			this.tss_5.Size = new System.Drawing.Size(208, 6);
-			// 
-			// tsmi_GhostNodes
-			// 
-			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
-			this.tsmi_GhostNodes.Size = new System.Drawing.Size(211, 22);
-			this.tsmi_GhostNodes.Text = "highlight Spawn nodes only";
-			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
 			// 
 			// tss_1
 			// 
@@ -421,6 +429,115 @@ namespace MapView.Forms.Observers
 			this.tsmi_TestNodeRanks.Size = new System.Drawing.Size(177, 22);
 			this.tsmi_TestNodeRanks.Text = "test node &ranks";
 			this.tsmi_TestNodeRanks.Click += new System.EventHandler(this.OnTestNoderanksClick);
+			// 
+			// tsddb_Highlights
+			// 
+			this.tsddb_Highlights.AutoToolTip = false;
+			this.tsddb_Highlights.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+			this.tsddb_Highlights.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.tsmi_GhostNodes,
+			this.tss_5,
+			this.tsmi_Noderank0,
+			this.tsmi_Noderank1,
+			this.tsmi_Noderank2,
+			this.tsmi_Noderank3,
+			this.tsmi_Noderank4,
+			this.tsmi_Noderank5,
+			this.tsmi_Noderank6,
+			this.tsmi_Noderank7,
+			this.tsmi_Noderank8});
+			this.tsddb_Highlights.Font = new System.Drawing.Font("Verdana", 7F);
+			this.tsddb_Highlights.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsddb_Highlights.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
+			this.tsddb_Highlights.Name = "tsddb_Highlights";
+			this.tsddb_Highlights.Size = new System.Drawing.Size(73, 23);
+			this.tsddb_Highlights.Text = "Highlights";
+			this.tsddb_Highlights.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tsmi_GhostNodes
+			// 
+			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
+			this.tsmi_GhostNodes.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_GhostNodes.Text = "highlight Spawn nodes only";
+			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
+			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
+			// 
+			// tss_5
+			// 
+			this.tss_5.Name = "tss_5";
+			this.tss_5.Size = new System.Drawing.Size(330, 6);
+			// 
+			// tsmi_Noderank0
+			// 
+			this.tsmi_Noderank0.Name = "tsmi_Noderank0";
+			this.tsmi_Noderank0.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank0.Text = "highlight Rank0 (Civilian/Scout) only";
+			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
+			// 
+			// tsmi_Noderank1
+			// 
+			this.tsmi_Noderank1.Name = "tsmi_Noderank1";
+			this.tsmi_Noderank1.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank1.Text = "highlight Rank1 (XCOM) only";
+			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
+			// 
+			// tsmi_Noderank2
+			// 
+			this.tsmi_Noderank2.Name = "tsmi_Noderank2";
+			this.tsmi_Noderank2.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank2.Text = "highlight Rank2 (Soldier) only";
+			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
+			// 
+			// tsmi_Noderank3
+			// 
+			this.tsmi_Noderank3.Name = "tsmi_Noderank3";
+			this.tsmi_Noderank3.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank3.Text = "highlight Rank3 (Navigator/Squad Leader) only";
+			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
+			// 
+			// tsmi_Noderank4
+			// 
+			this.tsmi_Noderank4.Name = "tsmi_Noderank4";
+			this.tsmi_Noderank4.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank4.Text = "highlight Rank4 (Leader/Commander) only";
+			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
+			// 
+			// tsmi_Noderank5
+			// 
+			this.tsmi_Noderank5.Name = "tsmi_Noderank5";
+			this.tsmi_Noderank5.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank5.Text = "highlight Rank5 (Engineer/Medic) only";
+			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
+			// 
+			// tsmi_Noderank6
+			// 
+			this.tsmi_Noderank6.Name = "tsmi_Noderank6";
+			this.tsmi_Noderank6.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank6.Text = "highlight Rank6 (Terrorist1) only";
+			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
+			// 
+			// tsmi_Noderank7
+			// 
+			this.tsmi_Noderank7.Name = "tsmi_Noderank7";
+			this.tsmi_Noderank7.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank7.Text = "highlight Rank7 (Medic/Technician) only";
+			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
+			// 
+			// tsmi_Noderank8
+			// 
+			this.tsmi_Noderank8.Name = "tsmi_Noderank8";
+			this.tsmi_Noderank8.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank8.Text = "highlight Rank8 (Terrorist2) only";
+			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
 			// 
 			// tsb_Options
 			// 

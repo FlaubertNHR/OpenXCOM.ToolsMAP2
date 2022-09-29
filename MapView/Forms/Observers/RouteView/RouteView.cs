@@ -2129,10 +2129,306 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnGhostNodesClick(object sender, EventArgs e)
+		internal void OnGhostNodesClick(object sender, EventArgs e)
 		{
 			GhostNodesCoordinator = !tsmi_GhostNodes.Checked;
 		}
+
+
+		private static byte _noderankHighlighted = Byte.MaxValue;
+		/// <summary>
+		/// Tracks which noderank (if any) user has chosen to highlight.
+		/// </summary>
+		/// <remarks><c>Byte.MaxValue</c> if none.</remarks>
+		internal static byte NoderankHighlighted
+		{
+			get { return _noderankHighlighted; }
+			private set { _noderankHighlighted = value; }
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="keyData"></param>
+		internal void FireNoderankClick(Keys keyData)
+		{
+			object it = null;
+			switch (keyData)
+			{
+				case Keys.D0: it = tsmi_Noderank0; break;
+				case Keys.D1: it = tsmi_Noderank1; break;
+				case Keys.D2: it = tsmi_Noderank2; break;
+				case Keys.D3: it = tsmi_Noderank3; break;
+				case Keys.D4: it = tsmi_Noderank4; break;
+				case Keys.D5: it = tsmi_Noderank5; break;
+				case Keys.D6: it = tsmi_Noderank6; break;
+				case Keys.D7: it = tsmi_Noderank7; break;
+				case Keys.D8: it = tsmi_Noderank8; break;
+			}
+
+			OnNoderankClick(it, EventArgs.Empty);
+			InvalidatePanels();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnNoderankClick(object sender, EventArgs e)
+		{
+			if (sender == tsmi_Noderank0)
+			{
+				if (!tsmi_Noderank0.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank0Checked(true);
+				}
+				else
+					SetNoderank0Checked(false);
+			}
+			else if (sender == tsmi_Noderank1)
+			{
+				if (!tsmi_Noderank1.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank1Checked(true);
+				}
+				else
+					SetNoderank1Checked(false);
+			}
+			else if (sender == tsmi_Noderank2)
+			{
+				if (!tsmi_Noderank2.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank2Checked(true);
+				}
+				else
+					SetNoderank2Checked(false);
+			}
+			else if (sender == tsmi_Noderank3)
+			{
+				if (!tsmi_Noderank3.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank3Checked(true);
+				}
+				else
+					SetNoderank3Checked(false);
+			}
+			else if (sender == tsmi_Noderank4)
+			{
+				if (!tsmi_Noderank4.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank4Checked(true);
+				}
+				else
+					SetNoderank4Checked(false);
+			}
+			else if (sender == tsmi_Noderank5)
+			{
+				if (!tsmi_Noderank5.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank5Checked(true);
+				}
+				else
+					SetNoderank5Checked(false);
+			}
+			else if (sender == tsmi_Noderank6)
+			{
+				if (!tsmi_Noderank6.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank6Checked(true);
+				}
+				else
+					SetNoderank6Checked(false);
+			}
+			else if (sender == tsmi_Noderank7)
+			{
+				if (!tsmi_Noderank7.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank7Checked(true);
+				}
+				else
+					SetNoderank7Checked(false);
+			}
+			else // tsmi_Noderank8
+			{
+				if (!tsmi_Noderank8.Checked)
+				{
+					ClearNoderankIts();
+					SetNoderank8Checked(true);
+				}
+				else
+					SetNoderank8Checked(false);
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		private void ClearNoderankIts()
+		{
+			ObserverManager.RouteView   .Control     .tsmi_Noderank0.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank0.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank1.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank1.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank2.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank2.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank3.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank3.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank4.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank4.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank5.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank5.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank6.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank6.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank7.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank7.Checked =
+			ObserverManager.RouteView   .Control     .tsmi_Noderank8.Checked =
+			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank8.Checked = false;
+		}
+
+		/// <summary>
+		/// Sets noderank 0 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank0Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank0.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank0.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)0;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 1 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank1Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank1.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank1.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)1;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 2 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank2Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank2.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank2.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)2;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 3 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank3Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank3.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank3.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)3;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 4 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank4Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank4.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank4.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)4;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 5 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank5Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank5.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank5.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)5;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 6 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank6Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank6.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank6.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)6;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 7 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank7Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank7.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank7.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)7;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
+		/// <summary>
+		/// Sets noderank 8 de/checked.
+		/// </summary>
+		/// <param name="checked"></param>
+		private void SetNoderank8Checked(bool @checked)
+		{
+			if (ObserverManager.RouteView   .Control     .tsmi_Noderank8.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank8.Checked = @checked)
+			{
+				NoderankHighlighted = (byte)8;
+			}
+			else
+				NoderankHighlighted = Byte.MaxValue;
+		}
+
 
 		/// <summary>
 		/// Handler for menuitem that clears all link-data of the currently

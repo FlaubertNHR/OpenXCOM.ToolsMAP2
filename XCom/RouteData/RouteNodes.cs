@@ -26,7 +26,7 @@ namespace XCom
 		private const string navigator = "3 : Navigator";
 		private const string squadldr  = "3 : Squad Leader";
 		private const string lc        = "4 : Leader/Commander";
-		private const string engineer  = "5 : Engineer";
+		private const string engineer  = "5 : Engineer"; // perhaps (TftD)Medic ...
 		private const string ter1      = "6 : Terrorist1";
 		private const string medic     = "7 : Medic";
 		private const string techie    = "7 : Technician";

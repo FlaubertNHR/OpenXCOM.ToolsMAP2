@@ -500,7 +500,8 @@ namespace MapView.Forms.Observers
 						{
 							brush = RouteBrushes[RouteViewOptionables.str_NodeSelectedColor];
 						}
-						else if (RouteView.GhostNodesCoordinator && node.Spawn == SpawnWeight.None)
+						else if ((RouteView.GhostNodesCoordinator && node.Spawn == SpawnWeight.None)
+							|| (RouteView.NoderankHighlighted != Byte.MaxValue && node.Rank != RouteView.NoderankHighlighted))
 						{
 							brush = RouteBrushes[RouteViewOptionables.str_NodeColorGhosted];
 						}
