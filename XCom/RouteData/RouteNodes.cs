@@ -26,7 +26,8 @@ namespace XCom
 		private const string navigator = "3 : Navigator";
 		private const string squadldr  = "3 : Squad Leader";
 		private const string lc        = "4 : Leader/Commander";
-		private const string engineer  = "5 : Engineer"; // perhaps (TftD)Medic ...
+		private const string engineer  = "5 : Engineer";
+		private const string medicTftD = "5 : Medic";
 		private const string ter1      = "6 : Terrorist1";
 		private const string medic     = "7 : Medic";
 		private const string techie    = "7 : Technician";
@@ -80,7 +81,7 @@ namespace XCom
 			new Pterodactyl(soldier,     NodeRankTftd.Soldier),
 			new Pterodactyl(squadldr,    NodeRankTftd.SquadLeader),
 			new Pterodactyl(lc,          NodeRankTftd.LeaderCommander),
-			new Pterodactyl(medic,       NodeRankTftd.Medic),
+			new Pterodactyl(medicTftD,   NodeRankTftd.Medic),
 			new Pterodactyl(ter1,        NodeRankTftd.Misc1),
 			new Pterodactyl(techie,      NodeRankTftd.Technician),
 			new Pterodactyl(ter2,        NodeRankTftd.Misc2),
