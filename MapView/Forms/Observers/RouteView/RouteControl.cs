@@ -540,10 +540,10 @@ namespace MapView.Forms.Observers
 							{
 								if (dest.Lev < _file.Level) // draw arrow up.
 								{
-									_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
-													PenLink,
-													x, y + 1,
-													x, y - 1 + HalfHeight * 2);
+//									_graphics.DrawLine( // start w/ a vertical line in the tile-lozenge
+//													PenLink,
+//													x, y + 1,
+//													x, y - 1 + HalfHeight * 2);
 									_graphics.DrawLine( // then lines on the two top edges of the tile
 													PenLink,
 													x + 1,             y + 1,
@@ -555,10 +555,10 @@ namespace MapView.Forms.Observers
 								}
 								else if (dest.Lev > _file.Level) // draw arrow down.
 								{
-									_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
-													PenLink,
-													x + 2 - HalfWidth, y + HalfHeight,
-													x - 2 + HalfWidth, y + HalfHeight);
+//									_graphics.DrawLine( // start w/ a horizontal line in the tile-lozenge
+//													PenLink,
+//													x + 2 - HalfWidth, y + HalfHeight,
+//													x - 2 + HalfWidth, y + HalfHeight);
 									_graphics.DrawLine( // then lines on the two bottom edges of the tile
 													PenLink,
 													x + 1,             y - 1 + HalfHeight * 2,
