@@ -3102,7 +3102,7 @@ namespace MapView.Forms.Observers
 					case 7: return Optionables.NodeColor7;
 					case 8: return Optionables.NodeColor8;
 
-					default: return Optionables.NodeColorInvalid; // case 9 OobRank
+					default: return Optionables.NodeColorInvalid; // case 9 OobRank. See RouteNode.cTor[0]
 				}
 			}
 			return Optionables.FieldsForecolor;
