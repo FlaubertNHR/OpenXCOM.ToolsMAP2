@@ -458,7 +458,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
 			this.tsmi_GhostNodes.Size = new System.Drawing.Size(333, 22);
-			this.tsmi_GhostNodes.Text = "highlight Spawn nodes";
+			this.tsmi_GhostNodes.Text = "highlight spawn nodes";
 			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
 			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
 			// 
