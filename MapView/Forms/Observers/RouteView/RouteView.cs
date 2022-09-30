@@ -626,19 +626,16 @@ namespace MapView.Forms.Observers
 			{
 				string info;
 				int level;
-				Color color;
 
-				if (NodeSelected == null)
-				{
-					info  = String.Empty;
-					level = _file.Level;
-					color = Optionables.FieldsForecolor;
-				}
-				else
+				if (NodeSelected != null)
 				{
 					info  = "Selected " + NodeSelected.Id;
 					level = NodeSelected.Lev;
-					color = Optionables.NodeSelectedColor;
+				}
+				else
+				{
+					info  = String.Empty;
+					level = _file.Level;
 				}
 
 				info += Environment.NewLine
@@ -648,8 +645,8 @@ namespace MapView.Forms.Observers
 											level,
 											_file.Levs);
 
-				la_Selected.ForeColor = color;
 				la_Selected.Text = info;
+				la_Selected.ForeColor = GetNodeColor(NodeSelected);
 				la_Selected.Refresh(); // fast update.
 			}
 		}
@@ -672,32 +669,21 @@ namespace MapView.Forms.Observers
 		{
 			if (c != -1)
 			{
-				string info; Color color;
+				string info;
 
 				RouteNode node = _file.GetTile(c,r).Node;
-				if (node == null)
-				{
-					info = String.Empty;
-					color = Optionables.FieldsForecolor;
-				}
-				else
-				{
-					info = "Over " + node.Id;
-
-					color = Optionables.NodeSelectedColor;
-//					if (node.Spawn == SpawnWeight.None) color = Optionables.NodeColor;
-//					else                                color = Optionables.NodeSpawnColor;
-				}
+				if (node != null) info = "Over " + node.Id;
+				else              info = String.Empty;
 
 				if (isToproute)
 				{
-					ObserverManager.TopRouteView.ControlRoute.la_Over.ForeColor = color;
+					ObserverManager.TopRouteView.ControlRoute.la_Over.ForeColor = GetNodeColor(node);
 					ObserverManager.RouteView   .Control     .la_Over.ForeColor = Optionables.FieldsForecolor;
 				}
 				else
 				{
 					ObserverManager.TopRouteView.ControlRoute.la_Over.ForeColor = Optionables.FieldsForecolor;
-					ObserverManager.RouteView   .Control     .la_Over.ForeColor = color;
+					ObserverManager.RouteView   .Control     .la_Over.ForeColor = GetNodeColor(node);
 				}
 
 				info += Environment.NewLine
@@ -721,13 +707,8 @@ namespace MapView.Forms.Observers
 			{
 				la_Over.ForeColor = Optionables.FieldsForecolorHighlight;
 			}
-//			else if (node.Spawn == SpawnWeight.None)
-//			{
-//				la_Over.ForeColor = Optionables.NodeColor;
-//			}
 			else
-//				la_Over.ForeColor = Optionables.NodeSpawnColor;
-				la_Over.ForeColor = Optionables.NodeSelectedColor;
+				la_Over.ForeColor = GetNodeColor(node);
 
 			string info;
 
@@ -3094,15 +3075,37 @@ namespace MapView.Forms.Observers
 		/// <remarks>Called by Options only.</remarks>
 		internal static void SetSelectedInfoColor(bool updatenodeinfo = false)
 		{
-			Color color;
-			if (NodeSelected == null) color = Optionables.FieldsForecolor;
-			else                      color = Optionables.NodeSelectedColor;
-
 			ObserverManager.RouteView   .Control     .la_Selected.ForeColor =
-			ObserverManager.TopRouteView.ControlRoute.la_Selected.ForeColor = color;
+			ObserverManager.TopRouteView.ControlRoute.la_Selected.ForeColor = GetNodeColor(NodeSelected);
 
 			if (updatenodeinfo && NodeSelected != null)
 				UpdateNodeInfo(); // TODO: update link texts' textcolor only
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		private static Color GetNodeColor(RouteNode node)
+		{
+			if (node != null)
+			{
+				switch (node.Rank)
+				{
+					case 0: return Optionables.NodeColor0;
+					case 1: return Optionables.NodeColor1;
+					case 2: return Optionables.NodeColor2;
+					case 3: return Optionables.NodeColor3;
+					case 4: return Optionables.NodeColor4;
+					case 5: return Optionables.NodeColor5;
+					case 6: return Optionables.NodeColor6;
+					case 7: return Optionables.NodeColor7;
+					case 8: return Optionables.NodeColor8;
+
+					default: return Optionables.NodeColorInvalid; // case 9 OobRank
+				}
+			}
+			return Optionables.FieldsForecolor;
 		}
 		#endregion Update UI (options)(static)
 

@@ -219,12 +219,12 @@ namespace MapView.Forms.Observers
 
 
 		internal const string str_NodeColor3 = "NodeColor3";
-		private static Color  def_NodeColor3 = Color.Lavender;
+		private static Color  def_NodeColor3 = Color.PaleTurquoise;
 
 		private Color _nodeColor3 = def_NodeColor3;
 		[Category(cat_Nodes)]
-		[Description("Color of nodes of Rank 3 Navigator/SquadLeader (default Lavender)")]
-		[DefaultValue(typeof(Color), "Lavender")]
+		[Description("Color of nodes of Rank 3 Navigator/SquadLeader (default PaleTurquoise)")]
+		[DefaultValue(typeof(Color), "PaleTurquoise")]
 		public Color NodeColor3
 		{
 			get { return _nodeColor3; }
@@ -1097,11 +1097,12 @@ This is the color of the text on the Save button (if enabled) and the color for 
 //				str_NodeColor:
 //				str_NodeSpawnColor:
 				case str_NodeSelectedColor:
+				case str_NodeColorGhosted:
 					color = Color.FromArgb(NodeOpacity, color);
 					RouteControl.RouteBrushes[key].Color = color;
 
 //					if (key == str_NodeSelectedColor)
-					RouteView.SetSelectedInfoColor(); // TODO <-
+//					RouteView.SetSelectedInfoColor();
 
 					break;
 
@@ -1114,10 +1115,11 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_NodeColor6:
 				case str_NodeColor7:
 				case str_NodeColor8:
-				case str_NodeColorGhosted:
 				case str_NodeColorInvalid:
 					color = Color.FromArgb(NodeOpacity, color);
 					RouteControl.RouteBrushes[key].Color = color;
+
+					RouteView.SetSelectedInfoColor();
 					break;
 			}
 		}
