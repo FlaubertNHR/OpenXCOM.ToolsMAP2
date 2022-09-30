@@ -177,12 +177,12 @@ namespace MapView.Forms.Observers
 		private const string cat_Nodes = "Nodes";
 
 		internal const string str_NodeColor0 = "NodeColor0";
-		private static Color  def_NodeColor0 = Color.LawnGreen;
+		private static Color  def_NodeColor0 = Color.LightGreen;
 
 		private Color _nodeColor0 = def_NodeColor0;
 		[Category(cat_Nodes)]
-		[Description("Color of nodes of Rank 0 Civilian/Scout (default LawnGreen)")]
-		[DefaultValue(typeof(Color), "LawnGreen")]
+		[Description("Color of nodes of Rank 0 Civilian/Scout (default LightGreen)")]
+		[DefaultValue(typeof(Color), "LightGreen")]
 		public Color NodeColor0
 		{
 			get { return _nodeColor0; }
