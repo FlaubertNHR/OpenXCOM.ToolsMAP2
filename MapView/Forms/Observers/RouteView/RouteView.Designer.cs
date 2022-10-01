@@ -265,7 +265,7 @@ namespace MapView.Forms.Observers
 			this.tsb_x2});
 			this.ts_Main.Location = new System.Drawing.Point(0, 0);
 			this.ts_Main.Name = "ts_Main";
-			this.ts_Main.Size = new System.Drawing.Size(640, 25);
+			this.ts_Main.Size = new System.Drawing.Size(800, 25);
 			this.ts_Main.TabIndex = 0;
 			this.ts_Main.TabStop = true;
 			this.ts_Main.Text = "ts_Main";
@@ -457,87 +457,87 @@ namespace MapView.Forms.Observers
 			// tsmi_GhostNodes
 			// 
 			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
-			this.tsmi_GhostNodes.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
+			this.tsmi_GhostNodes.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_GhostNodes.Text = "highlight spawn nodes";
 			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
-			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
 			// 
 			// tss_5
 			// 
 			this.tss_5.Name = "tss_5";
-			this.tss_5.Size = new System.Drawing.Size(330, 6);
+			this.tss_5.Size = new System.Drawing.Size(230, 6);
 			// 
 			// tsmi_Noderank0
 			// 
 			this.tsmi_Noderank0.Name = "tsmi_Noderank0";
-			this.tsmi_Noderank0.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
+			this.tsmi_Noderank0.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank0.Text = "highlight Rank0";
 			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
 			// 
 			// tsmi_Noderank1
 			// 
 			this.tsmi_Noderank1.Name = "tsmi_Noderank1";
-			this.tsmi_Noderank1.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
+			this.tsmi_Noderank1.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank1.Text = "highlight Rank1";
 			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
 			// 
 			// tsmi_Noderank2
 			// 
 			this.tsmi_Noderank2.Name = "tsmi_Noderank2";
-			this.tsmi_Noderank2.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
+			this.tsmi_Noderank2.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank2.Text = "highlight Rank2";
 			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
 			// 
 			// tsmi_Noderank3
 			// 
 			this.tsmi_Noderank3.Name = "tsmi_Noderank3";
-			this.tsmi_Noderank3.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
+			this.tsmi_Noderank3.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank3.Text = "highlight Rank3";
 			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
 			// 
 			// tsmi_Noderank4
 			// 
 			this.tsmi_Noderank4.Name = "tsmi_Noderank4";
-			this.tsmi_Noderank4.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
+			this.tsmi_Noderank4.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank4.Text = "highlight Rank4";
 			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
 			// 
 			// tsmi_Noderank5
 			// 
 			this.tsmi_Noderank5.Name = "tsmi_Noderank5";
-			this.tsmi_Noderank5.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
+			this.tsmi_Noderank5.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank5.Text = "highlight Rank5";
 			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
 			// 
 			// tsmi_Noderank6
 			// 
 			this.tsmi_Noderank6.Name = "tsmi_Noderank6";
-			this.tsmi_Noderank6.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
+			this.tsmi_Noderank6.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank6.Text = "highlight Rank6";
 			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
 			// 
 			// tsmi_Noderank7
 			// 
 			this.tsmi_Noderank7.Name = "tsmi_Noderank7";
-			this.tsmi_Noderank7.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
+			this.tsmi_Noderank7.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank7.Text = "highlight Rank7";
 			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
 			// 
 			// tsmi_Noderank8
 			// 
 			this.tsmi_Noderank8.Name = "tsmi_Noderank8";
-			this.tsmi_Noderank8.Size = new System.Drawing.Size(333, 22);
+			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
+			this.tsmi_Noderank8.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank8.Text = "highlight Rank8";
 			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnNoderankClick);
-			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
 			// 
 			// tsb_Options
 			// 
@@ -618,7 +618,7 @@ namespace MapView.Forms.Observers
 			this._pnlRoutes.Location = new System.Drawing.Point(0, 25);
 			this._pnlRoutes.Margin = new System.Windows.Forms.Padding(0);
 			this._pnlRoutes.Name = "_pnlRoutes";
-			this._pnlRoutes.Size = new System.Drawing.Size(640, 250);
+			this._pnlRoutes.Size = new System.Drawing.Size(800, 250);
 			this._pnlRoutes.TabIndex = 1;
 			// 
 			// pa_DataFields
@@ -634,7 +634,7 @@ namespace MapView.Forms.Observers
 			this.pa_DataFields.Margin = new System.Windows.Forms.Padding(0);
 			this.pa_DataFields.Name = "pa_DataFields";
 			this.pa_DataFields.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
-			this.pa_DataFields.Size = new System.Drawing.Size(640, 205);
+			this.pa_DataFields.Size = new System.Drawing.Size(800, 205);
 			this.pa_DataFields.TabIndex = 2;
 			// 
 			// pa_DataFieldsLeft
@@ -664,6 +664,7 @@ namespace MapView.Forms.Observers
 			this.gb_NodeData.Location = new System.Drawing.Point(0, 50);
 			this.gb_NodeData.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_NodeData.Name = "gb_NodeData";
+			this.gb_NodeData.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_NodeData.Size = new System.Drawing.Size(245, 152);
 			this.gb_NodeData.TabIndex = 1;
 			this.gb_NodeData.TabStop = false;
@@ -789,6 +790,7 @@ namespace MapView.Forms.Observers
 			this.gb_TileData.Location = new System.Drawing.Point(0, 0);
 			this.gb_TileData.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_TileData.Name = "gb_TileData";
+			this.gb_TileData.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_TileData.Size = new System.Drawing.Size(245, 50);
 			this.gb_TileData.TabIndex = 0;
 			this.gb_TileData.TabStop = false;
@@ -847,6 +849,7 @@ namespace MapView.Forms.Observers
 			this.gb_LinkData.Location = new System.Drawing.Point(245, 3);
 			this.gb_LinkData.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_LinkData.Name = "gb_LinkData";
+			this.gb_LinkData.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_LinkData.Size = new System.Drawing.Size(290, 150);
 			this.gb_LinkData.TabIndex = 1;
 			this.gb_LinkData.TabStop = false;
@@ -1239,6 +1242,7 @@ namespace MapView.Forms.Observers
 			this.gb_NodeEditor.Location = new System.Drawing.Point(245, 153);
 			this.gb_NodeEditor.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_NodeEditor.Name = "gb_NodeEditor";
+			this.gb_NodeEditor.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_NodeEditor.Size = new System.Drawing.Size(290, 52);
 			this.gb_NodeEditor.TabIndex = 4;
 			this.gb_NodeEditor.TabStop = false;
@@ -1325,7 +1329,7 @@ namespace MapView.Forms.Observers
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Margin = new System.Windows.Forms.Padding(0);
 			this.Name = "RouteView";
-			this.Size = new System.Drawing.Size(640, 480);
+			this.Size = new System.Drawing.Size(800, 480);
 			this.ts_Main.ResumeLayout(false);
 			this.ts_Main.PerformLayout();
 			this.pa_DataFields.ResumeLayout(false);
