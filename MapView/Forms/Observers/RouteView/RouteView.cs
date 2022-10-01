@@ -2137,6 +2137,7 @@ namespace MapView.Forms.Observers
 		internal void OnGhostNodesClick(object sender, EventArgs e)
 		{
 			GhostNodesCoordinator = !tsmi_GhostNodes.Checked;
+			InvalidatePanels();
 		}
 
 
@@ -2172,7 +2173,6 @@ namespace MapView.Forms.Observers
 			}
 
 			OnNoderankClick(it, EventArgs.Empty);
-			InvalidatePanels();
 		}
 
 		/// <summary>
@@ -2272,6 +2272,8 @@ namespace MapView.Forms.Observers
 				else
 					SetNoderank8Checked(false);
 			}
+
+			InvalidatePanels();
 		}
 
 		/// <summary>

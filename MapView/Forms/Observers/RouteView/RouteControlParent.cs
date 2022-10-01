@@ -435,7 +435,6 @@ namespace MapView.Forms.Observers
 				case Keys.H | Keys.Control:
 					e.SuppressKeyPress = true;
 					ObserverManager.RouteView.Control.OnGhostNodesClick(null, EventArgs.Empty);
-					RouteView.InvalidatePanels();
 					break;
 
 				case Keys.D0:
