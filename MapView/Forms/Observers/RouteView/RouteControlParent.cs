@@ -430,6 +430,7 @@ namespace MapView.Forms.Observers
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			//DSShared.Logfile.Log("RouteControlParent.OnKeyDown() KeyData= " + e.KeyData);
+
 			switch (e.KeyData)
 			{
 				case Keys.H | Keys.Control:
