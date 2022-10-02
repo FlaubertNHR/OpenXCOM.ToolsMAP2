@@ -191,12 +191,12 @@ namespace MapView.Forms.Observers
 
 
 		internal const string str_NodeColor1 = "NodeColor1";
-		private static Color  def_NodeColor1 = Color.Yellow;
+		private static Color  def_NodeColor1 = Color.Khaki;
 
 		private Color _nodeColor1 = def_NodeColor1;
 		[Category(cat_Nodes)]
-		[Description("Color of nodes of Rank 1 XCOM (default Yellow)")]
-		[DefaultValue(typeof(Color), "Yellow")]
+		[Description("Color of nodes of Rank 1 XCOM (default Khaki)")]
+		[DefaultValue(typeof(Color), "Khaki")]
 		public Color NodeColor1
 		{
 			get { return _nodeColor1; }
@@ -251,7 +251,7 @@ namespace MapView.Forms.Observers
 
 		private Color _nodeColor5 = def_NodeColor5;
 		[Category(cat_Nodes)]
-		[Description("Color of nodes of Rank 5 Engineer (default Thistle)")] // Engineer/Medic
+		[Description("Color of nodes of Rank 5 Engineer/Medic (default Thistle)")]
 		[DefaultValue(typeof(Color), "Thistle")]
 		public Color NodeColor5
 		{
@@ -949,6 +949,10 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_StartConnector,           def_StartConnector,           changer0);
 
 			options.CreateOptionDefault(str_DescriptionHeight,        def_DescriptionHeight,        changer1);
+
+
+			ObserverManager.RouteView   .Control     .SetNodeColors();
+			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();
 		}
 		#endregion Methods
 
@@ -1122,6 +1126,9 @@ This is the color of the text on the Save button (if enabled) and the color for 
 					RouteView.SetSelectedInfoColor();
 					break;
 			}
+
+			ObserverManager.RouteView   .Control     .SetNodeColors();
+			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();
 		}
 
 		/// <summary>
@@ -1173,7 +1180,10 @@ This is the color of the text on the Save button (if enabled) and the color for 
 
 			color = Color.FromArgb((int)val, NodeSelectedColor);
 			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = color;
-		}
+
+//			ObserverManager.RouteView   .Control     .SetNodeColors();	// doesn't appear to change transparency
+//			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();	// of backcolors in the RouteView groupbox ...
+		}																// ie. backcolors are always solid I guess.
 
 
 		/// <summary>

@@ -121,6 +121,26 @@ namespace MapView.Forms.Observers
 
 		private Button bu_Save;
 
+		private GroupBox gb_NoderankColors;
+		private Panel pa_ColorRank0;
+		private Label la_ColorRank0;
+		private Panel pa_ColorRank1;
+		private Label la_ColorRank1;
+		private Panel pa_ColorRank2;
+		private Label la_ColorRank2;
+		private Panel pa_ColorRank3;
+		private Label la_ColorRank3;
+		private Panel pa_ColorRank4;
+		private Label la_ColorRank4;
+		private Panel pa_ColorRank5;
+		private Label la_ColorRank5;
+		private Panel pa_ColorRank6;
+		private Label la_ColorRank6;
+		private Panel pa_ColorRank7;
+		private Label la_ColorRank7;
+		private Panel pa_ColorRank8;
+		private Label la_ColorRank8;
+
 		private ToolTip toolTip1;
 
 
@@ -237,6 +257,25 @@ namespace MapView.Forms.Observers
 			this.bu_Paste = new System.Windows.Forms.Button();
 			this.bu_Delete = new System.Windows.Forms.Button();
 			this.bu_Save = new System.Windows.Forms.Button();
+			this.gb_NoderankColors = new System.Windows.Forms.GroupBox();
+			this.la_ColorRank8 = new System.Windows.Forms.Label();
+			this.pa_ColorRank8 = new System.Windows.Forms.Panel();
+			this.la_ColorRank7 = new System.Windows.Forms.Label();
+			this.pa_ColorRank7 = new System.Windows.Forms.Panel();
+			this.la_ColorRank6 = new System.Windows.Forms.Label();
+			this.pa_ColorRank6 = new System.Windows.Forms.Panel();
+			this.la_ColorRank5 = new System.Windows.Forms.Label();
+			this.pa_ColorRank5 = new System.Windows.Forms.Panel();
+			this.la_ColorRank4 = new System.Windows.Forms.Label();
+			this.pa_ColorRank4 = new System.Windows.Forms.Panel();
+			this.la_ColorRank3 = new System.Windows.Forms.Label();
+			this.pa_ColorRank3 = new System.Windows.Forms.Panel();
+			this.la_ColorRank2 = new System.Windows.Forms.Label();
+			this.pa_ColorRank2 = new System.Windows.Forms.Panel();
+			this.la_ColorRank1 = new System.Windows.Forms.Label();
+			this.pa_ColorRank1 = new System.Windows.Forms.Panel();
+			this.la_ColorRank0 = new System.Windows.Forms.Label();
+			this.pa_ColorRank0 = new System.Windows.Forms.Panel();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.ts_Main.SuspendLayout();
 			this.pa_DataFields.SuspendLayout();
@@ -245,6 +284,7 @@ namespace MapView.Forms.Observers
 			this.gb_TileData.SuspendLayout();
 			this.gb_LinkData.SuspendLayout();
 			this.gb_NodeEditor.SuspendLayout();
+			this.gb_NoderankColors.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// ts_Main
@@ -629,6 +669,7 @@ namespace MapView.Forms.Observers
 			this.pa_DataFields.Controls.Add(this.bu_Tallyho);
 			this.pa_DataFields.Controls.Add(this.gb_NodeEditor);
 			this.pa_DataFields.Controls.Add(this.bu_Save);
+			this.pa_DataFields.Controls.Add(this.gb_NoderankColors);
 			this.pa_DataFields.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.pa_DataFields.Location = new System.Drawing.Point(0, 275);
 			this.pa_DataFields.Margin = new System.Windows.Forms.Padding(0);
@@ -1313,6 +1354,233 @@ namespace MapView.Forms.Observers
 			this.bu_Save.UseVisualStyleBackColor = true;
 			this.bu_Save.Click += new System.EventHandler(this.OnSaveClick);
 			// 
+			// gb_NoderankColors
+			// 
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank8);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank8);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank7);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank7);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank6);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank6);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank5);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank5);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank4);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank4);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank3);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank3);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank2);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank2);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank1);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank1);
+			this.gb_NoderankColors.Controls.Add(this.la_ColorRank0);
+			this.gb_NoderankColors.Controls.Add(this.pa_ColorRank0);
+			this.gb_NoderankColors.Location = new System.Drawing.Point(590, 3);
+			this.gb_NoderankColors.Margin = new System.Windows.Forms.Padding(0);
+			this.gb_NoderankColors.Name = "gb_NoderankColors";
+			this.gb_NoderankColors.Padding = new System.Windows.Forms.Padding(0);
+			this.gb_NoderankColors.Size = new System.Drawing.Size(182, 202);
+			this.gb_NoderankColors.TabIndex = 6;
+			this.gb_NoderankColors.TabStop = false;
+			this.gb_NoderankColors.Text = " Node Rank colors ";
+			// 
+			// la_ColorRank8
+			// 
+			this.la_ColorRank8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank8.Location = new System.Drawing.Point(34, 178);
+			this.la_ColorRank8.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank8.Name = "la_ColorRank8";
+			this.la_ColorRank8.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank8.TabIndex = 17;
+			this.la_ColorRank8.Text = "rank 8";
+			this.la_ColorRank8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank8
+			// 
+			this.pa_ColorRank8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank8.Location = new System.Drawing.Point(8, 177);
+			this.pa_ColorRank8.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank8.Name = "pa_ColorRank8";
+			this.pa_ColorRank8.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank8.TabIndex = 16;
+			this.pa_ColorRank8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank7
+			// 
+			this.la_ColorRank7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank7.Location = new System.Drawing.Point(34, 158);
+			this.la_ColorRank7.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank7.Name = "la_ColorRank7";
+			this.la_ColorRank7.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank7.TabIndex = 15;
+			this.la_ColorRank7.Text = "rank 7";
+			this.la_ColorRank7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank7
+			// 
+			this.pa_ColorRank7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank7.Location = new System.Drawing.Point(8, 157);
+			this.pa_ColorRank7.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank7.Name = "pa_ColorRank7";
+			this.pa_ColorRank7.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank7.TabIndex = 14;
+			this.pa_ColorRank7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank6
+			// 
+			this.la_ColorRank6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank6.Location = new System.Drawing.Point(34, 138);
+			this.la_ColorRank6.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank6.Name = "la_ColorRank6";
+			this.la_ColorRank6.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank6.TabIndex = 13;
+			this.la_ColorRank6.Text = "rank 6";
+			this.la_ColorRank6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank6
+			// 
+			this.pa_ColorRank6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank6.Location = new System.Drawing.Point(8, 137);
+			this.pa_ColorRank6.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank6.Name = "pa_ColorRank6";
+			this.pa_ColorRank6.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank6.TabIndex = 12;
+			this.pa_ColorRank6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank5
+			// 
+			this.la_ColorRank5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank5.Location = new System.Drawing.Point(34, 118);
+			this.la_ColorRank5.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank5.Name = "la_ColorRank5";
+			this.la_ColorRank5.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank5.TabIndex = 11;
+			this.la_ColorRank5.Text = "rank 5";
+			this.la_ColorRank5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank5
+			// 
+			this.pa_ColorRank5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank5.Location = new System.Drawing.Point(8, 117);
+			this.pa_ColorRank5.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank5.Name = "pa_ColorRank5";
+			this.pa_ColorRank5.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank5.TabIndex = 10;
+			this.pa_ColorRank5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank4
+			// 
+			this.la_ColorRank4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank4.Location = new System.Drawing.Point(34, 98);
+			this.la_ColorRank4.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank4.Name = "la_ColorRank4";
+			this.la_ColorRank4.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank4.TabIndex = 9;
+			this.la_ColorRank4.Text = "rank 4";
+			this.la_ColorRank4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank4
+			// 
+			this.pa_ColorRank4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank4.Location = new System.Drawing.Point(8, 97);
+			this.pa_ColorRank4.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank4.Name = "pa_ColorRank4";
+			this.pa_ColorRank4.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank4.TabIndex = 8;
+			this.pa_ColorRank4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank3
+			// 
+			this.la_ColorRank3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank3.Location = new System.Drawing.Point(34, 78);
+			this.la_ColorRank3.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank3.Name = "la_ColorRank3";
+			this.la_ColorRank3.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank3.TabIndex = 7;
+			this.la_ColorRank3.Text = "rank 3";
+			this.la_ColorRank3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank3
+			// 
+			this.pa_ColorRank3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank3.Location = new System.Drawing.Point(8, 77);
+			this.pa_ColorRank3.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank3.Name = "pa_ColorRank3";
+			this.pa_ColorRank3.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank3.TabIndex = 6;
+			this.pa_ColorRank3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank2
+			// 
+			this.la_ColorRank2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank2.Location = new System.Drawing.Point(34, 58);
+			this.la_ColorRank2.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank2.Name = "la_ColorRank2";
+			this.la_ColorRank2.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank2.TabIndex = 5;
+			this.la_ColorRank2.Text = "rank 2";
+			this.la_ColorRank2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank2
+			// 
+			this.pa_ColorRank2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank2.Location = new System.Drawing.Point(8, 57);
+			this.pa_ColorRank2.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank2.Name = "pa_ColorRank2";
+			this.pa_ColorRank2.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank2.TabIndex = 4;
+			this.pa_ColorRank2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank1
+			// 
+			this.la_ColorRank1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank1.Location = new System.Drawing.Point(34, 38);
+			this.la_ColorRank1.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank1.Name = "la_ColorRank1";
+			this.la_ColorRank1.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank1.TabIndex = 3;
+			this.la_ColorRank1.Text = "rank 1";
+			this.la_ColorRank1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank1
+			// 
+			this.pa_ColorRank1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank1.Location = new System.Drawing.Point(8, 37);
+			this.pa_ColorRank1.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank1.Name = "pa_ColorRank1";
+			this.pa_ColorRank1.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank1.TabIndex = 2;
+			this.pa_ColorRank1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
+			// la_ColorRank0
+			// 
+			this.la_ColorRank0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.la_ColorRank0.Location = new System.Drawing.Point(34, 18);
+			this.la_ColorRank0.Margin = new System.Windows.Forms.Padding(0);
+			this.la_ColorRank0.Name = "la_ColorRank0";
+			this.la_ColorRank0.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank0.TabIndex = 1;
+			this.la_ColorRank0.Text = "rank 0";
+			this.la_ColorRank0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// pa_ColorRank0
+			// 
+			this.pa_ColorRank0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pa_ColorRank0.Location = new System.Drawing.Point(8, 17);
+			this.pa_ColorRank0.Margin = new System.Windows.Forms.Padding(0);
+			this.pa_ColorRank0.Name = "pa_ColorRank0";
+			this.pa_ColorRank0.Size = new System.Drawing.Size(22, 17);
+			this.pa_ColorRank0.TabIndex = 0;
+			this.pa_ColorRank0.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			// 
 			// toolTip1
 			// 
 			this.toolTip1.AutoPopDelay = 10000;
@@ -1338,6 +1606,7 @@ namespace MapView.Forms.Observers
 			this.gb_TileData.ResumeLayout(false);
 			this.gb_LinkData.ResumeLayout(false);
 			this.gb_NodeEditor.ResumeLayout(false);
+			this.gb_NoderankColors.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

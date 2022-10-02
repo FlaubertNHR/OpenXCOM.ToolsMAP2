@@ -281,6 +281,16 @@ namespace MapView.Forms.Observers
 					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
 					tsmi_Noderank7.Text = "highlight " + RouteNodes.techie;
 					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
+
+					la_ColorRank0.Text = RouteNodes.civscout;
+					la_ColorRank1.Text = RouteNodes.xcom;
+					la_ColorRank2.Text = RouteNodes.soldier;
+					la_ColorRank3.Text = RouteNodes.squadldr;
+					la_ColorRank4.Text = RouteNodes.lc;
+					la_ColorRank5.Text = RouteNodes.medicTftD;
+					la_ColorRank6.Text = RouteNodes.ter1;
+					la_ColorRank7.Text = RouteNodes.techie;
+					la_ColorRank8.Text = RouteNodes.ter2;
 				}
 				else
 				{
@@ -295,9 +305,31 @@ namespace MapView.Forms.Observers
 					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
 					tsmi_Noderank7.Text = "highlight " + RouteNodes.medic;
 					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
+
+					la_ColorRank0.Text = RouteNodes.civscout;
+					la_ColorRank1.Text = RouteNodes.xcom;
+					la_ColorRank2.Text = RouteNodes.soldier;
+					la_ColorRank3.Text = RouteNodes.navigator;
+					la_ColorRank4.Text = RouteNodes.lc;
+					la_ColorRank5.Text = RouteNodes.engineer;
+					la_ColorRank6.Text = RouteNodes.ter1;
+					la_ColorRank7.Text = RouteNodes.medic;
+					la_ColorRank8.Text = RouteNodes.ter2;
 				}
 
 				UpdateNodeInformation();
+			}
+			else
+			{
+				la_ColorRank0.Text = "rank 0";
+				la_ColorRank1.Text = "rank 1";
+				la_ColorRank2.Text = "rank 2";
+				la_ColorRank3.Text = "rank 3";
+				la_ColorRank4.Text = "rank 4";
+				la_ColorRank5.Text = "rank 5";
+				la_ColorRank6.Text = "rank 6";
+				la_ColorRank7.Text = "rank 7";
+				la_ColorRank8.Text = "rank 8";
 			}
 
 			tsb_x2.Checked = false;
@@ -1104,6 +1136,8 @@ namespace MapView.Forms.Observers
 						ObserverManager.RouteView.Control.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
 					else
 						ObserverManager.TopRouteView.ControlRoute.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
+
+					SetSelectedInfoColor();
 				}
 			}
 		}
@@ -2129,8 +2163,9 @@ namespace MapView.Forms.Observers
 			SelectNode(NodeSelected.Id);
 		}
 
+
 		/// <summary>
-		/// 
+		/// Toggles <c><see cref="GhostNodesCoordinator"/></c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2139,7 +2174,6 @@ namespace MapView.Forms.Observers
 			GhostNodesCoordinator = !tsmi_GhostNodes.Checked;
 			InvalidatePanels();
 		}
-
 
 		private static byte _noderankHighlighted = Byte.MaxValue;
 		/// <summary>
@@ -2153,7 +2187,32 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Handles <c>Click</c> on any of the node-color panels in
+		/// <c><see cref="gb_NoderankColors"/></c>.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnNodecolorClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				Keys keyData;
+				if      (sender == pa_ColorRank0) keyData = Keys.D0;
+				else if (sender == pa_ColorRank1) keyData = Keys.D1;
+				else if (sender == pa_ColorRank2) keyData = Keys.D2;
+				else if (sender == pa_ColorRank3) keyData = Keys.D3;
+				else if (sender == pa_ColorRank4) keyData = Keys.D4;
+				else if (sender == pa_ColorRank5) keyData = Keys.D5;
+				else if (sender == pa_ColorRank6) keyData = Keys.D6;
+				else if (sender == pa_ColorRank7) keyData = Keys.D7;
+				else                              keyData = Keys.D8; // pa_ColorRank8
+
+				FireNoderankClick(keyData);
+			}
+		}
+
+		/// <summary>
+		/// Handles hotkeys [0..8] when the RouteView panel has focus.
 		/// </summary>
 		/// <param name="keyData"></param>
 		internal void FireNoderankClick(Keys keyData)
@@ -2176,7 +2235,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Handles its under the Highlights menu.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2277,28 +2336,52 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Preps this <c>Control</c> for noderank highlights. Clears all
+		/// Highlights its and ghosts all noderank colors.
 		/// </summary>
 		private void ClearNoderankIts()
 		{
-			ObserverManager.RouteView   .Control     .tsmi_Noderank0.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank0.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank1.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank1.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank2.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank2.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank3.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank3.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank4.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank4.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank5.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank5.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank6.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank6.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank7.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank7.Checked =
-			ObserverManager.RouteView   .Control     .tsmi_Noderank8.Checked =
-			ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank8.Checked = false;
+			RouteView ro = ObserverManager.RouteView   .Control;
+			RouteView tr = ObserverManager.TopRouteView.ControlRoute;
+
+			ro.tsmi_Noderank0.Checked = tr.tsmi_Noderank0.Checked =
+			ro.tsmi_Noderank1.Checked = tr.tsmi_Noderank1.Checked =
+			ro.tsmi_Noderank2.Checked = tr.tsmi_Noderank2.Checked =
+			ro.tsmi_Noderank3.Checked = tr.tsmi_Noderank3.Checked =
+			ro.tsmi_Noderank4.Checked = tr.tsmi_Noderank4.Checked =
+			ro.tsmi_Noderank5.Checked = tr.tsmi_Noderank5.Checked =
+			ro.tsmi_Noderank6.Checked = tr.tsmi_Noderank6.Checked =
+			ro.tsmi_Noderank7.Checked = tr.tsmi_Noderank7.Checked =
+			ro.tsmi_Noderank8.Checked = tr.tsmi_Noderank8.Checked = false;
+
+			ro.pa_ColorRank0.BackColor = tr.pa_ColorRank0.BackColor =
+			ro.pa_ColorRank1.BackColor = tr.pa_ColorRank1.BackColor =
+			ro.pa_ColorRank2.BackColor = tr.pa_ColorRank2.BackColor =
+			ro.pa_ColorRank3.BackColor = tr.pa_ColorRank3.BackColor =
+			ro.pa_ColorRank4.BackColor = tr.pa_ColorRank4.BackColor =
+			ro.pa_ColorRank5.BackColor = tr.pa_ColorRank5.BackColor =
+			ro.pa_ColorRank6.BackColor = tr.pa_ColorRank6.BackColor =
+			ro.pa_ColorRank7.BackColor = tr.pa_ColorRank7.BackColor =
+			ro.pa_ColorRank8.BackColor = tr.pa_ColorRank8.BackColor = Optionables.NodeColorGhosted;
+		}
+
+		/// <summary>
+		/// Sets all noderank colors to non-ghosted.
+		/// </summary>
+		private void FillNoderankColors()
+		{
+			RouteView ro = ObserverManager.RouteView   .Control;
+			RouteView tr = ObserverManager.TopRouteView.ControlRoute;
+
+			ro.pa_ColorRank0.BackColor = tr.pa_ColorRank0.BackColor = Optionables.NodeColor0;
+			ro.pa_ColorRank1.BackColor = tr.pa_ColorRank1.BackColor = Optionables.NodeColor1;
+			ro.pa_ColorRank2.BackColor = tr.pa_ColorRank2.BackColor = Optionables.NodeColor2;
+			ro.pa_ColorRank3.BackColor = tr.pa_ColorRank3.BackColor = Optionables.NodeColor3;
+			ro.pa_ColorRank4.BackColor = tr.pa_ColorRank4.BackColor = Optionables.NodeColor4;
+			ro.pa_ColorRank5.BackColor = tr.pa_ColorRank5.BackColor = Optionables.NodeColor5;
+			ro.pa_ColorRank6.BackColor = tr.pa_ColorRank6.BackColor = Optionables.NodeColor6;
+			ro.pa_ColorRank7.BackColor = tr.pa_ColorRank7.BackColor = Optionables.NodeColor7;
+			ro.pa_ColorRank8.BackColor = tr.pa_ColorRank8.BackColor = Optionables.NodeColor8;
 		}
 
 		/// <summary>
@@ -2311,9 +2394,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank0.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)0;
+				ObserverManager.RouteView   .Control     .pa_ColorRank0.BackColor = Optionables.NodeColor0;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank0.BackColor = Optionables.NodeColor0;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2326,9 +2414,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank1.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)1;
+				ObserverManager.RouteView   .Control     .pa_ColorRank1.BackColor = Optionables.NodeColor1;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank1.BackColor = Optionables.NodeColor1;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2341,9 +2434,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank2.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)2;
+				ObserverManager.RouteView   .Control     .pa_ColorRank2.BackColor = Optionables.NodeColor2;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank2.BackColor = Optionables.NodeColor2;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2356,9 +2454,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank3.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)3;
+				ObserverManager.RouteView   .Control     .pa_ColorRank3.BackColor = Optionables.NodeColor3;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank3.BackColor = Optionables.NodeColor3;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2371,9 +2474,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank4.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)4;
+				ObserverManager.RouteView   .Control     .pa_ColorRank4.BackColor = Optionables.NodeColor4;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank4.BackColor = Optionables.NodeColor4;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2386,9 +2494,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank5.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)5;
+				ObserverManager.RouteView   .Control     .pa_ColorRank5.BackColor = Optionables.NodeColor5;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank5.BackColor = Optionables.NodeColor5;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2401,9 +2514,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank6.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)6;
+				ObserverManager.RouteView   .Control     .pa_ColorRank6.BackColor = Optionables.NodeColor6;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank6.BackColor = Optionables.NodeColor6;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2416,9 +2534,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank7.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)7;
+				ObserverManager.RouteView   .Control     .pa_ColorRank7.BackColor = Optionables.NodeColor7;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank7.BackColor = Optionables.NodeColor7;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 		/// <summary>
@@ -2431,9 +2554,14 @@ namespace MapView.Forms.Observers
 				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank8.Checked = @checked)
 			{
 				NoderankHighlighted = (byte)8;
+				ObserverManager.RouteView   .Control     .pa_ColorRank8.BackColor = Optionables.NodeColor8;
+				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank8.BackColor = Optionables.NodeColor8;
 			}
 			else
+			{
 				NoderankHighlighted = Byte.MaxValue;
+				FillNoderankColors();
+			}
 		}
 
 
@@ -3024,10 +3152,11 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void SetFieldsForecolor()
 		{
-			gb_TileData  .ForeColor =
-			gb_NodeData  .ForeColor =
-			gb_LinkData  .ForeColor =
-			gb_NodeEditor.ForeColor = Optionables.FieldsForecolor;
+			gb_TileData      .ForeColor =
+			gb_NodeData      .ForeColor =
+			gb_LinkData      .ForeColor =
+			gb_NodeEditor    .ForeColor =
+			gb_NoderankColors.ForeColor = Optionables.FieldsForecolor;
 
 			Button bu;
 			foreach (var control in gb_LinkData.Controls)
@@ -3041,6 +3170,39 @@ namespace MapView.Forms.Observers
 				if ((bu = control as Button) != null)
 					bu.ForeColor = SystemColors.ControlText;
 			}
+		}
+
+		/// <summary>
+		/// Sets the noderank colors in <c><see cref="gb_NoderankColors"/></c>.
+		/// </summary>
+		internal void SetNodeColors()
+		{
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)0)
+				pa_ColorRank0.BackColor = Optionables.NodeColor0;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)1)
+				pa_ColorRank1.BackColor = Optionables.NodeColor1;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)2)
+				pa_ColorRank2.BackColor = Optionables.NodeColor2;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)3)
+				pa_ColorRank3.BackColor = Optionables.NodeColor3;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)4)
+				pa_ColorRank4.BackColor = Optionables.NodeColor4;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)5)
+				pa_ColorRank5.BackColor = Optionables.NodeColor5;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)6)
+				pa_ColorRank6.BackColor = Optionables.NodeColor6;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)7)
+				pa_ColorRank7.BackColor = Optionables.NodeColor7;
+
+			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)8)
+				pa_ColorRank8.BackColor = Optionables.NodeColor8;
 		}
 		#endregion Update UI (options)
 
