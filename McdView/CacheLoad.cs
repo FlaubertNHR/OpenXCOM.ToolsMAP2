@@ -13,7 +13,7 @@ namespace McdView
 	internal static class CacheLoad
 	{
 		#region Fields
-		internal static int Length;
+		private static int Length;
 		private static int[,] Parts;
 		#endregion Fields
 
