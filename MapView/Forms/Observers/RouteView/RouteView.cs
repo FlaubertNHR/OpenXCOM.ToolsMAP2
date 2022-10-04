@@ -2173,6 +2173,7 @@ namespace MapView.Forms.Observers
 		{
 			GhostNodesCoordinator = !tsmi_GhostNodes.Checked;
 			InvalidatePanels();
+			RouteControl.Select();
 		}
 
 		private static byte _noderankHighlighted = Byte.MaxValue;
@@ -2333,6 +2334,7 @@ namespace MapView.Forms.Observers
 			}
 
 			InvalidatePanels();
+			RouteControl.Select();
 		}
 
 		/// <summary>
