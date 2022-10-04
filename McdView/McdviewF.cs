@@ -2043,7 +2043,7 @@ namespace McdView
 								 + " It has nothing to do with palette-based sprite-shading in XCOM itself."
 								 + " This setting is not saved."
 								 + Environment.NewLine + Environment.NewLine
-								 + "1..100, unity 33, default -1 off";
+								 + "1..100, unity 33, default 0 off";
 		}
 
 		/// <summary>
