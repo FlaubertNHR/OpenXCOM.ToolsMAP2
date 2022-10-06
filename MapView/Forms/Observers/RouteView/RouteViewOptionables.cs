@@ -829,11 +829,11 @@ This is the color of the text on the Save button (if enabled) and the color for 
 
 			pen = new Pen(def_WallColor, def_WallWidth);
 			RouteControl.RoutePens[str_WallColor] = pen;
-			RouteControl.ToolWall = new BlobColorTool(pen);//, "RouteToolWall");
+			RouteControl.ToolWall = new BlobColorTool(pen);
 
 			brush = new SolidBrush(def_ContentColor);
 			RouteControl.RouteBrushes[str_ContentColor] = brush;
-			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);//, "RouteToolContent");
+			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeColor0);
 			brush = new SolidBrush(color);
@@ -1091,7 +1091,6 @@ This is the color of the text on the Save button (if enabled) and the color for 
 					RouteControl.ToolContent = new BlobColorTool(
 															RouteControl.RouteBrushes[str_ContentColor],
 															BlobDrawService.LINEWIDTH_CONTENT);
-//															"RouteToolContent");
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
@@ -1215,7 +1214,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			if (key == str_WallColor)
 			{
 				RouteControl.ToolWall.Dispose();
-				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
+				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
 
 				if (MainViewF.that._fcolors != null)
 					MainViewF.that._fcolors.UpdateRouteViewBlobColors();
@@ -1236,7 +1235,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			if (key == str_WallColor) // doh!
 			{
 				RouteControl.ToolWall.Dispose();
-				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);//, "RouteToolWall");
+				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);
 			}
 		}
 
