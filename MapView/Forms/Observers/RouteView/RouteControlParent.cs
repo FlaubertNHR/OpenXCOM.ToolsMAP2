@@ -433,60 +433,24 @@ namespace MapView.Forms.Observers
 
 			switch (e.KeyData)
 			{
+				default:
+					base.OnKeyDown(e);
+					return;
+
 				case Keys.H | Keys.Control:
 					e.SuppressKeyPress = true;
 					ObserverManager.RouteView.Control.OnGhostNodesClick(null, EventArgs.Empty);
-					break;
+					return;
 
-				case Keys.D0:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D0);
-					break;
-
-				case Keys.D1:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D1);
-					break;
-
-				case Keys.D2:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D2);
-					break;
-
-				case Keys.D3:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D3);
-					break;
-
-				case Keys.D4:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D4);
-					break;
-
-				case Keys.D5:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D5);
-					break;
-
-				case Keys.D6:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D6);
-					break;
-
-				case Keys.D7:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D7);
-					break;
-
+				case Keys.D0: case Keys.D1: case Keys.D2: case Keys.D3:
+				case Keys.D4: case Keys.D5: case Keys.D6: case Keys.D7:
 				case Keys.D8:
-					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.FireNoderankClick(Keys.D8);
-					break;
-
-				default:
-					base.OnKeyDown(e);
+					// doNoderankShortcut() ->
 					break;
 			}
+
+			e.SuppressKeyPress = true;
+			ObserverManager.RouteView.Control.doNoderankShortcut(e.KeyData);
 		}
 		#endregion Events (override)
 

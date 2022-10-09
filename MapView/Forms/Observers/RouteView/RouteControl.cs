@@ -505,7 +505,7 @@ namespace MapView.Forms.Observers
 							brush = RouteBrushes[RouteViewOptionables.str_NodeColorInvalid];
 						}
 						else if ((RouteView.GhostNodesCoordinator && node.Spawn == SpawnWeight.None)
-							|| (RouteView.NoderankHighlighted != Byte.MaxValue && node.Rank != RouteView.NoderankHighlighted))
+							|| (RouteView.NoderankHighlights & (1u << node.Rank)) == 0)
 						{
 							brush = RouteBrushes[RouteViewOptionables.str_NodeColorGhosted];
 						}

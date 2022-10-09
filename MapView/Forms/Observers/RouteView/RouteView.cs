@@ -2167,7 +2167,11 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Toggles <c><see cref="GhostNodesCoordinator"/></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="tsmi_GhostNodes"/></c></item>
+		/// <item><c><see cref="RouteControlParent"/>.OnKeyDown()</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		internal void OnGhostNodesClick(object sender, EventArgs e)
 		{
@@ -2176,161 +2180,191 @@ namespace MapView.Forms.Observers
 			RouteControl.Select();
 		}
 
-		private static byte _noderankHighlighted = Byte.MaxValue;
+		private const uint NoderankColorbit0 = 0x001;
+		private const uint NoderankColorbit1 = 0x002;
+		private const uint NoderankColorbit2 = 0x004;
+		private const uint NoderankColorbit3 = 0x008;
+		private const uint NoderankColorbit4 = 0x010;
+		private const uint NoderankColorbit5 = 0x020;
+		private const uint NoderankColorbit6 = 0x040;
+		private const uint NoderankColorbit7 = 0x080;
+		private const uint NoderankColorbit8 = 0x100;
+		private const uint NoderankColorbits = 0x1FF;
+
+		private static uint _noderankHighlights = NoderankColorbits;
 		/// <summary>
-		/// Tracks which noderank (if any) user has chosen to highlight.
+		/// Tracks which noderanks (if any) user has highlighted.
 		/// </summary>
-		/// <remarks><c>Byte.MaxValue</c> if none.</remarks>
-		internal static byte NoderankHighlighted
+		/// <remarks><c><see cref="NoderankColorbits"/></c> if none.</remarks>
+		internal static uint NoderankHighlights
 		{
-			get { return _noderankHighlighted; }
-			private set { _noderankHighlighted = value; }
+			get { return _noderankHighlights; }
+			private set { _noderankHighlights = value; }
 		}
 
 		/// <summary>
-		/// Handles <c>Click</c> on any of the node-color panels in
-		/// <c><see cref="gb_NoderankColors"/></c>.
+		/// Sets the noderank colors in <c><see cref="gb_NoderankColors"/></c>.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnNodecolorClick(object sender, MouseEventArgs e)
+		/// <remarks>Called only by <c><see cref="RouteViewOptionables"/></c>
+		/// for init or option-changed. Does not ghost the color-panels.</remarks>
+		internal void SetNodeColors()
 		{
-			if (e.Button == MouseButtons.Left)
-			{
-				Keys keyData;
-				if      (sender == pa_ColorRank0) keyData = Keys.D0;
-				else if (sender == pa_ColorRank1) keyData = Keys.D1;
-				else if (sender == pa_ColorRank2) keyData = Keys.D2;
-				else if (sender == pa_ColorRank3) keyData = Keys.D3;
-				else if (sender == pa_ColorRank4) keyData = Keys.D4;
-				else if (sender == pa_ColorRank5) keyData = Keys.D5;
-				else if (sender == pa_ColorRank6) keyData = Keys.D6;
-				else if (sender == pa_ColorRank7) keyData = Keys.D7;
-				else                              keyData = Keys.D8; // pa_ColorRank8
+			if ((NoderankHighlights & NoderankColorbit0) != 0)
+				pa_ColorRank0.BackColor = Optionables.NodeColor0;
 
-				FireNoderankClick(keyData);
-			}
+			if ((NoderankHighlights & NoderankColorbit1) != 0)
+				pa_ColorRank1.BackColor = Optionables.NodeColor1;
+
+			if ((NoderankHighlights & NoderankColorbit2) != 0)
+				pa_ColorRank2.BackColor = Optionables.NodeColor2;
+
+			if ((NoderankHighlights & NoderankColorbit3) != 0)
+				pa_ColorRank3.BackColor = Optionables.NodeColor3;
+
+			if ((NoderankHighlights & NoderankColorbit4) != 0)
+				pa_ColorRank4.BackColor = Optionables.NodeColor4;
+
+			if ((NoderankHighlights & NoderankColorbit5) != 0)
+				pa_ColorRank5.BackColor = Optionables.NodeColor5;
+
+			if ((NoderankHighlights & NoderankColorbit6) != 0)
+				pa_ColorRank6.BackColor = Optionables.NodeColor6;
+
+			if ((NoderankHighlights & NoderankColorbit7) != 0)
+				pa_ColorRank7.BackColor = Optionables.NodeColor7;
+
+			if ((NoderankHighlights & NoderankColorbit8) != 0)
+				pa_ColorRank8.BackColor = Optionables.NodeColor8;
 		}
 
 		/// <summary>
-		/// Handles hotkeys [0..8] when the RouteView panel has focus.
+		/// Sorts out the noderank-its and -colorpanels based on the current
+		/// value of <c><see cref="NoderankHighlights"/></c>.
 		/// </summary>
-		/// <param name="keyData"></param>
-		internal void FireNoderankClick(Keys keyData)
+		private void SetNoderankHighlights()
 		{
-			object it = null;
-			switch (keyData)
+			if (NoderankHighlights == NoderankColorbits)
 			{
-				case Keys.D0: it = tsmi_Noderank0; break;
-				case Keys.D1: it = tsmi_Noderank1; break;
-				case Keys.D2: it = tsmi_Noderank2; break;
-				case Keys.D3: it = tsmi_Noderank3; break;
-				case Keys.D4: it = tsmi_Noderank4; break;
-				case Keys.D5: it = tsmi_Noderank5; break;
-				case Keys.D6: it = tsmi_Noderank6; break;
-				case Keys.D7: it = tsmi_Noderank7; break;
-				case Keys.D8: it = tsmi_Noderank8; break;
-			}
+				tsmi_Noderank0.Checked = tsmi_Noderank1.Checked =
+				tsmi_Noderank2.Checked = tsmi_Noderank3.Checked =
+				tsmi_Noderank4.Checked = tsmi_Noderank5.Checked =
+				tsmi_Noderank6.Checked = tsmi_Noderank7.Checked =
+				tsmi_Noderank8.Checked = false;
 
-			OnNoderankClick(it, EventArgs.Empty);
-		}
+				pa_ColorRank0.BackColor = Optionables.NodeColor0;
+				pa_ColorRank1.BackColor = Optionables.NodeColor1;
+				pa_ColorRank2.BackColor = Optionables.NodeColor2;
+				pa_ColorRank3.BackColor = Optionables.NodeColor3;
+				pa_ColorRank4.BackColor = Optionables.NodeColor4;
+				pa_ColorRank5.BackColor = Optionables.NodeColor5;
+				pa_ColorRank6.BackColor = Optionables.NodeColor6;
+				pa_ColorRank7.BackColor = Optionables.NodeColor7;
+				pa_ColorRank8.BackColor = Optionables.NodeColor8;
 
-		/// <summary>
-		/// Handles its under the Highlights menu.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnNoderankClick(object sender, EventArgs e)
-		{
-			if (sender == tsmi_Noderank0)
-			{
-				if (!tsmi_Noderank0.Checked)
-				{
-					ClearNoderankIts();
-					SetNoderank0Checked(true);
-				}
-				else
-					SetNoderank0Checked(false);
+				tsmi_NoderankClear.Enabled = false;
 			}
-			else if (sender == tsmi_Noderank1)
+			else
 			{
-				if (!tsmi_Noderank1.Checked)
+				tsmi_NoderankClear.Enabled = true;
+
+				if ((NoderankHighlights & NoderankColorbit0) != 0)
 				{
-					ClearNoderankIts();
-					SetNoderank1Checked(true);
+					tsmi_Noderank0.Checked = true;
+					pa_ColorRank0.BackColor = Optionables.NodeColor0;
 				}
 				else
-					SetNoderank1Checked(false);
-			}
-			else if (sender == tsmi_Noderank2)
-			{
-				if (!tsmi_Noderank2.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank2Checked(true);
+					tsmi_Noderank0.Checked = false;
+					pa_ColorRank0.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit1) != 0)
+				{
+					tsmi_Noderank1.Checked = true;
+					pa_ColorRank1.BackColor = Optionables.NodeColor1;
 				}
 				else
-					SetNoderank2Checked(false);
-			}
-			else if (sender == tsmi_Noderank3)
-			{
-				if (!tsmi_Noderank3.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank3Checked(true);
+					tsmi_Noderank1.Checked = false;
+					pa_ColorRank1.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit2) != 0)
+				{
+					tsmi_Noderank2.Checked = true;
+					pa_ColorRank2.BackColor = Optionables.NodeColor2;
 				}
 				else
-					SetNoderank3Checked(false);
-			}
-			else if (sender == tsmi_Noderank4)
-			{
-				if (!tsmi_Noderank4.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank4Checked(true);
+					tsmi_Noderank2.Checked = false;
+					pa_ColorRank2.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit3) != 0)
+				{
+					tsmi_Noderank3.Checked = true;
+					pa_ColorRank3.BackColor = Optionables.NodeColor3;
 				}
 				else
-					SetNoderank4Checked(false);
-			}
-			else if (sender == tsmi_Noderank5)
-			{
-				if (!tsmi_Noderank5.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank5Checked(true);
+					tsmi_Noderank3.Checked = false;
+					pa_ColorRank3.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit4) != 0)
+				{
+					tsmi_Noderank4.Checked = true;
+					pa_ColorRank4.BackColor = Optionables.NodeColor4;
 				}
 				else
-					SetNoderank5Checked(false);
-			}
-			else if (sender == tsmi_Noderank6)
-			{
-				if (!tsmi_Noderank6.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank6Checked(true);
+					tsmi_Noderank4.Checked = false;
+					pa_ColorRank4.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit5) != 0)
+				{
+					tsmi_Noderank5.Checked = true;
+					pa_ColorRank5.BackColor = Optionables.NodeColor5;
 				}
 				else
-					SetNoderank6Checked(false);
-			}
-			else if (sender == tsmi_Noderank7)
-			{
-				if (!tsmi_Noderank7.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank7Checked(true);
+					tsmi_Noderank5.Checked = false;
+					pa_ColorRank5.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit6) != 0)
+				{
+					tsmi_Noderank6.Checked = true;
+					pa_ColorRank6.BackColor = Optionables.NodeColor6;
 				}
 				else
-					SetNoderank7Checked(false);
-			}
-			else // tsmi_Noderank8
-			{
-				if (!tsmi_Noderank8.Checked)
 				{
-					ClearNoderankIts();
-					SetNoderank8Checked(true);
+					tsmi_Noderank6.Checked = false;
+					pa_ColorRank6.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit7) != 0)
+				{
+					tsmi_Noderank7.Checked = true;
+					pa_ColorRank7.BackColor = Optionables.NodeColor7;
 				}
 				else
-					SetNoderank8Checked(false);
+				{
+					tsmi_Noderank7.Checked = false;
+					pa_ColorRank7.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit8) != 0)
+				{
+					tsmi_Noderank8.Checked = true;
+					pa_ColorRank8.BackColor = Optionables.NodeColor8;
+				}
+				else
+				{
+					tsmi_Noderank8.Checked = false;
+					pa_ColorRank8.BackColor = Optionables.NodeColorGhosted;
+				}
 			}
 
 			InvalidatePanels();
@@ -2338,232 +2372,237 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Preps this <c>Control</c> for noderank highlights. Clears all
-		/// Highlights its and ghosts all noderank colors.
+		/// Handles the <c>Click</c> event on any of the node-color panels in
+		/// <c><see cref="gb_NoderankColors"/></c>.
 		/// </summary>
-		private void ClearNoderankIts()
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="pa_ColorRank0"/></c></item>
+		/// <item><c><see cref="pa_ColorRank1"/></c></item>
+		/// <item><c><see cref="pa_ColorRank2"/></c></item>
+		/// <item><c><see cref="pa_ColorRank3"/></c></item>
+		/// <item><c><see cref="pa_ColorRank4"/></c></item>
+		/// <item><c><see cref="pa_ColorRank5"/></c></item>
+		/// <item><c><see cref="pa_ColorRank6"/></c></item>
+		/// <item><c><see cref="pa_ColorRank7"/></c></item>
+		/// <item><c><see cref="pa_ColorRank8"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank0"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank1"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank2"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank3"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank4"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank5"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank6"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank7"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank8"/></c></item>
+		/// </list></param>
+		/// <param name="e"></param>
+		private void OnNodecolorClick(object sender, MouseEventArgs e)
 		{
-			RouteView ro = ObserverManager.RouteView   .Control;
-			RouteView tr = ObserverManager.TopRouteView.ControlRoute;
-
-			ro.tsmi_Noderank0.Checked = tr.tsmi_Noderank0.Checked =
-			ro.tsmi_Noderank1.Checked = tr.tsmi_Noderank1.Checked =
-			ro.tsmi_Noderank2.Checked = tr.tsmi_Noderank2.Checked =
-			ro.tsmi_Noderank3.Checked = tr.tsmi_Noderank3.Checked =
-			ro.tsmi_Noderank4.Checked = tr.tsmi_Noderank4.Checked =
-			ro.tsmi_Noderank5.Checked = tr.tsmi_Noderank5.Checked =
-			ro.tsmi_Noderank6.Checked = tr.tsmi_Noderank6.Checked =
-			ro.tsmi_Noderank7.Checked = tr.tsmi_Noderank7.Checked =
-			ro.tsmi_Noderank8.Checked = tr.tsmi_Noderank8.Checked = false;
-
-			ro.pa_ColorRank0.BackColor = tr.pa_ColorRank0.BackColor =
-			ro.pa_ColorRank1.BackColor = tr.pa_ColorRank1.BackColor =
-			ro.pa_ColorRank2.BackColor = tr.pa_ColorRank2.BackColor =
-			ro.pa_ColorRank3.BackColor = tr.pa_ColorRank3.BackColor =
-			ro.pa_ColorRank4.BackColor = tr.pa_ColorRank4.BackColor =
-			ro.pa_ColorRank5.BackColor = tr.pa_ColorRank5.BackColor =
-			ro.pa_ColorRank6.BackColor = tr.pa_ColorRank6.BackColor =
-			ro.pa_ColorRank7.BackColor = tr.pa_ColorRank7.BackColor =
-			ro.pa_ColorRank8.BackColor = tr.pa_ColorRank8.BackColor = Optionables.NodeColorGhosted;
-		}
-
-		/// <summary>
-		/// Sets all noderank colors to non-ghosted.
-		/// </summary>
-		private void FillNoderankColors()
-		{
-			RouteView ro = ObserverManager.RouteView   .Control;
-			RouteView tr = ObserverManager.TopRouteView.ControlRoute;
-
-			ro.pa_ColorRank0.BackColor = tr.pa_ColorRank0.BackColor = Optionables.NodeColor0;
-			ro.pa_ColorRank1.BackColor = tr.pa_ColorRank1.BackColor = Optionables.NodeColor1;
-			ro.pa_ColorRank2.BackColor = tr.pa_ColorRank2.BackColor = Optionables.NodeColor2;
-			ro.pa_ColorRank3.BackColor = tr.pa_ColorRank3.BackColor = Optionables.NodeColor3;
-			ro.pa_ColorRank4.BackColor = tr.pa_ColorRank4.BackColor = Optionables.NodeColor4;
-			ro.pa_ColorRank5.BackColor = tr.pa_ColorRank5.BackColor = Optionables.NodeColor5;
-			ro.pa_ColorRank6.BackColor = tr.pa_ColorRank6.BackColor = Optionables.NodeColor6;
-			ro.pa_ColorRank7.BackColor = tr.pa_ColorRank7.BackColor = Optionables.NodeColor7;
-			ro.pa_ColorRank8.BackColor = tr.pa_ColorRank8.BackColor = Optionables.NodeColor8;
-		}
-
-		/// <summary>
-		/// Sets noderank 0 de/checked.
-		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank0Checked(bool @checked)
-		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank0.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank0.Checked = @checked)
+			if (e.Button == MouseButtons.Left)
 			{
-				NoderankHighlighted = (byte)0;
-				ObserverManager.RouteView   .Control     .pa_ColorRank0.BackColor = Optionables.NodeColor0;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank0.BackColor = Optionables.NodeColor0;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
-		}
+				if (ModifierKeys == Keys.None)
+				{
+					if (sender == pa_ColorRank0 || sender == tsmi_Noderank0)
+					{
+						if (NoderankHighlights == NoderankColorbit0)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit0;
+					}
+					else if (sender == pa_ColorRank1 || sender == tsmi_Noderank1)
+					{
+						if (NoderankHighlights == NoderankColorbit1)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit1;
+					}
+					else if (sender == pa_ColorRank2 || sender == tsmi_Noderank2)
+					{
+						if (NoderankHighlights == NoderankColorbit2)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit2;
+					}
+					else if (sender == pa_ColorRank3 || sender == tsmi_Noderank3)
+					{
+						if (NoderankHighlights == NoderankColorbit3)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit3;
+					}
+					else if (sender == pa_ColorRank4 || sender == tsmi_Noderank4)
+					{
+						if (NoderankHighlights == NoderankColorbit4)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit4;
+					}
+					else if (sender == pa_ColorRank5 || sender == tsmi_Noderank5)
+					{
+						if (NoderankHighlights == NoderankColorbit5)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit5;
+					}
+					else if (sender == pa_ColorRank6 || sender == tsmi_Noderank6)
+					{
+						if (NoderankHighlights == NoderankColorbit6)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit6;
+					}
+					else if (sender == pa_ColorRank7 || sender == tsmi_Noderank7)
+					{
+						if (NoderankHighlights == NoderankColorbit7)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit7;
+					}
+					else // pa_ColorRank8 || tsmi_Noderank8
+					{
+						if (NoderankHighlights == NoderankColorbit8)
+							NoderankHighlights = NoderankColorbits;
+						else
+							NoderankHighlights = NoderankColorbit8;
+					}
+				}
+				else if (ModifierKeys == Keys.Control)
+				{
+					if (sender == pa_ColorRank0 || sender == tsmi_Noderank0)
+						NoderankHighlights ^= NoderankColorbit0;
+					else if (sender == pa_ColorRank1 || sender == tsmi_Noderank1)
+						NoderankHighlights ^= NoderankColorbit1;
+					else if (sender == pa_ColorRank2 || sender == tsmi_Noderank2)
+						NoderankHighlights ^= NoderankColorbit2;
+					else if (sender == pa_ColorRank3 || sender == tsmi_Noderank3)
+						NoderankHighlights ^= NoderankColorbit3;
+					else if (sender == pa_ColorRank4 || sender == tsmi_Noderank4)
+						NoderankHighlights ^= NoderankColorbit4;
+					else if (sender == pa_ColorRank5 || sender == tsmi_Noderank5)
+						NoderankHighlights ^= NoderankColorbit5;
+					else if (sender == pa_ColorRank6 || sender == tsmi_Noderank6)
+						NoderankHighlights ^= NoderankColorbit6;
+					else if (sender == pa_ColorRank7 || sender == tsmi_Noderank7)
+						NoderankHighlights ^= NoderankColorbit7;
+					else // pa_ColorRank8 || tsmi_Noderank8
+						NoderankHighlights ^= NoderankColorbit8;
+				}
 
-		/// <summary>
-		/// Sets noderank 1 de/checked.
-		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank1Checked(bool @checked)
-		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank1.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank1.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)1;
-				ObserverManager.RouteView   .Control     .pa_ColorRank1.BackColor = Optionables.NodeColor1;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank1.BackColor = Optionables.NodeColor1;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
-		}
-
-		/// <summary>
-		/// Sets noderank 2 de/checked.
-		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank2Checked(bool @checked)
-		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank2.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank2.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)2;
-				ObserverManager.RouteView   .Control     .pa_ColorRank2.BackColor = Optionables.NodeColor2;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank2.BackColor = Optionables.NodeColor2;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
-		}
-
-		/// <summary>
-		/// Sets noderank 3 de/checked.
-		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank3Checked(bool @checked)
-		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank3.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank3.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)3;
-				ObserverManager.RouteView   .Control     .pa_ColorRank3.BackColor = Optionables.NodeColor3;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank3.BackColor = Optionables.NodeColor3;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
+				ObserverManager.RouteView   .Control.     SetNoderankHighlights();
+				ObserverManager.TopRouteView.ControlRoute.SetNoderankHighlights();
 			}
 		}
 
 		/// <summary>
-		/// Sets noderank 4 de/checked.
+		/// Handles noderank-color its under the Highlights menu.
 		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank4Checked(bool @checked)
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="tsmi_Noderank0"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank1"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank2"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank3"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank4"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank5"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank6"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank7"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank8"/></c></item>
+		/// </list></param>
+		/// <param name="e"></param>
+		private void OnNoderankClick(object sender, EventArgs e)
 		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank4.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank4.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)4;
-				ObserverManager.RouteView   .Control     .pa_ColorRank4.BackColor = Optionables.NodeColor4;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank4.BackColor = Optionables.NodeColor4;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
+			OnNodecolorClick(sender, new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0));
 		}
 
 		/// <summary>
-		/// Sets noderank 5 de/checked.
+		/// Handles shortcut-keys [0..8] when <c><see cref="RouteControl"/></c>
+		/// has focus.
 		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank5Checked(bool @checked)
+		/// <param name="keyData"></param>
+		internal void doNoderankShortcut(Keys keyData)
 		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank5.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank5.Checked = @checked)
+			switch (keyData)
 			{
-				NoderankHighlighted = (byte)5;
-				ObserverManager.RouteView   .Control     .pa_ColorRank5.BackColor = Optionables.NodeColor5;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank5.BackColor = Optionables.NodeColor5;
+				case Keys.D0:
+					if (NoderankHighlights == NoderankColorbit0)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit0;
+					break;
+
+				case Keys.D1:
+					if (NoderankHighlights == NoderankColorbit1)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit1;
+					break;
+
+				case Keys.D2:
+					if (NoderankHighlights == NoderankColorbit2)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit2;
+					break;
+
+				case Keys.D3:
+					if (NoderankHighlights == NoderankColorbit3)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit3;
+					break;
+
+				case Keys.D4:
+					if (NoderankHighlights == NoderankColorbit4)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit4;
+					break;
+
+				case Keys.D5:
+					if (NoderankHighlights == NoderankColorbit5)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit5;
+					break;
+
+				case Keys.D6:
+					if (NoderankHighlights == NoderankColorbit6)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit6;
+					break;
+
+				case Keys.D7:
+					if (NoderankHighlights == NoderankColorbit7)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit7;
+					break;
+
+				case Keys.D8:
+					if (NoderankHighlights == NoderankColorbit8)
+						NoderankHighlights = NoderankColorbits;
+					else
+						NoderankHighlights = NoderankColorbit8;
+					break;
 			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
+
+			ObserverManager.RouteView   .Control.     SetNoderankHighlights();
+			ObserverManager.TopRouteView.ControlRoute.SetNoderankHighlights();
 		}
 
 		/// <summary>
-		/// Sets noderank 6 de/checked.
+		/// Sets all noderank-color bits.
 		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank6Checked(bool @checked)
+		/// <param name="sender"><c><see cref="tsmi_NoderankClear"/></c></param>
+		/// <param name="e"></param>
+		private void OnClearRankHighlightsClick(object sender, EventArgs e)
 		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank6.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank6.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)6;
-				ObserverManager.RouteView   .Control     .pa_ColorRank6.BackColor = Optionables.NodeColor6;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank6.BackColor = Optionables.NodeColor6;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
-		}
+			NoderankHighlights = NoderankColorbits;
 
-		/// <summary>
-		/// Sets noderank 7 de/checked.
-		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank7Checked(bool @checked)
-		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank7.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank7.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)7;
-				ObserverManager.RouteView   .Control     .pa_ColorRank7.BackColor = Optionables.NodeColor7;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank7.BackColor = Optionables.NodeColor7;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
-		}
-
-		/// <summary>
-		/// Sets noderank 8 de/checked.
-		/// </summary>
-		/// <param name="checked"></param>
-		private void SetNoderank8Checked(bool @checked)
-		{
-			if (ObserverManager.RouteView   .Control     .tsmi_Noderank8.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_Noderank8.Checked = @checked)
-			{
-				NoderankHighlighted = (byte)8;
-				ObserverManager.RouteView   .Control     .pa_ColorRank8.BackColor = Optionables.NodeColor8;
-				ObserverManager.TopRouteView.ControlRoute.pa_ColorRank8.BackColor = Optionables.NodeColor8;
-			}
-			else
-			{
-				NoderankHighlighted = Byte.MaxValue;
-				FillNoderankColors();
-			}
+			ObserverManager.RouteView   .Control.     SetNoderankHighlights();
+			ObserverManager.TopRouteView.ControlRoute.SetNoderankHighlights();
 		}
 
 
@@ -3172,39 +3211,6 @@ namespace MapView.Forms.Observers
 				if ((bu = control as Button) != null)
 					bu.ForeColor = SystemColors.ControlText;
 			}
-		}
-
-		/// <summary>
-		/// Sets the noderank colors in <c><see cref="gb_NoderankColors"/></c>.
-		/// </summary>
-		internal void SetNodeColors()
-		{
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)0)
-				pa_ColorRank0.BackColor = Optionables.NodeColor0;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)1)
-				pa_ColorRank1.BackColor = Optionables.NodeColor1;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)2)
-				pa_ColorRank2.BackColor = Optionables.NodeColor2;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)3)
-				pa_ColorRank3.BackColor = Optionables.NodeColor3;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)4)
-				pa_ColorRank4.BackColor = Optionables.NodeColor4;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)5)
-				pa_ColorRank5.BackColor = Optionables.NodeColor5;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)6)
-				pa_ColorRank6.BackColor = Optionables.NodeColor6;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)7)
-				pa_ColorRank7.BackColor = Optionables.NodeColor7;
-
-			if (NoderankHighlighted == Byte.MaxValue || NoderankHighlighted == (byte)8)
-				pa_ColorRank8.BackColor = Optionables.NodeColor8;
 		}
 		#endregion Update UI (options)
 

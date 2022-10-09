@@ -48,6 +48,8 @@ namespace MapView.Forms.Observers
 		private ToolStripMenuItem tsmi_Noderank6;
 		private ToolStripMenuItem tsmi_Noderank7;
 		private ToolStripMenuItem tsmi_Noderank8;
+		private ToolStripSeparator tss_6;
+		private ToolStripMenuItem tsmi_NoderankClear;
 
 		private ToolStripSeparator tss_0;
 
@@ -196,6 +198,8 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank6 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_Noderank7 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_Noderank8 = new System.Windows.Forms.ToolStripMenuItem();
+			this.tss_6 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsmi_NoderankClear = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tss_0 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsb_connect0 = new System.Windows.Forms.ToolStripButton();
@@ -485,7 +489,9 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank5,
 			this.tsmi_Noderank6,
 			this.tsmi_Noderank7,
-			this.tsmi_Noderank8});
+			this.tsmi_Noderank8,
+			this.tss_6,
+			this.tsmi_NoderankClear});
 			this.tsddb_Highlights.Font = new System.Drawing.Font("Verdana", 7F);
 			this.tsddb_Highlights.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddb_Highlights.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
@@ -578,6 +584,19 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank8.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank8.Text = "highlight Rank8";
 			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnNoderankClick);
+			// 
+			// tss_6
+			// 
+			this.tss_6.Name = "tss_6";
+			this.tss_6.Size = new System.Drawing.Size(230, 6);
+			// 
+			// tsmi_NoderankClear
+			// 
+			this.tsmi_NoderankClear.Enabled = false;
+			this.tsmi_NoderankClear.Name = "tsmi_NoderankClear";
+			this.tsmi_NoderankClear.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_NoderankClear.Text = "clear rank highlights";
+			this.tsmi_NoderankClear.Click += new System.EventHandler(this.OnClearRankHighlightsClick);
 			// 
 			// tsb_Options
 			// 
