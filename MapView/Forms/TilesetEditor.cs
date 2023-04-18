@@ -1773,8 +1773,7 @@ namespace MapView
 		/// <item><c>lb_TerrainsAllocated.DisplayMember</c></item>
 		/// <item><c>lb_TerrainsAvailable.DisplayMember</c></item>
 		/// </list>
-		/// 
-		/// 
+		/// <br/><br/>
 		/// to work correctly.
 		/// </summary>
 		/// <returns>the <c><see cref="Terrain"/></c> label</returns>
