@@ -21,21 +21,28 @@ namespace MapView
 		:
 			Form
 	{
+		#region Fields (static)
+		static int _x = Int32.MinValue, _y;
+
+		static int _rankwidthUfo  = Int32.MinValue;
+		static int _rankwidthTftd = Int32.MinValue;
+		#endregion Fields (static)
+
+
 		#region Fields
 		private MapFile _file;
 
-		private string _group    = String.Empty;
-		private string _category = String.Empty;
-
 		private int _nodes, _nodescat;
 		private int
-			_ranks_0,     _ranks_1,     _ranks_2,     _ranks_3,
-			_ranks_4,     _ranks_5,     _ranks_6,     _ranks_7,     _ranks_8,
-			_ranks_0_cat, _ranks_1_cat, _ranks_2_cat, _ranks_3_cat,
-			_ranks_4_cat, _ranks_5_cat, _ranks_6_cat, _ranks_7_cat, _ranks_8_cat;
+			_ranks_0, _ranks_1, _ranks_2, _ranks_3,
+			_ranks_4, _ranks_5, _ranks_6, _ranks_7,
+			_ranks_8,
 
-		private readonly int _clientheight;
-		private int _clientwidth = -1;
+			_ranks_0_cat, _ranks_1_cat, _ranks_2_cat, _ranks_3_cat,
+			_ranks_4_cat, _ranks_5_cat, _ranks_6_cat, _ranks_7_cat,
+			_ranks_8_cat;
+
+		int _rankwidth;
 		#endregion Fields
 
 
@@ -47,7 +54,13 @@ namespace MapView
 		internal SpawnInfo(MapFile file)
 		{
 			InitializeComponent();
-			_clientheight = gb_Info.Height + gb_Tileset.Height;
+
+			if (_x != Int32.MinValue)
+			{
+				StartPosition = FormStartPosition.Manual;
+				Left = _x;
+				Top  = _y;
+			}
 
 			Initialize(file);
 		}
@@ -64,7 +77,12 @@ namespace MapView
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
+			{
 				RouteView.SpawnInfo = null;
+
+				_x = Math.Max(0, Left);
+				_y = Math.Max(0, Top);
+			}
 
 			base.OnFormClosed(e);
 		}
@@ -94,6 +112,8 @@ namespace MapView
 		{
 			_file = file;
 
+			SuspendLayout();
+
 			object[] pters;
 			if (_file.Descriptor.GroupType == GroupType.Tftd)
 				pters = RouteNodes.RankTftd;
@@ -110,14 +130,59 @@ namespace MapView
 			lbl_tsRanks7.Text = pters[7].ToString();
 			lbl_tsRanks8.Text = pters[8].ToString();
 
-			InitRanks();
-			InitRanksCategory();
+			if (_file.Descriptor.GroupType == GroupType.Tftd)
+			{
+				if (_rankwidthTftd == Int32.MinValue)
+					LongestRanktext(GroupType.Tftd);
 
-			lbl_Tileset .Text = _file.Descriptor.Label;
-			lbl_Group   .Text = _group;
-			lbl_Category.Text = _category;
+				_rankwidth = _rankwidthTftd;
+			}
+			else
+			{
+				if (_rankwidthUfo == Int32.MinValue)
+					LongestRanktext(GroupType.Ufo);
+
+				_rankwidth = _rankwidthUfo;
+			}
+
+			ResetTallies();
+
+			InitTilesetRanks();
+			InitCategoryRanks();
+
+			lbl_Tileset.Text = _file.Descriptor.Label;
 
 			LayoutRoutesInfo();
+		}
+
+		/// <summary>
+		/// Caches the longest ranktext width for either Ufo-ranks or
+		/// Tftd-ranks.
+		/// </summary>
+		/// <param name="group"></param>
+		private void LongestRanktext(GroupType @group)
+		{
+			int width = TextRenderer.MeasureText(lbl_tsRanks0.Text, Font).Width;
+
+			int widthtest = TextRenderer.MeasureText(lbl_tsRanks1.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks2.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks3.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks4.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks5.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks6.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks7.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+			widthtest = TextRenderer.MeasureText(lbl_tsRanks8.Text, Font).Width;
+			if (widthtest > width) width = widthtest;
+
+			if (@group == GroupType.Tftd) _rankwidthTftd = width;
+			else                          _rankwidthUfo  = width;
 		}
 
 		/// <summary>
@@ -125,10 +190,12 @@ namespace MapView
 		/// </summary>
 		private void ResetTallies()
 		{
-			_ranks_0     = _ranks_1     = _ranks_2     = _ranks_3     =
-			_ranks_4     = _ranks_5     = _ranks_6     = _ranks_7     = _ranks_8     =
+			_ranks_0 = _ranks_1 = _ranks_2 = _ranks_3 =
+			_ranks_4 = _ranks_5 = _ranks_6 = _ranks_7 =
+			_ranks_8 =
 			_ranks_0_cat = _ranks_1_cat = _ranks_2_cat = _ranks_3_cat =
-			_ranks_4_cat = _ranks_5_cat = _ranks_6_cat = _ranks_7_cat = _ranks_8_cat =
+			_ranks_4_cat = _ranks_5_cat = _ranks_6_cat = _ranks_7_cat =
+			_ranks_8_cat =
 
 			_nodes    =
 			_nodescat = 0;
@@ -138,10 +205,8 @@ namespace MapView
 		/// Initializes the <c><see cref="NodeRankUfo">NodeRank*s</see></c> for
 		/// the Tileset.
 		/// </summary>
-		private void InitRanks()
+		private void InitTilesetRanks()
 		{
-			ResetTallies();
-
 			foreach (RouteNode node in _file.Routes)
 			{
 				if (node.Spawn != SpawnWeight.None)
@@ -181,7 +246,7 @@ namespace MapView
 		/// the Category in
 		/// <c><see cref="TileGroup">TileGroup</see>.Categories</c>.
 		/// </summary>
-		private void InitRanksCategory()
+		private void InitCategoryRanks()
 		{
 			KeyValuePair<string, Dictionary<string, Descriptor>> category = GetCategory();
 			if (!category.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
@@ -239,8 +304,7 @@ namespace MapView
 		/// <summary>
 		/// Gets the current <c><see cref="_file">_file's</see></c> Category in
 		/// <c><see cref="TileGroup"></see>.Categories</c> and sets the current
-		/// <c><see cref="_group"/></c> and <c><see cref="_category"/></c>
-		/// strings.
+		/// Group and Category strings.
 		/// </summary>
 		/// <returns></returns>
 		private KeyValuePair<string, Dictionary<string, Descriptor>> GetCategory()
@@ -259,8 +323,8 @@ namespace MapView
 					{
 						if (descriptor.Value == _file.Descriptor)
 						{
-							_group = @group.Key;
-							_category = category.Key;
+							lbl_Group   .Text = @group.Key;
+							lbl_Category.Text = category.Key;
 
 							return category;
 						}
@@ -270,20 +334,40 @@ namespace MapView
 			return new KeyValuePair<string, Dictionary<string, Descriptor>>();
 		}
 
+
+		/// <summary>
+		/// Right padding for texts.
+		/// </summary>
+		const int PAD = 3;
+
 		/// <summary>
 		/// Lays out this <c>SpawnInfo</c> dialog.
 		/// </summary>
 		private void LayoutRoutesInfo()
 		{
+			MinimumSize = new Size(0,0); // jic
+
+			lbl_tsTilesetTotals.Anchor =
+			lbl_tsRanks0_out.Anchor = lbl_tsRanks1_out.Anchor = lbl_tsRanks2_out.Anchor = lbl_tsRanks3_out.Anchor = 
+			lbl_tsRanks4_out.Anchor = lbl_tsRanks5_out.Anchor = lbl_tsRanks6_out.Anchor = lbl_tsRanks7_out.Anchor =
+			lbl_tsRanks8_out.Anchor = lbl_TotalTileset.Anchor =
+
+			lbl_tsCategoryTotals.Anchor =
+			lbl_tsRanks0_outcat.Anchor = lbl_tsRanks1_outcat.Anchor = lbl_tsRanks2_outcat.Anchor = lbl_tsRanks3_outcat.Anchor = 
+			lbl_tsRanks4_outcat.Anchor = lbl_tsRanks5_outcat.Anchor = lbl_tsRanks6_outcat.Anchor = lbl_tsRanks7_outcat.Anchor =
+			lbl_tsRanks8_outcat.Anchor = lbl_TotalCategory.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+
+
+			// gb_TreeInfo ->
 			int widthLeft = lbl_Tileset_.Left + lbl_Tileset_.Width;
 			lbl_Tileset.Left  = widthLeft;
-			lbl_Tileset.Width = TextRenderer.MeasureText(lbl_Tileset.Text, Font).Width + 5;
+			lbl_Tileset.Width = TextRenderer.MeasureText(lbl_Tileset.Text, Font).Width + PAD;
 
 			widthLeft += lbl_Tileset.Width;
 
 
-			int widthRighttop = TextRenderer.MeasureText(lbl_Category.Text, Font).Width + 5;
-			int widthRightbot = TextRenderer.MeasureText(lbl_Group.Text,    Font).Width + 5;
+			int widthRighttop = TextRenderer.MeasureText(lbl_Category.Text, Font).Width + PAD;
+			int widthRightbot = TextRenderer.MeasureText(lbl_Group   .Text, Font).Width + PAD;
 
 			int widthRight;
 			if (widthRighttop > widthRightbot) widthRight = widthRighttop;
@@ -292,32 +376,54 @@ namespace MapView
 			lbl_Category.Width =
 			lbl_Group   .Width = widthRight;
 
-
 			int widthTop = widthLeft + widthRight;
-			int widthBot = lbl_tsCategoryTotals.Left + lbl_tsCategoryTotals.Width + 5;
 
+
+			// gb_CountInfo ->
+			lbl_tsRanks0.Width = lbl_tsRanks1.Width = lbl_tsRanks2.Width = lbl_tsRanks3.Width =
+			lbl_tsRanks4.Width = lbl_tsRanks5.Width = lbl_tsRanks6.Width = lbl_tsRanks7.Width =
+			lbl_tsRanks8.Width = _rankwidth + PAD;
+
+			widthLeft = lbl_tsRanks0.Left + lbl_tsRanks0.Width + PAD;
+
+			lbl_tsTilesetTotals.Left =
+			lbl_tsRanks0_out.Left = lbl_tsRanks1_out.Left = lbl_tsRanks2_out.Left = lbl_tsRanks3_out.Left = 
+			lbl_tsRanks4_out.Left = lbl_tsRanks5_out.Left = lbl_tsRanks6_out.Left = lbl_tsRanks7_out.Left =
+			lbl_tsRanks8_out.Left = lbl_TotalTileset.Left = widthLeft;
+
+			lbl_tsCategoryTotals.Left =
+			lbl_tsRanks0_outcat.Left = lbl_tsRanks1_outcat.Left = lbl_tsRanks2_outcat.Left = lbl_tsRanks3_outcat.Left = 
+			lbl_tsRanks4_outcat.Left = lbl_tsRanks5_outcat.Left = lbl_tsRanks6_outcat.Left = lbl_tsRanks7_outcat.Left =
+			lbl_tsRanks8_outcat.Left = lbl_TotalCategory.Left = widthLeft + lbl_tsTilesetTotals.Width;
+
+			int widthBot = lbl_tsCategoryTotals.Left + lbl_tsCategoryTotals.Width + 2;
+
+
+			// total width ->
 			int width;
 			if (widthTop > widthBot) width = widthTop;
 			else                     width = widthBot;
 
-			if (_clientwidth == -1)
-				_clientwidth = width + 10;
-			else
-				_clientwidth = Math.Max(width + 10, ClientSize.Width);
-
-			ClientSize = new Size(
-								_clientwidth,
-								Math.Max(_clientheight, ClientSize.Height));
+			ClientSize = new Size(width, ClientSize.Height);
 
 			lbl_Category.Left =
-			lbl_Group   .Left = gb_Info.Width - widthRight - 5;
+			lbl_Group   .Left = gb_TreeInfo.Width - widthRight - PAD;
+
+			MinimumSize = new Size(Width, Height);
 
 
-			int border   = Width  - ClientSize.Width;
-			int titlebar = Height - ClientSize.Height - border;
-			MinimumSize = new Size(
-								 width        + border + 10,
-								_clientheight + border + titlebar);
+			ResumeLayout();
+
+			// after ResumeLayout() ->
+			lbl_tsTilesetTotals.Anchor =
+			lbl_tsRanks0_out.Anchor = lbl_tsRanks1_out.Anchor = lbl_tsRanks2_out.Anchor = lbl_tsRanks3_out.Anchor = 
+			lbl_tsRanks4_out.Anchor = lbl_tsRanks5_out.Anchor = lbl_tsRanks6_out.Anchor = lbl_tsRanks7_out.Anchor =
+			lbl_tsRanks8_out.Anchor = lbl_TotalTileset.Anchor =
+
+			lbl_tsCategoryTotals.Anchor =
+			lbl_tsRanks0_outcat.Anchor = lbl_tsRanks1_outcat.Anchor = lbl_tsRanks2_outcat.Anchor = lbl_tsRanks3_outcat.Anchor = 
+			lbl_tsRanks4_outcat.Anchor = lbl_tsRanks5_outcat.Anchor = lbl_tsRanks6_outcat.Anchor = lbl_tsRanks7_outcat.Anchor =
+			lbl_tsRanks8_outcat.Anchor = lbl_TotalCategory.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 		}
 
 
@@ -340,14 +446,14 @@ namespace MapView
 		/// <summary>
 		/// Increments or decrements total values as applicable.
 		/// </summary>
-		/// <param name="weightPre"></param>
-		/// <param name="weightPos"></param>
+		/// <param name="pre"></param>
+		/// <param name="pos"></param>
 		/// <param name="rank"></param>
-		internal void ChangedSpawnweight(SpawnWeight weightPre, SpawnWeight weightPos, byte rank)
+		internal void ChangedSpawnweight(SpawnWeight pre, SpawnWeight pos, byte rank)
 		{
-			if (weightPre == SpawnWeight.None)
+			if (pre == SpawnWeight.None)
 			{
-				if (weightPos != SpawnWeight.None)
+				if (pos != SpawnWeight.None)
 				{
 					lbl_TotalTileset .Text = (++_nodes)   .ToString();
 					lbl_TotalCategory.Text = (++_nodescat).ToString();
@@ -355,7 +461,7 @@ namespace MapView
 					UpdateNoderank(Byte.MaxValue, rank);
 				}
 			}
-			else if (weightPos == SpawnWeight.None)
+			else if (pos == SpawnWeight.None)
 			{
 				lbl_TotalTileset .Text = (--_nodes)   .ToString();
 				lbl_TotalCategory.Text = (--_nodescat).ToString();
@@ -368,13 +474,11 @@ namespace MapView
 		/// Updates texts when <c><see cref="NodeRankUfo">NodeRank*</see></c>
 		/// gets changed.
 		/// </summary>
-		/// <param name="rankPre"></param>
-		/// <param name="rankPos"></param>
-		/// <remarks>Check that node is
-		/// <c><see cref="SpawnWeight"></see>.None</c> before call.</remarks>
-		internal void UpdateNoderank(byte rankPre, byte rankPos)
+		/// <param name="pre">previous rank</param>
+		/// <param name="pos">current rank</param>
+		internal void UpdateNoderank(byte pre, byte pos)
 		{
-			switch (rankPre)
+			switch (pre)
 			{
 				case 0:
 					lbl_tsRanks0_out   .Text = (--_ranks_0)    .ToString();
@@ -414,7 +518,7 @@ namespace MapView
 					break;
 			}
 
-			switch (rankPos)
+			switch (pos)
 			{
 				case 0:
 					lbl_tsRanks0_out   .Text = (++_ranks_0)    .ToString();
