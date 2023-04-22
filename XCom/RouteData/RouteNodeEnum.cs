@@ -62,11 +62,11 @@ namespace XCom
 		CivScout,			// 0
 		XCOM,				// 1
 		Soldier,			// 2
-		Navigator,			// 3
-		LeaderCommander,	// 4
-		Engineer,			// 5
+		Navigator,			// 3 vs SquadLeader
+		LeaderCommander,	// 4 vs Navigator/Commander
+		Engineer,			// 5 vs Medic
 		Misc1,				// 6
-		Medic,				// 7
+		Medic,				// 7 vs Technician
 		Misc2,				// 8
 		invalid				// 9 - WORKAROUND.
 	};
@@ -78,11 +78,11 @@ namespace XCom
 		CivScout,			// 0
 		XCOM,				// 1
 		Soldier,			// 2
-		SquadLeader,		// 3
-		LeaderCommander,	// 4
-		Medic,				// 5
+		SquadLeader,		// 3 vs Navigator
+		NavigatorCommander,	// 4 vs Leader/Commander
+		Medic,				// 5 vs Engineer
 		Misc1,				// 6
-		Technician,			// 7
+		Technician,			// 7 vs Medic
 		Misc2,				// 8
 		invalid				// 9 - WORKAROUND.
 	};

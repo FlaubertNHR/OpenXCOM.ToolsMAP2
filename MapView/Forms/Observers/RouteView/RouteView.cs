@@ -276,7 +276,7 @@ namespace MapView.Forms.Observers
 					tsmi_Noderank1.Text = "highlight " + RouteNodes.xcom;
 					tsmi_Noderank2.Text = "highlight " + RouteNodes.soldier;
 					tsmi_Noderank3.Text = "highlight " + RouteNodes.squadldr;
-					tsmi_Noderank4.Text = "highlight " + RouteNodes.lc;
+					tsmi_Noderank4.Text = "highlight " + RouteNodes.nc;
 					tsmi_Noderank5.Text = "highlight " + RouteNodes.medicTftD;
 					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
 					tsmi_Noderank7.Text = "highlight " + RouteNodes.techie;
@@ -286,7 +286,7 @@ namespace MapView.Forms.Observers
 					la_ColorRank1.Text = RouteNodes.xcom;
 					la_ColorRank2.Text = RouteNodes.soldier;
 					la_ColorRank3.Text = RouteNodes.squadldr;
-					la_ColorRank4.Text = RouteNodes.lc;
+					la_ColorRank4.Text = RouteNodes.nc;
 					la_ColorRank5.Text = RouteNodes.medicTftD;
 					la_ColorRank6.Text = RouteNodes.ter1;
 					la_ColorRank7.Text = RouteNodes.techie;
