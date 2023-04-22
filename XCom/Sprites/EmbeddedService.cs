@@ -19,14 +19,14 @@ namespace XCom
 		public static Spriteset CreateMonotoneSpriteset(string label)
 		{
 			var ass = Assembly.GetExecutingAssembly();
-			using (var strPck = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE" + GlobalsXC.PckExt))
-			using (var strTab = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE" + GlobalsXC.TabExt))
+			using (var pck = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE" + GlobalsXC.PckExt))
+			using (var tab = ass.GetManifestResourceStream("XCom._Embedded.MONOTONE" + GlobalsXC.TabExt))
 			{
-				var bytesPck = new byte[strPck.Length];
-				var bytesTab = new byte[strTab.Length];
+				var bytesPck = new byte[pck.Length];
+				var bytesTab = new byte[tab.Length];
 
-				strPck.Read(bytesPck, 0, (int)strPck.Length);
-				strTab.Read(bytesTab, 0, (int)strTab.Length);
+				pck.Read(bytesPck, 0, (int)pck.Length);
+				tab.Read(bytesTab, 0, (int)tab.Length);
 
 				return new Spriteset( // bypass error-checking
 								label,
