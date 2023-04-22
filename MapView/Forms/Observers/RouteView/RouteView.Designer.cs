@@ -1397,7 +1397,7 @@ namespace MapView.Forms.Observers
 			this.gb_NoderankColors.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_NoderankColors.Name = "gb_NoderankColors";
 			this.gb_NoderankColors.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_NoderankColors.Size = new System.Drawing.Size(182, 202);
+			this.gb_NoderankColors.Size = new System.Drawing.Size(192, 202);
 			this.gb_NoderankColors.TabIndex = 6;
 			this.gb_NoderankColors.TabStop = false;
 			this.gb_NoderankColors.Text = " Node Rank colors ";
@@ -1409,7 +1409,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank8.Location = new System.Drawing.Point(34, 178);
 			this.la_ColorRank8.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank8.Name = "la_ColorRank8";
-			this.la_ColorRank8.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank8.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank8.TabIndex = 17;
 			this.la_ColorRank8.Text = "rank 8";
 			this.la_ColorRank8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1431,7 +1431,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank7.Location = new System.Drawing.Point(34, 158);
 			this.la_ColorRank7.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank7.Name = "la_ColorRank7";
-			this.la_ColorRank7.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank7.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank7.TabIndex = 15;
 			this.la_ColorRank7.Text = "rank 7";
 			this.la_ColorRank7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1453,7 +1453,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank6.Location = new System.Drawing.Point(34, 138);
 			this.la_ColorRank6.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank6.Name = "la_ColorRank6";
-			this.la_ColorRank6.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank6.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank6.TabIndex = 13;
 			this.la_ColorRank6.Text = "rank 6";
 			this.la_ColorRank6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1475,7 +1475,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank5.Location = new System.Drawing.Point(34, 118);
 			this.la_ColorRank5.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank5.Name = "la_ColorRank5";
-			this.la_ColorRank5.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank5.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank5.TabIndex = 11;
 			this.la_ColorRank5.Text = "rank 5";
 			this.la_ColorRank5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1497,7 +1497,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank4.Location = new System.Drawing.Point(34, 98);
 			this.la_ColorRank4.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank4.Name = "la_ColorRank4";
-			this.la_ColorRank4.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank4.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank4.TabIndex = 9;
 			this.la_ColorRank4.Text = "rank 4";
 			this.la_ColorRank4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1519,7 +1519,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank3.Location = new System.Drawing.Point(34, 78);
 			this.la_ColorRank3.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank3.Name = "la_ColorRank3";
-			this.la_ColorRank3.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank3.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank3.TabIndex = 7;
 			this.la_ColorRank3.Text = "rank 3";
 			this.la_ColorRank3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1541,7 +1541,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank2.Location = new System.Drawing.Point(34, 58);
 			this.la_ColorRank2.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank2.Name = "la_ColorRank2";
-			this.la_ColorRank2.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank2.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank2.TabIndex = 5;
 			this.la_ColorRank2.Text = "rank 2";
 			this.la_ColorRank2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1563,7 +1563,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank1.Location = new System.Drawing.Point(34, 38);
 			this.la_ColorRank1.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank1.Name = "la_ColorRank1";
-			this.la_ColorRank1.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank1.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank1.TabIndex = 3;
 			this.la_ColorRank1.Text = "rank 1";
 			this.la_ColorRank1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1585,7 +1585,7 @@ namespace MapView.Forms.Observers
 			this.la_ColorRank0.Location = new System.Drawing.Point(34, 18);
 			this.la_ColorRank0.Margin = new System.Windows.Forms.Padding(0);
 			this.la_ColorRank0.Name = "la_ColorRank0";
-			this.la_ColorRank0.Size = new System.Drawing.Size(142, 15);
+			this.la_ColorRank0.Size = new System.Drawing.Size(153, 15);
 			this.la_ColorRank0.TabIndex = 1;
 			this.la_ColorRank0.Text = "rank 0";
 			this.la_ColorRank0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
