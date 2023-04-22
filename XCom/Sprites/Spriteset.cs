@@ -254,14 +254,14 @@ namespace XCom
 		/// UFO-sprites or
 		/// <c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c> for
 		/// TFTD-sprites)</param>
-		/// <param name="tabwordLength"><c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>
-		/// for terrains/bigobs/ufo-units,
-		/// <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
-		/// for tftd-units</param>
 		/// <param name="bytesPck">byte array of the Pckfile</param>
 		/// <param name="bytesTab">byte array of the Tabfile</param>
 		/// <param name="spritewidth"></param>
 		/// <param name="spriteheight"></param>
+		/// <param name="tabwordLength"><c><see cref="SpritesetManager.TAB_WORD_LENGTH_2">SpritesetManager.TAB_WORD_LENGTH_2</see></c>
+		/// for terrains/bigobs/ufo-units,
+		/// <c><see cref="SpritesetManager.TAB_WORD_LENGTH_4">SpritesetManager.TAB_WORD_LENGTH_4</see></c>
+		/// for tftd-units</param>
 		/// <param name="createToned"><c>true</c> to create
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
 		/// sprites for MapView</param>
@@ -273,7 +273,7 @@ namespace XCom
 		/// <list type="number">
 		/// <item><c>MapView.MainViewF()</c>
 		/// 
-		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c>
+		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset()">EmbeddedService.CreateMonotoneSpriteset()</see></c>
 		/// partype icons</item>
 		/// <item><c>MapView.MainViewF()</c>
 		/// 
@@ -304,7 +304,7 @@ namespace XCom
 		/// 
 		/// > <c>Tilepart.CreateCrippledSprites()</c>
 		/// 
-		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset(string)">EmbeddedService.CreateMonotoneSpriteset(string)</see></c>
+		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset()">EmbeddedService.CreateMonotoneSpriteset()</see></c>
 		/// crippled sprites</item>
 		/// <item><c>PckView.PckViewF.LoadSpriteset(string, bool)</c></item>
 		/// <item><c>McdView.McdViewF.OnClick_Create()</c></item>
@@ -327,13 +327,7 @@ namespace XCom
 			//Logfile.Log(". bytesTab.Length= " + bytesTab.Length);
 			//Logfile.Log(". tabwordLength= " + tabwordLength);
 
-			switch (SpritesetManager.GetCursor())
-			{
-				case SpritesetManager.CURSOR_non:  Label = label;          break;
-				case SpritesetManager.CURSOR_UFO:  Label = "TargeterUfo";  break;
-				case SpritesetManager.CURSOR_TFTD: Label = "TargeterTftd"; break;
-			}
-
+			Label = label;
 			Pal = pal;
 
 			SpriteWidth  = spritewidth;

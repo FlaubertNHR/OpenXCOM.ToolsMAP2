@@ -312,8 +312,7 @@ namespace MapView
 				using (var f = new ConfigurationForm())
 					f.ShowDialog(this);
 			}
-//			else
-//				Logfile.Log("Resources and Tilesets files exist.");
+//			else Logfile.Log("Resources and Tilesets files exist.");
 
 
 			// Exit app if either MapResources.yml or MapTilesets.yml doesn't exist
@@ -341,8 +340,7 @@ namespace MapView
 //				else
 //					Logfile.Log("Viewers file could not be created.");
 			}
-//			else
-//				Logfile.Log("Viewers file exists.");
+//			else Logfile.Log("Viewers file exists.");
 
 
 
@@ -514,12 +512,13 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryUfo))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				SpritesetManager.SetCursor(SpritesetManager.CURSOR_UFO); // for spriteset Label
+				SpritesetManager.SetCursorType(SpritesetManager.CURSOR_UFO); // for spriteset Label
 				CuboidSprite.Ufoset = SpritesetManager.CreateSpriteset(
 																	PathInfo.CursorFile,
 																	dir,
 																	Palette.UfoBattle);
-				SpritesetManager.SetCursor(SpritesetManager.CURSOR_non);
+				SpritesetManager.SetCursorType(SpritesetManager.CURSOR_non);
+
 				if (CuboidSprite.Ufoset != null)
 				{
 					if (CuboidSprite.Ufoset.Failr != Spriteset.Fail.non)
@@ -527,8 +526,7 @@ namespace MapView
 						CuboidSprite.Ufoset = null;
 						//Logfile.Log("UFO Cursor failed to load.");
 					}
-//					else
-//						Logfile.Log("UFO Cursor loaded.");
+//					else Logfile.Log("UFO Cursor loaded.");
 				}
 			}
 //			else
@@ -537,12 +535,13 @@ namespace MapView
 			if (!String.IsNullOrEmpty(dir = SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd))
 				&& Directory.Exists(Path.Combine(dir, GlobalsXC.UfographDir)))
 			{
-				SpritesetManager.SetCursor(SpritesetManager.CURSOR_TFTD); // for spriteset Label
+				SpritesetManager.SetCursorType(SpritesetManager.CURSOR_TFTD); // for spriteset Label
 				CuboidSprite.Tftdset = SpritesetManager.CreateSpriteset(
 																	PathInfo.CursorFile,
 																	dir,
 																	Palette.TftdBattle);
-				SpritesetManager.SetCursor(SpritesetManager.CURSOR_non);
+				SpritesetManager.SetCursorType(SpritesetManager.CURSOR_non);
+
 				if (CuboidSprite.Tftdset != null)
 				{
 					if (CuboidSprite.Tftdset.Failr != Spriteset.Fail.non)
@@ -550,12 +549,10 @@ namespace MapView
 						CuboidSprite.Tftdset = null;
 						//Logfile.Log("TFTD Cursor failed to load.");
 					}
-//					else
-//						Logfile.Log("TFTD Cursor loaded.");
+//					else Logfile.Log("TFTD Cursor loaded.");
 				}
 			}
-//			else
-//				Logfile.Log("TFTD Cursor directory not found.");
+//			else Logfile.Log("TFTD Cursor directory not found.");
 
 
 			// NOTE: ScanG's are conditional loads iff File exists.
@@ -566,8 +563,7 @@ namespace MapView
 //			{
 //				Logfile.Log("ScanG UFO loaded.");
 //			}
-//			else
-//				Logfile.Log("ScanG UFO not found.");
+//			else Logfile.Log("ScanG UFO not found.");
 
 			if (piScanGtftd != null && piScanGtftd.FileExists())
 				SpritesetManager.LoadScanGtftd(SharedSpace.GetShareString(SharedSpace.ResourceDirectoryTftd));
@@ -576,8 +572,7 @@ namespace MapView
 //			{
 //				Logfile.Log("ScanG TFTD loaded.");
 //			}
-//			else
-//				Logfile.Log("ScanG TFTD not found.");
+//			else Logfile.Log("ScanG TFTD not found.");
 
 
 			TileGroupManager.LoadTileGroups(piTilesets.Fullpath); // load resources from YAML.
@@ -588,12 +583,12 @@ namespace MapView
 			{
 				OptionsManager.LoadUserOptions(piOptions.Fullpath);
 //				if (OptionsManager.LoadUserOptions(piOptions.Fullpath))
+//				{
 //					Logfile.Log("User options loaded.");
-//				else
-//					Logfile.Log("User options could not be opened.");
+//				}
+//				else Logfile.Log("User options could not be opened.");
 			}
-//			else
-//				Logfile.Log("User options NOT loaded - no options file to load.");
+//			else Logfile.Log("User options NOT loaded - no options file to load.");
 
 
 			if (CuboidSprite.Cursorset == null && !CuboidSprite.SetCursor()) // exit app if a cuboid-targeter is not instantiated

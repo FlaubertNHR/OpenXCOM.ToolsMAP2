@@ -52,14 +52,10 @@ namespace XCom
 		public const int CURSOR_UFO  = 1;
 		public const int CURSOR_TFTD = 2;
 
-		private static int _isCursor;
-		public static void SetCursor(int cursor)
+		private static int _cursor;
+		public static void SetCursorType(int cursor)
 		{
-			_isCursor = cursor;
-		}
-		internal static int GetCursor()
-		{
-			return _isCursor;
+			_cursor = cursor;
 		}
 		#endregion Fields (static)
 
@@ -179,6 +175,12 @@ namespace XCom
 						}
 						else
 						{
+							switch (_cursor)
+							{
+								case CURSOR_UFO:  label = "TargeterUfo";  break;
+								case CURSOR_TFTD: label = "TargeterTftd"; break;
+							}
+
 							var spriteset = new Spriteset(
 														label,
 														pal,
