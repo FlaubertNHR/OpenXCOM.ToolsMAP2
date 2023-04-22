@@ -326,8 +326,7 @@ namespace XCom
 		/// deep-cloned <c><see cref="Record"/></c> for McdView. But any
 		/// referred to sprites and dead/altr <c>Tileparts</c> keep pointers to
 		/// their current objects.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// - classvars
 		/// <list type="bullet">
 		/// <item><c><see cref="Record"/></c>   (ptr)</item>
@@ -378,19 +377,16 @@ namespace XCom
 		/// <c><see cref="CrippledSprites"/></c> (based on its quadslot) but to
 		/// transfer the old <c><see cref="SetId"/></c> to the new
 		/// <c><see cref="Tilepart"/></c>.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// This allows the user to invoke <c>MapView.TilepartSubstitution</c>
 		/// to shift ids that are above the currently displayable/valid range
 		/// down into acceptable values. It's useful only when records have been
 		/// removed from <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>
 		/// but there are still records with ids that are higher than any of the
 		/// (previously/externally) removed ids.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// See <c><see cref="MapFile"/>.CreateTile().</c>
-		/// 
-		/// 
+		/// <br/><br/>
 		/// <c><see cref="McdRecord"/></c> contains the MCD-entries in case you
 		/// haven't figured that.
 		/// </summary>
