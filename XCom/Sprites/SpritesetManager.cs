@@ -103,20 +103,20 @@ namespace XCom
 		/// go in <c><see cref="Descriptor"/></c> except the XCOM cursor-sprites
 		/// load w/out a <c>Descriptor</c>. As do the monotone-sprites -
 		/// although that's done differently in
-		/// <c>MainViewF.LoadMonotoneSprites()</c>.
+		/// <c><see cref="EmbeddedService.CreateMonotoneSpriteset()">EmbeddedService.CreateMonotoneSpriteset()</see></c>.
 		/// </summary>
 		/// <param name="label">the filelabel(s) w/out extension</param>
 		/// <param name="dir">path to the directory of the <c>PCK+TAB</c> files</param>
 		/// <param name="pal">a freakin <c><see cref="Palette"/></c></param>
 		/// <param name="createToned"><c>true</c> to create
-		/// <param name="spritewidth"></param>
-		/// <param name="spriteheight"></param>
 		/// <c><see cref="PckSprite.SpriteToned">PckSprite.SpriteToned</see></c>
 		/// sprites for MapView - <c>false</c> to not screw with
 		/// <c><see cref="Spritesets"/></c> when McdView is invoked by
 		/// <c>TileView.OnMcdViewClick()</c>. Also <c>true</c> if the sprites
 		/// should be tallied for recognition in <c>MapView.MapInfoDialog</c> -
 		/// which is only for terrain-sprites in the currently loaded terrainset</param>
+		/// <param name="spritewidth"></param>
+		/// <param name="spriteheight"></param>
 		/// <returns>a <c>Spriteset</c> containing all the sprites, or
 		/// <c>null</c> if
 		/// <c><see cref="Spriteset.Failr">Spriteset.Failr</see></c> gets set to

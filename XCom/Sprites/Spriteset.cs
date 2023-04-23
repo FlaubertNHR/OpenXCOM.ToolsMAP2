@@ -17,8 +17,7 @@ namespace XCom
 	/// <c>Spritesets</c>. MapView and McdView use ScanG and LoFT icons in
 	/// nonjagged 2d-arrays of color-indices which are used to instantiate and
 	/// draw <c>Bitmaps</c> on-the-fly.
-	/// 
-	/// 
+	/// <br/><br/>
 	/// This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public sealed class Spriteset
 	{
