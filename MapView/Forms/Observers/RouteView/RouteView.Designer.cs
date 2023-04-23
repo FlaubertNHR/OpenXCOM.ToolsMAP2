@@ -61,6 +61,11 @@ namespace MapView.Forms.Observers
 
 		private ToolStripButton tsb_x2;
 
+		private ToolStripSeparator tss_7;
+
+		private ToolStripLabel tsl_Goto;
+		private ToolStripTextBox tstb_Goto;
+
 		private ToolStripButton tsb_Options;
 
 		private Panel pa_DataFields;
@@ -207,6 +212,9 @@ namespace MapView.Forms.Observers
 			this.tsb_connect2 = new System.Windows.Forms.ToolStripButton();
 			this.tss_4 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsb_x2 = new System.Windows.Forms.ToolStripButton();
+			this.tss_7 = new System.Windows.Forms.ToolStripSeparator();
+			this.tsl_Goto = new System.Windows.Forms.ToolStripLabel();
+			this.tstb_Goto = new System.Windows.Forms.ToolStripTextBox();
 			this._pnlRoutes = new DSShared.Controls.CompositedPanel();
 			this.pa_DataFields = new System.Windows.Forms.Panel();
 			this.pa_DataFieldsLeft = new System.Windows.Forms.Panel();
@@ -294,6 +302,7 @@ namespace MapView.Forms.Observers
 			// ts_Main
 			// 
 			this.ts_Main.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ts_Main.GripMargin = new System.Windows.Forms.Padding(0);
 			this.ts_Main.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.ts_Main.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 			this.tsddb_File,
@@ -306,7 +315,10 @@ namespace MapView.Forms.Observers
 			this.tsb_connect1,
 			this.tsb_connect2,
 			this.tss_4,
-			this.tsb_x2});
+			this.tsb_x2,
+			this.tss_7,
+			this.tsl_Goto,
+			this.tstb_Goto});
 			this.ts_Main.Location = new System.Drawing.Point(0, 0);
 			this.ts_Main.Name = "ts_Main";
 			this.ts_Main.Size = new System.Drawing.Size(800, 25);
@@ -670,6 +682,27 @@ namespace MapView.Forms.Observers
 			this.tsb_x2.Text = "x2";
 			this.tsb_x2.ToolTipText = "[Ctrl]+LMB - center on cursor";
 			this.tsb_x2.Click += new System.EventHandler(this.OnScaleClick);
+			// 
+			// tss_7
+			// 
+			this.tss_7.Name = "tss_7";
+			this.tss_7.Size = new System.Drawing.Size(6, 25);
+			// 
+			// tsl_Goto
+			// 
+			this.tsl_Goto.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
+			this.tsl_Goto.Name = "tsl_Goto";
+			this.tsl_Goto.Size = new System.Drawing.Size(30, 22);
+			this.tsl_Goto.Text = "goto";
+			// 
+			// tstb_Goto
+			// 
+			this.tstb_Goto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tstb_Goto.Font = new System.Drawing.Font("Consolas", 7.5F);
+			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(2, 4, 1, 2);
+			this.tstb_Goto.Name = "tstb_Goto";
+			this.tstb_Goto.Size = new System.Drawing.Size(45, 19);
+			this.tstb_Goto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_Goto);
 			// 
 			// _pnlRoutes
 			// 

@@ -75,7 +75,8 @@ namespace MapView.Forms.Observers
 		private bool _loadingInfo;
 
 		/// <summary>
-		/// Used by <see cref="UpdateNodeInformation"/>.
+		/// Used by
+		/// <c><see cref="UpdateNodeInformation()">UpdateNodeInformation()</see></c>.
 		/// </summary>
 		private readonly List<object> _linksList = new List<object>(); // List req'd.
 
@@ -202,6 +203,8 @@ namespace MapView.Forms.Observers
 		{
 			InitializeComponent();
 
+			tstb_Goto.BackColor = Color.GhostWhite;
+
 			_copynodedata.unittype = -1; // '_copynodedata' has not been filled w/ valid node data.
 
 			RouteControl = new RouteControl();
@@ -215,7 +218,7 @@ namespace MapView.Forms.Observers
 			// node data ->
 			var unitTypes = new object[]
 			{
-				UnitType.Any,
+				UnitType.Any, // note: these are not in order ->
 				UnitType.Small,
 				UnitType.Large,
 				UnitType.FlyingSmall,
@@ -1492,26 +1495,7 @@ namespace MapView.Forms.Observers
 			byte dest = NodeSelected[slot].Destination;
 			RouteNode node = _file.Routes[dest];
 
-			if (RouteCheckService.OutsideBounds(node, _file))
-			{
-				RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
-										MainViewF.Optionables.Base1_xy,
-										MainViewF.Optionables.Base1_z);
-
-				if (RouteCheckService.dialog_InvalidDestination(_file, node) == DialogResult.Yes)
-				{
-					RoutesChangedCoordinator = true;
-
-					if (SpawnInfo != null)
-						SpawnInfo.DeleteNode(node);
-
-					_file.Routes.DeleteNode(node);
-
-					UpdateNodeInfo();
-					// TODO: May need _pnlRoutes.Refresh()
-				}
-			}
-			else
+			if (isInsideBounds(node)) // offers to delete the node if Oob
 			{
 				if (_ogIds.Count == 0 || _ogIds.Peek() != NodeSelected.Id)
 					_ogIds.Push(NodeSelected.Id);
@@ -1709,8 +1693,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		/// <remarks>Navigation keys are handled by 'KeyPreview' at the form
-		/// level.</remarks>
+		/// <remarks>Navigation keys are handled by <c>KeyPreview</c> at the
+		/// <c>Form</c> level.</remarks>
 		private void OnRouteControlKeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -1997,6 +1981,72 @@ namespace MapView.Forms.Observers
 		private void OnScaleClick(object sender, EventArgs e)
 		{
 			RouteControl.doScaleResize((sender as ToolStripButton).Checked, true);
+		}
+
+
+		/// <summary>
+		/// Handles <c>[Enter]</c> to select a node via
+		/// <c><see cref="tstb_Goto"/></c>.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnKeyDown_Goto(object sender, KeyEventArgs e)
+		{
+			if (e.KeyData == Keys.Enter)
+			{
+				e.SuppressKeyPress = true;
+
+				int nodeid; RouteNode node;
+				if (Int32.TryParse(tstb_Goto.Text, out nodeid)
+					&& (node = _file.Routes[nodeid]) != null)
+				{
+					if (isInsideBounds(node)) // offers to delete the node if Oob
+						SelectNode(nodeid);
+				}
+				else
+				{
+					using (var ib = new Infobox(
+											"error",
+											"Invalid node ID",
+											null,
+											InfoboxType.Error))
+					{
+						ib.ShowDialog();
+					}
+				}
+
+//				RouteControl.Select(); // keep the textbox focused.
+			}
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns><c>true</c> if node is inside bounds of the Map</returns>
+		private bool isInsideBounds(RouteNode node)
+		{
+			if (RouteCheckService.OutsideBounds(node, _file)) // cf. OnLinkGoClick()
+			{
+				RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
+										MainViewF.Optionables.Base1_xy,
+										MainViewF.Optionables.Base1_z);
+
+				if (RouteCheckService.dialog_InvalidDestination(_file, node) == DialogResult.Yes)
+				{
+					RoutesChangedCoordinator = true;
+
+					if (SpawnInfo != null)
+						SpawnInfo.DeleteNode(node);
+
+					_file.Routes.DeleteNode(node);
+
+					UpdateNodeInfo();
+					// TODO: May need _pnlRoutes.Refresh()
+				}
+				return false;
+			}
+			return true;
 		}
 
 
@@ -2986,10 +3036,11 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handler for menuitem that checks if any node's rank is beyond the
 		/// array of the combobox. See also RouteNodes..cTor.
-		/// TODO: Consolidate these checks to RouteCheckService.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>TODO: Consolidate these checks to
+		/// <c><see cref="RouteCheckService"/></c>.</remarks>
 		private void OnTestNoderanksClick(object sender, EventArgs e)
 		{
 			var invalids = new List<byte>();
