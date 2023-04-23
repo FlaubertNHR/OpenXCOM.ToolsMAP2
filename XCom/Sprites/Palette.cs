@@ -76,7 +76,7 @@ namespace XCom
 
 		private const string binary       = "binary";
 
-		private const string PalExt = ".pal";
+		private const string PalExt       = ".pal";
 
 		/// <summary>
 		/// The suffix for the (key)label of the grayscaled version of this
@@ -455,22 +455,18 @@ namespace XCom
 		/// <summary>
 		/// Enables or disables transparency on the <c><see cref="Tid"/></c>
 		/// palette-index.
-		/// TODO: It would perhaps be worthwhile to create a separate
-		/// <c>Palette</c> for ufo-battle and tftd-battle that has id #0
-		/// transparent.
 		/// </summary>
 		/// <param name="transparent"><c>true</c> to enable transparency</param>
+		/// <remarks>TODO: It would perhaps be worthwhile to create a separate
+		/// <c>Palette</c> for ufo-battle and tftd-battle that has id #0
+		/// transparent.</remarks>
 		public void SetTransparent(bool transparent)
 		{
 			if (transparent != _isTransparent)
 			{
-				_isTransparent = transparent;
-
-				int alpha;
-				if (transparent) alpha =   0;
-				else             alpha = 255;
-
-				Table.Entries[Tid] = Color.FromArgb(alpha, Table.Entries[Tid]);
+				Table.Entries[Tid] = Color.FromArgb(
+												((_isTransparent = transparent) ? 0 : 255),
+												Table.Entries[Tid]);
 			}
 		}
 		#endregion Methods
