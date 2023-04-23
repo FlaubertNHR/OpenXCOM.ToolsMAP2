@@ -102,7 +102,7 @@ namespace XCom
 				Palette pal,
 				int id,
 				Spriteset spriteset,
-				bool createToned = false)
+				bool createToned)
 		{
 			_spriteset = spriteset; // only for ToString(), 'Fail', and Duplicate().
 
