@@ -34,7 +34,7 @@ namespace XCom
 
 		#region cTor
 		/// <summary>
-		/// Creates a Link object.
+		/// Creates a <c>Link</c> object.
 		/// </summary>
 		/// <param name="id">the id of the destination-node</param>
 		/// <param name="distance">the distance to the destination-node</param>
@@ -53,7 +53,7 @@ namespace XCom
 		/// Checks if this is a node-link rather than an exit-link or a not-used
 		/// link.
 		/// </summary>
-		/// <returns>true if node-link</returns>
+		/// <returns><c>true</c> if node-link</returns>
 		public bool IsNodelink()
 		{
 			return (Destination < ExitWest);
