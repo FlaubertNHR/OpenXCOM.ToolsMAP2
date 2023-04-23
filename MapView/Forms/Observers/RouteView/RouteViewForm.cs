@@ -69,15 +69,15 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles a so-called command-key at the form level. Stops keys that
-		/// shall be used for navigating the tiles from doing anything stupid
-		/// instead.
-		/// - passes the arrow-keys to the RouteView control's panel's
-		///   Navigate() funct
+		/// Handles a so-called command-key at this <c>Form</c> level. Stops
+		/// keys that shall be used for navigating the tiles from doing anything
+		/// stupid instead.
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>
 		/// <returns></returns>
+		/// <remarks>Passes the arrow-keys to
+		/// <c><see cref="RouteControlParent.Navigate()">RouteControlParent.Navigate()</see></c>.</remarks>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
 			if (Control.RouteControl.Focused)
@@ -100,17 +100,28 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles KeyDown events at the form level.
-		/// - [Esc] focuses the panel
-		/// - opens/closes Options on [Ctrl+o] event
-		/// - checks for and if so processes a viewer F-key
-		/// - passes edit-keys to the RouteView control's panel's Navigate()
-		///   funct
-		/// @note Requires 'KeyPreview' true.
-		/// @note See also TileViewForm, TopViewForm, TopRouteViewForm
-		/// @note Edit/Save keys are handled by 'RouteView.OnRoutePanelKeyDown()'.
+		/// Handles <c>KeyDown</c> events at this <c>Form</c> level.
+		/// <list type="bullet">
+		/// <item><c>[Esc]</c> - focuses the panel</item>
+		/// <item><c>[Ctrl+o]</c> - opens/closes Options</item>
+		/// <item><c>F-key</c> - checks for and processes a viewer</item>
+		/// <item>passes non-arrow navigate-keys to
+		/// <c><see cref="RouteControlParent.Navigate()">RouteControlParent.Navigate()</see></c>
+		/// - the arrow-keys are passed to the same function by
+		/// <c><see cref="ProcessCmdKey()">ProcessCmdKey()</see></c> instead of
+		/// here ... for no special reason perhaps</item>
+		/// </list>
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires <c>KeyPreview</c> <c>true</c>.
+		/// <br/><br/>
+		/// See also <c><see cref="TileViewForm"/></c> /
+		/// <c><see cref="TopViewForm"/></c> /
+		/// <c><see cref="TopRouteViewForm"/></c>.
+		/// <br/><br/>
+		/// Edit/Save keys are handled by
+		/// <c><see cref="RouteView">RouteView</see>.OnRouteControlKeyDown()</c>.
+		/// </remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -162,9 +173,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the FormClosing event. TODO: Close subsidiary dialogs here.
+		/// Handles the <c>FormClosing</c> event.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>TODO: Close subsidiary dialogs here.</remarks>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
