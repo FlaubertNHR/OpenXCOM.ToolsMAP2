@@ -699,9 +699,9 @@ namespace MapView.Forms.Observers
 			// 
 			this.tstb_Goto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tstb_Goto.Font = new System.Drawing.Font("Consolas", 7.5F);
-			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(2, 4, 1, 2);
+			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(2, 5, 1, 1);
 			this.tstb_Goto.Name = "tstb_Goto";
-			this.tstb_Goto.Size = new System.Drawing.Size(45, 19);
+			this.tstb_Goto.Size = new System.Drawing.Size(45, 18);
 			this.tstb_Goto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_Goto);
 			// 
 			// _pnlRoutes
