@@ -57,15 +57,15 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles a so-called command-key at the form level. Stops keys that
-		/// shall be used for navigating the tiles from doing anything stupid
-		/// instead.
-		/// - passes the arrow-keys to the TileView control's current panel's
-		///   Navigate() funct
+		/// Handles a so-called command-key at this <c>Form</c> level. Stops
+		/// keys that shall be used for navigating the tiles from doing anything
+		/// stupid instead.
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>
 		/// <returns></returns>
+		/// <remarks>Passes the arrow-keys to
+		/// <c><see cref="TilePanel.Navigate()">TilePanel.Navigate()</see></c>.</remarks>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
 			TilePanel panel = Control.GetSelectedPanel();
@@ -85,19 +85,25 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles KeyDown events at the form level.
+		/// Handles <c>KeyDown</c> events at this <c>Form</c> level.
 		/// <list type="bullet">
-		/// <item>[Esc] focuses the current panel</item>
-		/// <item>opens/closes Options on [Ctrl+o] event</item>
-		/// <item>opens/focuses Colorhelp on [Ctrl+h] event</item>
-		/// <item>checks for and if so processes a viewer F-key</item>
-		/// <item>passes edit-keys to the TileView control's current panel's
-		/// Navigate() funct</item>
+		/// <item><c>[Esc]</c> - focuses the panel</item>
+		/// <item><c>[Ctrl+o]</c> - opens/closes Options</item>
+		/// <item><c>[Ctrl+h]</c> - opens/focuses Colorhelp</item>
+		/// <item><c>F-key</c> - checks for and processes a viewer</item>
+		/// <item>passes non-arrow navigate-keys to
+		/// <c><see cref="TilePanel.Navigate()">TilePanel.Navigate()</see></c>
+		/// - the arrow-keys are passed to the same function by
+		/// <c><see cref="ProcessCmdKey()">ProcessCmdKey()</see></c> instead of
+		/// here ... for no special reason perhaps</item>
 		/// </list>
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>Requires 'KeyPreview' true. See also <c><see cref="TopViewForm"/></c>,
-		/// <c><see cref="RouteViewForm"/></c>, <c><see cref="TopRouteViewForm"/></c>.</remarks>
+		/// <remarks>Requires <c>KeyPreview</c> <c>true</c>.
+		/// <br/><br/>
+		/// See also <c><see cref="TopViewForm"/></c> /
+		/// <c><see cref="RouteViewForm"/></c> /
+		/// <c><see cref="TopRouteViewForm"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -146,7 +152,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the FormClosing event.
+		/// Handles the <c>FormClosing</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

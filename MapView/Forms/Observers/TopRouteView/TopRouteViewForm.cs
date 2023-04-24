@@ -13,7 +13,8 @@ namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// This is the form that contains <c><see cref="TopView"/></c> and
-	/// <c><see cref="RouteView"/></c> as pages in a tabcontrol.
+	/// <c><see cref="RouteView"/></c> as <c>TabPages</c> in a
+	/// <c>TabControl</c>.
 	/// </summary>
 	/// <remarks>This is instantiated by
 	/// <c><see cref="ObserverManager.CreateObservers()">ObserverManager.CreateObservers()</see></c>
@@ -82,8 +83,8 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Fires when the form is activated. Maintains the position of this
-		/// form in the z-order List and focuses the panel if the TopViewControl
-		/// is currently selected.
+		/// form in the z-order List and focuses the panel if
+		/// <c><see cref="ControlTop"/></c> is currently selected.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -99,15 +100,17 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles a so-called command-key at the form level. Stops keys that
-		/// shall be used for navigating the tiles from doing anything stupid
-		/// instead.
-		/// - passes the arrow-keys to the appropriate control's panel's
-		///   Navigate() funct
+		/// Handles a so-called command-key at this <c>Form</c> level. Stops
+		/// keys that shall be used for navigating the tiles from doing anything
+		/// stupid instead.
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <param name="keyData"></param>
 		/// <returns></returns>
+		/// <remarks><c><see cref="ControlTop"/></c> passes the arrow-keys to
+		/// <c><see cref="MainViewOverlay.Navigate()">MainViewOverlay.Navigate()</see></c>.
+		/// <c><see cref="ControlRoute"/></c> passes the arrow-keys to
+		/// <c><see cref="RouteControlParent.Navigate()">RouteControlParent.Navigate()</see></c>.</remarks>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
 			switch (tabControl.SelectedIndex)
@@ -154,17 +157,16 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles KeyDown events at the form level.
-		/// - [Esc] focuses the appropriate panel
-		/// - opens/closes Options on [Ctrl+o] event
-		/// - checks for and if so processes a viewer F-key
-		/// - passes edit-keys to the appropriate viewer's control's panel's
-		///   Navigate() funct
-		/// - selects a quadrant if TopView is the current tabpage
-		/// @note Requires 'KeyPreview' true.
-		/// @note See also TileViewForm, TopViewForm, RouteViewForm
+		/// Handles <c>KeyDown</c> events at this <c>Form</c> level. See notes
+		/// for <c><see cref="TopViewForm"/>.OnKeyDown()</c> and
+		/// <c><see cref="RouteViewForm"/>.OnKeyDown()</c>.
 		/// </summary>
 		/// <param name="e"></param>
+		/// <remarks>Requires <c>KeyPreview</c> <c>true</c>.
+		/// <br/><br/>
+		/// See also <c><see cref="TileViewForm"/></c> /
+		/// <c><see cref="TopViewForm"/></c> /
+		/// <c><see cref="RouteViewForm"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			PartType slot = PartType.Invalid;
@@ -283,8 +285,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the FormClosing event. Ensures that the TestPartslots dialog
-		/// gets closed.
+		/// Handles the <c>FormClosing</c> event. Ensures that the TestPartslots
+		/// dialog and <c><see cref="SpawnInfo"/></c> get closed.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)

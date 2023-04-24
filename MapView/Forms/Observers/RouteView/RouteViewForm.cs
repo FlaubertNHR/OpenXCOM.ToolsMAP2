@@ -120,8 +120,7 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="TopRouteViewForm"/></c>.
 		/// <br/><br/>
 		/// Edit/Save keys are handled by
-		/// <c><see cref="RouteView">RouteView</see>.OnRouteControlKeyDown()</c>.
-		/// </remarks>
+		/// <c><see cref="RouteView">RouteView</see>.OnRouteControlKeyDown()</c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
 			switch (e.KeyData)
@@ -173,10 +172,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the <c>FormClosing</c> event.
+		/// Handles the <c>FormClosing</c> event. Ensures that
+		/// <c><see cref="SpawnInfo"/></c> gets closed.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>TODO: Close subsidiary dialogs here.</remarks>
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
