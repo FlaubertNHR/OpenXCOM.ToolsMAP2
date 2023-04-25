@@ -2100,13 +2100,13 @@ namespace MapView.Forms.Observers
 								SelectNode(id);
 								break;
 
-							case NODE_BOUNDS_INVALID:
-								// id = id
-								break;
+//							case NODE_BOUNDS_INVALID:
+//								// id = id
+//								break;
 
-							case NODE_BOUNDS_DELETED:
-								//++id; no. The ids shuffle down to account for that.
-								break;
+//							case NODE_BOUNDS_DELETED:
+//								//++id; no. The ids shuffle down to account for that.
+//								break;
 						}
 					}
 					else
@@ -2129,9 +2129,9 @@ namespace MapView.Forms.Observers
 								SelectNode(id);
 								break;
 
-							case NODE_BOUNDS_INVALID:
-								// id = id
-								break;
+//							case NODE_BOUNDS_INVALID:
+//								// id = id
+//								break;
 
 							case NODE_BOUNDS_DELETED:
 								if (--id == -1)
