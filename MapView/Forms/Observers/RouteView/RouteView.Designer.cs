@@ -63,7 +63,6 @@ namespace MapView.Forms.Observers
 
 		private ToolStripSeparator tss_7;
 
-		private ToolStripLabel tsl_Goto;
 		private ToolStripTextBox tstb_Goto;
 		private ToolStripButton tsb_Gotodn;
 		private ToolStripButton tsb_Gotoup;
@@ -215,9 +214,8 @@ namespace MapView.Forms.Observers
 			this.tss_4 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsb_x2 = new System.Windows.Forms.ToolStripButton();
 			this.tss_7 = new System.Windows.Forms.ToolStripSeparator();
-			this.tsl_Goto = new System.Windows.Forms.ToolStripLabel();
-			this.tstb_Goto = new System.Windows.Forms.ToolStripTextBox();
 			this.tsb_Gotodn = new System.Windows.Forms.ToolStripButton();
+			this.tstb_Goto = new System.Windows.Forms.ToolStripTextBox();
 			this.tsb_Gotoup = new System.Windows.Forms.ToolStripButton();
 			this._pnlRoutes = new DSShared.Controls.CompositedPanel();
 			this.pa_DataFields = new System.Windows.Forms.Panel();
@@ -321,9 +319,8 @@ namespace MapView.Forms.Observers
 			this.tss_4,
 			this.tsb_x2,
 			this.tss_7,
-			this.tsl_Goto,
-			this.tstb_Goto,
 			this.tsb_Gotodn,
+			this.tstb_Goto,
 			this.tsb_Gotoup});
 			this.ts_Main.Location = new System.Drawing.Point(0, 0);
 			this.ts_Main.Name = "ts_Main";
@@ -694,31 +691,25 @@ namespace MapView.Forms.Observers
 			this.tss_7.Name = "tss_7";
 			this.tss_7.Size = new System.Drawing.Size(6, 25);
 			// 
-			// tsl_Goto
-			// 
-			this.tsl_Goto.Margin = new System.Windows.Forms.Padding(2, 1, 0, 2);
-			this.tsl_Goto.Name = "tsl_Goto";
-			this.tsl_Goto.Size = new System.Drawing.Size(30, 22);
-			this.tsl_Goto.Text = "goto";
-			// 
-			// tstb_Goto
-			// 
-			this.tstb_Goto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tstb_Goto.Font = new System.Drawing.Font("Consolas", 7.5F);
-			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(2, 5, 1, 1);
-			this.tstb_Goto.Name = "tstb_Goto";
-			this.tstb_Goto.Size = new System.Drawing.Size(45, 19);
-			this.tstb_Goto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_Goto);
-			// 
 			// tsb_Gotodn
 			// 
 			this.tsb_Gotodn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsb_Gotodn.Image = global::MapView.Properties.Resources.down;
 			this.tsb_Gotodn.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_Gotodn.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+			this.tsb_Gotodn.Margin = new System.Windows.Forms.Padding(1, 3, 0, 0);
 			this.tsb_Gotodn.Name = "tsb_Gotodn";
 			this.tsb_Gotodn.Size = new System.Drawing.Size(23, 22);
 			this.tsb_Gotodn.Click += new System.EventHandler(this.OnClick_Gotobtn);
+			// 
+			// tstb_Goto
+			// 
+			this.tstb_Goto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tstb_Goto.Font = new System.Drawing.Font("Consolas", 7.5F);
+			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(0, 5, 0, 1);
+			this.tstb_Goto.Name = "tstb_Goto";
+			this.tstb_Goto.Size = new System.Drawing.Size(27, 19);
+			this.tstb_Goto.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tstb_Goto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_Goto);
 			// 
 			// tsb_Gotoup
 			// 
