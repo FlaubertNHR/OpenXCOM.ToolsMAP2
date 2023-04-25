@@ -64,6 +64,29 @@ namespace MapView.Forms.Observers
 		/// <remarks>Is <c>static</c> so that it remains consistent between
 		/// <c>RouteView</c> and <c>TopRouteView(Route)</c>.</remarks>
 		private static CopyNodeData _copynodedata;
+
+		private static bool _bypassGoto;
+
+		/// <summary>
+		/// Routenode location Ok.
+		/// </summary>
+		/// <remarks>Return for
+		/// <c><see cref="isInsideBounds()">isInsideBounds()</see></c>.</remarks>
+		private const int NODE_BOUNDS_ok = 0;
+
+		/// <summary>
+		/// Routenode location is Out of Bounds but the node got deleted.
+		/// </summary>
+		/// <remarks>Return for
+		/// <c><see cref="isInsideBounds()">isInsideBounds()</see></c>.</remarks>
+		private const int NODE_BOUNDS_DELETED = 1;
+
+		/// <summary>
+		/// Routenode location is Out of Bounds.
+		/// </summary>
+		/// <remarks>Return for
+		/// <c><see cref="isInsideBounds()">isInsideBounds()</see></c>.</remarks>
+		private const int NODE_BOUNDS_INVALID = 2;
 		#endregion Fields (static)
 
 
@@ -142,7 +165,30 @@ namespace MapView.Forms.Observers
 					_selRank   = _nodeSelected.Rank;
 					_selWeight = _nodeSelected.Spawn;
 				}
+
+				if (   ObserverManager.RouteView    != null // are not valid on app start ->
+					&& ObserverManager.TopRouteView != null)
+				{
+					_bypassGoto = true;
+					GotoCoordinator();
+					_bypassGoto = false;
+				}
 			}
+		}
+
+		/// <summary>
+		/// Sets the value in <c><see cref="tstb_Goto"/></c> to the value of
+		/// <c><see cref="NodeSelected"/></c> in both RouteView and
+		/// TopRouteView(Route).
+		/// </summary>
+		private static void GotoCoordinator()
+		{
+			string id;
+			if (NodeSelected != null) id = NodeSelected.Id.ToString();
+			else                      id = String.Empty;
+
+			ObserverManager.RouteView   .Control     .tstb_Goto.Text =
+			ObserverManager.TopRouteView.ControlRoute.tstb_Goto.Text = id;
 		}
 
 		/// <summary>
@@ -800,7 +846,8 @@ namespace MapView.Forms.Observers
 				NodeSelected = node;
 				updateinfo = true;
 			}
-			// else the selected-node is the node clicked.
+			else // the selected-node is the node clicked ->
+				NodeSelected = node; // reset 'NodeSelected' to update the value in the Goto-box
 
 			if (updateinfo) UpdateNodeInfo();
 
@@ -1495,7 +1542,7 @@ namespace MapView.Forms.Observers
 			byte dest = NodeSelected[slot].Destination;
 			RouteNode node = _file.Routes[dest];
 
-			if (isInsideBounds(node)) // offers to delete the node if Oob
+			if (isInsideBounds(node) == NODE_BOUNDS_ok) // offers to delete the node if Oob
 			{
 				if (_ogIds.Count == 0 || _ogIds.Peek() != NodeSelected.Id)
 					_ogIds.Push(NodeSelected.Id);
@@ -1988,20 +2035,20 @@ namespace MapView.Forms.Observers
 		/// Handles <c>[Enter]</c> to select a node via
 		/// <c><see cref="tstb_Goto"/></c>.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tstb_Goto"/></c></param>
 		/// <param name="e"></param>
 		private void OnKeyDown_Goto(object sender, KeyEventArgs e)
 		{
-			if (e.KeyData == Keys.Enter)
+			if (!_bypassGoto && e.KeyData == Keys.Enter)
 			{
 				e.SuppressKeyPress = true;
 
-				int nodeid; RouteNode node;
-				if (Int32.TryParse(tstb_Goto.Text, out nodeid)
-					&& (node = _file.Routes[nodeid]) != null)
+				int id; RouteNode node;
+				if (Int32.TryParse(tstb_Goto.Text, out id)
+					&& (node = _file.Routes[id]) != null)
 				{
-					if (isInsideBounds(node)) // offers to delete the node if Oob
-						SelectNode(nodeid);
+					if (isInsideBounds(node) == NODE_BOUNDS_ok) // offers to delete the node if Oob
+						SelectNode(id);
 				}
 				else
 				{
@@ -2020,11 +2067,113 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Selects the next lower/higher routenode against the value in
+		/// <c><see cref="tstb_Goto"/></c>.
+		/// </summary>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="tsb_Gotodn"/></c></item>
+		/// <item><c><see cref="tsb_Gotoup"/></c></item>
+		/// </list></param>
+		/// <param name="e"></param>
+		private void OnClick_Gotobtn(object sender, EventArgs e)
+		{
+			string error = String.Empty;
+
+			int id = Int32.MinValue;
+			if (tstb_Goto.Text.Length == 0 || Int32.TryParse(tstb_Goto.Text, out id))
+			{
+				if (sender == tsb_Gotodn)
+				{
+					if (tstb_Goto.Text.Length == 0 || id > _file.Routes.Nodes.Count)
+						id = _file.Routes.Nodes.Count;
+
+					if (--id == -1)
+						id = _file.Routes.Nodes.Count - 1;
+
+					RouteNode node = _file.Routes[id];
+					if (node != null)
+					{
+						switch (isInsideBounds(node)) // offers to delete the node if Oob
+						{
+							case NODE_BOUNDS_ok:
+								SelectNode(id);
+								break;
+
+							case NODE_BOUNDS_INVALID:
+								// id = id
+								break;
+
+							case NODE_BOUNDS_DELETED:
+								//++id; no. The ids shuffle down to account for that.
+								break;
+						}
+					}
+					else
+						error = "error";
+				}
+				else // tsb_Gotoup
+				{
+					if (tstb_Goto.Text.Length == 0 || id < -1)
+						id = -1;
+
+					if (++id == _file.Routes.Nodes.Count)
+						id = 0;
+
+					RouteNode node = _file.Routes[id];
+					if (node != null)
+					{
+						switch (isInsideBounds(node)) // offers to delete the node if Oob
+						{
+							case NODE_BOUNDS_ok:
+								SelectNode(id);
+								break;
+
+							case NODE_BOUNDS_INVALID:
+								// id = id
+								break;
+
+							case NODE_BOUNDS_DELETED:
+								if (--id == -1)
+									id = _file.Routes.Nodes.Count - 1;
+								break;
+						}
+					}
+					else
+						error = "error";
+				}
+
+				if (error.Length == 0)
+					tstb_Goto.Text = id.ToString();
+			}
+			else
+				error = "error";
+
+			if (error.Length != 0)
+			{
+				using (var ib = new Infobox(
+										error,
+										"Invalid node ID",
+										null,
+										InfoboxType.Error))
+				{
+					ib.ShowDialog();
+				}
+			}
+
+//			if (NodeSelected != null)
+//				tstb_Goto.Text = NodeSelected.Id.ToString();
+//			else
+//				tstb_Goto.Text = String.Empty;
+		}
+
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="node"></param>
 		/// <returns><c>true</c> if node is inside bounds of the Map</returns>
-		private bool isInsideBounds(RouteNode node)
+		private int isInsideBounds(RouteNode node)
 		{
 			if (RouteCheckService.OutsideBounds(node, _file)) // cf. OnLinkGoClick()
 			{
@@ -2043,10 +2192,12 @@ namespace MapView.Forms.Observers
 
 					UpdateNodeInfo();
 					// TODO: May need _pnlRoutes.Refresh()
+
+					return NODE_BOUNDS_DELETED;
 				}
-				return false;
+				return NODE_BOUNDS_INVALID;
 			}
-			return true;
+			return NODE_BOUNDS_ok;
 		}
 
 
