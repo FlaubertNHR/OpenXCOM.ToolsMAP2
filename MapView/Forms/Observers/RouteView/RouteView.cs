@@ -2085,7 +2085,7 @@ namespace MapView.Forms.Observers
 			{
 				if (sender == tsb_Gotodn)
 				{
-					if (tstb_Goto.Text.Length == 0 || id > _file.Routes.Nodes.Count)
+					if (tstb_Goto.Text.Length == 0 || id < 0 || id > _file.Routes.Nodes.Count)
 						id = _file.Routes.Nodes.Count;
 
 					if (--id == -1)
@@ -2114,7 +2114,7 @@ namespace MapView.Forms.Observers
 				}
 				else // tsb_Gotoup
 				{
-					if (tstb_Goto.Text.Length == 0 || id < -1)
+					if (tstb_Goto.Text.Length == 0 || id < -1 || id > _file.Routes.Nodes.Count - 1)
 						id = -1;
 
 					if (++id == _file.Routes.Nodes.Count)
