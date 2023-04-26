@@ -362,14 +362,13 @@ namespace MapView.Forms.Observers
 		{
 			int xDst, yDst;
 			RouteNode dest;
-			byte destId;
+			byte destid;
 
 			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 			{
-				var link = node[slot] as Link;
-				if ((destId = link.Destination) != Link.NotUsed)
+				if ((destid = node[slot].Destination) != Link.NotUsed)
 				{
-					switch (destId)
+					switch (destid)
 					{
 						case Link.ExitWest:
 							if (node.Lev != _file.Level)
@@ -408,7 +407,7 @@ namespace MapView.Forms.Observers
 							break;
 
 						default:
-							if ((dest = _file.Routes[destId]) == null
+							if ((dest = _file.Routes[destid]) == null
 								|| dest.Lev != _file.Level
 								|| (NodeSelected != null && dest == NodeSelected)
 								|| RouteCheckService.OutsideBounds(dest, _file))
@@ -429,7 +428,7 @@ namespace MapView.Forms.Observers
 						{
 							if (dest == null)
 							{
-								switch (destId) // see RouteView.SpotGoDestination() for def'n of the following spot-positions
+								switch (destid) // see RouteView.SpotGoDestination() for def'n of the following spot-positions
 								{
 									case Link.ExitNorth: if (_spot.X != -2) pen = PenLink; break;
 									case Link.ExitEast:  if (_spot.X != -3) pen = PenLink; break;
@@ -536,9 +535,9 @@ namespace MapView.Forms.Observers
 						_graphics.FillPath(brush, _nodeFill);
 
 
-						for (int i = 0; i != RouteNode.LinkSlots; ++i) // check for and if applicable draw the up/down indicators.
+						for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // check for and if applicable draw the up/down indicators.
 						{
-							if ((link = node[i]).IsNodelink()
+							if ((link = node[slot]).IsNodelink()
 								&& link.Destination < _file.Routes.Nodes.Count
 								&& (dest = _file.Routes[link.Destination]) != null)
 							{
