@@ -20,7 +20,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// cTor. Constructs a MapLocation vector.
+		/// cTor. Constructs a <c>MapLocation</c> vector.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
