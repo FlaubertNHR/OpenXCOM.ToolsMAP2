@@ -237,7 +237,7 @@ namespace XCom
 			if (fs != null)
 			{
 				int length = (int)fs.Length / Length_Routenode;
-				for (byte id = 0; id < length; ++id)
+				for (int id = 0; id < length; ++id)
 				{
 					var bindata = new byte[Length_Routenode];
 					fs.Read(bindata, 0, Length_Routenode);
@@ -245,7 +245,7 @@ namespace XCom
 					Nodes.Add(new RouteNode(id, bindata));
 				}
 
-				var invalids = new List<byte>();	// check for invalid Ranks ->
+				var invalids = new List<int>();		// check for invalid Ranks ->
 				foreach (RouteNode node in Nodes)	// See also RouteView.OnCheckNodeRanksClick()
 				{
 					if (node.OobRank != (byte)0)
@@ -353,13 +353,15 @@ namespace XCom
 		/// <summary>
 		/// Adds a <c><see cref="RouteNode"/></c> to <c><see cref="Nodes"/></c>.
 		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <param name="lev"></param>
-		/// <returns></returns>
-		internal RouteNode AddNode(byte col, byte row, byte lev)
+		/// <param name="location"></param>
+		/// <returns>the created <c>RouteNode</c></returns>
+		internal RouteNode AddNode(MapLocation location)
 		{
-			var node = new RouteNode((byte)Nodes.Count, col, row, lev);
+			var node = new RouteNode(
+								Nodes.Count,
+								location.Col,
+								location.Row,
+								location.Lev);
 			Nodes.Add(node);
 
 			return node;

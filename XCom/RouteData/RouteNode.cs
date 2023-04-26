@@ -49,7 +49,7 @@ namespace XCom
 		/// <summary>
 		/// Gets/Sets the index of this <c>RouteNode</c>.
 		/// </summary>
-		public byte Id
+		public int Id
 		{ get; internal set; }
 
 
@@ -69,7 +69,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="id"></param>
 		/// <param name="bindata"></param>
-		internal RouteNode(byte id, byte[] bindata)
+		internal RouteNode(int id, byte[] bindata)
 		{
 			Id = id;
 
@@ -113,13 +113,14 @@ namespace XCom
 		/// <param name="col"></param>
 		/// <param name="row"></param>
 		/// <param name="lev"></param>
-		internal RouteNode(byte id, byte col, byte row, byte lev)
+		internal RouteNode(int id, int col, int row, int lev)
 		{
 			Id = id;
 
-			Col =      col;
-			Row =      row;
-			Lev = (int)lev; // NOTE: auto-converts to int-type. But do it explicitly.
+			// TODO: restrict 'col' and 'row' to byte
+			Col = (byte)col;
+			Row = (byte)row;
+			Lev =       lev;
 
 			_links = new Link[LinkSlots];
 			for (int slot = 0; slot != LinkSlots; ++slot)

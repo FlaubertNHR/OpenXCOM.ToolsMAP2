@@ -581,18 +581,13 @@ namespace XCom
 		/// <c><see cref="MapTile"/></c> at a given
 		/// <c><see cref="MapLocation"/></c>.
 		/// </summary>
-		/// <param name="location"></param>
+		/// <param name="location">a <c>MapLocation</c></param>
 		/// <returns>the <c>RouteNode</c></returns>
 		public RouteNode AddRouteNode(MapLocation location)
 		{
-			RouteNode node = Routes.AddNode(
-										(byte)location.Col,
-										(byte)location.Row,
-										(byte)location.Lev);
-
-			return Tiles.GetTile((int)node.Col,
-								 (int)node.Row,
-									  node.Lev).Node = node;
+			return Tiles.GetTile(location.Col,
+								 location.Row,
+								 location.Lev).Node = Routes.AddNode(location);
 		}
 		#endregion Methods (routenodes)
 

@@ -8,6 +8,8 @@ namespace XCom
 		public const byte ExitEast  = 0xFD;
 		public const byte ExitSouth = 0xFC;
 		public const byte ExitWest  = 0xFB;
+
+		public const byte MaxDestId = 250;
 		#endregion Fields (static)
 
 

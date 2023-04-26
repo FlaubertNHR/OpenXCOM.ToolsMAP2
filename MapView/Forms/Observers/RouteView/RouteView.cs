@@ -31,8 +31,9 @@ namespace MapView.Forms.Observers
 
 		private enum LinkSlotResult
 		{
-			LinkExists   = -1,
-			AllSlotsUsed = -2
+			LinkExists    = -1,
+			AllSlotsUsed  = -2,
+			IllegalDestid = -3
 		}
 		#endregion Enums
 
@@ -474,7 +475,10 @@ namespace MapView.Forms.Observers
 				_linksList.Clear();
 
 				int total = _file.Routes.Nodes.Count;
-				for (byte id = 0; id != total; ++id)
+				if (total > Link.MaxDestId + 1)
+					total = Link.MaxDestId + 1;
+
+				for (int id = 0; id != total; ++id)
 				{
 					if (id != NodeSelected.Id)
 						_linksList.Add(id);			// <- add all linkable (ie. other) nodes
@@ -596,7 +600,7 @@ namespace MapView.Forms.Observers
 		/// <returns></returns>
 		private string GetDistanceArrow(int slot)
 		{
-			var link = NodeSelected[slot];
+			Link link = NodeSelected[slot];
 			if (link.IsNodelink())
 			{
 				RouteNode dest = _file.Routes[link.Destination];
@@ -951,9 +955,21 @@ namespace MapView.Forms.Observers
 
 			switch (_conType)
 			{
-				case ConnectNodes.TwoWay:
+				case ConnectNodes.TwoWay: // link back
 					switch (result = GetOpenLinkSlot(node, NodeSelected.Id))
 					{
+						case LinkSlotResult.IllegalDestid:
+							using (var f = new Infobox(
+													"Error",
+													Infobox.SplitString("Destination node could not be linked"
+															+ " to the source node. The source node's ID exceeds 250."),
+													null,
+													InfoboxType.Error))
+							{
+								f.ShowDialog(this);
+							}
+							break;
+
 						case LinkSlotResult.AllSlotsUsed:
 							using (var f = new Infobox(
 													"Warning",
@@ -976,15 +992,27 @@ namespace MapView.Forms.Observers
 
 						default:
 							RoutesChangedCoordinator = true;
-							node[(int)result].Destination = NodeSelected.Id;
+							node[(int)result].Destination = (byte)NodeSelected.Id;
 							node[(int)result].Distance = CalculateLinkDistance(node, NodeSelected);
 							break;
 					}
 					goto case ConnectNodes.OneWay; // fallthrough
 
-				case ConnectNodes.OneWay:
+				case ConnectNodes.OneWay: // link forward
 					switch (result = GetOpenLinkSlot(NodeSelected, node.Id))
 					{
+						case LinkSlotResult.IllegalDestid:
+							using (var f = new Infobox(
+													"Error",
+													Infobox.SplitString("Source node could not be linked to the"
+															+ " destination node. The destination node's ID exceeds 250."),
+													null,
+													InfoboxType.Error))
+							{
+								f.ShowDialog(this);
+							}
+							break;
+
 						case LinkSlotResult.AllSlotsUsed:
 							using (var f = new Infobox(
 													"Warning",
@@ -1007,7 +1035,7 @@ namespace MapView.Forms.Observers
 
 						default:
 							RoutesChangedCoordinator = true;
-							NodeSelected[(int)result].Destination = node.Id;
+							NodeSelected[(int)result].Destination = (byte)node.Id;
 							NodeSelected[(int)result].Distance = CalculateLinkDistance(NodeSelected, node);
 							break;
 					}
@@ -1016,28 +1044,40 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Gets the first available link-slot for a given node.
+		/// Gets the first available link-slot for a specified
+		/// <c><see cref="RouteNode"/></c>.
 		/// </summary>
-		/// <param name="node">the node to check the link-slots of</param>
-		/// <param name="dest">the id of the destination node</param>
-		/// <returns>id of an available link-slot, or
-		/// -1 if the link already exists
-		/// -2 if there are no free slots</returns>
-		private static LinkSlotResult GetOpenLinkSlot(RouteNode node, int dest)
+		/// <param name="node">the <c>RouteNode</c> to check the link-slots of</param>
+		/// <param name="destid">the <c>Id</c> of the destination <c>RouteNode</c> to
+		/// attempt to add to <paramref name="node"/>'s link-slots</param>
+		/// <returns><list type="bullet">
+		/// <item><c>Id</c> of an available link-slot as a
+		/// <c><see cref="LinkSlotResult"/></c></item>
+		/// <item><c>-1</c> if the link already exists</item>
+		/// <item><c>-2</c> if there are no free slots</item>
+		/// <item><c>-3</c> if <paramref name="destid"/> is greater than
+		/// <c><see cref="Link.MaxDestId"/></c></item>
+		/// </list></returns>
+		private static LinkSlotResult GetOpenLinkSlot(RouteNode node, int destid)
 		{
-			// first check if a link to the destination-id already exists
+			// first check if the destination-id is legal to be linked to
+			if (destid > Link.MaxDestId)
+				return LinkSlotResult.IllegalDestid;
+
+			// second check if a link to the destination-id already exists
 			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 			{
-				if (node[slot].Destination == dest)
+				if (node[slot].Destination == destid)
 					return LinkSlotResult.LinkExists;
 			}
 
-			// then check for an open slot
+			// third check for an open slot
 			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 			{
 				if (node[slot].Destination == (byte)LinkType.NotUsed)
 					return (LinkSlotResult)slot;
 			}
+
 			return LinkSlotResult.AllSlotsUsed;
 		}
 
@@ -1071,12 +1111,13 @@ namespace MapView.Forms.Observers
 		/// call.</remarks>
 		private void UpdateLinkDistances()
 		{
+			Link link;
+
 			for (int slot = 0; slot != RouteNode.LinkSlots; ++slot) // update distances to selected node's linked nodes ->
 			{
 				string distance;
 
-				Link link = NodeSelected[slot];
-				switch (link.Destination)
+				switch ((link = NodeSelected[slot]).Destination)
 				{
 					case Link.NotUsed: // NOTE: Should not change; is here to help keep distances consistent.
 						link.Distance = 0;
@@ -1109,20 +1150,23 @@ namespace MapView.Forms.Observers
 				}
 			}
 
-			int count = _file.Routes.Nodes.Count;
-			for (var id = 0; id != count; ++id) // update distances of any links to the selected node ->
+			RouteNode node;
+
+			int total = _file.Routes.Nodes.Count;
+			for (int id = 0; id != total; ++id) // update distances of any links to the selected node ->
 			{
 				if (id != NodeSelected.Id) // NOTE: a node shall not link to itself.
 				{
-					var node = _file.Routes[id];
+					node = _file.Routes[id];
 
 					for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 					{
-						var link = node[slot];
-						if (link.Destination == NodeSelected.Id)
+						if ((link = node[slot]).Destination == NodeSelected.Id)
+						{
 							link.Distance = CalculateLinkDistance(
 																node,
 																NodeSelected);
+						}
 					}
 				}
 			}
@@ -1632,11 +1676,11 @@ namespace MapView.Forms.Observers
 		{
 			if (NodeSelected != null && NodeSelected[slot] != null) // safety: Go-btn should not be enabled unless a node is selected.
 			{
-				byte dest = NodeSelected[slot].Destination;
-				if (dest != Link.NotUsed)
+				byte destid = NodeSelected[slot].Destination;
+				if (destid != Link.NotUsed)
 				{
 					int c,r;
-					switch (dest)
+					switch (destid)
 					{
 						case Link.ExitNorth: c = r = -2; break;
 						case Link.ExitEast:  c = r = -3; break;
@@ -1644,7 +1688,7 @@ namespace MapView.Forms.Observers
 						case Link.ExitWest:  c = r = -5; break;
 	
 						default:
-							RouteNode node = _file.Routes[dest];
+							RouteNode node = _file.Routes[destid];
 							c = node.Col;
 							r = node.Row;
 							break;
@@ -2053,12 +2097,12 @@ namespace MapView.Forms.Observers
 				else
 				{
 					using (var ib = new Infobox(
-											"error",
+											"Error",
 											"Invalid node ID",
 											null,
 											InfoboxType.Error))
 					{
-						ib.ShowDialog();
+						ib.ShowDialog(this);
 					}
 				}
 
@@ -2110,7 +2154,7 @@ namespace MapView.Forms.Observers
 						}
 					}
 					else
-						error = "error";
+						error = "Error";
 				}
 				else // tsb_Gotoup
 				{
@@ -2140,14 +2184,14 @@ namespace MapView.Forms.Observers
 						}
 					}
 					else
-						error = "error";
+						error = "Error";
 				}
 
 				if (error.Length == 0)
 					tstb_Goto.Text = id.ToString();
 			}
 			else
-				error = "error";
+				error = "Error";
 
 			if (error.Length != 0)
 			{
@@ -2157,7 +2201,7 @@ namespace MapView.Forms.Observers
 										null,
 										InfoboxType.Error))
 				{
-					ib.ShowDialog();
+					ib.ShowDialog(this);
 				}
 			}
 
@@ -3106,14 +3150,13 @@ namespace MapView.Forms.Observers
 			int changed = 0;
 
 			int total = _file.Routes.Nodes.Count;
-			for (var id = 0; id != total; ++id)
+			for (int id = 0; id != total; ++id)
 			{
 				node = _file.Routes[id];
 
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 				{
-					link = node[slot];
-					switch (link.Destination)
+					switch ((link = node[slot]).Destination)
 					{
 						case Link.NotUsed:
 						case Link.ExitWest:
@@ -3194,7 +3237,7 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="RouteCheckService"/></c>.</remarks>
 		private void OnTestNoderanksClick(object sender, EventArgs e)
 		{
-			var invalids = new List<byte>();
+			var invalids = new List<int>();
 			foreach (RouteNode node in _file.Routes)
 			{
 				if (node.OobRank != (byte)0)
