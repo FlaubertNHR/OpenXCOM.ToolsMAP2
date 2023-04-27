@@ -1,3 +1,6 @@
+using System;
+
+
 namespace XCom
 {
 	public sealed class Link
@@ -58,7 +61,7 @@ namespace XCom
 		/// <returns><c>true</c> if node-link</returns>
 		public bool IsNodelink()
 		{
-			return (Destination < ExitWest);
+			return Destination <= MaxDestId;
 		}
 		#endregion Methods
 	}
