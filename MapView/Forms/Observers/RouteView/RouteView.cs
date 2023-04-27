@@ -327,7 +327,7 @@ namespace MapView.Forms.Observers
 					tsmi_Noderank2.Text = "highlight " + RouteNodes.soldier;
 					tsmi_Noderank3.Text = "highlight " + RouteNodes.squadldr;
 					tsmi_Noderank4.Text = "highlight " + RouteNodes.nc;
-					tsmi_Noderank5.Text = "highlight " + RouteNodes.medicTftD;
+					tsmi_Noderank5.Text = "highlight " + RouteNodes.medicTftd;
 					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
 					tsmi_Noderank7.Text = "highlight " + RouteNodes.techie;
 					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
@@ -337,7 +337,7 @@ namespace MapView.Forms.Observers
 					la_ColorRank2.Text = RouteNodes.soldier;
 					la_ColorRank3.Text = RouteNodes.squadldr;
 					la_ColorRank4.Text = RouteNodes.nc;
-					la_ColorRank5.Text = RouteNodes.medicTftD;
+					la_ColorRank5.Text = RouteNodes.medicTftd;
 					la_ColorRank6.Text = RouteNodes.ter1;
 					la_ColorRank7.Text = RouteNodes.techie;
 					la_ColorRank8.Text = RouteNodes.ter2;
@@ -353,7 +353,7 @@ namespace MapView.Forms.Observers
 					tsmi_Noderank4.Text = "highlight " + RouteNodes.lc;
 					tsmi_Noderank5.Text = "highlight " + RouteNodes.engineer;
 					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
-					tsmi_Noderank7.Text = "highlight " + RouteNodes.medic;
+					tsmi_Noderank7.Text = "highlight " + RouteNodes.medicUfo;
 					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
 
 					la_ColorRank0.Text = RouteNodes.civscout;
@@ -363,7 +363,7 @@ namespace MapView.Forms.Observers
 					la_ColorRank4.Text = RouteNodes.lc;
 					la_ColorRank5.Text = RouteNodes.engineer;
 					la_ColorRank6.Text = RouteNodes.ter1;
-					la_ColorRank7.Text = RouteNodes.medic;
+					la_ColorRank7.Text = RouteNodes.medicUfo;
 					la_ColorRank8.Text = RouteNodes.ter2;
 				}
 

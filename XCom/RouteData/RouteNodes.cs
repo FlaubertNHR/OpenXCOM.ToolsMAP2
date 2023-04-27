@@ -28,9 +28,9 @@ namespace XCom
 		public const string lc        = "4 : Leader/Commander";
 		public const string nc        = "4 : Navigator/Commander";
 		public const string engineer  = "5 : Engineer";
-		public const string medicTftD = "5 : Medic";
+		public const string medicTftd = "5 : Medic";
 		public const string ter1      = "6 : Terrorist1";
-		public const string medic     = "7 : Medic";
+		public const string medicUfo  = "7 : Medic";
 		public const string techie    = "7 : Technician";
 		public const string ter2      = "8 : Terrorist2";
 
@@ -66,7 +66,7 @@ namespace XCom
 			new Pterodactyl(lc,          NodeRankUfo.LeaderCommander),
 			new Pterodactyl(engineer,    NodeRankUfo.Engineer),
 			new Pterodactyl(ter1,        NodeRankUfo.Misc1),
-			new Pterodactyl(medic,       NodeRankUfo.Medic),
+			new Pterodactyl(medicUfo,    NodeRankUfo.Medic),
 			new Pterodactyl(ter2,        NodeRankUfo.Misc2),
 			new Pterodactyl(RankInvalid, NodeRankUfo.invalid) // WORKAROUND.
 		};
@@ -82,7 +82,7 @@ namespace XCom
 			new Pterodactyl(soldier,     NodeRankTftd.Soldier),
 			new Pterodactyl(squadldr,    NodeRankTftd.SquadLeader),
 			new Pterodactyl(nc,          NodeRankTftd.NavigatorCommander),
-			new Pterodactyl(medicTftD,   NodeRankTftd.Medic),
+			new Pterodactyl(medicTftd,   NodeRankTftd.Medic),
 			new Pterodactyl(ter1,        NodeRankTftd.Misc1),
 			new Pterodactyl(techie,      NodeRankTftd.Technician),
 			new Pterodactyl(ter2,        NodeRankTftd.Misc2),
