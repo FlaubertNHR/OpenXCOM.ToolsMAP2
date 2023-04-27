@@ -104,7 +104,7 @@ namespace XCom
 
 				if (showsuccess)
 				using (var ib = new Infobox(
-										"Good stuff, Magister Ludi",
+										"Good stuff Magister Ludi",
 										"There are no Out of Bounds nodes detected."))
 				{
 					ib.ShowDialog();
@@ -179,7 +179,6 @@ namespace XCom
 				int[] pads = GetPads(file);
 
 				string text = String.Empty;
-				int total = file.Routes.Nodes.Count;
 				int val;
 				foreach (RouteNode node in Invalids)
 				{
