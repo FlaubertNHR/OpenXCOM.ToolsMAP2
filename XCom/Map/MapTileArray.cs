@@ -18,16 +18,14 @@ namespace XCom
 		/// <summary>
 		/// Instantiates a <c>MapTileArray</c>.
 		/// </summary>
-		/// <param name="cols"></param>
-		/// <param name="rows"></param>
-		/// <param name="levs"></param>
+		/// <param name="cols">x-count</param>
+		/// <param name="rows">y-count</param>
+		/// <param name="levs">z-count</param>
 		internal MapTileArray(int cols, int rows, int levs)
 		{
-			_tiles = new MapTile[cols * rows * levs];
-
-			_cols = cols;
-			_rows = rows;
-			_levs = levs;
+			_tiles = new MapTile[(_cols = cols)
+							   * (_rows = rows)
+							   * (_levs = levs)];
 		}
 		#endregion cTor
 
@@ -36,9 +34,9 @@ namespace XCom
 		/// <summary>
 		/// Gets the <c><see cref="MapTile"/></c> at a specified location.
 		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <param name="lev"></param>
+		/// <param name="col">x-position</param>
+		/// <param name="row">y-position</param>
+		/// <param name="lev">z-position</param>
 		/// <returns></returns>
 		public MapTile GetTile(int col, int row, int lev)
 		{
@@ -55,10 +53,11 @@ namespace XCom
 		/// Sets a specified <c><see cref="MapTile"/></c> at a specified
 		/// location.
 		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <param name="lev"></param>
-		/// <param name="tile"></param>
+		/// <param name="col">x-position</param>
+		/// <param name="row">y-position</param>
+		/// <param name="lev">z-position</param>
+		/// <param name="tile">a <c>MapTile</c> to place at
+		/// <paramref name="col"/>/<paramref name="row"/>/<paramref name="lev"/></param>
 		internal void SetTile(int col, int row, int lev, MapTile tile)
 		{
 			if (   col > -1 && col < _cols
