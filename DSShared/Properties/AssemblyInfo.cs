@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the grays")]
 [assembly: AssemblyProduct("DSShared")]
-[assembly: AssemblyCopyright("2017-2022")]
+[assembly: AssemblyCopyright("2017-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,8 @@ using System.Runtime.InteropServices;
 // If you need to expose a type to COM use [ComVisible(true)] on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
+// The following GUID is for the ID of the typelib if this project is exposed to
+// COM
 [assembly: Guid("cb6f00c2-bdf3-4432-a57a-1982dd251532")]
 
 // The assembly version has following format:
@@ -31,9 +32,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("4.2.1.0")]
-[assembly: AssemblyFileVersion("4.2.1.0")]
-[assembly: AssemblyInformationalVersion("4.2.1.0")]
+[assembly: AssemblyVersion("4.2.1.1")]
+[assembly: AssemblyFileVersion("4.2.1.1")]
+[assembly: AssemblyInformationalVersion("4.2.1.1")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]

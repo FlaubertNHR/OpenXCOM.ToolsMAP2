@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the grays")]
 [assembly: AssemblyProduct("PckView")]
-[assembly: AssemblyCopyright("2017-2022")]
+[assembly: AssemblyCopyright("2017-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,8 @@ using System.Runtime.InteropServices;
 // If you need to expose a type to COM use [ComVisible(true)] on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
+// The following GUID is for the ID of the typelib if this project is exposed to
+// COM
 [assembly: Guid("49199299-dbbb-4178-96ae-19b2f91d3675")]
 
 // The assembly version has following format:
@@ -31,9 +32,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("4.3.0.0")]
-[assembly: AssemblyFileVersion("4.3.0.0")]
-[assembly: AssemblyInformationalVersion("4.3.0.0")]
+[assembly: AssemblyVersion("4.3.0.1")]
+[assembly: AssemblyFileVersion("4.3.0.1")]
+[assembly: AssemblyInformationalVersion("4.3.0.1")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]

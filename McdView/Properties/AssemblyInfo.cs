@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the sectoids")]
 [assembly: AssemblyProduct("McdView")]
-[assembly: AssemblyCopyright("2019-2022")]
+[assembly: AssemblyCopyright("2019-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,7 +22,8 @@ using System.Runtime.InteropServices;
 // If you need to expose a type to COM use [ComVisible(true)] on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
+// The following GUID is for the ID of the typelib if this project is exposed to
+// COM
 [assembly: Guid("4c71f729-dfeb-4c5c-a056-420f49a83949")]
 
 // The assembly version has following format:
@@ -31,9 +32,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("4.1.2.0")]
-[assembly: AssemblyFileVersion("4.1.2.0")]
-[assembly: AssemblyInformationalVersion("4.1.2.0")]
+[assembly: AssemblyVersion("4.1.2.1")]
+[assembly: AssemblyFileVersion("4.1.2.1")]
+[assembly: AssemblyInformationalVersion("4.1.2.1")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]
