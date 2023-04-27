@@ -597,7 +597,7 @@ namespace XCom
 		/// Gets the terrain-label of a given <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="tilepart"></param>
-		/// <returns></returns>
+		/// <returns><c>null</c> if not found</returns>
 		public string GetTerrainLabel(Tilepart tilepart)
 		{
 			int id = -1;
@@ -620,7 +620,7 @@ namespace XCom
 		/// Gets the terrain of a given <c><see cref="Tilepart"/></c>.
 		/// </summary>
 		/// <param name="tilepart"></param>
-		/// <returns></returns>
+		/// <returns><c>null</c> if not found</returns>
 		public Tuple<string,string> GetTerrain(Tilepart tilepart)
 		{
 			int id = -1;
