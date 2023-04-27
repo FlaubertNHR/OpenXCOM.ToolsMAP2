@@ -35,7 +35,7 @@ namespace XCom
 		/// starting at the ground level - but only if a height difference is
 		/// found for either case</param>
 		/// <returns>a resized MapTileArray or null</returns>
-		internal static MapTileArray GetTileArray(
+		internal static MapTileArray ResizeTileArray(
 				int cols1, int rows1, int levs1,
 				int cols0, int rows0, int levs0,
 				MapTileArray tiles0,

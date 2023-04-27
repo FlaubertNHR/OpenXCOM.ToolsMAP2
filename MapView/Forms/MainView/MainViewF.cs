@@ -1854,10 +1854,10 @@ namespace MapView
 													f.Levs,
 													f.zType);
 
-						if ((changes & MapFile.CHANGED_MAP) != 0 && !MapFile.MapChanged)
+						if ((changes & MapFile.CHANGED_MAP) == MapFile.CHANGED_MAP && !MapFile.MapChanged)
 							MapChanged = true;
 
-						if ((changes & MapFile.CHANGED_NOD) != 0)
+						if ((changes & MapFile.CHANGED_NOD) == MapFile.CHANGED_NOD)
 						{
 							if (!MapFile.RoutesChanged)
 								RouteView.RoutesChangedCoordinator = true;

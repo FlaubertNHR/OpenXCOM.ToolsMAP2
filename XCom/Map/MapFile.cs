@@ -653,6 +653,7 @@ namespace XCom
 		{
 			return Tiles.GetTile(col, row, lev);
 		}
+
 		/// <summary>
 		/// Gets a <c><see cref="MapTile"/></c> at the current level using
 		/// col,row values.
@@ -809,11 +810,11 @@ namespace XCom
 		{
 			int ret = CHANGED_NOT;
 
-			MapTileArray tiles = MapResizeService.GetTileArray(
-															cols, rows, levs,
-															Cols, Rows, Levs,
-															Tiles,
-															zType);
+			MapTileArray tiles = MapResizeService.ResizeTileArray(
+																cols, rows, levs,
+																Cols, Rows, Levs,
+																Tiles,
+																zType);
 			if (tiles != null)
 			{
 				ret |= CHANGED_MAP;

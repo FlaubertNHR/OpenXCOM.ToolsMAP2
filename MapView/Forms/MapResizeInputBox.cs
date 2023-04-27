@@ -152,7 +152,7 @@ namespace MapView
 		/// <summary>
 		/// Paints a left/top border on the head-label.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="lbl_Head"/></c></param>
 		/// <param name="e"></param>
 		private void OnPaintHead(object sender, PaintEventArgs e)
 		{
@@ -163,7 +163,7 @@ namespace MapView
 		/// <summary>
 		/// Handles an Ok click.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="btn_Ok"/></c></param>
 		/// <param name="e"></param>
 		private void OnOkClick(object sender, EventArgs e)
 		{
@@ -173,21 +173,21 @@ namespace MapView
 			{
 				ShowError("All fields must have a value.");
 			}
-			else if (!Int32.TryParse(tb_Col1.Text, out _cols) || _cols < 1
-				||   !Int32.TryParse(tb_Row1.Text, out _rows) || _rows < 1
-				||   !Int32.TryParse(tb_Lev1.Text, out _levs) || _levs < 1)
+			else if (!Int32.TryParse(tb_Col1.Text, out _cols) || _cols < 1 || _cols > Byte.MaxValue
+				||   !Int32.TryParse(tb_Row1.Text, out _rows) || _rows < 1 || _rows > Byte.MaxValue
+				||   !Int32.TryParse(tb_Lev1.Text, out _levs) || _levs < 1 || _levs > Byte.MaxValue)
 			{
-				ShowError("Values must be positive integers greater than 0.");
+				ShowError("Values must be greater than 0 and less than 256.");
 			}
 			else if (_cols % 10 != 0 || _rows % 10 != 0)
 			{
-				ShowError("Columns and Rows must be exactly divisible by 10.");
+				ShowError("Columns and Rows must be multiples of 10.");
 			}
 			else if (_cols == int.Parse(tb_Col0.Text)
 				&&   _rows == int.Parse(tb_Row0.Text)
 				&&   _levs == int.Parse(tb_Lev0.Text))
 			{
-				ShowError("The new size is the same as the old size.");
+				DialogResult = DialogResult.Cancel;
 			}
 			else // finally (sic) ->
 			{
@@ -198,7 +198,7 @@ namespace MapView
 		/// <summary>
 		/// Shows the ceiling-type checkbox if the levels have delta.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tb_Lev1"/></c></param>
 		/// <param name="e"></param>
 		private void OnLevelTextChanged(object sender, EventArgs e)
 		{
