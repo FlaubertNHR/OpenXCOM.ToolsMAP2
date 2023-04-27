@@ -224,7 +224,7 @@ namespace MapView
 				}
 				else
 				{
-					ShowError("Height must a positive integer.");
+					ShowError("Height must be a positive integer.");
 					tb_Lev1.Text = tb_Lev0.Text; // recurse
 				}
 			}
