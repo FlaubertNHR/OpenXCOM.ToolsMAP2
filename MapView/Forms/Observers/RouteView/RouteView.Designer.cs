@@ -459,7 +459,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_RecalcDist.Name = "tsmi_RecalcDist";
 			this.tsmi_RecalcDist.Size = new System.Drawing.Size(211, 22);
 			this.tsmi_RecalcDist.Text = "&update all Link distances";
-			this.tsmi_RecalcDist.Click += new System.EventHandler(this.OnRecalcDistClick);
+			this.tsmi_RecalcDist.Click += new System.EventHandler(this.OnRecalculateDistanceClick);
 			// 
 			// tsddb_Debug
 			// 

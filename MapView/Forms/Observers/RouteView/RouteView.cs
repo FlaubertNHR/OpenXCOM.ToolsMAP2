@@ -478,7 +478,7 @@ namespace MapView.Forms.Observers
 				if (total > Link.MaxDestId + 1)
 					total = Link.MaxDestId + 1;
 
-				for (int id = 0; id != total; ++id)
+				for (byte id = 0; id != total; ++id)
 				{
 					if (id != NodeSelected.Id)
 						_linksList.Add(id);			// <- add all linkable (ie. other) nodes
@@ -500,7 +500,7 @@ namespace MapView.Forms.Observers
 				Label la_link;
 
 				Link link;
-				byte dest;
+				byte destid;
 
 				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
 				{
@@ -552,16 +552,16 @@ namespace MapView.Forms.Observers
 					co_unit.SelectedItem = link.Unit;
 					bu_go.Enabled = link.IsNodelink();
 
-					if ((dest = link.Destination) != Link.NotUsed)
+					if ((destid = link.Destination) != Link.NotUsed)
 					{
 						bu_go  .Text = Go;
 						la_dist.Text = link.Distance + GetDistanceArrow(slot);
 
 						if (link.IsNodelink())
 						{
-							co_dest.SelectedItem = dest;
+							co_dest.SelectedItem = destid;
 
-							if (RouteCheckService.OutsideBounds(_file.Routes[dest], _file))
+							if (RouteCheckService.OutsideBounds(_file.Routes[destid], _file))
 							{
 								la_link.ForeColor = Optionables.FieldsForecolorHighlight;
 							}
@@ -570,7 +570,7 @@ namespace MapView.Forms.Observers
 						}
 						else
 						{
-							co_dest.SelectedItem = (LinkType)dest;
+							co_dest.SelectedItem = (LinkType)destid;
 							la_link.ForeColor = Optionables.FieldsForecolor;
 						}
 					}
@@ -578,7 +578,7 @@ namespace MapView.Forms.Observers
 					{
 						bu_go  .Text =
 						la_dist.Text = String.Empty;
-						co_dest.SelectedItem = (LinkType)dest;
+						co_dest.SelectedItem = (LinkType)Link.NotUsed;
 						la_link.ForeColor = Optionables.FieldsForecolor;
 					}
 				}
@@ -2855,7 +2855,7 @@ namespace MapView.Forms.Observers
 		/// Handler for menuitem that clears all link-data of the currently
 		/// selected node.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_ClearLinks"/></c></param>
 		/// <param name="e"></param>
 		private void OnClearLinksClick(object sender, EventArgs e)
 		{
@@ -3138,11 +3138,12 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handler for menuitem that updates all link distances in the RMP.
+		/// Handler for menuitem that updates all link distances in the RMP
+		/// file.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_RecalcDist"/></c></param>
 		/// <param name="e"></param>
-		private void OnRecalcDistClick(object sender, EventArgs e)
+		private void OnRecalculateDistanceClick(object sender, EventArgs e)
 		{
 			RouteNode node;
 			Link link;
@@ -3203,7 +3204,7 @@ namespace MapView.Forms.Observers
 		/// Handler for menuitem that checks if any node's location is outside
 		/// the dimensions of the Map.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_TestPositions"/></c></param>
 		/// <param name="e"></param>
 		private void OnTestPositionsClick(object sender, EventArgs e)
 		{
@@ -3231,7 +3232,7 @@ namespace MapView.Forms.Observers
 		/// Handler for menuitem that checks if any node's rank is beyond the
 		/// array of the combobox. See also RouteNodes..cTor.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="tsmi_TestNodeRanks"/></c></param>
 		/// <param name="e"></param>
 		/// <remarks>TODO: Consolidate these checks to
 		/// <c><see cref="RouteCheckService"/></c>.</remarks>
@@ -3264,7 +3265,7 @@ namespace MapView.Forms.Observers
 			else
 			{
 				bt       = InfoboxType.Info;
-				title    = "Good stuff, Magister Ludi";
+				title    = "Good stuff Magister Ludi";
 				head     = "There are no invalid NodeRanks detected.";
 				copyable = null;
 			}
@@ -3290,7 +3291,7 @@ namespace MapView.Forms.Observers
 		/// displays info tallied from current RouteNodes in the tileset as well
 		/// as totals across the tileset's Category.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="bu_Tallyho"/></c></param>
 		/// <param name="e"></param>
 		private void OnTallyhoClick(object sender, EventArgs e)
 		{
@@ -3316,7 +3317,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Saves the routes-file when the Save button is clicked.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="bu_Save"/></c></param>
 		/// <param name="e"></param>
 		private void OnSaveClick(object sender, EventArgs e)
 		{
