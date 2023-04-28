@@ -189,86 +189,86 @@ namespace MapView.Forms.Observers
 		#region Events (override)
 		/// <summary>
 		/// You know the drill ... Paint it, Black
+		/// <br/><br/>
 		/// black as night
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>Pens and Brushes need to be refreshed each call to draw
-		/// since they can be changed in Options. Or not ....</remarks>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			_graphics = e.Graphics;
-			_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-			if (_file != null)
+			if (!MapFile.BypassRoutePaint)
 			{
-				BlobService.HalfWidth  = HalfWidth;
-				BlobService.HalfHeight = HalfHeight;
+				_graphics = e.Graphics;
+				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-				PenLink = RoutePens[RouteViewOptionables.str_LinkColor];
-
-				DrawBlobs();
-
-				DrawLinks();
-
-				if (NodeSelected != null)
-					DrawLinkLines(
-							Origin.X + (NodeSelected.Col - NodeSelected.Row)     * HalfWidth  + _scaleOffsetX,
-							Origin.Y + (NodeSelected.Col + NodeSelected.Row + 1) * HalfHeight + _scaleOffsetY,
-							NodeSelected, true);
-
-				DrawNodes();
-
-				DrawGridLines();
-
-				if (Focused && _col != -1) // draw the selector lozenge
+				if (_file != null)
 				{
-					PathSelectorLozenge(
-									Origin.X + (_col - _row) * HalfWidth  + _scaleOffsetX,
-									Origin.Y + (_col + _row) * HalfHeight + _scaleOffsetY);
-					using (var pen = new Pen(
-											RouteView.Optionables.GridLineColor,		// TODO: Make selector-pen a separate Option.
-											RouteView.Optionables.GridLineWidth + 1))
-					{
-						_graphics.DrawPath(pen, _lozSelector);
-					}
-				}
+					BlobService.HalfWidth  = HalfWidth;
+					BlobService.HalfHeight = HalfHeight;
 
-				if (MainViewOverlay.that.FirstClick && MainViewOverlay.that.DragBeg.X != -1)
-				{
-					PathSelectedLozenge();
-					using (var pen = new Pen(
-											RouteView.Optionables.NodeSelectedColor,	// TODO: Make selected-pen a separate Option.
-											RouteView.Optionables.GridLineWidth + 1))
-					{
-						_graphics.DrawPath(pen, _lozSelected);
+					PenLink = RoutePens[RouteViewOptionables.str_LinkColor];
 
-						if (_spot.X > -1)
+					DrawBlobs();
+					DrawLinks();
+
+					if (NodeSelected != null)
+						DrawLinkLines(
+								Origin.X + (NodeSelected.Col - NodeSelected.Row)     * HalfWidth  + _scaleOffsetX,
+								Origin.Y + (NodeSelected.Col + NodeSelected.Row + 1) * HalfHeight + _scaleOffsetY,
+								NodeSelected, true);
+
+					DrawNodes();
+					DrawGridLines();
+
+					if (Focused && _col != -1) // draw the selector lozenge
+					{
+						PathSelectorLozenge(
+										Origin.X + (_col - _row) * HalfWidth  + _scaleOffsetX,
+										Origin.Y + (_col + _row) * HalfHeight + _scaleOffsetY);
+						using (var pen = new Pen(
+												RouteView.Optionables.GridLineColor,		// TODO: Make selector-pen a separate Option.
+												RouteView.Optionables.GridLineWidth + 1))
 						{
-							PathSpottedLozenge(
-											Origin.X + (_spot.X - _spot.Y) * HalfWidth  + _scaleOffsetX,
-											Origin.Y + (_spot.X + _spot.Y) * HalfHeight + _scaleOffsetY);
-
-							_graphics.DrawPath(pen, _lozSpotted);						// TODO: Make spotted-pen a separate Option.
+							_graphics.DrawPath(pen, _lozSelector);
 						}
 					}
+
+					if (MainViewOverlay.that.FirstClick && MainViewOverlay.that.DragBeg.X != -1)
+					{
+						PathSelectedLozenge();
+						using (var pen = new Pen(
+												RouteView.Optionables.NodeSelectedColor,	// TODO: Make selected-pen a separate Option.
+												RouteView.Optionables.GridLineWidth + 1))
+						{
+							_graphics.DrawPath(pen, _lozSelected);
+
+							if (_spot.X > -1)
+							{
+								PathSpottedLozenge(
+												Origin.X + (_spot.X - _spot.Y) * HalfWidth  + _scaleOffsetX,
+												Origin.Y + (_spot.X + _spot.Y) * HalfHeight + _scaleOffsetY);
+
+								_graphics.DrawPath(pen, _lozSpotted);						// TODO: Make spotted-pen a separate Option.
+							}
+						}
+					}
+
+					DrawRose();
+
+					if (RouteView.Optionables.ShowPriorityBars)
+						DrawNodeMeters();
+
+					if (RouteView.Optionables.ShowOverlay && _col != -1)
+						DrawInfoOverlay();
+
+					if (   ObserverManager.RouteView   .Control     .RouteControl._col == -1
+						&& ObserverManager.TopRouteView.ControlRoute.RouteControl._col == -1)
+					{
+						RouteView.ClearOverInfo();
+					}
 				}
 
-				DrawRose();
-
-				if (RouteView.Optionables.ShowPriorityBars)
-					DrawNodeMeters();
-
-				if (RouteView.Optionables.ShowOverlay && _col != -1)
-					DrawInfoOverlay();
-
-				if (   ObserverManager.RouteView   .Control     .RouteControl._col == -1
-					&& ObserverManager.TopRouteView.ControlRoute.RouteControl._col == -1)
-				{
-					RouteView.ClearOverInfo();
-				}
+				ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 			}
-
-			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 		}
 		#endregion Events (override)
 
@@ -478,8 +478,8 @@ namespace MapView.Forms.Observers
 							x += HalfWidth,
 							y += HalfHeight)
 				{
-					if ((node = _file.GetTile(c,r).Node) != null)	// NOTE: MapFile has the current level stored and uses
-					{												// it to return only tiles on the correct level here.
+					if ((node = _file.GetTile(c,r).Node) != null)
+					{
 						_nodeFill.Reset();
 						_nodeFill.AddLine(
 										x,             y,
@@ -636,8 +636,8 @@ namespace MapView.Forms.Observers
 				{
 					if ((node = _file.GetTile(c,r).Node) != null)
 					{
-						int infoboxX = x - HalfWidth / 2 - 2;				// -2 to prevent drawing over the link-going-up vertical
-						int infoboxY = y + HalfHeight - NodeValHeight / 2;	//    line indicator when panel-size is fairly small.
+						int infoboxX = x - HalfWidth / 2 - 2;
+						int infoboxY = y + HalfHeight - NodeValHeight / 2;
 
 						DrawNodeMeter(infoboxX,     infoboxY, (int)node.Spawn,  Brushes.LightCoral);
 						DrawNodeMeter(infoboxX + 3, infoboxY, (int)node.Patrol, Brushes.DeepSkyBlue);
@@ -732,142 +732,138 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawInfoOverlay()
 		{
-			MapTile tile = _file.GetTile(_col, _row);
-			if (tile != null) // safety.
+			string textLoc = Globals.GetLocationString(
+													_col,
+													_row,
+													_file.Level,
+													_file.Levs);
+
+			int textWidth = (int)_graphics.MeasureString(textLoc, FontOverlay).Width;
+
+			string
+				textOver   = null,
+				textUnit   = null,
+				textRank   = null,
+				textSpawn  = null,
+				textPatrol = null,
+				textAttack = null;
+
+			RouteNode node = _file.GetTile(_col, _row).Node;
+			if (node != null)
 			{
-				string textLoc = Globals.GetLocationString(
-														_col,
-														_row,
-														_file.Level,
-														_file.Levs);
+				textOver = node.Id.ToString();
+				textUnit = Enum.GetName(typeof(UnitType), node.Unit);
 
-				int textWidth = (int)_graphics.MeasureString(textLoc, FontOverlay).Width;
-
-				string
-					textOver   = null,
-					textUnit   = null,
-					textRank   = null,
-					textSpawn  = null,
-					textPatrol = null,
-					textAttack = null;
-
-				RouteNode node = tile.Node;
-				if (node != null)
-				{
-					textOver = node.Id.ToString();
-					textUnit = Enum.GetName(typeof(UnitType), node.Unit);
-
-					if (_file.Descriptor.GroupType == GroupType.Tftd)
-						textRank = RouteNodes.RankTftd[node.Rank].ToString();
-					else
-						textRank = RouteNodes.RankUfo [node.Rank].ToString();
-
-					textSpawn  = RouteNodes.Spawn [(byte)node.Spawn] .ToString();
-					textPatrol = RouteNodes.Patrol[(byte)node.Patrol].ToString();
-
-					int w;
-
-					w = (int)_graphics.MeasureString(textOver,   FontOverlay).Width;
-					if (w > textWidth) textWidth = w;
-
-					w = (int)_graphics.MeasureString(textUnit,   FontOverlay).Width;
-					if (w > textWidth) textWidth = w;
-
-					w = (int)_graphics.MeasureString(textRank,   FontOverlay).Width;
-					if (w > textWidth) textWidth = w;
-
-					w = (int)_graphics.MeasureString(textSpawn,  FontOverlay).Width;
-					if (w > textWidth) textWidth = w;
-
-					w = (int)_graphics.MeasureString(textPatrol, FontOverlay).Width;
-					if (w > textWidth) textWidth = w;
-
-					if (node.Attack != 0)
-					{
-						textAttack = RouteNodes.Attack[(byte)node.Attack].ToString();
-
-						w = (int)_graphics.MeasureString(textAttack, FontOverlay).Width;
-						if (w > textWidth) textWidth = w;
-					}
-
-					// time to move to a higher .NET framework.
-				}
-
-				var rect = new Rectangle(
-									_over.X + 18, _over.Y,
-									OverlayColPad + textWidth + 5, _heightoverlaytext + 7);
-
-				if (node != null)
-				{
-					rect.Width  += _widthoverlayleft;
-					rect.Height += _heightoverlaytext * 5;
-
-					if (node.Attack != 0)
-						rect.Height += _heightoverlaytext;
-				}
-
-				if (RouteView.Optionables.ReduceDraws)
-				{
-					rect.X = Origin.X + (_col * HalfWidth)  - (_row * HalfHeight * 2) + _scaleOffsetX; // heh nailed it.
-					rect.Y = Origin.Y + (_row * HalfHeight) + (_col * HalfWidth  / 2) + _scaleOffsetY;
-
-					rect.X += HalfWidth;
-					rect.Y += HalfHeight / 2;
-
-					if (rect.X + rect.Width > ClientRectangle.Width)
-						rect.X -= rect.Width + HalfWidth * 2;
-	
-					if (rect.Y + rect.Height > ClientRectangle.Height)
-						rect.Y -= rect.Height;
-				}
+				if (_file.Descriptor.GroupType == GroupType.Tftd)
+					textRank = RouteNodes.RankTftd[node.Rank].ToString();
 				else
+					textRank = RouteNodes.RankUfo [node.Rank].ToString();
+
+				textSpawn  = RouteNodes.Spawn [(byte)node.Spawn] .ToString();
+				textPatrol = RouteNodes.Patrol[(byte)node.Patrol].ToString();
+
+				int w;
+
+				w = (int)_graphics.MeasureString(textOver,   FontOverlay).Width;
+				if (w > textWidth) textWidth = w;
+
+				w = (int)_graphics.MeasureString(textUnit,   FontOverlay).Width;
+				if (w > textWidth) textWidth = w;
+
+				w = (int)_graphics.MeasureString(textRank,   FontOverlay).Width;
+				if (w > textWidth) textWidth = w;
+
+				w = (int)_graphics.MeasureString(textSpawn,  FontOverlay).Width;
+				if (w > textWidth) textWidth = w;
+
+				w = (int)_graphics.MeasureString(textPatrol, FontOverlay).Width;
+				if (w > textWidth) textWidth = w;
+
+				if (node.Attack != 0)
 				{
-					if (rect.X + rect.Width > ClientRectangle.Width)
-						rect.X = _over.X - rect.Width - 8;
-	
-					if (rect.Y + rect.Height > ClientRectangle.Height)
-						rect.Y = _over.Y - rect.Height;
+					textAttack = RouteNodes.Attack[(byte)node.Attack].ToString();
+
+					w = (int)_graphics.MeasureString(textAttack, FontOverlay).Width;
+					if (w > textWidth) textWidth = w;
 				}
 
-				_graphics.FillRectangle(
-									OverlayFill,
-									rect.X,
-									rect.Y,
-									rect.Width  - 1,
-									rect.Height - 1);
-				_graphics.DrawRectangle(OverlayBorder, rect);
-				_graphics.DrawLine(OverlayBorder, rect.X - 1, rect.Y, rect.X, rect.Y); // fill 1px glitch in topleft corner
+				// time to move to a higher .NET framework.
+			}
 
-				int textLeft = rect.X + 4;
-				int textTop  = rect.Y + 3;
+			var rect = new Rectangle(
+								_over.X + 18, _over.Y,
+								OverlayColPad + textWidth + 5, _heightoverlaytext + 7);
 
-				int colRight = textLeft + OverlayColPad;
-				if (node != null) colRight += _widthoverlayleft;
+			if (node != null)
+			{
+				rect.Width  += _widthoverlayleft;
+				rect.Height += _heightoverlaytext * 5;
 
-				_graphics.DrawString(textLoc, FontOverlay, OverlayForecolor, colRight, textTop);
+				if (node.Attack != 0)
+					rect.Height += _heightoverlaytext;
+			}
 
-				if (node != null)
+			if (RouteView.Optionables.ReduceDraws)
+			{
+				rect.X = Origin.X + (_col * HalfWidth)  - (_row * HalfHeight * 2) + _scaleOffsetX; // heh nailed it.
+				rect.Y = Origin.Y + (_row * HalfHeight) + (_col * HalfWidth  / 2) + _scaleOffsetY;
+
+				rect.X += HalfWidth;
+				rect.Y += HalfHeight / 2;
+
+				if (rect.X + rect.Width > ClientRectangle.Width)
+					rect.X -= rect.Width + HalfWidth * 2;
+
+				if (rect.Y + rect.Height > ClientRectangle.Height)
+					rect.Y -= rect.Height;
+			}
+			else
+			{
+				if (rect.X + rect.Width > ClientRectangle.Width)
+					rect.X = _over.X - rect.Width - 8;
+
+				if (rect.Y + rect.Height > ClientRectangle.Height)
+					rect.Y = _over.Y - rect.Height;
+			}
+
+			_graphics.FillRectangle(
+								OverlayFill,
+								rect.X,
+								rect.Y,
+								rect.Width  - 1,
+								rect.Height - 1);
+			_graphics.DrawRectangle(OverlayBorder, rect);
+			_graphics.DrawLine(OverlayBorder, rect.X - 1, rect.Y, rect.X, rect.Y); // fill 1px glitch in topleft corner
+
+			int textLeft = rect.X + 4;
+			int textTop  = rect.Y + 3;
+
+			int colRight = textLeft + OverlayColPad;
+			if (node != null) colRight += _widthoverlayleft;
+
+			_graphics.DrawString(textLoc, FontOverlay, OverlayForecolor, colRight, textTop);
+
+			if (node != null)
+			{
+				_graphics.DrawString(Over,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext);
+				_graphics.DrawString(textOver,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext);
+
+				_graphics.DrawString(Unit,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 2);
+				_graphics.DrawString(textUnit,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 2);
+
+				_graphics.DrawString(Rank,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 3);
+				_graphics.DrawString(textRank,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 3);
+
+				_graphics.DrawString(Spawn,      FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 4);
+				_graphics.DrawString(textSpawn,  FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 4);
+
+				_graphics.DrawString(Patrol,     FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 5);
+				_graphics.DrawString(textPatrol, FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 5);
+
+				if (node.Attack != 0)
 				{
-					_graphics.DrawString(Over,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext);
-					_graphics.DrawString(textOver,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext);
-
-					_graphics.DrawString(Unit,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 2);
-					_graphics.DrawString(textUnit,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 2);
-
-					_graphics.DrawString(Rank,       FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 3);
-					_graphics.DrawString(textRank,   FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 3);
-
-					_graphics.DrawString(Spawn,      FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 4);
-					_graphics.DrawString(textSpawn,  FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 4);
-
-					_graphics.DrawString(Patrol,     FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 5);
-					_graphics.DrawString(textPatrol, FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 5);
-
-					if (node.Attack != 0)
-					{
-						_graphics.DrawString(Attack,     FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 6);
-						_graphics.DrawString(textAttack, FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 6);
-					}
+					_graphics.DrawString(Attack,     FontOverlay, OverlayForecolor, textLeft, textTop + _heightoverlaytext * 6);
+					_graphics.DrawString(textAttack, FontOverlay, OverlayForecolor, colRight, textTop + _heightoverlaytext * 6);
 				}
 			}
 		}

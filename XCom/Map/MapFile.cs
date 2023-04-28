@@ -64,6 +64,23 @@ namespace XCom
 		/// MapView, for the 2 BLANKS tiles.
 		/// </summary>
 		private const int BlanksReservedCount = 2;
+
+		/// <summary>
+		/// <c>true</c> to bypass <c>RouteControl.OnPaint()</c>.
+		/// </summary>
+		/// <remarks>If the following conditions are true .NET will try to
+		/// draw a level that no longer exists.
+		/// <list type="bullet">
+		/// <item><c><see cref="MapResize()">MapResize()</see></c> cuts level(s)
+		/// off the bottom of the Map</item>
+		/// <item>a <c><see cref="RouteNode"/></c> is on a level that gets cut
+		/// off</item>
+		/// <item><c><see cref="Level"/></c> is at that level</item>
+		/// </list><br/><br/>
+		/// Note that .NET's undesired call to <c>OnPaint()</c> is caused by the
+		/// call to
+		/// <c><see cref="RouteCheckService.CheckNodeBounds()">RouteCheckService.CheckNodeBounds()</see></c>.</remarks>
+		public static bool BypassRoutePaint;
 		#endregion Fields (static)
 
 
@@ -828,7 +845,7 @@ namespace XCom
 												// to the top needs to push any existing node-levels down or up.
 					foreach (RouteNode node in Routes)
 					{
-						if (node.Lev < 128) // allow nodes that are OoB to come back into view
+						if (node.Lev < 128) // allow nodes that are OoB to come back into view ->
 						{
 							if ((node.Lev += delta) < 0)	// NOTE: node x/y/z are stored as bytes.
 								node.Lev += 256;			// -> ie. level -1 = level 255
@@ -844,8 +861,10 @@ namespace XCom
 
 				Tiles = tiles;
 
+				BypassRoutePaint = true;
 				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)
 					ret |= CHANGED_NOD;
+				BypassRoutePaint = false;
 
 				ClearRouteNodes();
 				SetupRouteNodes();
