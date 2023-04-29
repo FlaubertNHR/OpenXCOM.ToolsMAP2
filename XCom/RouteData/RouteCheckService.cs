@@ -124,15 +124,11 @@ namespace XCom
 		{
 			Invalids.Clear();
 
-			int cols = file.Cols;
-			int rows = file.Rows;
-			int levs = file.Levs;
-
 			foreach (RouteNode node in file.Routes)
 			{
-				if (   node.Col < 0 || node.Col >= cols
-					|| node.Row < 0 || node.Row >= rows
-					|| node.Lev < 0 || node.Lev >= levs)
+				if (   node.Col < 0 || node.Col >= file.Cols
+					|| node.Row < 0 || node.Row >= file.Rows
+					|| node.Lev < 0 || node.Lev >= file.Levs)
 				{
 					Invalids.Add(node);
 				}
@@ -193,8 +189,9 @@ namespace XCom
 					if (Base1_z) ++val;
 					text += val.ToString().PadLeft(pads[2]) + "  L ";
 
-					val = file.Levs - node.Lev;
-					if (!Base1_z) --val;
+					val = file.Levs - node.Lev - 1;
+					if (val < -127) val += 256; // cf. MapFile.MapResize()
+					if (Base1_z) ++val;
 					text += val.ToString().PadLeft(pads[3]) + Environment.NewLine;
 				}
 
@@ -242,16 +239,17 @@ namespace XCom
 				if (pads[2] < pad) pads[2] = pad;
 
 
-				pad = 3; val = file.Levs - node.Lev; // if node-level goes out of bounds 'val' can be less than 0 here ->
-				if (!Base1_z) --val;
+				pad = 3; val = file.Levs - node.Lev - 1; // if node-level goes out of bounds 'val' can be less than 0 here ->
+				if (val < -127) val += 256; // cf. MapFile.MapResize()
+				if (Base1_z) ++val;
 
 				bool n = val < 0;
-				val = Math.Abs(val);
-				while ((val /= 10) != 0) --pad;
+				int val0 = Math.Abs(val);
+				while ((val0 /= 10) != 0) --pad;
 				if (n) --pad;
 				if (pad < pad3) pad3 = pad;
 
-				pad += (file.Levs - node.Lev).ToString().Length;
+				pad += val.ToString().Length;
 				if (pads[3] < pad) pads[3] = pad;
 			}
 

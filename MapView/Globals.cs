@@ -98,14 +98,18 @@ namespace MapView
 		/// <param name="l">lev</param>
 		/// <param name="levels">total levels of the current Map</param>
 		/// <returns>the given location as a string</returns>
+		/// <remarks>This function inverts the z-level for readability (which is
+		/// the policy in Mapview2).</remarks>
 		internal static string GetLocationString(
 				int c, int r, int l,
 				int levels)
 		{
-			l = levels - l; // invert
+			l = levels - l - 1; // base0 and inverted
+
+			if (l < -127) l += 256; // cf. MapFile.MapResize()
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
-			if (!MainViewF.Optionables.Base1_z) { --l; }
+			if (MainViewF.Optionables.Base1_z)  { ++l; }
 
 			return "c " + c + "  r " + r + "  L " + l;
 

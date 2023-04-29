@@ -43,9 +43,10 @@ namespace XCom
 
 
 		// bitwise changes for MapResize()
-		public const int CHANGED_NOT = 0; // changed not
-		public const int CHANGED_MAP = 1; // changed Map
-		public const int CHANGED_NOD = 2; // changed Routes
+		private const int MAPRESIZERESULT_NONE             = 0; // changed not
+		public  const int MAPRESIZERESULT_CHANGEDMAP       = 1; // changed Map
+		public  const int MAPRESIZERESULT_CHANGEDROUTES    = 2; // changed Routes
+		public  const int MAPRESIZERESULT_DELETEROUTENODES = 4; // changed Routes and user chose to delete Oob nodes
 
 		public const int LEVEL_Dn = +1;
 		public const int LEVEL_no =  0;
@@ -98,12 +99,18 @@ namespace XCom
 		{ get; private set; }
 
 		/// <summary>
-		/// A <c><see cref="MapTileArray"/></c> of all tiles in this
-		/// <c>MapFile</c>. Each <c><see cref="MapTile"/></c> holds pointers to
-		/// its <c><see cref="MapTile.Floor"/></c>, <c><see cref="MapTile.West"/></c>,
-		/// <c><see cref="MapTile.North"/></c>, and <c><see cref="MapTile.Content"/></c>
-		/// <c><see cref="Tilepart">Tileparts</see></c>.
+		/// A <c><see cref="MapTileArray"/></c> of all
+		/// <c><see cref="MapTile">MapTiles</see></c> in this <c>MapFile</c>.
 		/// </summary>
+		/// <remarks>A <c>MapTile</c> contains pointers to any
+		/// <c><see cref="RouteNode"/></c> as well as to any
+		/// <c><see cref="Tilepart">Tileparts</see></c>
+		/// <list type="bullet">
+		/// <item><c><see cref="MapTile.Floor"/></c></item>
+		/// <item><c><see cref="MapTile.West"/></c></item>
+		/// <item><c><see cref="MapTile.North"/></c></item>
+		/// <item><c><see cref="MapTile.Content"/></c></item>
+		/// </list></remarks>
 		public MapTileArray Tiles
 		{ get; private set; }
 
@@ -662,10 +669,10 @@ namespace XCom
 		/// <summary>
 		/// Gets a <c><see cref="MapTile"/></c> using col,row,lev values.
 		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <param name="lev"></param>
-		/// <returns>the corresponding <c>MapTile</c> object</returns>
+		/// <param name="col">x-position</param>
+		/// <param name="row">y-position</param>
+		/// <param name="lev">z-position</param>
+		/// <returns>the <c>MapTile</c></returns>
 		public MapTile GetTile(int col, int row, int lev)
 		{
 			return Tiles.GetTile(col, row, lev);
@@ -675,9 +682,11 @@ namespace XCom
 		/// Gets a <c><see cref="MapTile"/></c> at the current level using
 		/// col,row values.
 		/// </summary>
-		/// <param name="col"></param>
-		/// <param name="row"></param>
-		/// <returns>the corresponding <c>MapTile</c> object</returns>
+		/// <param name="col">x-position</param>
+		/// <param name="row">y-position</param>
+		/// <returns>the <c>MapTile</c></returns>
+		/// <remarks>z-position is assumed to be the currently displayed
+		/// <c><see cref="Level"/></c>.</remarks>
 		public MapTile GetTile(int col, int row)
 		{
 			return Tiles.GetTile(col, row, Level);
@@ -815,9 +824,10 @@ namespace XCom
 		/// only if a height difference is found for either case</param>
 		/// <returns>a bitwise int of changes
 		/// <list type="bullet">
-		/// <item><c><see cref="CHANGED_NOT"/></c> - no change</item>
-		/// <item><c><see cref="CHANGED_MAP"/></c> - Map changed</item>
-		/// <item><c><see cref="CHANGED_NOD"/></c> - Routes changed</item>
+		/// <item><c><see cref="MAPRESIZERESULT_NONE"/></c> - no change</item>
+		/// <item><c><see cref="MAPRESIZERESULT_CHANGEDMAP"/></c> - Map changed</item>
+		/// <item><c><see cref="MAPRESIZERESULT_CHANGEDROUTES"/></c> - Routes changed</item>
+		/// <item><c><see cref="MAPRESIZERESULT_DELETEROUTENODES"/></c> - Routes changed and user chose to delete Oob nodes</item>
 		/// </list></returns>
 		public int MapResize(
 				int cols,
@@ -825,7 +835,7 @@ namespace XCom
 				int levs,
 				MapResizeZtype zType)
 		{
-			int ret = CHANGED_NOT;
+			int ret = MAPRESIZERESULT_NONE;
 
 			MapTileArray tiles = MapResizeService.ResizeTileArray(
 																cols, rows, levs,
@@ -834,12 +844,12 @@ namespace XCom
 																zType);
 			if (tiles != null)
 			{
-				ret |= CHANGED_MAP;
+				ret |= MAPRESIZERESULT_CHANGEDMAP;
 
 				if (zType == MapResizeZtype.MRZT_TOP // adjust route-nodes ->
 					&& Routes.Any())
 				{
-					ret |= CHANGED_NOD;
+					ret |= MAPRESIZERESULT_CHANGEDROUTES;
 
 					int delta = (levs - Levs);	// NOTE: Map levels are inverted so adding or subtracting levels
 												// to the top needs to push any existing node-levels down or up.
@@ -863,7 +873,7 @@ namespace XCom
 
 				BypassRoutePaint = true;
 				if (RouteCheckService.CheckNodeBounds(this) == DialogResult.Yes)
-					ret |= CHANGED_NOD;
+					ret |= MAPRESIZERESULT_DELETEROUTENODES;
 				BypassRoutePaint = false;
 
 				ClearRouteNodes();

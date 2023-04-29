@@ -73,22 +73,21 @@ namespace XCom
 		{
 			Id = id;
 
-			Row = bindata[0]; // NOTE: x & y are switched in the RMP-file.
-			Col = bindata[1];
-			Lev = bindata[2]; // NOTE: auto-converts to int-type.
+			Row =      bindata[0]; // x & y are switched in the RMP-file.
+			Col =      bindata[1];
+			Lev = (int)bindata[2]; // auto-converts to int but do it explicitly.
 
-			// NOTE: 'bindata[3]' is not used.
+			// 'bindata[3]' is not used.
 
 			_links = new Link[LinkSlots];
 
-			int offset = 4;
+			int offset = 3;
 			for (int slot = 0; slot != LinkSlots; ++slot)
 			{
 				_links[slot] = new Link(
-									bindata[offset],
-									bindata[offset + 1],
-									bindata[offset + 2]);
-				offset += 3;
+									bindata[++offset],
+									bindata[++offset],
+									bindata[++offset]);
 			}
 
 			Unit   =       (UnitType)bindata[19];
@@ -145,9 +144,9 @@ namespace XCom
 		/// <param name="fs"></param>
 		internal void WriteNode(Stream fs)
 		{
-			fs.WriteByte(      Row); // NOTE: col and row are reversed in the file.
+			fs.WriteByte(      Row); // col and row are inverted in the file.
 			fs.WriteByte(      Col);
-			fs.WriteByte((byte)Lev);
+			fs.WriteByte((byte)Lev); // TODO: 'Lev' can be negative ... or perhaps greater than Byte.MaxValue
 			fs.WriteByte((byte)0);
 
 			for (int slot = 0; slot != LinkSlots; ++slot)
@@ -173,9 +172,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Gets the location of this <c>RouteNode</c> as a string. This funct
-		/// inverts the z-level for readability (which is the policy in
-		/// Mapview2).
+		/// Gets the location of this <c>RouteNode</c> as a string.
 		/// </summary>
 		/// <param name="levels">the z-levels of the <c><see cref="MapFile"/></c></param>
 		/// <returns>the location of this <c>RouteNode</c> as a string</returns>
@@ -184,15 +181,20 @@ namespace XCom
 		/// and
 		/// <c><see cref="RouteCheckService.Base1_z">RouteCheckService.Base1_z</see></c>
 		/// with user's current <c>MainViewOptionables.Base1_xy</c> and
-		/// <c>MainViewOptionables.Base1_z</c> before calling this funct.</remarks>
-		public string GetLocationString(int levels)
+		/// <c>MainViewOptionables.Base1_z</c> before calling this funct.
+		/// <br/><br/>
+		/// This function inverts the z-level for readability (which is the
+		/// policy in Mapview2).</remarks>
+		internal string GetLocationString(int levels)
 		{
-			byte c = Col;
-			byte r = Row;
-			int  l = levels - Lev;
+			byte c = Col;				// base0
+			byte r = Row;				// base0
+			int  l = levels - Lev - 1;	// base0
+
+			if (l < -127) l += 256; // cf. MapFile.MapResize()
 
 			if (RouteCheckService.Base1_xy) { ++c; ++r; }
-			if (!RouteCheckService.Base1_z) { --l; }
+			if (RouteCheckService.Base1_z)  { ++l; }
 
 			return ("c " + c + "  r " + r + "  L " + l);
 		}

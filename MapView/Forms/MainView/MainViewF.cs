@@ -1854,10 +1854,19 @@ namespace MapView
 													f.Levs,
 													f.zType);
 
-						if ((changes & MapFile.CHANGED_MAP) == MapFile.CHANGED_MAP && !MapFile.MapChanged)
-							MapChanged = true;
+						if ((changes & MapFile.MAPRESIZERESULT_CHANGEDMAP) == MapFile.MAPRESIZERESULT_CHANGEDMAP)
+						{
+							if (!MapFile.MapChanged)
+								MapChanged = true;
+						}
 
-						if ((changes & MapFile.CHANGED_NOD) == MapFile.CHANGED_NOD)
+						if ((changes & MapFile.MAPRESIZERESULT_CHANGEDROUTES) == MapFile.MAPRESIZERESULT_CHANGEDROUTES)
+						{
+							if (!MapFile.RoutesChanged)
+								RouteView.RoutesChangedCoordinator = true;
+						}
+
+						if ((changes & MapFile.MAPRESIZERESULT_DELETEROUTENODES) == MapFile.MAPRESIZERESULT_DELETEROUTENODES)
 						{
 							if (!MapFile.RoutesChanged)
 								RouteView.RoutesChangedCoordinator = true;
