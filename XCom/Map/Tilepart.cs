@@ -106,7 +106,8 @@ namespace XCom
 		/// allocated terrains. The value is usually set in
 		/// <c><see cref="MapFileService.LoadDescriptor()">MapFileService.LoadDescriptor()</see></c>.
 		/// </summary>
-		/// <remarks><c>SetId</c> is written to the Mapfile as a <c>byte</c>.</remarks>
+		/// <remarks><c>SetId</c> is written to the <c><see cref="MapFile"/></c>
+		/// as a <c>byte</c>.</remarks>
 		public int SetId
 		{
 			get { return _setId; }
@@ -120,7 +121,7 @@ namespace XCom
 		/// <c><see cref="McdRecord.SlidingDoor">McdRecord.SlidingDoor</see></c>.
 		/// </summary>
 		public bool isDoor
-		{ get; set; }
+		{ get; private set; }
 		#endregion Properties
 
 

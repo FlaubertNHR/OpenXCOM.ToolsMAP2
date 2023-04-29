@@ -1762,7 +1762,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Disables the Og button when a Map gets loaded.
+		/// Enables or disables the Og button.
 		/// </summary>
 		/// <param name="enable"></param>
 		private static void EnableOgButton(bool enable)

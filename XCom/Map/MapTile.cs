@@ -4,7 +4,9 @@ using System;
 namespace XCom
 {
 	/// <summary>
-	/// A tile in the Tileset consisting of four parts.
+	/// A tile in the Tileset consisting of four
+	/// <c><see cref="Tilepart">Tileparts</see></c> and a
+	/// <c><see cref="RouteNode"/></c>.
 	/// </summary>
 	public sealed class MapTile
 	{
@@ -48,16 +50,18 @@ namespace XCom
 		{ get; set; }
 
 		/// <summary>
-		/// A tile is flagged as occulted if it has tiles with ground-parts
-		/// above and to the south and east. Is used to optimize the draw-cycle.
+		/// This <c>MapTile</c> is flagged as <c>Occulted</c> if it has tiles
+		/// with ground-parts above and to the south and east. Is used to
+		/// optimize the draw-cycle.
 		/// </summary>
 		public bool Occulted
 		{ get; set; }
 
 		/// <summary>
-		/// a tile is flagged as vacant if it has no tileparts. Is used to
-		/// optimize the draw-cycle as well as by MapInfoDialog and
-		/// TileslotSubstitution.
+		/// This <c>MapTile</c> is flagged as <c>Vacant</c> if it doesn't have
+		/// any <c><see cref="Tilepart">Tileparts</see></c>. Is used to optimize
+		/// the draw-cycle as well as by <c>MapInfoDialog</c> and
+		/// <c>TileslotSubstitution</c>.
 		/// </summary>
 		public bool Vacant
 		{ get; private set; }
