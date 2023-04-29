@@ -183,9 +183,9 @@ namespace MapView
 			{
 				ShowError("Columns and Rows must be multiples of 10.");
 			}
-			else if (_cols == int.Parse(tb_Col0.Text)
-				&&   _rows == int.Parse(tb_Row0.Text)
-				&&   _levs == int.Parse(tb_Lev0.Text))
+			else if (_cols == Int32.Parse(tb_Col0.Text)
+				&&   _rows == Int32.Parse(tb_Row0.Text)
+				&&   _levs == Int32.Parse(tb_Lev0.Text))
 			{
 				DialogResult = DialogResult.Cancel;
 			}
