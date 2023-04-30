@@ -3,6 +3,8 @@ using System.Drawing.Imaging;
 
 using MapView.Forms.MainView;
 
+using XCom;
+
 
 
 namespace MapView
@@ -106,7 +108,7 @@ namespace MapView
 		{
 			l = levels - l - 1; // base0 and inverted
 
-			if (l < -127) l += 256; // cf. MapFile.MapResize()
+			if (l < RouteNode.RouteNodeCutoffLevel) l += 256;
 
 			if (MainViewF.Optionables.Base1_xy) { ++c; ++r; }
 			if (MainViewF.Optionables.Base1_z)  { ++l; }

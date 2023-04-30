@@ -7,7 +7,23 @@ namespace XCom
 	public sealed class RouteNode
 	{
 		#region Fields (static)
+		/// <summary>
+		/// The count of link-slots in a <c>RouteNode</c>.
+		/// </summary>
 		public const int LinkSlots = 5;
+
+		/// <summary>
+		/// In an attempt to retain level-integrity when resizing the Map wrt
+		/// levels added to or subtracted from the top of the Map - which
+		/// changes the level of any <c><see cref="RouteNodes"/></c> on the Map
+		/// - it's necessary to have an arbitrary cut-off level against which
+		/// node-levels can be 'pushed' and 'pulled' in and out of negative
+		/// levels. This is that arbitrary level.
+		/// </summary>
+		/// <seealso cref="MapFile.MapResize()"><c>MapFile.MapResize()</c></seealso>
+		/// <remarks><c><see cref="Lev"/></c> is an <c>int</c> but is written to
+		/// the <c><see cref="MapFile"/></c> as a <c>byte</c>.</remarks>
+		public const int RouteNodeCutoffLevel = -128;
 		#endregion Fields (static)
 
 
@@ -191,7 +207,7 @@ namespace XCom
 			byte r = Row;				// base0
 			int  l = levels - Lev - 1;	// base0
 
-			if (l < -127) l += 256; // cf. MapFile.MapResize()
+			if (l < RouteNodeCutoffLevel) l += 256;
 
 			if (RouteCheckService.Base1_xy) { ++c; ++r; }
 			if (RouteCheckService.Base1_z)  { ++l; }
@@ -213,6 +229,14 @@ namespace XCom
 			return Id; // nice hashcode ...
 		}
 
+		/// <summary>
+		/// Overrides <c>object.ToString()</c>.
+		/// </summary>
+		/// <returns>a representation of this <c>RouteNode</c> as a
+		/// <c>string</c></returns>
+		/// <remarks>The level of the node is presented in raw format; it is NOT
+		/// inverted per <c><see cref="MapFile.Levs">MapFile.Levs</see> -
+		/// <see cref="Lev"/></c>.</remarks>
 		public override string ToString()
 		{
 			return ("c " + Col + "  r " + Row + "  L " + Lev);

@@ -190,7 +190,7 @@ namespace XCom
 					text += val.ToString().PadLeft(pads[2]) + "  L ";
 
 					val = file.Levs - node.Lev - 1;
-					if (val < -127) val += 256; // cf. MapFile.MapResize()
+					if (val < RouteNode.RouteNodeCutoffLevel) val += 256;
 					if (Base1_z) ++val;
 					text += val.ToString().PadLeft(pads[3]) + Environment.NewLine;
 				}
@@ -240,7 +240,7 @@ namespace XCom
 
 
 				pad = 3; val = file.Levs - node.Lev - 1; // if node-level goes out of bounds 'val' can be less than 0 here ->
-				if (val < -127) val += 256; // cf. MapFile.MapResize()
+				if (val < RouteNode.RouteNodeCutoffLevel) val += 256;
 				if (Base1_z) ++val;
 
 				bool n = val < 0;
