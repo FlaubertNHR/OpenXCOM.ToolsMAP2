@@ -851,13 +851,13 @@ namespace XCom
 				{
 					ret |= MAPRESIZERESULT_CHANGEDROUTES;
 
-					int delta = (levs - Levs);	// NOTE: Map levels are inverted so adding or subtracting levels
-												// to the top needs to push any existing node-levels down or up.
+					int delta = (levs - Levs);	// Map levels are inverted so adding or subtracting levels to
+												// the top needs to push any existing node-levels down or up.
 					foreach (RouteNode node in Routes)
 					{
 						if (node.Lev < 128) // allow nodes that are OoB to come back into view ->
 						{
-							if ((node.Lev += delta) < 0)	// NOTE: node x/y/z are stored as bytes.
+							if ((node.Lev += delta) < 0)	// node x/y/z are stored as bytes.
 								node.Lev += 256;			// -> ie. level -1 = level 255
 						}
 						else if ((node.Lev += delta - 256) < 0)	// nodes above the highest Maplevel maintain
