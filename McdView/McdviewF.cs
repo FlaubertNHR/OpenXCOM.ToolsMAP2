@@ -1055,17 +1055,17 @@ namespace McdView
 		/// Checks if <c><see cref="Parts"></see>.Length</c> - the count of
 		/// <c><see cref="McdRecord">McdRecords</see></c> - is less than or
 		/// equal to
-		/// <c><see cref="MapFile.MAX_MCDRECORDS">MapFile.MAX_MCDRECORDS</see></c>
+		/// <c><see cref="MapFile.MaxMcdRecords">MapFile.MaxMcdRecords</see></c>
 		/// </summary>
 		/// <returns><c>true</c> if legit or user doesn't care</returns>
 		private bool CheckRecordCount()
 		{
-			bool proceed = (Parts.Length <= MapFile.MAX_MCDRECORDS);
+			bool proceed = (Parts.Length <= MapFile.MaxMcdRecords);
 			if (!proceed)
 			{
 				using (var f = new Infobox(
 										"Warning",
-										"Total MCD records exceeds " + MapFile.MAX_MCDRECORDS + ".",
+										"Total MCD records exceeds " + MapFile.MaxMcdRecords + ".",
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))

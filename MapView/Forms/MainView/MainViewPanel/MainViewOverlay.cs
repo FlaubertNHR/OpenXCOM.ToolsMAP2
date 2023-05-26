@@ -779,7 +779,7 @@ namespace MapView.Forms.MainView
 			Tilepart part;
 			int id;
 
-			int records = Math.Min(_file.Parts.Count, MapFile.MAX_MCDRECORDS);	// NOTE: Also checked in the TilepartSubstitution
+			int records = Math.Min(_file.Parts.Count, MapFile.MaxMcdRecords);	// NOTE: Also checked in the TilepartSubstitution
 																				// dialog else the Accept button does not enable.
 			for (int lev = 0; lev != _file.Levs; ++lev)
 			for (int row = 0; row != _file.Rows; ++row)

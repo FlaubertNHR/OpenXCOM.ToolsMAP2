@@ -32,13 +32,13 @@ namespace XCom
 		/// that a Mapfile can cope with.
 		/// </summary>
 		/// <seealso cref="MaxTerrainId"><c>MaxTerrainId</c></seealso>
-		public const int MAX_MCDRECORDS = 254;
+		public const int MaxMcdRecords = 254;
 
 		/// <summary>
 		/// The highest id of an <c><see cref="McdRecord"/></c> that a Mapfile
 		/// can cope with.
 		/// </summary>
-		/// <seealso cref="MAX_MCDRECORDS"><c>MAX_MCDRECORDS</c></seealso>
+		/// <seealso cref="MaxMcdRecords"><c>MaxMcdRecords</c></seealso>
 		public const int MaxTerrainId = 253;
 
 
@@ -851,8 +851,8 @@ namespace XCom
 				{
 					ret |= MAPRESIZERESULT_CHANGEDROUTES;
 
-					int delta = (levs - Levs);	// Map levels are inverted so adding or subtracting levels to
-												// the top needs to push any existing node-levels down or up.
+					int delta = (levs - Levs);	// Map levels are inverted so adding or subtracting levels to the top needs
+												// to push any existing node-level down (increment) or up (decrement).
 					foreach (RouteNode node in Routes)
 					{
 						if (node.Lev < 128) // allow nodes that are OoB to come back into view ->

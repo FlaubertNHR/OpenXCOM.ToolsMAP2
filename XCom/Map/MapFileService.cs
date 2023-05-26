@@ -150,7 +150,7 @@ namespace XCom
 				if (parts.Count != 0)
 				{
 					if (!ignoreRecordsExceeded && !descriptor.BypassRecordsExceeded // issue warning ->
-						&& parts.Count > MapFile.MAX_MCDRECORDS)
+						&& parts.Count > MapFile.MaxMcdRecords)
 					{
 						string text = String.Empty;
 
