@@ -27,21 +27,15 @@ namespace MapView
 		#region Properties
 		private int _cols;
 		internal int Cols
-		{
-			get { return _cols; }
-		}
+		{ get { return _cols; } }
 
 		private int _rows;
 		internal int Rows
-		{
-			get { return _rows; }
-		}
+		{ get { return _rows; } }
 
 		private int _levs;
 		internal int Levs
-		{
-			get { return _levs; }
-		}
+		{ get { return _levs; } }
 
 		internal MapResizeZtype zType
 		{
