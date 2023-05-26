@@ -43,20 +43,22 @@ namespace XCom
 		{
 			if (cols1 > 0 && rows1 > 0 && levs1 > 0)
 			{
+				int col, row, lev;
+
 				var tiles1 = new MapTileArray(cols1, rows1, levs1);
 
-				for (int lev = 0; lev != levs1; ++lev)
-				for (int row = 0; row != rows1; ++row)
-				for (int col = 0; col != cols1; ++col)
+				for (lev = 0; lev != levs1; ++lev)
+				for (row = 0; row != rows1; ++row)
+				for (col = 0; col != cols1; ++col)
 					tiles1.SetTile(col, row, lev, new MapTile());
 
 				switch (zType)
 				{
 					case MapResizeZtype.MRZT_BOT:
 					{
-						for (int lev = 0; lev != levs1 && lev != levs0; ++lev)
-						for (int row = 0; row != rows1 && row != rows0; ++row)
-						for (int col = 0; col != cols1 && col != cols0; ++col)
+						for (lev = 0; lev != levs1 && lev != levs0; ++lev)
+						for (row = 0; row != rows1 && row != rows0; ++row)
+						for (col = 0; col != cols1 && col != cols0; ++col)
 						{
 							tiles1.SetTile(col, row, lev, tiles0.GetTile(col, row, lev));
 						}
@@ -68,12 +70,11 @@ namespace XCom
 						int levels0 = levs0 - 1;
 						int levels1 = levs1 - 1;
 
-						for (int lev = 0; lev != levs1 && lev != levs0; ++lev)
-						for (int row = 0; row != rows1 && row != rows0; ++row)
-						for (int col = 0; col != cols1 && col != cols0; ++col)
+						for (lev = 0; lev != levs1 && lev != levs0; ++lev)
+						for (row = 0; row != rows1 && row != rows0; ++row)
+						for (col = 0; col != cols1 && col != cols0; ++col)
 						{
-							tiles1.SetTile(col, row, levels1 - lev, // copy tiles from bot to top.
-							tiles0.GetTile(col, row, levels0 - lev));
+							tiles1.SetTile(col, row, levels1 - lev, tiles0.GetTile(col, row, levels0 - lev)); // copy tiles from bot to top.
 						}
 						break;
 					}
