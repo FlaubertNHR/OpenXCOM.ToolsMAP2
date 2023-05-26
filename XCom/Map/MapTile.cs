@@ -107,7 +107,7 @@ namespace XCom
 
 		#region Methods
 		/// <summary>
-		/// Sets the tile as Vacant if it has no tileparts.
+		/// Sets the tile as <c><see cref="Vacant"/></c> if it has no tileparts.
 		/// </summary>
 		public void Vacancy()
 		{
