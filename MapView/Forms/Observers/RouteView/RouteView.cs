@@ -1583,8 +1583,8 @@ namespace MapView.Forms.Observers
 			else if (sender == bu_GoLink4) slot = 3;
 			else                           slot = 4; // sender == bu_GoLink5
 
-			byte dest = NodeSelected[slot].Destination;
-			RouteNode node = _file.Routes[dest];
+			byte id = NodeSelected[slot].Destination;
+			RouteNode node = _file.Routes[id];
 
 			if (isInsideBounds(node) == NODE_BOUNDS_ok) // offers to delete the node if Oob
 			{
@@ -1593,7 +1593,7 @@ namespace MapView.Forms.Observers
 
 				EnableOgButton(true);
 
-				SelectNode(dest);
+				SelectNode(id);
 
 				OnLinkMouseEnter(sender, EventArgs.Empty); // update Go info
 			}
@@ -2092,7 +2092,17 @@ namespace MapView.Forms.Observers
 					&& (node = _file.Routes[id]) != null)
 				{
 					if (isInsideBounds(node) == NODE_BOUNDS_ok) // offers to delete the node if Oob
+					{
 						SelectNode(id);
+
+						// bizarely
+						// only when goto shifts levels to select the next node
+						// the panel needs to be invalidated (or a mouseover on
+						// the panel will do the same). But this happens only to
+						// RouteView (not TopRouteView(Route)). Nor does it
+						// happen when a node is selected by Goto linked node eg.
+						ObserverManager.RouteView.Control.RouteControl.Invalidate();
+					}
 				}
 				else
 				{
@@ -2142,15 +2152,18 @@ namespace MapView.Forms.Observers
 						{
 							case NODE_BOUNDS_ok:
 								SelectNode(id);
+
+								// bizarely
+								// only when goto shifts levels to select the next node
+								// the panel needs to be invalidated (or a mouseover on
+								// the panel will do the same). But this happens only to
+								// RouteView (not TopRouteView(Route)). Nor does it
+								// happen when a node is selected by Goto linked node eg.
+								ObserverManager.RouteView.Control.RouteControl.Invalidate();
 								break;
 
-//							case NODE_BOUNDS_INVALID:
-//								// id = id
-//								break;
-
-//							case NODE_BOUNDS_DELETED:
-//								//++id; no. The ids shuffle down to account for that.
-//								break;
+//							case NODE_BOUNDS_DELETED: ++id; // no. The ids shuffle down to account for that.
+//							case NODE_BOUNDS_INVALID: id = id;
 						}
 					}
 					else
@@ -2171,16 +2184,22 @@ namespace MapView.Forms.Observers
 						{
 							case NODE_BOUNDS_ok:
 								SelectNode(id);
-								break;
 
-//							case NODE_BOUNDS_INVALID:
-//								// id = id
-//								break;
+								// bizarely
+								// only when goto shifts levels to select the next node
+								// the panel needs to be invalidated (or a mouseover on
+								// the panel will do the same). But this happens only to
+								// RouteView (not TopRouteView(Route)). Nor does it
+								// happen when a node is selected by Goto linked node eg.
+								ObserverManager.RouteView.Control.RouteControl.Invalidate();
+								break;
 
 							case NODE_BOUNDS_DELETED:
 								if (--id == -1)
 									id = _file.Routes.Nodes.Count - 1;
 								break;
+
+//							case NODE_BOUNDS_INVALID: id = id;
 						}
 					}
 					else
