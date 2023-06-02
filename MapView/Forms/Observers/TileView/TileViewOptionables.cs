@@ -291,7 +291,7 @@ The path specified can be used to start an application or to open a specified"
 
 		private Color _panelBackcolor = def_PanelBackcolor;
 		[Category(cat_PanelColors)]
-		[Description("Color of the panel background (default System.Control")]
+		[Description("Color of the panel background (default System.Control)")]
 		[DefaultValue(typeof(Color), "Control")]
 		public Color PanelBackcolor
 		{
@@ -305,7 +305,7 @@ The path specified can be used to start an application or to open a specified"
 
 		private Color _gridLineColor = def_GridLineColor;
 		[Category(cat_PanelColors)]
-		[Description("Color of the grid lines (default System.ControlText")]
+		[Description("Color of the grid lines (default System.ControlText)")]
 		[DefaultValue(typeof(Color), "ControlText")]
 		public Color GridLineColor
 		{
@@ -319,7 +319,7 @@ The path specified can be used to start an application or to open a specified"
 
 		private Color _selectedPartBorderColor = def_SelectedPartBorderColor;
 		[Category(cat_PanelColors)]
-		[Description("Color for the border of the currently selected tilepart (default Red")]
+		[Description("Color for the border of the currently selected tilepart (default Red)")]
 		[DefaultValue(typeof(Color), "Red")]
 		public Color SelectedPartBorderColor
 		{
@@ -357,7 +357,7 @@ The path specified can be used to start an application or to open a specified"
 
 		private Color _eraserBackcolor = def_EraserBackcolor;
 		[Category(cat_PanelColors)]
-		[Description("Color for the background of the eraser (default AliceBlue")]
+		[Description("Color for the background of the eraser (default AliceBlue)")]
 		[DefaultValue(typeof(Color), "AliceBlue")]
 		public Color EraserBackcolor
 		{
