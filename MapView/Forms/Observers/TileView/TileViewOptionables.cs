@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Drawing;
 
-using MapView.Forms.MainView;
 using MapView.ExternalProcess;
+using MapView.Forms.MainView;
 
 using XCom;
 

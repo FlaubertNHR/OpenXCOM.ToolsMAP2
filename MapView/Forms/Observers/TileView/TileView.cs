@@ -10,8 +10,8 @@ using DSShared;
 using DSShared.Controls;
 
 using MapView;
-using MapView.Forms.MainView;
 using MapView.ExternalProcess;
+using MapView.Forms.MainView;
 
 using McdView;
 
