@@ -346,14 +346,14 @@ namespace MapView.Forms.Observers
 			// tsmi_Export
 			// 
 			this.tsmi_Export.Name = "tsmi_Export";
-			this.tsmi_Export.Size = new System.Drawing.Size(124, 22);
+			this.tsmi_Export.Size = new System.Drawing.Size(152, 22);
 			this.tsmi_Export.Text = "&Export ...";
 			this.tsmi_Export.Click += new System.EventHandler(this.OnExportClick);
 			// 
 			// tsmi_Import
 			// 
 			this.tsmi_Import.Name = "tsmi_Import";
-			this.tsmi_Import.Size = new System.Drawing.Size(124, 22);
+			this.tsmi_Import.Size = new System.Drawing.Size(152, 22);
 			this.tsmi_Import.Text = "&Import ...";
 			this.tsmi_Import.Click += new System.EventHandler(this.OnImportClick);
 			// 
@@ -696,18 +696,18 @@ namespace MapView.Forms.Observers
 			this.tsb_Gotodn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsb_Gotodn.Image = global::MapView.Properties.Resources.down;
 			this.tsb_Gotodn.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_Gotodn.Margin = new System.Windows.Forms.Padding(1, 3, 0, 0);
+			this.tsb_Gotodn.Margin = new System.Windows.Forms.Padding(2, 1, 0, 1);
 			this.tsb_Gotodn.Name = "tsb_Gotodn";
-			this.tsb_Gotodn.Size = new System.Drawing.Size(23, 22);
+			this.tsb_Gotodn.Size = new System.Drawing.Size(23, 23);
 			this.tsb_Gotodn.Click += new System.EventHandler(this.OnClick_Gotobtn);
 			// 
 			// tstb_Goto
 			// 
 			this.tstb_Goto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tstb_Goto.Font = new System.Drawing.Font("Consolas", 7.5F);
-			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(0, 5, 0, 1);
+			this.tstb_Goto.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tstb_Goto.Name = "tstb_Goto";
-			this.tstb_Goto.Size = new System.Drawing.Size(27, 19);
+			this.tstb_Goto.Size = new System.Drawing.Size(27, 23);
 			this.tstb_Goto.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.tstb_Goto.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown_Goto);
 			// 
@@ -716,9 +716,9 @@ namespace MapView.Forms.Observers
 			this.tsb_Gotoup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.tsb_Gotoup.Image = global::MapView.Properties.Resources.up;
 			this.tsb_Gotoup.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.tsb_Gotoup.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+			this.tsb_Gotoup.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.tsb_Gotoup.Name = "tsb_Gotoup";
-			this.tsb_Gotoup.Size = new System.Drawing.Size(23, 22);
+			this.tsb_Gotoup.Size = new System.Drawing.Size(23, 23);
 			this.tsb_Gotoup.Click += new System.EventHandler(this.OnClick_Gotobtn);
 			// 
 			// _pnlRoutes
