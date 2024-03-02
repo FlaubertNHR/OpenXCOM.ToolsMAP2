@@ -417,7 +417,16 @@ namespace PckView
 
 #if !__MonoCS__
 			if (!isInvoked)
-				Application.AddMessageFilter(this);
+			{
+				if (Type.GetType ("Mono.Runtime") == null) // WindowFromPoint is windows specific. If that ever works with Mono remove that check. Better: Check if function exists or replace function.
+				{
+					Application.AddMessageFilter(this);
+				}
+				else
+				{
+					Console.WriteLine ("Mousewheel (partly) not handled. Reason: Mono runtime detected.");
+				}
+			}
 #endif
 		}
 
