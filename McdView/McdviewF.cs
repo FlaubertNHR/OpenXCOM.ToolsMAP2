@@ -551,16 +551,16 @@ namespace McdView
 				LoadTerrain(_args[0]);
 
 #if !__MonoCS__
-			if (!isInvoked)
+			if (!IsInvoked)
 			{
-				if (Type.GetType ("Mono.Runtime") == null) // WindowFromPoint is windows specific. If that ever works with Mono remove that check. Better: Check if function exists or replace function.
+				// WindowFromPoint() is windows specific. If that ever works with
+				// Mono remove this check. Better: Check if function exists or
+				// replace function.
+				if (Type.GetType("Mono.Runtime") == null)
 				{
 					Application.AddMessageFilter(this);
 				}
-				else
-				{
-					Console.WriteLine ("Mousewheel (partly) not handled. Reason: Mono runtime detected.");
-				}
+				// else // "Mousewheel (partly) not handled. Reason: Mono runtime detected."
 			}
 #endif
 		}
