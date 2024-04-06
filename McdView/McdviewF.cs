@@ -133,8 +133,7 @@ namespace McdView
 		/// An array of <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
 		/// <remarks>Each entry's record is referenced w/ Tilepart.Record.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// Printing the quantity of records on the statusbar relies on
 		/// reconstructing/assigning the Tilepart array on the fly (see the file
 		/// and panel-edit operations).</remarks>

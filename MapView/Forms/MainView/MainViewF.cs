@@ -101,8 +101,7 @@ namespace MapView
 		/// MapView is closing .net will try to paint <c>MainViewOverlay</c> one
 		/// last time. But the crippled tileparts' sprites have just been
 		/// disposed and nulled ...
-		/// 
-		/// 
+		/// <br/><br/>
 		/// Or when reloading a tileset that has crippled tileparts the
 		/// warning dialog appears before the sprites for the regular tileparts
 		/// are valid ... and MainView attempts to paint <c>MainViewOverlay</c>
