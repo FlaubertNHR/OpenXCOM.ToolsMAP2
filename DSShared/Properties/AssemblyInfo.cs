@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("the grays")]
 [assembly: AssemblyProduct("DSShared")]
-[assembly: AssemblyCopyright("2017-2023")]
+[assembly: AssemblyCopyright("2017-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,9 +32,9 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values, or the defaults by using '*' for the Build
 // and Revision.
-[assembly: AssemblyVersion("4.2.1.1")]
-[assembly: AssemblyFileVersion("4.2.1.1")]
-[assembly: AssemblyInformationalVersion("4.2.1.1")]
+[assembly: AssemblyVersion("4.2.1.2")]
+[assembly: AssemblyFileVersion("4.2.1.2")]
+[assembly: AssemblyInformationalVersion("4.2.1.2")]
 
 // satisfy FxCop:
 //[assembly: System.CLSCompliant(true)]
