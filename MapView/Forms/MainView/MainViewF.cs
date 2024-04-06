@@ -623,7 +623,14 @@ namespace MapView
 			ssMain.Renderer = new CustomToolStripRenderer();
 
 #if !__MonoCS__
-			Application.AddMessageFilter(this);
+			if (Type.GetType ("Mono.Runtime") == null) // WindowFromPoint is windows specific. If that ever works with Mono remove that check. Better: Check if function exists or replace function.
+			{
+				Application.AddMessageFilter(this);
+			}
+			else
+			{
+				Console.WriteLine ("Mousewheel (partly) not handled. Reason: Mono runtime detected.");
+			}
 #endif
 			Cursor.Current = Cursors.Default;
 			//Logfile.Log("About to show MainView ..." + Environment.NewLine);
