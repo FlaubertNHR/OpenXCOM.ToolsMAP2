@@ -12,7 +12,8 @@ namespace XCom
 	/// <summary>
 	/// The quadrant-slots that a record can be assigned to in an MCD file.
 	/// <c>Invalid</c> is for TileView's ALL tabpage only but is also used by
-	/// <c>QuadrantControl.OnMouseDown()</c> as None. As well as by crippled tileparts.
+	/// <c>QuadrantControl.OnMouseDown()</c> as None. As well as by crippled
+	/// tileparts.
 	/// </summary>
 	/// <remarks>Do not reorder these since they are used by
 	/// <c>MainViewF.Screenshot()</c> in the specific order.</remarks>

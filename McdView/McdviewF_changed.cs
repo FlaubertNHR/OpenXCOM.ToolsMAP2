@@ -13,11 +13,12 @@ namespace McdView
 
 		#region Leave
 		/// <summary>
-		/// Tags each LoftPanel with its corresponding RecordTextbox.
+		/// Tags each <c><see cref="LoftPanel"/></c> with its corresponding
+		/// <c><see cref="RecordTextbox"/></c>.
 		/// </summary>
-		/// <remarks>The tagged TextBoxes are tagged with (string)panelid in the
-		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
-		/// synched respectively.</remarks>
+		/// <remarks>The tagged <c>TextBoxes</c> are tagged with (string)panelid
+		/// in the designer. Thus the loft-panels, loft-textboxes, and panelids
+		/// are all synched respectively.</remarks>
 		private void TagLoftPanels()
 		{
 			pnl_Loft08.Tag = tb08_loft00;
@@ -35,8 +36,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Checks if either of the ScanG textboxes has focus when mouse-leaving
-		/// either of the ScanG labels.
+		/// Checks if either of the ScanG <c>TextBoxes</c> has focus when
+		/// mouse-leaving either of the ScanG labels.
 		/// </summary>
 		/// <param name="control"></param>
 		/// <returns></returns>
@@ -47,8 +48,9 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Tags the labels with their respective textboxes. It's required for
-		/// the RecordLabels' mouseleave event(s).
+		/// Tags the labels with their respective <c>TextBoxes</c>. It's
+		/// required for the <c><see cref="RecordLabel">RecordLabels'</see></c>
+		/// <c>MouseLeave</c> event(s).
 		/// </summary>
 		private void TagLabels()
 		{

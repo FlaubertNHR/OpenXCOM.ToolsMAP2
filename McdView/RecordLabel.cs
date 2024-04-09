@@ -18,7 +18,9 @@ namespace McdView
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes '_f', 'StatusLabel', and 'DescriptLabel'.
+		/// Initializes <c><see cref="_f"/></c>,
+		/// <c><see cref="StatusLabel"/></c>, and
+		/// <c><see cref="DescriptLabel"/></c>.
 		/// </summary>
 		/// <param name="status"></param>
 		/// <param name="descript"></param>
@@ -38,7 +40,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Clears labels when mouseover leaves this RecordLabel.
+		/// Clears labels when mouseover leaves this <c>RecordLabel</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
@@ -51,7 +53,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Selects the PartsPanel when this RecordLabel is clicked.
+		/// Selects the <c><see cref="McdviewF.PartsPanel"/></c> when this
+		/// <c>RecordLabel</c> is clicked.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnClick(EventArgs e)

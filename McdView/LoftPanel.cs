@@ -26,7 +26,7 @@ namespace McdView
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes '_f'.
+		/// Initializes <c><see cref="_f"/></c>.
 		/// </summary>
 		/// <param name="f"></param>
 		internal static void SetStaticVars(McdviewF f)
@@ -38,7 +38,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Draws a LoFT icon in this LoftPanel.
+		/// Draws a LoFT icon in this <c>LoftPanel</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
@@ -113,12 +113,12 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Opens the LoFT viewer when this LoftPanel is clicked.
+		/// Opens the LoFT viewer when this <c>LoftPanel</c> is clicked.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>If user has the openfile dialog open and double-clicks to
-		/// open a file that happens to be over the panel a mouse-up event
-		/// fires. So use MouseDown here.</remarks>
+		/// open a file that happens to be over the panel a <c>MouseUp</c> event
+		/// fires. So use <c>MouseDown</c> here.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			_f.PartsPanel.Select(); // NOTE: Workaround 'bar_IsoLoft' flicker (flicker occurs iff 'bar_IsoLoft' is focused).

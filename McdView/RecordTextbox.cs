@@ -16,7 +16,8 @@ namespace McdView
 
 		#region Methods (static)
 		/// <summary>
-		/// Initializes 'StatusLabel' and 'DescriptLabel'.
+		/// Initializes <c><see cref="StatusLabel"/></c> and
+		/// <c><see cref="DescriptLabel"/></c>.
 		/// </summary>
 		/// <param name="status"></param>
 		/// <param name="descript"></param>
@@ -32,7 +33,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Clears labels when mouseover leaves this RecordTextbox.
+		/// Clears labels when mouseover leaves this <c>RecordTextbox</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseLeave(EventArgs e)
@@ -43,7 +44,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Clears description when this RecordTextbox loses focus.
+		/// Clears description when this <c>RecordTextbox</c> loses focus.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnLeave(EventArgs e)
