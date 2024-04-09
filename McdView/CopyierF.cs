@@ -438,7 +438,8 @@ namespace McdView
 			tb30_isslidingdoor.Text = Convert.ToInt32(record.SlidingDoor).ToString();
 			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)    .ToString();
 			tb32_isdropthrou  .Text = Convert.ToInt32(record.NotFloored) .ToString();
-			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
+//			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
+			tb33_isbigwall    .Text = ((int)record.BigWall)              .ToString();
 			tb34_isgravlift   .Text = Convert.ToInt32(record.GravLift)   .ToString();
 			tb35_ishingeddoor .Text = Convert.ToInt32(record.HingedDoor) .ToString();
 			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire)  .ToString();

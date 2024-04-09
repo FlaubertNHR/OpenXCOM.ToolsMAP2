@@ -2279,7 +2279,8 @@ namespace McdView
 			tb30_isslidingdoor.Text = Convert.ToInt32(record.SlidingDoor).ToString();
 			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)    .ToString();
 			tb32_isdropthrou  .Text = Convert.ToInt32(record.NotFloored) .ToString();
-			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
+//			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
+			tb33_isbigwall    .Text = ((int)record.BigWall)              .ToString();
 			tb34_isgravlift   .Text = Convert.ToInt32(record.GravLift)   .ToString();
 			tb35_ishingeddoor .Text = Convert.ToInt32(record.HingedDoor) .ToString();
 			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire)  .ToString();
@@ -2756,12 +2757,23 @@ namespace McdView
 			{
 				borks.Add("#32 isDropThrou (record) does not equal isDropThrou (text).");
 			}
-			valB = Parts[Selid].Record.BigWall;
-			if (    (valB && tb33_isbigwall.Text == "0")
-				|| (!valB && tb33_isbigwall.Text == "1"))
+
+//			valB = Parts[Selid].Record.BigWall;
+//			if (    (valB && tb33_isbigwall.Text == "0")
+//				|| (!valB && tb33_isbigwall.Text == "1"))
+//			{
+//				borks.Add("#33 isBigWall (record) does not equal isBigWall (text).");
+//			}
+			val = Parts[Selid].Record.BigWall;
+			if (val != Int32.Parse(tb33_isbigwall.Text))
 			{
 				borks.Add("#33 isBigWall (record) does not equal isBigWall (text).");
 			}
+			if (!Test(val, 0, 9)) // OXC defines 9(+1) values for BigWall (Battlescape/Pathfinding.h 'enum bigWallTypes')
+			{
+				borks.Add("#33 isBigWall exceeds expected value.");
+			}
+
 			valB = Parts[Selid].Record.GravLift;
 			if (    (valB && tb34_isgravlift.Text == "0")
 				|| (!valB && tb34_isgravlift.Text == "1"))
@@ -2992,7 +3004,8 @@ namespace McdView
 		/// <param name="val">a value to test</param>
 		/// <param name="x">the minimum accepted value</param>
 		/// <param name="y">the maximum accepted value</param>
-		/// <returns></returns>
+		/// <returns><c>true</c> if <paramref name="val"/> is between
+		/// <paramref name="x"/> and <paramref name="y"/> inclusive.</returns>
 		private static bool Test(int val, int x, int y)
 		{
 			return (val >= x && val <= y);

@@ -41,6 +41,9 @@ namespace XCom
 		// kL_note: All values in an MCD record are unsigned bytes except the
 		// ScanG ref (little endian unsigned short) and the TerrainOffset
 		// (signed byte).
+		//
+		// OpenXcom changed BigWall from a bool to a byte - see
+		// Battlescape/Pathfinding.h (enum bigWallTypes) in the OXC codebase.
 
 		public byte Sprite1 { get; set; }
 		public byte Sprite2 { get; set; }
@@ -79,7 +82,8 @@ namespace XCom
 		public bool SlidingDoor { get; set; }
 		public bool StopLOS     { get; set; }
 		public bool NotFloored  { get; set; }
-		public bool BigWall     { get; set; }
+//		public bool BigWall     { get; set; }
+		public byte BigWall     { get; set; }
 		public bool GravLift    { get; set; }
 		public bool HingedDoor  { get; set; }
 		public bool BlockFire   { get; set; }
@@ -175,7 +179,8 @@ namespace XCom
 					case 30: return Convert.ToInt32(SlidingDoor);	// bools ->
 					case 31: return Convert.ToInt32(StopLOS);
 					case 32: return Convert.ToInt32(NotFloored);
-					case 33: return Convert.ToInt32(BigWall);
+//					case 33: return Convert.ToInt32(BigWall);
+					case 33: return (int)BigWall;
 					case 34: return Convert.ToInt32(GravLift);
 					case 35: return Convert.ToInt32(HingedDoor);
 					case 36: return Convert.ToInt32(BlockFire);
@@ -264,7 +269,8 @@ namespace XCom
 			SlidingDoor = bindata[30] != 0;
 			StopLOS     = bindata[31] != 0;
 			NotFloored  = bindata[32] != 0;
-			BigWall     = bindata[33] != 0; // TODO: store as a byte
+//			BigWall     = bindata[33] != 0; // TODO: store as a byte ->
+			BigWall     = bindata[33];
 			GravLift    = bindata[34] != 0;
 			HingedDoor  = bindata[35] != 0;
 			BlockFire   = bindata[36] != 0;
@@ -465,7 +471,8 @@ namespace XCom
 					fs.WriteByte(Convert.ToByte(record.SlidingDoor));	// 30 (bool)
 					fs.WriteByte(Convert.ToByte(record.StopLOS));		// 31 (bool)
 					fs.WriteByte(Convert.ToByte(record.NotFloored));	// 32 (bool)
-					fs.WriteByte(Convert.ToByte(record.BigWall));		// 33 (bool)
+//					fs.WriteByte(Convert.ToByte(record.BigWall));		// 33 (bool)
+					fs.WriteByte((byte)record.BigWall);					// 33
 					fs.WriteByte(Convert.ToByte(record.GravLift));		// 34 (bool)
 					fs.WriteByte(Convert.ToByte(record.HingedDoor));	// 35 (bool)
 					fs.WriteByte(Convert.ToByte(record.BlockFire));		// 36 (bool)
@@ -553,7 +560,7 @@ namespace XCom
 			record.SlidingDoor = SlidingDoor;	// bool
 			record.StopLOS     = StopLOS;		// bool
 			record.NotFloored  = NotFloored;	// bool
-			record.BigWall     = BigWall;		// bool
+			record.BigWall     = BigWall;		// bool (-> int)
 			record.GravLift    = GravLift;		// bool
 			record.HingedDoor  = HingedDoor;	// bool
 			record.BlockFire   = BlockFire;		// bool

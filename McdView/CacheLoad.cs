@@ -69,7 +69,8 @@ namespace McdView
 				Parts[i, 30] = Convert.ToInt32(part.Record.SlidingDoor);		// bools ->
 				Parts[i, 31] = Convert.ToInt32(part.Record.StopLOS);
 				Parts[i, 32] = Convert.ToInt32(part.Record.NotFloored);
-				Parts[i, 33] = Convert.ToInt32(part.Record.BigWall);
+//				Parts[i, 33] = Convert.ToInt32(part.Record.BigWall);
+				Parts[i, 33] = part.Record.BigWall;
 				Parts[i, 34] = Convert.ToInt32(part.Record.GravLift);
 				Parts[i, 35] = Convert.ToInt32(part.Record.HingedDoor);
 				Parts[i, 36] = Convert.ToInt32(part.Record.BlockFire);

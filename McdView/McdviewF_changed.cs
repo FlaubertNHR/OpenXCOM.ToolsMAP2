@@ -144,14 +144,14 @@ namespace McdView
 
 
 		/// <summary>
-		/// Checks the text of a TextBox for validity. This changes the text if
-		/// it's not valid, which causes the OnChanged handler to recurse. It
-		/// trims the string and disallows any superfluous preceeding zeros.
-		/// Non-numeric text will be checked afterward in the OnChanged handler
-		/// itself.
+		/// Checks the text of a <c>TextBox</c> for validity. This changes the
+		/// text if it's not valid, which causes the <c>Changed</c> handler to
+		/// recurse. It trims the string and disallows any superfluous
+		/// preceeding zeros. Non-numeric text will be checked afterward in the
+		/// <c>Changed</c> handler itself.
 		/// </summary>
-		/// <param name="tb">a TextBox to check the text of</param>
-		/// <returns>true if the textbox's text is valid</returns>
+		/// <param name="tb">a <c>TextBox</c> to check the text of</param>
+		/// <returns><c>true</c> if the text is valid</returns>
 		private static bool TryParseText(Control tb)
 		{
 			if (!String.IsNullOrEmpty(tb.Text))
@@ -1922,7 +1922,7 @@ namespace McdView
 			}
 		}
 
-		/// <summary>
+/*		/// <summary>
 		/// #33 isBigWall (bool)
 		/// TODO: Allow the bigwall value to be stored as a byte.
 		/// </summary>
@@ -1972,6 +1972,82 @@ namespace McdView
 				{
 					case 0: text = "0 False"; break;
 					case 1: text = "1 True";  break;
+
+					default: text = result.ToString(); break;
+				}
+				tssl_Overval.Text = "isBigWall: " + text;
+				OnEnter33(null, EventArgs.Empty);
+			}
+		} */
+		/// <summary>
+		/// #33 isBigWall (byte)
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		/// <remarks>Original XCOM uses a true/false value but OpenXcom allows
+		/// 9(+1) values - see Battlescape/Pathfinding.h (enum bigWallTypes) in
+		/// the OXC codebase.</remarks>
+		private void OnChanged33(object sender, EventArgs e)
+		{
+			if (Selid != -1)
+			{
+				if (TryParseText(tb33_isbigwall)) // else recurse
+				{
+					int result;
+					if (Int32.TryParse(tb33_isbigwall.Text, out result)
+						&&     ((_strict && result > -1 && result < 10)
+							|| (!_strict && result > -1 && result < 256)))
+					{
+						Parts[Selid].Record.BigWall = (byte)result;
+
+						if (!InitFields)
+							Changed = CacheLoad.Changed(Parts);
+					}
+					else if (result < 1)
+						tb33_isbigwall.Text = "0"; // recurse w/ default.
+					else if (_strict)
+						tb33_isbigwall.Text = "9";
+					else
+						tb33_isbigwall.Text = "255";
+				}
+			}
+			else
+				tb33_isbigwall.Text = String.Empty; // recurse.
+		}
+		private void OnEnter33(object sender, EventArgs e)
+		{
+			// NOTE: "\u00A0" is a UTF nonbreaking-space char.
+			lbl_Description.Text = "isBigWall (ubyte) obstructs the movement of units, projectiles, and"
+								 + " explosions and is relevant only to content parts. Original XCOM"
+								 + " uses a true/false value but OpenXcom allows the following types:"
+								 + Environment.NewLine + Environment.NewLine
+								 + "0\u00A0None (false), 1\u00A0Block (true), 2\u00A0Northeast to Southwest (diagonal),"
+								 + " 3\u00A0Northwest to Southeast (diagonal), 4\u00A0Westwall, 5\u00A0Northwall,"
+								 + " 6\u00A0Eastwall, 7\u00A0Southwall,"
+								 + " 8\u00A0East and South walls, 9\u00A0West and North walls."
+								 + Environment.NewLine + Environment.NewLine
+								 + "A tile with a content part of type Block placed in it is"
+								 + " completely non-navigable; a unit is not even allowed to clip through"
+								 + " such a tile's corner by walking past it diagonally.";
+		}
+		private void OnMouseEnterTextbox33(object sender, EventArgs e)
+		{
+			int result;
+			if (Int32.TryParse(tb33_isbigwall.Text, out result))
+			{
+				string text;
+				switch (result)
+				{
+					case 0: text = "0 None (false)";                      break;
+					case 1: text = "1 Block (true)";                      break;
+					case 2: text = "2 Northeast to Southwest (diagonal)"; break;
+					case 3: text = "3 Northwest to Southeast (diagonal)"; break;
+					case 4: text = "4 Westwall";                          break;
+					case 5: text = "5 Northwall";                         break;
+					case 6: text = "6 Eastwall";                          break;
+					case 7: text = "7 Southwall";                         break;
+					case 8: text = "8 East and South walls";              break;
+					case 9: text = "9 West and North walls";              break;
 
 					default: text = result.ToString(); break;
 				}
