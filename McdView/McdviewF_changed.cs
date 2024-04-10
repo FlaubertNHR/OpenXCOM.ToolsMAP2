@@ -2952,7 +2952,7 @@ namespace McdView
 				{
 					int result;
 					if (Int32.TryParse(tb48_terrainoffset.Text, out result)
-						&&     ((_strict && result > - 25 && result < 1)
+						&&     ((_strict && result > - 25 && result < 25)
 							|| (!_strict && result > -129 && result < 128)))
 					{
 						Parts[Selid].Record.StandOffset = (sbyte)result;
@@ -2964,8 +2964,8 @@ namespace McdView
 						tb48_terrainoffset.Text = "0"; // recurse w/ default.
 					else if (_strict)
 					{
-						if      (result < -24) tb48_terrainoffset.Text = "-24";
-						else if (result >   0) tb48_terrainoffset.Text =   "0";
+						if (result < -24) tb48_terrainoffset.Text = "-24";
+						else              tb48_terrainoffset.Text =  "24";
 					}
 					else if (result < -128) tb48_terrainoffset.Text = "-128";
 					else                    tb48_terrainoffset.Text =  "127";
@@ -2989,7 +2989,7 @@ namespace McdView
 								 + " can be no greater than 8 voxels and that the total distance"
 								 + " between levels is 24 voxels."
 								 + Environment.NewLine + Environment.NewLine
-								 + "-24..0";
+								 + "-24..24";
 		}
 		private void OnMouseEnterTextbox48(object sender, EventArgs e)
 		{

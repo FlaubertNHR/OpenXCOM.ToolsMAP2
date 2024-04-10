@@ -2896,7 +2896,7 @@ namespace McdView
 			{
 				borks.Add("#48 TerrainOffset (record) does not equal TerrainOffset (text).");
 			}
-			if (!Test(val, -24, 0))
+			if (!Test(val, -24, 24))
 			{
 				borks.Add("#48 TerrainOffset has an unusual value.");
 			}
