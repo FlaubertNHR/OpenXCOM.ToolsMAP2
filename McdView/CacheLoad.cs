@@ -7,8 +7,8 @@ namespace McdView
 {
 	/// <summary>
 	/// A class that stores the originally loaded/ recently saved values of all
-	/// tileparts in an MCD file for later comparisons that determine McdView's
-	/// 'Changed' boolean.
+	/// tileparts in an MCD file for later comparisons that determine
+	/// <c><see cref="McdviewF.Changed">McdviewF.Changed</see></c>.
 	/// </summary>
 	internal static class CacheLoad
 	{

@@ -2119,11 +2119,11 @@ namespace McdView
 
 		/// <summary>
 		/// Handles mouseover leaving the "STRICT" Label or CheckBox.
-		/// @note Retains the current description if the CheckBox has
-		/// input-focus.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Retains the current description if the CheckBox has
+		/// input-focus.</remarks>
 		private void OnMouseLeaveStrict(object sender, EventArgs e)
 		{
 			if (!cb_Strict.Focused)
@@ -2133,10 +2133,11 @@ namespace McdView
 		/// <summary>
 		/// Handles the "STRICT" checkbox and the "SpriteShade" textbox losing
 		/// focus.
-		/// @note Clears the current description disregarding mouseover state.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Clears the current description disregarding mouseover
+		/// state.</remarks>
 		private void OnLeave(object sender, EventArgs e)
 		{
 			lbl_Description.Text = String.Empty;
