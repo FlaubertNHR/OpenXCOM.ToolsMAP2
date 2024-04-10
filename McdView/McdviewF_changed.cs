@@ -142,6 +142,88 @@ namespace McdView
 //				tb.SelectionLength = tb.Text.Length;
 			} */
 
+		/// <summary>
+		/// The <c>TextBox.LostFocus</c> event does not appear in the designer
+		/// so do it here.
+		/// </summary>
+		private void AssignLostFocusHandlers()
+		{
+			tb00_phase0        .LostFocus += tb_OnLostFocus;
+			tb01_phase1        .LostFocus += tb_OnLostFocus;
+			tb02_phase2        .LostFocus += tb_OnLostFocus;
+			tb03_phase3        .LostFocus += tb_OnLostFocus;
+			tb04_phase4        .LostFocus += tb_OnLostFocus;
+			tb05_phase5        .LostFocus += tb_OnLostFocus;
+			tb06_phase6        .LostFocus += tb_OnLostFocus;
+			tb07_phase7        .LostFocus += tb_OnLostFocus;
+			tb08_loft00        .LostFocus += tb_OnLostFocus;
+			tb09_loft01        .LostFocus += tb_OnLostFocus;
+			tb10_loft02        .LostFocus += tb_OnLostFocus;
+			tb11_loft03        .LostFocus += tb_OnLostFocus;
+			tb12_loft04        .LostFocus += tb_OnLostFocus;
+			tb13_loft05        .LostFocus += tb_OnLostFocus;
+			tb14_loft06        .LostFocus += tb_OnLostFocus;
+			tb15_loft07        .LostFocus += tb_OnLostFocus;
+			tb16_loft08        .LostFocus += tb_OnLostFocus;
+			tb17_loft09        .LostFocus += tb_OnLostFocus;
+			tb18_loft10        .LostFocus += tb_OnLostFocus;
+			tb19_loft11        .LostFocus += tb_OnLostFocus;
+			tb20_scang1        .LostFocus += tb_OnLostFocus;
+			tb20_scang2        .LostFocus += tb_OnLostFocus;
+			tb22_              .LostFocus += tb_OnLostFocus;
+			tb23_              .LostFocus += tb_OnLostFocus;
+			tb24_              .LostFocus += tb_OnLostFocus;
+			tb25_              .LostFocus += tb_OnLostFocus;
+			tb26_              .LostFocus += tb_OnLostFocus;
+			tb27_              .LostFocus += tb_OnLostFocus;
+			tb28_              .LostFocus += tb_OnLostFocus;
+			tb29_              .LostFocus += tb_OnLostFocus;
+			tb30_isslidingdoor .LostFocus += tb_OnLostFocus;
+			tb31_isblocklos    .LostFocus += tb_OnLostFocus;
+			tb32_isdropthrou   .LostFocus += tb_OnLostFocus;
+			tb33_isbigwall     .LostFocus += tb_OnLostFocus;
+			tb34_isgravlift    .LostFocus += tb_OnLostFocus;
+			tb35_ishingeddoor  .LostFocus += tb_OnLostFocus;
+			tb36_isblockfire   .LostFocus += tb_OnLostFocus;
+			tb37_isblocksmoke  .LostFocus += tb_OnLostFocus;
+			tb38_              .LostFocus += tb_OnLostFocus;
+			tb39_tuwalk        .LostFocus += tb_OnLostFocus;
+			tb40_tuslide       .LostFocus += tb_OnLostFocus;
+			tb41_tufly         .LostFocus += tb_OnLostFocus;
+			tb42_armor         .LostFocus += tb_OnLostFocus;
+			tb43_heblock       .LostFocus += tb_OnLostFocus;
+			tb44_deathid       .LostFocus += tb_OnLostFocus;
+			tb45_fireresist    .LostFocus += tb_OnLostFocus;
+			tb46_alternateid   .LostFocus += tb_OnLostFocus;
+			tb47_              .LostFocus += tb_OnLostFocus;
+			tb48_terrainoffset .LostFocus += tb_OnLostFocus;
+			tb49_spriteoffset  .LostFocus += tb_OnLostFocus;
+			tb50_              .LostFocus += tb_OnLostFocus;
+			tb51_lightblock    .LostFocus += tb_OnLostFocus;
+			tb52_footsound     .LostFocus += tb_OnLostFocus;
+			tb53_parttype      .LostFocus += tb_OnLostFocus;
+			tb54_hetype        .LostFocus += tb_OnLostFocus;
+			tb55_hestrength    .LostFocus += tb_OnLostFocus;
+			tb56_smokeblock    .LostFocus += tb_OnLostFocus;
+			tb57_fuel          .LostFocus += tb_OnLostFocus;
+			tb58_lightintensity.LostFocus += tb_OnLostFocus;
+			tb59_specialtype   .LostFocus += tb_OnLostFocus;
+			tb60_isbaseobject  .LostFocus += tb_OnLostFocus;
+			tb61_              .LostFocus += tb_OnLostFocus;
+		}
+
+		private int _lastrecordid = -1;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tb_OnLostFocus(object sender, EventArgs e)
+		{
+			var tb = sender as TextBox;
+			if (tb.Text.Length == 0)
+				tb.Text = Parts[Selid].Record[_lastrecordid].ToString();
+		}
 
 		/// <summary>
 		/// Checks the text of a <c>TextBox</c> for validity. This changes the
@@ -151,43 +233,45 @@ namespace McdView
 		/// <c>Changed</c> handler itself.
 		/// </summary>
 		/// <param name="tb">a <c>TextBox</c> to check the text of</param>
-		/// <returns><c>true</c> if the text is valid</returns>
-		private static bool TryParseText(Control tb)
+		/// <returns><c>true</c> if the text is NOT blank AND NOT changed -
+		/// <c>false</c> if the text is blank OR changed</returns>
+		private bool TryParseText(Control tb)
 		{
-			if (!String.IsNullOrEmpty(tb.Text))
+			if (tb.Text.Length == 0) // ignore value if user-deleted
+				return false;
+
+
+			string text = tb.Text.Trim();
+			if (text.Length != 0)
 			{
-				string text = tb.Text.Trim();
-				if (text.Length != 0)
-				{
-					text = String.Join(
-									"",
-									text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
-				}
+				text = String.Join(
+								"",
+								text.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
+			}
 
-				bool n = false;
-				if (text.Contains("-"))
-				{
-					n = true;
-					text = String.Join(
-									"",
-									text.Split(new[]{"-"}, StringSplitOptions.RemoveEmptyEntries));
-				}
+			bool n = false;
+			if (text.Contains("-"))
+			{
+				n = true;
+				text = String.Join(
+								"",
+								text.Split(new[]{"-"}, StringSplitOptions.RemoveEmptyEntries));
+			}
 
-				while (text.Length > 1 && text.StartsWith("0", StringComparison.Ordinal))
-					text = text.Substring(1);
+			while (text.Length > 1 && text.StartsWith("0", StringComparison.Ordinal))
+				text = text.Substring(1);
 
-				if (text != "0")
-				{
-					if (text.Length == 0) text = "0";
-					else if (n)           text = "-" + text;
-				}
+			if (text != "0")
+			{
+				if (text.Length == 0) text = "0";
+				else if (n)           text = "-" + text;
+			}
 
 
-				if (text != tb.Text)
-				{
-					tb.Text = text; // recurse
-					return false;
-				}
+			if (text != tb.Text)
+			{
+				tb.Text = text; // recurse
+				return false;
 			}
 			return true;
 		}
@@ -212,6 +296,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 0;
 				if (TryParseText(tb00_phase0)) // else recurse
 				{
 					int result;
@@ -263,6 +348,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 1;
 				if (TryParseText(tb01_phase1)) // else recurse
 				{
 					int result;
@@ -314,6 +400,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 2;
 				if (TryParseText(tb02_phase2)) // else recurse
 				{
 					int result;
@@ -365,6 +452,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 3;
 				if (TryParseText(tb03_phase3)) // else recurse
 				{
 					int result;
@@ -416,6 +504,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 4;
 				if (TryParseText(tb04_phase4)) // else recurse
 				{
 					int result;
@@ -467,6 +556,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 5;
 				if (TryParseText(tb05_phase5)) // else recurse
 				{
 					int result;
@@ -518,6 +608,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 6;
 				if (TryParseText(tb06_phase6)) // else recurse
 				{
 					int result;
@@ -569,6 +660,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 7;
 				if (TryParseText(tb07_phase7)) // else recurse
 				{
 					int result;
@@ -628,6 +720,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 8;
 				if (TryParseText(tb08_loft00)) // else recurse
 				{
 					int result;
@@ -679,6 +772,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 9;
 				if (TryParseText(tb09_loft01)) // else recurse
 				{
 					int result;
@@ -730,6 +824,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 10;
 				if (TryParseText(tb10_loft02)) // else recurse
 				{
 					int result;
@@ -781,6 +876,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 11;
 				if (TryParseText(tb11_loft03)) // else recurse
 				{
 					int result;
@@ -832,6 +928,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 12;
 				if (TryParseText(tb12_loft04)) // else recurse
 				{
 					int result;
@@ -883,6 +980,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 13;
 				if (TryParseText(tb13_loft05)) // else recurse
 				{
 					int result;
@@ -934,6 +1032,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 14;
 				if (TryParseText(tb14_loft06)) // else recurse
 				{
 					int result;
@@ -985,6 +1084,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 15;
 				if (TryParseText(tb15_loft07)) // else recurse
 				{
 					int result;
@@ -1036,6 +1136,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 16;
 				if (TryParseText(tb16_loft08)) // else recurse
 				{
 					int result;
@@ -1087,6 +1188,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 17;
 				if (TryParseText(tb17_loft09)) // else recurse
 				{
 					int result;
@@ -1138,6 +1240,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 18;
 				if (TryParseText(tb18_loft10)) // else recurse
 				{
 					int result;
@@ -1189,6 +1292,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 19;
 				if (TryParseText(tb19_loft11)) // else recurse
 				{
 					int result;
@@ -1238,22 +1342,23 @@ namespace McdView
 		/// <param name="e"></param>
 		private void OnMouseEnterLabel20(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "ScanG (unsigned short) is a reference"
-								 + " to an icon in SCANG.DAT that represents a part on"
-								 + " the overhead Minimap during tactical.";
+			lbl_Description.Text = "ScanG (unsigned short) is a reference to an"
+								 + " icon in SCANG.DAT that represents a part"
+								 + " on the overhead Minimap during tactical.";
 		}
 
 		/// <summary>
 		/// #20|21 ScanG (little endian unsigned short) + 35
-		/// @note This is the value in the MCD file with 35 added = the ID in
-		/// SCANG.DAT.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This is the value in the MCD file with 35 added = the ID in
+		/// SCANG.DAT.</remarks>
 		private void OnChanged20(object sender, EventArgs e)
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 20;
 				if (TryParseText(tb20_scang1)) // else recurse
 				{
 					int result;
@@ -1311,14 +1416,15 @@ namespace McdView
 
 		/// <summary>
 		/// #20|21 ScanG_reduced (little endian unsigned short)
-		/// @note This is the unadjusted value in the MCD file.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This is the unadjusted value in the MCD file.</remarks>
 		private void OnChanged20r(object sender, EventArgs e)
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 21;
 				if (TryParseText(tb20_scang2)) // else recurse
 				{
 					int result;
@@ -1383,6 +1489,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 22;
 				if (TryParseText(tb22_)) // else recurse
 				{
 					int result;
@@ -1429,6 +1536,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 23;
 				if (TryParseText(tb23_)) // else recurse
 				{
 					int result;
@@ -1475,6 +1583,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 24;
 				if (TryParseText(tb24_)) // else recurse
 				{
 					int result;
@@ -1521,6 +1630,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 25;
 				if (TryParseText(tb25_)) // else recurse
 				{
 					int result;
@@ -1567,6 +1677,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 26;
 				if (TryParseText(tb26_)) // else recurse
 				{
 					int result;
@@ -1613,6 +1724,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 27;
 				if (TryParseText(tb27_)) // else recurse
 				{
 					int result;
@@ -1659,6 +1771,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 28;
 				if (TryParseText(tb28_)) // else recurse
 				{
 					int result;
@@ -1705,6 +1818,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 29;
 				if (TryParseText(tb29_)) // else recurse
 				{
 					int result;
@@ -1751,6 +1865,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 30;
 				if (TryParseText(tb30_isslidingdoor)) // else recurse
 				{
 					int result;
@@ -1821,6 +1936,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 31;
 				if (TryParseText(tb31_isblocklos)) // else recurse
 				{
 					int result;
@@ -1876,6 +1992,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 32;
 				if (TryParseText(tb32_isdropthrou)) // else recurse
 				{
 					int result;
@@ -1932,6 +2049,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 33;
 				if (TryParseText(tb33_isbigwall)) // else recurse
 				{
 					int result;
@@ -1991,6 +2109,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 33;
 				if (TryParseText(tb33_isbigwall)) // else recurse
 				{
 					int result;
@@ -2065,6 +2184,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 34;
 				if (TryParseText(tb34_isgravlift)) // else recurse
 				{
 					int result;
@@ -2122,6 +2242,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 35;
 				if (TryParseText(tb35_ishingeddoor)) // else recurse
 				{
 					int result;
@@ -2187,6 +2308,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 36;
 				if (TryParseText(tb36_isblockfire)) // else recurse
 				{
 					int result;
@@ -2242,6 +2364,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 37;
 				if (TryParseText(tb37_isblocksmoke)) // else recurse
 				{
 					int result;
@@ -2298,6 +2421,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 38;
 				if (TryParseText(tb38_)) // else recurse
 				{
 					int result;
@@ -2357,6 +2481,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 39;
 				if (TryParseText(tb39_tuwalk)) // else recurse
 				{
 					int result;
@@ -2404,6 +2529,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 40;
 				if (TryParseText(tb40_tuslide)) // else recurse
 				{
 					int result;
@@ -2451,6 +2577,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 41;
 				if (TryParseText(tb41_tufly)) // else recurse
 				{
 					int result;
@@ -2498,6 +2625,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 42;
 				if (TryParseText(tb42_armor)) // else recurse
 				{
 					int result;
@@ -2548,6 +2676,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 43;
 				if (TryParseText(tb43_heblock)) // else recurse
 				{
 					int result;
@@ -2595,6 +2724,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 44;
 				if (TryParseText(tb44_deathid)) // else recurse
 				{
 					int result;
@@ -2655,6 +2785,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 45;
 				if (TryParseText(tb45_fireresist)) // else recurse
 				{
 					int result;
@@ -2705,6 +2836,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 46;
 				if (TryParseText(tb46_alternateid)) // else recurse
 				{
 					int result;
@@ -2766,6 +2898,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 47;
 				if (TryParseText(tb47_)) // else recurse
 				{
 					int result;
@@ -2814,6 +2947,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 48;
 				if (TryParseText(tb48_terrainoffset)) // else recurse // TODO: check 0 after "-" sign
 				{
 					int result;
@@ -2876,6 +3010,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 49;
 				if (TryParseText(tb49_spriteoffset)) // else recurse
 				{
 					int result;
@@ -2930,6 +3065,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 50;
 				if (TryParseText(tb50_)) // else recurse
 				{
 					int result;
@@ -2977,6 +3113,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 51;
 				if (TryParseText(tb51_lightblock)) // else recurse
 				{
 					int result;
@@ -3025,6 +3162,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 52;
 				if (TryParseText(tb52_footsound)) // else recurse
 				{
 					int result;
@@ -3090,6 +3228,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 53;
 				if (TryParseText(tb53_parttype)) // else recurse
 				{
 					int result;
@@ -3149,6 +3288,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 54;
 				if (TryParseText(tb54_hetype)) // else recurse
 				{
 					int result;
@@ -3207,6 +3347,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 55;
 				if (TryParseText(tb55_hestrength)) // else recurse
 				{
 					int result;
@@ -3255,6 +3396,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 56;
 				if (TryParseText(tb56_smokeblock)) // else recurse
 				{
 					int result;
@@ -3303,6 +3445,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 57;
 				if (TryParseText(tb57_fuel)) // else recurse
 				{
 					int result;
@@ -3350,6 +3493,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 58;
 				if (TryParseText(tb58_lightintensity)) // else recurse
 				{
 					int result;
@@ -3399,6 +3543,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 59;
 				if (TryParseText(tb59_specialtype)) // else recurse
 				{
 					int result;
@@ -3477,6 +3622,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 60;
 				if (TryParseText(tb60_isbaseobject)) // else recurse
 				{
 					int result;
@@ -3533,6 +3679,7 @@ namespace McdView
 		{
 			if (Selid != -1)
 			{
+				_lastrecordid = 61;
 				if (TryParseText(tb61_)) // else recurse
 				{
 					int result;

@@ -351,6 +351,8 @@ namespace McdView
 			InitializeComponent();
 			pnl_IsoLoft.MouseWheel += OnMouseWheel_IsoLoft;
 
+			AssignLostFocusHandlers();
+
 			MaximumSize = new Size(0,0);
 
 			gb_Overhead    .Location = new Point(0, 0);
@@ -1145,6 +1147,8 @@ namespace McdView
 				CacheLoad.SetCacheSaved(Parts);
 				Changed = false;
 				FireMvReload = true;
+
+				PopulateTextFields(); // in case user has a textbox focused with no string-value
 			}
 		}
 
