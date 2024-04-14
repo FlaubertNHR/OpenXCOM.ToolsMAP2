@@ -12,9 +12,11 @@ using XCom;
 namespace McdView
 {
 	/// <summary>
-	/// A panel that displays an entire <see cref="XCom.McdRecord">MCD recordset</see>
-	/// with each record's 'Sprite1' sprite. This class is inherited by
-	/// <see cref="TerrainPanel_main"/> and <see cref="TerrainPanel_copier"/>.
+	/// A panel that displays an entire
+	/// <c><see cref="XCom.McdRecord"></see></c> with each record's
+	/// <c><see cref="McdRecord.Sprite1"/></c> sprite. This class is inherited
+	/// by <c><see cref="TerrainPanel_main"/></c> and
+	/// <c><see cref="TerrainPanel_copier"/></c>.
 	/// </summary>
 	internal abstract class TerrainPanel
 		:
@@ -472,8 +474,8 @@ namespace McdView
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>If user has the openfile dialog open and double-clicks to
-		/// open a file that happens to be over the panel a mouse-up event
-		/// fires. So use MouseDown here.</remarks>
+		/// open a file that happens to be over the panel a <c>MouseUp</c> event
+		/// fires. So use <c>MouseDown</c> here.</remarks>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
 			Select();
@@ -562,7 +564,7 @@ namespace McdView
 
 		/// <summary>
 		/// This is required in order to handle arrow-keyboard-input via
-		/// McdviewF.OnKeyDown().
+		/// <c>McdviewF.OnKeyDown()</c>.
 		/// </summary>
 		/// <param name="keyData"></param>
 		/// <returns></returns>

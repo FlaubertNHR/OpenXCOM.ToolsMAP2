@@ -8,8 +8,9 @@ using XCom;
 namespace McdView
 {
 	/// <summary>
-	/// The panel that displays the entire MCD recordset with each record's
-	/// Sprite1 sprite.
+	/// The panel that displays the entire
+	/// <c><see cref="XCom.McdRecord"></see></c> with each record's
+	/// <c><see cref="McdRecord.Sprite1"/></c> sprite.
 	/// </summary>
 	internal sealed class TerrainPanel_main
 		:

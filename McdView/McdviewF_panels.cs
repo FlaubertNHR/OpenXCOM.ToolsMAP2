@@ -498,7 +498,7 @@ namespace McdView
 		internal LoftPanel _pnlLoFT;
 
 		/// <summary>
-		/// Sets a LoFT before returning from 'LoftChooserF'.
+		/// Sets a LoFT before returning from <c><see cref="LoftChooserF"/></c>.
 		/// </summary>
 		/// <param name="id"></param>
 		internal void SetLoft(int id)

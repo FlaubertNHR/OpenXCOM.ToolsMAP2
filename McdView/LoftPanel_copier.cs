@@ -36,7 +36,7 @@ namespace McdView
 
 		#region Events (override)
 		/// <summary>
-		/// Draws a LoFT icon in this LoftPanel_copier.
+		/// Draws a LoFT icon in this <c>LoftPanel_copier</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
