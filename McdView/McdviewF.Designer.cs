@@ -810,6 +810,7 @@ namespace McdView
 			this.lbl20_scang.Text = "ScanG";
 			this.lbl20_scang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl20_scang.MouseEnter += new System.EventHandler(this.OnMouseEnterLabel20);
+			this.lbl20_scang.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp20);
 			// 
 			// lbl30_isslidingdoor
 			// 
@@ -821,6 +822,7 @@ namespace McdView
 			this.lbl30_isslidingdoor.Text = "isSlidingDoor";
 			this.lbl30_isslidingdoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl30_isslidingdoor.MouseEnter += new System.EventHandler(this.OnEnter30);
+			this.lbl30_isslidingdoor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp30);
 			// 
 			// lbl20
 			// 
@@ -832,6 +834,7 @@ namespace McdView
 			this.lbl20.Text = "#20|21";
 			this.lbl20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl20.MouseEnter += new System.EventHandler(this.OnMouseEnterLabel20);
+			this.lbl20.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp20);
 			// 
 			// lbl30
 			// 
@@ -843,6 +846,7 @@ namespace McdView
 			this.lbl30.Text = "#30";
 			this.lbl30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl30.MouseEnter += new System.EventHandler(this.OnEnter30);
+			this.lbl30.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp30);
 			// 
 			// lbl31
 			// 
@@ -854,6 +858,7 @@ namespace McdView
 			this.lbl31.Text = "#31";
 			this.lbl31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl31.MouseEnter += new System.EventHandler(this.OnEnter31);
+			this.lbl31.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp31);
 			// 
 			// lbl31_isblocklos
 			// 
@@ -865,6 +870,7 @@ namespace McdView
 			this.lbl31_isblocklos.Text = "isBlockLoS";
 			this.lbl31_isblocklos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl31_isblocklos.MouseEnter += new System.EventHandler(this.OnEnter31);
+			this.lbl31_isblocklos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp31);
 			// 
 			// lbl32
 			// 
@@ -876,6 +882,7 @@ namespace McdView
 			this.lbl32.Text = "#32";
 			this.lbl32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl32.MouseEnter += new System.EventHandler(this.OnEnter32);
+			this.lbl32.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp32);
 			// 
 			// lbl32_isdropthrou
 			// 
@@ -887,6 +894,7 @@ namespace McdView
 			this.lbl32_isdropthrou.Text = "isDropThrou";
 			this.lbl32_isdropthrou.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl32_isdropthrou.MouseEnter += new System.EventHandler(this.OnEnter32);
+			this.lbl32_isdropthrou.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp32);
 			// 
 			// lbl33
 			// 
@@ -898,6 +906,7 @@ namespace McdView
 			this.lbl33.Text = "#33";
 			this.lbl33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl33.MouseEnter += new System.EventHandler(this.OnEnter33);
+			this.lbl33.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp33);
 			// 
 			// lbl33_isbigwall
 			// 
@@ -909,6 +918,7 @@ namespace McdView
 			this.lbl33_isbigwall.Text = "isBigWall";
 			this.lbl33_isbigwall.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl33_isbigwall.MouseEnter += new System.EventHandler(this.OnEnter33);
+			this.lbl33_isbigwall.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp33);
 			// 
 			// lbl34
 			// 
@@ -920,6 +930,7 @@ namespace McdView
 			this.lbl34.Text = "#34";
 			this.lbl34.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl34.MouseEnter += new System.EventHandler(this.OnEnter34);
+			this.lbl34.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp34);
 			// 
 			// lbl34_isgravlift
 			// 
@@ -931,6 +942,7 @@ namespace McdView
 			this.lbl34_isgravlift.Text = "isGravLift";
 			this.lbl34_isgravlift.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl34_isgravlift.MouseEnter += new System.EventHandler(this.OnEnter34);
+			this.lbl34_isgravlift.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp34);
 			// 
 			// lbl35
 			// 
@@ -942,6 +954,7 @@ namespace McdView
 			this.lbl35.Text = "#35";
 			this.lbl35.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl35.MouseEnter += new System.EventHandler(this.OnEnter35);
+			this.lbl35.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp35);
 			// 
 			// lbl35_ishingeddoor
 			// 
@@ -953,6 +966,7 @@ namespace McdView
 			this.lbl35_ishingeddoor.Text = "isHingedDoor";
 			this.lbl35_ishingeddoor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl35_ishingeddoor.MouseEnter += new System.EventHandler(this.OnEnter35);
+			this.lbl35_ishingeddoor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp35);
 			// 
 			// lbl36
 			// 
@@ -964,6 +978,7 @@ namespace McdView
 			this.lbl36.Text = "#36";
 			this.lbl36.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl36.MouseEnter += new System.EventHandler(this.OnEnter36);
+			this.lbl36.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp36);
 			// 
 			// lbl36_isblockfire
 			// 
@@ -975,6 +990,7 @@ namespace McdView
 			this.lbl36_isblockfire.Text = "isBlockFire";
 			this.lbl36_isblockfire.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl36_isblockfire.MouseEnter += new System.EventHandler(this.OnEnter36);
+			this.lbl36_isblockfire.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp36);
 			// 
 			// lbl37
 			// 
@@ -986,6 +1002,7 @@ namespace McdView
 			this.lbl37.Text = "#37";
 			this.lbl37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl37.MouseEnter += new System.EventHandler(this.OnEnter37);
+			this.lbl37.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp37);
 			// 
 			// lbl37_isblocksmoke
 			// 
@@ -997,6 +1014,7 @@ namespace McdView
 			this.lbl37_isblocksmoke.Text = "isBlockSmoke";
 			this.lbl37_isblocksmoke.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl37_isblocksmoke.MouseEnter += new System.EventHandler(this.OnEnter37);
+			this.lbl37_isblocksmoke.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp37);
 			// 
 			// lbl38
 			// 
@@ -1008,6 +1026,7 @@ namespace McdView
 			this.lbl38.Text = "#38";
 			this.lbl38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl38.MouseEnter += new System.EventHandler(this.OnEnter38);
+			this.lbl38.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp38);
 			// 
 			// lbl38_
 			// 
@@ -1019,6 +1038,7 @@ namespace McdView
 			this.lbl38_.Text = "LeftRightHalf";
 			this.lbl38_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl38_.MouseEnter += new System.EventHandler(this.OnEnter38);
+			this.lbl38_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp38);
 			// 
 			// lbl39
 			// 
@@ -1030,6 +1050,7 @@ namespace McdView
 			this.lbl39.Text = "#39";
 			this.lbl39.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl39.MouseEnter += new System.EventHandler(this.OnEnter39);
+			this.lbl39.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp39);
 			// 
 			// lbl39_tuwalk
 			// 
@@ -1041,6 +1062,7 @@ namespace McdView
 			this.lbl39_tuwalk.Text = "TuWalk";
 			this.lbl39_tuwalk.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl39_tuwalk.MouseEnter += new System.EventHandler(this.OnEnter39);
+			this.lbl39_tuwalk.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp39);
 			// 
 			// lbl40
 			// 
@@ -1052,6 +1074,7 @@ namespace McdView
 			this.lbl40.Text = "#40";
 			this.lbl40.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl40.MouseEnter += new System.EventHandler(this.OnEnter40);
+			this.lbl40.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp40);
 			// 
 			// lbl40_tuslide
 			// 
@@ -1063,6 +1086,7 @@ namespace McdView
 			this.lbl40_tuslide.Text = "TuSlide";
 			this.lbl40_tuslide.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl40_tuslide.MouseEnter += new System.EventHandler(this.OnEnter40);
+			this.lbl40_tuslide.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp40);
 			// 
 			// lbl41
 			// 
@@ -1074,6 +1098,7 @@ namespace McdView
 			this.lbl41.Text = "#41";
 			this.lbl41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl41.MouseEnter += new System.EventHandler(this.OnEnter41);
+			this.lbl41.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp41);
 			// 
 			// lbl41_tufly
 			// 
@@ -1085,6 +1110,7 @@ namespace McdView
 			this.lbl41_tufly.Text = "TuFly";
 			this.lbl41_tufly.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl41_tufly.MouseEnter += new System.EventHandler(this.OnEnter41);
+			this.lbl41_tufly.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp41);
 			// 
 			// lbl42
 			// 
@@ -1096,6 +1122,7 @@ namespace McdView
 			this.lbl42.Text = "#42";
 			this.lbl42.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl42.MouseEnter += new System.EventHandler(this.OnEnter42);
+			this.lbl42.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp42);
 			// 
 			// lbl42_armor
 			// 
@@ -1107,6 +1134,7 @@ namespace McdView
 			this.lbl42_armor.Text = "Armor";
 			this.lbl42_armor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl42_armor.MouseEnter += new System.EventHandler(this.OnEnter42);
+			this.lbl42_armor.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp42);
 			// 
 			// lbl43
 			// 
@@ -1118,6 +1146,7 @@ namespace McdView
 			this.lbl43.Text = "#43";
 			this.lbl43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl43.MouseEnter += new System.EventHandler(this.OnEnter43);
+			this.lbl43.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp43);
 			// 
 			// lbl43_heblock
 			// 
@@ -1129,6 +1158,7 @@ namespace McdView
 			this.lbl43_heblock.Text = "HeBlock";
 			this.lbl43_heblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl43_heblock.MouseEnter += new System.EventHandler(this.OnEnter43);
+			this.lbl43_heblock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp43);
 			// 
 			// lbl44
 			// 
@@ -1140,6 +1170,7 @@ namespace McdView
 			this.lbl44.Text = "#44";
 			this.lbl44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl44.MouseEnter += new System.EventHandler(this.OnEnter44);
+			this.lbl44.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp44);
 			// 
 			// lbl44_deathid
 			// 
@@ -1151,6 +1182,7 @@ namespace McdView
 			this.lbl44_deathid.Text = "DeathId";
 			this.lbl44_deathid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl44_deathid.MouseEnter += new System.EventHandler(this.OnEnter44);
+			this.lbl44_deathid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp44);
 			// 
 			// lbl45
 			// 
@@ -1162,6 +1194,7 @@ namespace McdView
 			this.lbl45.Text = "#45";
 			this.lbl45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl45.MouseEnter += new System.EventHandler(this.OnEnter45);
+			this.lbl45.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp45);
 			// 
 			// lbl45_fireresist
 			// 
@@ -1173,6 +1206,7 @@ namespace McdView
 			this.lbl45_fireresist.Text = "FireResist";
 			this.lbl45_fireresist.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl45_fireresist.MouseEnter += new System.EventHandler(this.OnEnter45);
+			this.lbl45_fireresist.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp45);
 			// 
 			// lbl46
 			// 
@@ -1184,6 +1218,7 @@ namespace McdView
 			this.lbl46.Text = "#46";
 			this.lbl46.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl46.MouseEnter += new System.EventHandler(this.OnEnter46);
+			this.lbl46.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp46);
 			// 
 			// lbl46_alternateid
 			// 
@@ -1195,6 +1230,7 @@ namespace McdView
 			this.lbl46_alternateid.Text = "AlternateId";
 			this.lbl46_alternateid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl46_alternateid.MouseEnter += new System.EventHandler(this.OnEnter46);
+			this.lbl46_alternateid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp46);
 			// 
 			// lbl47
 			// 
@@ -1206,6 +1242,7 @@ namespace McdView
 			this.lbl47.Text = "#47";
 			this.lbl47.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl47.MouseEnter += new System.EventHandler(this.OnEnter47);
+			this.lbl47.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp47);
 			// 
 			// lbl47_
 			// 
@@ -1217,6 +1254,7 @@ namespace McdView
 			this.lbl47_.Text = "CloseDoors";
 			this.lbl47_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl47_.MouseEnter += new System.EventHandler(this.OnEnter47);
+			this.lbl47_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp47);
 			// 
 			// lbl48
 			// 
@@ -1228,6 +1266,7 @@ namespace McdView
 			this.lbl48.Text = "#48";
 			this.lbl48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl48.MouseEnter += new System.EventHandler(this.OnEnter48);
+			this.lbl48.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp48);
 			// 
 			// lbl48_terrainoffset
 			// 
@@ -1239,6 +1278,7 @@ namespace McdView
 			this.lbl48_terrainoffset.Text = "TerrainOffset";
 			this.lbl48_terrainoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl48_terrainoffset.MouseEnter += new System.EventHandler(this.OnEnter48);
+			this.lbl48_terrainoffset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp48);
 			// 
 			// lbl49
 			// 
@@ -1250,6 +1290,7 @@ namespace McdView
 			this.lbl49.Text = "#49";
 			this.lbl49.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl49.MouseEnter += new System.EventHandler(this.OnEnter49);
+			this.lbl49.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp49);
 			// 
 			// lbl49_spriteoffset
 			// 
@@ -1261,6 +1302,7 @@ namespace McdView
 			this.lbl49_spriteoffset.Text = "SpriteOffset";
 			this.lbl49_spriteoffset.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl49_spriteoffset.MouseEnter += new System.EventHandler(this.OnEnter49);
+			this.lbl49_spriteoffset.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp49);
 			// 
 			// lbl50
 			// 
@@ -1272,6 +1314,7 @@ namespace McdView
 			this.lbl50.Text = "#50";
 			this.lbl50.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl50.MouseEnter += new System.EventHandler(this.OnEnter50);
+			this.lbl50.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp50);
 			// 
 			// lbl50_
 			// 
@@ -1283,6 +1326,7 @@ namespace McdView
 			this.lbl50_.Text = "dTypeMod";
 			this.lbl50_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl50_.MouseEnter += new System.EventHandler(this.OnEnter50);
+			this.lbl50_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp50);
 			// 
 			// lbl51
 			// 
@@ -1294,6 +1338,7 @@ namespace McdView
 			this.lbl51.Text = "#51";
 			this.lbl51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl51.MouseEnter += new System.EventHandler(this.OnEnter51);
+			this.lbl51.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp51);
 			// 
 			// lbl51_lightblock
 			// 
@@ -1305,6 +1350,7 @@ namespace McdView
 			this.lbl51_lightblock.Text = "LightBlock";
 			this.lbl51_lightblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl51_lightblock.MouseEnter += new System.EventHandler(this.OnEnter51);
+			this.lbl51_lightblock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp51);
 			// 
 			// lbl52
 			// 
@@ -1316,6 +1362,7 @@ namespace McdView
 			this.lbl52.Text = "#52";
 			this.lbl52.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl52.MouseEnter += new System.EventHandler(this.OnEnter52);
+			this.lbl52.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp52);
 			// 
 			// lbl52_footsound
 			// 
@@ -1327,6 +1374,7 @@ namespace McdView
 			this.lbl52_footsound.Text = "FootSound";
 			this.lbl52_footsound.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl52_footsound.MouseEnter += new System.EventHandler(this.OnEnter52);
+			this.lbl52_footsound.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp52);
 			// 
 			// lbl53
 			// 
@@ -1338,6 +1386,7 @@ namespace McdView
 			this.lbl53.Text = "#53";
 			this.lbl53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl53.MouseEnter += new System.EventHandler(this.OnEnter53);
+			this.lbl53.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp53);
 			// 
 			// lbl53_parttype
 			// 
@@ -1349,6 +1398,7 @@ namespace McdView
 			this.lbl53_parttype.Text = "PartType";
 			this.lbl53_parttype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl53_parttype.MouseEnter += new System.EventHandler(this.OnEnter53);
+			this.lbl53_parttype.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp53);
 			// 
 			// lbl54
 			// 
@@ -1360,6 +1410,7 @@ namespace McdView
 			this.lbl54.Text = "#54";
 			this.lbl54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl54.MouseEnter += new System.EventHandler(this.OnEnter54);
+			this.lbl54.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp54);
 			// 
 			// lbl54_hetype
 			// 
@@ -1371,6 +1422,7 @@ namespace McdView
 			this.lbl54_hetype.Text = "HeType";
 			this.lbl54_hetype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl54_hetype.MouseEnter += new System.EventHandler(this.OnEnter54);
+			this.lbl54_hetype.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp54);
 			// 
 			// lbl55
 			// 
@@ -1382,6 +1434,7 @@ namespace McdView
 			this.lbl55.Text = "#55";
 			this.lbl55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl55.MouseEnter += new System.EventHandler(this.OnEnter55);
+			this.lbl55.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp55);
 			// 
 			// lbl55_hestrength
 			// 
@@ -1393,6 +1446,7 @@ namespace McdView
 			this.lbl55_hestrength.Text = "HeStrength";
 			this.lbl55_hestrength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl55_hestrength.MouseEnter += new System.EventHandler(this.OnEnter55);
+			this.lbl55_hestrength.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp55);
 			// 
 			// lbl56
 			// 
@@ -1404,6 +1458,7 @@ namespace McdView
 			this.lbl56.Text = "#56";
 			this.lbl56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl56.MouseEnter += new System.EventHandler(this.OnEnter56);
+			this.lbl56.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp56);
 			// 
 			// lbl56_smokeblock
 			// 
@@ -1415,6 +1470,7 @@ namespace McdView
 			this.lbl56_smokeblock.Text = "SmokeBlock";
 			this.lbl56_smokeblock.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl56_smokeblock.MouseEnter += new System.EventHandler(this.OnEnter56);
+			this.lbl56_smokeblock.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp56);
 			// 
 			// lbl57
 			// 
@@ -1426,6 +1482,7 @@ namespace McdView
 			this.lbl57.Text = "#57";
 			this.lbl57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl57.MouseEnter += new System.EventHandler(this.OnEnter57);
+			this.lbl57.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp57);
 			// 
 			// lbl57_fuel
 			// 
@@ -1437,6 +1494,7 @@ namespace McdView
 			this.lbl57_fuel.Text = "Fuel";
 			this.lbl57_fuel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl57_fuel.MouseEnter += new System.EventHandler(this.OnEnter57);
+			this.lbl57_fuel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp57);
 			// 
 			// lbl58
 			// 
@@ -1448,6 +1506,7 @@ namespace McdView
 			this.lbl58.Text = "#58";
 			this.lbl58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl58.MouseEnter += new System.EventHandler(this.OnEnter58);
+			this.lbl58.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp58);
 			// 
 			// lbl58_lightintensity
 			// 
@@ -1459,6 +1518,7 @@ namespace McdView
 			this.lbl58_lightintensity.Text = "LightIntensity";
 			this.lbl58_lightintensity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl58_lightintensity.MouseEnter += new System.EventHandler(this.OnEnter58);
+			this.lbl58_lightintensity.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp58);
 			// 
 			// lbl59
 			// 
@@ -1470,6 +1530,7 @@ namespace McdView
 			this.lbl59.Text = "#59";
 			this.lbl59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl59.MouseEnter += new System.EventHandler(this.OnEnter59);
+			this.lbl59.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp59);
 			// 
 			// lbl59_specialtype
 			// 
@@ -1481,6 +1542,7 @@ namespace McdView
 			this.lbl59_specialtype.Text = "SpecialType";
 			this.lbl59_specialtype.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl59_specialtype.MouseEnter += new System.EventHandler(this.OnEnter59);
+			this.lbl59_specialtype.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp59);
 			// 
 			// lbl60
 			// 
@@ -1492,6 +1554,7 @@ namespace McdView
 			this.lbl60.Text = "#60";
 			this.lbl60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl60.MouseEnter += new System.EventHandler(this.OnEnter60);
+			this.lbl60.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp60);
 			// 
 			// lbl60_isbaseobject
 			// 
@@ -1503,6 +1566,7 @@ namespace McdView
 			this.lbl60_isbaseobject.Text = "isBaseObject";
 			this.lbl60_isbaseobject.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl60_isbaseobject.MouseEnter += new System.EventHandler(this.OnEnter60);
+			this.lbl60_isbaseobject.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp60);
 			// 
 			// lbl61
 			// 
@@ -1514,6 +1578,7 @@ namespace McdView
 			this.lbl61.Text = "#61";
 			this.lbl61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl61.MouseEnter += new System.EventHandler(this.OnEnter61);
+			this.lbl61.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp61);
 			// 
 			// lbl61_
 			// 
@@ -1525,6 +1590,7 @@ namespace McdView
 			this.lbl61_.Text = "VictoryPoints";
 			this.lbl61_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl61_.MouseEnter += new System.EventHandler(this.OnEnter61);
+			this.lbl61_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp61);
 			// 
 			// lbl19
 			// 
@@ -1536,6 +1602,7 @@ namespace McdView
 			this.lbl19.Text = "#19";
 			this.lbl19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl19.MouseEnter += new System.EventHandler(this.OnEnter19);
+			this.lbl19.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp19);
 			// 
 			// lbl19_loft11
 			// 
@@ -1547,6 +1614,7 @@ namespace McdView
 			this.lbl19_loft11.Text = "loft 12";
 			this.lbl19_loft11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl19_loft11.MouseEnter += new System.EventHandler(this.OnEnter19);
+			this.lbl19_loft11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp19);
 			// 
 			// lbl18
 			// 
@@ -1558,6 +1626,7 @@ namespace McdView
 			this.lbl18.Text = "#18";
 			this.lbl18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl18.MouseEnter += new System.EventHandler(this.OnEnter18);
+			this.lbl18.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp18);
 			// 
 			// lbl18_loft10
 			// 
@@ -1569,6 +1638,7 @@ namespace McdView
 			this.lbl18_loft10.Text = "loft 11";
 			this.lbl18_loft10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl18_loft10.MouseEnter += new System.EventHandler(this.OnEnter18);
+			this.lbl18_loft10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp18);
 			// 
 			// lbl17
 			// 
@@ -1580,6 +1650,7 @@ namespace McdView
 			this.lbl17.Text = "#17";
 			this.lbl17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl17.MouseEnter += new System.EventHandler(this.OnEnter17);
+			this.lbl17.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp17);
 			// 
 			// lbl17_loft09
 			// 
@@ -1591,6 +1662,7 @@ namespace McdView
 			this.lbl17_loft09.Text = "loft 10";
 			this.lbl17_loft09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl17_loft09.MouseEnter += new System.EventHandler(this.OnEnter17);
+			this.lbl17_loft09.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp17);
 			// 
 			// lbl16
 			// 
@@ -1602,6 +1674,7 @@ namespace McdView
 			this.lbl16.Text = "#16";
 			this.lbl16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl16.MouseEnter += new System.EventHandler(this.OnEnter16);
+			this.lbl16.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp16);
 			// 
 			// lbl16_loft08
 			// 
@@ -1613,6 +1686,7 @@ namespace McdView
 			this.lbl16_loft08.Text = "loft 9";
 			this.lbl16_loft08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl16_loft08.MouseEnter += new System.EventHandler(this.OnEnter16);
+			this.lbl16_loft08.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp16);
 			// 
 			// lbl15
 			// 
@@ -1624,6 +1698,7 @@ namespace McdView
 			this.lbl15.Text = "#15";
 			this.lbl15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl15.MouseEnter += new System.EventHandler(this.OnEnter15);
+			this.lbl15.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp15);
 			// 
 			// lbl15_loft07
 			// 
@@ -1635,6 +1710,7 @@ namespace McdView
 			this.lbl15_loft07.Text = "loft 8";
 			this.lbl15_loft07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl15_loft07.MouseEnter += new System.EventHandler(this.OnEnter15);
+			this.lbl15_loft07.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp15);
 			// 
 			// lbl14
 			// 
@@ -1646,6 +1722,7 @@ namespace McdView
 			this.lbl14.Text = "#14";
 			this.lbl14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl14.MouseEnter += new System.EventHandler(this.OnEnter14);
+			this.lbl14.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp14);
 			// 
 			// lbl14_loft06
 			// 
@@ -1657,6 +1734,7 @@ namespace McdView
 			this.lbl14_loft06.Text = "loft 7";
 			this.lbl14_loft06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl14_loft06.MouseEnter += new System.EventHandler(this.OnEnter14);
+			this.lbl14_loft06.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp14);
 			// 
 			// lbl13
 			// 
@@ -1668,6 +1746,7 @@ namespace McdView
 			this.lbl13.Text = "#13";
 			this.lbl13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl13.MouseEnter += new System.EventHandler(this.OnEnter13);
+			this.lbl13.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp13);
 			// 
 			// lbl13_loft05
 			// 
@@ -1679,6 +1758,7 @@ namespace McdView
 			this.lbl13_loft05.Text = "loft 6";
 			this.lbl13_loft05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl13_loft05.MouseEnter += new System.EventHandler(this.OnEnter13);
+			this.lbl13_loft05.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp13);
 			// 
 			// lbl12
 			// 
@@ -1690,6 +1770,7 @@ namespace McdView
 			this.lbl12.Text = "#12";
 			this.lbl12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl12.MouseEnter += new System.EventHandler(this.OnEnter12);
+			this.lbl12.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp12);
 			// 
 			// lbl12_loft04
 			// 
@@ -1701,6 +1782,7 @@ namespace McdView
 			this.lbl12_loft04.Text = "loft 5";
 			this.lbl12_loft04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl12_loft04.MouseEnter += new System.EventHandler(this.OnEnter12);
+			this.lbl12_loft04.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp12);
 			// 
 			// lbl11
 			// 
@@ -1712,6 +1794,7 @@ namespace McdView
 			this.lbl11.Text = "#11";
 			this.lbl11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl11.MouseEnter += new System.EventHandler(this.OnEnter11);
+			this.lbl11.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp11);
 			// 
 			// lbl11_loft03
 			// 
@@ -1723,6 +1806,7 @@ namespace McdView
 			this.lbl11_loft03.Text = "loft 4";
 			this.lbl11_loft03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl11_loft03.MouseEnter += new System.EventHandler(this.OnEnter11);
+			this.lbl11_loft03.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp11);
 			// 
 			// lbl10
 			// 
@@ -1734,6 +1818,7 @@ namespace McdView
 			this.lbl10.Text = "#10";
 			this.lbl10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl10.MouseEnter += new System.EventHandler(this.OnEnter10);
+			this.lbl10.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp10);
 			// 
 			// lbl10_loft02
 			// 
@@ -1745,6 +1830,7 @@ namespace McdView
 			this.lbl10_loft02.Text = "loft 3";
 			this.lbl10_loft02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl10_loft02.MouseEnter += new System.EventHandler(this.OnEnter10);
+			this.lbl10_loft02.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp10);
 			// 
 			// lbl09
 			// 
@@ -1756,6 +1842,7 @@ namespace McdView
 			this.lbl09.Text = "#9";
 			this.lbl09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl09.MouseEnter += new System.EventHandler(this.OnEnter9);
+			this.lbl09.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp9);
 			// 
 			// lbl09_loft01
 			// 
@@ -1767,6 +1854,7 @@ namespace McdView
 			this.lbl09_loft01.Text = "loft 2";
 			this.lbl09_loft01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl09_loft01.MouseEnter += new System.EventHandler(this.OnEnter9);
+			this.lbl09_loft01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp9);
 			// 
 			// lbl08
 			// 
@@ -1778,6 +1866,7 @@ namespace McdView
 			this.lbl08.Text = "#8";
 			this.lbl08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl08.MouseEnter += new System.EventHandler(this.OnEnter8);
+			this.lbl08.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp8);
 			// 
 			// lbl08_loft00
 			// 
@@ -1789,6 +1878,7 @@ namespace McdView
 			this.lbl08_loft00.Text = "loft 1";
 			this.lbl08_loft00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl08_loft00.MouseEnter += new System.EventHandler(this.OnEnter8);
+			this.lbl08_loft00.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp8);
 			// 
 			// lbl00
 			// 
@@ -1800,6 +1890,7 @@ namespace McdView
 			this.lbl00.Text = "#0";
 			this.lbl00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl00.MouseEnter += new System.EventHandler(this.OnEnter0);
+			this.lbl00.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp0);
 			// 
 			// lbl00_phase0
 			// 
@@ -1811,6 +1902,7 @@ namespace McdView
 			this.lbl00_phase0.Text = "phase 1";
 			this.lbl00_phase0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl00_phase0.MouseEnter += new System.EventHandler(this.OnEnter0);
+			this.lbl00_phase0.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp0);
 			// 
 			// lbl01
 			// 
@@ -1822,6 +1914,7 @@ namespace McdView
 			this.lbl01.Text = "#1";
 			this.lbl01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl01.MouseEnter += new System.EventHandler(this.OnEnter1);
+			this.lbl01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp1);
 			// 
 			// lbl01_phase1
 			// 
@@ -1833,6 +1926,7 @@ namespace McdView
 			this.lbl01_phase1.Text = "phase 2";
 			this.lbl01_phase1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl01_phase1.MouseEnter += new System.EventHandler(this.OnEnter1);
+			this.lbl01_phase1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp1);
 			// 
 			// lbl02
 			// 
@@ -1844,6 +1938,7 @@ namespace McdView
 			this.lbl02.Text = "#2";
 			this.lbl02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl02.MouseEnter += new System.EventHandler(this.OnEnter2);
+			this.lbl02.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp2);
 			// 
 			// lbl02_phase2
 			// 
@@ -1855,6 +1950,7 @@ namespace McdView
 			this.lbl02_phase2.Text = "phase 3";
 			this.lbl02_phase2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl02_phase2.MouseEnter += new System.EventHandler(this.OnEnter2);
+			this.lbl02_phase2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp2);
 			// 
 			// lbl03
 			// 
@@ -1866,6 +1962,7 @@ namespace McdView
 			this.lbl03.Text = "#3";
 			this.lbl03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl03.MouseEnter += new System.EventHandler(this.OnEnter3);
+			this.lbl03.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp3);
 			// 
 			// lbl03_phase3
 			// 
@@ -1877,6 +1974,7 @@ namespace McdView
 			this.lbl03_phase3.Text = "phase 4";
 			this.lbl03_phase3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl03_phase3.MouseEnter += new System.EventHandler(this.OnEnter3);
+			this.lbl03_phase3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp3);
 			// 
 			// lbl07
 			// 
@@ -1888,6 +1986,7 @@ namespace McdView
 			this.lbl07.Text = "#7";
 			this.lbl07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl07.MouseEnter += new System.EventHandler(this.OnEnter7);
+			this.lbl07.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp7);
 			// 
 			// lbl07_phase7
 			// 
@@ -1899,6 +1998,7 @@ namespace McdView
 			this.lbl07_phase7.Text = "phase 8";
 			this.lbl07_phase7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl07_phase7.MouseEnter += new System.EventHandler(this.OnEnter7);
+			this.lbl07_phase7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp7);
 			// 
 			// lbl06
 			// 
@@ -1910,6 +2010,7 @@ namespace McdView
 			this.lbl06.Text = "#6";
 			this.lbl06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl06.MouseEnter += new System.EventHandler(this.OnEnter6);
+			this.lbl06.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp6);
 			// 
 			// lbl06_phase6
 			// 
@@ -1921,6 +2022,7 @@ namespace McdView
 			this.lbl06_phase6.Text = "phase 7";
 			this.lbl06_phase6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl06_phase6.MouseEnter += new System.EventHandler(this.OnEnter6);
+			this.lbl06_phase6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp6);
 			// 
 			// lbl05
 			// 
@@ -1932,6 +2034,7 @@ namespace McdView
 			this.lbl05.Text = "#5";
 			this.lbl05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl05.MouseEnter += new System.EventHandler(this.OnEnter5);
+			this.lbl05.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp5);
 			// 
 			// lbl05_phase5
 			// 
@@ -1943,6 +2046,7 @@ namespace McdView
 			this.lbl05_phase5.Text = "phase 6";
 			this.lbl05_phase5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl05_phase5.MouseEnter += new System.EventHandler(this.OnEnter5);
+			this.lbl05_phase5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp5);
 			// 
 			// lbl04
 			// 
@@ -1954,6 +2058,7 @@ namespace McdView
 			this.lbl04.Text = "#4";
 			this.lbl04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl04.MouseEnter += new System.EventHandler(this.OnEnter4);
+			this.lbl04.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp4);
 			// 
 			// lbl04_phase4
 			// 
@@ -1965,6 +2070,7 @@ namespace McdView
 			this.lbl04_phase4.Text = "phase 5";
 			this.lbl04_phase4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl04_phase4.MouseEnter += new System.EventHandler(this.OnEnter4);
+			this.lbl04_phase4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp4);
 			// 
 			// lbl22
 			// 
@@ -1976,6 +2082,7 @@ namespace McdView
 			this.lbl22.Text = "#22";
 			this.lbl22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl22.MouseEnter += new System.EventHandler(this.OnEnter22);
+			this.lbl22.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp22);
 			// 
 			// lbl22_
 			// 
@@ -1987,6 +2094,7 @@ namespace McdView
 			this.lbl22_.Text = "tab ram";
 			this.lbl22_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl22_.MouseEnter += new System.EventHandler(this.OnEnter22);
+			this.lbl22_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp22);
 			// 
 			// lbl23
 			// 
@@ -1998,6 +2106,7 @@ namespace McdView
 			this.lbl23.Text = "#23";
 			this.lbl23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl23.MouseEnter += new System.EventHandler(this.OnEnter23);
+			this.lbl23.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp23);
 			// 
 			// lbl23_
 			// 
@@ -2009,6 +2118,7 @@ namespace McdView
 			this.lbl23_.Text = "tab ram";
 			this.lbl23_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl23_.MouseEnter += new System.EventHandler(this.OnEnter23);
+			this.lbl23_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp23);
 			// 
 			// lbl24
 			// 
@@ -2020,6 +2130,7 @@ namespace McdView
 			this.lbl24.Text = "#24";
 			this.lbl24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl24.MouseEnter += new System.EventHandler(this.OnEnter24);
+			this.lbl24.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp24);
 			// 
 			// lbl24_
 			// 
@@ -2031,6 +2142,7 @@ namespace McdView
 			this.lbl24_.Text = "tab ram";
 			this.lbl24_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl24_.MouseEnter += new System.EventHandler(this.OnEnter24);
+			this.lbl24_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp24);
 			// 
 			// lbl25
 			// 
@@ -2042,6 +2154,7 @@ namespace McdView
 			this.lbl25.Text = "#25";
 			this.lbl25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl25.MouseEnter += new System.EventHandler(this.OnEnter25);
+			this.lbl25.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp25);
 			// 
 			// lbl25_
 			// 
@@ -2053,6 +2166,7 @@ namespace McdView
 			this.lbl25_.Text = "tab ram";
 			this.lbl25_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl25_.MouseEnter += new System.EventHandler(this.OnEnter25);
+			this.lbl25_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp25);
 			// 
 			// lbl26
 			// 
@@ -2064,6 +2178,7 @@ namespace McdView
 			this.lbl26.Text = "#26";
 			this.lbl26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl26.MouseEnter += new System.EventHandler(this.OnEnter26);
+			this.lbl26.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp26);
 			// 
 			// lbl26_
 			// 
@@ -2075,6 +2190,7 @@ namespace McdView
 			this.lbl26_.Text = "pck ram";
 			this.lbl26_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl26_.MouseEnter += new System.EventHandler(this.OnEnter26);
+			this.lbl26_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp26);
 			// 
 			// lbl27
 			// 
@@ -2086,6 +2202,7 @@ namespace McdView
 			this.lbl27.Text = "#27";
 			this.lbl27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl27.MouseEnter += new System.EventHandler(this.OnEnter27);
+			this.lbl27.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp27);
 			// 
 			// lbl27_
 			// 
@@ -2097,6 +2214,7 @@ namespace McdView
 			this.lbl27_.Text = "pck ram";
 			this.lbl27_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl27_.MouseEnter += new System.EventHandler(this.OnEnter27);
+			this.lbl27_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp27);
 			// 
 			// lbl28
 			// 
@@ -2108,6 +2226,7 @@ namespace McdView
 			this.lbl28.Text = "#28";
 			this.lbl28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl28.MouseEnter += new System.EventHandler(this.OnEnter28);
+			this.lbl28.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp28);
 			// 
 			// lbl28_
 			// 
@@ -2119,6 +2238,7 @@ namespace McdView
 			this.lbl28_.Text = "pck ram";
 			this.lbl28_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl28_.MouseEnter += new System.EventHandler(this.OnEnter28);
+			this.lbl28_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp28);
 			// 
 			// lbl29
 			// 
@@ -2130,6 +2250,7 @@ namespace McdView
 			this.lbl29.Text = "#29";
 			this.lbl29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl29.MouseEnter += new System.EventHandler(this.OnEnter29);
+			this.lbl29.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp29);
 			// 
 			// lbl29_
 			// 
@@ -2141,6 +2262,7 @@ namespace McdView
 			this.lbl29_.Text = "pck ram";
 			this.lbl29_.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.lbl29_.MouseEnter += new System.EventHandler(this.OnEnter29);
+			this.lbl29_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp29);
 			// 
 			// ss_Statusbar
 			// 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using DSShared;
+
 using XCom;
 
 
@@ -37,7 +39,7 @@ namespace McdView
 
 		/// <summary>
 		/// Checks if either of the ScanG <c>TextBoxes</c> has focus when
-		/// mouse-leaving either of the ScanG labels.
+		/// mouseover leaves either of the ScanG labels.
 		/// </summary>
 		/// <param name="control"></param>
 		/// <returns></returns>
@@ -54,65 +56,65 @@ namespace McdView
 		/// </summary>
 		private void TagLabels()
 		{
-			lbl00.Tag = lbl00_phase0.Tag = tb00_phase0;
-			lbl01.Tag = lbl01_phase1.Tag = tb01_phase1;
-			lbl02.Tag = lbl02_phase2.Tag = tb02_phase2;
-			lbl03.Tag = lbl03_phase3.Tag = tb03_phase3;
-			lbl04.Tag = lbl04_phase4.Tag = tb04_phase4;
-			lbl05.Tag = lbl05_phase5.Tag = tb05_phase5;
-			lbl06.Tag = lbl06_phase6.Tag = tb06_phase6;
-			lbl07.Tag = lbl07_phase7.Tag = tb07_phase7;
+			lbl00.Tag = lbl00_phase0        .Tag = tb00_phase0;
+			lbl01.Tag = lbl01_phase1        .Tag = tb01_phase1;
+			lbl02.Tag = lbl02_phase2        .Tag = tb02_phase2;
+			lbl03.Tag = lbl03_phase3        .Tag = tb03_phase3;
+			lbl04.Tag = lbl04_phase4        .Tag = tb04_phase4;
+			lbl05.Tag = lbl05_phase5        .Tag = tb05_phase5;
+			lbl06.Tag = lbl06_phase6        .Tag = tb06_phase6;
+			lbl07.Tag = lbl07_phase7        .Tag = tb07_phase7;
 
-			lbl08.Tag = lbl08_loft00.Tag = tb08_loft00;
-			lbl09.Tag = lbl09_loft01.Tag = tb09_loft01;
-			lbl10.Tag = lbl10_loft02.Tag = tb10_loft02;
-			lbl11.Tag = lbl11_loft03.Tag = tb11_loft03;
-			lbl12.Tag = lbl12_loft04.Tag = tb12_loft04;
-			lbl13.Tag = lbl13_loft05.Tag = tb13_loft05;
-			lbl14.Tag = lbl14_loft06.Tag = tb14_loft06;
-			lbl15.Tag = lbl15_loft07.Tag = tb15_loft07;
-			lbl16.Tag = lbl16_loft08.Tag = tb16_loft08;
-			lbl17.Tag = lbl17_loft09.Tag = tb17_loft09;
-			lbl18.Tag = lbl18_loft10.Tag = tb18_loft10;
-			lbl19.Tag = lbl19_loft11.Tag = tb19_loft11;
+			lbl08.Tag = lbl08_loft00        .Tag = tb08_loft00;
+			lbl09.Tag = lbl09_loft01        .Tag = tb09_loft01;
+			lbl10.Tag = lbl10_loft02        .Tag = tb10_loft02;
+			lbl11.Tag = lbl11_loft03        .Tag = tb11_loft03;
+			lbl12.Tag = lbl12_loft04        .Tag = tb12_loft04;
+			lbl13.Tag = lbl13_loft05        .Tag = tb13_loft05;
+			lbl14.Tag = lbl14_loft06        .Tag = tb14_loft06;
+			lbl15.Tag = lbl15_loft07        .Tag = tb15_loft07;
+			lbl16.Tag = lbl16_loft08        .Tag = tb16_loft08;
+			lbl17.Tag = lbl17_loft09        .Tag = tb17_loft09;
+			lbl18.Tag = lbl18_loft10        .Tag = tb18_loft10;
+			lbl19.Tag = lbl19_loft11        .Tag = tb19_loft11;
 
-//			lbl20.Tag = lbl20_scang.Tag = tb20_scang1; //|| tb20_scang2; NOTE: ScanG requires special handling.
+//			lbl20.Tag = lbl20_scang         .Tag = tb20_scang1;			//|| tb20_scang2; NOTE: ScanG requires special handling.
 
-			lbl22.Tag = lbl22_.Tag = tb22_; // internal RAM addresses ->
-			lbl23.Tag = lbl23_.Tag = tb23_;
-			lbl24.Tag = lbl24_.Tag = tb24_;
-			lbl25.Tag = lbl25_.Tag = tb25_;
-			lbl26.Tag = lbl26_.Tag = tb26_;
-			lbl27.Tag = lbl27_.Tag = tb27_;
-			lbl28.Tag = lbl28_.Tag = tb28_;
-			lbl29.Tag = lbl29_.Tag = tb29_;
+			lbl22.Tag = lbl22_              .Tag = tb22_;				// internal RAM addresses ->
+			lbl23.Tag = lbl23_              .Tag = tb23_;
+			lbl24.Tag = lbl24_              .Tag = tb24_;
+			lbl25.Tag = lbl25_              .Tag = tb25_;
+			lbl26.Tag = lbl26_              .Tag = tb26_;
+			lbl27.Tag = lbl27_              .Tag = tb27_;
+			lbl28.Tag = lbl28_              .Tag = tb28_;
+			lbl29.Tag = lbl29_              .Tag = tb29_;
 
-			lbl30.Tag = lbl30_isslidingdoor.Tag = tb30_isslidingdoor;
-			lbl31.Tag = lbl31_isblocklos   .Tag = tb31_isblocklos;
-			lbl32.Tag = lbl32_isdropthrou  .Tag = tb32_isdropthrou;
-			lbl33.Tag = lbl33_isbigwall    .Tag = tb33_isbigwall;
-			lbl34.Tag = lbl34_isgravlift   .Tag = tb34_isgravlift;
-			lbl35.Tag = lbl35_ishingeddoor .Tag = tb35_ishingeddoor;
-			lbl36.Tag = lbl36_isblockfire  .Tag = tb36_isblockfire;
-			lbl37.Tag = lbl37_isblocksmoke .Tag = tb37_isblocksmoke;
+			lbl30.Tag = lbl30_isslidingdoor .Tag = tb30_isslidingdoor;
+			lbl31.Tag = lbl31_isblocklos    .Tag = tb31_isblocklos;
+			lbl32.Tag = lbl32_isdropthrou   .Tag = tb32_isdropthrou;
+			lbl33.Tag = lbl33_isbigwall     .Tag = tb33_isbigwall;
+			lbl34.Tag = lbl34_isgravlift    .Tag = tb34_isgravlift;
+			lbl35.Tag = lbl35_ishingeddoor  .Tag = tb35_ishingeddoor;
+			lbl36.Tag = lbl36_isblockfire   .Tag = tb36_isblockfire;
+			lbl37.Tag = lbl37_isblocksmoke  .Tag = tb37_isblocksmoke;
 
-			lbl38.Tag = lbl38_.Tag = tb38_; // LeftRightHalf
+			lbl38.Tag = lbl38_              .Tag = tb38_;				// LeftRightHalf
 
-			lbl39.Tag = lbl39_tuwalk     .Tag = tb39_tuwalk;
-			lbl40.Tag = lbl40_tuslide    .Tag = tb40_tuslide;
-			lbl41.Tag = lbl41_tufly      .Tag = tb41_tufly;
-			lbl42.Tag = lbl42_armor      .Tag = tb42_armor;
-			lbl43.Tag = lbl43_heblock    .Tag = tb43_heblock;
-			lbl44.Tag = lbl44_deathid    .Tag = tb44_deathid;
-			lbl45.Tag = lbl45_fireresist .Tag = tb45_fireresist;
-			lbl46.Tag = lbl46_alternateid.Tag = tb46_alternateid;
+			lbl39.Tag = lbl39_tuwalk        .Tag = tb39_tuwalk;
+			lbl40.Tag = lbl40_tuslide       .Tag = tb40_tuslide;
+			lbl41.Tag = lbl41_tufly         .Tag = tb41_tufly;
+			lbl42.Tag = lbl42_armor         .Tag = tb42_armor;
+			lbl43.Tag = lbl43_heblock       .Tag = tb43_heblock;
+			lbl44.Tag = lbl44_deathid       .Tag = tb44_deathid;
+			lbl45.Tag = lbl45_fireresist    .Tag = tb45_fireresist;
+			lbl46.Tag = lbl46_alternateid   .Tag = tb46_alternateid;
 
-			lbl47.Tag = lbl47_.Tag = tb47_; // CloseDoors
+			lbl47.Tag = lbl47_              .Tag = tb47_;				// CloseDoors
 
-			lbl48.Tag = lbl48_terrainoffset.Tag = tb48_terrainoffset;
-			lbl49.Tag = lbl49_spriteoffset .Tag = tb49_spriteoffset;
+			lbl48.Tag = lbl48_terrainoffset .Tag = tb48_terrainoffset;
+			lbl49.Tag = lbl49_spriteoffset  .Tag = tb49_spriteoffset;
 
-			lbl50.Tag = lbl50_.Tag = tb50_; // dTypeMod
+			lbl50.Tag = lbl50_              .Tag = tb50_;				// dTypeMod
 
 			lbl51.Tag = lbl51_lightblock    .Tag = tb51_lightblock;
 			lbl52.Tag = lbl52_footsound     .Tag = tb52_footsound;
@@ -125,7 +127,7 @@ namespace McdView
 			lbl59.Tag = lbl59_specialtype   .Tag = tb59_specialtype;
 			lbl60.Tag = lbl60_isbaseobject  .Tag = tb60_isbaseobject;
 
-			lbl61.Tag = lbl61_.Tag = tb61_; // VictoryPoints
+			lbl61.Tag = lbl61_              .Tag = tb61_;				// VictoryPoints
 		}
 		#endregion Leave
 
@@ -214,7 +216,9 @@ namespace McdView
 
 		private int _lastrecordid = -1;
 		/// <summary>
-		/// 
+		/// Handles the <c>TextBoxs'</c> <c>LostFocus</c> event. Ensures that a
+		/// record entry is not left blank by inserting its previously stored
+		/// value.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -338,6 +342,30 @@ namespace McdView
 				OnEnter0(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp0(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb00_phase0.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite1 = val;
+
+						PartsPanel.Invalidate();
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #1 phase 2 (byte)
@@ -388,6 +416,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "phase 2: " + result;
 				OnEnter1(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp1(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb01_phase1.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite2 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -442,6 +493,29 @@ namespace McdView
 				OnEnter2(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp2(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb02_phase2.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite3 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #3 phase 4 (byte)
@@ -492,6 +566,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "phase 4: " + result;
 				OnEnter3(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp3(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb03_phase3.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite4 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -546,6 +643,29 @@ namespace McdView
 				OnEnter4(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp4(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb04_phase4.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite5 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #5 phase 6 (byte)
@@ -596,6 +716,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "phase 6: " + result;
 				OnEnter5(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp5(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb05_phase5.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite6 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -650,6 +793,29 @@ namespace McdView
 				OnEnter6(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp6(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb06_phase6.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite7 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #7 phase 8 (byte)
@@ -700,6 +866,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "phase 8: " + result;
 				OnEnter7(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp7(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb07_phase7.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Sprite8 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -762,6 +951,29 @@ namespace McdView
 				OnEnter8(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp8(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb08_loft00.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft1 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #9 loft 2 (byte)
@@ -812,6 +1024,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "loft 2: " + result;
 				OnEnter9(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp9(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb09_loft01.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft2 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -866,6 +1101,29 @@ namespace McdView
 				OnEnter10(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp10(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb10_loft02.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft3 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #11 loft 4 (byte)
@@ -916,6 +1174,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "loft 4: " + result;
 				OnEnter11(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp11(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb11_loft03.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft4 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -970,6 +1251,29 @@ namespace McdView
 				OnEnter12(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp12(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb12_loft04.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft5 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #13 loft 6 (byte)
@@ -1020,6 +1324,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "loft 6: " + result;
 				OnEnter13(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp13(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb13_loft05.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft6 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1074,6 +1401,29 @@ namespace McdView
 				OnEnter14(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp14(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb14_loft06.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft7 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #15 loft 8 (byte)
@@ -1124,6 +1474,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "loft 8: " + result;
 				OnEnter15(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp15(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb15_loft07.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft8 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1178,6 +1551,29 @@ namespace McdView
 				OnEnter16(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp16(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb16_loft08.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft9 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #17 loft 10 (byte)
@@ -1228,6 +1624,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "loft 10: " + result;
 				OnEnter17(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp17(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb17_loft09.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft10 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1282,6 +1701,29 @@ namespace McdView
 				OnEnter18(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp18(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb18_loft10.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft11 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #19 loft 12 (byte)
@@ -1334,12 +1776,36 @@ namespace McdView
 				OnEnter19(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp19(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb19_loft11.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Loft12 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
-		/// #20|21 ScanG - this is a special mouseover handler for the ScanG labels.
+		/// #20|21 ScanG
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>This is a special mouseover handler for the ScanG labels.</remarks>
 		private void OnMouseEnterLabel20(object sender, EventArgs e)
 		{
 			lbl_Description.Text = "ScanG (unsigned short) is a reference to an"
@@ -1413,6 +1879,32 @@ namespace McdView
 				OnEnter20(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp20(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						ushort val  = UInt16.Parse(tb20_scang1.Text);
+						ushort valr = (ushort)(val - ScanGicon.UNITICON_Max);
+						foreach (var id in PartsPanel.SubIds)
+						{
+							Parts[id].Record.ScanG         = val;
+							Parts[id].Record.ScanG_reduced = valr;
+						}
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #20|21 ScanG_reduced (little endian unsigned short)
@@ -1479,6 +1971,7 @@ namespace McdView
 				OnEnter20r(null, EventArgs.Empty);
 			}
 		}
+		// see la_OnMouseUp20()
 
 		/// <summary>
 		/// #22 (byte)
@@ -1524,6 +2017,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "22: " + result;
 				OnEnter22(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp22(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb22_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown22 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1573,6 +2089,29 @@ namespace McdView
 				OnEnter23(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp23(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb23_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown23 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #24 (byte)
@@ -1618,6 +2157,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "24: " + result;
 				OnEnter24(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp24(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb24_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown24 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1667,6 +2229,29 @@ namespace McdView
 				OnEnter25(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp25(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb25_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown25 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #26 (byte)
@@ -1712,6 +2297,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "26: " + result;
 				OnEnter26(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp26(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb26_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown26 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1761,6 +2369,29 @@ namespace McdView
 				OnEnter27(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp27(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb27_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown27 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #28 (byte)
@@ -1806,6 +2437,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "28: " + result;
 				OnEnter28(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp28(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb28_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown28 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1855,6 +2509,29 @@ namespace McdView
 				OnEnter29(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp29(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb29_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown29 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #30 isSlidingDoor (bool)
@@ -1871,7 +2548,7 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb30_isslidingdoor.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 2))) // TODO: allow ubyte value (for all bools in a record)
 					{
 						Parts[Selid].Record.SlidingDoor = Convert.ToBoolean(result);
 
@@ -1924,6 +2601,34 @@ namespace McdView
 				}
 				tssl_Overval.Text = "isSlidingDoor: " + text;
 				OnEnter30(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp30(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb30_isslidingdoor.Text));
+						foreach (var id in PartsPanel.SubIds)
+						{
+							if (Parts[id].Record.SlidingDoor = val
+								&& _strict && Parts[id].Record.HingedDoor)
+							{
+								Parts[id].Record.HingedDoor = false;
+							}
+						}
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -1982,6 +2687,29 @@ namespace McdView
 				OnEnter31(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp31(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb31_isblocklos.Text));
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.StopLOS = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #32 isDropThrou (bool)
@@ -2036,6 +2764,29 @@ namespace McdView
 				}
 				tssl_Overval.Text = "isDropThrou: " + text;
 				OnEnter32(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp32(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb32_isdropthrou.Text));
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.NotFloored = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2174,6 +2925,29 @@ namespace McdView
 				OnEnter33(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp33(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb33_isbigwall.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.BigWall = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #34 isGravLift (bool)
@@ -2230,6 +3004,29 @@ namespace McdView
 				}
 				tssl_Overval.Text = "isGravLift: " + text;
 				OnEnter34(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp34(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb34_isgravlift.Text));
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.GravLift = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2298,6 +3095,34 @@ namespace McdView
 				OnEnter35(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp35(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb35_ishingeddoor.Text));
+						foreach (var id in PartsPanel.SubIds)
+						{
+							if (Parts[id].Record.HingedDoor = val
+							    && _strict && Parts[id].Record.SlidingDoor)
+							{
+								Parts[id].Record.SlidingDoor = false;
+							}
+						}
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #36 isBlockFire (bool)
@@ -2354,6 +3179,29 @@ namespace McdView
 				OnEnter36(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp36(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb36_isblockfire.Text));
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.BlockFire = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #37 isBlockSmoke (bool)
@@ -2408,6 +3256,29 @@ namespace McdView
 				}
 				tssl_Overval.Text = "isBlockSmoke: " + text;
 				OnEnter37(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp37(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb37_isblocksmoke.Text));
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.BlockSmoke = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2471,6 +3342,29 @@ namespace McdView
 				OnEnter38(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp38(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb38_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.LeftRightHalf = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #39 TuWalk (byte)
@@ -2517,6 +3411,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "TuWalk: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter39(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp39(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb39_tuwalk.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.TU_Walk = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2567,6 +3484,29 @@ namespace McdView
 				OnEnter40(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp40(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb40_tuslide.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.TU_Slide = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #41 TuFly (byte)
@@ -2613,6 +3553,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "TuFly: " + result + (result == 255 ? " impassable" : String.Empty);
 				OnEnter41(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp41(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb41_tufly.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.TU_Fly = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2666,6 +3629,29 @@ namespace McdView
 				OnEnter42(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp42(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb42_armor.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Armor = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #43 HeBlock (byte)
@@ -2712,6 +3698,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "HeBlock: " + result;
 				OnEnter43(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp43(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb43_heblock.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.HE_Block = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2775,6 +3784,29 @@ namespace McdView
 				OnEnter44(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp44(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb44_deathid.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.DieTile = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #45 FireResist (byte)
@@ -2824,6 +3856,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "FireResist: " + result + (result == 255 ? " impervious" : String.Empty);
 				OnEnter45(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp45(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb45_fireresist.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.FireResist = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -2887,6 +3942,29 @@ namespace McdView
 				OnEnter46(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp46(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb46_alternateid.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Alt_MCD = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #47 CloseDoors (byte)
@@ -2937,6 +4015,29 @@ namespace McdView
 				OnEnter47(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp47(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb47_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown47 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #48 TerrainOffset (sbyte)
@@ -2948,7 +4049,7 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 48;
-				if (TryParseText(tb48_terrainoffset)) // else recurse // TODO: check 0 after "-" sign
+				if (TryParseText(tb48_terrainoffset)) // else recurse
 				{
 					int result;
 					if (Int32.TryParse(tb48_terrainoffset.Text, out result)
@@ -2998,6 +4099,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "TerrainOffset: " + result;
 				OnEnter48(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp48(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						sbyte val = SByte.Parse(tb48_terrainoffset.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.StandOffset = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3055,6 +4179,30 @@ namespace McdView
 				OnEnter49(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp49(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb49_spriteoffset.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.TileOffset = val;
+
+						PartsPanel.Invalidate();
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #50 dTypeMod (byte)
@@ -3101,6 +4249,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "dTypeMod: " + result;
 				OnEnter50(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp50(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb50_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown50 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3150,6 +4321,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "LightBlock: " + result;
 				OnEnter51(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp51(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb51_lightblock.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.LightBlock = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3218,6 +4412,29 @@ namespace McdView
 				OnEnter52(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp52(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb52_footsound.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Footstep = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #53 PartType (byte/PartType)
@@ -3276,6 +4493,29 @@ namespace McdView
 				}
 				tssl_Overval.Text = "PartType: " + text;
 				OnEnter53(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp53(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						var val = (PartType)Byte.Parse(tb53_parttype.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.PartType = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3337,6 +4577,29 @@ namespace McdView
 				OnEnter54(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp54(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb54_hetype.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.HE_Type = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #55 HeStrength (byte)
@@ -3384,6 +4647,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "HeStrength: " + result;
 				OnEnter55(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp55(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb55_hestrength.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.HE_Strength = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3435,6 +4721,29 @@ namespace McdView
 				OnEnter56(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp56(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb56_smokeblock.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.SmokeBlockage = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #57 Fuel (byte)
@@ -3481,6 +4790,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "Fuel: " + result;
 				OnEnter57(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp57(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb57_fuel.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Fuel = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3530,6 +4862,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "LightIntensity: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter58(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp58(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb58_lightintensity.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.LightSource = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 
@@ -3612,6 +4967,29 @@ namespace McdView
 				OnEnter59(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp59(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						var val = (SpecialType)Byte.Parse(tb59_specialtype.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Special = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #60 isBaseObject (bool)
@@ -3669,6 +5047,29 @@ namespace McdView
 				OnEnter60(null, EventArgs.Empty);
 			}
 		}
+		private void la_OnMouseUp60(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						bool val = Convert.ToBoolean(Byte.Parse(tb60_isbaseobject.Text));
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.BaseObject = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// #61 VictoryPoints (byte)
@@ -3715,6 +5116,29 @@ namespace McdView
 			{
 				tssl_Overval.Text = "VictoryPoints: " + result;
 				OnEnter61(null, EventArgs.Empty);
+			}
+		}
+		private void la_OnMouseUp61(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right
+				&& PartsPanel.SubIds.Count != 0)
+			{
+				using (var ib = new Infobox(
+										"multiple selected records",
+										"Apply current value to other selected records ...",
+										null,
+										InfoboxType.Warn,
+										InfoboxButtons.CancelOkay))
+				{
+					if (ib.ShowDialog() == DialogResult.OK)
+					{
+						byte val = Byte.Parse(tb61_.Text);
+						foreach (var id in PartsPanel.SubIds)
+							Parts[id].Record.Unknown61 = val;
+
+						Changed = CacheLoad.Changed(Parts);
+					}
+				}
 			}
 		}
 		#endregion Changed events
