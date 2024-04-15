@@ -2245,14 +2245,14 @@ namespace McdView
 
 			McdRecord record = Parts[Selid].Record;
 
-			tb00_phase0.Text = ((int)record.Sprite1).ToString();
-			tb01_phase1.Text = ((int)record.Sprite2).ToString();
-			tb02_phase2.Text = ((int)record.Sprite3).ToString();
-			tb03_phase3.Text = ((int)record.Sprite4).ToString();
-			tb04_phase4.Text = ((int)record.Sprite5).ToString();
-			tb05_phase5.Text = ((int)record.Sprite6).ToString();
-			tb06_phase6.Text = ((int)record.Sprite7).ToString();
-			tb07_phase7.Text = ((int)record.Sprite8).ToString();
+			tb00_phase1.Text = ((int)record.Sprite1).ToString();
+			tb01_phase2.Text = ((int)record.Sprite2).ToString();
+			tb02_phase3.Text = ((int)record.Sprite3).ToString();
+			tb03_phase4.Text = ((int)record.Sprite4).ToString();
+			tb04_phase5.Text = ((int)record.Sprite5).ToString();
+			tb05_phase6.Text = ((int)record.Sprite6).ToString();
+			tb06_phase7.Text = ((int)record.Sprite7).ToString();
+			tb07_phase8.Text = ((int)record.Sprite8).ToString();
 
 			tb08_loft00.Text = ((int)record.Loft1) .ToString();
 			tb09_loft01.Text = ((int)record.Loft2) .ToString();
@@ -2338,14 +2338,14 @@ namespace McdView
 			else
 				text = String.Empty;
 
-			tb00_phase0.Text =
-			tb01_phase1.Text =
-			tb02_phase2.Text =
-			tb03_phase3.Text =
-			tb04_phase4.Text =
-			tb05_phase5.Text =
-			tb06_phase6.Text =
-			tb07_phase7.Text =
+			tb00_phase1.Text =
+			tb01_phase2.Text =
+			tb02_phase3.Text =
+			tb03_phase4.Text =
+			tb04_phase5.Text =
+			tb05_phase6.Text =
+			tb06_phase7.Text =
+			tb07_phase8.Text =
 
 			tb08_loft00.Text =
 			tb09_loft01.Text =
@@ -2442,7 +2442,7 @@ namespace McdView
 				y = Byte.MaxValue;
 
 			val = Parts[Selid].Record.Sprite1;
-			if (val != Int32.Parse(tb00_phase0.Text))
+			if (val != Int32.Parse(tb00_phase1.Text))
 			{
 				borks.Add("#0 phase 1 (record) does not equal phase 1 (text).");
 			}
@@ -2452,7 +2452,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite2;
-			if (val != Int32.Parse(tb01_phase1.Text))
+			if (val != Int32.Parse(tb01_phase2.Text))
 			{
 				borks.Add("#1 phase 2 (record) does not equal phase 2 (text).");
 			}
@@ -2462,7 +2462,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite3;
-			if (val != Int32.Parse(tb02_phase2.Text))
+			if (val != Int32.Parse(tb02_phase3.Text))
 			{
 				borks.Add("#2 phase 3 (record) does not equal phase 3 (text).");
 			}
@@ -2472,7 +2472,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite4;
-			if (val != Int32.Parse(tb03_phase3.Text))
+			if (val != Int32.Parse(tb03_phase4.Text))
 			{
 				borks.Add("#3 phase 4 (record) does not equal phase 4 (text).");
 			}
@@ -2482,7 +2482,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite5;
-			if (val != Int32.Parse(tb04_phase4.Text))
+			if (val != Int32.Parse(tb04_phase5.Text))
 			{
 				borks.Add("#4 phase 5 (record) does not equal phase 5 (text).");
 			}
@@ -2492,7 +2492,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite6;
-			if (val != Int32.Parse(tb05_phase5.Text))
+			if (val != Int32.Parse(tb05_phase6.Text))
 			{
 				borks.Add("#5 phase 6 (record) does not equal phase 6 (text).");
 			}
@@ -2502,7 +2502,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite7;
-			if (val != Int32.Parse(tb06_phase6.Text))
+			if (val != Int32.Parse(tb06_phase7.Text))
 			{
 				borks.Add("#6 phase 7 (record) does not equal phase 7 (text).");
 			}
@@ -2512,7 +2512,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Sprite8;
-			if (val != Int32.Parse(tb07_phase7.Text))
+			if (val != Int32.Parse(tb07_phase8.Text))
 			{
 				borks.Add("#7 phase 8 (record) does not equal phase 8 (text).");
 			}

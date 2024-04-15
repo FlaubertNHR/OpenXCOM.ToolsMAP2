@@ -38,40 +38,40 @@ namespace McdView
 			pnl_Sprites.Width = (gb_Sprites.Width - 10);
 
 			int left = pnl_Sprites.Left;
-			int offset = Spriteset.SpriteWidth32 - (tb00_phase0.Width / 2);
+			int offset = Spriteset.SpriteWidth32 - (tb00_phase1.Width / 2);
 
-			tb00_phase0.Left = left + SPRITE_ORIGIN_X + offset;
-			tb01_phase1.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
-			tb02_phase2.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 2;
-			tb03_phase3.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 3;
-			tb04_phase4.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 4;
-			tb05_phase5.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 5;
-			tb06_phase6.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 6;
-			tb07_phase7.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 7;
+			tb00_phase1.Left = left + SPRITE_ORIGIN_X + offset;
+			tb01_phase2.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X;
+			tb02_phase3.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 2;
+			tb03_phase4.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 3;
+			tb04_phase5.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 4;
+			tb05_phase6.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 5;
+			tb06_phase7.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 6;
+			tb07_phase8.Left = left + SPRITE_ORIGIN_X + offset + SPRITE_OFFSET_X * 7;
 
-			lbl00.Left = tb00_phase0.Left + (tb00_phase0.Width / 2) - ((lbl00.Width + lbl00_phase0.Width) / 2);
-			lbl00_phase0.Left = lbl00.Right;
+			lbl00.Left = tb00_phase1.Left + (tb00_phase1.Width / 2) - ((lbl00.Width + lbl00_phase1.Width) / 2);
+			lbl00_phase1.Left = lbl00.Right;
 
 			lbl01.Left = lbl00.Left + SPRITE_OFFSET_X;
-			lbl01_phase1.Left = lbl01.Right;
+			lbl01_phase2.Left = lbl01.Right;
 
 			lbl02.Left = lbl01.Left + SPRITE_OFFSET_X;
-			lbl02_phase2.Left = lbl02.Right;
+			lbl02_phase3.Left = lbl02.Right;
 
 			lbl03.Left = lbl02.Left + SPRITE_OFFSET_X;
-			lbl03_phase3.Left = lbl03.Right;
+			lbl03_phase4.Left = lbl03.Right;
 
 			lbl04.Left = lbl03.Left + SPRITE_OFFSET_X;
-			lbl04_phase4.Left = lbl04.Right;
+			lbl04_phase5.Left = lbl04.Right;
 
 			lbl05.Left = lbl04.Left + SPRITE_OFFSET_X;
-			lbl05_phase5.Left = lbl05.Right;
+			lbl05_phase6.Left = lbl05.Right;
 
 			lbl06.Left = lbl05.Left + SPRITE_OFFSET_X;
-			lbl06_phase6.Left = lbl06.Right;
+			lbl06_phase7.Left = lbl06.Right;
 
 			lbl07.Left = lbl06.Left + SPRITE_OFFSET_X;
-			lbl07_phase7.Left = lbl07.Right;
+			lbl07_phase8.Left = lbl07.Right;
 		}
 
 		/// <summary>
@@ -235,14 +235,14 @@ namespace McdView
 								string id;
 								switch (phase)
 								{
-									default: id = tb00_phase0.Text; break; // #0
-									case 1:  id = tb01_phase1.Text; break;
-									case 2:  id = tb02_phase2.Text; break;
-									case 3:  id = tb03_phase3.Text; break;
-									case 4:  id = tb04_phase4.Text; break;
-									case 5:  id = tb05_phase5.Text; break;
-									case 6:  id = tb06_phase6.Text; break;
-									case 7:  id = tb07_phase7.Text; break;
+									default: id = tb00_phase1.Text; break; // #0
+									case 1:  id = tb01_phase2.Text; break;
+									case 2:  id = tb02_phase3.Text; break;
+									case 3:  id = tb03_phase4.Text; break;
+									case 4:  id = tb04_phase5.Text; break;
+									case 5:  id = tb05_phase6.Text; break;
+									case 6:  id = tb06_phase7.Text; break;
+									case 7:  id = tb07_phase8.Text; break;
 								}
 
 								switch (e.Button)
@@ -285,14 +285,14 @@ namespace McdView
 			string val = id.ToString();
 			switch (phase)
 			{
-				case 0: tb00_phase0.Text = val; break;
-				case 1: tb01_phase1.Text = val; break;
-				case 2: tb02_phase2.Text = val; break;
-				case 3: tb03_phase3.Text = val; break;
-				case 4: tb04_phase4.Text = val; break;
-				case 5: tb05_phase5.Text = val; break;
-				case 6: tb06_phase6.Text = val; break;
-				case 7: tb07_phase7.Text = val; break;
+				case 0: tb00_phase1.Text = val; break;
+				case 1: tb01_phase2.Text = val; break;
+				case 2: tb02_phase3.Text = val; break;
+				case 3: tb03_phase4.Text = val; break;
+				case 4: tb04_phase5.Text = val; break;
+				case 5: tb05_phase6.Text = val; break;
+				case 6: tb06_phase7.Text = val; break;
+				case 7: tb07_phase8.Text = val; break;
 			}
 		}
 
@@ -302,14 +302,14 @@ namespace McdView
 		/// <param name="id"></param>
 		internal void SetAllSprites(string id)
 		{
-			tb00_phase0.Text =
-			tb01_phase1.Text =
-			tb02_phase2.Text =
-			tb03_phase3.Text =
-			tb04_phase4.Text =
-			tb05_phase5.Text =
-			tb06_phase6.Text =
-			tb07_phase7.Text = id;
+			tb00_phase1.Text =
+			tb01_phase2.Text =
+			tb02_phase3.Text =
+			tb03_phase4.Text =
+			tb04_phase5.Text =
+			tb05_phase6.Text =
+			tb06_phase7.Text =
+			tb07_phase8.Text = id;
 		}
 
 		/// <summary>
@@ -319,14 +319,14 @@ namespace McdView
 		/// <returns>true if any are different</returns>
 		internal bool CanSetAllSprites(string id)
 		{
-			return tb00_phase0.Text != id
-				|| tb01_phase1.Text != id
-				|| tb02_phase2.Text != id
-				|| tb03_phase3.Text != id
-				|| tb04_phase4.Text != id
-				|| tb05_phase5.Text != id
-				|| tb06_phase6.Text != id
-				|| tb07_phase7.Text != id;
+			return tb00_phase1.Text != id
+				|| tb01_phase2.Text != id
+				|| tb02_phase3.Text != id
+				|| tb03_phase4.Text != id
+				|| tb04_phase5.Text != id
+				|| tb05_phase6.Text != id
+				|| tb06_phase7.Text != id
+				|| tb07_phase8.Text != id;
 		}
 		#endregion Anisprites
 

@@ -343,40 +343,40 @@ namespace McdView
 			if (SPRITE_ORIGIN_X < 0) SPRITE_ORIGIN_X = 0;
 
 			const int left = 5;
-			int offset = Spriteset.SpriteWidth32 - (tb00_phase0.Width / 2);
+			int offset = Spriteset.SpriteWidth32 - (tb00_phase1.Width / 2);
 
-			tb00_phase0.Left = left + SPRITE_ORIGIN_X + offset;
-			tb01_phase1.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X;
-			tb02_phase2.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 2;
-			tb03_phase3.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 3;
-			tb04_phase4.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 4;
-			tb05_phase5.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 5;
-			tb06_phase6.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 6;
-			tb07_phase7.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 7;
+			tb00_phase1.Left = left + SPRITE_ORIGIN_X + offset;
+			tb01_phase2.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X;
+			tb02_phase3.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 2;
+			tb03_phase4.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 3;
+			tb04_phase5.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 4;
+			tb05_phase6.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 5;
+			tb06_phase7.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 6;
+			tb07_phase8.Left = left + SPRITE_ORIGIN_X + offset + McdviewF.SPRITE_OFFSET_X * 7;
 
-			lbl00.Left = tb00_phase0.Left + (tb00_phase0.Width / 2) - ((lbl00.Width + lbl00_phase0.Width) / 2);
-			lbl00_phase0.Left = lbl00.Right;
+			lbl00.Left = tb00_phase1.Left + (tb00_phase1.Width / 2) - ((lbl00.Width + lbl00_phase1.Width) / 2);
+			lbl00_phase1.Left = lbl00.Right;
 
 			lbl01.Left = lbl00.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl01_phase1.Left = lbl01.Right;
+			lbl01_phase2.Left = lbl01.Right;
 
 			lbl02.Left = lbl01.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl02_phase2.Left = lbl02.Right;
+			lbl02_phase3.Left = lbl02.Right;
 
 			lbl03.Left = lbl02.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl03_phase3.Left = lbl03.Right;
+			lbl03_phase4.Left = lbl03.Right;
 
 			lbl04.Left = lbl03.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl04_phase4.Left = lbl04.Right;
+			lbl04_phase5.Left = lbl04.Right;
 
 			lbl05.Left = lbl04.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl05_phase5.Left = lbl05.Right;
+			lbl05_phase6.Left = lbl05.Right;
 
 			lbl06.Left = lbl05.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl06_phase6.Left = lbl06.Right;
+			lbl06_phase7.Left = lbl06.Right;
 
 			lbl07.Left = lbl06.Left + McdviewF.SPRITE_OFFSET_X;
-			lbl07_phase7.Left = lbl07.Right;
+			lbl07_phase8.Left = lbl07.Right;
 		}
 
 
@@ -399,14 +399,14 @@ namespace McdView
 		{
 			McdRecord record = Parts[SelId].Record;
 
-			tb00_phase0.Text = ((int)record.Sprite1).ToString();
-			tb01_phase1.Text = ((int)record.Sprite2).ToString();
-			tb02_phase2.Text = ((int)record.Sprite3).ToString();
-			tb03_phase3.Text = ((int)record.Sprite4).ToString();
-			tb04_phase4.Text = ((int)record.Sprite5).ToString();
-			tb05_phase5.Text = ((int)record.Sprite6).ToString();
-			tb06_phase6.Text = ((int)record.Sprite7).ToString();
-			tb07_phase7.Text = ((int)record.Sprite8).ToString();
+			tb00_phase1.Text = ((int)record.Sprite1).ToString();
+			tb01_phase2.Text = ((int)record.Sprite2).ToString();
+			tb02_phase3.Text = ((int)record.Sprite3).ToString();
+			tb03_phase4.Text = ((int)record.Sprite4).ToString();
+			tb04_phase5.Text = ((int)record.Sprite5).ToString();
+			tb05_phase6.Text = ((int)record.Sprite6).ToString();
+			tb06_phase7.Text = ((int)record.Sprite7).ToString();
+			tb07_phase8.Text = ((int)record.Sprite8).ToString();
 
 			tb08_loft00.Text = ((int)record.Loft1) .ToString();
 			tb09_loft01.Text = ((int)record.Loft2) .ToString();
@@ -483,14 +483,14 @@ namespace McdView
 		/// </summary>
 		internal void ClearTextFields()
 		{
-			tb00_phase0.Text =
-			tb01_phase1.Text =
-			tb02_phase2.Text =
-			tb03_phase3.Text =
-			tb04_phase4.Text =
-			tb05_phase5.Text =
-			tb06_phase6.Text =
-			tb07_phase7.Text =
+			tb00_phase1.Text =
+			tb01_phase2.Text =
+			tb02_phase3.Text =
+			tb03_phase4.Text =
+			tb04_phase5.Text =
+			tb05_phase6.Text =
+			tb06_phase7.Text =
+			tb07_phase8.Text =
 
 			tb08_loft00.Text =
 			tb09_loft01.Text =

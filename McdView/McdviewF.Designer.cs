@@ -134,21 +134,21 @@ namespace McdView
 		private RecordLabel lbl08;
 		private RecordLabel lbl08_loft00;
 		private RecordLabel lbl00;
-		private RecordLabel lbl00_phase0;
+		private RecordLabel lbl00_phase1;
 		private RecordLabel lbl01;
-		private RecordLabel lbl01_phase1;
+		private RecordLabel lbl01_phase2;
 		private RecordLabel lbl02;
-		private RecordLabel lbl02_phase2;
+		private RecordLabel lbl02_phase3;
 		private RecordLabel lbl03;
-		private RecordLabel lbl03_phase3;
+		private RecordLabel lbl03_phase4;
 		private RecordLabel lbl07;
-		private RecordLabel lbl07_phase7;
+		private RecordLabel lbl07_phase8;
 		private RecordLabel lbl06;
-		private RecordLabel lbl06_phase6;
+		private RecordLabel lbl06_phase7;
 		private RecordLabel lbl05;
-		private RecordLabel lbl05_phase5;
+		private RecordLabel lbl05_phase6;
 		private RecordLabel lbl04;
-		private RecordLabel lbl04_phase4;
+		private RecordLabel lbl04_phase5;
 		private RecordLabel lbl22;
 		private RecordLabel lbl22_;
 		private RecordLabel lbl23;
@@ -222,14 +222,14 @@ namespace McdView
 		private RecordTextbox tb34_isgravlift;
 		private RecordTextbox tb33_isbigwall;
 		private RecordTextbox tb53_parttype;
-		private RecordTextbox tb07_phase7;
-		private RecordTextbox tb06_phase6;
-		private RecordTextbox tb05_phase5;
-		private RecordTextbox tb04_phase4;
-		private RecordTextbox tb03_phase3;
-		private RecordTextbox tb02_phase2;
-		private RecordTextbox tb01_phase1;
-		private RecordTextbox tb00_phase0;
+		private RecordTextbox tb07_phase8;
+		private RecordTextbox tb06_phase7;
+		private RecordTextbox tb05_phase6;
+		private RecordTextbox tb04_phase5;
+		private RecordTextbox tb03_phase4;
+		private RecordTextbox tb02_phase3;
+		private RecordTextbox tb01_phase2;
+		private RecordTextbox tb00_phase1;
 		private RecordTextbox tb19_loft11;
 		private RecordTextbox tb18_loft10;
 		private RecordTextbox tb17_loft09;
@@ -417,21 +417,21 @@ namespace McdView
 			this.lbl08 = new McdView.RecordLabel();
 			this.lbl08_loft00 = new McdView.RecordLabel();
 			this.lbl00 = new McdView.RecordLabel();
-			this.lbl00_phase0 = new McdView.RecordLabel();
+			this.lbl00_phase1 = new McdView.RecordLabel();
 			this.lbl01 = new McdView.RecordLabel();
-			this.lbl01_phase1 = new McdView.RecordLabel();
+			this.lbl01_phase2 = new McdView.RecordLabel();
 			this.lbl02 = new McdView.RecordLabel();
-			this.lbl02_phase2 = new McdView.RecordLabel();
+			this.lbl02_phase3 = new McdView.RecordLabel();
 			this.lbl03 = new McdView.RecordLabel();
-			this.lbl03_phase3 = new McdView.RecordLabel();
+			this.lbl03_phase4 = new McdView.RecordLabel();
 			this.lbl07 = new McdView.RecordLabel();
-			this.lbl07_phase7 = new McdView.RecordLabel();
+			this.lbl07_phase8 = new McdView.RecordLabel();
 			this.lbl06 = new McdView.RecordLabel();
-			this.lbl06_phase6 = new McdView.RecordLabel();
+			this.lbl06_phase7 = new McdView.RecordLabel();
 			this.lbl05 = new McdView.RecordLabel();
-			this.lbl05_phase5 = new McdView.RecordLabel();
+			this.lbl05_phase6 = new McdView.RecordLabel();
 			this.lbl04 = new McdView.RecordLabel();
-			this.lbl04_phase4 = new McdView.RecordLabel();
+			this.lbl04_phase5 = new McdView.RecordLabel();
 			this.lbl22 = new McdView.RecordLabel();
 			this.lbl22_ = new McdView.RecordLabel();
 			this.lbl23 = new McdView.RecordLabel();
@@ -494,14 +494,14 @@ namespace McdView
 			this.pnl_Loft18 = new McdView.LoftPanel();
 			this.pnl_Loft19 = new McdView.LoftPanel();
 			this.gb_Sprites = new System.Windows.Forms.GroupBox();
-			this.tb07_phase7 = new McdView.RecordTextbox();
-			this.tb06_phase6 = new McdView.RecordTextbox();
-			this.tb05_phase5 = new McdView.RecordTextbox();
-			this.tb04_phase4 = new McdView.RecordTextbox();
-			this.tb03_phase3 = new McdView.RecordTextbox();
-			this.tb02_phase2 = new McdView.RecordTextbox();
-			this.tb01_phase1 = new McdView.RecordTextbox();
-			this.tb00_phase0 = new McdView.RecordTextbox();
+			this.tb07_phase8 = new McdView.RecordTextbox();
+			this.tb06_phase7 = new McdView.RecordTextbox();
+			this.tb05_phase6 = new McdView.RecordTextbox();
+			this.tb04_phase5 = new McdView.RecordTextbox();
+			this.tb03_phase4 = new McdView.RecordTextbox();
+			this.tb02_phase3 = new McdView.RecordTextbox();
+			this.tb01_phase2 = new McdView.RecordTextbox();
+			this.tb00_phase1 = new McdView.RecordTextbox();
 			this.pnl_Sprites = new DSShared.Controls.BufferedPanel();
 			this.gb_Collection = new System.Windows.Forms.GroupBox();
 			this.gb_Overhead = new System.Windows.Forms.GroupBox();
@@ -1892,17 +1892,17 @@ namespace McdView
 			this.lbl00.MouseEnter += new System.EventHandler(this.OnEnter0);
 			this.lbl00.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp0);
 			// 
-			// lbl00_phase0
+			// lbl00_phase1
 			// 
-			this.lbl00_phase0.Location = new System.Drawing.Point(30, 120);
-			this.lbl00_phase0.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl00_phase0.Name = "lbl00_phase0";
-			this.lbl00_phase0.Size = new System.Drawing.Size(50, 15);
-			this.lbl00_phase0.TabIndex = 2;
-			this.lbl00_phase0.Text = "phase 1";
-			this.lbl00_phase0.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl00_phase0.MouseEnter += new System.EventHandler(this.OnEnter0);
-			this.lbl00_phase0.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp0);
+			this.lbl00_phase1.Location = new System.Drawing.Point(30, 120);
+			this.lbl00_phase1.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl00_phase1.Name = "lbl00_phase1";
+			this.lbl00_phase1.Size = new System.Drawing.Size(50, 15);
+			this.lbl00_phase1.TabIndex = 2;
+			this.lbl00_phase1.Text = "phase 1";
+			this.lbl00_phase1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl00_phase1.MouseEnter += new System.EventHandler(this.OnEnter0);
+			this.lbl00_phase1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp0);
 			// 
 			// lbl01
 			// 
@@ -1916,17 +1916,17 @@ namespace McdView
 			this.lbl01.MouseEnter += new System.EventHandler(this.OnEnter1);
 			this.lbl01.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp1);
 			// 
-			// lbl01_phase1
+			// lbl01_phase2
 			// 
-			this.lbl01_phase1.Location = new System.Drawing.Point(110, 120);
-			this.lbl01_phase1.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl01_phase1.Name = "lbl01_phase1";
-			this.lbl01_phase1.Size = new System.Drawing.Size(50, 15);
-			this.lbl01_phase1.TabIndex = 5;
-			this.lbl01_phase1.Text = "phase 2";
-			this.lbl01_phase1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl01_phase1.MouseEnter += new System.EventHandler(this.OnEnter1);
-			this.lbl01_phase1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp1);
+			this.lbl01_phase2.Location = new System.Drawing.Point(110, 120);
+			this.lbl01_phase2.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl01_phase2.Name = "lbl01_phase2";
+			this.lbl01_phase2.Size = new System.Drawing.Size(50, 15);
+			this.lbl01_phase2.TabIndex = 5;
+			this.lbl01_phase2.Text = "phase 2";
+			this.lbl01_phase2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl01_phase2.MouseEnter += new System.EventHandler(this.OnEnter1);
+			this.lbl01_phase2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp1);
 			// 
 			// lbl02
 			// 
@@ -1940,17 +1940,17 @@ namespace McdView
 			this.lbl02.MouseEnter += new System.EventHandler(this.OnEnter2);
 			this.lbl02.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp2);
 			// 
-			// lbl02_phase2
+			// lbl02_phase3
 			// 
-			this.lbl02_phase2.Location = new System.Drawing.Point(190, 120);
-			this.lbl02_phase2.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl02_phase2.Name = "lbl02_phase2";
-			this.lbl02_phase2.Size = new System.Drawing.Size(50, 15);
-			this.lbl02_phase2.TabIndex = 8;
-			this.lbl02_phase2.Text = "phase 3";
-			this.lbl02_phase2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl02_phase2.MouseEnter += new System.EventHandler(this.OnEnter2);
-			this.lbl02_phase2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp2);
+			this.lbl02_phase3.Location = new System.Drawing.Point(190, 120);
+			this.lbl02_phase3.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl02_phase3.Name = "lbl02_phase3";
+			this.lbl02_phase3.Size = new System.Drawing.Size(50, 15);
+			this.lbl02_phase3.TabIndex = 8;
+			this.lbl02_phase3.Text = "phase 3";
+			this.lbl02_phase3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl02_phase3.MouseEnter += new System.EventHandler(this.OnEnter2);
+			this.lbl02_phase3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp2);
 			// 
 			// lbl03
 			// 
@@ -1964,17 +1964,17 @@ namespace McdView
 			this.lbl03.MouseEnter += new System.EventHandler(this.OnEnter3);
 			this.lbl03.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp3);
 			// 
-			// lbl03_phase3
+			// lbl03_phase4
 			// 
-			this.lbl03_phase3.Location = new System.Drawing.Point(265, 120);
-			this.lbl03_phase3.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl03_phase3.Name = "lbl03_phase3";
-			this.lbl03_phase3.Size = new System.Drawing.Size(50, 15);
-			this.lbl03_phase3.TabIndex = 11;
-			this.lbl03_phase3.Text = "phase 4";
-			this.lbl03_phase3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl03_phase3.MouseEnter += new System.EventHandler(this.OnEnter3);
-			this.lbl03_phase3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp3);
+			this.lbl03_phase4.Location = new System.Drawing.Point(265, 120);
+			this.lbl03_phase4.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl03_phase4.Name = "lbl03_phase4";
+			this.lbl03_phase4.Size = new System.Drawing.Size(50, 15);
+			this.lbl03_phase4.TabIndex = 11;
+			this.lbl03_phase4.Text = "phase 4";
+			this.lbl03_phase4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl03_phase4.MouseEnter += new System.EventHandler(this.OnEnter3);
+			this.lbl03_phase4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp3);
 			// 
 			// lbl07
 			// 
@@ -1988,17 +1988,17 @@ namespace McdView
 			this.lbl07.MouseEnter += new System.EventHandler(this.OnEnter7);
 			this.lbl07.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp7);
 			// 
-			// lbl07_phase7
+			// lbl07_phase8
 			// 
-			this.lbl07_phase7.Location = new System.Drawing.Point(580, 120);
-			this.lbl07_phase7.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl07_phase7.Name = "lbl07_phase7";
-			this.lbl07_phase7.Size = new System.Drawing.Size(50, 15);
-			this.lbl07_phase7.TabIndex = 23;
-			this.lbl07_phase7.Text = "phase 8";
-			this.lbl07_phase7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl07_phase7.MouseEnter += new System.EventHandler(this.OnEnter7);
-			this.lbl07_phase7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp7);
+			this.lbl07_phase8.Location = new System.Drawing.Point(580, 120);
+			this.lbl07_phase8.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl07_phase8.Name = "lbl07_phase8";
+			this.lbl07_phase8.Size = new System.Drawing.Size(50, 15);
+			this.lbl07_phase8.TabIndex = 23;
+			this.lbl07_phase8.Text = "phase 8";
+			this.lbl07_phase8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl07_phase8.MouseEnter += new System.EventHandler(this.OnEnter7);
+			this.lbl07_phase8.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp7);
 			// 
 			// lbl06
 			// 
@@ -2012,17 +2012,17 @@ namespace McdView
 			this.lbl06.MouseEnter += new System.EventHandler(this.OnEnter6);
 			this.lbl06.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp6);
 			// 
-			// lbl06_phase6
+			// lbl06_phase7
 			// 
-			this.lbl06_phase6.Location = new System.Drawing.Point(500, 120);
-			this.lbl06_phase6.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl06_phase6.Name = "lbl06_phase6";
-			this.lbl06_phase6.Size = new System.Drawing.Size(50, 15);
-			this.lbl06_phase6.TabIndex = 20;
-			this.lbl06_phase6.Text = "phase 7";
-			this.lbl06_phase6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl06_phase6.MouseEnter += new System.EventHandler(this.OnEnter6);
-			this.lbl06_phase6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp6);
+			this.lbl06_phase7.Location = new System.Drawing.Point(500, 120);
+			this.lbl06_phase7.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl06_phase7.Name = "lbl06_phase7";
+			this.lbl06_phase7.Size = new System.Drawing.Size(50, 15);
+			this.lbl06_phase7.TabIndex = 20;
+			this.lbl06_phase7.Text = "phase 7";
+			this.lbl06_phase7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl06_phase7.MouseEnter += new System.EventHandler(this.OnEnter6);
+			this.lbl06_phase7.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp6);
 			// 
 			// lbl05
 			// 
@@ -2036,17 +2036,17 @@ namespace McdView
 			this.lbl05.MouseEnter += new System.EventHandler(this.OnEnter5);
 			this.lbl05.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp5);
 			// 
-			// lbl05_phase5
+			// lbl05_phase6
 			// 
-			this.lbl05_phase5.Location = new System.Drawing.Point(420, 120);
-			this.lbl05_phase5.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl05_phase5.Name = "lbl05_phase5";
-			this.lbl05_phase5.Size = new System.Drawing.Size(50, 15);
-			this.lbl05_phase5.TabIndex = 17;
-			this.lbl05_phase5.Text = "phase 6";
-			this.lbl05_phase5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl05_phase5.MouseEnter += new System.EventHandler(this.OnEnter5);
-			this.lbl05_phase5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp5);
+			this.lbl05_phase6.Location = new System.Drawing.Point(420, 120);
+			this.lbl05_phase6.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl05_phase6.Name = "lbl05_phase6";
+			this.lbl05_phase6.Size = new System.Drawing.Size(50, 15);
+			this.lbl05_phase6.TabIndex = 17;
+			this.lbl05_phase6.Text = "phase 6";
+			this.lbl05_phase6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl05_phase6.MouseEnter += new System.EventHandler(this.OnEnter5);
+			this.lbl05_phase6.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp5);
 			// 
 			// lbl04
 			// 
@@ -2060,17 +2060,17 @@ namespace McdView
 			this.lbl04.MouseEnter += new System.EventHandler(this.OnEnter4);
 			this.lbl04.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp4);
 			// 
-			// lbl04_phase4
+			// lbl04_phase5
 			// 
-			this.lbl04_phase4.Location = new System.Drawing.Point(340, 120);
-			this.lbl04_phase4.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl04_phase4.Name = "lbl04_phase4";
-			this.lbl04_phase4.Size = new System.Drawing.Size(50, 15);
-			this.lbl04_phase4.TabIndex = 14;
-			this.lbl04_phase4.Text = "phase 5";
-			this.lbl04_phase4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl04_phase4.MouseEnter += new System.EventHandler(this.OnEnter4);
-			this.lbl04_phase4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp4);
+			this.lbl04_phase5.Location = new System.Drawing.Point(340, 120);
+			this.lbl04_phase5.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl04_phase5.Name = "lbl04_phase5";
+			this.lbl04_phase5.Size = new System.Drawing.Size(50, 15);
+			this.lbl04_phase5.TabIndex = 14;
+			this.lbl04_phase5.Text = "phase 5";
+			this.lbl04_phase5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl04_phase5.MouseEnter += new System.EventHandler(this.OnEnter4);
+			this.lbl04_phase5.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp4);
 			// 
 			// lbl22
 			// 
@@ -2873,22 +2873,22 @@ namespace McdView
 			this.gb_Sprites.Controls.Add(this.lbl03);
 			this.gb_Sprites.Controls.Add(this.lbl05);
 			this.gb_Sprites.Controls.Add(this.lbl04);
-			this.gb_Sprites.Controls.Add(this.lbl03_phase3);
-			this.gb_Sprites.Controls.Add(this.lbl00_phase0);
-			this.gb_Sprites.Controls.Add(this.lbl01_phase1);
-			this.gb_Sprites.Controls.Add(this.lbl07_phase7);
-			this.gb_Sprites.Controls.Add(this.lbl02_phase2);
-			this.gb_Sprites.Controls.Add(this.lbl06_phase6);
-			this.gb_Sprites.Controls.Add(this.lbl04_phase4);
-			this.gb_Sprites.Controls.Add(this.lbl05_phase5);
-			this.gb_Sprites.Controls.Add(this.tb07_phase7);
-			this.gb_Sprites.Controls.Add(this.tb06_phase6);
-			this.gb_Sprites.Controls.Add(this.tb05_phase5);
-			this.gb_Sprites.Controls.Add(this.tb04_phase4);
-			this.gb_Sprites.Controls.Add(this.tb03_phase3);
-			this.gb_Sprites.Controls.Add(this.tb02_phase2);
-			this.gb_Sprites.Controls.Add(this.tb01_phase1);
-			this.gb_Sprites.Controls.Add(this.tb00_phase0);
+			this.gb_Sprites.Controls.Add(this.lbl03_phase4);
+			this.gb_Sprites.Controls.Add(this.lbl00_phase1);
+			this.gb_Sprites.Controls.Add(this.lbl01_phase2);
+			this.gb_Sprites.Controls.Add(this.lbl07_phase8);
+			this.gb_Sprites.Controls.Add(this.lbl02_phase3);
+			this.gb_Sprites.Controls.Add(this.lbl06_phase7);
+			this.gb_Sprites.Controls.Add(this.lbl04_phase5);
+			this.gb_Sprites.Controls.Add(this.lbl05_phase6);
+			this.gb_Sprites.Controls.Add(this.tb07_phase8);
+			this.gb_Sprites.Controls.Add(this.tb06_phase7);
+			this.gb_Sprites.Controls.Add(this.tb05_phase6);
+			this.gb_Sprites.Controls.Add(this.tb04_phase5);
+			this.gb_Sprites.Controls.Add(this.tb03_phase4);
+			this.gb_Sprites.Controls.Add(this.tb02_phase3);
+			this.gb_Sprites.Controls.Add(this.tb01_phase2);
+			this.gb_Sprites.Controls.Add(this.tb00_phase1);
 			this.gb_Sprites.Controls.Add(this.pnl_Sprites);
 			this.gb_Sprites.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gb_Sprites.Location = new System.Drawing.Point(0, 175);
@@ -2900,109 +2900,109 @@ namespace McdView
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Sprites ";
 			// 
-			// tb07_phase7
+			// tb07_phase8
 			// 
-			this.tb07_phase7.Location = new System.Drawing.Point(580, 100);
-			this.tb07_phase7.Margin = new System.Windows.Forms.Padding(0);
-			this.tb07_phase7.Name = "tb07_phase7";
-			this.tb07_phase7.Size = new System.Drawing.Size(35, 19);
-			this.tb07_phase7.TabIndex = 24;
-			this.tb07_phase7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb07_phase7.WordWrap = false;
-			this.tb07_phase7.TextChanged += new System.EventHandler(this.OnChanged7);
-			this.tb07_phase7.Enter += new System.EventHandler(this.OnEnter7);
-			this.tb07_phase7.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox7);
+			this.tb07_phase8.Location = new System.Drawing.Point(580, 100);
+			this.tb07_phase8.Margin = new System.Windows.Forms.Padding(0);
+			this.tb07_phase8.Name = "tb07_phase8";
+			this.tb07_phase8.Size = new System.Drawing.Size(35, 19);
+			this.tb07_phase8.TabIndex = 24;
+			this.tb07_phase8.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb07_phase8.WordWrap = false;
+			this.tb07_phase8.TextChanged += new System.EventHandler(this.OnChanged7);
+			this.tb07_phase8.Enter += new System.EventHandler(this.OnEnter7);
+			this.tb07_phase8.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox7);
 			// 
-			// tb06_phase6
+			// tb06_phase7
 			// 
-			this.tb06_phase6.Location = new System.Drawing.Point(500, 100);
-			this.tb06_phase6.Margin = new System.Windows.Forms.Padding(0);
-			this.tb06_phase6.Name = "tb06_phase6";
-			this.tb06_phase6.Size = new System.Drawing.Size(35, 19);
-			this.tb06_phase6.TabIndex = 21;
-			this.tb06_phase6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb06_phase6.WordWrap = false;
-			this.tb06_phase6.TextChanged += new System.EventHandler(this.OnChanged6);
-			this.tb06_phase6.Enter += new System.EventHandler(this.OnEnter6);
-			this.tb06_phase6.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox6);
+			this.tb06_phase7.Location = new System.Drawing.Point(500, 100);
+			this.tb06_phase7.Margin = new System.Windows.Forms.Padding(0);
+			this.tb06_phase7.Name = "tb06_phase7";
+			this.tb06_phase7.Size = new System.Drawing.Size(35, 19);
+			this.tb06_phase7.TabIndex = 21;
+			this.tb06_phase7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb06_phase7.WordWrap = false;
+			this.tb06_phase7.TextChanged += new System.EventHandler(this.OnChanged6);
+			this.tb06_phase7.Enter += new System.EventHandler(this.OnEnter6);
+			this.tb06_phase7.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox6);
 			// 
-			// tb05_phase5
+			// tb05_phase6
 			// 
-			this.tb05_phase5.Location = new System.Drawing.Point(420, 100);
-			this.tb05_phase5.Margin = new System.Windows.Forms.Padding(0);
-			this.tb05_phase5.Name = "tb05_phase5";
-			this.tb05_phase5.Size = new System.Drawing.Size(35, 19);
-			this.tb05_phase5.TabIndex = 18;
-			this.tb05_phase5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb05_phase5.WordWrap = false;
-			this.tb05_phase5.TextChanged += new System.EventHandler(this.OnChanged5);
-			this.tb05_phase5.Enter += new System.EventHandler(this.OnEnter5);
-			this.tb05_phase5.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox5);
+			this.tb05_phase6.Location = new System.Drawing.Point(420, 100);
+			this.tb05_phase6.Margin = new System.Windows.Forms.Padding(0);
+			this.tb05_phase6.Name = "tb05_phase6";
+			this.tb05_phase6.Size = new System.Drawing.Size(35, 19);
+			this.tb05_phase6.TabIndex = 18;
+			this.tb05_phase6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb05_phase6.WordWrap = false;
+			this.tb05_phase6.TextChanged += new System.EventHandler(this.OnChanged5);
+			this.tb05_phase6.Enter += new System.EventHandler(this.OnEnter5);
+			this.tb05_phase6.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox5);
 			// 
-			// tb04_phase4
+			// tb04_phase5
 			// 
-			this.tb04_phase4.Location = new System.Drawing.Point(340, 100);
-			this.tb04_phase4.Margin = new System.Windows.Forms.Padding(0);
-			this.tb04_phase4.Name = "tb04_phase4";
-			this.tb04_phase4.Size = new System.Drawing.Size(35, 19);
-			this.tb04_phase4.TabIndex = 15;
-			this.tb04_phase4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb04_phase4.WordWrap = false;
-			this.tb04_phase4.TextChanged += new System.EventHandler(this.OnChanged4);
-			this.tb04_phase4.Enter += new System.EventHandler(this.OnEnter4);
-			this.tb04_phase4.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox4);
+			this.tb04_phase5.Location = new System.Drawing.Point(340, 100);
+			this.tb04_phase5.Margin = new System.Windows.Forms.Padding(0);
+			this.tb04_phase5.Name = "tb04_phase5";
+			this.tb04_phase5.Size = new System.Drawing.Size(35, 19);
+			this.tb04_phase5.TabIndex = 15;
+			this.tb04_phase5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb04_phase5.WordWrap = false;
+			this.tb04_phase5.TextChanged += new System.EventHandler(this.OnChanged4);
+			this.tb04_phase5.Enter += new System.EventHandler(this.OnEnter4);
+			this.tb04_phase5.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox4);
 			// 
-			// tb03_phase3
+			// tb03_phase4
 			// 
-			this.tb03_phase3.Location = new System.Drawing.Point(265, 100);
-			this.tb03_phase3.Margin = new System.Windows.Forms.Padding(0);
-			this.tb03_phase3.Name = "tb03_phase3";
-			this.tb03_phase3.Size = new System.Drawing.Size(35, 19);
-			this.tb03_phase3.TabIndex = 12;
-			this.tb03_phase3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb03_phase3.WordWrap = false;
-			this.tb03_phase3.TextChanged += new System.EventHandler(this.OnChanged3);
-			this.tb03_phase3.Enter += new System.EventHandler(this.OnEnter3);
-			this.tb03_phase3.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox3);
+			this.tb03_phase4.Location = new System.Drawing.Point(265, 100);
+			this.tb03_phase4.Margin = new System.Windows.Forms.Padding(0);
+			this.tb03_phase4.Name = "tb03_phase4";
+			this.tb03_phase4.Size = new System.Drawing.Size(35, 19);
+			this.tb03_phase4.TabIndex = 12;
+			this.tb03_phase4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb03_phase4.WordWrap = false;
+			this.tb03_phase4.TextChanged += new System.EventHandler(this.OnChanged3);
+			this.tb03_phase4.Enter += new System.EventHandler(this.OnEnter3);
+			this.tb03_phase4.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox3);
 			// 
-			// tb02_phase2
+			// tb02_phase3
 			// 
-			this.tb02_phase2.Location = new System.Drawing.Point(190, 100);
-			this.tb02_phase2.Margin = new System.Windows.Forms.Padding(0);
-			this.tb02_phase2.Name = "tb02_phase2";
-			this.tb02_phase2.Size = new System.Drawing.Size(35, 19);
-			this.tb02_phase2.TabIndex = 9;
-			this.tb02_phase2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb02_phase2.WordWrap = false;
-			this.tb02_phase2.TextChanged += new System.EventHandler(this.OnChanged2);
-			this.tb02_phase2.Enter += new System.EventHandler(this.OnEnter2);
-			this.tb02_phase2.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox2);
+			this.tb02_phase3.Location = new System.Drawing.Point(190, 100);
+			this.tb02_phase3.Margin = new System.Windows.Forms.Padding(0);
+			this.tb02_phase3.Name = "tb02_phase3";
+			this.tb02_phase3.Size = new System.Drawing.Size(35, 19);
+			this.tb02_phase3.TabIndex = 9;
+			this.tb02_phase3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb02_phase3.WordWrap = false;
+			this.tb02_phase3.TextChanged += new System.EventHandler(this.OnChanged2);
+			this.tb02_phase3.Enter += new System.EventHandler(this.OnEnter2);
+			this.tb02_phase3.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox2);
 			// 
-			// tb01_phase1
+			// tb01_phase2
 			// 
-			this.tb01_phase1.Location = new System.Drawing.Point(110, 100);
-			this.tb01_phase1.Margin = new System.Windows.Forms.Padding(0);
-			this.tb01_phase1.Name = "tb01_phase1";
-			this.tb01_phase1.Size = new System.Drawing.Size(35, 19);
-			this.tb01_phase1.TabIndex = 6;
-			this.tb01_phase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb01_phase1.WordWrap = false;
-			this.tb01_phase1.TextChanged += new System.EventHandler(this.OnChanged1);
-			this.tb01_phase1.Enter += new System.EventHandler(this.OnEnter1);
-			this.tb01_phase1.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox1);
+			this.tb01_phase2.Location = new System.Drawing.Point(110, 100);
+			this.tb01_phase2.Margin = new System.Windows.Forms.Padding(0);
+			this.tb01_phase2.Name = "tb01_phase2";
+			this.tb01_phase2.Size = new System.Drawing.Size(35, 19);
+			this.tb01_phase2.TabIndex = 6;
+			this.tb01_phase2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb01_phase2.WordWrap = false;
+			this.tb01_phase2.TextChanged += new System.EventHandler(this.OnChanged1);
+			this.tb01_phase2.Enter += new System.EventHandler(this.OnEnter1);
+			this.tb01_phase2.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox1);
 			// 
-			// tb00_phase0
+			// tb00_phase1
 			// 
-			this.tb00_phase0.Location = new System.Drawing.Point(35, 100);
-			this.tb00_phase0.Margin = new System.Windows.Forms.Padding(0);
-			this.tb00_phase0.Name = "tb00_phase0";
-			this.tb00_phase0.Size = new System.Drawing.Size(35, 19);
-			this.tb00_phase0.TabIndex = 3;
-			this.tb00_phase0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb00_phase0.WordWrap = false;
-			this.tb00_phase0.TextChanged += new System.EventHandler(this.OnChanged0);
-			this.tb00_phase0.Enter += new System.EventHandler(this.OnEnter0);
-			this.tb00_phase0.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox0);
+			this.tb00_phase1.Location = new System.Drawing.Point(35, 100);
+			this.tb00_phase1.Margin = new System.Windows.Forms.Padding(0);
+			this.tb00_phase1.Name = "tb00_phase1";
+			this.tb00_phase1.Size = new System.Drawing.Size(35, 19);
+			this.tb00_phase1.TabIndex = 3;
+			this.tb00_phase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb00_phase1.WordWrap = false;
+			this.tb00_phase1.TextChanged += new System.EventHandler(this.OnChanged0);
+			this.tb00_phase1.Enter += new System.EventHandler(this.OnEnter0);
+			this.tb00_phase1.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox0);
 			// 
 			// pnl_Sprites
 			// 

@@ -69,14 +69,14 @@ namespace McdView
 		/// </summary>
 		private void TagLabels()
 		{
-			lbl00.Tag = lbl00_phase0        .Tag = tb00_phase0;
-			lbl01.Tag = lbl01_phase1        .Tag = tb01_phase1;
-			lbl02.Tag = lbl02_phase2        .Tag = tb02_phase2;
-			lbl03.Tag = lbl03_phase3        .Tag = tb03_phase3;
-			lbl04.Tag = lbl04_phase4        .Tag = tb04_phase4;
-			lbl05.Tag = lbl05_phase5        .Tag = tb05_phase5;
-			lbl06.Tag = lbl06_phase6        .Tag = tb06_phase6;
-			lbl07.Tag = lbl07_phase7        .Tag = tb07_phase7;
+			lbl00.Tag = lbl00_phase1        .Tag = tb00_phase1;
+			lbl01.Tag = lbl01_phase2        .Tag = tb01_phase2;
+			lbl02.Tag = lbl02_phase3        .Tag = tb02_phase3;
+			lbl03.Tag = lbl03_phase4        .Tag = tb03_phase4;
+			lbl04.Tag = lbl04_phase5        .Tag = tb04_phase5;
+			lbl05.Tag = lbl05_phase6        .Tag = tb05_phase6;
+			lbl06.Tag = lbl06_phase7        .Tag = tb06_phase7;
+			lbl07.Tag = lbl07_phase8        .Tag = tb07_phase8;
 
 			lbl08.Tag = lbl08_loft00        .Tag = tb08_loft00;
 			lbl09.Tag = lbl09_loft01        .Tag = tb09_loft01;
@@ -163,14 +163,14 @@ namespace McdView
 		/// </summary>
 		private void AssignLostFocusHandlers()
 		{
-			tb00_phase0        .LostFocus += tb_OnLostFocus;
-			tb01_phase1        .LostFocus += tb_OnLostFocus;
-			tb02_phase2        .LostFocus += tb_OnLostFocus;
-			tb03_phase3        .LostFocus += tb_OnLostFocus;
-			tb04_phase4        .LostFocus += tb_OnLostFocus;
-			tb05_phase5        .LostFocus += tb_OnLostFocus;
-			tb06_phase6        .LostFocus += tb_OnLostFocus;
-			tb07_phase7        .LostFocus += tb_OnLostFocus;
+			tb00_phase1        .LostFocus += tb_OnLostFocus;
+			tb01_phase2        .LostFocus += tb_OnLostFocus;
+			tb02_phase3        .LostFocus += tb_OnLostFocus;
+			tb03_phase4        .LostFocus += tb_OnLostFocus;
+			tb04_phase5        .LostFocus += tb_OnLostFocus;
+			tb05_phase6        .LostFocus += tb_OnLostFocus;
+			tb06_phase7        .LostFocus += tb_OnLostFocus;
+			tb07_phase8        .LostFocus += tb_OnLostFocus;
 			tb08_loft00        .LostFocus += tb_OnLostFocus;
 			tb09_loft01        .LostFocus += tb_OnLostFocus;
 			tb10_loft02        .LostFocus += tb_OnLostFocus;
@@ -304,10 +304,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 0;
-				if (TryParseText(tb00_phase0)) // else recurse
+				if (TryParseText(tb00_phase1)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb00_phase0.Text, out result)
+					if (Int32.TryParse(tb00_phase1.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -320,15 +320,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb00_phase0.Text = "0"; // recurse w/ default.
+						tb00_phase1.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb00_phase0.Text = (Spriteset.Count - 1).ToString();
+						tb00_phase1.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb00_phase0.Text = "255";
+						tb00_phase1.Text = "255";
 				}
 			}
 			else
-				tb00_phase0.Text = String.Empty; // recurse.
+				tb00_phase1.Text = String.Empty; // recurse.
 		}
 		private void OnEnter0(object sender, EventArgs e)
 		{
@@ -339,7 +339,7 @@ namespace McdView
 		private void OnMouseEnterTextbox0(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb00_phase0.Text, out result))
+			if (Int32.TryParse(tb00_phase1.Text, out result))
 			{
 				tssl_Overval.Text = "phase 1: " + result;
 				OnEnter0(null, EventArgs.Empty);
@@ -359,7 +359,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb00_phase0.Text);
+						byte val = Byte.Parse(tb00_phase1.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite1 = val;
 
@@ -380,10 +380,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 1;
-				if (TryParseText(tb01_phase1)) // else recurse
+				if (TryParseText(tb01_phase2)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb01_phase1.Text, out result)
+					if (Int32.TryParse(tb01_phase2.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -396,15 +396,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb01_phase1.Text = "0"; // recurse w/ default.
+						tb01_phase2.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb01_phase1.Text = (Spriteset.Count - 1).ToString();
+						tb01_phase2.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb01_phase1.Text = "255";
+						tb01_phase2.Text = "255";
 				}
 			}
 			else
-				tb01_phase1.Text = String.Empty; // recurse.
+				tb01_phase2.Text = String.Empty; // recurse.
 		}
 		private void OnEnter1(object sender, EventArgs e)
 		{
@@ -415,7 +415,7 @@ namespace McdView
 		private void OnMouseEnterTextbox1(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb01_phase1.Text, out result))
+			if (Int32.TryParse(tb01_phase2.Text, out result))
 			{
 				tssl_Overval.Text = "phase 2: " + result;
 				OnEnter1(null, EventArgs.Empty);
@@ -435,7 +435,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb01_phase1.Text);
+						byte val = Byte.Parse(tb01_phase2.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite2 = val;
 
@@ -455,10 +455,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 2;
-				if (TryParseText(tb02_phase2)) // else recurse
+				if (TryParseText(tb02_phase3)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb02_phase2.Text, out result)
+					if (Int32.TryParse(tb02_phase3.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -471,15 +471,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb02_phase2.Text = "0"; // recurse w/ default.
+						tb02_phase3.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb02_phase2.Text = (Spriteset.Count - 1).ToString();
+						tb02_phase3.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb02_phase2.Text = "255";
+						tb02_phase3.Text = "255";
 				}
 			}
 			else
-				tb02_phase2.Text = String.Empty; // recurse.
+				tb02_phase3.Text = String.Empty; // recurse.
 		}
 		private void OnEnter2(object sender, EventArgs e)
 		{
@@ -490,7 +490,7 @@ namespace McdView
 		private void OnMouseEnterTextbox2(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb02_phase2.Text, out result))
+			if (Int32.TryParse(tb02_phase3.Text, out result))
 			{
 				tssl_Overval.Text = "phase 3: " + result;
 				OnEnter2(null, EventArgs.Empty);
@@ -510,7 +510,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb02_phase2.Text);
+						byte val = Byte.Parse(tb02_phase3.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite3 = val;
 
@@ -530,10 +530,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 3;
-				if (TryParseText(tb03_phase3)) // else recurse
+				if (TryParseText(tb03_phase4)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb03_phase3.Text, out result)
+					if (Int32.TryParse(tb03_phase4.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -546,15 +546,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb03_phase3.Text = "0"; // recurse w/ default.
+						tb03_phase4.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb03_phase3.Text = (Spriteset.Count - 1).ToString();
+						tb03_phase4.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb03_phase3.Text = "255";
+						tb03_phase4.Text = "255";
 				}
 			}
 			else
-				tb03_phase3.Text = String.Empty; // recurse.
+				tb03_phase4.Text = String.Empty; // recurse.
 		}
 		private void OnEnter3(object sender, EventArgs e)
 		{
@@ -565,7 +565,7 @@ namespace McdView
 		private void OnMouseEnterTextbox3(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb03_phase3.Text, out result))
+			if (Int32.TryParse(tb03_phase4.Text, out result))
 			{
 				tssl_Overval.Text = "phase 4: " + result;
 				OnEnter3(null, EventArgs.Empty);
@@ -585,7 +585,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb03_phase3.Text);
+						byte val = Byte.Parse(tb03_phase4.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite4 = val;
 
@@ -605,10 +605,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 4;
-				if (TryParseText(tb04_phase4)) // else recurse
+				if (TryParseText(tb04_phase5)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb04_phase4.Text, out result)
+					if (Int32.TryParse(tb04_phase5.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -621,15 +621,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb04_phase4.Text = "0"; // recurse w/ default.
+						tb04_phase5.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb04_phase4.Text = (Spriteset.Count - 1).ToString();
+						tb04_phase5.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb04_phase4.Text = "255";
+						tb04_phase5.Text = "255";
 				}
 			}
 			else
-				tb04_phase4.Text = String.Empty; // recurse.
+				tb04_phase5.Text = String.Empty; // recurse.
 		}
 		private void OnEnter4(object sender, EventArgs e)
 		{
@@ -640,7 +640,7 @@ namespace McdView
 		private void OnMouseEnterTextbox4(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb04_phase4.Text, out result))
+			if (Int32.TryParse(tb04_phase5.Text, out result))
 			{
 				tssl_Overval.Text = "phase 5: " + result;
 				OnEnter4(null, EventArgs.Empty);
@@ -660,7 +660,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb04_phase4.Text);
+						byte val = Byte.Parse(tb04_phase5.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite5 = val;
 
@@ -680,10 +680,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 5;
-				if (TryParseText(tb05_phase5)) // else recurse
+				if (TryParseText(tb05_phase6)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb05_phase5.Text, out result)
+					if (Int32.TryParse(tb05_phase6.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -696,15 +696,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb05_phase5.Text = "0"; // recurse w/ default.
+						tb05_phase6.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb05_phase5.Text = (Spriteset.Count - 1).ToString();
+						tb05_phase6.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb05_phase5.Text = "255";
+						tb05_phase6.Text = "255";
 				}
 			}
 			else
-				tb05_phase5.Text = String.Empty; // recurse.
+				tb05_phase6.Text = String.Empty; // recurse.
 		}
 		private void OnEnter5(object sender, EventArgs e)
 		{
@@ -715,7 +715,7 @@ namespace McdView
 		private void OnMouseEnterTextbox5(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb05_phase5.Text, out result))
+			if (Int32.TryParse(tb05_phase6.Text, out result))
 			{
 				tssl_Overval.Text = "phase 6: " + result;
 				OnEnter5(null, EventArgs.Empty);
@@ -735,7 +735,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb05_phase5.Text);
+						byte val = Byte.Parse(tb05_phase6.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite6 = val;
 
@@ -755,10 +755,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 6;
-				if (TryParseText(tb06_phase6)) // else recurse
+				if (TryParseText(tb06_phase7)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb06_phase6.Text, out result)
+					if (Int32.TryParse(tb06_phase7.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -771,15 +771,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb06_phase6.Text = "0"; // recurse w/ default.
+						tb06_phase7.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb06_phase6.Text = (Spriteset.Count - 1).ToString();
+						tb06_phase7.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb06_phase6.Text = "255";
+						tb06_phase7.Text = "255";
 				}
 			}
 			else
-				tb06_phase6.Text = String.Empty; // recurse.
+				tb06_phase7.Text = String.Empty; // recurse.
 		}
 		private void OnEnter6(object sender, EventArgs e)
 		{
@@ -790,7 +790,7 @@ namespace McdView
 		private void OnMouseEnterTextbox6(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb06_phase6.Text, out result))
+			if (Int32.TryParse(tb06_phase7.Text, out result))
 			{
 				tssl_Overval.Text = "phase 7: " + result;
 				OnEnter6(null, EventArgs.Empty);
@@ -810,7 +810,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb06_phase6.Text);
+						byte val = Byte.Parse(tb06_phase7.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite7 = val;
 
@@ -830,10 +830,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 7;
-				if (TryParseText(tb07_phase7)) // else recurse
+				if (TryParseText(tb07_phase8)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb07_phase7.Text, out result)
+					if (Int32.TryParse(tb07_phase8.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (Spriteset == null || result < Spriteset.Count))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -846,15 +846,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb07_phase7.Text = "0"; // recurse w/ default.
+						tb07_phase8.Text = "0"; // recurse w/ default.
 					else if (_strict && Spriteset != null)
-						tb07_phase7.Text = (Spriteset.Count - 1).ToString();
+						tb07_phase8.Text = (Spriteset.Count - 1).ToString();
 					else
-						tb07_phase7.Text = "255";
+						tb07_phase8.Text = "255";
 				}
 			}
 			else
-				tb07_phase7.Text = String.Empty; // recurse.
+				tb07_phase8.Text = String.Empty; // recurse.
 		}
 		private void OnEnter7(object sender, EventArgs e)
 		{
@@ -865,7 +865,7 @@ namespace McdView
 		private void OnMouseEnterTextbox7(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb07_phase7.Text, out result))
+			if (Int32.TryParse(tb07_phase8.Text, out result))
 			{
 				tssl_Overval.Text = "phase 8: " + result;
 				OnEnter7(null, EventArgs.Empty);
@@ -885,7 +885,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb07_phase7.Text);
+						byte val = Byte.Parse(tb07_phase8.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite8 = val;
 
