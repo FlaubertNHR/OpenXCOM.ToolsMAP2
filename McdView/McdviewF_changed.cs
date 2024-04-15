@@ -13,6 +13,19 @@ namespace McdView
 		// Descriptions of MCD entries are at
 		// https://www.ufopaedia.org/index.php/MCD
 
+		#region fields (static)
+		/// <summary>
+		/// Gets a generic description for the aniphase fields.
+		/// </summary>
+		/// <returns></returns>
+		private const string PHASE_DESCRIPTION = " Terrain sprites typically cycle through eight phases"
+											   + " (sliding doors are static at phase 1 - see #30 isSlidingDoor).";
+
+		private const string COPYVAL_TITLE = "multiple selected records";
+		private const string COPYVAL_INFO  = "Apply current value to other selected records ...";
+		#endregion fields (static)
+
+
 		#region Leave
 		/// <summary>
 		/// Tags each <c><see cref="LoftPanel"/></c> with its corresponding
@@ -282,16 +295,6 @@ namespace McdView
 
 
 		/// <summary>
-		/// Gets a generic description for the aniphase fields.
-		/// </summary>
-		/// <returns></returns>
-		private static string GetPhaseDescription()
-		{
-			return " Terrain sprites typically cycle through eight phases"
-				 + " (sliding doors are static at phase 1 - see #30 isSlidingDoor).";
-		}
-
-		/// <summary>
 		/// #0 phase 1 (byte)
 		/// </summary>
 		/// <param name="sender"></param>
@@ -329,7 +332,7 @@ namespace McdView
 		}
 		private void OnEnter0(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 1 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 1 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -348,8 +351,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -405,7 +408,7 @@ namespace McdView
 		}
 		private void OnEnter1(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 2 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 2 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -424,8 +427,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -480,7 +483,7 @@ namespace McdView
 		}
 		private void OnEnter2(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 3 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 3 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -499,8 +502,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -555,7 +558,7 @@ namespace McdView
 		}
 		private void OnEnter3(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 4 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 4 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -574,8 +577,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -630,7 +633,7 @@ namespace McdView
 		}
 		private void OnEnter4(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 5 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 5 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -649,8 +652,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -705,7 +708,7 @@ namespace McdView
 		}
 		private void OnEnter5(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 6 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 6 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -724,8 +727,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -780,7 +783,7 @@ namespace McdView
 		}
 		private void OnEnter6(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 7 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 7 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -799,8 +802,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -855,7 +858,7 @@ namespace McdView
 		}
 		private void OnEnter7(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "phase 8 (ubyte)" + GetPhaseDescription()
+			lbl_Description.Text = "phase 8 (ubyte)" + PHASE_DESCRIPTION
 								 + Environment.NewLine + Environment.NewLine
 								 + "0.." + (Spriteset != null ? (Spriteset.Count - 1).ToString() : "255");
 		}
@@ -874,8 +877,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -957,8 +960,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1032,8 +1035,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1107,8 +1110,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1182,8 +1185,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1257,8 +1260,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1332,8 +1335,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1407,8 +1410,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1482,8 +1485,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1557,8 +1560,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1632,8 +1635,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1707,8 +1710,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1782,8 +1785,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -1885,8 +1888,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2025,8 +2028,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2095,8 +2098,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2165,8 +2168,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2235,8 +2238,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2305,8 +2308,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2375,8 +2378,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2445,8 +2448,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2515,8 +2518,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2609,8 +2612,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2693,8 +2696,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2772,8 +2775,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -2931,8 +2934,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3012,8 +3015,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3101,8 +3104,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3185,8 +3188,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3264,8 +3267,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3348,8 +3351,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3419,8 +3422,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3490,8 +3493,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3561,8 +3564,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3635,8 +3638,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3706,8 +3709,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3790,8 +3793,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3864,8 +3867,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -3948,8 +3951,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4021,8 +4024,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4107,8 +4110,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4185,8 +4188,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4257,8 +4260,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4329,8 +4332,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4418,8 +4421,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4501,8 +4504,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4583,8 +4586,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4655,8 +4658,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4727,8 +4730,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4798,8 +4801,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4870,8 +4873,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -4973,8 +4976,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -5053,8 +5056,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
@@ -5124,8 +5127,8 @@ namespace McdView
 				&& PartsPanel.SubIds.Count != 0)
 			{
 				using (var ib = new Infobox(
-										"multiple selected records",
-										"Apply current value to other selected records ...",
+										COPYVAL_TITLE,
+										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
 										InfoboxButtons.CancelOkay))
