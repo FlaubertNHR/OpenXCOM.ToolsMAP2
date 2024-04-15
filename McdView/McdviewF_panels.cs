@@ -166,8 +166,8 @@ namespace McdView
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		/// <remarks>If user has the openfile dialog open and double-clicks to
-		/// open a file that happens to be over the panel a mouse-up event
-		/// fires. So use MouseDown here.</remarks>
+		/// open a file that happens to be over the panel a <c>MouseUp</c> event
+		/// fires. So use <c>MouseDown</c> here.</remarks>
 		private void OnMouseDown_SpritePanel(object sender, MouseEventArgs e)
 		{
 			PartsPanel.Select();
