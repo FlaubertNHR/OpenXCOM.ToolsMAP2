@@ -49,30 +49,30 @@ namespace McdView
 		private Label lbl08;
 		private Label lbl10;
 		private Label lbl09;
-		private Label lbl08_loft00;
-		private Label lbl19_loft11;
-		private Label lbl18_loft10;
-		private Label lbl17_loft09;
-		private Label lbl16_loft08;
-		private Label lbl15_loft07;
-		private Label lbl14_loft06;
-		private Label lbl13_loft05;
-		private Label lbl12_loft04;
-		private Label lbl11_loft03;
-		private Label lbl10_loft02;
-		private Label lbl09_loft01;
-		private TextBox tb19_loft11;
-		private TextBox tb18_loft10;
-		private TextBox tb17_loft09;
-		private TextBox tb16_loft08;
-		private TextBox tb15_loft07;
-		private TextBox tb14_loft06;
-		private TextBox tb13_loft05;
-		private TextBox tb12_loft04;
-		private TextBox tb11_loft03;
-		private TextBox tb10_loft02;
-		private TextBox tb09_loft01;
-		private TextBox tb08_loft00;
+		private Label lbl08_loft01;
+		private Label lbl19_loft12;
+		private Label lbl18_loft11;
+		private Label lbl17_loft10;
+		private Label lbl16_loft09;
+		private Label lbl15_loft08;
+		private Label lbl14_loft07;
+		private Label lbl13_loft06;
+		private Label lbl12_loft05;
+		private Label lbl11_loft04;
+		private Label lbl10_loft03;
+		private Label lbl09_loft02;
+		private TextBox tb19_loft12;
+		private TextBox tb18_loft11;
+		private TextBox tb17_loft10;
+		private TextBox tb16_loft09;
+		private TextBox tb15_loft08;
+		private TextBox tb14_loft07;
+		private TextBox tb13_loft06;
+		private TextBox tb12_loft05;
+		private TextBox tb11_loft04;
+		private TextBox tb10_loft03;
+		private TextBox tb09_loft02;
+		private TextBox tb08_loft01;
 		private LoftPanel_copier pnl_Loft08;
 		private LoftPanel_copier pnl_Loft09;
 		private LoftPanel_copier pnl_Loft10;
@@ -280,30 +280,30 @@ namespace McdView
 			this.lbl08 = new System.Windows.Forms.Label();
 			this.lbl10 = new System.Windows.Forms.Label();
 			this.lbl09 = new System.Windows.Forms.Label();
-			this.lbl08_loft00 = new System.Windows.Forms.Label();
-			this.lbl19_loft11 = new System.Windows.Forms.Label();
-			this.lbl18_loft10 = new System.Windows.Forms.Label();
-			this.lbl17_loft09 = new System.Windows.Forms.Label();
-			this.lbl16_loft08 = new System.Windows.Forms.Label();
-			this.lbl15_loft07 = new System.Windows.Forms.Label();
-			this.lbl14_loft06 = new System.Windows.Forms.Label();
-			this.lbl13_loft05 = new System.Windows.Forms.Label();
-			this.lbl12_loft04 = new System.Windows.Forms.Label();
-			this.lbl11_loft03 = new System.Windows.Forms.Label();
-			this.lbl10_loft02 = new System.Windows.Forms.Label();
-			this.lbl09_loft01 = new System.Windows.Forms.Label();
-			this.tb19_loft11 = new System.Windows.Forms.TextBox();
-			this.tb18_loft10 = new System.Windows.Forms.TextBox();
-			this.tb17_loft09 = new System.Windows.Forms.TextBox();
-			this.tb16_loft08 = new System.Windows.Forms.TextBox();
-			this.tb15_loft07 = new System.Windows.Forms.TextBox();
-			this.tb14_loft06 = new System.Windows.Forms.TextBox();
-			this.tb13_loft05 = new System.Windows.Forms.TextBox();
-			this.tb12_loft04 = new System.Windows.Forms.TextBox();
-			this.tb11_loft03 = new System.Windows.Forms.TextBox();
-			this.tb10_loft02 = new System.Windows.Forms.TextBox();
-			this.tb09_loft01 = new System.Windows.Forms.TextBox();
-			this.tb08_loft00 = new System.Windows.Forms.TextBox();
+			this.lbl08_loft01 = new System.Windows.Forms.Label();
+			this.lbl19_loft12 = new System.Windows.Forms.Label();
+			this.lbl18_loft11 = new System.Windows.Forms.Label();
+			this.lbl17_loft10 = new System.Windows.Forms.Label();
+			this.lbl16_loft09 = new System.Windows.Forms.Label();
+			this.lbl15_loft08 = new System.Windows.Forms.Label();
+			this.lbl14_loft07 = new System.Windows.Forms.Label();
+			this.lbl13_loft06 = new System.Windows.Forms.Label();
+			this.lbl12_loft05 = new System.Windows.Forms.Label();
+			this.lbl11_loft04 = new System.Windows.Forms.Label();
+			this.lbl10_loft03 = new System.Windows.Forms.Label();
+			this.lbl09_loft02 = new System.Windows.Forms.Label();
+			this.tb19_loft12 = new System.Windows.Forms.TextBox();
+			this.tb18_loft11 = new System.Windows.Forms.TextBox();
+			this.tb17_loft10 = new System.Windows.Forms.TextBox();
+			this.tb16_loft09 = new System.Windows.Forms.TextBox();
+			this.tb15_loft08 = new System.Windows.Forms.TextBox();
+			this.tb14_loft07 = new System.Windows.Forms.TextBox();
+			this.tb13_loft06 = new System.Windows.Forms.TextBox();
+			this.tb12_loft05 = new System.Windows.Forms.TextBox();
+			this.tb11_loft04 = new System.Windows.Forms.TextBox();
+			this.tb10_loft03 = new System.Windows.Forms.TextBox();
+			this.tb09_loft02 = new System.Windows.Forms.TextBox();
+			this.tb08_loft01 = new System.Windows.Forms.TextBox();
 			this.pnl_Loft08 = new McdView.LoftPanel_copier();
 			this.pnl_Loft09 = new McdView.LoftPanel_copier();
 			this.pnl_Loft10 = new McdView.LoftPanel_copier();
@@ -856,30 +856,30 @@ namespace McdView
 			this.gb_Loft.Controls.Add(this.lbl08);
 			this.gb_Loft.Controls.Add(this.lbl10);
 			this.gb_Loft.Controls.Add(this.lbl09);
-			this.gb_Loft.Controls.Add(this.lbl08_loft00);
-			this.gb_Loft.Controls.Add(this.lbl19_loft11);
-			this.gb_Loft.Controls.Add(this.lbl18_loft10);
-			this.gb_Loft.Controls.Add(this.lbl17_loft09);
-			this.gb_Loft.Controls.Add(this.lbl16_loft08);
-			this.gb_Loft.Controls.Add(this.lbl15_loft07);
-			this.gb_Loft.Controls.Add(this.lbl14_loft06);
-			this.gb_Loft.Controls.Add(this.lbl13_loft05);
-			this.gb_Loft.Controls.Add(this.lbl12_loft04);
-			this.gb_Loft.Controls.Add(this.lbl11_loft03);
-			this.gb_Loft.Controls.Add(this.lbl10_loft02);
-			this.gb_Loft.Controls.Add(this.lbl09_loft01);
-			this.gb_Loft.Controls.Add(this.tb19_loft11);
-			this.gb_Loft.Controls.Add(this.tb18_loft10);
-			this.gb_Loft.Controls.Add(this.tb17_loft09);
-			this.gb_Loft.Controls.Add(this.tb16_loft08);
-			this.gb_Loft.Controls.Add(this.tb15_loft07);
-			this.gb_Loft.Controls.Add(this.tb14_loft06);
-			this.gb_Loft.Controls.Add(this.tb13_loft05);
-			this.gb_Loft.Controls.Add(this.tb12_loft04);
-			this.gb_Loft.Controls.Add(this.tb11_loft03);
-			this.gb_Loft.Controls.Add(this.tb10_loft02);
-			this.gb_Loft.Controls.Add(this.tb09_loft01);
-			this.gb_Loft.Controls.Add(this.tb08_loft00);
+			this.gb_Loft.Controls.Add(this.lbl08_loft01);
+			this.gb_Loft.Controls.Add(this.lbl19_loft12);
+			this.gb_Loft.Controls.Add(this.lbl18_loft11);
+			this.gb_Loft.Controls.Add(this.lbl17_loft10);
+			this.gb_Loft.Controls.Add(this.lbl16_loft09);
+			this.gb_Loft.Controls.Add(this.lbl15_loft08);
+			this.gb_Loft.Controls.Add(this.lbl14_loft07);
+			this.gb_Loft.Controls.Add(this.lbl13_loft06);
+			this.gb_Loft.Controls.Add(this.lbl12_loft05);
+			this.gb_Loft.Controls.Add(this.lbl11_loft04);
+			this.gb_Loft.Controls.Add(this.lbl10_loft03);
+			this.gb_Loft.Controls.Add(this.lbl09_loft02);
+			this.gb_Loft.Controls.Add(this.tb19_loft12);
+			this.gb_Loft.Controls.Add(this.tb18_loft11);
+			this.gb_Loft.Controls.Add(this.tb17_loft10);
+			this.gb_Loft.Controls.Add(this.tb16_loft09);
+			this.gb_Loft.Controls.Add(this.tb15_loft08);
+			this.gb_Loft.Controls.Add(this.tb14_loft07);
+			this.gb_Loft.Controls.Add(this.tb13_loft06);
+			this.gb_Loft.Controls.Add(this.tb12_loft05);
+			this.gb_Loft.Controls.Add(this.tb11_loft04);
+			this.gb_Loft.Controls.Add(this.tb10_loft03);
+			this.gb_Loft.Controls.Add(this.tb09_loft02);
+			this.gb_Loft.Controls.Add(this.tb08_loft01);
 			this.gb_Loft.Controls.Add(this.pnl_Loft08);
 			this.gb_Loft.Controls.Add(this.pnl_Loft09);
 			this.gb_Loft.Controls.Add(this.pnl_Loft10);
@@ -1023,257 +1023,257 @@ namespace McdView
 			this.lbl09.Text = "#9";
 			this.lbl09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl08_loft00
+			// lbl08_loft01
 			// 
-			this.lbl08_loft00.Location = new System.Drawing.Point(35, 410);
-			this.lbl08_loft00.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl08_loft00.Name = "lbl08_loft00";
-			this.lbl08_loft00.Size = new System.Drawing.Size(45, 15);
-			this.lbl08_loft00.TabIndex = 45;
-			this.lbl08_loft00.Text = "loft 1";
-			this.lbl08_loft00.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl08_loft01.Location = new System.Drawing.Point(35, 410);
+			this.lbl08_loft01.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl08_loft01.Name = "lbl08_loft01";
+			this.lbl08_loft01.Size = new System.Drawing.Size(45, 15);
+			this.lbl08_loft01.TabIndex = 45;
+			this.lbl08_loft01.Text = "loft 1";
+			this.lbl08_loft01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl19_loft11
+			// lbl19_loft12
 			// 
-			this.lbl19_loft11.Location = new System.Drawing.Point(35, 25);
-			this.lbl19_loft11.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl19_loft11.Name = "lbl19_loft11";
-			this.lbl19_loft11.Size = new System.Drawing.Size(45, 15);
-			this.lbl19_loft11.TabIndex = 1;
-			this.lbl19_loft11.Text = "loft 12";
-			this.lbl19_loft11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl19_loft12.Location = new System.Drawing.Point(35, 25);
+			this.lbl19_loft12.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl19_loft12.Name = "lbl19_loft12";
+			this.lbl19_loft12.Size = new System.Drawing.Size(45, 15);
+			this.lbl19_loft12.TabIndex = 1;
+			this.lbl19_loft12.Text = "loft 12";
+			this.lbl19_loft12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl18_loft10
+			// lbl18_loft11
 			// 
-			this.lbl18_loft10.Location = new System.Drawing.Point(35, 60);
-			this.lbl18_loft10.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl18_loft10.Name = "lbl18_loft10";
-			this.lbl18_loft10.Size = new System.Drawing.Size(45, 15);
-			this.lbl18_loft10.TabIndex = 5;
-			this.lbl18_loft10.Text = "loft 11";
-			this.lbl18_loft10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl18_loft11.Location = new System.Drawing.Point(35, 60);
+			this.lbl18_loft11.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl18_loft11.Name = "lbl18_loft11";
+			this.lbl18_loft11.Size = new System.Drawing.Size(45, 15);
+			this.lbl18_loft11.TabIndex = 5;
+			this.lbl18_loft11.Text = "loft 11";
+			this.lbl18_loft11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl17_loft09
+			// lbl17_loft10
 			// 
-			this.lbl17_loft09.Location = new System.Drawing.Point(35, 95);
-			this.lbl17_loft09.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl17_loft09.Name = "lbl17_loft09";
-			this.lbl17_loft09.Size = new System.Drawing.Size(45, 15);
-			this.lbl17_loft09.TabIndex = 9;
-			this.lbl17_loft09.Text = "loft 10";
-			this.lbl17_loft09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl17_loft10.Location = new System.Drawing.Point(35, 95);
+			this.lbl17_loft10.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl17_loft10.Name = "lbl17_loft10";
+			this.lbl17_loft10.Size = new System.Drawing.Size(45, 15);
+			this.lbl17_loft10.TabIndex = 9;
+			this.lbl17_loft10.Text = "loft 10";
+			this.lbl17_loft10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl16_loft08
+			// lbl16_loft09
 			// 
-			this.lbl16_loft08.Location = new System.Drawing.Point(35, 130);
-			this.lbl16_loft08.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl16_loft08.Name = "lbl16_loft08";
-			this.lbl16_loft08.Size = new System.Drawing.Size(45, 15);
-			this.lbl16_loft08.TabIndex = 13;
-			this.lbl16_loft08.Text = "loft 9";
-			this.lbl16_loft08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl16_loft09.Location = new System.Drawing.Point(35, 130);
+			this.lbl16_loft09.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl16_loft09.Name = "lbl16_loft09";
+			this.lbl16_loft09.Size = new System.Drawing.Size(45, 15);
+			this.lbl16_loft09.TabIndex = 13;
+			this.lbl16_loft09.Text = "loft 9";
+			this.lbl16_loft09.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl15_loft07
+			// lbl15_loft08
 			// 
-			this.lbl15_loft07.Location = new System.Drawing.Point(35, 165);
-			this.lbl15_loft07.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl15_loft07.Name = "lbl15_loft07";
-			this.lbl15_loft07.Size = new System.Drawing.Size(45, 15);
-			this.lbl15_loft07.TabIndex = 17;
-			this.lbl15_loft07.Text = "loft 8";
-			this.lbl15_loft07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl15_loft08.Location = new System.Drawing.Point(35, 165);
+			this.lbl15_loft08.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl15_loft08.Name = "lbl15_loft08";
+			this.lbl15_loft08.Size = new System.Drawing.Size(45, 15);
+			this.lbl15_loft08.TabIndex = 17;
+			this.lbl15_loft08.Text = "loft 8";
+			this.lbl15_loft08.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl14_loft06
+			// lbl14_loft07
 			// 
-			this.lbl14_loft06.Location = new System.Drawing.Point(35, 200);
-			this.lbl14_loft06.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl14_loft06.Name = "lbl14_loft06";
-			this.lbl14_loft06.Size = new System.Drawing.Size(45, 15);
-			this.lbl14_loft06.TabIndex = 21;
-			this.lbl14_loft06.Text = "loft 7";
-			this.lbl14_loft06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl14_loft07.Location = new System.Drawing.Point(35, 200);
+			this.lbl14_loft07.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl14_loft07.Name = "lbl14_loft07";
+			this.lbl14_loft07.Size = new System.Drawing.Size(45, 15);
+			this.lbl14_loft07.TabIndex = 21;
+			this.lbl14_loft07.Text = "loft 7";
+			this.lbl14_loft07.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl13_loft05
+			// lbl13_loft06
 			// 
-			this.lbl13_loft05.Location = new System.Drawing.Point(35, 235);
-			this.lbl13_loft05.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl13_loft05.Name = "lbl13_loft05";
-			this.lbl13_loft05.Size = new System.Drawing.Size(45, 15);
-			this.lbl13_loft05.TabIndex = 25;
-			this.lbl13_loft05.Text = "loft 6";
-			this.lbl13_loft05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl13_loft06.Location = new System.Drawing.Point(35, 235);
+			this.lbl13_loft06.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl13_loft06.Name = "lbl13_loft06";
+			this.lbl13_loft06.Size = new System.Drawing.Size(45, 15);
+			this.lbl13_loft06.TabIndex = 25;
+			this.lbl13_loft06.Text = "loft 6";
+			this.lbl13_loft06.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl12_loft04
+			// lbl12_loft05
 			// 
-			this.lbl12_loft04.Location = new System.Drawing.Point(35, 270);
-			this.lbl12_loft04.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl12_loft04.Name = "lbl12_loft04";
-			this.lbl12_loft04.Size = new System.Drawing.Size(45, 15);
-			this.lbl12_loft04.TabIndex = 29;
-			this.lbl12_loft04.Text = "loft 5";
-			this.lbl12_loft04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl12_loft05.Location = new System.Drawing.Point(35, 270);
+			this.lbl12_loft05.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl12_loft05.Name = "lbl12_loft05";
+			this.lbl12_loft05.Size = new System.Drawing.Size(45, 15);
+			this.lbl12_loft05.TabIndex = 29;
+			this.lbl12_loft05.Text = "loft 5";
+			this.lbl12_loft05.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl11_loft03
+			// lbl11_loft04
 			// 
-			this.lbl11_loft03.Location = new System.Drawing.Point(35, 305);
-			this.lbl11_loft03.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl11_loft03.Name = "lbl11_loft03";
-			this.lbl11_loft03.Size = new System.Drawing.Size(45, 15);
-			this.lbl11_loft03.TabIndex = 33;
-			this.lbl11_loft03.Text = "loft 4";
-			this.lbl11_loft03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl11_loft04.Location = new System.Drawing.Point(35, 305);
+			this.lbl11_loft04.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl11_loft04.Name = "lbl11_loft04";
+			this.lbl11_loft04.Size = new System.Drawing.Size(45, 15);
+			this.lbl11_loft04.TabIndex = 33;
+			this.lbl11_loft04.Text = "loft 4";
+			this.lbl11_loft04.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl10_loft02
+			// lbl10_loft03
 			// 
-			this.lbl10_loft02.Location = new System.Drawing.Point(35, 340);
-			this.lbl10_loft02.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl10_loft02.Name = "lbl10_loft02";
-			this.lbl10_loft02.Size = new System.Drawing.Size(45, 15);
-			this.lbl10_loft02.TabIndex = 37;
-			this.lbl10_loft02.Text = "loft 3";
-			this.lbl10_loft02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl10_loft03.Location = new System.Drawing.Point(35, 340);
+			this.lbl10_loft03.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl10_loft03.Name = "lbl10_loft03";
+			this.lbl10_loft03.Size = new System.Drawing.Size(45, 15);
+			this.lbl10_loft03.TabIndex = 37;
+			this.lbl10_loft03.Text = "loft 3";
+			this.lbl10_loft03.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl09_loft01
+			// lbl09_loft02
 			// 
-			this.lbl09_loft01.Location = new System.Drawing.Point(35, 375);
-			this.lbl09_loft01.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl09_loft01.Name = "lbl09_loft01";
-			this.lbl09_loft01.Size = new System.Drawing.Size(45, 15);
-			this.lbl09_loft01.TabIndex = 41;
-			this.lbl09_loft01.Text = "loft 2";
-			this.lbl09_loft01.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl09_loft02.Location = new System.Drawing.Point(35, 375);
+			this.lbl09_loft02.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl09_loft02.Name = "lbl09_loft02";
+			this.lbl09_loft02.Size = new System.Drawing.Size(45, 15);
+			this.lbl09_loft02.TabIndex = 41;
+			this.lbl09_loft02.Text = "loft 2";
+			this.lbl09_loft02.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tb19_loft11
+			// tb19_loft12
 			// 
-			this.tb19_loft11.Location = new System.Drawing.Point(80, 23);
-			this.tb19_loft11.Margin = new System.Windows.Forms.Padding(0);
-			this.tb19_loft11.Name = "tb19_loft11";
-			this.tb19_loft11.Size = new System.Drawing.Size(35, 19);
-			this.tb19_loft11.TabIndex = 2;
-			this.tb19_loft11.Tag = "11";
-			this.tb19_loft11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb19_loft11.WordWrap = false;
+			this.tb19_loft12.Location = new System.Drawing.Point(80, 23);
+			this.tb19_loft12.Margin = new System.Windows.Forms.Padding(0);
+			this.tb19_loft12.Name = "tb19_loft12";
+			this.tb19_loft12.Size = new System.Drawing.Size(35, 19);
+			this.tb19_loft12.TabIndex = 2;
+			this.tb19_loft12.Tag = "11";
+			this.tb19_loft12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb19_loft12.WordWrap = false;
 			// 
-			// tb18_loft10
+			// tb18_loft11
 			// 
-			this.tb18_loft10.Location = new System.Drawing.Point(80, 58);
-			this.tb18_loft10.Margin = new System.Windows.Forms.Padding(0);
-			this.tb18_loft10.Name = "tb18_loft10";
-			this.tb18_loft10.Size = new System.Drawing.Size(35, 19);
-			this.tb18_loft10.TabIndex = 6;
-			this.tb18_loft10.Tag = "10";
-			this.tb18_loft10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb18_loft10.WordWrap = false;
+			this.tb18_loft11.Location = new System.Drawing.Point(80, 58);
+			this.tb18_loft11.Margin = new System.Windows.Forms.Padding(0);
+			this.tb18_loft11.Name = "tb18_loft11";
+			this.tb18_loft11.Size = new System.Drawing.Size(35, 19);
+			this.tb18_loft11.TabIndex = 6;
+			this.tb18_loft11.Tag = "10";
+			this.tb18_loft11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb18_loft11.WordWrap = false;
 			// 
-			// tb17_loft09
+			// tb17_loft10
 			// 
-			this.tb17_loft09.Location = new System.Drawing.Point(80, 93);
-			this.tb17_loft09.Margin = new System.Windows.Forms.Padding(0);
-			this.tb17_loft09.Name = "tb17_loft09";
-			this.tb17_loft09.Size = new System.Drawing.Size(35, 19);
-			this.tb17_loft09.TabIndex = 10;
-			this.tb17_loft09.Tag = "9";
-			this.tb17_loft09.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb17_loft09.WordWrap = false;
+			this.tb17_loft10.Location = new System.Drawing.Point(80, 93);
+			this.tb17_loft10.Margin = new System.Windows.Forms.Padding(0);
+			this.tb17_loft10.Name = "tb17_loft10";
+			this.tb17_loft10.Size = new System.Drawing.Size(35, 19);
+			this.tb17_loft10.TabIndex = 10;
+			this.tb17_loft10.Tag = "9";
+			this.tb17_loft10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb17_loft10.WordWrap = false;
 			// 
-			// tb16_loft08
+			// tb16_loft09
 			// 
-			this.tb16_loft08.Location = new System.Drawing.Point(80, 128);
-			this.tb16_loft08.Margin = new System.Windows.Forms.Padding(0);
-			this.tb16_loft08.Name = "tb16_loft08";
-			this.tb16_loft08.Size = new System.Drawing.Size(35, 19);
-			this.tb16_loft08.TabIndex = 14;
-			this.tb16_loft08.Tag = "8";
-			this.tb16_loft08.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb16_loft08.WordWrap = false;
+			this.tb16_loft09.Location = new System.Drawing.Point(80, 128);
+			this.tb16_loft09.Margin = new System.Windows.Forms.Padding(0);
+			this.tb16_loft09.Name = "tb16_loft09";
+			this.tb16_loft09.Size = new System.Drawing.Size(35, 19);
+			this.tb16_loft09.TabIndex = 14;
+			this.tb16_loft09.Tag = "8";
+			this.tb16_loft09.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb16_loft09.WordWrap = false;
 			// 
-			// tb15_loft07
+			// tb15_loft08
 			// 
-			this.tb15_loft07.Location = new System.Drawing.Point(80, 163);
-			this.tb15_loft07.Margin = new System.Windows.Forms.Padding(0);
-			this.tb15_loft07.Name = "tb15_loft07";
-			this.tb15_loft07.Size = new System.Drawing.Size(35, 19);
-			this.tb15_loft07.TabIndex = 18;
-			this.tb15_loft07.Tag = "7";
-			this.tb15_loft07.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb15_loft07.WordWrap = false;
+			this.tb15_loft08.Location = new System.Drawing.Point(80, 163);
+			this.tb15_loft08.Margin = new System.Windows.Forms.Padding(0);
+			this.tb15_loft08.Name = "tb15_loft08";
+			this.tb15_loft08.Size = new System.Drawing.Size(35, 19);
+			this.tb15_loft08.TabIndex = 18;
+			this.tb15_loft08.Tag = "7";
+			this.tb15_loft08.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb15_loft08.WordWrap = false;
 			// 
-			// tb14_loft06
+			// tb14_loft07
 			// 
-			this.tb14_loft06.Location = new System.Drawing.Point(80, 198);
-			this.tb14_loft06.Margin = new System.Windows.Forms.Padding(0);
-			this.tb14_loft06.Name = "tb14_loft06";
-			this.tb14_loft06.Size = new System.Drawing.Size(35, 19);
-			this.tb14_loft06.TabIndex = 22;
-			this.tb14_loft06.Tag = "6";
-			this.tb14_loft06.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb14_loft06.WordWrap = false;
+			this.tb14_loft07.Location = new System.Drawing.Point(80, 198);
+			this.tb14_loft07.Margin = new System.Windows.Forms.Padding(0);
+			this.tb14_loft07.Name = "tb14_loft07";
+			this.tb14_loft07.Size = new System.Drawing.Size(35, 19);
+			this.tb14_loft07.TabIndex = 22;
+			this.tb14_loft07.Tag = "6";
+			this.tb14_loft07.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb14_loft07.WordWrap = false;
 			// 
-			// tb13_loft05
+			// tb13_loft06
 			// 
-			this.tb13_loft05.Location = new System.Drawing.Point(80, 233);
-			this.tb13_loft05.Margin = new System.Windows.Forms.Padding(0);
-			this.tb13_loft05.Name = "tb13_loft05";
-			this.tb13_loft05.Size = new System.Drawing.Size(35, 19);
-			this.tb13_loft05.TabIndex = 26;
-			this.tb13_loft05.Tag = "5";
-			this.tb13_loft05.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb13_loft05.WordWrap = false;
+			this.tb13_loft06.Location = new System.Drawing.Point(80, 233);
+			this.tb13_loft06.Margin = new System.Windows.Forms.Padding(0);
+			this.tb13_loft06.Name = "tb13_loft06";
+			this.tb13_loft06.Size = new System.Drawing.Size(35, 19);
+			this.tb13_loft06.TabIndex = 26;
+			this.tb13_loft06.Tag = "5";
+			this.tb13_loft06.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb13_loft06.WordWrap = false;
 			// 
-			// tb12_loft04
+			// tb12_loft05
 			// 
-			this.tb12_loft04.Location = new System.Drawing.Point(80, 268);
-			this.tb12_loft04.Margin = new System.Windows.Forms.Padding(0);
-			this.tb12_loft04.Name = "tb12_loft04";
-			this.tb12_loft04.Size = new System.Drawing.Size(35, 19);
-			this.tb12_loft04.TabIndex = 30;
-			this.tb12_loft04.Tag = "4";
-			this.tb12_loft04.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb12_loft04.WordWrap = false;
+			this.tb12_loft05.Location = new System.Drawing.Point(80, 268);
+			this.tb12_loft05.Margin = new System.Windows.Forms.Padding(0);
+			this.tb12_loft05.Name = "tb12_loft05";
+			this.tb12_loft05.Size = new System.Drawing.Size(35, 19);
+			this.tb12_loft05.TabIndex = 30;
+			this.tb12_loft05.Tag = "4";
+			this.tb12_loft05.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb12_loft05.WordWrap = false;
 			// 
-			// tb11_loft03
+			// tb11_loft04
 			// 
-			this.tb11_loft03.Location = new System.Drawing.Point(80, 303);
-			this.tb11_loft03.Margin = new System.Windows.Forms.Padding(0);
-			this.tb11_loft03.Name = "tb11_loft03";
-			this.tb11_loft03.Size = new System.Drawing.Size(35, 19);
-			this.tb11_loft03.TabIndex = 34;
-			this.tb11_loft03.Tag = "3";
-			this.tb11_loft03.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb11_loft03.WordWrap = false;
+			this.tb11_loft04.Location = new System.Drawing.Point(80, 303);
+			this.tb11_loft04.Margin = new System.Windows.Forms.Padding(0);
+			this.tb11_loft04.Name = "tb11_loft04";
+			this.tb11_loft04.Size = new System.Drawing.Size(35, 19);
+			this.tb11_loft04.TabIndex = 34;
+			this.tb11_loft04.Tag = "3";
+			this.tb11_loft04.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb11_loft04.WordWrap = false;
 			// 
-			// tb10_loft02
+			// tb10_loft03
 			// 
-			this.tb10_loft02.Location = new System.Drawing.Point(80, 338);
-			this.tb10_loft02.Margin = new System.Windows.Forms.Padding(0);
-			this.tb10_loft02.Name = "tb10_loft02";
-			this.tb10_loft02.Size = new System.Drawing.Size(35, 19);
-			this.tb10_loft02.TabIndex = 38;
-			this.tb10_loft02.Tag = "2";
-			this.tb10_loft02.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb10_loft02.WordWrap = false;
+			this.tb10_loft03.Location = new System.Drawing.Point(80, 338);
+			this.tb10_loft03.Margin = new System.Windows.Forms.Padding(0);
+			this.tb10_loft03.Name = "tb10_loft03";
+			this.tb10_loft03.Size = new System.Drawing.Size(35, 19);
+			this.tb10_loft03.TabIndex = 38;
+			this.tb10_loft03.Tag = "2";
+			this.tb10_loft03.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb10_loft03.WordWrap = false;
 			// 
-			// tb09_loft01
+			// tb09_loft02
 			// 
-			this.tb09_loft01.Location = new System.Drawing.Point(80, 373);
-			this.tb09_loft01.Margin = new System.Windows.Forms.Padding(0);
-			this.tb09_loft01.Name = "tb09_loft01";
-			this.tb09_loft01.Size = new System.Drawing.Size(35, 19);
-			this.tb09_loft01.TabIndex = 42;
-			this.tb09_loft01.Tag = "1";
-			this.tb09_loft01.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb09_loft01.WordWrap = false;
+			this.tb09_loft02.Location = new System.Drawing.Point(80, 373);
+			this.tb09_loft02.Margin = new System.Windows.Forms.Padding(0);
+			this.tb09_loft02.Name = "tb09_loft02";
+			this.tb09_loft02.Size = new System.Drawing.Size(35, 19);
+			this.tb09_loft02.TabIndex = 42;
+			this.tb09_loft02.Tag = "1";
+			this.tb09_loft02.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb09_loft02.WordWrap = false;
 			// 
-			// tb08_loft00
+			// tb08_loft01
 			// 
-			this.tb08_loft00.Location = new System.Drawing.Point(80, 408);
-			this.tb08_loft00.Margin = new System.Windows.Forms.Padding(0);
-			this.tb08_loft00.Name = "tb08_loft00";
-			this.tb08_loft00.Size = new System.Drawing.Size(35, 19);
-			this.tb08_loft00.TabIndex = 46;
-			this.tb08_loft00.Tag = "0";
-			this.tb08_loft00.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb08_loft00.WordWrap = false;
+			this.tb08_loft01.Location = new System.Drawing.Point(80, 408);
+			this.tb08_loft01.Margin = new System.Windows.Forms.Padding(0);
+			this.tb08_loft01.Name = "tb08_loft01";
+			this.tb08_loft01.Size = new System.Drawing.Size(35, 19);
+			this.tb08_loft01.TabIndex = 46;
+			this.tb08_loft01.Tag = "0";
+			this.tb08_loft01.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb08_loft01.WordWrap = false;
 			// 
 			// pnl_Loft08
 			// 

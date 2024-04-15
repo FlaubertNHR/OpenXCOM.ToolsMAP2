@@ -512,18 +512,18 @@ namespace McdView
 		/// <param name="id"></param>
 		internal void SetAllLofts(string id)
 		{
-			tb08_loft00.Text =
-			tb09_loft01.Text =
-			tb10_loft02.Text =
-			tb11_loft03.Text =
-			tb12_loft04.Text =
-			tb13_loft05.Text =
-			tb14_loft06.Text =
-			tb15_loft07.Text =
-			tb16_loft08.Text =
-			tb17_loft09.Text =
-			tb18_loft10.Text =
-			tb19_loft11.Text = id;
+			tb08_loft01.Text =
+			tb09_loft02.Text =
+			tb10_loft03.Text =
+			tb11_loft04.Text =
+			tb12_loft05.Text =
+			tb13_loft06.Text =
+			tb14_loft07.Text =
+			tb15_loft08.Text =
+			tb16_loft09.Text =
+			tb17_loft10.Text =
+			tb18_loft11.Text =
+			tb19_loft12.Text = id;
 		}
 
 		/// <summary>
@@ -533,18 +533,18 @@ namespace McdView
 		/// <returns>true if any are different</returns>
 		internal bool CanSetAllLofts(string id)
 		{
-			return tb08_loft00.Text != id
-				|| tb09_loft01.Text != id
-				|| tb10_loft02.Text != id
-				|| tb11_loft03.Text != id
-				|| tb12_loft04.Text != id
-				|| tb13_loft05.Text != id
-				|| tb14_loft06.Text != id
-				|| tb15_loft07.Text != id
-				|| tb16_loft08.Text != id
-				|| tb17_loft09.Text != id
-				|| tb18_loft10.Text != id
-				|| tb19_loft11.Text != id;
+			return tb08_loft01.Text != id
+				|| tb09_loft02.Text != id
+				|| tb10_loft03.Text != id
+				|| tb11_loft04.Text != id
+				|| tb12_loft05.Text != id
+				|| tb13_loft06.Text != id
+				|| tb14_loft07.Text != id
+				|| tb15_loft08.Text != id
+				|| tb16_loft09.Text != id
+				|| tb17_loft10.Text != id
+				|| tb18_loft11.Text != id
+				|| tb19_loft12.Text != id;
 		}
 
 

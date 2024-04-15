@@ -2254,18 +2254,18 @@ namespace McdView
 			tb06_phase7.Text = ((int)record.Sprite7).ToString();
 			tb07_phase8.Text = ((int)record.Sprite8).ToString();
 
-			tb08_loft00.Text = ((int)record.Loft1) .ToString();
-			tb09_loft01.Text = ((int)record.Loft2) .ToString();
-			tb10_loft02.Text = ((int)record.Loft3) .ToString();
-			tb11_loft03.Text = ((int)record.Loft4) .ToString();
-			tb12_loft04.Text = ((int)record.Loft5) .ToString();
-			tb13_loft05.Text = ((int)record.Loft6) .ToString();
-			tb14_loft06.Text = ((int)record.Loft7) .ToString();
-			tb15_loft07.Text = ((int)record.Loft8) .ToString();
-			tb16_loft08.Text = ((int)record.Loft9) .ToString();
-			tb17_loft09.Text = ((int)record.Loft10).ToString();
-			tb18_loft10.Text = ((int)record.Loft11).ToString();
-			tb19_loft11.Text = ((int)record.Loft12).ToString();
+			tb08_loft01.Text = ((int)record.Loft1) .ToString();
+			tb09_loft02.Text = ((int)record.Loft2) .ToString();
+			tb10_loft03.Text = ((int)record.Loft3) .ToString();
+			tb11_loft04.Text = ((int)record.Loft4) .ToString();
+			tb12_loft05.Text = ((int)record.Loft5) .ToString();
+			tb13_loft06.Text = ((int)record.Loft6) .ToString();
+			tb14_loft07.Text = ((int)record.Loft7) .ToString();
+			tb15_loft08.Text = ((int)record.Loft8) .ToString();
+			tb16_loft09.Text = ((int)record.Loft9) .ToString();
+			tb17_loft10.Text = ((int)record.Loft10).ToString();
+			tb18_loft11.Text = ((int)record.Loft11).ToString();
+			tb19_loft12.Text = ((int)record.Loft12).ToString();
 
 			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
 			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
@@ -2347,18 +2347,18 @@ namespace McdView
 			tb06_phase7.Text =
 			tb07_phase8.Text =
 
-			tb08_loft00.Text =
-			tb09_loft01.Text =
-			tb10_loft02.Text =
-			tb11_loft03.Text =
-			tb12_loft04.Text =
-			tb13_loft05.Text =
-			tb14_loft06.Text =
-			tb15_loft07.Text =
-			tb16_loft08.Text =
-			tb17_loft09.Text =
-			tb18_loft10.Text =
-			tb19_loft11.Text =
+			tb08_loft01.Text =
+			tb09_loft02.Text =
+			tb10_loft03.Text =
+			tb11_loft04.Text =
+			tb12_loft05.Text =
+			tb13_loft06.Text =
+			tb14_loft07.Text =
+			tb15_loft08.Text =
+			tb16_loft09.Text =
+			tb17_loft10.Text =
+			tb18_loft11.Text =
+			tb19_loft12.Text =
 
 			tb20_scang1.Text =
 			tb20_scang2.Text =
@@ -2538,7 +2538,7 @@ namespace McdView
 				y = Byte.MaxValue;
 
 			val = Parts[Selid].Record.Loft1;
-			if (val != Int32.Parse(tb08_loft00.Text))
+			if (val != Int32.Parse(tb08_loft01.Text))
 			{
 				borks.Add("#8 loft 1 (record) does not equal loft 1 (text).");
 			}
@@ -2548,7 +2548,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft2;
-			if (val != Int32.Parse(tb09_loft01.Text))
+			if (val != Int32.Parse(tb09_loft02.Text))
 			{
 				borks.Add("#9 loft 2 (record) does not equal loft 2 (text).");
 			}
@@ -2558,7 +2558,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft3;
-			if (val != Int32.Parse(tb10_loft02.Text))
+			if (val != Int32.Parse(tb10_loft03.Text))
 			{
 				borks.Add("#10 loft 3 (record) does not equal loft 3 (text).");
 			}
@@ -2568,7 +2568,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft4;
-			if (val != Int32.Parse(tb11_loft03.Text))
+			if (val != Int32.Parse(tb11_loft04.Text))
 			{
 				borks.Add("#11 loft 4 (record) does not equal loft 4 (text).");
 			}
@@ -2578,7 +2578,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft5;
-			if (val != Int32.Parse(tb12_loft04.Text))
+			if (val != Int32.Parse(tb12_loft05.Text))
 			{
 				borks.Add("#12 loft 5 (record) does not equal loft 5 (text).");
 			}
@@ -2588,7 +2588,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft6;
-			if (val != Int32.Parse(tb13_loft05.Text))
+			if (val != Int32.Parse(tb13_loft06.Text))
 			{
 				borks.Add("#13 loft 6 (record) does not equal loft 6 (text).");
 			}
@@ -2598,7 +2598,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft7;
-			if (val != Int32.Parse(tb14_loft06.Text))
+			if (val != Int32.Parse(tb14_loft07.Text))
 			{
 				borks.Add("#14 loft 7 (record) does not equal loft 7 (text).");
 			}
@@ -2608,7 +2608,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft8;
-			if (val != Int32.Parse(tb15_loft07.Text))
+			if (val != Int32.Parse(tb15_loft08.Text))
 			{
 				borks.Add("#15 loft 8 (record) does not equal loft 8 (text).");
 			}
@@ -2618,7 +2618,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft9;
-			if (val != Int32.Parse(tb16_loft08.Text))
+			if (val != Int32.Parse(tb16_loft09.Text))
 			{
 				borks.Add("#16 loft 9 (record) does not equal loft 9 (text).");
 			}
@@ -2628,7 +2628,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft10;
-			if (val != Int32.Parse(tb17_loft09.Text))
+			if (val != Int32.Parse(tb17_loft10.Text))
 			{
 				borks.Add("#17 loft 10 (record) does not equal loft 10 (text).");
 			}
@@ -2638,7 +2638,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft11;
-			if (val != Int32.Parse(tb18_loft10.Text))
+			if (val != Int32.Parse(tb18_loft11.Text))
 			{
 				borks.Add("#18 loft 11 (record) does not equal loft 11 (text).");
 			}
@@ -2648,7 +2648,7 @@ namespace McdView
 			}
 
 			val = Parts[Selid].Record.Loft12;
-			if (val != Int32.Parse(tb19_loft11.Text))
+			if (val != Int32.Parse(tb19_loft12.Text))
 			{
 				borks.Add("#19 loft 12 (record) does not equal loft 12 (text).");
 			}

@@ -408,18 +408,18 @@ namespace McdView
 			tb06_phase7.Text = ((int)record.Sprite7).ToString();
 			tb07_phase8.Text = ((int)record.Sprite8).ToString();
 
-			tb08_loft00.Text = ((int)record.Loft1) .ToString();
-			tb09_loft01.Text = ((int)record.Loft2) .ToString();
-			tb10_loft02.Text = ((int)record.Loft3) .ToString();
-			tb11_loft03.Text = ((int)record.Loft4) .ToString();
-			tb12_loft04.Text = ((int)record.Loft5) .ToString();
-			tb13_loft05.Text = ((int)record.Loft6) .ToString();
-			tb14_loft06.Text = ((int)record.Loft7) .ToString();
-			tb15_loft07.Text = ((int)record.Loft8) .ToString();
-			tb16_loft08.Text = ((int)record.Loft9) .ToString();
-			tb17_loft09.Text = ((int)record.Loft10).ToString();
-			tb18_loft10.Text = ((int)record.Loft11).ToString();
-			tb19_loft11.Text = ((int)record.Loft12).ToString();
+			tb08_loft01.Text = ((int)record.Loft1) .ToString();
+			tb09_loft02.Text = ((int)record.Loft2) .ToString();
+			tb10_loft03.Text = ((int)record.Loft3) .ToString();
+			tb11_loft04.Text = ((int)record.Loft4) .ToString();
+			tb12_loft05.Text = ((int)record.Loft5) .ToString();
+			tb13_loft06.Text = ((int)record.Loft6) .ToString();
+			tb14_loft07.Text = ((int)record.Loft7) .ToString();
+			tb15_loft08.Text = ((int)record.Loft8) .ToString();
+			tb16_loft09.Text = ((int)record.Loft9) .ToString();
+			tb17_loft10.Text = ((int)record.Loft10).ToString();
+			tb18_loft11.Text = ((int)record.Loft11).ToString();
+			tb19_loft12.Text = ((int)record.Loft12).ToString();
 
 			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
 			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
@@ -492,18 +492,18 @@ namespace McdView
 			tb06_phase7.Text =
 			tb07_phase8.Text =
 
-			tb08_loft00.Text =
-			tb09_loft01.Text =
-			tb10_loft02.Text =
-			tb11_loft03.Text =
-			tb12_loft04.Text =
-			tb13_loft05.Text =
-			tb14_loft06.Text =
-			tb15_loft07.Text =
-			tb16_loft08.Text =
-			tb17_loft09.Text =
-			tb18_loft10.Text =
-			tb19_loft11.Text =
+			tb08_loft01.Text =
+			tb09_loft02.Text =
+			tb10_loft03.Text =
+			tb11_loft04.Text =
+			tb12_loft05.Text =
+			tb13_loft06.Text =
+			tb14_loft07.Text =
+			tb15_loft08.Text =
+			tb16_loft09.Text =
+			tb17_loft10.Text =
+			tb18_loft11.Text =
+			tb19_loft12.Text =
 
 			tb20_scang1.Text =
 			tb20_scang2.Text =
@@ -642,24 +642,24 @@ namespace McdView
 		#region LoFT
 		/// <summary>
 		/// Tags each LoftPanel with its corresponding TextBox.
-		/// @note The tagged TextBoxes are tagged with (string)panelid in the
-		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
-		/// synched respectively.
 		/// </summary>
+		/// <remarks>The tagged TextBoxes are tagged with (string)panelid in the
+		/// designer. Thus the loft-panels, loft-textboxes, and panelids are all
+		/// synched respectively.</remarks>
 		private void TagLoftPanels()
 		{
-			pnl_Loft08.Tag = tb08_loft00;
-			pnl_Loft09.Tag = tb09_loft01;
-			pnl_Loft10.Tag = tb10_loft02;
-			pnl_Loft11.Tag = tb11_loft03;
-			pnl_Loft12.Tag = tb12_loft04;
-			pnl_Loft13.Tag = tb13_loft05;
-			pnl_Loft14.Tag = tb14_loft06;
-			pnl_Loft15.Tag = tb15_loft07;
-			pnl_Loft16.Tag = tb16_loft08;
-			pnl_Loft17.Tag = tb17_loft09;
-			pnl_Loft18.Tag = tb18_loft10;
-			pnl_Loft19.Tag = tb19_loft11;
+			pnl_Loft08.Tag = tb08_loft01;
+			pnl_Loft09.Tag = tb09_loft02;
+			pnl_Loft10.Tag = tb10_loft03;
+			pnl_Loft11.Tag = tb11_loft04;
+			pnl_Loft12.Tag = tb12_loft05;
+			pnl_Loft13.Tag = tb13_loft06;
+			pnl_Loft14.Tag = tb14_loft07;
+			pnl_Loft15.Tag = tb15_loft08;
+			pnl_Loft16.Tag = tb16_loft09;
+			pnl_Loft17.Tag = tb17_loft10;
+			pnl_Loft18.Tag = tb18_loft11;
+			pnl_Loft19.Tag = tb19_loft12;
 		}
 
 		/// <summary>

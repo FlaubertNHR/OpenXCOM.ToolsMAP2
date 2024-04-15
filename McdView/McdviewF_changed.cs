@@ -36,18 +36,18 @@ namespace McdView
 		/// are all synched respectively.</remarks>
 		private void TagLoftPanels()
 		{
-			pnl_Loft08.Tag = tb08_loft00;
-			pnl_Loft09.Tag = tb09_loft01;
-			pnl_Loft10.Tag = tb10_loft02;
-			pnl_Loft11.Tag = tb11_loft03;
-			pnl_Loft12.Tag = tb12_loft04;
-			pnl_Loft13.Tag = tb13_loft05;
-			pnl_Loft14.Tag = tb14_loft06;
-			pnl_Loft15.Tag = tb15_loft07;
-			pnl_Loft16.Tag = tb16_loft08;
-			pnl_Loft17.Tag = tb17_loft09;
-			pnl_Loft18.Tag = tb18_loft10;
-			pnl_Loft19.Tag = tb19_loft11;
+			pnl_Loft08.Tag = tb08_loft01;
+			pnl_Loft09.Tag = tb09_loft02;
+			pnl_Loft10.Tag = tb10_loft03;
+			pnl_Loft11.Tag = tb11_loft04;
+			pnl_Loft12.Tag = tb12_loft05;
+			pnl_Loft13.Tag = tb13_loft06;
+			pnl_Loft14.Tag = tb14_loft07;
+			pnl_Loft15.Tag = tb15_loft08;
+			pnl_Loft16.Tag = tb16_loft09;
+			pnl_Loft17.Tag = tb17_loft10;
+			pnl_Loft18.Tag = tb18_loft11;
+			pnl_Loft19.Tag = tb19_loft12;
 		}
 
 		/// <summary>
@@ -78,18 +78,18 @@ namespace McdView
 			lbl06.Tag = lbl06_phase7        .Tag = tb06_phase7;
 			lbl07.Tag = lbl07_phase8        .Tag = tb07_phase8;
 
-			lbl08.Tag = lbl08_loft00        .Tag = tb08_loft00;
-			lbl09.Tag = lbl09_loft01        .Tag = tb09_loft01;
-			lbl10.Tag = lbl10_loft02        .Tag = tb10_loft02;
-			lbl11.Tag = lbl11_loft03        .Tag = tb11_loft03;
-			lbl12.Tag = lbl12_loft04        .Tag = tb12_loft04;
-			lbl13.Tag = lbl13_loft05        .Tag = tb13_loft05;
-			lbl14.Tag = lbl14_loft06        .Tag = tb14_loft06;
-			lbl15.Tag = lbl15_loft07        .Tag = tb15_loft07;
-			lbl16.Tag = lbl16_loft08        .Tag = tb16_loft08;
-			lbl17.Tag = lbl17_loft09        .Tag = tb17_loft09;
-			lbl18.Tag = lbl18_loft10        .Tag = tb18_loft10;
-			lbl19.Tag = lbl19_loft11        .Tag = tb19_loft11;
+			lbl08.Tag = lbl08_loft01        .Tag = tb08_loft01;
+			lbl09.Tag = lbl09_loft02        .Tag = tb09_loft02;
+			lbl10.Tag = lbl10_loft03        .Tag = tb10_loft03;
+			lbl11.Tag = lbl11_loft04        .Tag = tb11_loft04;
+			lbl12.Tag = lbl12_loft05        .Tag = tb12_loft05;
+			lbl13.Tag = lbl13_loft06        .Tag = tb13_loft06;
+			lbl14.Tag = lbl14_loft07        .Tag = tb14_loft07;
+			lbl15.Tag = lbl15_loft08        .Tag = tb15_loft08;
+			lbl16.Tag = lbl16_loft09        .Tag = tb16_loft09;
+			lbl17.Tag = lbl17_loft10        .Tag = tb17_loft10;
+			lbl18.Tag = lbl18_loft11        .Tag = tb18_loft11;
+			lbl19.Tag = lbl19_loft12        .Tag = tb19_loft12;
 
 //			lbl20.Tag = lbl20_scang         .Tag = tb20_scang1;			//|| tb20_scang2; NOTE: ScanG requires special handling.
 
@@ -171,18 +171,18 @@ namespace McdView
 			tb05_phase6        .LostFocus += tb_OnLostFocus;
 			tb06_phase7        .LostFocus += tb_OnLostFocus;
 			tb07_phase8        .LostFocus += tb_OnLostFocus;
-			tb08_loft00        .LostFocus += tb_OnLostFocus;
-			tb09_loft01        .LostFocus += tb_OnLostFocus;
-			tb10_loft02        .LostFocus += tb_OnLostFocus;
-			tb11_loft03        .LostFocus += tb_OnLostFocus;
-			tb12_loft04        .LostFocus += tb_OnLostFocus;
-			tb13_loft05        .LostFocus += tb_OnLostFocus;
-			tb14_loft06        .LostFocus += tb_OnLostFocus;
-			tb15_loft07        .LostFocus += tb_OnLostFocus;
-			tb16_loft08        .LostFocus += tb_OnLostFocus;
-			tb17_loft09        .LostFocus += tb_OnLostFocus;
-			tb18_loft10        .LostFocus += tb_OnLostFocus;
-			tb19_loft11        .LostFocus += tb_OnLostFocus;
+			tb08_loft01        .LostFocus += tb_OnLostFocus;
+			tb09_loft02        .LostFocus += tb_OnLostFocus;
+			tb10_loft03        .LostFocus += tb_OnLostFocus;
+			tb11_loft04        .LostFocus += tb_OnLostFocus;
+			tb12_loft05        .LostFocus += tb_OnLostFocus;
+			tb13_loft06        .LostFocus += tb_OnLostFocus;
+			tb14_loft07        .LostFocus += tb_OnLostFocus;
+			tb15_loft08        .LostFocus += tb_OnLostFocus;
+			tb16_loft09        .LostFocus += tb_OnLostFocus;
+			tb17_loft10        .LostFocus += tb_OnLostFocus;
+			tb18_loft11        .LostFocus += tb_OnLostFocus;
+			tb19_loft12        .LostFocus += tb_OnLostFocus;
 			tb20_scang1        .LostFocus += tb_OnLostFocus;
 			tb20_scang2        .LostFocus += tb_OnLostFocus;
 			tb22_              .LostFocus += tb_OnLostFocus;
@@ -913,10 +913,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 8;
-				if (TryParseText(tb08_loft00)) // else recurse
+				if (TryParseText(tb08_loft01)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb08_loft00.Text, out result)
+					if (Int32.TryParse(tb08_loft01.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -929,15 +929,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb08_loft00.Text = "0"; // recurse w/ default.
+						tb08_loft01.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb08_loft00.Text = (LoFT.Length / 256 - 1).ToString();
+						tb08_loft01.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb08_loft00.Text = "255";
+						tb08_loft01.Text = "255";
 				}
 			}
 			else
-				tb08_loft00.Text = String.Empty; // recurse.
+				tb08_loft01.Text = String.Empty; // recurse.
 		}
 		private void OnEnter8(object sender, EventArgs e)
 		{
@@ -948,7 +948,7 @@ namespace McdView
 		private void OnMouseEnterTextbox8(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb08_loft00.Text, out result))
+			if (Int32.TryParse(tb08_loft01.Text, out result))
 			{
 				tssl_Overval.Text = "loft 1: " + result;
 				OnEnter8(null, EventArgs.Empty);
@@ -968,7 +968,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb08_loft00.Text);
+						byte val = Byte.Parse(tb08_loft01.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft1 = val;
 
@@ -988,10 +988,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 9;
-				if (TryParseText(tb09_loft01)) // else recurse
+				if (TryParseText(tb09_loft02)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb09_loft01.Text, out result)
+					if (Int32.TryParse(tb09_loft02.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1004,15 +1004,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb09_loft01.Text = "0"; // recurse w/ default.
+						tb09_loft02.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb09_loft01.Text = (LoFT.Length / 256 - 1).ToString();
+						tb09_loft02.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb09_loft01.Text = "255";
+						tb09_loft02.Text = "255";
 				}
 			}
 			else
-				tb09_loft01.Text = String.Empty; // recurse.
+				tb09_loft02.Text = String.Empty; // recurse.
 		}
 		private void OnEnter9(object sender, EventArgs e)
 		{
@@ -1023,7 +1023,7 @@ namespace McdView
 		private void OnMouseEnterTextbox9(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb09_loft01.Text, out result))
+			if (Int32.TryParse(tb09_loft02.Text, out result))
 			{
 				tssl_Overval.Text = "loft 2: " + result;
 				OnEnter9(null, EventArgs.Empty);
@@ -1043,7 +1043,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb09_loft01.Text);
+						byte val = Byte.Parse(tb09_loft02.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft2 = val;
 
@@ -1063,10 +1063,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 10;
-				if (TryParseText(tb10_loft02)) // else recurse
+				if (TryParseText(tb10_loft03)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb10_loft02.Text, out result)
+					if (Int32.TryParse(tb10_loft03.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1079,15 +1079,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb10_loft02.Text = "0"; // recurse w/ default.
+						tb10_loft03.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb10_loft02.Text = (LoFT.Length / 256 - 1).ToString();
+						tb10_loft03.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb10_loft02.Text = "255";
+						tb10_loft03.Text = "255";
 				}
 			}
 			else
-				tb10_loft02.Text = String.Empty; // recurse.
+				tb10_loft03.Text = String.Empty; // recurse.
 		}
 		private void OnEnter10(object sender, EventArgs e)
 		{
@@ -1098,7 +1098,7 @@ namespace McdView
 		private void OnMouseEnterTextbox10(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb10_loft02.Text, out result))
+			if (Int32.TryParse(tb10_loft03.Text, out result))
 			{
 				tssl_Overval.Text = "loft 3: " + result;
 				OnEnter10(null, EventArgs.Empty);
@@ -1118,7 +1118,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb10_loft02.Text);
+						byte val = Byte.Parse(tb10_loft03.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft3 = val;
 
@@ -1138,10 +1138,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 11;
-				if (TryParseText(tb11_loft03)) // else recurse
+				if (TryParseText(tb11_loft04)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb11_loft03.Text, out result)
+					if (Int32.TryParse(tb11_loft04.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1154,15 +1154,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb11_loft03.Text = "0"; // recurse w/ default.
+						tb11_loft04.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb11_loft03.Text = (LoFT.Length / 256 - 1).ToString();
+						tb11_loft04.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb11_loft03.Text = "255";
+						tb11_loft04.Text = "255";
 				}
 			}
 			else
-				tb11_loft03.Text = String.Empty; // recurse.
+				tb11_loft04.Text = String.Empty; // recurse.
 		}
 		private void OnEnter11(object sender, EventArgs e)
 		{
@@ -1173,7 +1173,7 @@ namespace McdView
 		private void OnMouseEnterTextbox11(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb11_loft03.Text, out result))
+			if (Int32.TryParse(tb11_loft04.Text, out result))
 			{
 				tssl_Overval.Text = "loft 4: " + result;
 				OnEnter11(null, EventArgs.Empty);
@@ -1193,7 +1193,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb11_loft03.Text);
+						byte val = Byte.Parse(tb11_loft04.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft4 = val;
 
@@ -1213,10 +1213,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 12;
-				if (TryParseText(tb12_loft04)) // else recurse
+				if (TryParseText(tb12_loft05)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb12_loft04.Text, out result)
+					if (Int32.TryParse(tb12_loft05.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1229,15 +1229,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb12_loft04.Text = "0"; // recurse w/ default.
+						tb12_loft05.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb12_loft04.Text = (LoFT.Length / 256 - 1).ToString();
+						tb12_loft05.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb12_loft04.Text = "255";
+						tb12_loft05.Text = "255";
 				}
 			}
 			else
-				tb12_loft04.Text = String.Empty; // recurse.
+				tb12_loft05.Text = String.Empty; // recurse.
 		}
 		private void OnEnter12(object sender, EventArgs e)
 		{
@@ -1248,7 +1248,7 @@ namespace McdView
 		private void OnMouseEnterTextbox12(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb12_loft04.Text, out result))
+			if (Int32.TryParse(tb12_loft05.Text, out result))
 			{
 				tssl_Overval.Text = "loft 5: " + result;
 				OnEnter12(null, EventArgs.Empty);
@@ -1268,7 +1268,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb12_loft04.Text);
+						byte val = Byte.Parse(tb12_loft05.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft5 = val;
 
@@ -1288,10 +1288,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 13;
-				if (TryParseText(tb13_loft05)) // else recurse
+				if (TryParseText(tb13_loft06)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb13_loft05.Text, out result)
+					if (Int32.TryParse(tb13_loft06.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1304,15 +1304,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb13_loft05.Text = "0"; // recurse w/ default.
+						tb13_loft06.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb13_loft05.Text = (LoFT.Length / 256 - 1).ToString();
+						tb13_loft06.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb13_loft05.Text = "255";
+						tb13_loft06.Text = "255";
 				}
 			}
 			else
-				tb13_loft05.Text = String.Empty; // recurse.
+				tb13_loft06.Text = String.Empty; // recurse.
 		}
 		private void OnEnter13(object sender, EventArgs e)
 		{
@@ -1323,7 +1323,7 @@ namespace McdView
 		private void OnMouseEnterTextbox13(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb13_loft05.Text, out result))
+			if (Int32.TryParse(tb13_loft06.Text, out result))
 			{
 				tssl_Overval.Text = "loft 6: " + result;
 				OnEnter13(null, EventArgs.Empty);
@@ -1343,7 +1343,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb13_loft05.Text);
+						byte val = Byte.Parse(tb13_loft06.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft6 = val;
 
@@ -1363,10 +1363,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 14;
-				if (TryParseText(tb14_loft06)) // else recurse
+				if (TryParseText(tb14_loft07)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb14_loft06.Text, out result)
+					if (Int32.TryParse(tb14_loft07.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1379,15 +1379,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb14_loft06.Text = "0"; // recurse w/ default.
+						tb14_loft07.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb14_loft06.Text = (LoFT.Length / 256 - 1).ToString();
+						tb14_loft07.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb14_loft06.Text = "255";
+						tb14_loft07.Text = "255";
 				}
 			}
 			else
-				tb14_loft06.Text = String.Empty; // recurse.
+				tb14_loft07.Text = String.Empty; // recurse.
 		}
 		private void OnEnter14(object sender, EventArgs e)
 		{
@@ -1398,7 +1398,7 @@ namespace McdView
 		private void OnMouseEnterTextbox14(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb14_loft06.Text, out result))
+			if (Int32.TryParse(tb14_loft07.Text, out result))
 			{
 				tssl_Overval.Text = "loft 7: " + result;
 				OnEnter14(null, EventArgs.Empty);
@@ -1418,7 +1418,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb14_loft06.Text);
+						byte val = Byte.Parse(tb14_loft07.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft7 = val;
 
@@ -1438,10 +1438,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 15;
-				if (TryParseText(tb15_loft07)) // else recurse
+				if (TryParseText(tb15_loft08)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb15_loft07.Text, out result)
+					if (Int32.TryParse(tb15_loft08.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1454,15 +1454,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb15_loft07.Text = "0"; // recurse w/ default.
+						tb15_loft08.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb15_loft07.Text = (LoFT.Length / 256 - 1).ToString();
+						tb15_loft08.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb15_loft07.Text = "255";
+						tb15_loft08.Text = "255";
 				}
 			}
 			else
-				tb15_loft07.Text = String.Empty; // recurse.
+				tb15_loft08.Text = String.Empty; // recurse.
 		}
 		private void OnEnter15(object sender, EventArgs e)
 		{
@@ -1473,7 +1473,7 @@ namespace McdView
 		private void OnMouseEnterTextbox15(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb15_loft07.Text, out result))
+			if (Int32.TryParse(tb15_loft08.Text, out result))
 			{
 				tssl_Overval.Text = "loft 8: " + result;
 				OnEnter15(null, EventArgs.Empty);
@@ -1493,7 +1493,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb15_loft07.Text);
+						byte val = Byte.Parse(tb15_loft08.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft8 = val;
 
@@ -1513,10 +1513,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 16;
-				if (TryParseText(tb16_loft08)) // else recurse
+				if (TryParseText(tb16_loft09)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb16_loft08.Text, out result)
+					if (Int32.TryParse(tb16_loft09.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1529,15 +1529,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb16_loft08.Text = "0"; // recurse w/ default.
+						tb16_loft09.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb16_loft08.Text = (LoFT.Length / 256 - 1).ToString();
+						tb16_loft09.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb16_loft08.Text = "255";
+						tb16_loft09.Text = "255";
 				}
 			}
 			else
-				tb16_loft08.Text = String.Empty; // recurse.
+				tb16_loft09.Text = String.Empty; // recurse.
 		}
 		private void OnEnter16(object sender, EventArgs e)
 		{
@@ -1548,7 +1548,7 @@ namespace McdView
 		private void OnMouseEnterTextbox16(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb16_loft08.Text, out result))
+			if (Int32.TryParse(tb16_loft09.Text, out result))
 			{
 				tssl_Overval.Text = "loft 9: " + result;
 				OnEnter16(null, EventArgs.Empty);
@@ -1568,7 +1568,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb16_loft08.Text);
+						byte val = Byte.Parse(tb16_loft09.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft9 = val;
 
@@ -1588,10 +1588,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 17;
-				if (TryParseText(tb17_loft09)) // else recurse
+				if (TryParseText(tb17_loft10)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb17_loft09.Text, out result)
+					if (Int32.TryParse(tb17_loft10.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1604,15 +1604,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb17_loft09.Text = "0"; // recurse w/ default.
+						tb17_loft10.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb17_loft09.Text = (LoFT.Length / 256 - 1).ToString();
+						tb17_loft10.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb17_loft09.Text = "255";
+						tb17_loft10.Text = "255";
 				}
 			}
 			else
-				tb17_loft09.Text = String.Empty; // recurse.
+				tb17_loft10.Text = String.Empty; // recurse.
 		}
 		private void OnEnter17(object sender, EventArgs e)
 		{
@@ -1623,7 +1623,7 @@ namespace McdView
 		private void OnMouseEnterTextbox17(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb17_loft09.Text, out result))
+			if (Int32.TryParse(tb17_loft10.Text, out result))
 			{
 				tssl_Overval.Text = "loft 10: " + result;
 				OnEnter17(null, EventArgs.Empty);
@@ -1643,7 +1643,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb17_loft09.Text);
+						byte val = Byte.Parse(tb17_loft10.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft10 = val;
 
@@ -1663,10 +1663,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 18;
-				if (TryParseText(tb18_loft10)) // else recurse
+				if (TryParseText(tb18_loft11)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb18_loft10.Text, out result)
+					if (Int32.TryParse(tb18_loft11.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1679,15 +1679,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb18_loft10.Text = "0"; // recurse w/ default.
+						tb18_loft11.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb18_loft10.Text = (LoFT.Length / 256 - 1).ToString();
+						tb18_loft11.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb18_loft10.Text = "255";
+						tb18_loft11.Text = "255";
 				}
 			}
 			else
-				tb18_loft10.Text = String.Empty; // recurse.
+				tb18_loft11.Text = String.Empty; // recurse.
 		}
 		private void OnEnter18(object sender, EventArgs e)
 		{
@@ -1698,7 +1698,7 @@ namespace McdView
 		private void OnMouseEnterTextbox18(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb18_loft10.Text, out result))
+			if (Int32.TryParse(tb18_loft11.Text, out result))
 			{
 				tssl_Overval.Text = "loft 11: " + result;
 				OnEnter18(null, EventArgs.Empty);
@@ -1718,7 +1718,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb18_loft10.Text);
+						byte val = Byte.Parse(tb18_loft11.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft11 = val;
 
@@ -1738,10 +1738,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 19;
-				if (TryParseText(tb19_loft11)) // else recurse
+				if (TryParseText(tb19_loft12)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb19_loft11.Text, out result)
+					if (Int32.TryParse(tb19_loft12.Text, out result)
 						&&     ((_strict && result > -1 && result < 256 && (LoFT == null || result < LoFT.Length / 256))
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -1754,15 +1754,15 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb19_loft11.Text = "0"; // recurse w/ default.
+						tb19_loft12.Text = "0"; // recurse w/ default.
 					else if (_strict && LoFT != null)
-						tb19_loft11.Text = (LoFT.Length / 256 - 1).ToString();
+						tb19_loft12.Text = (LoFT.Length / 256 - 1).ToString();
 					else
-						tb19_loft11.Text = "255";
+						tb19_loft12.Text = "255";
 				}
 			}
 			else
-				tb19_loft11.Text = String.Empty; // recurse.
+				tb19_loft12.Text = String.Empty; // recurse.
 		}
 		private void OnEnter19(object sender, EventArgs e)
 		{
@@ -1773,7 +1773,7 @@ namespace McdView
 		private void OnMouseEnterTextbox19(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb19_loft11.Text, out result))
+			if (Int32.TryParse(tb19_loft12.Text, out result))
 			{
 				tssl_Overval.Text = "loft 12: " + result;
 				OnEnter19(null, EventArgs.Empty);
@@ -1793,7 +1793,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb19_loft11.Text);
+						byte val = Byte.Parse(tb19_loft12.Text);
 						foreach (var id in PartsPanel.SubIds)
 							Parts[id].Record.Loft12 = val;
 
