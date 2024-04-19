@@ -269,7 +269,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && (part = tile.Floor) != null)
 			{
 				DrawSprite(part[phase], 0, part.Record.TileOffset);
-				if (part.isDoor) DrawDoorString((int)PartType.Floor);
+				if (part.IsDoor) DrawDoorString((int)PartType.Floor);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_FLOOR], 0);
@@ -278,7 +278,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && (part = tile.West) != null)
 			{
 				DrawSprite(part[phase], Quadwidth, part.Record.TileOffset);
-				if (part.isDoor) DrawDoorString((int)PartType.West);
+				if (part.IsDoor) DrawDoorString((int)PartType.West);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_WEST], Quadwidth);
@@ -287,7 +287,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && (part = tile.North) != null)
 			{
 				DrawSprite(part[phase], Quadwidth * (int)PartType.North, part.Record.TileOffset);
-				if (part.isDoor) DrawDoorString((int)PartType.North);
+				if (part.IsDoor) DrawDoorString((int)PartType.North);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_NORTH], Quadwidth * (int)PartType.North);
@@ -296,7 +296,7 @@ namespace MapView.Forms.Observers
 			if (tile != null && (part = tile.Content) != null)
 			{
 				DrawSprite(part[phase], Quadwidth * (int)PartType.Content, part.Record.TileOffset);
-				if (part.isDoor) DrawDoorString((int)PartType.Content);
+				if (part.IsDoor) DrawDoorString((int)PartType.Content);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_CONTENT], Quadwidth * (int)PartType.Content);
@@ -305,7 +305,7 @@ namespace MapView.Forms.Observers
 			if (SelectedTilepart != null)
 			{
 				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, SelectedTilepart.Record.TileOffset);
-				if (SelectedTilepart.isDoor) DrawDoorString(QuadrantPart);
+				if (SelectedTilepart.IsDoor) DrawDoorString(QuadrantPart);
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_ERASER], Quadwidth * QuadrantPart);

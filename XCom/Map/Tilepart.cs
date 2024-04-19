@@ -118,9 +118,10 @@ namespace XCom
 		/// <c>true</c> if
 		/// <c><see cref="McdRecord.HingedDoor">McdRecord.HingedDoor</see></c>
 		/// or
-		/// <c><see cref="McdRecord.SlidingDoor">McdRecord.SlidingDoor</see></c>.
+		/// <c><see cref="McdRecord.SlidingDoor">McdRecord.SlidingDoor</see></c>
+		/// is nonzero.
 		/// </summary>
-		public bool isDoor
+		public bool IsDoor
 		{ get; private set; }
 		#endregion Properties
 
@@ -161,12 +162,13 @@ namespace XCom
 				McdRecord record,
 				int terid = -1)
 		{
-			//DSShared.Logfile.Log("Tilepart terid= " + terid + " id= " + id);
+			//DSShared.Logfile.Log("Tilepart() terid= " + terid + " id= " + id);
 
 			Id = id;
 
 			Record = record;
-			isDoor = (Record.HingedDoor || Record.SlidingDoor);
+			IsDoor = Record.SlidingDoor != 0
+				  || Record.HingedDoor  != 0;
 
 			if (terid != -1) // NOTA BENE: _terId shall be -1 and _sprites shall be null for McdView.
 			{
@@ -190,7 +192,7 @@ namespace XCom
 //						+ (spriteset[Record.Sprite8] != null);
 //				DSShared.Logfile.Log(info);
 
-				if (isDoor)
+				if (IsDoor)
 					SetSprite1();
 				else
 					SetSprites();
@@ -287,7 +289,7 @@ namespace XCom
 		/// <remarks>This is for doors only.</remarks>
 		public void SetSprite1_altr()
 		{
-			if (isDoor)
+			if (IsDoor)
 			{
 				for (int i = 0; i != PHASES; ++i)
 					_sprites[i] = _spritealtr;
@@ -303,13 +305,13 @@ namespace XCom
 		/// <remarks>This is for doors only.</remarks>
 		public void ToggleDoorSprites(bool ani)
 		{
-			if (isDoor)
+			if (IsDoor)
 			{
 				if (!ani)
 				{
 					SetSprite1();
 				}
-				else if (Record.SlidingDoor || Altr == null)
+				else if (Record.SlidingDoor != 0 || Altr == null)
 				{
 					SetSprites();
 				}
@@ -336,8 +338,8 @@ namespace XCom
 		/// <item><c><see cref="Altr"/></c>     (ptr)</item>
 		/// <item><c><see cref="Id"/></c>       (int)</item>
 		/// <item><c><see cref="SetId"/></c>    (int)</item>
-		/// <item><c><see cref="_terId"/></c>   (int) -> not used in McdView</item>
-		/// <item><c><see cref="isDoor"/></c>   (bool) -> not used in McdView</item>
+		/// <item><c><see cref="_terId"/></c>   (int)  -> not used in McdView</item>
+		/// <item><c><see cref="IsDoor"/></c>   (bool) -> not used in McdView</item>
 		/// </list>
 		/// </summary>
 		/// <returns>a new <c><see cref="Tilepart"/></c> for insertion in McdView</returns>

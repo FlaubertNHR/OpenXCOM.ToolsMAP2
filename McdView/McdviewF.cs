@@ -2245,69 +2245,68 @@ namespace McdView
 
 			McdRecord record = Parts[Selid].Record;
 
-			tb00_phase1.Text = ((int)record.Sprite1).ToString();
-			tb01_phase2.Text = ((int)record.Sprite2).ToString();
-			tb02_phase3.Text = ((int)record.Sprite3).ToString();
-			tb03_phase4.Text = ((int)record.Sprite4).ToString();
-			tb04_phase5.Text = ((int)record.Sprite5).ToString();
-			tb05_phase6.Text = ((int)record.Sprite6).ToString();
-			tb06_phase7.Text = ((int)record.Sprite7).ToString();
-			tb07_phase8.Text = ((int)record.Sprite8).ToString();
+			tb00_phase1        .Text = ((int)record.Sprite1)      .ToString();
+			tb01_phase2        .Text = ((int)record.Sprite2)      .ToString();
+			tb02_phase3        .Text = ((int)record.Sprite3)      .ToString();
+			tb03_phase4        .Text = ((int)record.Sprite4)      .ToString();
+			tb04_phase5        .Text = ((int)record.Sprite5)      .ToString();
+			tb05_phase6        .Text = ((int)record.Sprite6)      .ToString();
+			tb06_phase7        .Text = ((int)record.Sprite7)      .ToString();
+			tb07_phase8        .Text = ((int)record.Sprite8)      .ToString();
 
-			tb08_loft01.Text = ((int)record.Loft1) .ToString();
-			tb09_loft02.Text = ((int)record.Loft2) .ToString();
-			tb10_loft03.Text = ((int)record.Loft3) .ToString();
-			tb11_loft04.Text = ((int)record.Loft4) .ToString();
-			tb12_loft05.Text = ((int)record.Loft5) .ToString();
-			tb13_loft06.Text = ((int)record.Loft6) .ToString();
-			tb14_loft07.Text = ((int)record.Loft7) .ToString();
-			tb15_loft08.Text = ((int)record.Loft8) .ToString();
-			tb16_loft09.Text = ((int)record.Loft9) .ToString();
-			tb17_loft10.Text = ((int)record.Loft10).ToString();
-			tb18_loft11.Text = ((int)record.Loft11).ToString();
-			tb19_loft12.Text = ((int)record.Loft12).ToString();
+			tb08_loft01        .Text = ((int)record.Loft1)        .ToString();
+			tb09_loft02        .Text = ((int)record.Loft2)        .ToString();
+			tb10_loft03        .Text = ((int)record.Loft3)        .ToString();
+			tb11_loft04        .Text = ((int)record.Loft4)        .ToString();
+			tb12_loft05        .Text = ((int)record.Loft5)        .ToString();
+			tb13_loft06        .Text = ((int)record.Loft6)        .ToString();
+			tb14_loft07        .Text = ((int)record.Loft7)        .ToString();
+			tb15_loft08        .Text = ((int)record.Loft8)        .ToString();
+			tb16_loft09        .Text = ((int)record.Loft9)        .ToString();
+			tb17_loft10        .Text = ((int)record.Loft10)       .ToString();
+			tb18_loft11        .Text = ((int)record.Loft11)       .ToString();
+			tb19_loft12        .Text = ((int)record.Loft12)       .ToString();
 
-			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
-			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
-			tb20_scang1.Text = scanG;										// See also the OnChanged mechanism ...
-			tb20_scang2.Text = scanG_reduced;
+			string scanG             = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
+			string scanG_reduced     = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
+			tb20_scang1        .Text = scanG;									// See also the OnChanged mechanism ...
+			tb20_scang2        .Text = scanG_reduced;
 
-			tb22_.Text = ((int)record.Unknown22).ToString();
-			tb23_.Text = ((int)record.Unknown23).ToString();
-			tb24_.Text = ((int)record.Unknown24).ToString();
-			tb25_.Text = ((int)record.Unknown25).ToString();
-			tb26_.Text = ((int)record.Unknown26).ToString();
-			tb27_.Text = ((int)record.Unknown27).ToString();
-			tb28_.Text = ((int)record.Unknown28).ToString();
-			tb29_.Text = ((int)record.Unknown29).ToString();
+			tb22_              .Text = ((int)record.Unknown22)    .ToString();
+			tb23_              .Text = ((int)record.Unknown23)    .ToString();
+			tb24_              .Text = ((int)record.Unknown24)    .ToString();
+			tb25_              .Text = ((int)record.Unknown25)    .ToString();
+			tb26_              .Text = ((int)record.Unknown26)    .ToString();
+			tb27_              .Text = ((int)record.Unknown27)    .ToString();
+			tb28_              .Text = ((int)record.Unknown28)    .ToString();
+			tb29_              .Text = ((int)record.Unknown29)    .ToString();
 
-			tb30_isslidingdoor.Text = Convert.ToInt32(record.SlidingDoor).ToString();
-			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)    .ToString();
-			tb32_isdropthrou  .Text = Convert.ToInt32(record.NotFloored) .ToString();
-//			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
-			tb33_isbigwall    .Text = ((int)record.BigWall)              .ToString();
-			tb34_isgravlift   .Text = Convert.ToInt32(record.GravLift)   .ToString();
-			tb35_ishingeddoor .Text = Convert.ToInt32(record.HingedDoor) .ToString();
-			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire)  .ToString();
-			tb37_isblocksmoke .Text = Convert.ToInt32(record.BlockSmoke) .ToString();
+			tb30_isslidingdoor .Text = ((int)record.SlidingDoor)  .ToString();
+			tb31_isblocklos    .Text = ((int)record.StopLOS)      .ToString();
+			tb32_isdropthrou   .Text = ((int)record.NotFloored)   .ToString();
+			tb33_isbigwall     .Text = ((int)record.BigWall)      .ToString();
+			tb34_isgravlift    .Text = ((int)record.GravLift)     .ToString();
+			tb35_ishingeddoor  .Text = ((int)record.HingedDoor)   .ToString();
+			tb36_isblockfire   .Text = ((int)record.BlockFire)    .ToString();
+			tb37_isblocksmoke  .Text = ((int)record.BlockSmoke)   .ToString();
 
-			tb38_.Text = ((int)record.LeftRightHalf).ToString();
+			tb38_              .Text = ((int)record.LeftRightHalf).ToString();
 
-			tb39_tuwalk       .Text = ((int)record.TU_Walk)   .ToString();
-			tb40_tuslide      .Text = ((int)record.TU_Slide)  .ToString();
-			tb41_tufly        .Text = ((int)record.TU_Fly)    .ToString();
-			tb42_armor        .Text = ((int)record.Armor)     .ToString();
-			tb43_heblock      .Text = ((int)record.HE_Block)  .ToString();
-			tb44_deathid      .Text = ((int)record.DieTile)   .ToString();
-			tb45_fireresist   .Text = ((int)record.FireResist).ToString();
-			tb46_alternateid  .Text = ((int)record.Alt_MCD)   .ToString();
+			tb39_tuwalk        .Text = ((int)record.TU_Walk)      .ToString();
+			tb40_tuslide       .Text = ((int)record.TU_Slide)     .ToString();
+			tb41_tufly         .Text = ((int)record.TU_Fly)       .ToString();
+			tb42_armor         .Text = ((int)record.Armor)        .ToString();
+			tb43_heblock       .Text = ((int)record.HE_Block)     .ToString();
+			tb44_deathid       .Text = ((int)record.DieTile)      .ToString();
+			tb45_fireresist    .Text = ((int)record.FireResist)   .ToString();
+			tb46_alternateid   .Text = ((int)record.Alt_MCD)      .ToString();
 
-			tb47_.Text = ((int)record.Unknown47).ToString();
+			tb47_              .Text = ((int)record.Unknown47)    .ToString();
 
-			tb48_terrainoffset.Text = ((int)record.StandOffset).ToString();
-			tb49_spriteoffset .Text = ((int)record.TileOffset) .ToString();
+			tb48_terrainoffset .Text = ((int)record.StandOffset)  .ToString();
+			tb49_spriteoffset  .Text = ((int)record.TileOffset)   .ToString();
 
-			tb50_.Text = ((int)record.Unknown50).ToString();
+			tb50_              .Text = ((int)record.Unknown50)    .ToString();
 
 			tb51_lightblock    .Text = ((int)record.LightBlock)   .ToString();
 			tb52_footsound     .Text = ((int)record.Footstep)     .ToString();
@@ -2319,9 +2318,9 @@ namespace McdView
 			tb58_lightintensity.Text = ((int)record.LightSource)  .ToString();
 			tb59_specialtype   .Text = ((int)record.Special)      .ToString();
 
-			tb60_isbaseobject.Text = Convert.ToInt32(record.BaseObject).ToString();
+			tb60_isbaseobject  .Text = ((int)record.BaseObject)   .ToString();
 
-			tb61_.Text = ((int)record.Unknown61).ToString();
+			tb61_              .Text = ((int)record.Unknown61)    .ToString();
 
 			InitFields = false;
 		}
@@ -2338,66 +2337,66 @@ namespace McdView
 			else
 				text = String.Empty;
 
-			tb00_phase1.Text =
-			tb01_phase2.Text =
-			tb02_phase3.Text =
-			tb03_phase4.Text =
-			tb04_phase5.Text =
-			tb05_phase6.Text =
-			tb06_phase7.Text =
-			tb07_phase8.Text =
+			tb00_phase1        .Text =
+			tb01_phase2        .Text =
+			tb02_phase3        .Text =
+			tb03_phase4        .Text =
+			tb04_phase5        .Text =
+			tb05_phase6        .Text =
+			tb06_phase7        .Text =
+			tb07_phase8        .Text =
 
-			tb08_loft01.Text =
-			tb09_loft02.Text =
-			tb10_loft03.Text =
-			tb11_loft04.Text =
-			tb12_loft05.Text =
-			tb13_loft06.Text =
-			tb14_loft07.Text =
-			tb15_loft08.Text =
-			tb16_loft09.Text =
-			tb17_loft10.Text =
-			tb18_loft11.Text =
-			tb19_loft12.Text =
+			tb08_loft01        .Text =
+			tb09_loft02        .Text =
+			tb10_loft03        .Text =
+			tb11_loft04        .Text =
+			tb12_loft05        .Text =
+			tb13_loft06        .Text =
+			tb14_loft07        .Text =
+			tb15_loft08        .Text =
+			tb16_loft09        .Text =
+			tb17_loft10        .Text =
+			tb18_loft11        .Text =
+			tb19_loft12        .Text =
 
-			tb20_scang1.Text =
-			tb20_scang2.Text =
+			tb20_scang1        .Text =
+			tb20_scang2        .Text =
 
-			tb22_.Text =
-			tb23_.Text =
-			tb24_.Text =
-			tb25_.Text =
-			tb26_.Text =
-			tb27_.Text =
-			tb28_.Text =
-			tb29_.Text =
+			tb22_              .Text =
+			tb23_              .Text =
+			tb24_              .Text =
+			tb25_              .Text =
+			tb26_              .Text =
+			tb27_              .Text =
+			tb28_              .Text =
+			tb29_              .Text =
 
-			tb30_isslidingdoor.Text =
-			tb31_isblocklos   .Text =
-			tb32_isdropthrou  .Text =
-			tb33_isbigwall    .Text =
-			tb34_isgravlift   .Text =
-			tb35_ishingeddoor .Text =
-			tb36_isblockfire  .Text =
-			tb37_isblocksmoke .Text =
+			tb30_isslidingdoor .Text =
+			tb31_isblocklos    .Text =
+			tb32_isdropthrou   .Text =
+			tb33_isbigwall     .Text =
+			tb34_isgravlift    .Text =
+			tb35_ishingeddoor  .Text =
+			tb36_isblockfire   .Text =
+			tb37_isblocksmoke  .Text =
 
-			tb38_.Text =
+			tb38_              .Text =
 
-			tb39_tuwalk     .Text =
-			tb40_tuslide    .Text =
-			tb41_tufly      .Text =
-			tb42_armor      .Text =
-			tb43_heblock    .Text =
-			tb44_deathid    .Text =
-			tb45_fireresist .Text =
-			tb46_alternateid.Text =
+			tb39_tuwalk        .Text =
+			tb40_tuslide       .Text =
+			tb41_tufly         .Text =
+			tb42_armor         .Text =
+			tb43_heblock       .Text =
+			tb44_deathid       .Text =
+			tb45_fireresist    .Text =
+			tb46_alternateid   .Text =
 
-			tb47_.Text =
+			tb47_              .Text =
 
-			tb48_terrainoffset.Text =
-			tb49_spriteoffset .Text =
+			tb48_terrainoffset .Text =
+			tb49_spriteoffset  .Text =
 
-			tb50_.Text =
+			tb50_              .Text =
 
 			tb51_lightblock    .Text =
 			tb52_footsound     .Text =
@@ -2410,11 +2409,11 @@ namespace McdView
 			tb59_specialtype   .Text =
 			tb60_isbaseobject  .Text =
 
-			tb61_.Text = text;
+			tb61_              .Text = text;
 		}
 
 		/// <summary>
-		/// Tests all values for STRICT.
+		/// Tests all values for STRICT (etc).
 		/// </summary>
 		/// <returns>a list of borks if any</returns>
 		/// <remarks>These tests shall stay synched w/ McdviewF_changed events.
@@ -2424,6 +2423,8 @@ namespace McdView
 		{
 			var borks = new List<string>();
 
+			McdRecord record = Parts[Selid].Record;
+
 			int val, y;
 
 			// Sprites
@@ -2431,92 +2432,90 @@ namespace McdView
 			{
 				if ((y = Spriteset.Count - 1) > Byte.MaxValue)
 				{
-					borks.Add("#The terrain's spriteset count exceeds 256 but an MCD record"
-							+ Environment.NewLine
-							+ "cannot deal with a sprite ref in excess of 256 because the"
-							+ Environment.NewLine
-							+ "MCD values of sprite refs are stored in a single byte (0..255)");
+					borks.Add("#The terrain's spriteset count exceeds 256 but an MCD record"   + Environment.NewLine
+							+ "cannot deal with a sprite ref in excess of 256 because the MCD" + Environment.NewLine
+							+ "values of sprite refs are stored in a single byte (0..255)");
 				}
 			}
 			else
 				y = Byte.MaxValue;
 
-			val = Parts[Selid].Record.Sprite1;
+			val = record.Sprite1;
 			if (val != Int32.Parse(tb00_phase1.Text))
 			{
 				borks.Add("#0 phase 1 (record) does not equal phase 1 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#0 phase 1 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite2;
+			val = record.Sprite2;
 			if (val != Int32.Parse(tb01_phase2.Text))
 			{
 				borks.Add("#1 phase 2 (record) does not equal phase 2 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#1 phase 2 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite3;
+			val = record.Sprite3;
 			if (val != Int32.Parse(tb02_phase3.Text))
 			{
 				borks.Add("#2 phase 3 (record) does not equal phase 3 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#2 phase 3 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite4;
+			val = record.Sprite4;
 			if (val != Int32.Parse(tb03_phase4.Text))
 			{
 				borks.Add("#3 phase 4 (record) does not equal phase 4 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#3 phase 4 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite5;
+			val = record.Sprite5;
 			if (val != Int32.Parse(tb04_phase5.Text))
 			{
 				borks.Add("#4 phase 5 (record) does not equal phase 5 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#4 phase 5 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite6;
+			val = record.Sprite6;
 			if (val != Int32.Parse(tb05_phase6.Text))
 			{
 				borks.Add("#5 phase 6 (record) does not equal phase 6 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#5 phase 6 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite7;
+			val = record.Sprite7;
 			if (val != Int32.Parse(tb06_phase7.Text))
 			{
 				borks.Add("#6 phase 7 (record) does not equal phase 7 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#6 phase 7 id exceeds the terrain's spriteset count.");
 			}
 
-			val = Parts[Selid].Record.Sprite8;
+			val = record.Sprite8;
 			if (val != Int32.Parse(tb07_phase8.Text))
 			{
 				borks.Add("#7 phase 8 (record) does not equal phase 8 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#7 phase 8 id exceeds the terrain's spriteset count.");
 			}
@@ -2527,132 +2526,130 @@ namespace McdView
 			{
 				if ((y = LoFT.Length / 256 - 1) > Byte.MaxValue)
 				{
-					borks.Add("#The LoFTs count exceeds 256 but an MCD record cannot deal"
-							+ Environment.NewLine
-							+ "with a LoFT ref in excess of 256 because the MCD values"
-							+ Environment.NewLine
-							+ "of LoFT refs are stored in a single byte (0..255)");
+					borks.Add("#The LoFTs count exceeds 256 but an MCD record cannot deal" + Environment.NewLine
+							+ "with a LoFT ref in excess of 256 because the MCD values of" + Environment.NewLine
+							+ "LoFT refs are stored in a single byte (0..255)");
 				}
 			}
 			else
 				y = Byte.MaxValue;
 
-			val = Parts[Selid].Record.Loft1;
+			val = record.Loft1;
 			if (val != Int32.Parse(tb08_loft01.Text))
 			{
 				borks.Add("#8 loft 1 (record) does not equal loft 1 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#8 loft 1 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft2;
+			val = record.Loft2;
 			if (val != Int32.Parse(tb09_loft02.Text))
 			{
 				borks.Add("#9 loft 2 (record) does not equal loft 2 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#9 loft 2 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft3;
+			val = record.Loft3;
 			if (val != Int32.Parse(tb10_loft03.Text))
 			{
 				borks.Add("#10 loft 3 (record) does not equal loft 3 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#10 loft 3 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft4;
+			val = record.Loft4;
 			if (val != Int32.Parse(tb11_loft04.Text))
 			{
 				borks.Add("#11 loft 4 (record) does not equal loft 4 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#11 loft 4 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft5;
+			val = record.Loft5;
 			if (val != Int32.Parse(tb12_loft05.Text))
 			{
 				borks.Add("#12 loft 5 (record) does not equal loft 5 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#12 loft 5 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft6;
+			val = record.Loft6;
 			if (val != Int32.Parse(tb13_loft06.Text))
 			{
 				borks.Add("#13 loft 6 (record) does not equal loft 6 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#13 loft 6 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft7;
+			val = record.Loft7;
 			if (val != Int32.Parse(tb14_loft07.Text))
 			{
 				borks.Add("#14 loft 7 (record) does not equal loft 7 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#14 loft 7 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft8;
+			val = record.Loft8;
 			if (val != Int32.Parse(tb15_loft08.Text))
 			{
 				borks.Add("#15 loft 8 (record) does not equal loft 8 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#15 loft 8 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft9;
+			val = record.Loft9;
 			if (val != Int32.Parse(tb16_loft09.Text))
 			{
 				borks.Add("#16 loft 9 (record) does not equal loft 9 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#16 loft 9 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft10;
+			val = record.Loft10;
 			if (val != Int32.Parse(tb17_loft10.Text))
 			{
 				borks.Add("#17 loft 10 (record) does not equal loft 10 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#17 loft 10 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft11;
+			val = record.Loft11;
 			if (val != Int32.Parse(tb18_loft11.Text))
 			{
 				borks.Add("#18 loft 11 (record) does not equal loft 11 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#18 loft 11 id exceeds the LoFT count.");
 			}
 
-			val = Parts[Selid].Record.Loft12;
+			val = record.Loft12;
 			if (val != Int32.Parse(tb19_loft12.Text))
 			{
 				borks.Add("#19 loft 12 (record) does not equal loft 12 (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#19 loft 12 id exceeds the LoFT count.");
 			}
@@ -2673,64 +2670,64 @@ namespace McdView
 			else
 				y = UInt16.MaxValue;
 
-			val = Parts[Selid].Record.ScanG;
+			val = record.ScanG;
 			if (val != Int32.Parse(tb20_scang1.Text))
 			{
 				borks.Add("#20 ScanG (record) does not equal ScanG (text).");
 			}
-			if (!Test(val, ScanGicon.UNITICON_Max, y + ScanGicon.UNITICON_Max))
+			if (!test(val, ScanGicon.UNITICON_Max, y + ScanGicon.UNITICON_Max))
 			{
 				borks.Add("#20 ScanG id is outside the ScanG limits.");
 			}
 
-			val = Parts[Selid].Record.ScanG_reduced;
+			val = record.ScanG_reduced;
 			if (val != Int32.Parse(tb20_scang2.Text))
 			{
 				borks.Add("#20 ScanG_reduced (record) does not equal ScanG_reduced (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#20 ScanG_reduced id exceeds the ScanG count.");
 			}
 
 
 			// RAM addresses
-			val = Parts[Selid].Record.Unknown22;
+			val = record.Unknown22;
 			if (val != Int32.Parse(tb22_.Text))
 			{
 				borks.Add("#22 tab ram (record) does not equal tab ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown23;
+			val = record.Unknown23;
 			if (val != Int32.Parse(tb23_.Text))
 			{
 				borks.Add("#23 tab ram (record) does not equal tab ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown24;
+			val = record.Unknown24;
 			if (val != Int32.Parse(tb24_.Text))
 			{
 				borks.Add("#24 tab ram (record) does not equal tab ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown25;
+			val = record.Unknown25;
 			if (val != Int32.Parse(tb25_.Text))
 			{
 				borks.Add("#25 tab ram (record) does not equal tab ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown26;
+			val = record.Unknown26;
 			if (val != Int32.Parse(tb26_.Text))
 			{
 				borks.Add("#26 pck ram (record) does not equal pck ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown27;
+			val = record.Unknown27;
 			if (val != Int32.Parse(tb27_.Text))
 			{
 				borks.Add("#27 pck ram (record) does not equal pck ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown28;
+			val = record.Unknown28;
 			if (val != Int32.Parse(tb28_.Text))
 			{
 				borks.Add("#28 pck ram (record) does not equal pck ram (text).");
 			}
-			val = Parts[Selid].Record.Unknown29;
+			val = record.Unknown29;
 			if (val != Int32.Parse(tb29_.Text))
 			{
 				borks.Add("#29 pck ram (record) does not equal pck ram (text).");
@@ -2738,111 +2735,122 @@ namespace McdView
 
 
 			// booleans
-			bool valB;
-
-			valB = Parts[Selid].Record.SlidingDoor;
-			if (    (valB && tb30_isslidingdoor.Text == "0")
-				|| (!valB && tb30_isslidingdoor.Text == "1"))
+			val = record.SlidingDoor;
+			if (val != Int32.Parse(tb30_isslidingdoor.Text))
 			{
 				borks.Add("#30 isSlidingDoor (record) does not equal isSlidingDoor (text).");
 			}
-			if (valB && tb35_ishingeddoor.Text == "1")
+			if (!test(val, 0,1))
+			{
+				borks.Add("#30 isSlidingDoor exceeds expected value.");
+			}
+			if (val != 0 && (record.HingedDoor != 0 || tb35_ishingeddoor.Text != "0"))
 			{
 				borks.Add("#30 isSlidingDoor and #35 isHingedDoor are both true.");
 			}
-			valB = Parts[Selid].Record.StopLOS;
-			if (    (valB && tb31_isblocklos.Text == "0")
-				|| (!valB && tb31_isblocklos.Text == "1"))
+			val = record.StopLOS;
+			if (val != Int32.Parse(tb31_isblocklos.Text))
 			{
 				borks.Add("#31 isBlockLoS (record) does not equal isBlockLoS (text).");
 			}
-			valB = Parts[Selid].Record.NotFloored;
-			if (    (valB && tb32_isdropthrou.Text == "0")
-				|| (!valB && tb32_isdropthrou.Text == "1"))
+			if (!test(val, 0,1))
+			{
+				borks.Add("#31 isBlockLoS exceeds expected value.");
+			}
+			val = record.NotFloored;
+			if (val != Int32.Parse(tb32_isdropthrou.Text))
 			{
 				borks.Add("#32 isDropThrou (record) does not equal isDropThrou (text).");
 			}
-
-//			valB = Parts[Selid].Record.BigWall;
-//			if (    (valB && tb33_isbigwall.Text == "0")
-//				|| (!valB && tb33_isbigwall.Text == "1"))
-//			{
-//				borks.Add("#33 isBigWall (record) does not equal isBigWall (text).");
-//			}
-			val = Parts[Selid].Record.BigWall;
+			if (!test(val, 0,1))
+			{
+				borks.Add("#32 isDropThrou exceeds expected value.");
+			}
+			val = record.BigWall;
 			if (val != Int32.Parse(tb33_isbigwall.Text))
 			{
 				borks.Add("#33 isBigWall (record) does not equal isBigWall (text).");
 			}
-			if (!Test(val, 0, 9)) // OXC defines 9(+1) values for BigWall (Battlescape/Pathfinding.h 'enum bigWallTypes')
+			if (!test(val, 0,9)) // OXC defines 9(+1) values for BigWall (Battlescape/Pathfinding.h 'enum bigWallTypes')
 			{
 				borks.Add("#33 isBigWall exceeds expected value.");
 			}
-
-			valB = Parts[Selid].Record.GravLift;
-			if (    (valB && tb34_isgravlift.Text == "0")
-				|| (!valB && tb34_isgravlift.Text == "1"))
+			val = record.GravLift;
+			if (val != Int32.Parse(tb34_isgravlift.Text))
 			{
 				borks.Add("#34 isGravLift (record) does not equal isGravLift (text).");
 			}
-			valB = Parts[Selid].Record.HingedDoor;
-			if (    (valB && tb35_ishingeddoor.Text == "0")
-				|| (!valB && tb35_ishingeddoor.Text == "1"))
+			if (!test(val, 0,1))
+			{
+				borks.Add("#34 isGravLift exceeds expected value.");
+			}
+			val = record.HingedDoor;
+			if (val != Int32.Parse(tb35_ishingeddoor.Text))
 			{
 				borks.Add("#35 isHingedDoor (record) does not equal isHingedDoor (text).");
 			}
-			if (valB && tb30_isslidingdoor.Text == "1")
+			if (!test(val, 0,1))
+			{
+				borks.Add("#35 isHingedDoor exceeds expected value.");
+			}
+			if (val != 0 && (record.SlidingDoor != 0 || tb30_isslidingdoor.Text != "0"))
 			{
 				borks.Add("#35 isHingedDoor and #30 isSlidingDoor are both true.");
 			}
-			valB = Parts[Selid].Record.BlockFire;
-			if (    (valB && tb36_isblockfire.Text == "0")
-				|| (!valB && tb36_isblockfire.Text == "1"))
+			val = record.BlockFire;
+			if (val != Int32.Parse(tb36_isblockfire.Text))
 			{
 				borks.Add("#36 isBlockFire (record) does not equal isBlockFire (text).");
 			}
-			valB = Parts[Selid].Record.BlockSmoke;
-			if (    (valB && tb37_isblocksmoke.Text == "0")
-				|| (!valB && tb37_isblocksmoke.Text == "1"))
+			if (!test(val, 0,1))
+			{
+				borks.Add("#36 isBlockFire exceeds expected value.");
+			}
+			val = record.BlockSmoke;
+			if (val != Int32.Parse(tb37_isblocksmoke.Text))
 			{
 				borks.Add("#37 isBlockSmoke (record) does not equal isBlockSmoke (text).");
+			}
+			if (!test(val, 0,1))
+			{
+				borks.Add("#37 isBlockSmoke exceeds expected value.");
 			}
 
 
 			// ints
-			val = Parts[Selid].Record.LeftRightHalf;
+			val = record.LeftRightHalf;
 			if (val != Int32.Parse(tb38_.Text))
 			{
 				borks.Add("#38 LeftRightHalf (record) does not equal LeftRightHalf (text).");
 			}
 //			if (val != 3)
 //			{
-//				borks.Add("#38 LeftRightHalf is not \"3\".");
+//				borks.Add("#38 LeftRightHalf is not 3.");
 //			}
 
-			val = Parts[Selid].Record.TU_Walk;
+			val = record.TU_Walk;
 			if (val != Int32.Parse(tb39_tuwalk.Text))
 			{
 				borks.Add("#39 TuWalk (record) does not equal TuWalk (text).");
 			}
-			val = Parts[Selid].Record.TU_Slide;
+			val = record.TU_Slide;
 			if (val != Int32.Parse(tb40_tuslide.Text))
 			{
 				borks.Add("#40 TuSlide (record) does not equal TuSlide (text).");
 			}
-			val = Parts[Selid].Record.TU_Fly;
+			val = record.TU_Fly;
 			if (val != Int32.Parse(tb41_tufly.Text))
 			{
 				borks.Add("#41 TuFly (record) does not equal TuFly (text).");
 			}
 
-			val = Parts[Selid].Record.Armor;
+			val = record.Armor;
 			if (val != Int32.Parse(tb42_armor.Text))
 			{
 				borks.Add("#42 Armor (record) does not equal Armor (text).");
 			}
 
-			val = Parts[Selid].Record.HE_Block;
+			val = record.HE_Block;
 			if (val != Int32.Parse(tb43_heblock.Text))
 			{
 				borks.Add("#43 HeBlock (record) does not equal HeBlock (text).");
@@ -2851,12 +2859,12 @@ namespace McdView
 
 			y = Parts.Length - 1;
 
-			val = Parts[Selid].Record.DieTile;
+			val = record.DieTile;
 			if (val != Int32.Parse(tb44_deathid.Text))
 			{
 				borks.Add("#44 DeathId (record) does not equal DeathId (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#44 DeathId exceeds the count of the MCD.");
 			}
@@ -2865,18 +2873,18 @@ namespace McdView
 				borks.Add("#44 Dead part is null.");
 			}
 
-			val = Parts[Selid].Record.FireResist;
+			val = record.FireResist;
 			if (val != Int32.Parse(tb45_fireresist.Text))
 			{
 				borks.Add("#45 FireResist (record) does not equal FireResist (text).");
 			}
 
-			val = Parts[Selid].Record.Alt_MCD;
+			val = record.Alt_MCD;
 			if (val != Int32.Parse(tb46_alternateid.Text))
 			{
 				borks.Add("#46 AlternateId (record) does not equal AlternateId (text).");
 			}
-			if (!Test(val, 0, y))
+			if (!test(val, 0,y))
 			{
 				borks.Add("#46 AlternateId exceeds the count of the MCD.");
 			}
@@ -2885,116 +2893,119 @@ namespace McdView
 				borks.Add("#46 Alternate part is null.");
 			}
 
-			val = Parts[Selid].Record.Unknown47;
+			val = record.Unknown47;
 			if (val != Int32.Parse(tb47_.Text))
 			{
 				borks.Add("#47 CloseDoors (record) does not equal CloseDoors (text).");
 			}
 
-			val = Parts[Selid].Record.StandOffset;
+			val = record.StandOffset;
 			if (val != Int32.Parse(tb48_terrainoffset.Text))
 			{
 				borks.Add("#48 TerrainOffset (record) does not equal TerrainOffset (text).");
 			}
-			if (!Test(val, -24, 24))
+			if (!test(val, -24,24))
 			{
 				borks.Add("#48 TerrainOffset has an unusual value.");
 			}
 
-			val = Parts[Selid].Record.TileOffset;
+			val = record.TileOffset;
 			if (val != Int32.Parse(tb49_spriteoffset.Text))
 			{
 				borks.Add("#49 SpriteOffset (record) does not equal SpriteOffset (text).");
 			}
-			if (!Test(val, 0, 24))
+			if (!test(val, 0,24))
 			{
 				borks.Add("#49 SpriteOffset has an unusual value.");
 			}
 
-			val = Parts[Selid].Record.Unknown50;
+			val = record.Unknown50;
 			if (val != Int32.Parse(tb50_.Text))
 			{
 				borks.Add("#50 dTypeMod (record) does not equal dTypeMod (text).");
 			}
 
-			val = Parts[Selid].Record.LightBlock;
+			val = record.LightBlock;
 			if (val != Int32.Parse(tb51_lightblock.Text))
 			{
 				borks.Add("#51 LightBlock (record) does not equal LightBlock (text).");
 			}
 
-			val = Parts[Selid].Record.Footstep;
+			val = record.Footstep;
 			if (val != Int32.Parse(tb52_footsound.Text))
 			{
 				borks.Add("#52 FootSound (record) does not equal FootSound (text).");
 			}
-			if (!Test(val, 0, 6))
+			if (!test(val, 0,6))
 			{
 				borks.Add("#52 FootSound exceeds expected value.");
 			}
 
-			val = (int)Parts[Selid].Record.PartType;
+			val = (int)record.PartType;
 			if (val != Int32.Parse(tb53_parttype.Text))
 			{
 				borks.Add("#53 PartType (record) does not equal PartType (text).");
 			}
-			if (!Test(val, 0, 3))
+			if (!test(val, 0,3))
 			{
 				borks.Add("#53 PartType exceeds expected value.");
 			}
 
-			val = Parts[Selid].Record.HE_Type;
+			val = record.HE_Type;
 			if (val != Int32.Parse(tb54_hetype.Text))
 			{
 				borks.Add("#54 HeType (record) does not equal HeType (text).");
 			}
-			if (!Test(val, 0, 1))
+			if (!test(val, 0,1))
 			{
 				borks.Add("#54 HeType exceeds expected value.");
 			}
 
-			val = Parts[Selid].Record.HE_Strength;
+			val = record.HE_Strength;
 			if (val != Int32.Parse(tb55_hestrength.Text))
 			{
 				borks.Add("#55 HeStrength (record) does not equal HeStrength (text).");
 			}
 
-			val = Parts[Selid].Record.SmokeBlockage;
+			val = record.SmokeBlockage;
 			if (val != Int32.Parse(tb56_smokeblock.Text))
 			{
 				borks.Add("#56 SmokeBlock (record) does not equal SmokeBlock (text).");
 			}
 
-			val = Parts[Selid].Record.Fuel;
+			val = record.Fuel;
 			if (val != Int32.Parse(tb57_fuel.Text))
 			{
 				borks.Add("#57 Fuel (record) does not equal Fuel (text).");
 			}
 
-			val = Parts[Selid].Record.LightSource;
+			val = record.LightSource;
 			if (val != Int32.Parse(tb58_lightintensity.Text))
 			{
 				borks.Add("#58 LightIntensity (record) does not equal LightIntensity (text).");
 			}
 
-			val = (int)Parts[Selid].Record.Special;
+			val = (int)record.Special;
 			if (val != Int32.Parse(tb59_specialtype.Text))
 			{
 				borks.Add("#59 SpecialType (record) does not equal SpecialType (text).");
 			}
-			if (!Test(val, 0, 14))
+			if (!test(val, 0,14))
 			{
 				borks.Add("#59 SpecialType exceeds expected value.");
 			}
 
-			valB = Parts[Selid].Record.BaseObject;
-			if (    (valB && tb60_isbaseobject.Text == "0")
-				|| (!valB && tb60_isbaseobject.Text == "1"))
+			val = record.BaseObject;
+			if (val != Int32.Parse(tb60_isbaseobject.Text))
 			{
 				borks.Add("#60 isBaseObject (record) does not equal isBaseObject (text).");
 			}
+			if (!test(val, 0,1))
+			{
+				borks.Add("#60 isBaseObject exceeds expected value.");
+			}
 
-			val = Parts[Selid].Record.Unknown61;
+			val = record.Unknown61;
 			if (val != Int32.Parse(tb61_.Text))
 			{
 				borks.Add("#61 VictoryPoints (record) does not equal VictoryPoints (text).");
@@ -3011,9 +3022,9 @@ namespace McdView
 		/// <param name="y">the maximum accepted value</param>
 		/// <returns><c>true</c> if <paramref name="val"/> is between
 		/// <paramref name="x"/> and <paramref name="y"/> inclusive.</returns>
-		private static bool Test(int val, int x, int y)
+		private static bool test(int val, int x, int y)
 		{
-			return (val >= x && val <= y);
+			return val >= x && val <= y;
 		}
 		#endregion Methods
 	}

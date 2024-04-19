@@ -360,7 +360,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb00_phase1.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite1 = val;
 
 						PartsPanel.Invalidate();
@@ -436,7 +436,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb01_phase2.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite2 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -511,7 +511,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb02_phase3.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite3 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -586,7 +586,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb03_phase4.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite4 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -661,7 +661,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb04_phase5.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite5 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -736,7 +736,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb05_phase6.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite6 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -811,7 +811,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb06_phase7.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite7 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -886,7 +886,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb07_phase8.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Sprite8 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -969,7 +969,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb08_loft01.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft1 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1044,7 +1044,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb09_loft02.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft2 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1119,7 +1119,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb10_loft03.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft3 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1194,7 +1194,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb11_loft04.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft4 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1269,7 +1269,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb12_loft05.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft5 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1344,7 +1344,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb13_loft06.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft6 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1419,7 +1419,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb14_loft07.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft7 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1494,7 +1494,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb15_loft08.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft8 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1569,7 +1569,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb16_loft09.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft9 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1644,7 +1644,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb17_loft10.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft10 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1719,7 +1719,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb18_loft11.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft11 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1794,7 +1794,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb19_loft12.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Loft12 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -1898,7 +1898,7 @@ namespace McdView
 					{
 						ushort val  = UInt16.Parse(tb20_scang1.Text);
 						ushort valr = (ushort)(val - ScanGicon.UNITICON_Max);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 						{
 							Parts[id].Record.ScanG         = val;
 							Parts[id].Record.ScanG_reduced = valr;
@@ -2037,7 +2037,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb22_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown22 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2107,7 +2107,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb23_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown23 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2177,7 +2177,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb24_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown24 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2247,7 +2247,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb25_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown25 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2317,7 +2317,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb26_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown26 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2387,7 +2387,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb27_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown27 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2457,7 +2457,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb28_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown28 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2527,7 +2527,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb29_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown29 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2551,13 +2551,13 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb30_isslidingdoor.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2))) // TODO: allow ubyte value (for all bools in a record)
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.SlidingDoor = Convert.ToBoolean(result);
+						Parts[Selid].Record.SlidingDoor = (byte)result;
 
 						if (_strict
-							&& Parts[Selid].Record.SlidingDoor
-							&& Parts[Selid].Record.HingedDoor)
+							&& Parts[Selid].Record.SlidingDoor != 0
+							&& Parts[Selid].Record.HingedDoor  != 0)
 						{
 							tb35_ishingeddoor.Text = "0";
 						}
@@ -2567,8 +2567,10 @@ namespace McdView
 					}
 					else if (result < 1)
 						tb30_isslidingdoor.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb30_isslidingdoor.Text = "1";
+					else
+						tb30_isslidingdoor.Text = "255";
 				}
 			}
 			else
@@ -2620,13 +2622,13 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb30_isslidingdoor.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb30_isslidingdoor.Text);
+						foreach (int id in PartsPanel.SubIds)
 						{
-							if (Parts[id].Record.SlidingDoor = val
-								&& _strict && Parts[id].Record.HingedDoor)
+							if ((Parts[id].Record.SlidingDoor = val) != 0
+								&& _strict && Parts[id].Record.HingedDoor != 0)
 							{
-								Parts[id].Record.HingedDoor = false;
+								Parts[id].Record.HingedDoor = 0;
 							}
 						}
 						Changed = CacheLoad.Changed(Parts);
@@ -2650,17 +2652,19 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb31_isblocklos.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.StopLOS = Convert.ToBoolean(result);
+						Parts[Selid].Record.StopLOS = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb31_isblocklos.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb31_isblocklos.Text = "1";
+					else
+						tb31_isblocklos.Text = "255";
 				}
 			}
 			else
@@ -2704,8 +2708,8 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb31_isblocklos.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb31_isblocklos.Text);
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.StopLOS = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2729,17 +2733,19 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb32_isdropthrou.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.NotFloored = Convert.ToBoolean(result);
+						Parts[Selid].Record.NotFloored = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb32_isdropthrou.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb32_isdropthrou.Text = "1";
+					else
+						tb32_isdropthrou.Text = "255";
 				}
 			}
 			else
@@ -2783,8 +2789,8 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb32_isdropthrou.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb32_isdropthrou.Text);
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.NotFloored = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2793,66 +2799,8 @@ namespace McdView
 			}
 		}
 
-/*		/// <summary>
-		/// #33 isBigWall (bool)
-		/// TODO: Allow the bigwall value to be stored as a byte.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnChanged33(object sender, EventArgs e)
-		{
-			if (Selid != -1)
-			{
-				_lastrecordid = 33;
-				if (TryParseText(tb33_isbigwall)) // else recurse
-				{
-					int result;
-					if (Int32.TryParse(tb33_isbigwall.Text, out result)
-						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
-					{
-						Parts[Selid].Record.BigWall = Convert.ToBoolean(result);
-
-						if (!InitFields)
-							Changed = CacheLoad.Changed(Parts);
-					}
-					else if (result < 1)
-						tb33_isbigwall.Text = "0"; // recurse w/ default.
-					else
-						tb33_isbigwall.Text = "1";
-				}
-			}
-			else
-				tb33_isbigwall.Text = String.Empty; // recurse.
-		}
-		private void OnEnter33(object sender, EventArgs e)
-		{
-			lbl_Description.Text = "isBigWall (bool) is a true/false value that is relevant only to"
-								 + " content parts. A tile with such a part placed in it is"
-								 + " not navigable; a unit is not even allowed to clip through"
-								 + " such a tile's corner by walking past it diagonally."
-								 + Environment.NewLine + Environment.NewLine
-								 + "0 False, 1 True";
-		}
-		private void OnMouseEnterTextbox33(object sender, EventArgs e)
-		{
-			int result;
-			if (Int32.TryParse(tb33_isbigwall.Text, out result))
-			{
-				string text;
-				switch (result)
-				{
-					case 0: text = "0 False"; break;
-					case 1: text = "1 True";  break;
-
-					default: text = result.ToString(); break;
-				}
-				tssl_Overval.Text = "isBigWall: " + text;
-				OnEnter33(null, EventArgs.Empty);
-			}
-		} */
 		/// <summary>
-		/// #33 isBigWall (byte)
+		/// #33 isBigWall (bool)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2943,7 +2891,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb33_isbigwall.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.BigWall = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -2967,17 +2915,19 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb34_isgravlift.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.GravLift = Convert.ToBoolean(result);
+						Parts[Selid].Record.GravLift = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb34_isgravlift.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb34_isgravlift.Text = "1";
+					else
+						tb34_isgravlift.Text = "255";
 				}
 			}
 			else
@@ -3023,8 +2973,8 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb34_isgravlift.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb34_isgravlift.Text);
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.GravLift = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3048,13 +2998,13 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb35_ishingeddoor.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.HingedDoor = Convert.ToBoolean(result);
+						Parts[Selid].Record.HingedDoor = (byte)result;
 
 						if (_strict
-							&& Parts[Selid].Record.HingedDoor
-							&& Parts[Selid].Record.SlidingDoor)
+							&& Parts[Selid].Record.HingedDoor  != 0
+							&& Parts[Selid].Record.SlidingDoor != 0)
 						{
 							tb30_isslidingdoor.Text = "0";
 						}
@@ -3064,8 +3014,10 @@ namespace McdView
 					}
 					else if (result < 1)
 						tb35_ishingeddoor.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb35_ishingeddoor.Text = "1";
+					else
+						tb35_ishingeddoor.Text = "255";
 				}
 			}
 			else
@@ -3112,13 +3064,13 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb35_ishingeddoor.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb35_ishingeddoor.Text);
+						foreach (int id in PartsPanel.SubIds)
 						{
-							if (Parts[id].Record.HingedDoor = val
-							    && _strict && Parts[id].Record.SlidingDoor)
+							if ((Parts[id].Record.HingedDoor = val) != 0
+							    && _strict && Parts[id].Record.SlidingDoor != 0)
 							{
-								Parts[id].Record.SlidingDoor = false;
+								Parts[id].Record.SlidingDoor = 0;
 							}
 						}
 						Changed = CacheLoad.Changed(Parts);
@@ -3142,17 +3094,19 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb36_isblockfire.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.BlockFire = Convert.ToBoolean(result);
+						Parts[Selid].Record.BlockFire = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb36_isblockfire.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb36_isblockfire.Text = "1";
+					else
+						tb36_isblockfire.Text = "255";
 				}
 			}
 			else
@@ -3196,8 +3150,8 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb36_isblockfire.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb36_isblockfire.Text);
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.BlockFire = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3221,17 +3175,19 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb37_isblocksmoke.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.BlockSmoke = Convert.ToBoolean(result);
+						Parts[Selid].Record.BlockSmoke = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb37_isblocksmoke.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb37_isblocksmoke.Text = "1";
+					else
+						tb37_isblocksmoke.Text = "255";
 				}
 			}
 			else
@@ -3275,8 +3231,8 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb37_isblocksmoke.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb37_isblocksmoke.Text);
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.BlockSmoke = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3360,7 +3316,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb38_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.LeftRightHalf = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3431,7 +3387,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb39_tuwalk.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.TU_Walk = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3502,7 +3458,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb40_tuslide.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.TU_Slide = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3573,7 +3529,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb41_tufly.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.TU_Fly = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3647,7 +3603,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb42_armor.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Armor = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3718,7 +3674,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb43_heblock.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.HE_Block = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3802,7 +3758,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb44_deathid.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.DieTile = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3876,7 +3832,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb45_fireresist.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.FireResist = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -3960,7 +3916,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb46_alternateid.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Alt_MCD = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4033,7 +3989,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb47_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown47 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4119,7 +4075,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						sbyte val = SByte.Parse(tb48_terrainoffset.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.StandOffset = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4197,7 +4153,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb49_spriteoffset.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.TileOffset = val;
 
 						PartsPanel.Invalidate();
@@ -4269,7 +4225,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb50_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown50 = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4341,7 +4297,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb51_lightblock.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.LightBlock = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4430,7 +4386,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb52_footsound.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Footstep = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4513,7 +4469,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						var val = (PartType)Byte.Parse(tb53_parttype.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.PartType = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4595,7 +4551,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb54_hetype.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.HE_Type = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4667,7 +4623,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb55_hestrength.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.HE_Strength = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4739,7 +4695,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb56_smokeblock.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.SmokeBlockage = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4810,7 +4766,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb57_fuel.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Fuel = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4882,7 +4838,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb58_lightintensity.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.LightSource = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -4985,7 +4941,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						var val = (SpecialType)Byte.Parse(tb59_specialtype.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Special = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -5009,17 +4965,19 @@ namespace McdView
 					int result;
 					if (Int32.TryParse(tb60_isbaseobject.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
-							|| (!_strict && result > -1 && result < 2)))
+							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.BaseObject = Convert.ToBoolean(result);
+						Parts[Selid].Record.BaseObject = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
 						tb60_isbaseobject.Text = "0"; // recurse w/ default.
-					else
+					else if (_strict)
 						tb60_isbaseobject.Text = "1";
+					else
+						tb60_isbaseobject.Text = "255";
 				}
 			}
 			else
@@ -5064,8 +5022,8 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						bool val = Convert.ToBoolean(Byte.Parse(tb60_isbaseobject.Text));
-						foreach (var id in PartsPanel.SubIds)
+						byte val = Byte.Parse(tb60_isbaseobject.Text);
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.BaseObject = val;
 
 						Changed = CacheLoad.Changed(Parts);
@@ -5136,7 +5094,7 @@ namespace McdView
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
 						byte val = Byte.Parse(tb61_.Text);
-						foreach (var id in PartsPanel.SubIds)
+						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.Unknown61 = val;
 
 						Changed = CacheLoad.Changed(Parts);

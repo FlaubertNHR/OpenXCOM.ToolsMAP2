@@ -45,75 +45,74 @@ namespace XCom
 		// OpenXcom changed BigWall from a bool to a byte - see
 		// Battlescape/Pathfinding.h (enum bigWallTypes) in the OXC codebase.
 
-		public byte Sprite1 { get; set; }
-		public byte Sprite2 { get; set; }
-		public byte Sprite3 { get; set; }
-		public byte Sprite4 { get; set; }
-		public byte Sprite5 { get; set; }
-		public byte Sprite6 { get; set; }
-		public byte Sprite7 { get; set; }
-		public byte Sprite8 { get; set; }
+		public byte Sprite1         { get; set; }
+		public byte Sprite2         { get; set; }
+		public byte Sprite3         { get; set; }
+		public byte Sprite4         { get; set; }
+		public byte Sprite5         { get; set; }
+		public byte Sprite6         { get; set; }
+		public byte Sprite7         { get; set; }
+		public byte Sprite8         { get; set; }
 
-		public byte Loft1  { get; set; }
-		public byte Loft2  { get; set; }
-		public byte Loft3  { get; set; }
-		public byte Loft4  { get; set; }
-		public byte Loft5  { get; set; }
-		public byte Loft6  { get; set; }
-		public byte Loft7  { get; set; }
-		public byte Loft8  { get; set; }
-		public byte Loft9  { get; set; }
-		public byte Loft10 { get; set; }
-		public byte Loft11 { get; set; }
-		public byte Loft12 { get; set; }
+		public byte Loft1           { get; set; }
+		public byte Loft2           { get; set; }
+		public byte Loft3           { get; set; }
+		public byte Loft4           { get; set; }
+		public byte Loft5           { get; set; }
+		public byte Loft6           { get; set; }
+		public byte Loft7           { get; set; }
+		public byte Loft8           { get; set; }
+		public byte Loft9           { get; set; }
+		public byte Loft10          { get; set; }
+		public byte Loft11          { get; set; }
+		public byte Loft12          { get; set; }
 
 		public ushort ScanG_reduced { get; set; }
 		public ushort ScanG         { get; set; }
 
-		public byte Unknown22 { get; set; }
-		public byte Unknown23 { get; set; }
-		public byte Unknown24 { get; set; }
-		public byte Unknown25 { get; set; }
-		public byte Unknown26 { get; set; }
-		public byte Unknown27 { get; set; }
-		public byte Unknown28 { get; set; }
-		public byte Unknown29 { get; set; }
+		public byte Unknown22       { get; set; }
+		public byte Unknown23       { get; set; }
+		public byte Unknown24       { get; set; }
+		public byte Unknown25       { get; set; }
+		public byte Unknown26       { get; set; }
+		public byte Unknown27       { get; set; }
+		public byte Unknown28       { get; set; }
+		public byte Unknown29       { get; set; }
 
-		public bool SlidingDoor { get; set; }
-		public bool StopLOS     { get; set; }
-		public bool NotFloored  { get; set; }
-//		public bool BigWall     { get; set; }
-		public byte BigWall     { get; set; }
-		public bool GravLift    { get; set; }
-		public bool HingedDoor  { get; set; }
-		public bool BlockFire   { get; set; }
-		public bool BlockSmoke  { get; set; }
+		public byte SlidingDoor     { get; set; }
+		public byte StopLOS         { get; set; }
+		public byte NotFloored      { get; set; }
+		public byte BigWall         { get; set; }
+		public byte GravLift        { get; set; }
+		public byte HingedDoor      { get; set; }
+		public byte BlockFire       { get; set; }
+		public byte BlockSmoke      { get; set; }
 
-		public byte LeftRightHalf { get; set; }
-		public byte TU_Walk       { get; set; }
-		public byte TU_Slide      { get; set; }
-		public byte TU_Fly        { get; set; }
-		public byte Armor         { get; set; }
-		public byte HE_Block      { get; set; }
-		public byte DieTile       { get; set; }
-		public byte FireResist    { get; set; }
-		public byte Alt_MCD       { get; set; }
-		public byte Unknown47     { get; set; }
-		public sbyte StandOffset  { get; set; }
-		public byte TileOffset    { get; set; }
-		public byte Unknown50     { get; set; }
-		public byte LightBlock    { get; set; }
-		public byte Footstep      { get; set; }
+		public byte LeftRightHalf   { get; set; }
+		public byte TU_Walk         { get; set; }
+		public byte TU_Slide        { get; set; }
+		public byte TU_Fly          { get; set; }
+		public byte Armor           { get; set; }
+		public byte HE_Block        { get; set; }
+		public byte DieTile         { get; set; }
+		public byte FireResist      { get; set; }
+		public byte Alt_MCD         { get; set; }
+		public byte Unknown47       { get; set; }
+		public sbyte StandOffset    { get; set; }
+		public byte TileOffset      { get; set; }
+		public byte Unknown50       { get; set; }
+		public byte LightBlock      { get; set; }
+		public byte Footstep        { get; set; }
 
-		public PartType PartType   { get; set; }
-		public byte HE_Type        { get; set; }
-		public byte HE_Strength    { get; set; }
-		public byte SmokeBlockage  { get; set; }
-		public byte Fuel           { get; set; }
-		public byte LightSource    { get; set; }
-		public SpecialType Special { get; set; }
-		public bool BaseObject     { get; set; }
-		public byte Unknown61      { get; set; }
+		public PartType PartType    { get; set; }
+		public byte HE_Type         { get; set; }
+		public byte HE_Strength     { get; set; }
+		public byte SmokeBlockage   { get; set; }
+		public byte Fuel            { get; set; }
+		public byte LightSource     { get; set; }
+		public SpecialType Special  { get; set; }
+		public byte BaseObject      { get; set; }
+		public byte Unknown61       { get; set; }
 
 
 		// The following strings are used by the McdInfoF dialog only.
@@ -164,8 +163,8 @@ namespace XCom
 					case 18: return (int)Loft11;
 					case 19: return (int)Loft12;
 
-					case 21: return (int)ScanG_reduced;				// ushort
-					case 20: return (int)ScanG;						// ushort +35
+					case 20: return (int)ScanG;			// ushort +35
+					case 21: return (int)ScanG_reduced;	// ushort
 
 					case 22: return (int)Unknown22;
 					case 23: return (int)Unknown23;
@@ -176,15 +175,14 @@ namespace XCom
 					case 28: return (int)Unknown28;
 					case 29: return (int)Unknown29;
 
-					case 30: return Convert.ToInt32(SlidingDoor);	// bools ->
-					case 31: return Convert.ToInt32(StopLOS);
-					case 32: return Convert.ToInt32(NotFloored);
-//					case 33: return Convert.ToInt32(BigWall);
+					case 30: return (int)SlidingDoor;	// bools ->
+					case 31: return (int)StopLOS;
+					case 32: return (int)NotFloored;
 					case 33: return (int)BigWall;
-					case 34: return Convert.ToInt32(GravLift);
-					case 35: return Convert.ToInt32(HingedDoor);
-					case 36: return Convert.ToInt32(BlockFire);
-					case 37: return Convert.ToInt32(BlockSmoke);
+					case 34: return (int)GravLift;
+					case 35: return (int)HingedDoor;
+					case 36: return (int)BlockFire;
+					case 37: return (int)BlockSmoke;
 
 					case 38: return (int)LeftRightHalf;
 					case 39: return (int)TU_Walk;
@@ -196,20 +194,20 @@ namespace XCom
 					case 45: return (int)FireResist;
 					case 46: return (int)Alt_MCD;
 					case 47: return (int)Unknown47;
-					case 48: return (int)StandOffset;				// sbyte
+					case 48: return (int)StandOffset;	// sbyte
 					case 49: return (int)TileOffset;
 					case 50: return (int)Unknown50;
 					case 51: return (int)LightBlock;
 					case 52: return (int)Footstep;
 
-					case 53: return (int)PartType;					// PartType
+					case 53: return (int)PartType;		// PartType
 					case 54: return (int)HE_Type;
 					case 55: return (int)HE_Strength;
 					case 56: return (int)SmokeBlockage;
 					case 57: return (int)Fuel;
 					case 58: return (int)LightSource;
-					case 59: return (int)Special;					// SpecialType
-					case 60: return Convert.ToInt32(BaseObject);	// bool
+					case 59: return (int)Special;		// SpecialType
+					case 60: return (int)BaseObject;	// bool
 					case 61: return (int)Unknown61;
 				}
 				return 0;
@@ -232,49 +230,48 @@ namespace XCom
 			if (bindata == null)
 				bindata = new byte[McdRecord.Length]; // all values in the byte-array default to (byte)0
 
-			Sprite1 = bindata[0];
-			Sprite2 = bindata[1];
-			Sprite3 = bindata[2];
-			Sprite4 = bindata[3];
-			Sprite5 = bindata[4];
-			Sprite6 = bindata[5];
-			Sprite7 = bindata[6];
-			Sprite8 = bindata[7];
+			Sprite1       = bindata[0];
+			Sprite2       = bindata[1];
+			Sprite3       = bindata[2];
+			Sprite4       = bindata[3];
+			Sprite5       = bindata[4];
+			Sprite6       = bindata[5];
+			Sprite7       = bindata[6];
+			Sprite8       = bindata[7];
 
-			Loft1  = bindata[8];
-			Loft2  = bindata[9];
-			Loft3  = bindata[10];
-			Loft4  = bindata[11];
-			Loft5  = bindata[12];
-			Loft6  = bindata[13];
-			Loft7  = bindata[14];
-			Loft8  = bindata[15];
-			Loft9  = bindata[16];
-			Loft10 = bindata[17];
-			Loft11 = bindata[18];
-			Loft12 = bindata[19];
+			Loft1         = bindata[8];
+			Loft2         = bindata[9];
+			Loft3         = bindata[10];
+			Loft4         = bindata[11];
+			Loft5         = bindata[12];
+			Loft6         = bindata[13];
+			Loft7         = bindata[14];
+			Loft8         = bindata[15];
+			Loft9         = bindata[16];
+			Loft10        = bindata[17];
+			Loft11        = bindata[18];
+			Loft12        = bindata[19];
 
 			ScanG_reduced = (ushort)(bindata[21] * 256 + bindata[20]); // ushort in the MCD is little-endian
 			ScanG         = (ushort)(ScanG_reduced + 35);
 
-			Unknown22 = bindata[22];
-			Unknown23 = bindata[23];
-			Unknown24 = bindata[24];
-			Unknown25 = bindata[25];
-			Unknown26 = bindata[26];
-			Unknown27 = bindata[27];
-			Unknown28 = bindata[28];
-			Unknown29 = bindata[29];
+			Unknown22     = bindata[22];
+			Unknown23     = bindata[23];
+			Unknown24     = bindata[24];
+			Unknown25     = bindata[25];
+			Unknown26     = bindata[26];
+			Unknown27     = bindata[27];
+			Unknown28     = bindata[28];
+			Unknown29     = bindata[29];
 
-			SlidingDoor = bindata[30] != 0;
-			StopLOS     = bindata[31] != 0;
-			NotFloored  = bindata[32] != 0;
-//			BigWall     = bindata[33] != 0; // TODO: store as a byte ->
-			BigWall     = bindata[33];
-			GravLift    = bindata[34] != 0;
-			HingedDoor  = bindata[35] != 0;
-			BlockFire   = bindata[36] != 0;
-			BlockSmoke  = bindata[37] != 0;
+			SlidingDoor   = bindata[30];
+			StopLOS       = bindata[31];
+			NotFloored    = bindata[32];
+			BigWall       = bindata[33];
+			GravLift      = bindata[34];
+			HingedDoor    = bindata[35];
+			BlockFire     = bindata[36];
+			BlockSmoke    = bindata[37];
 
 			LeftRightHalf = bindata[38];
 			TU_Walk       = bindata[39];
@@ -299,7 +296,7 @@ namespace XCom
 			Fuel          = bindata[57];
 			LightSource   = bindata[58];
 			Special       = (SpecialType)bindata[59];
-			BaseObject    = bindata[60] != 0;
+			BaseObject    = bindata[60];
 			Unknown61     = bindata[61];
 
 			if (extra)
@@ -468,15 +465,14 @@ namespace XCom
 					fs.WriteByte((byte)record.Unknown28);				// 28
 					fs.WriteByte((byte)record.Unknown29);				// 29
 
-					fs.WriteByte(Convert.ToByte(record.SlidingDoor));	// 30 (bool)
-					fs.WriteByte(Convert.ToByte(record.StopLOS));		// 31 (bool)
-					fs.WriteByte(Convert.ToByte(record.NotFloored));	// 32 (bool)
-//					fs.WriteByte(Convert.ToByte(record.BigWall));		// 33 (bool)
-					fs.WriteByte((byte)record.BigWall);					// 33
-					fs.WriteByte(Convert.ToByte(record.GravLift));		// 34 (bool)
-					fs.WriteByte(Convert.ToByte(record.HingedDoor));	// 35 (bool)
-					fs.WriteByte(Convert.ToByte(record.BlockFire));		// 36 (bool)
-					fs.WriteByte(Convert.ToByte(record.BlockSmoke));	// 37 (bool)
+					fs.WriteByte((byte)record.SlidingDoor);				// 30 (bool)
+					fs.WriteByte((byte)record.StopLOS);					// 31 (bool)
+					fs.WriteByte((byte)record.NotFloored);				// 32 (bool)
+					fs.WriteByte((byte)record.BigWall);					// 33 (bool)
+					fs.WriteByte((byte)record.GravLift);				// 34 (bool)
+					fs.WriteByte((byte)record.HingedDoor);				// 35 (bool)
+					fs.WriteByte((byte)record.BlockFire);				// 36 (bool)
+					fs.WriteByte((byte)record.BlockSmoke);				// 37 (bool)
 
 					fs.WriteByte((byte)record.LeftRightHalf);			// 38
 					fs.WriteByte((byte)record.TU_Walk);					// 39
@@ -501,7 +497,7 @@ namespace XCom
 					fs.WriteByte((byte)record.Fuel);					// 57
 					fs.WriteByte((byte)record.LightSource);				// 58
 					fs.WriteByte((byte)record.Special);					// 59 (SpecialType)
-					fs.WriteByte(Convert.ToByte(record.BaseObject));	// 60 (bool)
+					fs.WriteByte((byte)record.BaseObject);				// 60 (bool)
 					fs.WriteByte((byte)record.Unknown61);				// 61
 				}
 			}
@@ -560,7 +556,7 @@ namespace XCom
 			record.SlidingDoor = SlidingDoor;	// bool
 			record.StopLOS     = StopLOS;		// bool
 			record.NotFloored  = NotFloored;	// bool
-			record.BigWall     = BigWall;		// bool (-> int)
+			record.BigWall     = BigWall;		// bool
 			record.GravLift    = GravLift;		// bool
 			record.HingedDoor  = HingedDoor;	// bool
 			record.BlockFire   = BlockFire;		// bool

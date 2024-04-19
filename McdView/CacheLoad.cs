@@ -54,8 +54,8 @@ namespace McdView
 				Parts[i, 18] = part.Record.Loft11;
 				Parts[i, 19] = part.Record.Loft12;
 
-				Parts[i, 20] = part.Record.ScanG;								// ushort (already has 35 added)
-				Parts[i, 21] = part.Record.ScanG_reduced;						// ushort - 35 (is redundant)
+				Parts[i, 20] = part.Record.ScanG;			// ushort (already has 35 added)
+				Parts[i, 21] = part.Record.ScanG_reduced;	// ushort - 35 (is redundant)
 
 				Parts[i, 22] = part.Record.Unknown22;
 				Parts[i, 23] = part.Record.Unknown23;
@@ -66,15 +66,14 @@ namespace McdView
 				Parts[i, 28] = part.Record.Unknown28;
 				Parts[i, 29] = part.Record.Unknown29;
 
-				Parts[i, 30] = Convert.ToInt32(part.Record.SlidingDoor);		// bools ->
-				Parts[i, 31] = Convert.ToInt32(part.Record.StopLOS);
-				Parts[i, 32] = Convert.ToInt32(part.Record.NotFloored);
-//				Parts[i, 33] = Convert.ToInt32(part.Record.BigWall);
+				Parts[i, 30] = part.Record.SlidingDoor;		// bools ->
+				Parts[i, 31] = part.Record.StopLOS;
+				Parts[i, 32] = part.Record.NotFloored;
 				Parts[i, 33] = part.Record.BigWall;
-				Parts[i, 34] = Convert.ToInt32(part.Record.GravLift);
-				Parts[i, 35] = Convert.ToInt32(part.Record.HingedDoor);
-				Parts[i, 36] = Convert.ToInt32(part.Record.BlockFire);
-				Parts[i, 37] = Convert.ToInt32(part.Record.BlockSmoke);
+				Parts[i, 34] = part.Record.GravLift;
+				Parts[i, 35] = part.Record.HingedDoor;
+				Parts[i, 36] = part.Record.BlockFire;
+				Parts[i, 37] = part.Record.BlockSmoke;
 
 				Parts[i, 38] = part.Record.LeftRightHalf;
 				Parts[i, 39] = part.Record.TU_Walk;
@@ -86,20 +85,20 @@ namespace McdView
 				Parts[i, 45] = part.Record.FireResist;
 				Parts[i, 46] = part.Record.Alt_MCD;
 				Parts[i, 47] = part.Record.Unknown47;
-				Parts[i, 48] = part.Record.StandOffset;							// sbyte
+				Parts[i, 48] = part.Record.StandOffset;		// sbyte
 				Parts[i, 49] = part.Record.TileOffset;
 				Parts[i, 50] = part.Record.Unknown50;
 				Parts[i, 51] = part.Record.LightBlock;
 				Parts[i, 52] = part.Record.Footstep;
 
-				Parts[i, 53] = (int)part.Record.PartType;						// PartType
+				Parts[i, 53] = (int)part.Record.PartType;	// PartType
 				Parts[i, 54] = part.Record.HE_Type;
 				Parts[i, 55] = part.Record.HE_Strength;
 				Parts[i, 56] = part.Record.SmokeBlockage;
 				Parts[i, 57] = part.Record.Fuel;
 				Parts[i, 58] = part.Record.LightSource;
-				Parts[i, 59] = (int)part.Record.Special;						// SpecialType
-				Parts[i, 60] = Convert.ToInt32(part.Record.BaseObject);			// bool
+				Parts[i, 59] = (int)part.Record.Special;	// SpecialType
+				Parts[i, 60] = part.Record.BaseObject;		// bool
 				Parts[i, 61] = part.Record.Unknown61;
 			}
 		}

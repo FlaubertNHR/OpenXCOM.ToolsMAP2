@@ -399,69 +399,68 @@ namespace McdView
 		{
 			McdRecord record = Parts[SelId].Record;
 
-			tb00_phase1.Text = ((int)record.Sprite1).ToString();
-			tb01_phase2.Text = ((int)record.Sprite2).ToString();
-			tb02_phase3.Text = ((int)record.Sprite3).ToString();
-			tb03_phase4.Text = ((int)record.Sprite4).ToString();
-			tb04_phase5.Text = ((int)record.Sprite5).ToString();
-			tb05_phase6.Text = ((int)record.Sprite6).ToString();
-			tb06_phase7.Text = ((int)record.Sprite7).ToString();
-			tb07_phase8.Text = ((int)record.Sprite8).ToString();
+			tb00_phase1        .Text = ((int)record.Sprite1)      .ToString();
+			tb01_phase2        .Text = ((int)record.Sprite2)      .ToString();
+			tb02_phase3        .Text = ((int)record.Sprite3)      .ToString();
+			tb03_phase4        .Text = ((int)record.Sprite4)      .ToString();
+			tb04_phase5        .Text = ((int)record.Sprite5)      .ToString();
+			tb05_phase6        .Text = ((int)record.Sprite6)      .ToString();
+			tb06_phase7        .Text = ((int)record.Sprite7)      .ToString();
+			tb07_phase8        .Text = ((int)record.Sprite8)      .ToString();
 
-			tb08_loft01.Text = ((int)record.Loft1) .ToString();
-			tb09_loft02.Text = ((int)record.Loft2) .ToString();
-			tb10_loft03.Text = ((int)record.Loft3) .ToString();
-			tb11_loft04.Text = ((int)record.Loft4) .ToString();
-			tb12_loft05.Text = ((int)record.Loft5) .ToString();
-			tb13_loft06.Text = ((int)record.Loft6) .ToString();
-			tb14_loft07.Text = ((int)record.Loft7) .ToString();
-			tb15_loft08.Text = ((int)record.Loft8) .ToString();
-			tb16_loft09.Text = ((int)record.Loft9) .ToString();
-			tb17_loft10.Text = ((int)record.Loft10).ToString();
-			tb18_loft11.Text = ((int)record.Loft11).ToString();
-			tb19_loft12.Text = ((int)record.Loft12).ToString();
+			tb08_loft01        .Text = ((int)record.Loft1)        .ToString();
+			tb09_loft02        .Text = ((int)record.Loft2)        .ToString();
+			tb10_loft03        .Text = ((int)record.Loft3)        .ToString();
+			tb11_loft04        .Text = ((int)record.Loft4)        .ToString();
+			tb12_loft05        .Text = ((int)record.Loft5)        .ToString();
+			tb13_loft06        .Text = ((int)record.Loft6)        .ToString();
+			tb14_loft07        .Text = ((int)record.Loft7)        .ToString();
+			tb15_loft08        .Text = ((int)record.Loft8)        .ToString();
+			tb16_loft09        .Text = ((int)record.Loft9)        .ToString();
+			tb17_loft10        .Text = ((int)record.Loft10)       .ToString();
+			tb18_loft11        .Text = ((int)record.Loft11)       .ToString();
+			tb19_loft12        .Text = ((int)record.Loft12)       .ToString();
 
-			string scanG         = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
-			string scanG_reduced = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
-			tb20_scang1.Text = scanG;										// See also the OnChanged mechanism ...
-			tb20_scang2.Text = scanG_reduced;
+			string scanG             = ((int)record.ScanG)        .ToString();	// NOTE: Yes, keep this outside the .Text setters.
+			string scanG_reduced     = ((int)record.ScanG_reduced).ToString();	// else only god knows why the cast from ushort won't work right.
+			tb20_scang1        .Text = scanG;									// See also the OnChanged mechanism ...
+			tb20_scang2        .Text = scanG_reduced;
 
-			tb22_.Text = ((int)record.Unknown22).ToString();
-			tb23_.Text = ((int)record.Unknown23).ToString();
-			tb24_.Text = ((int)record.Unknown24).ToString();
-			tb25_.Text = ((int)record.Unknown25).ToString();
-			tb26_.Text = ((int)record.Unknown26).ToString();
-			tb27_.Text = ((int)record.Unknown27).ToString();
-			tb28_.Text = ((int)record.Unknown28).ToString();
-			tb29_.Text = ((int)record.Unknown29).ToString();
+			tb22_              .Text = ((int)record.Unknown22)    .ToString();
+			tb23_              .Text = ((int)record.Unknown23)    .ToString();
+			tb24_              .Text = ((int)record.Unknown24)    .ToString();
+			tb25_              .Text = ((int)record.Unknown25)    .ToString();
+			tb26_              .Text = ((int)record.Unknown26)    .ToString();
+			tb27_              .Text = ((int)record.Unknown27)    .ToString();
+			tb28_              .Text = ((int)record.Unknown28)    .ToString();
+			tb29_              .Text = ((int)record.Unknown29)    .ToString();
 
-			tb30_isslidingdoor.Text = Convert.ToInt32(record.SlidingDoor).ToString();
-			tb31_isblocklos   .Text = Convert.ToInt32(record.StopLOS)    .ToString();
-			tb32_isdropthrou  .Text = Convert.ToInt32(record.NotFloored) .ToString();
-//			tb33_isbigwall    .Text = Convert.ToInt32(record.BigWall)    .ToString();
-			tb33_isbigwall    .Text = ((int)record.BigWall)              .ToString();
-			tb34_isgravlift   .Text = Convert.ToInt32(record.GravLift)   .ToString();
-			tb35_ishingeddoor .Text = Convert.ToInt32(record.HingedDoor) .ToString();
-			tb36_isblockfire  .Text = Convert.ToInt32(record.BlockFire)  .ToString();
-			tb37_isblocksmoke .Text = Convert.ToInt32(record.BlockSmoke) .ToString();
+			tb30_isslidingdoor .Text = ((int)record.SlidingDoor)  .ToString();
+			tb31_isblocklos    .Text = ((int)record.StopLOS)      .ToString();
+			tb32_isdropthrou   .Text = ((int)record.NotFloored)   .ToString();
+			tb33_isbigwall     .Text = ((int)record.BigWall)      .ToString();
+			tb34_isgravlift    .Text = ((int)record.GravLift)     .ToString();
+			tb35_ishingeddoor  .Text = ((int)record.HingedDoor)   .ToString();
+			tb36_isblockfire   .Text = ((int)record.BlockFire)    .ToString();
+			tb37_isblocksmoke  .Text = ((int)record.BlockSmoke)   .ToString();
 
-			tb38_.Text = ((int)record.LeftRightHalf).ToString();
+			tb38_              .Text = ((int)record.LeftRightHalf).ToString();
 
-			tb39_tuwalk       .Text = ((int)record.TU_Walk)   .ToString();
-			tb40_tuslide      .Text = ((int)record.TU_Slide)  .ToString();
-			tb41_tufly        .Text = ((int)record.TU_Fly)    .ToString();
-			tb42_armor        .Text = ((int)record.Armor)     .ToString();
-			tb43_heblock      .Text = ((int)record.HE_Block)  .ToString();
-			tb44_deathid      .Text = ((int)record.DieTile)   .ToString();
-			tb45_fireresist   .Text = ((int)record.FireResist).ToString();
-			tb46_alternateid  .Text = ((int)record.Alt_MCD)   .ToString();
+			tb39_tuwalk        .Text = ((int)record.TU_Walk)      .ToString();
+			tb40_tuslide       .Text = ((int)record.TU_Slide)     .ToString();
+			tb41_tufly         .Text = ((int)record.TU_Fly)       .ToString();
+			tb42_armor         .Text = ((int)record.Armor)        .ToString();
+			tb43_heblock       .Text = ((int)record.HE_Block)     .ToString();
+			tb44_deathid       .Text = ((int)record.DieTile)      .ToString();
+			tb45_fireresist    .Text = ((int)record.FireResist)   .ToString();
+			tb46_alternateid   .Text = ((int)record.Alt_MCD)      .ToString();
 
-			tb47_.Text = ((int)record.Unknown47).ToString();
+			tb47_              .Text = ((int)record.Unknown47)    .ToString();
 
-			tb48_terrainoffset.Text = ((int)record.StandOffset).ToString();
-			tb49_spriteoffset .Text = ((int)record.TileOffset) .ToString();
+			tb48_terrainoffset .Text = ((int)record.StandOffset)  .ToString();
+			tb49_spriteoffset  .Text = ((int)record.TileOffset)   .ToString();
 
-			tb50_.Text = ((int)record.Unknown50).ToString();
+			tb50_              .Text = ((int)record.Unknown50)    .ToString();
 
 			tb51_lightblock    .Text = ((int)record.LightBlock)   .ToString();
 			tb52_footsound     .Text = ((int)record.Footstep)     .ToString();
@@ -473,9 +472,9 @@ namespace McdView
 			tb58_lightintensity.Text = ((int)record.LightSource)  .ToString();
 			tb59_specialtype   .Text = ((int)record.Special)      .ToString();
 
-			tb60_isbaseobject.Text = Convert.ToInt32(record.BaseObject).ToString();
+			tb60_isbaseobject  .Text = ((int)record.BaseObject)   .ToString();
 
-			tb61_.Text = ((int)record.Unknown61).ToString();
+			tb61_              .Text = ((int)record.Unknown61)    .ToString();
 		}
 
 		/// <summary>
