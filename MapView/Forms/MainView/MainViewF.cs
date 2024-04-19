@@ -1787,7 +1787,7 @@ namespace MapView
 															part[0].Sprite,
 															b,
 															x,
-															y - part.Record.TileOffset);
+															y - part.Record.SpriteOffset);
 								}
 							}
 						}

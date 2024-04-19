@@ -268,7 +268,7 @@ namespace MapView.Forms.Observers
 			// Floor ->
 			if (tile != null && (part = tile.Floor) != null)
 			{
-				DrawSprite(part[phase], 0, part.Record.TileOffset);
+				DrawSprite(part[phase], 0, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.Floor);
 			}
 			else
@@ -277,7 +277,7 @@ namespace MapView.Forms.Observers
 			// West ->
 			if (tile != null && (part = tile.West) != null)
 			{
-				DrawSprite(part[phase], Quadwidth, part.Record.TileOffset);
+				DrawSprite(part[phase], Quadwidth, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.West);
 			}
 			else
@@ -286,7 +286,7 @@ namespace MapView.Forms.Observers
 			// North ->
 			if (tile != null && (part = tile.North) != null)
 			{
-				DrawSprite(part[phase], Quadwidth * (int)PartType.North, part.Record.TileOffset);
+				DrawSprite(part[phase], Quadwidth * (int)PartType.North, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.North);
 			}
 			else
@@ -295,7 +295,7 @@ namespace MapView.Forms.Observers
 			// Content ->
 			if (tile != null && (part = tile.Content) != null)
 			{
-				DrawSprite(part[phase], Quadwidth * (int)PartType.Content, part.Record.TileOffset);
+				DrawSprite(part[phase], Quadwidth * (int)PartType.Content, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.Content);
 			}
 			else
@@ -304,7 +304,7 @@ namespace MapView.Forms.Observers
 			// Current ->
 			if (SelectedTilepart != null)
 			{
-				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, SelectedTilepart.Record.TileOffset);
+				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, SelectedTilepart.Record.SpriteOffset);
 				if (SelectedTilepart.IsDoor) DrawDoorString(QuadrantPart);
 			}
 			else

@@ -45,74 +45,74 @@ namespace XCom
 		// OpenXcom changed BigWall from a bool to a byte - see
 		// Battlescape/Pathfinding.h (enum bigWallTypes) in the OXC codebase.
 
-		public byte Sprite1         { get; set; }
-		public byte Sprite2         { get; set; }
-		public byte Sprite3         { get; set; }
-		public byte Sprite4         { get; set; }
-		public byte Sprite5         { get; set; }
-		public byte Sprite6         { get; set; }
-		public byte Sprite7         { get; set; }
-		public byte Sprite8         { get; set; }
+		public byte        Sprite1       { get; set; }
+		public byte        Sprite2       { get; set; }
+		public byte        Sprite3       { get; set; }
+		public byte        Sprite4       { get; set; }
+		public byte        Sprite5       { get; set; }
+		public byte        Sprite6       { get; set; }
+		public byte        Sprite7       { get; set; }
+		public byte        Sprite8       { get; set; }
 
-		public byte Loft1           { get; set; }
-		public byte Loft2           { get; set; }
-		public byte Loft3           { get; set; }
-		public byte Loft4           { get; set; }
-		public byte Loft5           { get; set; }
-		public byte Loft6           { get; set; }
-		public byte Loft7           { get; set; }
-		public byte Loft8           { get; set; }
-		public byte Loft9           { get; set; }
-		public byte Loft10          { get; set; }
-		public byte Loft11          { get; set; }
-		public byte Loft12          { get; set; }
+		public byte        Loft1         { get; set; }
+		public byte        Loft2         { get; set; }
+		public byte        Loft3         { get; set; }
+		public byte        Loft4         { get; set; }
+		public byte        Loft5         { get; set; }
+		public byte        Loft6         { get; set; }
+		public byte        Loft7         { get; set; }
+		public byte        Loft8         { get; set; }
+		public byte        Loft9         { get; set; }
+		public byte        Loft10        { get; set; }
+		public byte        Loft11        { get; set; }
+		public byte        Loft12        { get; set; }
 
-		public ushort ScanG_reduced { get; set; }
-		public ushort ScanG         { get; set; }
+		public ushort      ScanG_reduced { get; set; }
+		public ushort      ScanG         { get; set; }
 
-		public byte Unknown22       { get; set; }
-		public byte Unknown23       { get; set; }
-		public byte Unknown24       { get; set; }
-		public byte Unknown25       { get; set; }
-		public byte Unknown26       { get; set; }
-		public byte Unknown27       { get; set; }
-		public byte Unknown28       { get; set; }
-		public byte Unknown29       { get; set; }
+		public byte        Unknown22     { get; set; }
+		public byte        Unknown23     { get; set; }
+		public byte        Unknown24     { get; set; }
+		public byte        Unknown25     { get; set; }
+		public byte        Unknown26     { get; set; }
+		public byte        Unknown27     { get; set; }
+		public byte        Unknown28     { get; set; }
+		public byte        Unknown29     { get; set; }
 
-		public byte SlidingDoor     { get; set; }
-		public byte StopLOS         { get; set; }
-		public byte NotFloored      { get; set; }
-		public byte BigWall         { get; set; }
-		public byte GravLift        { get; set; }
-		public byte HingedDoor      { get; set; }
-		public byte BlockFire       { get; set; }
-		public byte BlockSmoke      { get; set; }
+		public byte        SlidingDoor   { get; set; }
+		public byte        StopLOS       { get; set; }
+		public byte        NotFloored    { get; set; }
+		public byte        BigWall       { get; set; }
+		public byte        GravLift      { get; set; }
+		public byte        HingedDoor    { get; set; }
+		public byte        BlockFire     { get; set; }
+		public byte        BlockSmoke    { get; set; }
 
-		public byte LeftRightHalf   { get; set; }
-		public byte TU_Walk         { get; set; }
-		public byte TU_Slide        { get; set; }
-		public byte TU_Fly          { get; set; }
-		public byte Armor           { get; set; }
-		public byte HE_Block        { get; set; }
-		public byte DieTile         { get; set; }
-		public byte FireResist      { get; set; }
-		public byte Alt_MCD         { get; set; }
-		public byte Unknown47       { get; set; }
-		public sbyte StandOffset    { get; set; }
-		public byte TileOffset      { get; set; }
-		public byte Unknown50       { get; set; }
-		public byte LightBlock      { get; set; }
-		public byte Footstep        { get; set; }
+		public byte        LeftRightHalf { get; set; }
+		public byte        TU_Walk       { get; set; }
+		public byte        TU_Slide      { get; set; }
+		public byte        TU_Fly        { get; set; }
+		public byte        Armor         { get; set; }
+		public byte        HE_Block      { get; set; }
+		public byte        DieTile       { get; set; }
+		public byte        FireResist    { get; set; }
+		public byte        Alt_MCD       { get; set; }
+		public byte        Unknown47     { get; set; }
+		public sbyte       TerrainOffset { get; set; }
+		public byte        SpriteOffset  { get; set; }
+		public byte        Unknown50     { get; set; }
+		public byte        LightBlock    { get; set; }
+		public byte        Footstep      { get; set; }
 
-		public PartType PartType    { get; set; }
-		public byte HE_Type         { get; set; }
-		public byte HE_Strength     { get; set; }
-		public byte SmokeBlockage   { get; set; }
-		public byte Fuel            { get; set; }
-		public byte LightSource     { get; set; }
-		public SpecialType Special  { get; set; }
-		public byte BaseObject      { get; set; }
-		public byte Unknown61       { get; set; }
+		public PartType    PartType      { get; set; }
+		public byte        HE_Type       { get; set; }
+		public byte        HE_Strength   { get; set; }
+		public byte        SmokeBlockage { get; set; }
+		public byte        Fuel          { get; set; }
+		public byte        LightSource   { get; set; }
+		public SpecialType Special       { get; set; }
+		public byte        BaseObject    { get; set; }
+		public byte        Unknown61     { get; set; }
 
 
 		// The following strings are used by the McdInfoF dialog only.
@@ -194,8 +194,8 @@ namespace XCom
 					case 45: return (int)FireResist;
 					case 46: return (int)Alt_MCD;
 					case 47: return (int)Unknown47;
-					case 48: return (int)StandOffset;	// sbyte
-					case 49: return (int)TileOffset;
+					case 48: return (int)TerrainOffset;	// sbyte
+					case 49: return (int)SpriteOffset;
 					case 50: return (int)Unknown50;
 					case 51: return (int)LightBlock;
 					case 52: return (int)Footstep;
@@ -283,8 +283,8 @@ namespace XCom
 			FireResist    = bindata[45];
 			Alt_MCD       = bindata[46];
 			Unknown47     = bindata[47];
-			StandOffset   = unchecked((sbyte)bindata[48]);
-			TileOffset    = bindata[49];
+			TerrainOffset = unchecked((sbyte)bindata[48]);
+			SpriteOffset  = bindata[49];
 			Unknown50     = bindata[50];
 			LightBlock    = bindata[51];
 			Footstep      = bindata[52];
@@ -430,75 +430,75 @@ namespace XCom
 				{
 					record = part.Record;
 
-					fs.WriteByte((byte)record.Sprite1);					//  0
-					fs.WriteByte((byte)record.Sprite2);					//  1
-					fs.WriteByte((byte)record.Sprite3);					//  2
-					fs.WriteByte((byte)record.Sprite4);					//  3
-					fs.WriteByte((byte)record.Sprite5);					//  4
-					fs.WriteByte((byte)record.Sprite6);					//  5
-					fs.WriteByte((byte)record.Sprite7);					//  6
-					fs.WriteByte((byte)record.Sprite8);					//  7
+					fs.WriteByte((byte)record.Sprite1);						//  0
+					fs.WriteByte((byte)record.Sprite2);						//  1
+					fs.WriteByte((byte)record.Sprite3);						//  2
+					fs.WriteByte((byte)record.Sprite4);						//  3
+					fs.WriteByte((byte)record.Sprite5);						//  4
+					fs.WriteByte((byte)record.Sprite6);						//  5
+					fs.WriteByte((byte)record.Sprite7);						//  6
+					fs.WriteByte((byte)record.Sprite8);						//  7
 
-					fs.WriteByte((byte)record.Loft1);					//  8
-					fs.WriteByte((byte)record.Loft2);					//  9
-					fs.WriteByte((byte)record.Loft3);					// 10
-					fs.WriteByte((byte)record.Loft4);					// 11
-					fs.WriteByte((byte)record.Loft5);					// 12
-					fs.WriteByte((byte)record.Loft6);					// 13
-					fs.WriteByte((byte)record.Loft7);					// 14
-					fs.WriteByte((byte)record.Loft8);					// 15
-					fs.WriteByte((byte)record.Loft9);					// 16
-					fs.WriteByte((byte)record.Loft10);					// 17
-					fs.WriteByte((byte)record.Loft11);					// 18
-					fs.WriteByte((byte)record.Loft12);					// 19
+					fs.WriteByte((byte)record.Loft1);						//  8
+					fs.WriteByte((byte)record.Loft2);						//  9
+					fs.WriteByte((byte)record.Loft3);						// 10
+					fs.WriteByte((byte)record.Loft4);						// 11
+					fs.WriteByte((byte)record.Loft5);						// 12
+					fs.WriteByte((byte)record.Loft6);						// 13
+					fs.WriteByte((byte)record.Loft7);						// 14
+					fs.WriteByte((byte)record.Loft8);						// 15
+					fs.WriteByte((byte)record.Loft9);						// 16
+					fs.WriteByte((byte)record.Loft10);						// 17
+					fs.WriteByte((byte)record.Loft11);						// 18
+					fs.WriteByte((byte)record.Loft12);						// 19
 
 					u = record.ScanG_reduced;
-					fs.WriteByte((byte)( u & 0x00FF));					// 20 - ushort in the MCD is little-endian
-					fs.WriteByte((byte)((u & 0xFF00) >> 8));			// 21
+					fs.WriteByte((byte)( u & 0x00FF));						// 20 - ushort in the MCD is little-endian
+					fs.WriteByte((byte)((u & 0xFF00) >> 8));				// 21
 
-					fs.WriteByte((byte)record.Unknown22);				// 22
-					fs.WriteByte((byte)record.Unknown23);				// 23
-					fs.WriteByte((byte)record.Unknown24);				// 24
-					fs.WriteByte((byte)record.Unknown25);				// 25
-					fs.WriteByte((byte)record.Unknown26);				// 26
-					fs.WriteByte((byte)record.Unknown27);				// 27
-					fs.WriteByte((byte)record.Unknown28);				// 28
-					fs.WriteByte((byte)record.Unknown29);				// 29
+					fs.WriteByte((byte)record.Unknown22);					// 22
+					fs.WriteByte((byte)record.Unknown23);					// 23
+					fs.WriteByte((byte)record.Unknown24);					// 24
+					fs.WriteByte((byte)record.Unknown25);					// 25
+					fs.WriteByte((byte)record.Unknown26);					// 26
+					fs.WriteByte((byte)record.Unknown27);					// 27
+					fs.WriteByte((byte)record.Unknown28);					// 28
+					fs.WriteByte((byte)record.Unknown29);					// 29
 
-					fs.WriteByte((byte)record.SlidingDoor);				// 30 (bool)
-					fs.WriteByte((byte)record.StopLOS);					// 31 (bool)
-					fs.WriteByte((byte)record.NotFloored);				// 32 (bool)
-					fs.WriteByte((byte)record.BigWall);					// 33 (bool)
-					fs.WriteByte((byte)record.GravLift);				// 34 (bool)
-					fs.WriteByte((byte)record.HingedDoor);				// 35 (bool)
-					fs.WriteByte((byte)record.BlockFire);				// 36 (bool)
-					fs.WriteByte((byte)record.BlockSmoke);				// 37 (bool)
+					fs.WriteByte((byte)record.SlidingDoor);					// 30 (bool)
+					fs.WriteByte((byte)record.StopLOS);						// 31 (bool)
+					fs.WriteByte((byte)record.NotFloored);					// 32 (bool)
+					fs.WriteByte((byte)record.BigWall);						// 33 (bool)
+					fs.WriteByte((byte)record.GravLift);					// 34 (bool)
+					fs.WriteByte((byte)record.HingedDoor);					// 35 (bool)
+					fs.WriteByte((byte)record.BlockFire);					// 36 (bool)
+					fs.WriteByte((byte)record.BlockSmoke);					// 37 (bool)
 
-					fs.WriteByte((byte)record.LeftRightHalf);			// 38
-					fs.WriteByte((byte)record.TU_Walk);					// 39
-					fs.WriteByte((byte)record.TU_Slide);				// 40
-					fs.WriteByte((byte)record.TU_Fly);					// 41
-					fs.WriteByte((byte)record.Armor);					// 42
-					fs.WriteByte((byte)record.HE_Block);				// 43
-					fs.WriteByte((byte)record.DieTile);					// 44
-					fs.WriteByte((byte)record.FireResist);				// 45
-					fs.WriteByte((byte)record.Alt_MCD);					// 46
-					fs.WriteByte((byte)record.Unknown47);				// 47
-					fs.WriteByte(unchecked((byte)record.StandOffset));	// 48 (sbyte)
-					fs.WriteByte((byte)record.TileOffset);				// 49
-					fs.WriteByte((byte)record.Unknown50);				// 50
-					fs.WriteByte((byte)record.LightBlock);				// 51
-					fs.WriteByte((byte)record.Footstep);				// 52
+					fs.WriteByte((byte)record.LeftRightHalf);				// 38
+					fs.WriteByte((byte)record.TU_Walk);						// 39
+					fs.WriteByte((byte)record.TU_Slide);					// 40
+					fs.WriteByte((byte)record.TU_Fly);						// 41
+					fs.WriteByte((byte)record.Armor);						// 42
+					fs.WriteByte((byte)record.HE_Block);					// 43
+					fs.WriteByte((byte)record.DieTile);						// 44
+					fs.WriteByte((byte)record.FireResist);					// 45
+					fs.WriteByte((byte)record.Alt_MCD);						// 46
+					fs.WriteByte((byte)record.Unknown47);					// 47
+					fs.WriteByte(unchecked((byte)record.TerrainOffset));	// 48 (sbyte)
+					fs.WriteByte((byte)record.SpriteOffset);				// 49
+					fs.WriteByte((byte)record.Unknown50);					// 50
+					fs.WriteByte((byte)record.LightBlock);					// 51
+					fs.WriteByte((byte)record.Footstep);					// 52
 
-					fs.WriteByte((byte)record.PartType);				// 53 (PartType)
-					fs.WriteByte((byte)record.HE_Type);					// 54
-					fs.WriteByte((byte)record.HE_Strength);				// 55
-					fs.WriteByte((byte)record.SmokeBlockage);			// 56
-					fs.WriteByte((byte)record.Fuel);					// 57
-					fs.WriteByte((byte)record.LightSource);				// 58
-					fs.WriteByte((byte)record.Special);					// 59 (SpecialType)
-					fs.WriteByte((byte)record.BaseObject);				// 60 (bool)
-					fs.WriteByte((byte)record.Unknown61);				// 61
+					fs.WriteByte((byte)record.PartType);					// 53 (PartType)
+					fs.WriteByte((byte)record.HE_Type);						// 54
+					fs.WriteByte((byte)record.HE_Strength);					// 55
+					fs.WriteByte((byte)record.SmokeBlockage);				// 56
+					fs.WriteByte((byte)record.Fuel);						// 57
+					fs.WriteByte((byte)record.LightSource);					// 58
+					fs.WriteByte((byte)record.Special);						// 59 (SpecialType)
+					fs.WriteByte((byte)record.BaseObject);					// 60 (bool)
+					fs.WriteByte((byte)record.Unknown61);					// 61
 				}
 			}
 
@@ -553,14 +553,14 @@ namespace XCom
 			record.Unknown28 = Unknown28;
 			record.Unknown29 = Unknown29;
 
-			record.SlidingDoor = SlidingDoor;	// bool
-			record.StopLOS     = StopLOS;		// bool
-			record.NotFloored  = NotFloored;	// bool
-			record.BigWall     = BigWall;		// bool
-			record.GravLift    = GravLift;		// bool
-			record.HingedDoor  = HingedDoor;	// bool
-			record.BlockFire   = BlockFire;		// bool
-			record.BlockSmoke  = BlockSmoke;	// bool
+			record.SlidingDoor = SlidingDoor;		// bool
+			record.StopLOS     = StopLOS;			// bool
+			record.NotFloored  = NotFloored;		// bool
+			record.BigWall     = BigWall;			// bool
+			record.GravLift    = GravLift;			// bool
+			record.HingedDoor  = HingedDoor;		// bool
+			record.BlockFire   = BlockFire;			// bool
+			record.BlockSmoke  = BlockSmoke;		// bool
 
 			record.LeftRightHalf = LeftRightHalf;
 			record.TU_Walk       = TU_Walk;
@@ -572,20 +572,20 @@ namespace XCom
 			record.FireResist    = FireResist;
 			record.Alt_MCD       = Alt_MCD;
 			record.Unknown47     = Unknown47;
-			record.StandOffset   = StandOffset;	// sbyte
-			record.TileOffset    = TileOffset;
+			record.TerrainOffset = TerrainOffset;	// sbyte
+			record.SpriteOffset  = SpriteOffset;
 			record.Unknown50     = Unknown50;
 			record.LightBlock    = LightBlock;
 			record.Footstep      = Footstep;
 
-			record.PartType      = PartType;	// PartType
+			record.PartType      = PartType;		// PartType
 			record.HE_Type       = HE_Type;
 			record.HE_Strength   = HE_Strength;
 			record.SmokeBlockage = SmokeBlockage;
 			record.Fuel          = Fuel;
 			record.LightSource   = LightSource;
-			record.Special       = Special;		// SpecialType
-			record.BaseObject    = BaseObject;	// bool
+			record.Special       = Special;			// SpecialType
+			record.BaseObject    = BaseObject;		// bool
 			record.Unknown61     = Unknown61;
 
 

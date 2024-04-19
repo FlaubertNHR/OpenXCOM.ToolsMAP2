@@ -102,7 +102,7 @@ namespace McdView
 		private RecordLabel lbl57;
 		private RecordLabel lbl57_fuel;
 		private RecordLabel lbl58;
-		private RecordLabel lbl58_lightintensity;
+		private RecordLabel lbl58_lightsource;
 		private RecordLabel lbl59;
 		private RecordLabel lbl59_specialtype;
 		private RecordLabel lbl60;
@@ -216,7 +216,7 @@ namespace McdView
 		private RecordTextbox tb45_fireresist;
 		private RecordTextbox tb55_hestrength;
 		private RecordTextbox tb54_hetype;
-		private RecordTextbox tb58_lightintensity;
+		private RecordTextbox tb58_lightsource;
 		private RecordTextbox tb60_isbaseobject;
 		private RecordTextbox tb59_specialtype;
 		private RecordTextbox tb34_isgravlift;
@@ -385,7 +385,7 @@ namespace McdView
 			this.lbl57 = new McdView.RecordLabel();
 			this.lbl57_fuel = new McdView.RecordLabel();
 			this.lbl58 = new McdView.RecordLabel();
-			this.lbl58_lightintensity = new McdView.RecordLabel();
+			this.lbl58_lightsource = new McdView.RecordLabel();
 			this.lbl59 = new McdView.RecordLabel();
 			this.lbl59_specialtype = new McdView.RecordLabel();
 			this.lbl60 = new McdView.RecordLabel();
@@ -538,7 +538,7 @@ namespace McdView
 			this.tb44_deathid = new McdView.RecordTextbox();
 			this.tb42_armor = new McdView.RecordTextbox();
 			this.gb_General = new System.Windows.Forms.GroupBox();
-			this.tb58_lightintensity = new McdView.RecordTextbox();
+			this.tb58_lightsource = new McdView.RecordTextbox();
 			this.tb60_isbaseobject = new McdView.RecordTextbox();
 			this.tb59_specialtype = new McdView.RecordTextbox();
 			this.tb53_parttype = new McdView.RecordTextbox();
@@ -1508,17 +1508,17 @@ namespace McdView
 			this.lbl58.MouseEnter += new System.EventHandler(this.OnEnter58);
 			this.lbl58.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp58);
 			// 
-			// lbl58_lightintensity
+			// lbl58_lightsource
 			// 
-			this.lbl58_lightintensity.Location = new System.Drawing.Point(40, 115);
-			this.lbl58_lightintensity.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl58_lightintensity.Name = "lbl58_lightintensity";
-			this.lbl58_lightintensity.Size = new System.Drawing.Size(85, 15);
-			this.lbl58_lightintensity.TabIndex = 16;
-			this.lbl58_lightintensity.Text = "LightIntensity";
-			this.lbl58_lightintensity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl58_lightintensity.MouseEnter += new System.EventHandler(this.OnEnter58);
-			this.lbl58_lightintensity.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp58);
+			this.lbl58_lightsource.Location = new System.Drawing.Point(40, 115);
+			this.lbl58_lightsource.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl58_lightsource.Name = "lbl58_lightsource";
+			this.lbl58_lightsource.Size = new System.Drawing.Size(85, 15);
+			this.lbl58_lightsource.TabIndex = 16;
+			this.lbl58_lightsource.Text = "LightSource";
+			this.lbl58_lightsource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl58_lightsource.MouseEnter += new System.EventHandler(this.OnEnter58);
+			this.lbl58_lightsource.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp58);
 			// 
 			// lbl59
 			// 
@@ -3523,8 +3523,8 @@ namespace McdView
 			this.gb_General.Controls.Add(this.lbl53_parttype);
 			this.gb_General.Controls.Add(this.lbl59_specialtype);
 			this.gb_General.Controls.Add(this.lbl34_isgravlift);
-			this.gb_General.Controls.Add(this.lbl58_lightintensity);
-			this.gb_General.Controls.Add(this.tb58_lightintensity);
+			this.gb_General.Controls.Add(this.lbl58_lightsource);
+			this.gb_General.Controls.Add(this.tb58_lightsource);
 			this.gb_General.Controls.Add(this.tb60_isbaseobject);
 			this.gb_General.Controls.Add(this.tb59_specialtype);
 			this.gb_General.Controls.Add(this.tb53_parttype);
@@ -3539,18 +3539,18 @@ namespace McdView
 			this.gb_General.TabStop = false;
 			this.gb_General.Text = " General ";
 			// 
-			// tb58_lightintensity
+			// tb58_lightsource
 			// 
-			this.tb58_lightintensity.Location = new System.Drawing.Point(125, 113);
-			this.tb58_lightintensity.Margin = new System.Windows.Forms.Padding(0);
-			this.tb58_lightintensity.Name = "tb58_lightintensity";
-			this.tb58_lightintensity.Size = new System.Drawing.Size(35, 19);
-			this.tb58_lightintensity.TabIndex = 17;
-			this.tb58_lightintensity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb58_lightintensity.WordWrap = false;
-			this.tb58_lightintensity.TextChanged += new System.EventHandler(this.OnChanged58);
-			this.tb58_lightintensity.Enter += new System.EventHandler(this.OnEnter58);
-			this.tb58_lightintensity.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox58);
+			this.tb58_lightsource.Location = new System.Drawing.Point(125, 113);
+			this.tb58_lightsource.Margin = new System.Windows.Forms.Padding(0);
+			this.tb58_lightsource.Name = "tb58_lightsource";
+			this.tb58_lightsource.Size = new System.Drawing.Size(35, 19);
+			this.tb58_lightsource.TabIndex = 17;
+			this.tb58_lightsource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb58_lightsource.WordWrap = false;
+			this.tb58_lightsource.TextChanged += new System.EventHandler(this.OnChanged58);
+			this.tb58_lightsource.Enter += new System.EventHandler(this.OnEnter58);
+			this.tb58_lightsource.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox58);
 			// 
 			// tb60_isbaseobject
 			// 

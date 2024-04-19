@@ -616,7 +616,7 @@ namespace MapView.Forms.Observers
 							else
 							{
 								rectInner.X = L + SpriteMargin;
-								rectInner.Y = T + SpriteMargin - part.Record.TileOffset;
+								rectInner.Y = T + SpriteMargin - part.Record.SpriteOffset;
 								graphics.DrawImage(								// then draw the sprite itself
 												sprite.Sprite,
 												rectInner,

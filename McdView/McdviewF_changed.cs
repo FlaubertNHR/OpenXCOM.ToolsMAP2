@@ -69,78 +69,78 @@ namespace McdView
 		/// </summary>
 		private void TagLabels()
 		{
-			lbl00.Tag = lbl00_phase1        .Tag = tb00_phase1;
-			lbl01.Tag = lbl01_phase2        .Tag = tb01_phase2;
-			lbl02.Tag = lbl02_phase3        .Tag = tb02_phase3;
-			lbl03.Tag = lbl03_phase4        .Tag = tb03_phase4;
-			lbl04.Tag = lbl04_phase5        .Tag = tb04_phase5;
-			lbl05.Tag = lbl05_phase6        .Tag = tb05_phase6;
-			lbl06.Tag = lbl06_phase7        .Tag = tb06_phase7;
-			lbl07.Tag = lbl07_phase8        .Tag = tb07_phase8;
+			lbl00.Tag = lbl00_phase1       .Tag = tb00_phase1;
+			lbl01.Tag = lbl01_phase2       .Tag = tb01_phase2;
+			lbl02.Tag = lbl02_phase3       .Tag = tb02_phase3;
+			lbl03.Tag = lbl03_phase4       .Tag = tb03_phase4;
+			lbl04.Tag = lbl04_phase5       .Tag = tb04_phase5;
+			lbl05.Tag = lbl05_phase6       .Tag = tb05_phase6;
+			lbl06.Tag = lbl06_phase7       .Tag = tb06_phase7;
+			lbl07.Tag = lbl07_phase8       .Tag = tb07_phase8;
 
-			lbl08.Tag = lbl08_loft01        .Tag = tb08_loft01;
-			lbl09.Tag = lbl09_loft02        .Tag = tb09_loft02;
-			lbl10.Tag = lbl10_loft03        .Tag = tb10_loft03;
-			lbl11.Tag = lbl11_loft04        .Tag = tb11_loft04;
-			lbl12.Tag = lbl12_loft05        .Tag = tb12_loft05;
-			lbl13.Tag = lbl13_loft06        .Tag = tb13_loft06;
-			lbl14.Tag = lbl14_loft07        .Tag = tb14_loft07;
-			lbl15.Tag = lbl15_loft08        .Tag = tb15_loft08;
-			lbl16.Tag = lbl16_loft09        .Tag = tb16_loft09;
-			lbl17.Tag = lbl17_loft10        .Tag = tb17_loft10;
-			lbl18.Tag = lbl18_loft11        .Tag = tb18_loft11;
-			lbl19.Tag = lbl19_loft12        .Tag = tb19_loft12;
+			lbl08.Tag = lbl08_loft01       .Tag = tb08_loft01;
+			lbl09.Tag = lbl09_loft02       .Tag = tb09_loft02;
+			lbl10.Tag = lbl10_loft03       .Tag = tb10_loft03;
+			lbl11.Tag = lbl11_loft04       .Tag = tb11_loft04;
+			lbl12.Tag = lbl12_loft05       .Tag = tb12_loft05;
+			lbl13.Tag = lbl13_loft06       .Tag = tb13_loft06;
+			lbl14.Tag = lbl14_loft07       .Tag = tb14_loft07;
+			lbl15.Tag = lbl15_loft08       .Tag = tb15_loft08;
+			lbl16.Tag = lbl16_loft09       .Tag = tb16_loft09;
+			lbl17.Tag = lbl17_loft10       .Tag = tb17_loft10;
+			lbl18.Tag = lbl18_loft11       .Tag = tb18_loft11;
+			lbl19.Tag = lbl19_loft12       .Tag = tb19_loft12;
 
-//			lbl20.Tag = lbl20_scang         .Tag = tb20_scang1;			//|| tb20_scang2; NOTE: ScanG requires special handling.
+//			lbl20.Tag = lbl20_scang        .Tag = tb20_scang1;			//|| tb20_scang2; NOTE: ScanG requires special handling.
 
-			lbl22.Tag = lbl22_              .Tag = tb22_;				// internal RAM addresses ->
-			lbl23.Tag = lbl23_              .Tag = tb23_;
-			lbl24.Tag = lbl24_              .Tag = tb24_;
-			lbl25.Tag = lbl25_              .Tag = tb25_;
-			lbl26.Tag = lbl26_              .Tag = tb26_;
-			lbl27.Tag = lbl27_              .Tag = tb27_;
-			lbl28.Tag = lbl28_              .Tag = tb28_;
-			lbl29.Tag = lbl29_              .Tag = tb29_;
+			lbl22.Tag = lbl22_             .Tag = tb22_;				// internal RAM addresses ->
+			lbl23.Tag = lbl23_             .Tag = tb23_;
+			lbl24.Tag = lbl24_             .Tag = tb24_;
+			lbl25.Tag = lbl25_             .Tag = tb25_;
+			lbl26.Tag = lbl26_             .Tag = tb26_;
+			lbl27.Tag = lbl27_             .Tag = tb27_;
+			lbl28.Tag = lbl28_             .Tag = tb28_;
+			lbl29.Tag = lbl29_             .Tag = tb29_;
 
-			lbl30.Tag = lbl30_isslidingdoor .Tag = tb30_isslidingdoor;
-			lbl31.Tag = lbl31_isblocklos    .Tag = tb31_isblocklos;
-			lbl32.Tag = lbl32_isdropthrou   .Tag = tb32_isdropthrou;
-			lbl33.Tag = lbl33_isbigwall     .Tag = tb33_isbigwall;
-			lbl34.Tag = lbl34_isgravlift    .Tag = tb34_isgravlift;
-			lbl35.Tag = lbl35_ishingeddoor  .Tag = tb35_ishingeddoor;
-			lbl36.Tag = lbl36_isblockfire   .Tag = tb36_isblockfire;
-			lbl37.Tag = lbl37_isblocksmoke  .Tag = tb37_isblocksmoke;
+			lbl30.Tag = lbl30_isslidingdoor.Tag = tb30_isslidingdoor;
+			lbl31.Tag = lbl31_isblocklos   .Tag = tb31_isblocklos;
+			lbl32.Tag = lbl32_isdropthrou  .Tag = tb32_isdropthrou;
+			lbl33.Tag = lbl33_isbigwall    .Tag = tb33_isbigwall;
+			lbl34.Tag = lbl34_isgravlift   .Tag = tb34_isgravlift;
+			lbl35.Tag = lbl35_ishingeddoor .Tag = tb35_ishingeddoor;
+			lbl36.Tag = lbl36_isblockfire  .Tag = tb36_isblockfire;
+			lbl37.Tag = lbl37_isblocksmoke .Tag = tb37_isblocksmoke;
 
-			lbl38.Tag = lbl38_              .Tag = tb38_;				// LeftRightHalf
+			lbl38.Tag = lbl38_             .Tag = tb38_;				// LeftRightHalf
 
-			lbl39.Tag = lbl39_tuwalk        .Tag = tb39_tuwalk;
-			lbl40.Tag = lbl40_tuslide       .Tag = tb40_tuslide;
-			lbl41.Tag = lbl41_tufly         .Tag = tb41_tufly;
-			lbl42.Tag = lbl42_armor         .Tag = tb42_armor;
-			lbl43.Tag = lbl43_heblock       .Tag = tb43_heblock;
-			lbl44.Tag = lbl44_deathid       .Tag = tb44_deathid;
-			lbl45.Tag = lbl45_fireresist    .Tag = tb45_fireresist;
-			lbl46.Tag = lbl46_alternateid   .Tag = tb46_alternateid;
+			lbl39.Tag = lbl39_tuwalk       .Tag = tb39_tuwalk;
+			lbl40.Tag = lbl40_tuslide      .Tag = tb40_tuslide;
+			lbl41.Tag = lbl41_tufly        .Tag = tb41_tufly;
+			lbl42.Tag = lbl42_armor        .Tag = tb42_armor;
+			lbl43.Tag = lbl43_heblock      .Tag = tb43_heblock;
+			lbl44.Tag = lbl44_deathid      .Tag = tb44_deathid;
+			lbl45.Tag = lbl45_fireresist   .Tag = tb45_fireresist;
+			lbl46.Tag = lbl46_alternateid  .Tag = tb46_alternateid;
 
-			lbl47.Tag = lbl47_              .Tag = tb47_;				// CloseDoors
+			lbl47.Tag = lbl47_             .Tag = tb47_;				// CloseDoors
 
-			lbl48.Tag = lbl48_terrainoffset .Tag = tb48_terrainoffset;
-			lbl49.Tag = lbl49_spriteoffset  .Tag = tb49_spriteoffset;
+			lbl48.Tag = lbl48_terrainoffset.Tag = tb48_terrainoffset;
+			lbl49.Tag = lbl49_spriteoffset .Tag = tb49_spriteoffset;
 
-			lbl50.Tag = lbl50_              .Tag = tb50_;				// dTypeMod
+			lbl50.Tag = lbl50_             .Tag = tb50_;				// dTypeMod
 
-			lbl51.Tag = lbl51_lightblock    .Tag = tb51_lightblock;
-			lbl52.Tag = lbl52_footsound     .Tag = tb52_footsound;
-			lbl53.Tag = lbl53_parttype      .Tag = tb53_parttype;
-			lbl54.Tag = lbl54_hetype        .Tag = tb54_hetype;
-			lbl55.Tag = lbl55_hestrength    .Tag = tb55_hestrength;
-			lbl56.Tag = lbl56_smokeblock    .Tag = tb56_smokeblock;
-			lbl57.Tag = lbl57_fuel          .Tag = tb57_fuel;
-			lbl58.Tag = lbl58_lightintensity.Tag = tb58_lightintensity;
-			lbl59.Tag = lbl59_specialtype   .Tag = tb59_specialtype;
-			lbl60.Tag = lbl60_isbaseobject  .Tag = tb60_isbaseobject;
+			lbl51.Tag = lbl51_lightblock   .Tag = tb51_lightblock;
+			lbl52.Tag = lbl52_footsound    .Tag = tb52_footsound;
+			lbl53.Tag = lbl53_parttype     .Tag = tb53_parttype;
+			lbl54.Tag = lbl54_hetype       .Tag = tb54_hetype;
+			lbl55.Tag = lbl55_hestrength   .Tag = tb55_hestrength;
+			lbl56.Tag = lbl56_smokeblock   .Tag = tb56_smokeblock;
+			lbl57.Tag = lbl57_fuel         .Tag = tb57_fuel;
+			lbl58.Tag = lbl58_lightsource  .Tag = tb58_lightsource;
+			lbl59.Tag = lbl59_specialtype  .Tag = tb59_specialtype;
+			lbl60.Tag = lbl60_isbaseobject .Tag = tb60_isbaseobject;
 
-			lbl61.Tag = lbl61_              .Tag = tb61_;				// VictoryPoints
+			lbl61.Tag = lbl61_             .Tag = tb61_;				// VictoryPoints
 		}
 		#endregion Leave
 
@@ -163,68 +163,68 @@ namespace McdView
 		/// </summary>
 		private void AssignLostFocusHandlers()
 		{
-			tb00_phase1        .LostFocus += tb_OnLostFocus;
-			tb01_phase2        .LostFocus += tb_OnLostFocus;
-			tb02_phase3        .LostFocus += tb_OnLostFocus;
-			tb03_phase4        .LostFocus += tb_OnLostFocus;
-			tb04_phase5        .LostFocus += tb_OnLostFocus;
-			tb05_phase6        .LostFocus += tb_OnLostFocus;
-			tb06_phase7        .LostFocus += tb_OnLostFocus;
-			tb07_phase8        .LostFocus += tb_OnLostFocus;
-			tb08_loft01        .LostFocus += tb_OnLostFocus;
-			tb09_loft02        .LostFocus += tb_OnLostFocus;
-			tb10_loft03        .LostFocus += tb_OnLostFocus;
-			tb11_loft04        .LostFocus += tb_OnLostFocus;
-			tb12_loft05        .LostFocus += tb_OnLostFocus;
-			tb13_loft06        .LostFocus += tb_OnLostFocus;
-			tb14_loft07        .LostFocus += tb_OnLostFocus;
-			tb15_loft08        .LostFocus += tb_OnLostFocus;
-			tb16_loft09        .LostFocus += tb_OnLostFocus;
-			tb17_loft10        .LostFocus += tb_OnLostFocus;
-			tb18_loft11        .LostFocus += tb_OnLostFocus;
-			tb19_loft12        .LostFocus += tb_OnLostFocus;
-			tb20_scang1        .LostFocus += tb_OnLostFocus;
-			tb20_scang2        .LostFocus += tb_OnLostFocus;
-			tb22_              .LostFocus += tb_OnLostFocus;
-			tb23_              .LostFocus += tb_OnLostFocus;
-			tb24_              .LostFocus += tb_OnLostFocus;
-			tb25_              .LostFocus += tb_OnLostFocus;
-			tb26_              .LostFocus += tb_OnLostFocus;
-			tb27_              .LostFocus += tb_OnLostFocus;
-			tb28_              .LostFocus += tb_OnLostFocus;
-			tb29_              .LostFocus += tb_OnLostFocus;
-			tb30_isslidingdoor .LostFocus += tb_OnLostFocus;
-			tb31_isblocklos    .LostFocus += tb_OnLostFocus;
-			tb32_isdropthrou   .LostFocus += tb_OnLostFocus;
-			tb33_isbigwall     .LostFocus += tb_OnLostFocus;
-			tb34_isgravlift    .LostFocus += tb_OnLostFocus;
-			tb35_ishingeddoor  .LostFocus += tb_OnLostFocus;
-			tb36_isblockfire   .LostFocus += tb_OnLostFocus;
-			tb37_isblocksmoke  .LostFocus += tb_OnLostFocus;
-			tb38_              .LostFocus += tb_OnLostFocus;
-			tb39_tuwalk        .LostFocus += tb_OnLostFocus;
-			tb40_tuslide       .LostFocus += tb_OnLostFocus;
-			tb41_tufly         .LostFocus += tb_OnLostFocus;
-			tb42_armor         .LostFocus += tb_OnLostFocus;
-			tb43_heblock       .LostFocus += tb_OnLostFocus;
-			tb44_deathid       .LostFocus += tb_OnLostFocus;
-			tb45_fireresist    .LostFocus += tb_OnLostFocus;
-			tb46_alternateid   .LostFocus += tb_OnLostFocus;
-			tb47_              .LostFocus += tb_OnLostFocus;
-			tb48_terrainoffset .LostFocus += tb_OnLostFocus;
-			tb49_spriteoffset  .LostFocus += tb_OnLostFocus;
-			tb50_              .LostFocus += tb_OnLostFocus;
-			tb51_lightblock    .LostFocus += tb_OnLostFocus;
-			tb52_footsound     .LostFocus += tb_OnLostFocus;
-			tb53_parttype      .LostFocus += tb_OnLostFocus;
-			tb54_hetype        .LostFocus += tb_OnLostFocus;
-			tb55_hestrength    .LostFocus += tb_OnLostFocus;
-			tb56_smokeblock    .LostFocus += tb_OnLostFocus;
-			tb57_fuel          .LostFocus += tb_OnLostFocus;
-			tb58_lightintensity.LostFocus += tb_OnLostFocus;
-			tb59_specialtype   .LostFocus += tb_OnLostFocus;
-			tb60_isbaseobject  .LostFocus += tb_OnLostFocus;
-			tb61_              .LostFocus += tb_OnLostFocus;
+			tb00_phase1       .LostFocus += tb_OnLostFocus;
+			tb01_phase2       .LostFocus += tb_OnLostFocus;
+			tb02_phase3       .LostFocus += tb_OnLostFocus;
+			tb03_phase4       .LostFocus += tb_OnLostFocus;
+			tb04_phase5       .LostFocus += tb_OnLostFocus;
+			tb05_phase6       .LostFocus += tb_OnLostFocus;
+			tb06_phase7       .LostFocus += tb_OnLostFocus;
+			tb07_phase8       .LostFocus += tb_OnLostFocus;
+			tb08_loft01       .LostFocus += tb_OnLostFocus;
+			tb09_loft02       .LostFocus += tb_OnLostFocus;
+			tb10_loft03       .LostFocus += tb_OnLostFocus;
+			tb11_loft04       .LostFocus += tb_OnLostFocus;
+			tb12_loft05       .LostFocus += tb_OnLostFocus;
+			tb13_loft06       .LostFocus += tb_OnLostFocus;
+			tb14_loft07       .LostFocus += tb_OnLostFocus;
+			tb15_loft08       .LostFocus += tb_OnLostFocus;
+			tb16_loft09       .LostFocus += tb_OnLostFocus;
+			tb17_loft10       .LostFocus += tb_OnLostFocus;
+			tb18_loft11       .LostFocus += tb_OnLostFocus;
+			tb19_loft12       .LostFocus += tb_OnLostFocus;
+			tb20_scang1       .LostFocus += tb_OnLostFocus;
+			tb20_scang2       .LostFocus += tb_OnLostFocus;
+			tb22_             .LostFocus += tb_OnLostFocus;
+			tb23_             .LostFocus += tb_OnLostFocus;
+			tb24_             .LostFocus += tb_OnLostFocus;
+			tb25_             .LostFocus += tb_OnLostFocus;
+			tb26_             .LostFocus += tb_OnLostFocus;
+			tb27_             .LostFocus += tb_OnLostFocus;
+			tb28_             .LostFocus += tb_OnLostFocus;
+			tb29_             .LostFocus += tb_OnLostFocus;
+			tb30_isslidingdoor.LostFocus += tb_OnLostFocus;
+			tb31_isblocklos   .LostFocus += tb_OnLostFocus;
+			tb32_isdropthrou  .LostFocus += tb_OnLostFocus;
+			tb33_isbigwall    .LostFocus += tb_OnLostFocus;
+			tb34_isgravlift   .LostFocus += tb_OnLostFocus;
+			tb35_ishingeddoor .LostFocus += tb_OnLostFocus;
+			tb36_isblockfire  .LostFocus += tb_OnLostFocus;
+			tb37_isblocksmoke .LostFocus += tb_OnLostFocus;
+			tb38_             .LostFocus += tb_OnLostFocus;
+			tb39_tuwalk       .LostFocus += tb_OnLostFocus;
+			tb40_tuslide      .LostFocus += tb_OnLostFocus;
+			tb41_tufly        .LostFocus += tb_OnLostFocus;
+			tb42_armor        .LostFocus += tb_OnLostFocus;
+			tb43_heblock      .LostFocus += tb_OnLostFocus;
+			tb44_deathid      .LostFocus += tb_OnLostFocus;
+			tb45_fireresist   .LostFocus += tb_OnLostFocus;
+			tb46_alternateid  .LostFocus += tb_OnLostFocus;
+			tb47_             .LostFocus += tb_OnLostFocus;
+			tb48_terrainoffset.LostFocus += tb_OnLostFocus;
+			tb49_spriteoffset .LostFocus += tb_OnLostFocus;
+			tb50_             .LostFocus += tb_OnLostFocus;
+			tb51_lightblock   .LostFocus += tb_OnLostFocus;
+			tb52_footsound    .LostFocus += tb_OnLostFocus;
+			tb53_parttype     .LostFocus += tb_OnLostFocus;
+			tb54_hetype       .LostFocus += tb_OnLostFocus;
+			tb55_hestrength   .LostFocus += tb_OnLostFocus;
+			tb56_smokeblock   .LostFocus += tb_OnLostFocus;
+			tb57_fuel         .LostFocus += tb_OnLostFocus;
+			tb58_lightsource  .LostFocus += tb_OnLostFocus;
+			tb59_specialtype  .LostFocus += tb_OnLostFocus;
+			tb60_isbaseobject .LostFocus += tb_OnLostFocus;
+			tb61_             .LostFocus += tb_OnLostFocus;
 		}
 
 		private int _lastrecordid = -1;
@@ -4015,7 +4015,7 @@ namespace McdView
 						&&     ((_strict && result > - 25 && result < 25)
 							|| (!_strict && result > -129 && result < 128)))
 					{
-						Parts[Selid].Record.StandOffset = (sbyte)result;
+						Parts[Selid].Record.TerrainOffset = (sbyte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -4076,7 +4076,7 @@ namespace McdView
 					{
 						sbyte val = SByte.Parse(tb48_terrainoffset.Text);
 						foreach (int id in PartsPanel.SubIds)
-							Parts[id].Record.StandOffset = val;
+							Parts[id].Record.TerrainOffset = val;
 
 						Changed = CacheLoad.Changed(Parts);
 					}
@@ -4101,7 +4101,7 @@ namespace McdView
 						&&     ((_strict && result > -1 && result < 25)
 							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.TileOffset = (byte)result;
+						Parts[Selid].Record.SpriteOffset = (byte)result;
 						PartsPanel .Invalidate();
 						pnl_Sprites.Invalidate();
 
@@ -4154,7 +4154,7 @@ namespace McdView
 					{
 						byte val = Byte.Parse(tb49_spriteoffset.Text);
 						foreach (int id in PartsPanel.SubIds)
-							Parts[id].Record.TileOffset = val;
+							Parts[id].Record.SpriteOffset = val;
 
 						PartsPanel.Invalidate();
 						Changed = CacheLoad.Changed(Parts);
@@ -4776,7 +4776,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #58 LightIntensity (byte)
+		/// #58 LightSource (byte)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -4785,10 +4785,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 58;
-				if (TryParseText(tb58_lightintensity)) // else recurse
+				if (TryParseText(tb58_lightsource)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb58_lightintensity.Text, out result)
+					if (Int32.TryParse(tb58_lightsource.Text, out result)
 						&&     ((_strict && result > -1 && result < 256)
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -4798,17 +4798,17 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb58_lightintensity.Text = "0"; // recurse w/ default.
+						tb58_lightsource.Text = "0"; // recurse w/ default.
 					else
-						tb58_lightintensity.Text = "255";
+						tb58_lightsource.Text = "255";
 				}
 			}
 			else
-				tb58_lightintensity.Text = String.Empty; // recurse.
+				tb58_lightsource.Text = String.Empty; // recurse.
 		}
 		private void OnEnter58(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "LightIntensity (ubyte) controls how brightly a part lights up its surroundings."
+			lbl_Description.Text = "LightSource (ubyte) controls how brightly a part lights up its surroundings."
 								 + " A part with a value of 0 should not emit light although the exact"
 								 + " effect depends on the XCOM build."
 								 + Environment.NewLine + Environment.NewLine
@@ -4817,9 +4817,9 @@ namespace McdView
 		private void OnMouseEnterTextbox58(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb58_lightintensity.Text, out result))
+			if (Int32.TryParse(tb58_lightsource.Text, out result))
 			{
-				tssl_Overval.Text = "LightIntensity: " + result + (result == 0 ? " none" : String.Empty);
+				tssl_Overval.Text = "LightSource: " + result + (result == 0 ? " none" : String.Empty);
 				OnEnter58(null, EventArgs.Empty);
 			}
 		}
@@ -4837,7 +4837,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb58_lightintensity.Text);
+						byte val = Byte.Parse(tb58_lightsource.Text);
 						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.LightSource = val;
 

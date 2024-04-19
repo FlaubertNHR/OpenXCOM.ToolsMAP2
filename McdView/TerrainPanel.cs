@@ -273,7 +273,7 @@ namespace McdView
 									sprite,
 									x,
 									y1_sprite,
-									part.Record.TileOffset);
+									part.Record.SpriteOffset);
 						}
 						else
 							_graphics.FillRectangle(
@@ -340,7 +340,7 @@ namespace McdView
 										sprite,
 										i * Spriteset.SpriteWidth32 + i + offset,
 										y2_sprite,
-										part.Dead.Record.TileOffset);
+										part.Dead.Record.SpriteOffset);
 							}
 							else
 								_graphics.FillRectangle(
@@ -373,7 +373,7 @@ namespace McdView
 										sprite,
 										i * Spriteset.SpriteWidth32 + i + offset,
 										y3_sprite,
-										part.Altr.Record.TileOffset);
+										part.Altr.Record.SpriteOffset);
 							}
 							else
 								_graphics.FillRectangle(

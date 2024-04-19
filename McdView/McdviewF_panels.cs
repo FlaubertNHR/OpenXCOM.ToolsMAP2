@@ -91,7 +91,7 @@ namespace McdView
 				McdRecord record = Parts[Selid].Record;
 				int y = SPRITE_ORIGIN_Y;
 
-				int yoffset = record.TileOffset;
+				int yoffset = record.SpriteOffset;
 				if (yoffset != 0)
 				{
 					y -= yoffset * 2;

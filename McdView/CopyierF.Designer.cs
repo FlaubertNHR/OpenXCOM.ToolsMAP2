@@ -145,8 +145,8 @@ namespace McdView
 		private Label lbl53_parttype;
 		private Label lbl59_specialtype;
 		private Label lbl34_isgravlift;
-		private Label lbl58_lightintensity;
-		private TextBox tb58_lightintensity;
+		private Label lbl58_lightsource;
+		private TextBox tb58_lightsource;
 		private TextBox tb60_isbaseobject;
 		private TextBox tb59_specialtype;
 		private TextBox tb53_parttype;
@@ -376,8 +376,8 @@ namespace McdView
 			this.lbl53_parttype = new System.Windows.Forms.Label();
 			this.lbl59_specialtype = new System.Windows.Forms.Label();
 			this.lbl34_isgravlift = new System.Windows.Forms.Label();
-			this.lbl58_lightintensity = new System.Windows.Forms.Label();
-			this.tb58_lightintensity = new System.Windows.Forms.TextBox();
+			this.lbl58_lightsource = new System.Windows.Forms.Label();
+			this.tb58_lightsource = new System.Windows.Forms.TextBox();
 			this.tb60_isbaseobject = new System.Windows.Forms.TextBox();
 			this.tb59_specialtype = new System.Windows.Forms.TextBox();
 			this.tb53_parttype = new System.Windows.Forms.TextBox();
@@ -1912,8 +1912,8 @@ namespace McdView
 			this.gb_General.Controls.Add(this.lbl53_parttype);
 			this.gb_General.Controls.Add(this.lbl59_specialtype);
 			this.gb_General.Controls.Add(this.lbl34_isgravlift);
-			this.gb_General.Controls.Add(this.lbl58_lightintensity);
-			this.gb_General.Controls.Add(this.tb58_lightintensity);
+			this.gb_General.Controls.Add(this.lbl58_lightsource);
+			this.gb_General.Controls.Add(this.tb58_lightsource);
 			this.gb_General.Controls.Add(this.tb60_isbaseobject);
 			this.gb_General.Controls.Add(this.tb59_specialtype);
 			this.gb_General.Controls.Add(this.tb53_parttype);
@@ -2038,25 +2038,25 @@ namespace McdView
 			this.lbl34_isgravlift.Text = "isGravLift";
 			this.lbl34_isgravlift.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl58_lightintensity
+			// lbl58_lightsource
 			// 
-			this.lbl58_lightintensity.Location = new System.Drawing.Point(40, 115);
-			this.lbl58_lightintensity.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl58_lightintensity.Name = "lbl58_lightintensity";
-			this.lbl58_lightintensity.Size = new System.Drawing.Size(85, 15);
-			this.lbl58_lightintensity.TabIndex = 16;
-			this.lbl58_lightintensity.Text = "LightIntensity";
-			this.lbl58_lightintensity.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl58_lightsource.Location = new System.Drawing.Point(40, 115);
+			this.lbl58_lightsource.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl58_lightsource.Name = "lbl58_lightsource";
+			this.lbl58_lightsource.Size = new System.Drawing.Size(85, 15);
+			this.lbl58_lightsource.TabIndex = 16;
+			this.lbl58_lightsource.Text = "LightSource";
+			this.lbl58_lightsource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tb58_lightintensity
+			// tb58_lightsource
 			// 
-			this.tb58_lightintensity.Location = new System.Drawing.Point(125, 113);
-			this.tb58_lightintensity.Margin = new System.Windows.Forms.Padding(0);
-			this.tb58_lightintensity.Name = "tb58_lightintensity";
-			this.tb58_lightintensity.Size = new System.Drawing.Size(35, 19);
-			this.tb58_lightintensity.TabIndex = 17;
-			this.tb58_lightintensity.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb58_lightintensity.WordWrap = false;
+			this.tb58_lightsource.Location = new System.Drawing.Point(125, 113);
+			this.tb58_lightsource.Margin = new System.Windows.Forms.Padding(0);
+			this.tb58_lightsource.Name = "tb58_lightsource";
+			this.tb58_lightsource.Size = new System.Drawing.Size(35, 19);
+			this.tb58_lightsource.TabIndex = 17;
+			this.tb58_lightsource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb58_lightsource.WordWrap = false;
 			// 
 			// tb60_isbaseobject
 			// 

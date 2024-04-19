@@ -248,12 +248,12 @@ namespace MapView
 				sb.AppendLine(string.Format(
 										"{0,-20}{1}",
 										"unit y-offset:",
-										record.StandOffset));
+										record.TerrainOffset));
 
 				sb.AppendLine(string.Format(
 										"{0,-20}{1}",
-										"tile y-offset:",
-										record.TileOffset));
+										"sprite y-offset:",
+										record.SpriteOffset));
 
 //				sb.AppendLine(string.Format("Unknown data: {0}", info[50]));
 

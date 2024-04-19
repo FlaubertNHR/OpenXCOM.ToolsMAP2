@@ -85,8 +85,8 @@ namespace McdView
 				Parts[i, 45] = part.Record.FireResist;
 				Parts[i, 46] = part.Record.Alt_MCD;
 				Parts[i, 47] = part.Record.Unknown47;
-				Parts[i, 48] = part.Record.StandOffset;		// sbyte
-				Parts[i, 49] = part.Record.TileOffset;
+				Parts[i, 48] = part.Record.TerrainOffset;	// sbyte
+				Parts[i, 49] = part.Record.SpriteOffset;
 				Parts[i, 50] = part.Record.Unknown50;
 				Parts[i, 51] = part.Record.LightBlock;
 				Parts[i, 52] = part.Record.Footstep;

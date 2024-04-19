@@ -1918,28 +1918,28 @@ namespace MapView.Forms.MainView
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
-						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
+						x, y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (!_disWest && (part = tile.West) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
-						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
+						x, y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (!_disNorth && (part = tile.North) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
-						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
+						x, y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst);
 			}
 
 			if (!_disContent && (part = tile.Content) != null)
 			{
 				DrawSprite(
 						part[_phase].GetBindata(),
-						x, y - part.Record.TileOffset * HalfHeight / HalfHeightConst);
+						x, y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst);
 			}
 		}
 
@@ -1968,25 +1968,25 @@ namespace MapView.Forms.MainView
 			{
 				if (!_disFloor && (part = tile.Floor) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 
 				if (!_disWest && (part = tile.West) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 
 				if (!_disNorth && (part = tile.North) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 
 				if (!_disContent && (part = tile.Content) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite((part[_phase] as PckSprite).SpriteToned, rect);
 				}
 			}
@@ -1994,25 +1994,25 @@ namespace MapView.Forms.MainView
 			{
 				if (!_disFloor && (part = tile.Floor) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 
 				if (!_disWest && (part = tile.West) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 
 				if (!_disNorth && (part = tile.North) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 
 				if (!_disContent && (part = tile.Content) != null)
 				{
-					rect.Y = y - part.Record.TileOffset * HalfHeight / HalfHeightConst;
+					rect.Y = y - part.Record.SpriteOffset * HalfHeight / HalfHeightConst;
 					DrawSprite(part[_phase].Sprite, rect);
 				}
 			}
