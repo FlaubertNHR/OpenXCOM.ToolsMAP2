@@ -229,7 +229,7 @@ namespace McdView
 
 		private int _lastrecordid = -1;
 		/// <summary>
-		/// Handles the <c>TextBoxs'</c> <c>LostFocus</c> event. Ensures that a
+		/// Handles the <c>TextBoxes'</c> <c>LostFocus</c> event. Ensures that a
 		/// record entry is not left blank by inserting its previously stored
 		/// value.
 		/// </summary>
@@ -237,9 +237,12 @@ namespace McdView
 		/// <param name="e"></param>
 		private void tb_OnLostFocus(object sender, EventArgs e)
 		{
-			var tb = sender as TextBox;
-			if (tb.Text.Length == 0)
-				tb.Text = Parts[Selid].Record[_lastrecordid].ToString();
+			if (Selid != -1)
+			{
+				var tb = sender as TextBox;
+				if (tb.Text.Length == 0)
+					tb.Text = Parts[Selid].Record[_lastrecordid].ToString();
+			}
 		}
 
 		/// <summary>
