@@ -574,7 +574,7 @@ namespace McdView
 		/// </summary>
 		/// <param name="pathufo"></param>
 		/// <param name="pathtftd"></param>
-		public static void GetResourcePaths(out string pathufo, out string pathtftd)
+		private static void GetResourcePaths(out string pathufo, out string pathtftd)
 		{
 			pathufo = pathtftd = null;
 
