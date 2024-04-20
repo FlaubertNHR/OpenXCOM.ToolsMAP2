@@ -104,7 +104,7 @@ namespace McdView
 
 			lbl30.Tag = lbl30_isslidingdoor.Tag = tb30_isslidingdoor;
 			lbl31.Tag = lbl31_isblocklos   .Tag = tb31_isblocklos;
-			lbl32.Tag = lbl32_isdropthrou  .Tag = tb32_isdropthrou;
+			lbl32.Tag = lbl32_isnotfloored .Tag = tb32_isnotfloored;
 			lbl33.Tag = lbl33_isbigwall    .Tag = tb33_isbigwall;
 			lbl34.Tag = lbl34_isgravlift   .Tag = tb34_isgravlift;
 			lbl35.Tag = lbl35_ishingeddoor .Tag = tb35_ishingeddoor;
@@ -195,7 +195,7 @@ namespace McdView
 			tb29_             .LostFocus += tb_OnLostFocus;
 			tb30_isslidingdoor.LostFocus += tb_OnLostFocus;
 			tb31_isblocklos   .LostFocus += tb_OnLostFocus;
-			tb32_isdropthrou  .LostFocus += tb_OnLostFocus;
+			tb32_isnotfloored .LostFocus += tb_OnLostFocus;
 			tb33_isbigwall    .LostFocus += tb_OnLostFocus;
 			tb34_isgravlift   .LostFocus += tb_OnLostFocus;
 			tb35_ishingeddoor .LostFocus += tb_OnLostFocus;
@@ -227,7 +227,7 @@ namespace McdView
 			tb61_             .LostFocus += tb_OnLostFocus;
 		}
 
-		private int _lastrecordid = 0;
+		private int _lastrecordid;
 		/// <summary>
 		/// Handles the <c>TextBoxes'</c> <c>LostFocus</c> event. Ensures that a
 		/// record entry is not left blank by inserting its previously stored
@@ -2722,7 +2722,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// #32 isDropThrou (bool)
+		/// #32 isNotFloored (bool)
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2731,10 +2731,10 @@ namespace McdView
 			if (Selid != -1)
 			{
 				_lastrecordid = 32;
-				if (TryParseText(tb32_isdropthrou)) // else recurse
+				if (TryParseText(tb32_isnotfloored)) // else recurse
 				{
 					int result;
-					if (Int32.TryParse(tb32_isdropthrou.Text, out result)
+					if (Int32.TryParse(tb32_isnotfloored.Text, out result)
 						&&     ((_strict && result > -1 && result < 2)
 							|| (!_strict && result > -1 && result < 256)))
 					{
@@ -2744,19 +2744,19 @@ namespace McdView
 							Changed = CacheLoad.Changed(Parts);
 					}
 					else if (result < 1)
-						tb32_isdropthrou.Text = "0"; // recurse w/ default.
+						tb32_isnotfloored.Text = "0"; // recurse w/ default.
 					else if (_strict)
-						tb32_isdropthrou.Text = "1";
+						tb32_isnotfloored.Text = "1";
 					else
-						tb32_isdropthrou.Text = "255";
+						tb32_isnotfloored.Text = "255";
 				}
 			}
 			else
-				tb32_isdropthrou.Text = String.Empty; // recurse.
+				tb32_isnotfloored.Text = String.Empty; // recurse.
 		}
 		private void OnEnter32(object sender, EventArgs e)
 		{
-			lbl_Description.Text = "isDropThrou (bool) is a true/false value that is relevant only to"
+			lbl_Description.Text = "isNotFloored (bool) is a true/false value that is relevant only to"
 								 + " floor parts. A non-flying unit will drop through such a part if true."
 								 + Environment.NewLine + Environment.NewLine
 								 + "0 False, 1 True";
@@ -2764,7 +2764,7 @@ namespace McdView
 		private void OnMouseEnterTextbox32(object sender, EventArgs e)
 		{
 			int result;
-			if (Int32.TryParse(tb32_isdropthrou.Text, out result))
+			if (Int32.TryParse(tb32_isnotfloored.Text, out result))
 			{
 				string text;
 				switch (result)
@@ -2774,7 +2774,7 @@ namespace McdView
 
 					default: text = result.ToString(); break;
 				}
-				tssl_Overval.Text = "isDropThrou: " + text;
+				tssl_Overval.Text = "isNotFloored: " + text;
 				OnEnter32(null, EventArgs.Empty);
 			}
 		}
@@ -2792,7 +2792,7 @@ namespace McdView
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
-						byte val = Byte.Parse(tb32_isdropthrou.Text);
+						byte val = Byte.Parse(tb32_isnotfloored.Text);
 						foreach (int id in PartsPanel.SubIds)
 							Parts[id].Record.NotFloored = val;
 

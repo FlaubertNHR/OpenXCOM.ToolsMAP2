@@ -2283,7 +2283,7 @@ namespace McdView
 
 			tb30_isslidingdoor.Text = ((int)record.SlidingDoor)  .ToString();
 			tb31_isblocklos   .Text = ((int)record.StopLOS)      .ToString();
-			tb32_isdropthrou  .Text = ((int)record.NotFloored)   .ToString();
+			tb32_isnotfloored .Text = ((int)record.NotFloored)   .ToString();
 			tb33_isbigwall    .Text = ((int)record.BigWall)      .ToString();
 			tb34_isgravlift   .Text = ((int)record.GravLift)     .ToString();
 			tb35_ishingeddoor .Text = ((int)record.HingedDoor)   .ToString();
@@ -2373,7 +2373,7 @@ namespace McdView
 
 			tb30_isslidingdoor.Text =
 			tb31_isblocklos   .Text =
-			tb32_isdropthrou  .Text =
+			tb32_isnotfloored .Text =
 			tb33_isbigwall    .Text =
 			tb34_isgravlift   .Text =
 			tb35_ishingeddoor .Text =
@@ -2758,13 +2758,13 @@ namespace McdView
 				borks.Add("#31 isBlockLoS exceeds expected value.");
 			}
 			val = record.NotFloored;
-			if (val != Int32.Parse(tb32_isdropthrou.Text))
+			if (val != Int32.Parse(tb32_isnotfloored.Text))
 			{
-				borks.Add("#32 isDropThrou (record) does not equal isDropThrou (text).");
+				borks.Add("#32 isNotFloored (record) does not equal isNotFloored (text).");
 			}
 			if (!test(val, 0,1))
 			{
-				borks.Add("#32 isDropThrou exceeds expected value.");
+				borks.Add("#32 isNotFloored exceeds expected value.");
 			}
 			val = record.BigWall;
 			if (val != Int32.Parse(tb33_isbigwall.Text))

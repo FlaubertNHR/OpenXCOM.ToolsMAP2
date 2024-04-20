@@ -217,8 +217,8 @@ namespace McdView
 		private Label lbl32;
 		private Label lbl52;
 		private Label lbl52_footsound;
-		private Label lbl32_isdropthrou;
-		private TextBox tb32_isdropthrou;
+		private Label lbl32_isnotfloored;
+		private TextBox tb32_isnotfloored;
 		private TextBox tb52_footsound;
 		private Button btn_Open;
 		internal CheckBox cb_IalAltrpart;
@@ -448,8 +448,8 @@ namespace McdView
 			this.lbl32 = new System.Windows.Forms.Label();
 			this.lbl52 = new System.Windows.Forms.Label();
 			this.lbl52_footsound = new System.Windows.Forms.Label();
-			this.lbl32_isdropthrou = new System.Windows.Forms.Label();
-			this.tb32_isdropthrou = new System.Windows.Forms.TextBox();
+			this.lbl32_isnotfloored = new System.Windows.Forms.Label();
+			this.tb32_isnotfloored = new System.Windows.Forms.TextBox();
 			this.tb52_footsound = new System.Windows.Forms.TextBox();
 			this.gb_Sprites.SuspendLayout();
 			this.pnl_bg.SuspendLayout();
@@ -2784,8 +2784,8 @@ namespace McdView
 			this.gb_Step.Controls.Add(this.lbl32);
 			this.gb_Step.Controls.Add(this.lbl52);
 			this.gb_Step.Controls.Add(this.lbl52_footsound);
-			this.gb_Step.Controls.Add(this.lbl32_isdropthrou);
-			this.gb_Step.Controls.Add(this.tb32_isdropthrou);
+			this.gb_Step.Controls.Add(this.lbl32_isnotfloored);
+			this.gb_Step.Controls.Add(this.tb32_isnotfloored);
 			this.gb_Step.Controls.Add(this.tb52_footsound);
 			this.gb_Step.Location = new System.Drawing.Point(175, 215);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
@@ -2826,25 +2826,25 @@ namespace McdView
 			this.lbl52_footsound.Text = "FootSound";
 			this.lbl52_footsound.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// lbl32_isdropthrou
+			// lbl32_isnotfloored
 			// 
-			this.lbl32_isdropthrou.Location = new System.Drawing.Point(40, 35);
-			this.lbl32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl32_isdropthrou.Name = "lbl32_isdropthrou";
-			this.lbl32_isdropthrou.Size = new System.Drawing.Size(85, 15);
-			this.lbl32_isdropthrou.TabIndex = 4;
-			this.lbl32_isdropthrou.Text = "isDropThrou";
-			this.lbl32_isdropthrou.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl32_isnotfloored.Location = new System.Drawing.Point(40, 35);
+			this.lbl32_isnotfloored.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl32_isnotfloored.Name = "lbl32_isnotfloored";
+			this.lbl32_isnotfloored.Size = new System.Drawing.Size(85, 15);
+			this.lbl32_isnotfloored.TabIndex = 4;
+			this.lbl32_isnotfloored.Text = "isNotFloored";
+			this.lbl32_isnotfloored.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tb32_isdropthrou
+			// tb32_isnotfloored
 			// 
-			this.tb32_isdropthrou.Location = new System.Drawing.Point(125, 33);
-			this.tb32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
-			this.tb32_isdropthrou.Name = "tb32_isdropthrou";
-			this.tb32_isdropthrou.Size = new System.Drawing.Size(35, 19);
-			this.tb32_isdropthrou.TabIndex = 5;
-			this.tb32_isdropthrou.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb32_isdropthrou.WordWrap = false;
+			this.tb32_isnotfloored.Location = new System.Drawing.Point(125, 33);
+			this.tb32_isnotfloored.Margin = new System.Windows.Forms.Padding(0);
+			this.tb32_isnotfloored.Name = "tb32_isnotfloored";
+			this.tb32_isnotfloored.Size = new System.Drawing.Size(35, 19);
+			this.tb32_isnotfloored.TabIndex = 5;
+			this.tb32_isnotfloored.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb32_isnotfloored.WordWrap = false;
 			// 
 			// tb52_footsound
 			// 

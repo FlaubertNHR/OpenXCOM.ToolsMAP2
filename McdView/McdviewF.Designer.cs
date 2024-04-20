@@ -50,7 +50,7 @@ namespace McdView
 		private RecordLabel lbl31;
 		private RecordLabel lbl31_isblocklos;
 		private RecordLabel lbl32;
-		private RecordLabel lbl32_isdropthrou;
+		private RecordLabel lbl32_isnotfloored;
 		private RecordLabel lbl33;
 		private RecordLabel lbl33_isbigwall;
 		private RecordLabel lbl34;
@@ -210,7 +210,7 @@ namespace McdView
 		private RecordTextbox tb46_alternateid;
 		private RecordTextbox tb35_ishingeddoor;
 		private RecordTextbox tb30_isslidingdoor;
-		private RecordTextbox tb32_isdropthrou;
+		private RecordTextbox tb32_isnotfloored;
 		private RecordTextbox tb52_footsound;
 		private RecordTextbox tb57_fuel;
 		private RecordTextbox tb45_fireresist;
@@ -333,7 +333,7 @@ namespace McdView
 			this.lbl31 = new McdView.RecordLabel();
 			this.lbl31_isblocklos = new McdView.RecordLabel();
 			this.lbl32 = new McdView.RecordLabel();
-			this.lbl32_isdropthrou = new McdView.RecordLabel();
+			this.lbl32_isnotfloored = new McdView.RecordLabel();
 			this.lbl33 = new McdView.RecordLabel();
 			this.lbl33_isbigwall = new McdView.RecordLabel();
 			this.lbl34 = new McdView.RecordLabel();
@@ -527,7 +527,7 @@ namespace McdView
 			this.tb35_ishingeddoor = new McdView.RecordTextbox();
 			this.tb30_isslidingdoor = new McdView.RecordTextbox();
 			this.gb_Step = new System.Windows.Forms.GroupBox();
-			this.tb32_isdropthrou = new McdView.RecordTextbox();
+			this.tb32_isnotfloored = new McdView.RecordTextbox();
 			this.tb52_footsound = new McdView.RecordTextbox();
 			this.gb_Explode = new System.Windows.Forms.GroupBox();
 			this.tb57_fuel = new McdView.RecordTextbox();
@@ -884,17 +884,17 @@ namespace McdView
 			this.lbl32.MouseEnter += new System.EventHandler(this.OnEnter32);
 			this.lbl32.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp32);
 			// 
-			// lbl32_isdropthrou
+			// lbl32_isnotfloored
 			// 
-			this.lbl32_isdropthrou.Location = new System.Drawing.Point(40, 35);
-			this.lbl32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
-			this.lbl32_isdropthrou.Name = "lbl32_isdropthrou";
-			this.lbl32_isdropthrou.Size = new System.Drawing.Size(85, 15);
-			this.lbl32_isdropthrou.TabIndex = 4;
-			this.lbl32_isdropthrou.Text = "isDropThrou";
-			this.lbl32_isdropthrou.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.lbl32_isdropthrou.MouseEnter += new System.EventHandler(this.OnEnter32);
-			this.lbl32_isdropthrou.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp32);
+			this.lbl32_isnotfloored.Location = new System.Drawing.Point(40, 35);
+			this.lbl32_isnotfloored.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl32_isnotfloored.Name = "lbl32_isnotfloored";
+			this.lbl32_isnotfloored.Size = new System.Drawing.Size(85, 15);
+			this.lbl32_isnotfloored.TabIndex = 4;
+			this.lbl32_isnotfloored.Text = "isNotFloored";
+			this.lbl32_isnotfloored.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl32_isnotfloored.MouseEnter += new System.EventHandler(this.OnEnter32);
+			this.lbl32_isnotfloored.MouseUp += new System.Windows.Forms.MouseEventHandler(this.la_OnMouseUp32);
 			// 
 			// lbl33
 			// 
@@ -3354,8 +3354,8 @@ namespace McdView
 			this.gb_Step.Controls.Add(this.lbl32);
 			this.gb_Step.Controls.Add(this.lbl52);
 			this.gb_Step.Controls.Add(this.lbl52_footsound);
-			this.gb_Step.Controls.Add(this.lbl32_isdropthrou);
-			this.gb_Step.Controls.Add(this.tb32_isdropthrou);
+			this.gb_Step.Controls.Add(this.lbl32_isnotfloored);
+			this.gb_Step.Controls.Add(this.tb32_isnotfloored);
 			this.gb_Step.Controls.Add(this.tb52_footsound);
 			this.gb_Step.Location = new System.Drawing.Point(175, 225);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
@@ -3366,18 +3366,18 @@ namespace McdView
 			this.gb_Step.TabStop = false;
 			this.gb_Step.Text = " Step ";
 			// 
-			// tb32_isdropthrou
+			// tb32_isnotfloored
 			// 
-			this.tb32_isdropthrou.Location = new System.Drawing.Point(125, 33);
-			this.tb32_isdropthrou.Margin = new System.Windows.Forms.Padding(0);
-			this.tb32_isdropthrou.Name = "tb32_isdropthrou";
-			this.tb32_isdropthrou.Size = new System.Drawing.Size(35, 19);
-			this.tb32_isdropthrou.TabIndex = 5;
-			this.tb32_isdropthrou.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.tb32_isdropthrou.WordWrap = false;
-			this.tb32_isdropthrou.TextChanged += new System.EventHandler(this.OnChanged32);
-			this.tb32_isdropthrou.Enter += new System.EventHandler(this.OnEnter32);
-			this.tb32_isdropthrou.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox32);
+			this.tb32_isnotfloored.Location = new System.Drawing.Point(125, 33);
+			this.tb32_isnotfloored.Margin = new System.Windows.Forms.Padding(0);
+			this.tb32_isnotfloored.Name = "tb32_isnotfloored";
+			this.tb32_isnotfloored.Size = new System.Drawing.Size(35, 19);
+			this.tb32_isnotfloored.TabIndex = 5;
+			this.tb32_isnotfloored.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tb32_isnotfloored.WordWrap = false;
+			this.tb32_isnotfloored.TextChanged += new System.EventHandler(this.OnChanged32);
+			this.tb32_isnotfloored.Enter += new System.EventHandler(this.OnEnter32);
+			this.tb32_isnotfloored.MouseEnter += new System.EventHandler(this.OnMouseEnterTextbox32);
 			// 
 			// tb52_footsound
 			// 

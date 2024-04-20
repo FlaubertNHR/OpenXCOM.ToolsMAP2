@@ -437,7 +437,7 @@ namespace McdView
 
 			tb30_isslidingdoor.Text = ((int)record.SlidingDoor)  .ToString();
 			tb31_isblocklos   .Text = ((int)record.StopLOS)      .ToString();
-			tb32_isdropthrou  .Text = ((int)record.NotFloored)   .ToString();
+			tb32_isnotfloored .Text = ((int)record.NotFloored)   .ToString();
 			tb33_isbigwall    .Text = ((int)record.BigWall)      .ToString();
 			tb34_isgravlift   .Text = ((int)record.GravLift)     .ToString();
 			tb35_ishingeddoor .Text = ((int)record.HingedDoor)   .ToString();
@@ -518,7 +518,7 @@ namespace McdView
 
 			tb30_isslidingdoor.Text =
 			tb31_isblocklos   .Text =
-			tb32_isdropthrou  .Text =
+			tb32_isnotfloored .Text =
 			tb33_isbigwall    .Text =
 			tb34_isgravlift   .Text =
 			tb35_ishingeddoor .Text =
