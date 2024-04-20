@@ -227,7 +227,7 @@ namespace McdView
 			tb61_             .LostFocus += tb_OnLostFocus;
 		}
 
-		private int _lastrecordid = -1;
+		private int _lastrecordid = 0;
 		/// <summary>
 		/// Handles the <c>TextBoxes'</c> <c>LostFocus</c> event. Ensures that a
 		/// record entry is not left blank by inserting its previously stored
