@@ -920,8 +920,8 @@ namespace McdView
 			{
 				using (var ofd = new OpenFileDialog())
 				{
-					ofd.Title      = "Open an MCD file";
-					ofd.Filter     = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
+					ofd.Title  = "Open an MCD file";
+					ofd.Filter = "MCD files (*.MCD)|*.MCD|All files (*.*)|*.*";
 
 					if (!String.IsNullOrEmpty(PfeMcd))
 					{
@@ -1027,7 +1027,7 @@ namespace McdView
 			{
 				CacheLoad.SetCacheSaved(Parts = parts);
 
-				Label = label;
+				Label  = label;
 				PfeMcd = pfeMcd;
 
 				Changed = PartsPanel.SpritesChanged = false;
