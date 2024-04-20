@@ -133,7 +133,8 @@ namespace XCom
 
 		#region Indexers
 		/// <summary>
-		/// Gets the value of a specified MCD-entry as an <c>int</c>.
+		/// Gets the value of a specified entry in this <c>McdRecord</c> as an
+		/// <c>int</c>.
 		/// </summary>
 		public int this[int id]
 		{
