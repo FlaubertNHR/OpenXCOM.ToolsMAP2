@@ -171,7 +171,7 @@ namespace MapView
 			var br = new Point(w, h);
 			var bl = new Point(0, h);
 
-			var graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 			graphics.DrawLine(Pencils.DarkLine, tl, tr);
 			graphics.DrawLine(Pencils.DarkLine, tr, br);
 			graphics.DrawLine(Pencils.DarkLine, br, bl);

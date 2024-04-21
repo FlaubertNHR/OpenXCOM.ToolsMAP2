@@ -95,10 +95,8 @@ namespace MapView.Forms.MainView
 		#region Events (override)
 		protected override void OnPaint(PaintEventArgs e)
 		{
-//			base.OnPaint(e);
-
 			// indicate reserved space for scroll-bars.
-			var graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 			graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
 			graphics.DrawLine(

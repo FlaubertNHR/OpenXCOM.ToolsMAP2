@@ -177,7 +177,7 @@ namespace McdView
 
 			var b = new Bitmap(width, HEIGHT, PixelFormat.Format32bppArgb);
 
-			var graphics = Graphics.FromImage(b);
+			Graphics graphics = Graphics.FromImage(b);
 			graphics.SmoothingMode     = SmoothingMode    .HighQuality;
 			graphics.PixelOffsetMode   = PixelOffsetMode  .HighQuality;
 			graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;

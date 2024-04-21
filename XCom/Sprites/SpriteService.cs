@@ -555,7 +555,7 @@ namespace XCom
 
 			dst.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-			using (var graphics = Graphics.FromImage(dst))
+			using (Graphics graphics = Graphics.FromImage(dst))
 			{
 				graphics.CompositingMode    = CompositingMode   .SourceCopy;
 				graphics.CompositingQuality = CompositingQuality.HighQuality;

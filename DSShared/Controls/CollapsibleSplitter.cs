@@ -221,7 +221,7 @@ namespace DSShared.Controls
 		{
 			base.OnPaint(e);
 
-			var graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 
 			if (_over)
 				graphics.FillRectangle(Brushes.PaleTurquoise, Clickable);

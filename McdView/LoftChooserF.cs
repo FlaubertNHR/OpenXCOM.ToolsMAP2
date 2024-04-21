@@ -113,7 +113,7 @@ namespace McdView
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var graphics = e.Graphics;
+			Graphics graphics = e.Graphics;
 			graphics.PixelOffsetMode   = PixelOffsetMode.Half;
 			graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
 

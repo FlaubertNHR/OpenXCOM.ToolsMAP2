@@ -46,7 +46,7 @@ namespace McdView
 			if (McdviewF.isRunT // <- is set in McdviewF.cTor; prevents designer barf attacks.
 				&& _f.Selid != -1 && _f.LoFT != null)
 			{
-				var graphics = e.Graphics;
+				Graphics graphics = e.Graphics;
 				graphics.PixelOffsetMode = PixelOffsetMode.Half;
 
 				var tb = Tag as TextBox;
