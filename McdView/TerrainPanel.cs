@@ -52,11 +52,14 @@ namespace McdView
 
 		private Tilepart[] _parts;
 		/// <summary>
-		/// An array of 'Tilepart'.
+		/// An array of <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
-		/// <remarks>!!IMPORTANT: Only set 'Parts' via 'McdviewF.Parts' when
-		/// instantiating a 'TerrainPanel_main' object and via 'CopierF.Parts'
-		/// when instantiating a 'TerrainPanel_copier' object. IMPORTANT!!</remarks>
+		/// <remarks>!!IMPORTANT: Only set <c>Parts</c> via
+		/// <c><see cref="McdviewF.Parts">McdviewF.Parts</see></c> when
+		/// instantiating a <c><see cref="TerrainPanel_main"/></c> object and
+		/// via <c><see cref="CopierF.Parts">CopierF.Parts</see></c> when
+		/// instantiating a <c><see cref="TerrainPanel_copier"/></c> object.
+		/// IMPORTANT!!</remarks>
 		internal Tilepart[] Parts
 		{
 			get { return _parts; }
@@ -79,15 +82,17 @@ namespace McdView
 
 		/// <summary>
 		/// The spriteset. Use this var only for drawing; get the spriteset
-		/// directly in 'McdviewF' otherwise. (no reason, jic)
+		/// directly in <c><see cref="McdviewF"/></c> otherwise. (no reason,
+		/// jic)
 		/// </summary>
-		/// <remarks>!!IMPORTANT: Set Spriteset only via 'McdviewF' or 'CopierF'
-		/// as appropriate. IMPORTANT!!</remarks>
+		/// <remarks>!!IMPORTANT: Set <c>Spriteset</c> only via
+		/// <c><see cref="McdviewF"/></c> or <c><see cref="CopierF"/></c> as
+		/// appropriate. IMPORTANT!!</remarks>
 		private Spriteset Spriteset
 		{ get; set; }
 
 		/// <summary>
-		/// Sets the <see cref="Spriteset"/> property.
+		/// Sets the <c><see cref="Spriteset"/></c> property.
 		/// </summary>
 		/// <param name="spriteset"></param>
 		internal void SetSpriteset(Spriteset spriteset)
@@ -389,7 +394,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Helper for OnPaint().
+		/// Helper for <c><see cref="OnPaint()">OnPaint()</see></c>.
 		/// </summary>
 		/// <param name="sprite"></param>
 		/// <param name="x"></param>

@@ -8,8 +8,8 @@ namespace McdView
 {
 	/// <summary>
 	/// The panel that displays the entire
-	/// <c><see cref="XCom.McdRecord"></see></c> with each record's
-	/// <c><see cref="McdRecord.Sprite1"/></c> sprite.
+	/// <c><see cref="XCom.McdRecord">XCom.McdRecord</see></c> with each
+	/// record's <c>Sprite1</c> sprite.
 	/// </summary>
 	internal sealed class TerrainPanel_copier
 		:
@@ -123,8 +123,8 @@ namespace McdView
 
 		#region Methods
 		/// <summary>
-		/// Takes keyboard-input from the KeyDown event to select a part or
-		/// parts.
+		/// Takes keyboard-input from the <c>KeyDown</c> event to select a part
+		/// or parts.
 		/// </summary>
 		/// <param name="e"></param>
 		internal void KeyInput(KeyEventArgs e)
