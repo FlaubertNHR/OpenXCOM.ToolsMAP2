@@ -463,7 +463,7 @@ namespace McdView
 			tb50_             .Text = ((int)record.Unknown50)    .ToString();
 
 			tb51_lightblock   .Text = ((int)record.LightBlock)   .ToString();
-			tb52_footsound    .Text = ((int)record.Footstep)     .ToString();
+			tb52_footsound    .Text = ((int)record.Footsound)    .ToString();
 			tb53_parttype     .Text = ((int)record.PartType)     .ToString();
 			tb54_hetype       .Text = ((int)record.HE_Type)      .ToString();
 			tb55_hestrength   .Text = ((int)record.HE_Strength)  .ToString();

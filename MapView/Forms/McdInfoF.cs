@@ -265,7 +265,7 @@ namespace MapView
 				sb.AppendLine(string.Format(
 										"{0,-20}{1}",
 										"footstep sound:",
-										record.Footstep));
+										record.Footsound));
 
 				sb.AppendLine(string.Format(
 										"{0,-20}{1} - {2}",

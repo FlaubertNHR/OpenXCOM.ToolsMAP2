@@ -89,7 +89,7 @@ namespace McdView
 				Parts[i, 49] = part.Record.SpriteOffset;
 				Parts[i, 50] = part.Record.Unknown50;
 				Parts[i, 51] = part.Record.LightBlock;
-				Parts[i, 52] = part.Record.Footstep;
+				Parts[i, 52] = part.Record.Footsound;
 
 				Parts[i, 53] = (int)part.Record.PartType;	// PartType
 				Parts[i, 54] = part.Record.HE_Type;

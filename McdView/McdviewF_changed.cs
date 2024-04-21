@@ -4326,7 +4326,7 @@ namespace McdView
 						&&     ((_strict && result > -1 && result < 7)
 							|| (!_strict && result > -1 && result < 256)))
 					{
-						Parts[Selid].Record.Footstep = (byte)result;
+						Parts[Selid].Record.Footsound = (byte)result;
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -4390,7 +4390,7 @@ namespace McdView
 					{
 						byte val = Byte.Parse(tb52_footsound.Text);
 						foreach (int id in PartsPanel.SubIds)
-							Parts[id].Record.Footstep = val;
+							Parts[id].Record.Footsound = val;
 
 						Changed = CacheLoad.Changed(Parts);
 					}

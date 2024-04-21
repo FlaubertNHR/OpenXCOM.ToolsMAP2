@@ -102,7 +102,7 @@ namespace XCom
 		public byte        SpriteOffset  { get; set; }
 		public byte        Unknown50     { get; set; }
 		public byte        LightBlock    { get; set; }
-		public byte        Footstep      { get; set; }
+		public byte        Footsound     { get; set; }
 
 		public PartType    PartType      { get; set; }
 		public byte        HE_Type       { get; set; }
@@ -199,7 +199,7 @@ namespace XCom
 					case 49: return (int)SpriteOffset;
 					case 50: return (int)Unknown50;
 					case 51: return (int)LightBlock;
-					case 52: return (int)Footstep;
+					case 52: return (int)Footsound;
 
 					case 53: return (int)PartType;		// PartType
 					case 54: return (int)HE_Type;
@@ -288,7 +288,7 @@ namespace XCom
 			SpriteOffset  = bindata[49];
 			Unknown50     = bindata[50];
 			LightBlock    = bindata[51];
-			Footstep      = bindata[52];
+			Footsound     = bindata[52];
 
 			PartType      = (PartType)bindata[53];
 			HE_Type       = bindata[54];
@@ -489,7 +489,7 @@ namespace XCom
 					fs.WriteByte((byte)record.SpriteOffset);				// 49
 					fs.WriteByte((byte)record.Unknown50);					// 50
 					fs.WriteByte((byte)record.LightBlock);					// 51
-					fs.WriteByte((byte)record.Footstep);					// 52
+					fs.WriteByte((byte)record.Footsound);					// 52
 
 					fs.WriteByte((byte)record.PartType);					// 53 (PartType)
 					fs.WriteByte((byte)record.HE_Type);						// 54
@@ -577,7 +577,7 @@ namespace XCom
 			record.SpriteOffset  = SpriteOffset;
 			record.Unknown50     = Unknown50;
 			record.LightBlock    = LightBlock;
-			record.Footstep      = Footstep;
+			record.Footsound     = Footsound;
 
 			record.PartType      = PartType;		// PartType
 			record.HE_Type       = HE_Type;
