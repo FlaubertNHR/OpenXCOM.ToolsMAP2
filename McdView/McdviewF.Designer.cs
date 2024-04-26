@@ -1258,7 +1258,7 @@ namespace McdView
 			// 
 			// lbl48
 			// 
-			this.lbl48.Location = new System.Drawing.Point(10, 15);
+			this.lbl48.Location = new System.Drawing.Point(10, 35);
 			this.lbl48.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl48.Name = "lbl48";
 			this.lbl48.Size = new System.Drawing.Size(30, 15);
@@ -1270,7 +1270,7 @@ namespace McdView
 			// 
 			// lbl48_terrainoffset
 			// 
-			this.lbl48_terrainoffset.Location = new System.Drawing.Point(40, 15);
+			this.lbl48_terrainoffset.Location = new System.Drawing.Point(40, 35);
 			this.lbl48_terrainoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl48_terrainoffset.Name = "lbl48_terrainoffset";
 			this.lbl48_terrainoffset.Size = new System.Drawing.Size(85, 15);
@@ -1282,7 +1282,7 @@ namespace McdView
 			// 
 			// lbl49
 			// 
-			this.lbl49.Location = new System.Drawing.Point(10, 35);
+			this.lbl49.Location = new System.Drawing.Point(10, 15);
 			this.lbl49.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl49.Name = "lbl49";
 			this.lbl49.Size = new System.Drawing.Size(30, 15);
@@ -1294,7 +1294,7 @@ namespace McdView
 			// 
 			// lbl49_spriteoffset
 			// 
-			this.lbl49_spriteoffset.Location = new System.Drawing.Point(40, 35);
+			this.lbl49_spriteoffset.Location = new System.Drawing.Point(40, 15);
 			this.lbl49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl49_spriteoffset.Name = "lbl49_spriteoffset";
 			this.lbl49_spriteoffset.Size = new System.Drawing.Size(85, 15);
@@ -2274,9 +2274,9 @@ namespace McdView
 			this.tssl_Offset,
 			this.tssl_OffsetLast,
 			this.tssl_OffsetAftr});
-			this.ss_Statusbar.Location = new System.Drawing.Point(0, 772);
+			this.ss_Statusbar.Location = new System.Drawing.Point(0, 752);
 			this.ss_Statusbar.Name = "ss_Statusbar";
-			this.ss_Statusbar.Size = new System.Drawing.Size(832, 22);
+			this.ss_Statusbar.Size = new System.Drawing.Size(812, 22);
 			this.ss_Statusbar.TabIndex = 3;
 			this.ss_Statusbar.Text = "ss_Statusbar";
 			// 
@@ -2373,7 +2373,7 @@ namespace McdView
 			this.gb_Unused.Controls.Add(this.tb24_);
 			this.gb_Unused.Controls.Add(this.tb23_);
 			this.gb_Unused.Controls.Add(this.tb22_);
-			this.gb_Unused.Location = new System.Drawing.Point(345, 105);
+			this.gb_Unused.Location = new System.Drawing.Point(330, 95);
 			this.gb_Unused.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Unused.Name = "gb_Unused";
 			this.gb_Unused.Padding = new System.Windows.Forms.Padding(0);
@@ -2589,11 +2589,11 @@ namespace McdView
 			this.gb_Loft.Controls.Add(this.pnl_Loft18);
 			this.gb_Loft.Controls.Add(this.pnl_Loft19);
 			this.gb_Loft.Dock = System.Windows.Forms.DockStyle.Right;
-			this.gb_Loft.Location = new System.Drawing.Point(672, 0);
+			this.gb_Loft.Location = new System.Drawing.Point(652, 0);
 			this.gb_Loft.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Loft.Name = "gb_Loft";
 			this.gb_Loft.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Loft.Size = new System.Drawing.Size(160, 457);
+			this.gb_Loft.Size = new System.Drawing.Size(160, 437);
 			this.gb_Loft.TabIndex = 10;
 			this.gb_Loft.TabStop = false;
 			this.gb_Loft.Text = " LoFT ";
@@ -2895,7 +2895,7 @@ namespace McdView
 			this.gb_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Sprites.Name = "gb_Sprites";
 			this.gb_Sprites.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Sprites.Size = new System.Drawing.Size(832, 140);
+			this.gb_Sprites.Size = new System.Drawing.Size(812, 140);
 			this.gb_Sprites.TabIndex = 1;
 			this.gb_Sprites.TabStop = false;
 			this.gb_Sprites.Text = " Sprites ";
@@ -3011,7 +3011,7 @@ namespace McdView
 			this.pnl_Sprites.Location = new System.Drawing.Point(5, 15);
 			this.pnl_Sprites.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_Sprites.Name = "pnl_Sprites";
-			this.pnl_Sprites.Size = new System.Drawing.Size(680, 80);
+			this.pnl_Sprites.Size = new System.Drawing.Size(660, 80);
 			this.pnl_Sprites.TabIndex = 0;
 			this.pnl_Sprites.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Sprites);
 			this.pnl_Sprites.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown_SpritePanel);
@@ -3023,7 +3023,7 @@ namespace McdView
 			this.gb_Collection.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Collection.Name = "gb_Collection";
 			this.gb_Collection.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Collection.Size = new System.Drawing.Size(832, 175);
+			this.gb_Collection.Size = new System.Drawing.Size(812, 175);
 			this.gb_Collection.TabIndex = 0;
 			this.gb_Collection.TabStop = false;
 			this.gb_Collection.Text = " RECORD COLLECTION ";
@@ -3035,7 +3035,7 @@ namespace McdView
 			this.gb_Overhead.Controls.Add(this.tb20_scang2);
 			this.gb_Overhead.Controls.Add(this.tb20_scang1);
 			this.gb_Overhead.Controls.Add(this.pnl_ScanGic);
-			this.gb_Overhead.Location = new System.Drawing.Point(5, 5);
+			this.gb_Overhead.Location = new System.Drawing.Point(0, 0);
 			this.gb_Overhead.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Overhead.Name = "gb_Overhead";
 			this.gb_Overhead.Padding = new System.Windows.Forms.Padding(0);
@@ -3092,7 +3092,7 @@ namespace McdView
 			this.gb_Tu.Controls.Add(this.tb41_tufly);
 			this.gb_Tu.Controls.Add(this.tb40_tuslide);
 			this.gb_Tu.Controls.Add(this.tb39_tuwalk);
-			this.gb_Tu.Location = new System.Drawing.Point(175, 5);
+			this.gb_Tu.Location = new System.Drawing.Point(165, 0);
 			this.gb_Tu.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Tu.Name = "gb_Tu";
 			this.gb_Tu.Padding = new System.Windows.Forms.Padding(0);
@@ -3148,18 +3148,18 @@ namespace McdView
 			this.gb_Elevation.Controls.Add(this.lbl48_terrainoffset);
 			this.gb_Elevation.Controls.Add(this.tb49_spriteoffset);
 			this.gb_Elevation.Controls.Add(this.tb48_terrainoffset);
-			this.gb_Elevation.Location = new System.Drawing.Point(175, 285);
+			this.gb_Elevation.Location = new System.Drawing.Point(165, 130);
 			this.gb_Elevation.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Elevation.Name = "gb_Elevation";
 			this.gb_Elevation.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_Elevation.Size = new System.Drawing.Size(165, 55);
-			this.gb_Elevation.TabIndex = 7;
+			this.gb_Elevation.TabIndex = 6;
 			this.gb_Elevation.TabStop = false;
 			this.gb_Elevation.Text = " Elevation ";
 			// 
 			// tb49_spriteoffset
 			// 
-			this.tb49_spriteoffset.Location = new System.Drawing.Point(125, 33);
+			this.tb49_spriteoffset.Location = new System.Drawing.Point(125, 13);
 			this.tb49_spriteoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.tb49_spriteoffset.Name = "tb49_spriteoffset";
 			this.tb49_spriteoffset.Size = new System.Drawing.Size(35, 19);
@@ -3172,7 +3172,7 @@ namespace McdView
 			// 
 			// tb48_terrainoffset
 			// 
-			this.tb48_terrainoffset.Location = new System.Drawing.Point(125, 13);
+			this.tb48_terrainoffset.Location = new System.Drawing.Point(125, 33);
 			this.tb48_terrainoffset.Margin = new System.Windows.Forms.Padding(0);
 			this.tb48_terrainoffset.Name = "tb48_terrainoffset";
 			this.tb48_terrainoffset.Size = new System.Drawing.Size(35, 19);
@@ -3203,12 +3203,12 @@ namespace McdView
 			this.gb_Block.Controls.Add(this.tb37_isblocksmoke);
 			this.gb_Block.Controls.Add(this.tb36_isblockfire);
 			this.gb_Block.Controls.Add(this.tb31_isblocklos);
-			this.gb_Block.Location = new System.Drawing.Point(175, 85);
+			this.gb_Block.Location = new System.Drawing.Point(165, 185);
 			this.gb_Block.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Name = "gb_Block";
 			this.gb_Block.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_Block.Size = new System.Drawing.Size(165, 135);
-			this.gb_Block.TabIndex = 5;
+			this.gb_Block.TabIndex = 7;
 			this.gb_Block.TabStop = false;
 			this.gb_Block.Text = " Block ";
 			// 
@@ -3301,7 +3301,7 @@ namespace McdView
 			this.gb_Door.Controls.Add(this.tb46_alternateid);
 			this.gb_Door.Controls.Add(this.tb35_ishingeddoor);
 			this.gb_Door.Controls.Add(this.tb30_isslidingdoor);
-			this.gb_Door.Location = new System.Drawing.Point(5, 265);
+			this.gb_Door.Location = new System.Drawing.Point(0, 245);
 			this.gb_Door.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Door.Name = "gb_Door";
 			this.gb_Door.Padding = new System.Windows.Forms.Padding(0);
@@ -3357,12 +3357,12 @@ namespace McdView
 			this.gb_Step.Controls.Add(this.lbl32_isnotfloored);
 			this.gb_Step.Controls.Add(this.tb32_isnotfloored);
 			this.gb_Step.Controls.Add(this.tb52_footsound);
-			this.gb_Step.Location = new System.Drawing.Point(175, 225);
+			this.gb_Step.Location = new System.Drawing.Point(165, 75);
 			this.gb_Step.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Name = "gb_Step";
 			this.gb_Step.Padding = new System.Windows.Forms.Padding(0);
 			this.gb_Step.Size = new System.Drawing.Size(165, 55);
-			this.gb_Step.TabIndex = 6;
+			this.gb_Step.TabIndex = 5;
 			this.gb_Step.TabStop = false;
 			this.gb_Step.Text = " Step ";
 			// 
@@ -3406,7 +3406,7 @@ namespace McdView
 			this.gb_Explode.Controls.Add(this.tb45_fireresist);
 			this.gb_Explode.Controls.Add(this.tb55_hestrength);
 			this.gb_Explode.Controls.Add(this.tb54_hetype);
-			this.gb_Explode.Location = new System.Drawing.Point(345, 5);
+			this.gb_Explode.Location = new System.Drawing.Point(330, 0);
 			this.gb_Explode.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Explode.Name = "gb_Explode";
 			this.gb_Explode.Padding = new System.Windows.Forms.Padding(0);
@@ -3475,7 +3475,7 @@ namespace McdView
 			this.gb_Health.Controls.Add(this.lbl44_deathid);
 			this.gb_Health.Controls.Add(this.tb44_deathid);
 			this.gb_Health.Controls.Add(this.tb42_armor);
-			this.gb_Health.Location = new System.Drawing.Point(5, 205);
+			this.gb_Health.Location = new System.Drawing.Point(0, 190);
 			this.gb_Health.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Health.Name = "gb_Health";
 			this.gb_Health.Padding = new System.Windows.Forms.Padding(0);
@@ -3530,7 +3530,7 @@ namespace McdView
 			this.gb_General.Controls.Add(this.tb53_parttype);
 			this.gb_General.Controls.Add(this.tb34_isgravlift);
 			this.gb_General.Controls.Add(this.tb33_isbigwall);
-			this.gb_General.Location = new System.Drawing.Point(5, 65);
+			this.gb_General.Location = new System.Drawing.Point(0, 55);
 			this.gb_General.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_General.Name = "gb_General";
 			this.gb_General.Padding = new System.Windows.Forms.Padding(0);
@@ -3619,7 +3619,7 @@ namespace McdView
 			// 
 			// lbl_SpriteShade
 			// 
-			this.lbl_SpriteShade.Location = new System.Drawing.Point(85, 345);
+			this.lbl_SpriteShade.Location = new System.Drawing.Point(85, 325);
 			this.lbl_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_SpriteShade.Name = "lbl_SpriteShade";
 			this.lbl_SpriteShade.Size = new System.Drawing.Size(75, 15);
@@ -3632,7 +3632,7 @@ namespace McdView
 			// 
 			// tb_SpriteShade
 			// 
-			this.tb_SpriteShade.Location = new System.Drawing.Point(160, 343);
+			this.tb_SpriteShade.Location = new System.Drawing.Point(160, 323);
 			this.tb_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.tb_SpriteShade.Name = "tb_SpriteShade";
 			this.tb_SpriteShade.Size = new System.Drawing.Size(35, 19);
@@ -3649,11 +3649,11 @@ namespace McdView
 			// 
 			this.gb_Description.Controls.Add(this.lbl_Description);
 			this.gb_Description.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.gb_Description.Location = new System.Drawing.Point(0, 365);
+			this.gb_Description.Location = new System.Drawing.Point(0, 352);
 			this.gb_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.gb_Description.Name = "gb_Description";
 			this.gb_Description.Padding = new System.Windows.Forms.Padding(0);
-			this.gb_Description.Size = new System.Drawing.Size(672, 92);
+			this.gb_Description.Size = new System.Drawing.Size(652, 85);
 			this.gb_Description.TabIndex = 18;
 			this.gb_Description.TabStop = false;
 			this.gb_Description.Text = " description ";
@@ -3666,7 +3666,7 @@ namespace McdView
 			this.lbl_Description.Location = new System.Drawing.Point(5, 15);
 			this.lbl_Description.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Description.Name = "lbl_Description";
-			this.lbl_Description.Size = new System.Drawing.Size(662, 71);
+			this.lbl_Description.Size = new System.Drawing.Size(642, 64);
 			this.lbl_Description.TabIndex = 0;
 			this.lbl_Description.Click += new System.EventHandler(this.OnClick_FocusCollection);
 			// 
@@ -3675,7 +3675,7 @@ namespace McdView
 			this.cb_Strict.CheckAlign = System.Drawing.ContentAlignment.BottomRight;
 			this.cb_Strict.Checked = true;
 			this.cb_Strict.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cb_Strict.Location = new System.Drawing.Point(60, 345);
+			this.cb_Strict.Location = new System.Drawing.Point(60, 325);
 			this.cb_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.cb_Strict.Name = "cb_Strict";
 			this.cb_Strict.Size = new System.Drawing.Size(15, 15);
@@ -3690,7 +3690,7 @@ namespace McdView
 			// lbl_Strict
 			// 
 			this.lbl_Strict.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lbl_Strict.Location = new System.Drawing.Point(10, 345);
+			this.lbl_Strict.Location = new System.Drawing.Point(10, 325);
 			this.lbl_Strict.Margin = new System.Windows.Forms.Padding(0);
 			this.lbl_Strict.Name = "lbl_Strict";
 			this.lbl_Strict.Size = new System.Drawing.Size(50, 15);
@@ -3704,7 +3704,7 @@ namespace McdView
 			// bar_SpriteShade
 			// 
 			this.bar_SpriteShade.AutoSize = false;
-			this.bar_SpriteShade.Location = new System.Drawing.Point(195, 345);
+			this.bar_SpriteShade.Location = new System.Drawing.Point(195, 325);
 			this.bar_SpriteShade.Margin = new System.Windows.Forms.Padding(0);
 			this.bar_SpriteShade.Maximum = 99;
 			this.bar_SpriteShade.Name = "bar_SpriteShade";
@@ -3716,7 +3716,7 @@ namespace McdView
 			// pnl_IsoLoft
 			// 
 			this.pnl_IsoLoft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnl_IsoLoft.Location = new System.Drawing.Point(535, 15);
+			this.pnl_IsoLoft.Location = new System.Drawing.Point(515, 15);
 			this.pnl_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_IsoLoft.Name = "pnl_IsoLoft";
 			this.pnl_IsoLoft.Size = new System.Drawing.Size(130, 195);
@@ -3729,7 +3729,7 @@ namespace McdView
 			this.bar_IsoLoft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.bar_IsoLoft.AutoSize = false;
 			this.bar_IsoLoft.LargeChange = 6;
-			this.bar_IsoLoft.Location = new System.Drawing.Point(520, 10);
+			this.bar_IsoLoft.Location = new System.Drawing.Point(500, 10);
 			this.bar_IsoLoft.Margin = new System.Windows.Forms.Padding(0);
 			this.bar_IsoLoft.Maximum = 24;
 			this.bar_IsoLoft.Name = "bar_IsoLoft";
@@ -3766,7 +3766,7 @@ namespace McdView
 			this.pnl_bg.Location = new System.Drawing.Point(0, 315);
 			this.pnl_bg.Margin = new System.Windows.Forms.Padding(0);
 			this.pnl_bg.Name = "pnl_bg";
-			this.pnl_bg.Size = new System.Drawing.Size(832, 457);
+			this.pnl_bg.Size = new System.Drawing.Size(812, 437);
 			this.pnl_bg.TabIndex = 2;
 			this.pnl_bg.Click += new System.EventHandler(this.OnClick_FocusCollection);
 			// 
@@ -3774,7 +3774,7 @@ namespace McdView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(832, 794);
+			this.ClientSize = new System.Drawing.Size(812, 774);
 			this.Controls.Add(this.pnl_bg);
 			this.Controls.Add(this.ss_Statusbar);
 			this.Controls.Add(this.gb_Sprites);
@@ -3782,7 +3782,7 @@ namespace McdView
 			this.Font = new System.Drawing.Font("Verdana", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
-			this.MaximumSize = new System.Drawing.Size(840, 820);
+			this.MaximumSize = new System.Drawing.Size(820, 800);
 			this.Menu = this.mmMainMenu;
 			this.Name = "McdviewF";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

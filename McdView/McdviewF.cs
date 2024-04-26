@@ -361,9 +361,9 @@ namespace McdView
 			gb_Door        .Location = new Point(0, gb_Health  .Bottom);
 
 			gb_Tu          .Location = new Point(gb_Overhead.Right, 0);
-			gb_Block       .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
-			gb_Step        .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
-			gb_Elevation   .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
+			gb_Step        .Location = new Point(gb_Overhead.Right, gb_Tu       .Bottom);
+			gb_Elevation   .Location = new Point(gb_Overhead.Right, gb_Step     .Bottom);
+			gb_Block       .Location = new Point(gb_Overhead.Right, gb_Elevation.Bottom);
 
 			gb_Explode     .Location = new Point(gb_Tu.Right, 0);
 			gb_Unused      .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
@@ -378,7 +378,7 @@ namespace McdView
 			bar_SpriteShade.Location = new Point(tb_SpriteShade .Right,      botDoor);
 
 			pnl_IsoLoft    .Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
-			bar_IsoLoft    .Location = new Point(pnl_IsoLoft.Left - 5 - bar_IsoLoft.Width, 10);
+			bar_IsoLoft    .Location = new Point(pnl_IsoLoft.Left - 2 - bar_IsoLoft.Width, 10);
 
 			if (!IsInvoked)
 				RegistryInfo.InitializeRegistry(dirAppL);

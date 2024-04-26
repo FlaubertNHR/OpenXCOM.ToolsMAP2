@@ -155,9 +155,9 @@ namespace McdView
 			gb_Door      .Location = new Point(0, gb_Health  .Bottom);
 
 			gb_Tu        .Location = new Point(gb_Overhead.Right, 0);
-			gb_Block     .Location = new Point(gb_Overhead.Right, gb_Tu   .Bottom);
-			gb_Step      .Location = new Point(gb_Overhead.Right, gb_Block.Bottom);
-			gb_Elevation .Location = new Point(gb_Overhead.Right, gb_Step .Bottom);
+			gb_Step      .Location = new Point(gb_Overhead.Right, gb_Tu       .Bottom);
+			gb_Elevation .Location = new Point(gb_Overhead.Right, gb_Step     .Bottom);
+			gb_Block     .Location = new Point(gb_Overhead.Right, gb_Elevation.Bottom);
 
 			gb_Explode   .Location = new Point(gb_Tu.Right, 0);
 			gb_Unused    .Location = new Point(gb_Tu.Right, gb_Explode.Bottom);
@@ -177,10 +177,11 @@ namespace McdView
 			}
 
 			btn_Open.Location = new Point(gb_Unused.Left, gb_Unused.Bottom);
-			btn_Open.Width  = gb_Loft.Location.X - gb_IalOptions.Width;
+			btn_Open.Width  = gb_Unused.Width;
 			btn_Open.Height = pnl_bg.ClientSize.Height - gb_Unused.Bottom;
 
-			cb_IalSprites.Text = "copy Sprites to " + _f.Label + GlobalsXC.PckExt;
+			if (_f.Label.Length != 0)
+				cb_IalSprites.Text = "copy Sprites to " + _f.Label + GlobalsXC.PckExt;
 
 
 			PartsPanel = new TerrainPanel_copier(_f, this);
