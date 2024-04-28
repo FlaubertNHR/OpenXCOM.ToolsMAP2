@@ -13,8 +13,8 @@ namespace MapView
 		#region Fields (static)
 		/// <summary>
 		/// A dictionary that indexes <c><see cref="Options"/></c> by viewer.
-		/// The type of <c><see cref="Options"/></c> - ie MainView Options, TileView Options, TopView
-		/// Options, or RouteView Options.
+		/// The type of <c><see cref="Options"/></c> - ie MainView Options,
+		/// TileView Options, TopView Options, or RouteView Options.
 		/// </summary>
 		private static readonly Dictionary<string, Options> _sections =
 							new Dictionary<string, Options>();

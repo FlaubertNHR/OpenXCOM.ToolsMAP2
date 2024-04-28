@@ -8,8 +8,8 @@ namespace MapView.Forms.Observers
 {
 	/// <summary>
 	/// The various wall- and content-types that will be used to determine how
-	/// to draw the wall- and content-blobs in <see cref="TopView"/> and
-	/// <see cref="RouteView"/>.
+	/// to draw the wall- and content-blobs in <c><see cref="TopView"/></c> and
+	/// <c><see cref="RouteView"/></c>.
 	/// </summary>
 	internal enum BlobType
 	{
@@ -34,8 +34,8 @@ namespace MapView.Forms.Observers
 
 
 	/// <summary>
-	/// A class that determines how walls and objects are drawn for TopView and
-	/// RouteView.
+	/// A class that determines how walls and objects are drawn for
+	/// <c><see cref="TopView"/></c> and <c><see cref="RouteView"/></c>.
 	/// </summary>
 	internal static class BlobTypeService
 	{
@@ -47,8 +47,8 @@ namespace MapView.Forms.Observers
 		#region Methods (static)
 		/// <summary>
 		/// Gets the <c><see cref="BlobType"/></c> of a specified
-		/// <c><see cref="Tilepart"/></c> for drawing its blob in TopView and/or
-		/// RouteView.
+		/// <c><see cref="Tilepart"/></c> for drawing its blob in
+		/// <c><see cref="TopView"/></c> and <c><see cref="RouteView"/></c>.
 		/// </summary>
 		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
 		/// <param name="part"></param>

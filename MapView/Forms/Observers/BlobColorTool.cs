@@ -5,8 +5,8 @@ using System.Drawing;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// A BlobColorTool is used for drawing blobs in <see cref="TopView"/> and
-	/// <see cref="RouteView"/>.
+	/// A <c>BlobColorTool</c> is used for drawing blobs in
+	/// <c><see cref="TopView"/></c> and <c><see cref="RouteView"/></c>.
 	/// </summary>
 	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
 	internal sealed class BlobColorTool
@@ -72,7 +72,7 @@ namespace MapView.Forms.Observers
 
 		#region cTor
 		/// <summary>
-		/// cTor[0]. Instantiates a colortool from a Pen object.
+		/// cTor[0]. Instantiates a colortool from a <c>Pen</c> object.
 		/// </summary>
 		/// <param name="pen"></param>
 //		/// <param name="label"></param>
@@ -81,7 +81,7 @@ namespace MapView.Forms.Observers
 		{
 //			Label = label;
 
-			var colorLight = Color.FromArgb(ALFALFA, pen.Color);
+			Color colorLight = Color.FromArgb(ALFALFA, pen.Color);
 
 			Pen          = new Pen(pen.Color,   pen.Width);
 			PenLight     = new Pen(colorLight,  pen.Width);
@@ -92,7 +92,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// cTor[1]. Instantiates a colortool from a Brush object.
+		/// cTor[1]. Instantiates a colortool from a <c>Brush</c> object.
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="width"></param>
@@ -102,7 +102,7 @@ namespace MapView.Forms.Observers
 		{
 //			Label = label;
 
-			var colorLight = Color.FromArgb(ALFALFA, brush.Color);
+			Color colorLight = Color.FromArgb(ALFALFA, brush.Color);
 
 			Pen          = new Pen(brush.Color, width);
 			PenLight     = new Pen(colorLight,  width);

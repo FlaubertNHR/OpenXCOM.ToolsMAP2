@@ -8,10 +8,11 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// Draws floor- and wall- and content-blobs for <see cref="TopView"/> and
-	/// <see cref="RouteView"/>.
+	/// Draws floor- and wall- and content-blobs for
+	/// <c><see cref="TopView"/></c> and <c><see cref="RouteView"/></c>.
 	/// </summary>
-	/// <remarks>This object is disposable but eff their <c>IDisposable</c> crap.</remarks>
+	/// <remarks>This object is disposable but eff their <c>IDisposable</c>
+	/// crap.</remarks>
 	internal sealed class BlobDrawService
 	{
 		/// <summary>
@@ -82,8 +83,8 @@ namespace MapView.Forms.Observers
 
 		#region Methods
 		/// <summary>
-		/// Draws floor-blobs for <see cref="TopView"/> only; floors are not
-		/// drawn for <see cref="RouteView"/>.
+		/// Draws floor-blobs for <c><see cref="TopView"/></c> only; floors are
+		/// not drawn for <c><see cref="RouteView"/></c>.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="brush"></param>
@@ -110,11 +111,14 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const int Offset = 4; // offset the blobs from the grid-lines a bit.
+		/// <summary>
+		/// Offset the blobs from the grid-lines a bit.
+		/// </summary>
+		private const int Offset = 4;
 
 		/// <summary>
-		/// Draws wall- and content-blobs for <see cref="RouteView"/> and
-		/// <see cref="TopView"/>.
+		/// Draws wall- and content-blobs for <c><see cref="RouteView"/></c> and
+		/// <c><see cref="TopView"/></c>.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="tool"></param>
@@ -285,7 +289,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets a GraphicsPath for content-object.
+		/// Sets a <c>GraphicsPath</c> for content-object.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>

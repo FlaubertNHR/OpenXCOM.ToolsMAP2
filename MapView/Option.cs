@@ -16,7 +16,7 @@ namespace MapView
 	/// </list>
 	/// </summary>
 	/// <remarks><c><see cref="Options"/></c> can be accessed by the user in an
-	/// <c><see cref="OptionsF"/></c></remarks>
+	/// <c><see cref="OptionsF"/></c>.</remarks>
 	internal sealed class Option
 	{
 		#region Events
@@ -64,7 +64,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Gets if Value is a boolean and TRUE. else false.
+		/// Gets if <c><see cref="Value"/></c> is a boolean and TRUE. else
+		/// false.
 		/// </summary>
 		/// <remarks>Is used only to determine which secondary viewers should be
 		/// displayed when MapView loads.</remarks>
@@ -77,7 +78,7 @@ namespace MapView
 
 		#region cTor
 		/// <summary>
-		/// cTor. Instantiates an <c>Option</c> with its default value.
+		/// cTor. Instantiates this <c>Option</c> with its default value.
 		/// </summary>
 		/// <param name="default"></param>
 		internal Option(object @default)
