@@ -367,6 +367,13 @@ namespace MapView.Forms.Observers
 			ControlPaint.DrawBorder3D(_graphics, ClientRectangle, Border3DStyle.Etched);
 		}
 
+
+		private const int CBLOB_n = 0; // bitwise flags for DrawBlobs() ->
+		private const int CBLOB_F = 1; // floor
+		private const int CBLOB_C = 2; // content
+		private const int CBLOB_W = 4; // west
+		private const int CBLOB_N = 8; // north
+
 		/// <summary>
 		/// Draws the floor, westwall, northwall, and content indicator blobs.
 		/// </summary>
@@ -377,32 +384,81 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				int x, int y)
 		{
+			int cblob = CBLOB_n;
+
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
+			{
 				_blobService.Draw(
 								_graphics,
 								TopBrushes[TopViewOptionables.str_FloorColor],
 								x,y);
+				if (BlobTypeService.hasCustomLofts(tile.Floor, _file.Descriptor.GroupType))
+					cblob |= CBLOB_F;
+			}
 
 			if (!TopView.it_Content.Checked && tile.Content != null)
+			{
 				_blobService.Draw(
 								_graphics,
 								ToolContent,
 								x,y,
 								tile.Content);
+				if (BlobTypeService.hasCustomLofts(tile.Content, _file.Descriptor.GroupType))
+					cblob |= CBLOB_C;
+			}
 
 			if (!TopView.it_West.Checked && tile.West != null)
+			{
 				_blobService.Draw(
 								_graphics,
 								ToolWest,
 								x,y,
 								tile.West);
+				if (BlobTypeService.hasCustomLofts(tile.West, _file.Descriptor.GroupType))
+					cblob |= CBLOB_W;
+			}
 
 			if (!TopView.it_North.Checked && tile.North != null)
+			{
 				_blobService.Draw(
 								_graphics,
 								ToolNorth,
 								x,y,
 								tile.North);
+				if (BlobTypeService.hasCustomLofts(tile.North, _file.Descriptor.GroupType))
+					cblob |= CBLOB_N;
+			}
+
+			if (cblob != CBLOB_n) // draw a small indicator for each tilepart that has custom LoFT entry(s) ->
+			{
+				var brush = new SolidBrush(TopView.Optionables.GridLine10Color); // TODO: instantiate this brush on Load
+
+				if ((cblob & CBLOB_F) != CBLOB_n)
+					_graphics.FillRectangle(brush, new Rectangle(
+															x - 1,
+															y + _blobService.HalfHeight * 2 - 5,
+															2,2));
+
+				if ((cblob & CBLOB_C) != CBLOB_n)
+					_graphics.FillRectangle(brush, new Rectangle(
+															x - 1,
+															y + _blobService.HalfHeight - 1,
+															2,2));
+
+				if ((cblob & CBLOB_W) != CBLOB_n)
+					_graphics.FillRectangle(brush, new Rectangle(
+															x - _blobService.HalfWidth  / 2 + 3,
+															y + _blobService.HalfHeight / 2,
+															2,2));
+
+				if ((cblob & CBLOB_N) != CBLOB_n)
+					_graphics.FillRectangle(brush, new Rectangle(
+															x + _blobService.HalfWidth  / 2 - 6,
+															y + _blobService.HalfHeight / 2,
+															2,2));
+	
+				brush.Dispose();
+			}
 		}
 		#endregion Draw
 

@@ -244,6 +244,35 @@ namespace MapView.Forms.Observers
 //			}
 //			return true;
 //		}
+
+		private const int LOFTID_Max_ufo  = 111;
+		private const int LOFTID_Max_tftd = 113;
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="part"></param>
+		/// <param name="group"></param>
+		/// <returns></returns>
+		internal static bool hasCustomLofts(Tilepart part, GroupType @group)
+		{
+			McdRecord record = part.Record;
+			if (record != null)
+			{
+				if ((_loftList = record.LoftList) != null) // crippled tileparts have an invalid 'LoftList'
+				{
+					foreach (byte loft in _loftList)
+					{
+						if (@group == GroupType.Tftd && loft > LOFTID_Max_tftd)
+							return true;
+
+						if (loft > LOFTID_Max_ufo)
+							return true;
+					}
+				}
+			}
+			return false;
+		}
 		#endregion Methods (static)
 	}
 }
