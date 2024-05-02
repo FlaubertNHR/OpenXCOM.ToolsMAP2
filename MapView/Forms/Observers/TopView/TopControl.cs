@@ -384,7 +384,7 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				int x, int y)
 		{
-			bool b = TopView.Optionables.ShowExtendedLoftIndicators;
+			int size = TopView.Optionables.ExtendedLoftIndicators;
 			int elofts = ELOFT_n;
 
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
@@ -393,7 +393,7 @@ namespace MapView.Forms.Observers
 								_graphics,
 								TopBrushes[TopViewOptionables.str_FloorColor],
 								x,y);
-				if (b && BlobTypeService.hasExtendedLofts(tile.Floor, _file.Descriptor.GroupType))
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Floor, _file.Descriptor.GroupType))
 					elofts |= ELOFT_F;
 			}
 
@@ -404,7 +404,7 @@ namespace MapView.Forms.Observers
 								ToolContent,
 								x,y,
 								tile.Content);
-				if (b && BlobTypeService.hasExtendedLofts(tile.Content, _file.Descriptor.GroupType))
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Content, _file.Descriptor.GroupType))
 					elofts |= ELOFT_C;
 			}
 
@@ -415,7 +415,7 @@ namespace MapView.Forms.Observers
 								ToolWest,
 								x,y,
 								tile.West);
-				if (b && BlobTypeService.hasExtendedLofts(tile.West, _file.Descriptor.GroupType))
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.West, _file.Descriptor.GroupType))
 					elofts |= ELOFT_W;
 			}
 
@@ -426,38 +426,40 @@ namespace MapView.Forms.Observers
 								ToolNorth,
 								x,y,
 								tile.North);
-				if (b && BlobTypeService.hasExtendedLofts(tile.North, _file.Descriptor.GroupType))
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.North, _file.Descriptor.GroupType))
 					elofts |= ELOFT_N;
 			}
 
-			if (b && elofts != ELOFT_n) // draw a small indicator for each tilepart that has custom LoFT entry(s) ->
+			if (size != 0 && elofts != ELOFT_n) // draw a small indicator for each tilepart that has custom LoFT entry(s) ->
 			{
 				var brush = new SolidBrush(TopView.Optionables.GridLine10Color); // TODO: instantiate this brush on Load
 
+				int pos = size / 2;
+
 				if ((elofts & ELOFT_F) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x - 1,
-															y + _blobService.HalfHeight * 2 - 5,
-															2,2));
+															x - pos,
+															y + _blobService.HalfHeight * 2 - pos - 4,
+															size,size));
 
 				if ((elofts & ELOFT_C) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x - 1,
-															y + _blobService.HalfHeight - 1,
-															2,2));
+															x - pos,
+															y + _blobService.HalfHeight - pos,
+															size,size));
 
 				if ((elofts & ELOFT_W) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x - _blobService.HalfWidth  / 2 + 3,
-															y + _blobService.HalfHeight / 2,
-															2,2));
+															x - _blobService.HalfWidth  / 2 + pos + 2,
+															y + _blobService.HalfHeight / 2 - pos + 1,
+															size,size));
 
 				if ((elofts & ELOFT_N) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x + _blobService.HalfWidth  / 2 - 6,
-															y + _blobService.HalfHeight / 2,
-															2,2));
-	
+															x + _blobService.HalfWidth  / 2 - size - 6,
+															y + _blobService.HalfHeight / 2 - pos + 1,
+															size,size));
+
 				brush.Dispose();
 			}
 		}

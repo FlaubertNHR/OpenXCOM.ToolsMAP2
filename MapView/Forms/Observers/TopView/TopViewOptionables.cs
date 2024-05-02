@@ -330,20 +330,33 @@ namespace MapView.Forms.Observers
 		}
 
 
-		private const string str_ShowExtendedLoftIndicators = "ShowExtendedLoftIndicators";
-		private const bool   def_ShowExtendedLoftIndicators = false;
+		private const string str_ExtendedLoftIndicators = "ExtendedLoftIndicators";
+		private const int    def_ExtendedLoftIndicators = 0;
 
-		private bool _showLoftIndicators = def_ShowExtendedLoftIndicators;
+		private int _loftIndicators = def_ExtendedLoftIndicators;
 		[Category(cat_General)]
-		[Description("TopView detects extended entries in customized UFO and TFTD"
-			+ " LOFTEMPS.DAT resources and draws indicators on tiles with parts"
-			+ " that reference entries that extend beyond the stock ids. If true"
-			+ " then indicators for extended LOFT entries will be drawn.")]
-		[DefaultValue(def_ShowExtendedLoftIndicators)]
-		public bool ShowExtendedLoftIndicators
+		[Description("TopView detects extended entries in customized UFO and"
+			+ " TFTD LOFTEMPS.DAT resources and can draw indicators on tiles"
+			+ " with parts that reference entries that extend beyond the stock"
+			+ " ids. This value is the size in pixels of the indicators for"
+			+ " extended LOFT entries. 0 disables the indicators (0..5 default"
+			+ " 0 disabled)")]
+		[DefaultValue(def_ExtendedLoftIndicators)]
+		public int ExtendedLoftIndicators
 		{
-			get { return _showLoftIndicators; }
-			set { _showLoftIndicators = value; }
+			get { return _loftIndicators; }
+			set
+			{
+				if (TopView._foptions == null) // on load
+				{
+					TopView.Options[str_ExtendedLoftIndicators].Value =
+					_loftIndicators = value.Viceroy(0,5);
+				}
+				else if ((_loftIndicators = value.Viceroy(0,5)) != value) // on user-changed
+				{
+					TopView.Options[str_ExtendedLoftIndicators].Value = _loftIndicators;
+				}
+			}
 		}
 
 
@@ -532,36 +545,36 @@ namespace MapView.Forms.Observers
 			OptionChangedEvent changer2 = OnDescriptionHeightChanged;
 			OptionChangedEvent changer3 = OnPanelColorChanged;
 
-			options.CreateOptionDefault(str_PanelBackcolor,             def_PanelBackcolor,             changer3);
-			options.CreateOptionDefault(str_PanelForecolor,             def_PanelForecolor,             changer3);
-			options.CreateOptionDefault(str_QuadrantForecolor,          def_QuadrantForecolor,          changer3);
-			options.CreateOptionDefault(str_QuadrantBackcolor,          def_QuadrantBackcolor,          changer3);
-			options.CreateOptionDefault(str_QuadrantColor,              def_QuadrantColor,              changer3);
-			options.CreateOptionDefault(str_QuadrantSelected,           def_QuadrantSelected,           changer3);
-			options.CreateOptionDefault(str_QuadrantDisabled,           def_QuadrantDisabled,           changer3);
-			options.CreateOptionDefault(str_QuadrantBorder,             def_QuadrantBorder,             changer3);
+			options.CreateOptionDefault(str_PanelBackcolor,            def_PanelBackcolor,            changer3);
+			options.CreateOptionDefault(str_PanelForecolor,            def_PanelForecolor,            changer3);
+			options.CreateOptionDefault(str_QuadrantForecolor,         def_QuadrantForecolor,         changer3);
+			options.CreateOptionDefault(str_QuadrantBackcolor,         def_QuadrantBackcolor,         changer3);
+			options.CreateOptionDefault(str_QuadrantColor,             def_QuadrantColor,             changer3);
+			options.CreateOptionDefault(str_QuadrantSelected,          def_QuadrantSelected,          changer3);
+			options.CreateOptionDefault(str_QuadrantDisabled,          def_QuadrantDisabled,          changer3);
+			options.CreateOptionDefault(str_QuadrantBorder,            def_QuadrantBorder,            changer3);
 
-			options.CreateOptionDefault(str_GridLineColor,              def_GridLineColor,              changer0);
-			options.CreateOptionDefault(str_GridLineWidth,              def_GridLineWidth,              changer0);
-			options.CreateOptionDefault(str_GridLine10Color,            def_GridLine10Color,            changer0);
-			options.CreateOptionDefault(str_GridLine10Width,            def_GridLine10Width,            changer0);
+			options.CreateOptionDefault(str_GridLineColor,             def_GridLineColor,             changer0);
+			options.CreateOptionDefault(str_GridLineWidth,             def_GridLineWidth,             changer0);
+			options.CreateOptionDefault(str_GridLine10Color,           def_GridLine10Color,           changer0);
+			options.CreateOptionDefault(str_GridLine10Width,           def_GridLine10Width,           changer0);
 
-			options.CreateOptionDefault(str_FloorColor,                 def_FloorColor,                 changer0);
-			options.CreateOptionDefault(str_WestColor,                  def_WestColor,                  changer0);
-			options.CreateOptionDefault(str_WestWidth,                  def_WestWidth,                  changer0);
-			options.CreateOptionDefault(str_NorthColor,                 def_NorthColor,                 changer0);
-			options.CreateOptionDefault(str_NorthWidth,                 def_NorthWidth,                 changer0);
-			options.CreateOptionDefault(str_ContentColor,               def_ContentColor,               changer0);
+			options.CreateOptionDefault(str_FloorColor,                def_FloorColor,                changer0);
+			options.CreateOptionDefault(str_WestColor,                 def_WestColor,                 changer0);
+			options.CreateOptionDefault(str_WestWidth,                 def_WestWidth,                 changer0);
+			options.CreateOptionDefault(str_NorthColor,                def_NorthColor,                changer0);
+			options.CreateOptionDefault(str_NorthWidth,                def_NorthWidth,                changer0);
+			options.CreateOptionDefault(str_ContentColor,              def_ContentColor,              changer0);
 
-			options.CreateOptionDefault(str_SelectorColor,              def_SelectorColor,              changer0);
-			options.CreateOptionDefault(str_SelectorWidth,              def_SelectorWidth,              changer0);
-			options.CreateOptionDefault(str_SelectedColor,              def_SelectedColor,              changer0);
-			options.CreateOptionDefault(str_SelectedWidth,              def_SelectedWidth,              changer0);
+			options.CreateOptionDefault(str_SelectorColor,             def_SelectorColor,             changer0);
+			options.CreateOptionDefault(str_SelectorWidth,             def_SelectorWidth,             changer0);
+			options.CreateOptionDefault(str_SelectedColor,             def_SelectedColor,             changer0);
+			options.CreateOptionDefault(str_SelectedWidth,             def_SelectedWidth,             changer0);
 
-			options.CreateOptionDefault(str_EnableRightClickWaitTimer,  def_EnableRightClickWaitTimer,  changer1);
-			options.CreateOptionDefault(str_ShowExtendedLoftIndicators, def_ShowExtendedLoftIndicators, changer1);
+			options.CreateOptionDefault(str_EnableRightClickWaitTimer, def_EnableRightClickWaitTimer, changer1);
+			options.CreateOptionDefault(str_ExtendedLoftIndicators,    def_ExtendedLoftIndicators,    changer0);
 
-			options.CreateOptionDefault(str_DescriptionHeight,          def_DescriptionHeight,          changer2);
+			options.CreateOptionDefault(str_DescriptionHeight,         def_DescriptionHeight,         changer2);
 		}
 		#endregion Methods
 
@@ -648,6 +661,10 @@ namespace MapView.Forms.Observers
 				case str_GridLineWidth:   GridLineWidth   =   (int)val; ChangePenWidth(key, val);                         break;
 				case str_GridLine10Color: GridLine10Color = (Color)val; ChangePenColor(key, val);                         break;
 				case str_GridLine10Width: GridLine10Width =   (int)val; ChangePenWidth(key, val);                         break;
+
+				case str_ExtendedLoftIndicators:
+					ExtendedLoftIndicators = (int)val;
+					break;
 			}
 
 			ObserverManager.InvalidateTopControls();
@@ -657,8 +674,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets the value of an optionable property and invalidates
-		/// <c><see cref="TopControl"/></c> if necessary.
+		/// Sets the value of an optionable property but does not invalidate
+		/// anything.
 		/// </summary>
 		/// <param name="key">one of the standard keys of an optionable</param>
 		/// <param name="val">the value to set it to</param>
@@ -666,17 +683,12 @@ namespace MapView.Forms.Observers
 		{
 			//DSShared.Logfile.Log("TopViewOptionables.OnFlagChanged() key= " + key);
 
-			switch (key)
-			{
-				case str_EnableRightClickWaitTimer:
-					EnableRightClickWaitTimer = (bool)val;
-					break;
-
-				case str_ShowExtendedLoftIndicators:
-					ShowExtendedLoftIndicators = (bool)val;
-					ObserverManager.InvalidateTopControls();
-					break;
-			}
+//			switch (key)
+//			{
+//				case str_EnableRightClickWaitTimer:
+					EnableRightClickWaitTimer = (bool)val; // this is the only option affected at present
+//					break;
+//			}
 		}
 
 		/// <summary>
