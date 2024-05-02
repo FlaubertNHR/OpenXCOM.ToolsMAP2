@@ -254,7 +254,7 @@ namespace MapView.Forms.Observers
 		/// <param name="part"></param>
 		/// <param name="group"></param>
 		/// <returns></returns>
-		internal static bool hasCustomLofts(Tilepart part, GroupType @group)
+		internal static bool hasExtendedLofts(Tilepart part, GroupType @group)
 		{
 			McdRecord record = part.Record;
 			if (record != null)
