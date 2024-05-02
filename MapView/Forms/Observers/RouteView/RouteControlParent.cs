@@ -657,14 +657,24 @@ namespace MapView.Forms.Observers
 						  + (double)y / (HalfHeight * 2);
 				double yd = ((double)y * 2 - x) / (HalfWidth * 2);
 
-				var loc = new Point(
-								(int)Math.Floor(xd),
-								(int)Math.Floor(yd));
-
-				if (   loc.X > -1 && loc.X < _file.Cols
-					&& loc.Y > -1 && loc.Y < _file.Rows)
+				// in case user has sized the window too small for the control
+				// to be drawn ... note this appears to happen only in RouteView
+				// and only when the window-size is vertically decreased; ie.
+				// MainView and TopView do not appear to be affected by this
+				// infinity/nan glitch ->
+				// System.OverflowException: Arithmetic operation resulted in an overflow.
+				if (   !Double.IsInfinity(xd) && !Double.IsNaN(xd)
+				    && !Double.IsInfinity(yd) && !Double.IsNaN(yd))
 				{
-					return loc;
+					var loc = new Point(
+									(int)Math.Floor(xd),
+									(int)Math.Floor(yd));
+
+					if (   loc.X > -1 && loc.X < _file.Cols
+						&& loc.Y > -1 && loc.Y < _file.Rows)
+					{
+						return loc;
+					}
 				}
 			}
 			return new Point(-1,-1);
