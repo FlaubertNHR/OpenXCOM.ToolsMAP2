@@ -395,9 +395,9 @@ namespace MapView.Forms.Observers
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
 			{
 				_blobService.DrawFloor(
-								_graphics,
-								TopBrushes[TopViewOptionables.str_FloorColor],
-								x,y);
+									_graphics,
+									TopBrushes[TopViewOptionables.str_FloorColor],
+									x,y);
 
 				if (tile.Floor.Record.GravLift != 0) // draw GravLift floor as content-part
 					_blobService.DrawContentOrWall(

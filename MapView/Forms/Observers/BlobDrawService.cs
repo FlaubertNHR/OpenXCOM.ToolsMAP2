@@ -194,19 +194,19 @@ namespace MapView.Forms.Observers
 										x,             y + HalfHeight);
 					break;
 
-				case BlobType.NorthWallFence:
-					graphics.DrawLine(
-									tool.PenLight,
-									pT(x,y),
-									pR(x,y));
-					break;
-
 				case BlobType.NorthWallWindow:
 					DrawWindow(
 							graphics,
 							tool,
 							pT(x,y),
 							pR(x,y));
+					break;
+
+				case BlobType.NorthWallFence:
+					graphics.DrawLine(
+									tool.PenLight,
+									pT(x,y),
+									pR(x,y));
 					break;
 
 				case BlobType.EastWall:
@@ -289,7 +289,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets a <c>GraphicsPath</c> for content-object.
+		/// Sets a <c>GraphicsPath</c> for content-part.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
