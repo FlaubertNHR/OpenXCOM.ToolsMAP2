@@ -49,6 +49,9 @@ namespace MapView.Forms.Observers
 		internal static BlobColorTool ToolContent;
 
 		internal static readonly SolidBrush PanelFill = new SolidBrush(TopViewOptionables.def_PanelBackcolor);
+
+		private const byte LOFTID_Max_ufo  = 111;
+		private const byte LOFTID_Max_tftd = 113;
 		#endregion Fields (static)
 
 
@@ -385,48 +388,58 @@ namespace MapView.Forms.Observers
 				int x, int y)
 		{
 			int size = TopView.Optionables.ExtendedLoftIndicators;
+			byte cutoff = _file.Descriptor.GroupType == GroupType.Tftd ? LOFTID_Max_tftd
+																	   : LOFTID_Max_ufo;
 			int elofts = ELOFT_n;
 
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
 			{
-				_blobService.Draw(
+				_blobService.DrawFloor(
 								_graphics,
 								TopBrushes[TopViewOptionables.str_FloorColor],
 								x,y);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Floor, _file.Descriptor.GroupType))
+
+				if (tile.Floor.Record.GravLift != 0) // draw GravLift floor as content-part
+					_blobService.DrawContentOrWall(
+												_graphics,
+												ToolContent,
+												x,y,
+												tile.Floor);
+
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Floor, cutoff))
 					elofts |= ELOFT_F;
 			}
 
 			if (!TopView.it_Content.Checked && tile.Content != null)
 			{
-				_blobService.Draw(
-								_graphics,
-								ToolContent,
-								x,y,
-								tile.Content);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Content, _file.Descriptor.GroupType))
+				_blobService.DrawContentOrWall(
+											_graphics,
+											ToolContent,
+											x,y,
+											tile.Content);
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Content, cutoff))
 					elofts |= ELOFT_C;
 			}
 
 			if (!TopView.it_West.Checked && tile.West != null)
 			{
-				_blobService.Draw(
-								_graphics,
-								ToolWest,
-								x,y,
-								tile.West);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.West, _file.Descriptor.GroupType))
+				_blobService.DrawContentOrWall(
+											_graphics,
+											ToolWest,
+											x,y,
+											tile.West);
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.West, cutoff))
 					elofts |= ELOFT_W;
 			}
 
 			if (!TopView.it_North.Checked && tile.North != null)
 			{
-				_blobService.Draw(
-								_graphics,
-								ToolNorth,
-								x,y,
-								tile.North);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.North, _file.Descriptor.GroupType))
+				_blobService.DrawContentOrWall(
+											_graphics,
+											ToolNorth,
+											x,y,
+											tile.North);
+				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.North, cutoff))
 					elofts |= ELOFT_N;
 			}
 

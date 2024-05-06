@@ -7,8 +7,8 @@ using XCom;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// The various wall- and content-types that will be used to determine how
-	/// to draw the wall- and content-blobs in <c><see cref="TopView"/></c> and
+	/// The various content- and wall-types that will be used to determine how
+	/// to draw the content- and wall-blobs in <c><see cref="TopView"/></c> and
 	/// <c><see cref="RouteView"/></c>.
 	/// </summary>
 	internal enum BlobType
@@ -34,13 +34,15 @@ namespace MapView.Forms.Observers
 
 
 	/// <summary>
-	/// A class that determines how walls and objects are drawn for
+	/// A class that determines how content- and wall-parts are drawn for
 	/// <c><see cref="TopView"/></c> and <c><see cref="RouteView"/></c>.
 	/// </summary>
 	internal static class BlobTypeService
 	{
 		#region Fields (static)
 		private static IList<byte> _loftList;
+
+		private const int LoftListLength = 12;
 		#endregion Fields (static)
 
 
@@ -64,83 +66,73 @@ namespace MapView.Forms.Observers
 				if ((_loftList = record.LoftList) != null) // crippled tileparts have an invalid 'LoftList'
 				{
 					// Floor
-					if (isfloor())
+					if (isfloorlike())
 						return BlobType.Floor;
 
 
 					// East
-					if (allingroup(new byte[]{24,26})) // 28,30,32,34
+					if (allareincluded(new byte[]{24,26,28,30,32,34}))
 						return BlobType.EastWall;
 
 					// South
-					if (allingroup(new byte[]{23,25})) // 27,29,31,33
+					if (allareincluded(new byte[]{23,25,27,29,31,33,44}))
 						return BlobType.SouthWall;
 
 
 					// North ->
 					if (anyare(38)
-						&& allingroup(new byte[]{8,10,12,14,38}))
+						&& allareincluded(new byte[]{8,10,12,14,38}))
 					{
 						return BlobType.NorthWallWindow;
 					}
 
 					if (anyare(0)
-						&& allingroup(new byte[]{0,8,10,12,14,38,39,77})) // 40,41
+						&& allareincluded(new byte[]{0,8,10,12,14,38,39,40,41,77,110}))
 					{
 						return BlobType.NorthWallFence;
 					}
 
-					if (allingroup(new byte[]{8,10,12,14})) // 16,18,20,21
+					if (allareincluded(new byte[]{8,10,12,14,16,18,20,21}))
 						return BlobType.NorthWall;
 
 
 					// West ->
 					if (anyare(37)
-						&& allingroup(new byte[]{7,9,11,13,37}))
+						&& allareincluded(new byte[]{7,9,11,13,37}))
 					{
 						return BlobType.WestWallWindow;
 					}
 
 					if (anyare(0)
-						&& allingroup(new byte[]{0,7,9,11,13,37,39,76})) // 40,41
+						&& allareincluded(new byte[]{0,7,9,11,13,37,39,40,41,76,111}))
 					{
 						return BlobType.WestWallFence;
 					}
 
-					if (allingroup(new byte[]{7,9,11,13})) // 15,17,19,22
+					if (allareincluded(new byte[]{7,9,11,13,15,17,19,22}))
 						return BlobType.WestWall;
 
 
 					// diagonals ->
-//					if (CheckAllAreLoftExcludeFloor(35))
 					if (allare(35))
 						return BlobType.NorthwestSoutheast;
 
-//					if (CheckAllAreLoftExcludeFloor(36))
 					if (allare(36))
 						return BlobType.NortheastSouthwest;
 
 
 					// corners ->
-					if (allingroup(new byte[]{39,40,41,103})) // 102,101
+					if (allareincluded(new byte[]{39,40,41,101,102,103}))
 						return BlobType.NorthwestCorner;
 
-					if (allare(100)) // 99,98
+					if (allareincluded(new byte[]{98,99,100}))
 						return BlobType.NortheastCorner;
 
-					if (allare(106)) // 105,104
+					if (allareincluded(new byte[]{104,105,106}))
 						return BlobType.SouthwestCorner;
 
-					if (allare(109)) // 108,107
+					if (allareincluded(new byte[]{107,108,109}))
 						return BlobType.SoutheastCorner;
-
-
-
-					if (allingroup(new byte[]{0,110}))
-						return BlobType.NorthWallFence;
-	
-					if (allingroup(new byte[]{0,111}))
-						return BlobType.WestWallFence;
 				}
 				else
 					return BlobType.Crippled;
@@ -149,33 +141,40 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Checks if the tilepart is purely Floor-type.
+		/// Checks if <c><see cref="_loftList"/></c> has only LoFT id #0 (blank
+		/// LoFT) above the first layer.
 		/// </summary>
 		/// <returns></returns>
-		private static bool isfloor()
+		/// <remarks>This function checks LoFTs only of content- and wall-parts
+		/// for
+		/// <c><see cref="BlobDrawService.DrawContentOrWall()">BlobDrawService.DrawContentOrWall()</see></c>
+		/// but is not actually used for floor-parts which are instead drawn by
+		/// <c><see cref="BlobDrawService.DrawFloor()">BlobDrawService.DrawFloor()</see></c>.
+		/// Loftid #6 on layer #0 is the fullfloor LoFT but is not checked for.</remarks>
+		private static bool isfloorlike()
 		{
-			int length = _loftList.Count;
-			for (int layer = 2; layer != length; ++layer)
-				if (_loftList[layer] != 0) // that's a stupid check for floor ...
+			for (int layer = 1; layer != LoftListLength; ++layer)
+				if (_loftList[layer] != 0) // that's kind of a stupid check for floor ...
 					return false;
 
 			return true;
 		}
 
 		/// <summary>
-		/// Checks if all entries in <c><see cref="_loftList"/></c> are among
-		/// <paramref name="group"/>.
+		/// Checks if all entries in <c><see cref="_loftList"/></c> are included
+		/// in <paramref name="loftids"/>.
 		/// </summary>
-		/// <param name="group"></param>
-		/// <returns></returns>
-		private static bool allingroup(byte[] @group)
+		/// <param name="loftids">an array of LoFT ids</param>
+		/// <returns><c>true</c>if all LoFTs are included in
+		/// <paramref name="loftids"/></returns>
+		private static bool allareincluded(byte[] loftids)
 		{
 			bool found;
 			foreach (var loft in _loftList)
 			{
 				found = false;
-				foreach (byte gottfried in @group)
-					if (gottfried == loft)
+				foreach (byte loftid in loftids)
+					if (loftid == loft)
 					{
 						found = true;
 						break;
@@ -189,14 +188,15 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Checks if all entries in <c><see cref="_loftList"/></c> are
-		/// <paramref name="necessary"/>.
+		/// <paramref name="loftid"/>.
 		/// </summary>
-		/// <param name="necessary"></param>
-		/// <returns></returns>
-		private static bool allare(byte necessary)
+		/// <param name="loftid">the required loftid</param>
+		/// <returns><c>true</c> if all LoFTs are <paramref name="loftid"/></returns>
+		/// <remarks>Layer #0 is NOT considered.</remarks>
+		private static bool allare(byte loftid)
 		{
-			foreach (byte loft in _loftList)
-				if (loft != necessary)
+			for (int layer = 1; layer != LoftListLength; ++layer)
+				if (_loftList[layer] != loftid)
 					return false;
 
 			return true;
@@ -204,72 +204,35 @@ namespace MapView.Forms.Observers
 
 		/// <summary>
 		/// Checks if any entry in <c><see cref="_loftList"/></c> is
-		/// <paramref name="necessary"/>.
+		/// <paramref name="loftid"/>.
 		/// </summary>
-		/// <param name="necessary"></param>
-		/// <returns></returns>
-		private static bool anyare(byte necessary)
+		/// <param name="loftid">the required loftid</param>
+		/// <returns><c>true</c> if any LoFT is <paramref name="loftid"/></returns>
+		private static bool anyare(byte loftid)
 		{
-			foreach (byte loft in _loftList)
-				if (loft == necessary)
+			for (int layer = 0; layer != LoftListLength; ++layer)
+				if (_loftList[layer] == loftid)
 					return true;
 
 			return false;
 		}
-//		private static bool CheckAnyIsLoft(int[] necessary)
-//		{
-//			foreach (byte loft in _loftList)
-//				foreach (byte gottfried in necessary)
-//					if (gottfried == loft)
-//						return true;
-//
-//			return false;
-//		}
-
-//		private static bool CheckAllAreLoftExcludeFloor(int necessary)
-//		{
-//			int length = _loftList.Count;
-//			for (int layer = 0; layer != length; ++layer)
-//			{
-//				switch (layer)
-//				{
-//					case 0:
-//						break;
-//
-//					default:
-//						if (_loftList[layer] != necessary)
-//							return false;
-//						break;
-//				}
-//			}
-//			return true;
-//		}
-
-		private const int LOFTID_Max_ufo  = 111;
-		private const int LOFTID_Max_tftd = 113;
 
 		/// <summary>
-		/// 
+		/// Checks if any LoFTS of a specified <c><see cref="Tilepart"/></c>
+		/// exceed the stock UFO or TFTD LoFT ids.
 		/// </summary>
-		/// <param name="part"></param>
-		/// <param name="group"></param>
-		/// <returns></returns>
-		internal static bool hasExtendedLofts(Tilepart part, GroupType @group)
+		/// <param name="part">a <c>Tilepart</c> to check the LoFTs of</param>
+		/// <param name="loftid"><c><see cref="TopControl"/>.LOFTID_Max_ufo</c>
+		/// or <c>TopControl.LOFTID_Max_tftd</c></param>
+		/// <returns><c>true</c> if <paramref name="part"/> has extended LoFTs</returns>
+		internal static bool hasExtendedLofts(Tilepart part, byte loftid)
 		{
-			McdRecord record = part.Record;
-			if (record != null)
+			if (part.Record != null
+				&& (_loftList = part.Record.LoftList) != null) // crippled tileparts have an invalid 'LoftList'
 			{
-				if ((_loftList = record.LoftList) != null) // crippled tileparts have an invalid 'LoftList'
-				{
-					foreach (byte loft in _loftList)
-					{
-						if (@group == GroupType.Tftd && loft > LOFTID_Max_tftd)
-							return true;
-
-						if (loft > LOFTID_Max_ufo)
-							return true;
-					}
-				}
+				foreach (byte loft in _loftList)
+					if (loft > loftid)
+						return true;
 			}
 			return false;
 		}

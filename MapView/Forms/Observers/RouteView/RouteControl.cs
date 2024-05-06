@@ -301,13 +301,13 @@ namespace MapView.Forms.Observers
 					if (!(tile = _file.GetTile(c,r)).Vacant)
 					{
 						if (tile.Content != null)
-							BlobService.Draw(_graphics, ToolContent, x,y, tile.Content);
+							BlobService.DrawContentOrWall(_graphics, ToolContent, x,y, tile.Content);
 
 						if (tile.West != null)
-							BlobService.Draw(_graphics, ToolWall, x,y, tile.West);
+							BlobService.DrawContentOrWall(_graphics, ToolWall, x,y, tile.West);
 
 						if (tile.North != null)
-							BlobService.Draw(_graphics, ToolWall, x,y, tile.North);
+							BlobService.DrawContentOrWall(_graphics, ToolWall, x,y, tile.North);
 					}
 				}
 			}

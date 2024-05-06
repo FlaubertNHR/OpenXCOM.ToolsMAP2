@@ -90,7 +90,7 @@ namespace MapView.Forms.Observers
 		/// <param name="brush"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		internal void Draw(
+		internal void DrawFloor(
 				Graphics graphics,
 				Brush brush,
 				int x, int y)
@@ -117,7 +117,7 @@ namespace MapView.Forms.Observers
 		private const int Offset = 4;
 
 		/// <summary>
-		/// Draws wall- and content-blobs for <c><see cref="RouteView"/></c> and
+		/// Draws content- and wall-blobs for <c><see cref="RouteView"/></c> and
 		/// <c><see cref="TopView"/></c>.
 		/// </summary>
 		/// <param name="graphics"></param>
@@ -125,7 +125,7 @@ namespace MapView.Forms.Observers
 		/// <param name="x"></param>
 		/// <param name="y"></param>
 		/// <param name="part"></param>
-		internal void Draw(
+		internal void DrawContentOrWall(
 				Graphics graphics,
 				BlobColorTool tool,
 				int x, int y,
@@ -133,14 +133,6 @@ namespace MapView.Forms.Observers
 		{
 			switch (BlobTypeService.GetBlobType(part))
 			{
-				// content ->
-				case BlobType.Content:
-					PathContent(x,y);
-					graphics.FillPath(
-									tool.Brush,
-									_content);
-					break;
-
 				// floor ->
 				case BlobType.Floor:
 					PathContent(x,y);
@@ -152,12 +144,41 @@ namespace MapView.Forms.Observers
 									_content);
 					break;
 
+				// content ->
+				case BlobType.Content:
+					PathContent(x,y);
+					graphics.FillPath(
+									tool.Brush,
+									_content);
+					break;
+
 				// walls ->
-				case BlobType.NorthWallFence:
+				case BlobType.WestWall:
+					graphics.DrawLine(
+									tool.Pen,
+									pT(x,y),
+									pL(x,y));
+
+					if (part.IsDoor)
+						graphics.DrawLine(
+										tool.Pen,
+										x - HalfWidth, y,
+										x,             y + HalfHeight);
+					break;
+
+				case BlobType.WestWallWindow:
+					DrawWindow(
+							graphics,
+							tool,
+							pT(x,y),
+							pL(x,y));
+					break;
+
+				case BlobType.WestWallFence:
 					graphics.DrawLine(
 									tool.PenLight,
 									pT(x,y),
-									pR(x,y));
+									pL(x,y));
 					break;
 
 				case BlobType.NorthWall:
@@ -173,24 +194,11 @@ namespace MapView.Forms.Observers
 										x,             y + HalfHeight);
 					break;
 
-				case BlobType.WestWallFence:
+				case BlobType.NorthWallFence:
 					graphics.DrawLine(
 									tool.PenLight,
 									pT(x,y),
-									pL(x,y));
-					break;
-
-				case BlobType.WestWall:
-					graphics.DrawLine(
-									tool.Pen,
-									pT(x,y),
-									pL(x,y));
-
-					if (part.IsDoor)
-						graphics.DrawLine(
-										tool.Pen,
-										x - HalfWidth, y,
-										x,             y + HalfHeight);
+									pR(x,y));
 					break;
 
 				case BlobType.NorthWallWindow:
@@ -201,12 +209,11 @@ namespace MapView.Forms.Observers
 							pR(x,y));
 					break;
 
-				case BlobType.WestWallWindow:
-					DrawWindow(
-							graphics,
-							tool,
-							pT(x,y),
-							pL(x,y));
+				case BlobType.EastWall:
+					graphics.DrawLine(
+									tool.Pen,
+									pB(x,y),
+									pR(x,y));
 					break;
 
 				case BlobType.SouthWall:
@@ -214,13 +221,6 @@ namespace MapView.Forms.Observers
 									tool.Pen,
 									pL(x,y),
 									pB(x,y));
-					break;
-
-				case BlobType.EastWall:
-					graphics.DrawLine(
-									tool.Pen,
-									pB(x,y),
-									pR(x,y));
 					break;
 
 				// diagonals ->
