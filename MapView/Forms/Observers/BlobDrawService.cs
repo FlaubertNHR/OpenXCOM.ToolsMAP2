@@ -26,6 +26,12 @@ namespace MapView.Forms.Observers
 		}
 
 
+		#region Enums
+		enum Corner
+		{ nw,ne,se,sw }
+		#endregion Enums
+
+
 		#region Fields (static)
 		internal const int LINEWIDTH_CONTENT = 3;
 		#endregion Fields (static)
@@ -54,7 +60,7 @@ namespace MapView.Forms.Observers
 
 		#region Methods (static)
 		/// <summary>
-		/// Draws a window.
+		/// Draws a window blob.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="tool"></param>
@@ -238,31 +244,47 @@ namespace MapView.Forms.Observers
 
 				// corners ->
 				case BlobType.NorthwestCorner:
-					graphics.DrawLine(
-									tool.Pen,
-									Point.Add(pT(x,y), new Size(-Offset - Offset / 2, 0)),
-									Point.Add(pT(x,y), new Size( Offset + Offset / 2, 0)));
+					PathCorner(x,y, Corner.nw);
+					graphics.FillPath(
+									tool.Brush,
+									_path);
+//					graphics.DrawLine(
+//									tool.Pen,
+//									Point.Add(pT(x,y), new Size(-Offset - Offset / 2, 0)),
+//									Point.Add(pT(x,y), new Size( Offset + Offset / 2, 0)));
 					break;
 
 				case BlobType.NortheastCorner:
-					graphics.DrawLine(
-									tool.Pen,
-									Point.Add(pR(x,y), new Size(0, -Offset)),
-									Point.Add(pR(x,y), new Size(0,  Offset)));
+					PathCorner(x,y, Corner.ne);
+					graphics.FillPath(
+									tool.Brush,
+									_path);
+//					graphics.DrawLine(
+//									tool.Pen,
+//									Point.Add(pR(x,y), new Size(0, -Offset)),
+//									Point.Add(pR(x,y), new Size(0,  Offset)));
 					break;
 
 				case BlobType.SoutheastCorner:
-					graphics.DrawLine(
-									tool.Pen,
-									Point.Add(pB(x,y), new Size(-Offset - Offset / 2, 0)),
-									Point.Add(pB(x,y), new Size( Offset + Offset / 2, 0)));
+					PathCorner(x,y, Corner.se);
+					graphics.FillPath(
+									tool.Brush,
+									_path);
+//					graphics.DrawLine(
+//									tool.Pen,
+//									Point.Add(pB(x,y), new Size(-Offset - Offset / 2, 0)),
+//									Point.Add(pB(x,y), new Size( Offset + Offset / 2, 0)));
 					break;
 
 				case BlobType.SouthwestCorner:
-					graphics.DrawLine(
-									tool.Pen,
-									Point.Add(pL(x,y), new Size(0, -Offset)),
-									Point.Add(pL(x,y), new Size(0,  Offset)));
+					PathCorner(x,y, Corner.sw);
+					graphics.FillPath(
+									tool.Brush,
+									_path);
+//					graphics.DrawLine(
+//									tool.Pen,
+//									Point.Add(pL(x,y), new Size(0, -Offset)),
+//									Point.Add(pL(x,y), new Size(0,  Offset)));
 					break;
 
 //				case BlobType.Crippled: break;
@@ -287,7 +309,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets a <c>GraphicsPath</c> for content-part.
+		/// Sets <c><see cref="_path"/></c> for a content blob.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -308,6 +330,59 @@ namespace MapView.Forms.Observers
 			_path.AddLine(
 						x,     y + h * 2,
 						x - w, y + h);
+			_path.CloseFigure();
+		}
+
+		/// <summary>
+		/// Sets <c><see cref="_path"/></c> for a corner blob.
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="corner"></param>
+		private void PathCorner(int x, int y, Corner corner)
+		{
+			int w = HalfWidth  / 2;
+			int h = HalfHeight / 2;
+
+			_path.Reset();
+			switch (corner)
+			{
+				case Corner.nw:
+					_path.AddLine(
+								x,     y,
+								x + w, y + h);
+					_path.AddLine(
+								x + w, y + h,
+								x - w, y + h);
+					break;
+
+				case Corner.ne:
+					_path.AddLine(
+								x + w,         y + h,
+								x + HalfWidth, y + HalfHeight);
+					_path.AddLine(
+								x + HalfWidth, y + HalfHeight,
+								x + w,         y + HalfHeight + h);
+					break;
+
+				case Corner.se:
+					_path.AddLine(
+								x + w, y + HalfHeight + h,
+								x,     y + HalfHeight * 2);
+					_path.AddLine(
+								x,     y + HalfHeight * 2,
+								x - w, y + HalfHeight + h);
+					break;
+
+				case Corner.sw:
+					_path.AddLine(
+								x - w,         y + HalfHeight + h,
+								x - HalfWidth, y + HalfHeight);
+					_path.AddLine(
+								x - HalfWidth, y + HalfHeight,
+								x - w,         y + h);
+					break;
+			}
 			_path.CloseFigure();
 		}
 		#endregion Methods
