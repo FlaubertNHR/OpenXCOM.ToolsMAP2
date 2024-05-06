@@ -226,6 +226,36 @@ namespace MapView.Forms.Observers
 		}
 
 
+		private const string str_ExtendedLoftIndicators = "ExtendedLoftIndicators";
+		private const int    def_ExtendedLoftIndicators = 0;
+
+		private int _loftIndicators = def_ExtendedLoftIndicators;
+		[Category(cat_Blobs)]
+		[Description("TopView detects extended entries in customized UFO and"
+			+ " TFTD LOFTEMPS.DAT resources and can draw indicators on tiles"
+			+ " with parts that reference entries that extend beyond the stock"
+			+ " ids. This value is the size in pixels of the indicators for"
+			+ " extended LOFT entries. 0 disables the indicators (0..5 default"
+			+ " 0 disabled)")]
+		[DefaultValue(def_ExtendedLoftIndicators)]
+		public int ExtendedLoftIndicators
+		{
+			get { return _loftIndicators; }
+			set
+			{
+				if (TopView._foptions == null) // on load
+				{
+					TopView.Options[str_ExtendedLoftIndicators].Value =
+					_loftIndicators = value.Viceroy(0,5);
+				}
+				else if ((_loftIndicators = value.Viceroy(0,5)) != value) // on user-changed
+				{
+					TopView.Options[str_ExtendedLoftIndicators].Value = _loftIndicators;
+				}
+			}
+		}
+
+
 
 		private const string cat_Selects = "Selects";
 
@@ -327,36 +357,6 @@ namespace MapView.Forms.Observers
 		{
 			get { return _enableWaitTimer; }
 			set { _enableWaitTimer = value; }
-		}
-
-
-		private const string str_ExtendedLoftIndicators = "ExtendedLoftIndicators";
-		private const int    def_ExtendedLoftIndicators = 0;
-
-		private int _loftIndicators = def_ExtendedLoftIndicators;
-		[Category(cat_General)]
-		[Description("TopView detects extended entries in customized UFO and"
-			+ " TFTD LOFTEMPS.DAT resources and can draw indicators on tiles"
-			+ " with parts that reference entries that extend beyond the stock"
-			+ " ids. This value is the size in pixels of the indicators for"
-			+ " extended LOFT entries. 0 disables the indicators (0..5 default"
-			+ " 0 disabled)")]
-		[DefaultValue(def_ExtendedLoftIndicators)]
-		public int ExtendedLoftIndicators
-		{
-			get { return _loftIndicators; }
-			set
-			{
-				if (TopView._foptions == null) // on load
-				{
-					TopView.Options[str_ExtendedLoftIndicators].Value =
-					_loftIndicators = value.Viceroy(0,5);
-				}
-				else if ((_loftIndicators = value.Viceroy(0,5)) != value) // on user-changed
-				{
-					TopView.Options[str_ExtendedLoftIndicators].Value = _loftIndicators;
-				}
-			}
 		}
 
 
