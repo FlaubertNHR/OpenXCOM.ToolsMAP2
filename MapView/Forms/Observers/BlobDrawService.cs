@@ -22,8 +22,7 @@ namespace MapView.Forms.Observers
 		internal void Dispose()
 		{
 			//DSShared.Logfile.Log("BlobDrawService.Dispose()");
-			_floor  .Dispose();
-			_content.Dispose();
+			_path.Dispose();
 		}
 
 
@@ -33,8 +32,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields
-		private readonly GraphicsPath _floor   = new GraphicsPath();
-		private readonly GraphicsPath _content = new GraphicsPath();
+		private readonly GraphicsPath _path = new GraphicsPath();
 		#endregion Fields
 
 
@@ -95,19 +93,19 @@ namespace MapView.Forms.Observers
 				Brush brush,
 				int x, int y)
 		{
-			_floor.Reset();
-			_floor.AddLine(
+			_path.Reset();
+			_path.AddLine(
 						x,             y,
 						x + HalfWidth, y + HalfHeight);
-			_floor.AddLine(
+			_path.AddLine(
 						x + HalfWidth, y + HalfHeight,
 						x,             y + HalfHeight * 2);
-			_floor.AddLine(
+			_path.AddLine(
 						x,             y + HalfHeight * 2,
 						x - HalfWidth, y + HalfHeight);
-			_floor.CloseFigure();
+			_path.CloseFigure();
 
-			graphics.FillPath(brush, _floor);
+			graphics.FillPath(brush, _path);
 		}
 
 
@@ -138,10 +136,10 @@ namespace MapView.Forms.Observers
 					PathContent(x,y);
 					graphics.FillPath(
 									BlobColorTool.BrushLightPrep,
-									_content);
+									_path);
 					graphics.FillPath(
 									tool.BrushLight,
-									_content);
+									_path);
 					break;
 
 				// content ->
@@ -149,7 +147,7 @@ namespace MapView.Forms.Observers
 					PathContent(x,y);
 					graphics.FillPath(
 									tool.Brush,
-									_content);
+									_path);
 					break;
 
 				// walls ->
@@ -300,17 +298,17 @@ namespace MapView.Forms.Observers
 
 			y += h;
 
-			_content.Reset();
-			_content.AddLine(
-							x,     y,
-							x + w, y + h);
-			_content.AddLine(
-							x + w, y + h,
-							x,     y + h * 2);
-			_content.AddLine(
-							x,     y + h * 2,
-							x - w, y + h);
-			_content.CloseFigure();
+			_path.Reset();
+			_path.AddLine(
+						x,     y,
+						x + w, y + h);
+			_path.AddLine(
+						x + w, y + h,
+						x,     y + h * 2);
+			_path.AddLine(
+						x,     y + h * 2,
+						x - w, y + h);
+			_path.CloseFigure();
 		}
 		#endregion Methods
 	}
