@@ -32,7 +32,7 @@ namespace MapView.Forms.MainView
 			LocationFont .Dispose();
 			LocationBrush.Dispose();
 			_layerFill   .Dispose();
-			_t1          .Dispose();
+//			_t1          .Dispose();
 		}
 
 
@@ -87,7 +87,7 @@ namespace MapView.Forms.MainView
 		private int _row = -1;
 
 
-		private Timer _t1 = new Timer();
+//		private Timer _t1 = new Timer();
 		private int _phase;
 		#endregion Fields
 
@@ -220,9 +220,9 @@ namespace MapView.Forms.MainView
 			GotFocus  += OnFocusGained;
 			LostFocus += OnFocusLost;
 
-			_t1.Interval = Globals.PERIOD;
-			_t1.Enabled = true;
-			_t1.Tick += t1_Tick;
+//			_t1.Interval = Globals.PERIOD;
+//			_t1.Enabled = true;
+//			_t1.Tick += t1_Tick;
 		}
 		#endregion cTor
 
@@ -285,19 +285,19 @@ namespace MapView.Forms.MainView
 			}
 		}
 
-		/// <summary>
-		/// Hides the cuboid-targeter when the cursor leaves the center-panel
-		/// unless the targeter was enabled by a keyboard tile-selection.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void t1_Tick(object sender, EventArgs e)
-		{
-			// TODO: this does not appear to be useful ...
-			// Reason. The targeter does not get drawn unless the panel is focused.
-			if (Focused && _file != null && !_targeterForced && CursorOutsideClient())
-				Invalidate();
-		}
+//		/// <summary>
+//		/// Hides the cuboid-targeter when the cursor leaves the center-panel
+//		/// unless the targeter was enabled by a keyboard tile-selection.
+//		/// </summary>
+//		/// <param name="sender"></param>
+//		/// <param name="e"></param>
+//		private void t1_Tick(object sender, EventArgs e)
+//		{
+//			// TODO: this does not appear to be useful ...
+//			// Reason. The targeter does not get drawn unless the panel is focused.
+//			if (Focused && _file != null && !_targeterForced && CursorOutsideClient())
+//				Invalidate();
+//		}
 
 		/// <summary>
 		/// Checks if the cursor is *not* inside the ToolStripContainer's
