@@ -717,7 +717,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// A TreeNode that can be sorted.
+		/// A <c>TreeNode</c> that can be sorted.
 		/// </summary>
 		private sealed class SortableTreeNode
 			:
