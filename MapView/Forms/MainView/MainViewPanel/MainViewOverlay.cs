@@ -1351,7 +1351,8 @@ namespace MapView.Forms.MainView
 					_graphics.DrawImageUnscaled(_b, Point.Empty);	// uh does not draw the image unscaled. it
 				}													// still uses the DPI in the Graphics object ...
 #endif
-				if (Globals.Scale > 0.55 // else the text starts to hit the sprites
+				if (Focused // else the loc-string can stick when the cursor leaves this panel
+					&& Globals.Scale > 0.55 // else the text starts to hit the sprites
 					&& _col > -1 && _col < _cols
 					&& _row > -1 && _row < _rows)
 				{
