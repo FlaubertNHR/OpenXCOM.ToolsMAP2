@@ -258,7 +258,7 @@ namespace MapView.Forms.MainView
 
 		#region Events and Methods for targeter-suppression
 		/// <summary>
-		/// Handles the focusgained event.
+		/// Handles the <c>FocusGained</c> event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -272,7 +272,7 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Handles the focuslost event.
+		/// Handles the <c>FocusLost</c> event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -286,13 +286,15 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Hides the cuboid-targeter when the mouse leaves the center-panel
+		/// Hides the cuboid-targeter when the cursor leaves the center-panel
 		/// unless the targeter was enabled by a keyboard tile-selection.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void t1_Tick(object sender, EventArgs e)
 		{
+			// TODO: this does not appear to be useful ...
+			// Reason. The targeter does not get drawn unless the panel is focused.
 			if (Focused && _file != null && !_targeterForced && SuppressTargeter())
 				Invalidate();
 		}
@@ -1039,7 +1041,7 @@ namespace MapView.Forms.MainView
 				{
 					_targeterForced = false;
 
-					var loc = GetTileLocation(e.X, e.Y);
+					Point loc = GetTileLocation(e.X, e.Y);
 					_col = loc.X;
 					_row = loc.Y;
 				}

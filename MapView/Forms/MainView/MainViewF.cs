@@ -904,8 +904,8 @@ namespace MapView
 		internal static bool BypassActivatedEvent;
 
 		/// <summary>
-		/// Overrides the Activated event. Brings any other open viewers to the
-		/// top of the desktop, along with this. And focuses the panel.
+		/// Overrides the <c>Activated</c> event. Brings any other open viewers
+		/// to the top of the desktop, along with this. And focuses the panel.
 		/// </summary>
 		/// <param name="e"></param>
 		/// <remarks>Trying to bring this form to the top after the other forms
@@ -944,7 +944,8 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the Deactivated event. Allows the targeter to go away.
+		/// Overrides the <c>Deactivate</c> event. Allows the targeter to go
+		/// away.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnDeactivate(EventArgs e)
