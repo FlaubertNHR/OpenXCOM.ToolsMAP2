@@ -67,7 +67,7 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Forces display of the targeter sprite at the DragEnd position when
-		/// tiles are selected by keyboard. This overrules
+		/// tiles are selected by keyboard. This takes priority over
 		/// <c><see cref="_targeterSuppressed"/></c>.
 		/// </summary>
 		private bool _targeterForced;
@@ -295,7 +295,7 @@ namespace MapView.Forms.MainView
 		{
 			// TODO: this does not appear to be useful ...
 			// Reason. The targeter does not get drawn unless the panel is focused.
-			if (Focused && _file != null && !_targeterForced && SuppressTargeter())
+			if (Focused && _file != null && !_targeterForced && CursorOutsideClient())
 				Invalidate();
 		}
 
@@ -306,7 +306,7 @@ namespace MapView.Forms.MainView
 		/// <returns></returns>
 		/// <remarks>This funct ignores the <c><see cref="_targeterForced"/></c>
 		/// var so that needs to be checked before call.</remarks>
-		private static bool SuppressTargeter()
+		private static bool CursorOutsideClient()
 		{
 			MainViewUnderlay underlay = MainViewUnderlay.that;
 			ToolStripContentPanel centerpanel = MainViewF.that.tscPanel.ContentPanel;
@@ -1311,7 +1311,7 @@ namespace MapView.Forms.MainView
 
 			if (_file != null)
 			{
-				_targeterSuppressed = !_targeterForced && (!Focused || SuppressTargeter());
+				_targeterSuppressed = !_targeterForced && (!Focused || CursorOutsideClient());
 
 				CuboidSprite.SetGraphics(_graphics = e.Graphics);
 				_graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
