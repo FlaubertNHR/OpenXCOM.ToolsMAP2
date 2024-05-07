@@ -34,6 +34,11 @@ namespace MapView.Forms.Observers
 
 		#region Fields (static)
 		internal const int LINEWIDTH_CONTENT = 3;
+
+		/// <summary>
+		/// Offset the blobs from the grid-lines a bit.
+		/// </summary>
+		private const int Offset = 4;
 		#endregion Fields (static)
 
 
@@ -94,31 +99,70 @@ namespace MapView.Forms.Observers
 		/// <param name="brush"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
+		/// <param name="loftid"></param>
 		internal void DrawFloor(
 				Graphics graphics,
 				Brush brush,
-				int x, int y)
+				int x, int y,
+				byte loftid)
 		{
 			_path.Reset();
-			_path.AddLine(
-						x,             y,
-						x + HalfWidth, y + HalfHeight);
-			_path.AddLine(
-						x + HalfWidth, y + HalfHeight,
-						x,             y + HalfHeight * 2);
-			_path.AddLine(
-						x,             y + HalfHeight * 2,
-						x - HalfWidth, y + HalfHeight);
+			switch (loftid)
+			{
+				default:
+//				case Byte.MaxValue:
+//				case 6: // fullfloor
+					_path.AddLine(
+								x,             y,
+								x + HalfWidth, y + HalfHeight);
+					_path.AddLine(
+								x + HalfWidth, y + HalfHeight,
+								x,             y + HalfHeight * 2);
+					_path.AddLine(
+								x,             y + HalfHeight * 2,
+								x - HalfWidth, y + HalfHeight);
+					break;
+
+				case 79: // sw
+					_path.AddLine(
+								x,             y,
+								x,             y + HalfHeight * 2);
+					_path.AddLine(
+								x,             y + HalfHeight * 2,
+								x - HalfWidth, y + HalfHeight);
+					break;
+
+				case 80: // ne
+					_path.AddLine(
+								x,             y,
+								x + HalfWidth, y + HalfHeight);
+					_path.AddLine(
+								x + HalfWidth, y + HalfHeight,
+								x,             y + HalfHeight * 2);
+					break;
+
+				case 81: // nw
+					_path.AddLine(
+								x,             y,
+								x + HalfWidth, y + HalfHeight);
+					_path.AddLine(
+								x + HalfWidth, y + HalfHeight,
+								x - HalfWidth, y + HalfHeight);
+					break;
+
+				case 82: // se
+					_path.AddLine(
+								x + HalfWidth, y + HalfHeight,
+								x,             y + HalfHeight * 2);
+					_path.AddLine(
+								x,             y + HalfHeight * 2,
+								x - HalfWidth, y + HalfHeight);
+					break;
+			}
 			_path.CloseFigure();
 
 			graphics.FillPath(brush, _path);
 		}
-
-
-		/// <summary>
-		/// Offset the blobs from the grid-lines a bit.
-		/// </summary>
-		private const int Offset = 4;
 
 		/// <summary>
 		/// Draws content- and wall-blobs for <c><see cref="RouteView"/></c> and

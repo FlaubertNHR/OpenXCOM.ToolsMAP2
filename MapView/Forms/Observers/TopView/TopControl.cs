@@ -394,10 +394,19 @@ namespace MapView.Forms.Observers
 
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
 			{
+				byte loftid;
+				if (tile.Floor.Record.LoftList != null) // crippled tileparts have an invalid 'LoftList'
+				{
+					loftid = tile.Floor.Record.LoftList[0];
+				}
+				else
+					loftid = Byte.MaxValue;
+
 				_blobService.DrawFloor(
 									_graphics,
 									TopBrushes[TopViewOptionables.str_FloorColor],
-									x,y);
+									x,y,
+									loftid);
 
 				if (tile.Floor.Record.GravLift != 0) // draw GravLift floor as content-part
 					_blobService.DrawContentOrWall(
