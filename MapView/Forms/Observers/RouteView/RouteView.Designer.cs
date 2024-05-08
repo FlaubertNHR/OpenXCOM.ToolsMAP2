@@ -520,7 +520,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
 			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
 			this.tsmi_GhostNodes.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_GhostNodes.Text = "highlight spawn nodes";
+			this.tsmi_GhostNodes.Text = "Spawn nodes only";
 			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
 			// 
 			// tss_5
@@ -533,7 +533,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank0.Name = "tsmi_Noderank0";
 			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
 			this.tsmi_Noderank0.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank0.Text = "highlight Rank0";
+			this.tsmi_Noderank0.Text = "Rank0";
 			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank1
@@ -541,7 +541,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank1.Name = "tsmi_Noderank1";
 			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
 			this.tsmi_Noderank1.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank1.Text = "highlight Rank1";
+			this.tsmi_Noderank1.Text = "Rank1";
 			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank2
@@ -549,7 +549,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank2.Name = "tsmi_Noderank2";
 			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
 			this.tsmi_Noderank2.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank2.Text = "highlight Rank2";
+			this.tsmi_Noderank2.Text = "Rank2";
 			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank3
@@ -557,7 +557,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank3.Name = "tsmi_Noderank3";
 			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
 			this.tsmi_Noderank3.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank3.Text = "highlight Rank3";
+			this.tsmi_Noderank3.Text = "Rank3";
 			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank4
@@ -565,7 +565,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank4.Name = "tsmi_Noderank4";
 			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
 			this.tsmi_Noderank4.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank4.Text = "highlight Rank4";
+			this.tsmi_Noderank4.Text = "Rank4";
 			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank5
@@ -573,7 +573,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank5.Name = "tsmi_Noderank5";
 			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
 			this.tsmi_Noderank5.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank5.Text = "highlight Rank5";
+			this.tsmi_Noderank5.Text = "Rank5";
 			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank6
@@ -581,7 +581,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank6.Name = "tsmi_Noderank6";
 			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
 			this.tsmi_Noderank6.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank6.Text = "highlight Rank6";
+			this.tsmi_Noderank6.Text = "Rank6";
 			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank7
@@ -589,7 +589,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank7.Name = "tsmi_Noderank7";
 			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
 			this.tsmi_Noderank7.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank7.Text = "highlight Rank7";
+			this.tsmi_Noderank7.Text = "Rank7";
 			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tsmi_Noderank8
@@ -597,7 +597,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank8.Name = "tsmi_Noderank8";
 			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
 			this.tsmi_Noderank8.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_Noderank8.Text = "highlight Rank8";
+			this.tsmi_Noderank8.Text = "Rank8";
 			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnNoderankClick);
 			// 
 			// tss_6
@@ -610,7 +610,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_NoderankClear.Enabled = false;
 			this.tsmi_NoderankClear.Name = "tsmi_NoderankClear";
 			this.tsmi_NoderankClear.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_NoderankClear.Text = "clear rank highlights";
+			this.tsmi_NoderankClear.Text = "clear Rank highlights";
 			this.tsmi_NoderankClear.Click += new System.EventHandler(this.OnClearRankHighlightsClick);
 			// 
 			// tsb_Options

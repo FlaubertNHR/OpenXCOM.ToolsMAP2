@@ -322,15 +322,15 @@ namespace MapView.Forms.Observers
 				{
 					co_Rank.Items.AddRange(RouteNodes.RankTftd);
 
-					tsmi_Noderank0.Text = "highlight " + RouteNodes.civscout;
-					tsmi_Noderank1.Text = "highlight " + RouteNodes.xcom;
-					tsmi_Noderank2.Text = "highlight " + RouteNodes.soldier;
-					tsmi_Noderank3.Text = "highlight " + RouteNodes.squadldr;
-					tsmi_Noderank4.Text = "highlight " + RouteNodes.nc;
-					tsmi_Noderank5.Text = "highlight " + RouteNodes.medicTftd;
-					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
-					tsmi_Noderank7.Text = "highlight " + RouteNodes.techie;
-					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
+					tsmi_Noderank0.Text = RouteNodes.civscout;
+					tsmi_Noderank1.Text = RouteNodes.xcom;
+					tsmi_Noderank2.Text = RouteNodes.soldier;
+					tsmi_Noderank3.Text = RouteNodes.squadldr;
+					tsmi_Noderank4.Text = RouteNodes.nc;
+					tsmi_Noderank5.Text = RouteNodes.medicTftd;
+					tsmi_Noderank6.Text = RouteNodes.ter1;
+					tsmi_Noderank7.Text = RouteNodes.techie;
+					tsmi_Noderank8.Text = RouteNodes.ter2;
 
 					la_ColorRank0.Text = RouteNodes.civscout;
 					la_ColorRank1.Text = RouteNodes.xcom;
@@ -346,15 +346,15 @@ namespace MapView.Forms.Observers
 				{
 					co_Rank.Items.AddRange(RouteNodes.RankUfo);
 
-					tsmi_Noderank0.Text = "highlight " + RouteNodes.civscout;
-					tsmi_Noderank1.Text = "highlight " + RouteNodes.xcom;
-					tsmi_Noderank2.Text = "highlight " + RouteNodes.soldier;
-					tsmi_Noderank3.Text = "highlight " + RouteNodes.navigator;
-					tsmi_Noderank4.Text = "highlight " + RouteNodes.lc;
-					tsmi_Noderank5.Text = "highlight " + RouteNodes.engineer;
-					tsmi_Noderank6.Text = "highlight " + RouteNodes.ter1;
-					tsmi_Noderank7.Text = "highlight " + RouteNodes.medicUfo;
-					tsmi_Noderank8.Text = "highlight " + RouteNodes.ter2;
+					tsmi_Noderank0.Text = RouteNodes.civscout;
+					tsmi_Noderank1.Text = RouteNodes.xcom;
+					tsmi_Noderank2.Text = RouteNodes.soldier;
+					tsmi_Noderank3.Text = RouteNodes.navigator;
+					tsmi_Noderank4.Text = RouteNodes.lc;
+					tsmi_Noderank5.Text = RouteNodes.engineer;
+					tsmi_Noderank6.Text = RouteNodes.ter1;
+					tsmi_Noderank7.Text = RouteNodes.medicUfo;
+					tsmi_Noderank8.Text = RouteNodes.ter2;
 
 					la_ColorRank0.Text = RouteNodes.civscout;
 					la_ColorRank1.Text = RouteNodes.xcom;
