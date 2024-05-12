@@ -396,6 +396,7 @@ namespace XCom
 		/// <summary>
 		/// Creates the toner-palettes.
 		/// </summary>
+		/// <param name="brightness"></param>
 		/// <remarks>Tonescaled <c>Palettes</c> are required by ufo-battle and
 		/// tftd-battle for MapView only.</remarks>
 		public void CreateTonescaledPalettes(int brightness)
