@@ -20,11 +20,6 @@
 
 		<p>An overlay appears with tile position and node data as the mouse moves over the Map. Also, two small vertical bars are shown at each node - the left bar (red) presents the spawn weight and the right bar (blue) presents the patrol priority. The info-overlay and weight/priority meters can be toggled on and off in Options.</p>
 
-		<p>The menubar along the top of the panel has buttons representing three connection-types.<br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;DontConnect - no automatic node-linking is performed.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;OneWayConnect - when a node is selected and another node is then either created or right-clicked, a patrol-route is automatically linked from the first node to the second node, provided that a link-slot is available.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;TwoWayConnect - when a node is selected and another node is then either created or right-clicked, a patrol-route is automatically linked both ways between the nodes, provided that link-slots are available.</p>
-
 		<br>
 		<h3>Tile data</h3>
 		<p>This section displays the currently selected tile's position along with the ID of the node at that position if one exists. It also shows the position that the mouse-cursor hovers over as well as the ID of a node at that position if one exists. If a node-link or the Og button is mouseovered the position and ID of the respective node is displayed.</p>
@@ -34,7 +29,7 @@
 		<p>
 &nbsp;&nbsp;&nbsp;&nbsp;Unit Type - aLien units must have this characteristic to patrol the node.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Node Rank - the faction or, if aLien, the rank of units that may spawn at the node.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Spawn Weight - the weight given to spawn at the node (note that "0" will disallow spawns).
+&nbsp;&nbsp;&nbsp;&nbsp;Spawn Weight - the weight given to spawn at the node (note that "0" will disallow spawns).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Patrol Priority - the priority that aLien units will give this node when patrolling nearby (note that even "0" is valid for patrolling).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Base Attack - this acts as a lure for aLien units. If and when they reach a node with a non-zero value, they will start shooting up XCOM Base facilities. This is relevant only for XCOM Base defense missions.</p>
 
@@ -43,11 +38,9 @@
 		<p>
 &nbsp;&nbsp;&nbsp;&nbsp;Link1..5 - each node has up to five destination nodes. The first field specifies the destination's ID or a compass point. The second field specifies the characteristic that an aLien unit must have to use the link. The third field is the distance between the origin and destination nodes, and is calculated automatically by MapView. It is not used by XCOM mechanics and is purely informational. An up arrow appears after the entry if the link goes to a higher level on the Map, or a down arrow appears if the entry goes to a lower level on the Map.</p>
 
-		<p>
-&nbsp;&nbsp;&nbsp;&nbsp;Along the right side of the Link data is a column of Go buttons. A button is enabled if it has a regular node as the link's destination. When the mouse is hovered over an enabled button, the link's destination is highlighted along with its link-line. Clicking an enabled Go button selects that link's destination node. To the right of that column is the Og button, which is a Go button in reverse. It can be used as a back-button but with a difference, in that if a Go button has been clicked then the source node can be returned to even if other nodes have been selected inbetween clicking a Go button and the Og button.</p>
+		<p>Along the right side of the Link data is a column of Go buttons. A button is enabled if it has a regular node as the link's destination. When the mouse is hovered over an enabled button, the link's destination is highlighted along with its link-line. Clicking an enabled Go button selects that link's destination node. To the right of that column is the Og button, which is a Go button in reverse. It can be used as a back-button but with a difference, in that if a Go button has been clicked then the source node can be returned to even if other nodes have been selected inbetween clicking a Go button and the Og button.</p>
 
-		<p>
-&nbsp;&nbsp;&nbsp;&nbsp;If a node is detected as linked to an Out of Bounds node the "Link" text will appear in red. Clicking the Go button of such a link will open a dialog that allows the Out of Bounds destination node to be deleted.</p>
+		<p>If a node is detected as linked to an Out of Bounds node the "Link" text will appear in red. Clicking the Go button of such a link will open a dialog that allows the Out of Bounds destination node to be deleted.</p>
 
 		<br>
 		<h3>Node editor</h3>
@@ -59,8 +52,7 @@
 
 		<br>
 		<h3>Node Rank colors</h3>
-		<p>
-&nbsp;&nbsp;&nbsp;&nbsp;Left-click on a colored panel to highlight nodes of that rank as per the Highlights menu (see below). Depress [Ctrl] to add or subtract a highlight.</p>
+		<p>Left-click on a colored panel to highlight nodes of that rank as per the Highlights menu (see below). Depress [Ctrl] to add or subtract a rank's highlight.</p>
 
 		<p>Note that [Ctrl+S] can be used to save the Routes when the center panel has focus. A "save" button will be enabled in the lower right corner of the data area if the Routefile is changed but has not been saved.</p>
 
@@ -118,8 +110,27 @@
 		<br>
 		<h3>Highlights menu</h3>
 
-		<p>highlight spawn nodes [Ctrl+h] - ghosts nodes with spawnweight:None so that only nodes with a weight are left colored. The center panel must be focused for the hotkey to work. The ghost-color can be chosen in Options.</p>
-		<p>highlight NodeRank* [0..8] - ghosts all nodes that do not have the chosen noderank so that only nodes of that rank are left colored. The center panel must be focused for the shortcuts to work. The ghost-color can be chosen in Options. Depress [Ctrl] to add or subtract a highlight, but note that the shortcuts do not respect the [Ctrl] key.</p>
+		<p>Spawn nodes only [Ctrl+h] - ghosts nodes with spawnweight:None so that only nodes with a weight are left colored. The center panel must be focused for the hotkey to work. The ghost-color can be chosen in Options.</p>
+		<p>NodeRank* [0..8] - ghosts all nodes that do not have the chosen noderank so that only nodes of that rank are left colored. The center panel must be focused for the shortcuts to work. The ghost-color can be chosen in Options. Depress [Ctrl] to add or subtract a highlight, but note that the shortcuts do not respect the [Ctrl] key.</p>
+		<p>clear Rank highlights - what it says on the tin but does not affect the state of highlighted Spawn nodes</p>
+
+		<br>
+		<h3>Connection options</h3>
+
+		<p>The menubar along the top of the panel has buttons representing three connection-types.<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;DontConnect - no automatic node-linking is performed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;OneWayConnect - when a node is selected and another node is then either created or right-clicked, a patrol-route is automatically linked from the first node to the second node, provided that a link-slot is available.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;TwoWayConnect - when a node is selected and another node is then either created or right-clicked, a patrol-route is automatically linked both ways between the nodes, provided that link-slots are available.</p>
+
+		<br>
+		<h3>x2 magnifier</h3>
+
+		<p>Enabling the x2 magnifier renders the grid at twice its normal scale. Navigating around the grid is done with [Ctrl]+LMB, which centers the grid on a clicked point.</p>
+
+		<br>
+		<h3>Goto box</h3>
+
+		<p>A valid node ID can be typed into the texbox and that node will be focused when [Enter] is pressed. The up/down arrows on either side of the box will increment or decrement the currently selected node ID respectively; note that the value wraps after the highest or lowest ID.</p>
 
 		<br>
 		<p>Options [Ctrl+O] - opens and closes the Options for RouteView. Descriptions for the entries appear at the bottom of that window.</p>

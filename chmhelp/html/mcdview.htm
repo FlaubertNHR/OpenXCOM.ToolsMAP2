@@ -54,13 +54,15 @@
 
 		<p>The statusbar along the bottom shows the value of a currently selected field along with its interpretation if applicable.</p>
 
-		<p>Integer Fields - All fields will be blank until a part is selected. Other than that they should never be blank, a value cannot be deleted - you might have to select all or part of the text in the field and type in a different value to change it. Fields accept integer values only. If the STRICT setting is enabled then accepted values shall be limited to those that XCOM generally expects; if STRICT is unchecked then the values are bounded only by their type: you're basically dealing with an unsigned byte: 0..255 (the ScanG field is an unsigned short: 0..65535; the TerrainOffset field is a signed byte: -128..127; and several other fields are simple booleans: 0 or 1).</p>
+		<p>Integer Fields - All fields will be blank until a part is selected. Other than that they should never be blank; if a value is blank then its previous value will be inserted when the textbox loses focus. Fields accept integer values only. If the STRICT setting is enabled then accepted values shall be limited to those that XCOM generally expects; if STRICT is unchecked then the values are bounded only by their type: you're basically dealing with an unsigned byte: 0..255 (the ScanG field is an unsigned short: 0..65535; the TerrainOffset field is a signed byte: -128..127; and several other fields are simple booleans: 0 or 1).</p>
 
 		<p>The [+/-] keys on the numeric keypad can be used to increment and decrement a value within its limits when its field is focused for editing.</p>
 
 		<p>[Esc] or [Enter] will unfocus a field and focus the Record Collection panel for navigation, as will clicking almost anywhere on the background of the app.</p>
 
 		<p>Clicking on the IsoLoFT panel focuses its vertical trackbar, as does returning from the LoFTs viewer.</p>
+
+		<p>Right clicking on the label of a textbox will offer to assign the textbox's current value to other records that are currently subselected.</p>
 
 		<br>
 		<h3>File menu</h3>
