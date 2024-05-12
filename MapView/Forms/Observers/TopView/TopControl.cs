@@ -402,9 +402,15 @@ namespace MapView.Forms.Observers
 				else
 					loftid = Byte.MaxValue;
 
+				string key;
+				if (loftid == 0) // blank LoFT, draw light floor color.
+					key = TopViewOptionables.str_FloorColorLight;
+				else
+					key = TopViewOptionables.str_FloorColor;
+
 				_blobService.DrawFloor(
 									_graphics,
-									TopBrushes[TopViewOptionables.str_FloorColor],
+									TopBrushes[key],
 									x,y,
 									loftid);
 

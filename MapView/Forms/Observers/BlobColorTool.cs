@@ -26,7 +26,7 @@ namespace MapView.Forms.Observers
 
 
 		#region Fields (static)
-		private const int ALFALFA = 100;
+		internal const int ALFALFA = 100;
 
 		internal static Brush BrushLightPrep = Brushes.White;
 		#endregion Fields (static)

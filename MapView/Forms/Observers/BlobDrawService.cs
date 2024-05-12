@@ -99,7 +99,7 @@ namespace MapView.Forms.Observers
 		/// <param name="brush"></param>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		/// <param name="loftid"></param>
+		/// <param name="loftid">the LoFT id of layer #0</param>
 		internal void DrawFloor(
 				Graphics graphics,
 				Brush brush,
@@ -109,6 +109,8 @@ namespace MapView.Forms.Observers
 			_path.Reset();
 			switch (loftid)
 			{
+//				case 0: return; // blank LoFT, no draw.
+
 				default:
 //				case Byte.MaxValue:
 //				case 6: // fullfloor

@@ -134,6 +134,7 @@ namespace MapView.Forms.Observers
 			get { return _floorColor; }
 			set { _floorColor = value; }
 		}
+		internal const string str_FloorColorLight = "FloorColorLight"; // for Floors with no LoFT @ layer #0
 
 
 		internal const string str_WestColor = "WestColor";
@@ -519,7 +520,8 @@ namespace MapView.Forms.Observers
 			pen = new Pen(def_GridLine10Color, def_GridLine10Width);
 			TopControl.TopPens.Add(str_GridLine10Color, pen);
 
-			TopControl.TopBrushes.Add(str_FloorColor, new SolidBrush(def_FloorColor));
+			TopControl.TopBrushes.Add(str_FloorColor,      new SolidBrush(def_FloorColor));
+			TopControl.TopBrushes.Add(str_FloorColorLight, new SolidBrush(Color.FromArgb(BlobColorTool.ALFALFA, def_FloorColor)));
 
 			pen = new Pen(def_WestColor, def_WestWidth);
 			TopControl.TopPens.Add(str_WestColor, pen);
@@ -717,13 +719,21 @@ namespace MapView.Forms.Observers
 
 			TopControl.TopBrushes[key].Color = (Color)val;
 
-			if (key == str_ContentColor)
+			switch(key)
 			{
-				TopControl.ToolContent.Dispose();
-				TopControl.ToolContent = new BlobColorTool(
-														TopControl.TopBrushes[key],
-														BlobDrawService.LINEWIDTH_CONTENT);
-//														"TopToolContent");
+				case str_FloorColor:
+					TopControl.TopBrushes[str_FloorColorLight].Color = Color.FromArgb(
+																					BlobColorTool.ALFALFA,
+																					(Color)val);
+					break;
+
+				case str_ContentColor:
+					TopControl.ToolContent.Dispose();
+					TopControl.ToolContent = new BlobColorTool(
+															TopControl.TopBrushes[key],
+															BlobDrawService.LINEWIDTH_CONTENT);
+//															"TopToolContent");
+					break;
 			}
 
 			if (MainViewF.that._fcolors != null)
