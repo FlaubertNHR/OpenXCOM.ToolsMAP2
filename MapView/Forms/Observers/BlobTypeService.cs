@@ -71,7 +71,7 @@ namespace MapView.Forms.Observers
 
 
 					// East
-					if (allareincluded(new byte[]{24,26,28,30,32,34}))
+					if (allareincluded(new byte[]{24,26,28,30,32,34,47}))
 						return BlobType.EastWall;
 
 					// South
@@ -122,16 +122,16 @@ namespace MapView.Forms.Observers
 
 
 					// corners ->
-					if (allareincluded(new byte[]{39,40,41,101,102,103}))
+					if (allareincluded(new byte[]{0,39,40,41,101,102,103}))
 						return BlobType.NorthwestCorner;
 
-					if (allareincluded(new byte[]{98,99,100}))
+					if (allareincluded(new byte[]{0,98,99,100}))
 						return BlobType.NortheastCorner;
 
-					if (allareincluded(new byte[]{104,105,106}))
+					if (allareincluded(new byte[]{0,104,105,106}))
 						return BlobType.SouthwestCorner;
 
-					if (allareincluded(new byte[]{107,108,109}))
+					if (allareincluded(new byte[]{0,107,108,109}))
 						return BlobType.SoutheastCorner;
 				}
 				else
