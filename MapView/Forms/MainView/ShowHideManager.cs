@@ -35,7 +35,7 @@ namespace MapView.Forms.MainView
 
 
 		#region Methods (static)
-		/// <summary>
+/*		/// <summary>
 		/// Hides visible viewers (except MainView) when invoking PckView or
 		/// McdView via TileView. Is used in conjunction with
 		/// <c><see cref="ShowViewers()">ShowViewers()</see></c>.
@@ -51,9 +51,9 @@ namespace MapView.Forms.MainView
 			foreach (var f in _visible)
 				if (f != MainViewF.that)
 					f.Hide();
-		}
+		} */
 
-		/// <summary>
+/*		/// <summary>
 		/// Shows subsidiary viewers that were previously visible after closing
 		/// PckView or McdView via TileView. Is used in conjunction with
 		/// <c><see cref="HideViewers()">HideViewers()</see></c>.
@@ -75,7 +75,7 @@ namespace MapView.Forms.MainView
 					MainViewF.BypassActivatedEvent = false;
 				}
 			}
-		}
+		} */
 
 
 		/// <summary>

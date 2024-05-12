@@ -514,9 +514,9 @@ namespace MapView.Forms.Observers
 						fPckView.SetPalette(_file.Descriptor.Pal);
 						fPckView.SetSelected(SelectedTilepart[0].Id);
 
-						ShowHideManager.HideViewers();
+//						ShowHideManager.HideViewers();
 						fPckView.ShowDialog(ObserverManager.TileView); // <- Pause UI until PckView is closed.
-						ShowHideManager.ShowViewers();
+//						ShowHideManager.ShowViewers();
 
 						Palette.UfoBattle .SetTransparent(true); // ensure that transparency is turned on after returning
 						Palette.TftdBattle.SetTransparent(true); // from PckView
@@ -577,9 +577,9 @@ namespace MapView.Forms.Observers
 										_file.Descriptor.Pal,
 										SelectedTilepart.Id);
 
-						ShowHideManager.HideViewers();
+//						ShowHideManager.HideViewers();
 						fMcdView.ShowDialog(ObserverManager.TileView); // <- Pause UI until McdView is closed.
-						ShowHideManager.ShowViewers();
+//						ShowHideManager.ShowViewers();
 
 						Palette.UfoBattle .SetTransparent(true);
 						Palette.TftdBattle.SetTransparent(true);
