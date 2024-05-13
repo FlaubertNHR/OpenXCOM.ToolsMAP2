@@ -235,6 +235,10 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				PartType partType)
 		{
+			//DSShared.Logfile.Log("QuadrantDrawService.Paint()");
+			//DSShared.Logfile.Log(". tile= " + tile);
+			//DSShared.Logfile.Log(". partType= " + partType);
+
 			// fill the background of the quad-slots
 			Brush brush;
 
@@ -268,6 +272,7 @@ namespace MapView.Forms.Observers
 			// Floor ->
 			if (tile != null && (part = tile.Floor) != null)
 			{
+				//DSShared.Logfile.Log(". . Floor");
 				DrawSprite(part[phase], 0, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.Floor);
 			}
@@ -277,6 +282,7 @@ namespace MapView.Forms.Observers
 			// West ->
 			if (tile != null && (part = tile.West) != null)
 			{
+				//DSShared.Logfile.Log(". . West");
 				DrawSprite(part[phase], Quadwidth, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.West);
 			}
@@ -286,6 +292,7 @@ namespace MapView.Forms.Observers
 			// North ->
 			if (tile != null && (part = tile.North) != null)
 			{
+				//DSShared.Logfile.Log(". . North");
 				DrawSprite(part[phase], Quadwidth * (int)PartType.North, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.North);
 			}
@@ -295,6 +302,7 @@ namespace MapView.Forms.Observers
 			// Content ->
 			if (tile != null && (part = tile.Content) != null)
 			{
+				//DSShared.Logfile.Log(". . Content");
 				DrawSprite(part[phase], Quadwidth * (int)PartType.Content, part.Record.SpriteOffset);
 				if (part.IsDoor) DrawDoorString((int)PartType.Content);
 			}
@@ -304,6 +312,7 @@ namespace MapView.Forms.Observers
 			// Current ->
 			if (SelectedTilepart != null)
 			{
+				//DSShared.Logfile.Log(". . Current");
 				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, SelectedTilepart.Record.SpriteOffset);
 				if (SelectedTilepart.IsDoor) DrawDoorString(QuadrantPart);
 			}
@@ -339,6 +348,9 @@ namespace MapView.Forms.Observers
 		/// <param name="offset_y"></param>
 		private static void DrawSprite(XCImage sprite, int offset_x, int offset_y)
 		{
+			//DSShared.Logfile.Log("QuadrantDrawService.DrawSprite()");
+			//DSShared.Logfile.Log(". sprite= " + sprite);
+
 			if (MainViewF.Optionables.UseMono)
 			{
 				byte[] bindata = sprite.GetBindata();
@@ -361,16 +373,28 @@ namespace MapView.Forms.Observers
 			else
 			{
 				Bitmap b = sprite.Sprite;
-				_graphics.DrawImage(
-								b,
-								new Rectangle(
-											StartX + offset_x,
-											StartY - offset_y,
-											b.Width,
-											b.Height),
-								0,0, b.Width, b.Height,
-								GraphicsUnit.Pixel,
-								Globals.Ia);
+				// 'b' can be null when dismissing a SaveAlert to load or reload
+				// a tileset; I haven't gotten to the bottom of it (this
+				// shouldn't happen) so just put a null-check here ->
+				//
+				// It could be .NET trying to redraw the QuadrantPanel for the
+				// tileset that has just been removed instead of only drawing
+				// the panel for the newly loaded tileset - see
+				// 'MainViewF.Dontdrawyougits'.
+				//
+				if (b != null)
+				{
+					_graphics.DrawImage(
+									b,
+									new Rectangle(
+												StartX + offset_x,
+												StartY - offset_y,
+												b.Width,
+												b.Height),
+									0,0, b.Width, b.Height,
+									GraphicsUnit.Pixel,
+									Globals.Ia);
+				}
 			}
 		}
 
