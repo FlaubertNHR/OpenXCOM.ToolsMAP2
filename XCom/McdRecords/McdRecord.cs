@@ -16,7 +16,8 @@ namespace XCom
 	/// tileparts.
 	/// </summary>
 	/// <remarks>Do not reorder these since they are used by
-	/// <c>MainViewF.Screenshot()</c> in the specific order.</remarks>
+	/// <c>MainViewF.Screenshot()</c> in the specific order. They are also used
+	/// to position the Quadrant panels in TopView.</remarks>
 	public enum PartType
 	{
 		Invalid = -1,
