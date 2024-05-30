@@ -124,7 +124,7 @@ namespace XCom
 
 
 		/// <summary>
-		/// Used by <c>MapView.BlobTypeService</c>.
+		/// Used by <c><see cref="BlobTypeService"/></c>.
 		/// </summary>
 		public IList<byte> LoftList
 		{ get; private set; }
@@ -223,9 +223,9 @@ namespace XCom
 		/// </summary>
 		/// <param name="bindata">if <c>null</c> a blank byte-array gets created</param>
 		/// <param name="extra"><c>true</c> if this <c>McdRecord</c> needs to
-		/// create preset strings for <c>MapView.McdInfoF</c> and
-		/// <c><see cref="McdRecord.LoftList">McdRecord.LoftLists</see></c>
-		/// for <c>MapView.BlobDrawService</c></param>
+		/// create preset strings for <c>McdInfoF</c> and
+		/// <c><see cref="LoftList">LoftLists</see></c> for
+		/// <c><see cref="BlobDrawService"/></c></param>
 		public McdRecord(IList<byte> bindata, bool extra = false)
 		{
 			if (bindata == null)
@@ -341,7 +341,7 @@ namespace XCom
 				ByteTable = BytesTable(bindata);
 
 
-				LoftList = new List<byte>(); // create LoftList for MapView.BlobTypeService ->
+				LoftList = new List<byte>(); // create LoftList for 'BlobTypeService' ->
 
 				LoftList.Add(Loft1);
 				LoftList.Add(Loft2);
@@ -597,7 +597,7 @@ namespace XCom
 
 			record.ByteTable = ByteTable;
 
-			// The following list is used by MapView.BlobTypeService only.
+			// The following list is used by 'BlobTypeService' only.
 			record.LoftList = LoftList;
 
 			return record;

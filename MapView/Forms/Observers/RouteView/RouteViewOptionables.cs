@@ -4,6 +4,8 @@ using System.Drawing;
 
 using MapView.Forms.MainView;
 
+using XCom;
+
 
 namespace MapView.Forms.Observers
 {
@@ -833,7 +835,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 
 			brush = new SolidBrush(def_ContentColor);
 			RouteControl.RouteBrushes[str_ContentColor] = brush;
-			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);
+			RouteControl.ToolContent = new BlobColorTool(brush, BlobDrawCoordinator.DefaultLinewidthContent);
 
 			color = Color.FromArgb(def_NodeOpacity, def_NodeColor0);
 			brush = new SolidBrush(color);
@@ -1090,7 +1092,7 @@ This is the color of the text on the Save button (if enabled) and the color for 
 					RouteControl.ToolContent.Dispose();
 					RouteControl.ToolContent = new BlobColorTool(
 															RouteControl.RouteBrushes[str_ContentColor],
-															BlobDrawService.LINEWIDTH_CONTENT);
+															BlobDrawCoordinator.DefaultLinewidthContent);
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();

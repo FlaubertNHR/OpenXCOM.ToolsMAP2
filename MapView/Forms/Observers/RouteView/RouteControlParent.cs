@@ -23,6 +23,8 @@ namespace MapView.Forms.Observers
 		{
 			//DSShared.Logfile.Log("RouteControlParent.DisposeControlParent()");
 			_t1.Dispose();
+
+			BlobService.Dispose();
 		}
 
 
@@ -163,8 +165,8 @@ namespace MapView.Forms.Observers
 		{ get; set; }
 
 
-		private readonly BlobDrawService _blobService = new BlobDrawService();
-		protected BlobDrawService BlobService
+		private readonly BlobDrawCoordinator _blobService = new BlobDrawCoordinator();
+		protected BlobDrawCoordinator BlobService
 		{
 			get { return _blobService; }
 		}

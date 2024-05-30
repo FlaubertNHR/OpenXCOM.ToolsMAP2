@@ -4,6 +4,8 @@ using System.Drawing;
 
 using MapView.Forms.MainView;
 
+using XCom;
+
 
 namespace MapView.Forms.Observers
 {
@@ -521,7 +523,7 @@ namespace MapView.Forms.Observers
 			TopControl.TopPens.Add(str_GridLine10Color, pen);
 
 			TopControl.TopBrushes.Add(str_FloorColor,      new SolidBrush(def_FloorColor));
-			TopControl.TopBrushes.Add(str_FloorColorLight, new SolidBrush(Color.FromArgb(BlobColorTool.ALFALFA, def_FloorColor)));
+			TopControl.TopBrushes.Add(str_FloorColorLight, new SolidBrush(Color.FromArgb(BlobColorTool.Alfalfa, def_FloorColor)));
 
 			pen = new Pen(def_WestColor, def_WestWidth);
 			TopControl.TopPens.Add(str_WestColor, pen);
@@ -533,7 +535,7 @@ namespace MapView.Forms.Observers
 
 			brush = new SolidBrush(def_ContentColor);
 			TopControl.TopBrushes.Add(str_ContentColor, brush);
-			TopControl.ToolContent = new BlobColorTool(brush, BlobDrawService.LINEWIDTH_CONTENT);//, "TopToolContent");
+			TopControl.ToolContent = new BlobColorTool(brush, BlobDrawCoordinator.DefaultLinewidthContent);//, "TopToolContent");
 
 			pen = new Pen(def_SelectorColor, def_SelectorWidth);
 			TopControl.TopPens.Add(str_SelectorColor, pen);
@@ -723,7 +725,7 @@ namespace MapView.Forms.Observers
 			{
 				case str_FloorColor:
 					TopControl.TopBrushes[str_FloorColorLight].Color = Color.FromArgb(
-																					BlobColorTool.ALFALFA,
+																					BlobColorTool.Alfalfa,
 																					(Color)val);
 					break;
 
@@ -731,7 +733,7 @@ namespace MapView.Forms.Observers
 					TopControl.ToolContent.Dispose();
 					TopControl.ToolContent = new BlobColorTool(
 															TopControl.TopBrushes[key],
-															BlobDrawService.LINEWIDTH_CONTENT);
+															BlobDrawCoordinator.DefaultLinewidthContent);
 //															"TopToolContent");
 					break;
 			}

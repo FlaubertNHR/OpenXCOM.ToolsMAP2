@@ -62,7 +62,7 @@ namespace MapView.Forms.Observers
 		private readonly GraphicsPath _lozSelector = new GraphicsPath(); // mouse-over cursor lozenge
 		private readonly GraphicsPath _lozSelected = new GraphicsPath(); // selected tile or tiles being drag-selected
 
-		private readonly BlobDrawService _blobService = new BlobDrawService();
+		private readonly BlobDrawCoordinator _blobService = new BlobDrawCoordinator();
 
 
 		private int _originX;	// since the lozenge is drawn with its Origin at 0,0 of the
@@ -394,71 +394,93 @@ namespace MapView.Forms.Observers
 
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
 			{
+				McdRecord record = tile.Floor.Record;
+
 				byte loftid;
-				if (tile.Floor.Record.LoftList != null) // crippled tileparts have an invalid 'LoftList'
+				if (record.LoftList != null) // crippled tileparts have an invalid 'LoftList'
 				{
-					loftid = tile.Floor.Record.LoftList[0];
+					loftid = record.LoftList[0];
+
+					if (size != 0 && BlobTypeService.hasExtendedLofts(record.LoftList, cutoff))
+						elofts |= ELOFT_F;
 				}
 				else
 					loftid = Byte.MaxValue;
 
 				string key;
-				if (loftid == 0) // blank LoFT, draw light floor color.
-					key = TopViewOptionables.str_FloorColorLight;
-				else
-					key = TopViewOptionables.str_FloorColor;
+				if (loftid == 0) key = TopViewOptionables.str_FloorColorLight; // blank LoFT, draw light floor color.
+				else             key = TopViewOptionables.str_FloorColor;
 
-				_blobService.DrawFloor(
+				BlobDrawService.DrawFloor(
 									_graphics,
 									TopBrushes[key],
 									x,y,
-									loftid);
+									loftid,
+									_blobService._path,
+									_blobService.HalfWidth, _blobService.HalfHeight);
 
-				if (tile.Floor.Record.GravLift != 0) // draw GravLift floor as content-part
-					_blobService.DrawContentOrWall(
+				if (record.GravLift != 0) // overlay GravLift floor as a content-part ->
+					BlobDrawService.DrawWallOrContent(
 												_graphics,
 												ToolContent,
 												x,y,
-												tile.Floor);
-
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Floor, cutoff))
-					elofts |= ELOFT_F;
+												tile.Floor,
+												_blobService._path,
+												_blobService.HalfWidth, _blobService.HalfHeight);
 			}
 
 			if (!TopView.it_Content.Checked && tile.Content != null)
 			{
-				_blobService.DrawContentOrWall(
+				BlobDrawService.DrawWallOrContent(
 											_graphics,
 											ToolContent,
 											x,y,
-											tile.Content);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.Content, cutoff))
+											tile.Content,
+											_blobService._path,
+											_blobService.HalfWidth, _blobService.HalfHeight);
+				if (size != 0
+					&& tile.Content.Record.LoftList != null // crippled tileparts have an invalid 'LoftList'
+					&& BlobTypeService.hasExtendedLofts(tile.Content.Record.LoftList, cutoff))
+				{
 					elofts |= ELOFT_C;
+				}
 			}
 
 			if (!TopView.it_West.Checked && tile.West != null)
 			{
-				_blobService.DrawContentOrWall(
+				BlobDrawService.DrawWallOrContent(
 											_graphics,
 											ToolWest,
 											x,y,
-											tile.West);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.West, cutoff))
+											tile.West,
+											_blobService._path,
+											_blobService.HalfWidth, _blobService.HalfHeight);
+				if (size != 0
+					&& tile.West.Record.LoftList != null // crippled tileparts have an invalid 'LoftList'
+					&& BlobTypeService.hasExtendedLofts(tile.West.Record.LoftList, cutoff))
+				{
 					elofts |= ELOFT_W;
+				}
 			}
 
 			if (!TopView.it_North.Checked && tile.North != null)
 			{
-				_blobService.DrawContentOrWall(
+				BlobDrawService.DrawWallOrContent(
 											_graphics,
 											ToolNorth,
 											x,y,
-											tile.North);
-				if (size != 0 && BlobTypeService.hasExtendedLofts(tile.North, cutoff))
+											tile.North,
+											_blobService._path,
+											_blobService.HalfWidth, _blobService.HalfHeight);
+				if (size != 0
+					&& tile.North.Record.LoftList != null // crippled tileparts have an invalid 'LoftList'
+					&& BlobTypeService.hasExtendedLofts(tile.North.Record.LoftList, cutoff))
+				{
 					elofts |= ELOFT_N;
+				}
 			}
 
-			if (size != 0 && elofts != ELOFT_n) // draw a small indicator for each tilepart that has custom LoFT entry(s) ->
+			if (elofts != ELOFT_n) // draw a small indicator for each tilepart that has custom LoFT entry(s) ->
 			{
 				var brush = new SolidBrush(TopView.Optionables.GridLine10Color); // TODO: instantiate this brush on Load
 

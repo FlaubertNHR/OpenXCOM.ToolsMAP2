@@ -380,6 +380,8 @@ namespace McdView
 			pnl_IsoLoft    .Location = new Point(gb_Loft    .Left - 5 - pnl_IsoLoft.Width, 15);
 			bar_IsoLoft    .Location = new Point(pnl_IsoLoft.Left - 2 - bar_IsoLoft.Width, 10);
 
+			pnl_Blob       .Location = new Point(pnl_IsoLoft.Left, pnl_IsoLoft.Bottom + 15);
+
 			if (!IsInvoked)
 				RegistryInfo.InitializeRegistry(dirAppL);
 
@@ -525,6 +527,8 @@ namespace McdView
 			CuboidVertLineTopPath = isocube.GetVerticalLineTop(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 			CuboidVertLineBotPath = isocube.GetVerticalLineBot(pnl_IsoLoft.Width, pnl_IsoLoft.Height);
 
+			BlobDrawCoordinator.SetService(pnl_Blob.Width / 2);
+
 
 			foreach (Control control in Controls)
 			{
@@ -566,7 +570,6 @@ namespace McdView
 			}
 #endif
 		}
-
 
 		/// <summary>
 		/// Assigns MapView's Configurator's basepath(s) to
@@ -676,13 +679,18 @@ namespace McdView
 				{
 					RegistryInfo.UpdateRegistry(this);
 
-					// do not dispose static brushes if McdView is invoked by TileView.
-					// Because if McdView gets invoked twice TerrainPanel.OnPaint()
-					// throws an ArgumentException.
+					// do not dispose static brushes/tools/etc if McdView is
+					// invoked by TileView. Because if McdView gets invoked
+					// twice TerrainPanel.OnPaint() throws an ArgumentException.
+					//
+					// TODO: check for and Dispose() these in MapView ->
 					if (!IsInvoked)
 					{
 						Colors.BrushHilight      .Dispose();
 						Colors.BrushHilightsubsel.Dispose();
+
+						ToolGray.Dispose();
+						BlobDrawCoordinator.Dispose();
 					}
 
 					_fontRose                .Dispose();
@@ -1461,7 +1469,7 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles clicking the Palette|UFO menuitem.
+		/// Handles clicking the Resources|UFO menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1498,7 +1506,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles clicking the Palette|TFTD menuitem.
+		/// Handles clicking the Resources|TFTD menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1891,7 +1899,8 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles clicking the Help|Help menuitem. Shows the CHM helpfile.
+		/// Handles clicking the Help|Help <c>MenuItem</c>. Shows the CHM
+		/// helpfile.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1903,7 +1912,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles clicking the Help|About menuitem. Shows the about-box.
+		/// Handles clicking the Help|About <c>MenuItem</c>. Shows the
+		/// about-box.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1963,8 +1973,8 @@ namespace McdView
 
 		#region Events
 		/// <summary>
-		/// Selects the PartsPanel if a group's title (or a blank point inside
-		/// of the groupbox), etc is clicked.
+		/// Selects the <c><see cref="PartsPanel"/></c> if a group's title (or a
+		/// blank point inside of the <c>GroupBox</c>) etc is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1974,7 +1984,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Selects the STRICT checkbox if the label is clicked.
+		/// Selects the STRICT <c>CheckBox</c> if the label is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1984,7 +1994,7 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Selects the SpriteShade trackbar if the label is clicked.
+		/// Selects the SpriteShade trackbar if the <c>Label</c> is clicked.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2044,8 +2054,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles the "SpriteShade" textbox gaining focus as well as
-		/// mouseovers on its label and textbox.
+		/// Handles the "SpriteShade" <c>TextBox</c> gaining focus as well as
+		/// mouseovers on its <c>Label</c> and <c>TextBox</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2059,12 +2069,13 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles mouseover leaving the "SpriteShade" Label or TextBox.
-		/// @note Retains the current description if the TextBox has
-		/// input-focus.
+		/// Handles mouseover leaving the "SpriteShade" <c>Label</c> or
+		/// <c>TextBox</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
+		/// <remarks>Retains the current description if the <c>TextBox</c> has
+		/// input-focus.</remarks>
 		private void OnMouseLeaveSpriteShade(object sender, EventArgs e)
 		{
 			if (!tb_SpriteShade.Focused)
@@ -2073,7 +2084,7 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles STRICT's CheckChanged event for its CheckBox.
+		/// Handles STRICT's <c>CheckChanged</c> event for its <c>CheckBox</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2106,8 +2117,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles the "STRICT" checkbox gaining focus as well as mouseovers on
-		/// its label and checkbox.
+		/// Handles the "STRICT" <c>CheckBox</c> gaining focus as well as
+		/// mouseovers on its <c>Label</c> and <c>CheckBox</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2122,7 +2133,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles mouseover leaving the "STRICT" Label or CheckBox.
+		/// Handles mouseover leaving the "STRICT" <c>Label</c> or
+		/// <c>CheckBox</c>.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2135,8 +2147,8 @@ namespace McdView
 		}
 
 		/// <summary>
-		/// Handles the "STRICT" checkbox and the "SpriteShade" textbox losing
-		/// focus.
+		/// Handles the "STRICT" <c>CheckBox</c> and the "SpriteShade"
+		/// <c>TextBox</c> losing focus.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2149,7 +2161,7 @@ namespace McdView
 
 
 		/// <summary>
-		/// Handles IsoLoFT's trackbar's ValueChanged event.
+		/// Handles IsoLoFT's trackbar's <c>ValueChanged</c> event.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2233,6 +2245,7 @@ namespace McdView
 			pnl_Loft19.Invalidate();
 
 			pnl_IsoLoft.Invalidate();
+			pnl_Blob   .Invalidate();
 		}
 
 		/// <summary>
@@ -2328,7 +2341,7 @@ namespace McdView
 		/// <summary>
 		/// Clears all textfields.
 		/// </summary>
-		/// <param name="zero">true to "0" all textfields</param>
+		/// <param name="zero"><c>true</c> to zero all textfields</param>
 		internal void ClearTextFields(bool zero = false)
 		{
 			string text;

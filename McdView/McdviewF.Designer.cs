@@ -271,6 +271,8 @@ namespace McdView
 		private ToolStripStatusLabel tssl_Offset;
 		private ToolStripStatusLabel tssl_OffsetLast;
 		private ToolStripStatusLabel tssl_OffsetAftr;
+		private BufferedPanel pnl_Blob;
+		private Label lbl_Extended;
 
 
 		/// <summary>
@@ -554,6 +556,8 @@ namespace McdView
 			this.pnl_IsoLoft = new DSShared.Controls.BufferedPanel();
 			this.bar_IsoLoft = new System.Windows.Forms.TrackBar();
 			this.pnl_bg = new DSShared.Controls.BufferedPanel();
+			this.lbl_Extended = new System.Windows.Forms.Label();
+			this.pnl_Blob = new DSShared.Controls.BufferedPanel();
 			this.ss_Statusbar.SuspendLayout();
 			this.gb_Unused.SuspendLayout();
 			this.gb_Loft.SuspendLayout();
@@ -3762,6 +3766,8 @@ namespace McdView
 			this.pnl_bg.Controls.Add(this.gb_Step);
 			this.pnl_bg.Controls.Add(this.pnl_IsoLoft);
 			this.pnl_bg.Controls.Add(this.bar_IsoLoft);
+			this.pnl_bg.Controls.Add(this.lbl_Extended);
+			this.pnl_bg.Controls.Add(this.pnl_Blob);
 			this.pnl_bg.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnl_bg.Location = new System.Drawing.Point(0, 315);
 			this.pnl_bg.Margin = new System.Windows.Forms.Padding(0);
@@ -3769,6 +3775,28 @@ namespace McdView
 			this.pnl_bg.Size = new System.Drawing.Size(812, 437);
 			this.pnl_bg.TabIndex = 2;
 			this.pnl_bg.Click += new System.EventHandler(this.OnClick_FocusCollection);
+			// 
+			// lbl_Extended
+			// 
+			this.lbl_Extended.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbl_Extended.Location = new System.Drawing.Point(515, 290);
+			this.lbl_Extended.Margin = new System.Windows.Forms.Padding(0);
+			this.lbl_Extended.Name = "lbl_Extended";
+			this.lbl_Extended.Size = new System.Drawing.Size(130, 16);
+			this.lbl_Extended.TabIndex = 20;
+			this.lbl_Extended.Text = "Extended Loftset";
+			this.lbl_Extended.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.lbl_Extended.Visible = false;
+			// 
+			// pnl_Blob
+			// 
+			this.pnl_Blob.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnl_Blob.Location = new System.Drawing.Point(515, 220);
+			this.pnl_Blob.Margin = new System.Windows.Forms.Padding(0);
+			this.pnl_Blob.Name = "pnl_Blob";
+			this.pnl_Blob.Size = new System.Drawing.Size(130, 65);
+			this.pnl_Blob.TabIndex = 19;
+			this.pnl_Blob.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint_Blob);
 			// 
 			// McdviewF
 			// 

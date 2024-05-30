@@ -152,7 +152,7 @@ namespace McdView
 								{
 									using (var f = new Infobox(
 															"Error",
-															"LoFT icons not found.",
+															"LoFT icons not loaded.",
 															null,
 															InfoboxType.Error))
 									{

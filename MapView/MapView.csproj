@@ -150,7 +150,6 @@
     <Compile Include="Forms\McdInfoF.Designer.cs">
       <DependentUpon>McdInfoF.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Observers\BlobTypeService.cs" />
     <Compile Include="Forms\Observers\RouteView\RouteControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -198,8 +197,7 @@
     </Compile>
     <Compile Include="Forms\Observers\TopView\QuadrantDrawService.cs" />
     <Compile Include="Forms\Observers\TopView\TopViewOptionables.cs" />
-    <Compile Include="Forms\Observers\BlobColorTool.cs" />
-    <Compile Include="Forms\Observers\BlobDrawService.cs" />
+    <Compile Include="Forms\Observers\BlobDrawCoordinator.cs" />
     <Compile Include="Forms\OptionsF.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -439,7 +439,7 @@ namespace McdView
 				{
 					using (var f = new Infobox(
 											"Error",
-											"ScanG icons not found.",
+											"ScanG icons not loaded.",
 											null,
 											InfoboxType.Error))
 					{
@@ -736,8 +736,86 @@ namespace McdView
 		}
 
 
+		private static BlobColorTool ToolGray = new BlobColorTool(Color.Gray);
+
+		private const byte LOFTID_Max_ufo  = 111;
+		private const byte LOFTID_Max_tftd = 113;
+
+		/// <summary>
+		/// Paints a blob based on the current loftset.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnPaint_Blob(object sender, PaintEventArgs e)
+		{
+			Graphics graphics = e.Graphics;
+
+			graphics.DrawRectangle(
+								Colors.PenText,
+								0,0,
+								pnl_Blob.Width  - 1,
+								pnl_Blob.Height - 1);
+
+			if (Selid != -1)
+			{
+				McdRecord record = Parts[Selid].Record;
+
+				BlobTypeService.UpdateLoftlist(record);
+
+				byte loftid;
+				if (miResourcesTftd.Checked) loftid = LOFTID_Max_tftd;
+				else                         loftid = LOFTID_Max_ufo;
+
+				lbl_Extended.Visible = BlobTypeService.hasExtendedLofts(BlobTypeService._loftlist, loftid);
+
+				switch (record.PartType)
+				{
+//					default:
+//					case PartType.Invalid: // -1
+//						break;
+
+					case PartType.Floor:
+					{
+						Brush brush;
+						if (record.Loft1 == 0) brush = Brushes.DarkGray; // is lighter than Gray
+						else                   brush = Brushes.Gray;
+
+						BlobDrawService.DrawFloor(
+											graphics,
+											brush,
+											pnl_Blob.Width / 2, 0,
+											record.Loft1,
+											BlobDrawCoordinator._path,
+											BlobDrawCoordinator._halfwidth, BlobDrawCoordinator._halfheight);
+
+						if (record.GravLift != 0) // draw GravLift floor as content-part
+							goto case PartType.Content;
+
+						break;
+					}
+
+					case PartType.West:
+					case PartType.North:
+					case PartType.Content:
+						BlobDrawService.DrawWallOrContent(
+													graphics,
+													ToolGray,
+													pnl_Blob.Width / 2, 0,
+													Parts[Selid],
+													BlobDrawCoordinator._path,
+													BlobDrawCoordinator._halfwidth, BlobDrawCoordinator._halfheight);
+						break;
+				}
+			}
+			else
+				lbl_Extended.Visible = false;
+		}
+		#endregion LoFT
+	}
+}
+
 /*		// RotatingCube -->
-// OnPaint ->
+		// OnPaint ->
 			var g = e.Graphics;
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			g.Clear(Color.Transparent);
@@ -826,6 +904,3 @@ namespace McdView
 				item[2] *= v3;
 			}
 		} */
-		#endregion LoFT
-	}
-}

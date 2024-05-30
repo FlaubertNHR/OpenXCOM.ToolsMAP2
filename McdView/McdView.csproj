@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddRangeInput.cs" />
+    <Compile Include="BlobDrawCoordinator.cs" />
     <Compile Include="CacheLoad.cs" />
     <Compile Include="CloseTerrainDialog.cs" />
     <Compile Include="Colors.cs" />

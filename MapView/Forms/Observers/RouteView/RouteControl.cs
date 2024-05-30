@@ -300,14 +300,41 @@ namespace MapView.Forms.Observers
 				{
 					if (!(tile = _file.GetTile(c,r)).Vacant)
 					{
+						if (tile.Floor != null && tile.Floor.Record.GravLift != 0) // draw GravLift floor as a content-part ->
+							BlobDrawService.DrawWallOrContent(
+														_graphics,
+														ToolContent,
+														x,y,
+														tile.Floor,
+														BlobService._path,
+														HalfWidth, HalfHeight);
+
 						if (tile.Content != null)
-							BlobService.DrawContentOrWall(_graphics, ToolContent, x,y, tile.Content);
+							BlobDrawService.DrawWallOrContent(
+														_graphics,
+														ToolContent,
+														x,y,
+														tile.Content,
+														BlobService._path,
+														HalfWidth, HalfHeight);
 
 						if (tile.West != null)
-							BlobService.DrawContentOrWall(_graphics, ToolWall, x,y, tile.West);
+							BlobDrawService.DrawWallOrContent(
+														_graphics,
+														ToolWall,
+														x,y,
+														tile.West,
+														BlobService._path,
+														HalfWidth, HalfHeight);
 
 						if (tile.North != null)
-							BlobService.DrawContentOrWall(_graphics, ToolWall, x,y, tile.North);
+							BlobDrawService.DrawWallOrContent(
+														_graphics,
+														ToolWall,
+														x,y,
+														tile.North,
+														BlobService._path,
+														HalfWidth, HalfHeight);
 					}
 				}
 			}

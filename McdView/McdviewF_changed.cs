@@ -927,6 +927,7 @@ namespace McdView
 
 						pnl_Loft08 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1002,6 +1003,7 @@ namespace McdView
 
 						pnl_Loft09 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1077,6 +1079,7 @@ namespace McdView
 
 						pnl_Loft10 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1152,6 +1155,7 @@ namespace McdView
 
 						pnl_Loft11 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1227,6 +1231,7 @@ namespace McdView
 
 						pnl_Loft12 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1302,6 +1307,7 @@ namespace McdView
 
 						pnl_Loft13 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1377,6 +1383,7 @@ namespace McdView
 
 						pnl_Loft14 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1452,6 +1459,7 @@ namespace McdView
 
 						pnl_Loft15 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1527,6 +1535,7 @@ namespace McdView
 
 						pnl_Loft16 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1602,6 +1611,7 @@ namespace McdView
 
 						pnl_Loft17 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1677,6 +1687,7 @@ namespace McdView
 
 						pnl_Loft18 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -1752,6 +1763,7 @@ namespace McdView
 
 						pnl_Loft19 .Invalidate();
 						pnl_IsoLoft.Invalidate();
+						pnl_Blob   .Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -2921,6 +2933,8 @@ namespace McdView
 							|| (!_strict && result > -1 && result < 256)))
 					{
 						Parts[Selid].Record.GravLift = (byte)result;
+
+						pnl_Blob.Invalidate();
 
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
@@ -4417,6 +4431,8 @@ namespace McdView
 					{
 						Parts[Selid].Record.PartType = (PartType)result;	// NOTE: Assigning integers that are not
 																			// explicitly defined in the enum is allowed.
+						pnl_Blob.Invalidate();
+
 						if (!InitFields)
 							Changed = CacheLoad.Changed(Parts);
 					}

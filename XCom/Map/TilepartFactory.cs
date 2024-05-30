@@ -19,11 +19,10 @@ namespace XCom
 		/// <c><see cref="MapFile.Terrains">MapFile.Terrains</see></c>; default
 		/// <c>-1</c> if McdView is going to handle the
 		/// sprites itself and this <c>Tilepart</c> is not part of a terrainset</param>
-		/// <param name="extra"><c>true</c> if the
-		/// <c><see cref="McdRecord">McdRecords</see></c> need to create preset
-		/// strings for <c>MapView.McdInfoF</c> and
-		/// <c><see cref="McdRecord.LoftList">McdRecord.LoftLists</see></c>
-		/// for <c>MapView.BlobDrawService</c></param>
+		/// <param name="extra"><c>true</c> if this <c>McdRecord</c> needs to
+		/// create preset strings for <c>McdInfoF</c> and
+		/// <c><see cref="McdRecord.LoftList">McdRecord.LoftLists</see></c> for
+		/// <c><see cref="BlobDrawService"/></c></param>
 		/// <returns>an array of <c>Tileparts</c></returns>
 		public static Tilepart[] CreateTileparts(
 				string terrain,
