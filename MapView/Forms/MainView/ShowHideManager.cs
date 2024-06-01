@@ -26,15 +26,14 @@ namespace MapView.Forms.MainView
 		/// <item>About</item>
 		/// </list></remarks>
 		internal static IList<Form> _zOrder = new List<Form>();
-
-		/// <summary>
-		/// Exclusively for use when invoking McdView or PckView from TileView.
-		/// </summary>
-		private static readonly IList<Form> _visible = new List<Form>();
 		#endregion Fields (static)
 
 
-		#region Methods (static)
+/*		/// <summary>
+		/// Exclusively for use when invoking McdView or PckView from TileView.
+		/// </summary>
+		private static readonly IList<Form> _visible = new List<Form>(); */
+
 /*		/// <summary>
 		/// Hides visible viewers (except MainView) when invoking PckView or
 		/// McdView via TileView. Is used in conjunction with
@@ -78,6 +77,7 @@ namespace MapView.Forms.MainView
 		} */
 
 
+		#region Methods (static)
 		/// <summary>
 		/// Gets the current z-order of visible Forms and returns it in a List.
 		/// </summary>
