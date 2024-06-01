@@ -2784,7 +2784,7 @@ namespace MapView.Forms.Observers
 		/// has focus.
 		/// </summary>
 		/// <param name="keyData"></param>
-		internal void doNoderankShortcut(Keys keyData)
+		internal static void doNoderankShortcut(Keys keyData)
 		{
 			switch (keyData)
 			{

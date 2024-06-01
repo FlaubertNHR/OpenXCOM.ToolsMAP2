@@ -3440,7 +3440,7 @@ namespace MapView
 		/// Dis/enables <c>ToolStrips</c> on the observers.
 		/// </summary>
 		/// <param name="enable"><c>true</c> to enable</param>
-		private void EnableObservers(bool enable)
+		private static void EnableObservers(bool enable)
 		{
 			ObserverManager.TileView    .Control     .Enable(enable);
 			ObserverManager.TopView     .Control     .Enable(enable);

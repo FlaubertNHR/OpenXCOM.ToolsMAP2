@@ -452,7 +452,7 @@ namespace MapView.Forms.Observers
 			}
 
 			e.SuppressKeyPress = true;
-			ObserverManager.RouteView.Control.doNoderankShortcut(e.KeyData);
+			RouteView.doNoderankShortcut(e.KeyData);
 		}
 		#endregion Events (override)
 
