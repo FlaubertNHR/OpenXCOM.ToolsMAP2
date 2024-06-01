@@ -1300,9 +1300,9 @@ namespace MapView
 				 MainViewF.that.MaptreeChanged = true;
 
 
-			string head = String.Format("{0} other tileset{1} been updated.",
-										changed,
-										changed == 1 ? " has" : "s have");
+			string head = String.Format(
+									"{0} other tileset{1} been updated.",
+									changed, changed == 1 ? " has" : "s have");
 
 			using (var f = new Infobox("Tilesets updated", head))
 				f.ShowDialog(this);
