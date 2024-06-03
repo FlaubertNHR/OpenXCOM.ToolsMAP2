@@ -52,7 +52,7 @@ namespace DSShared
 				string head,
 				string copyable = null,
 				InfoboxType bt = InfoboxType.Info,
-				InfoboxButtons buttons = InfoboxButtons.Cancel)
+				InfoboxButton buttons = InfoboxButton.Cancel)
 		{
 			// TODO: Store static location and size of the Infobox (if shown non-modally).
 
@@ -64,23 +64,23 @@ namespace DSShared
 
 			switch (buttons)
 			{
-				case InfoboxButtons.Cancel:
+				case InfoboxButton.Cancel:
 					bu_Cancel.Text = "ok";
 					break;
 
-				case InfoboxButtons.CancelOkay:
+				case InfoboxButton.CancelOkay:
 					bu_Okay.Visible = true;
 					break;
 
-				case InfoboxButtons.CancelOkayRetry:
+				case InfoboxButton.CancelOkayRetry:
 					bu_Okay .Visible =
 					bu_Retry.Visible = true;
 					break;
 
-				case InfoboxButtons.CancelYesNo:
+				case InfoboxButton.CancelYesNo:
 					bu_Okay .Text = "yes";
 					bu_Retry.Text = "no";
-					goto case InfoboxButtons.CancelOkayRetry;
+					goto case InfoboxButton.CancelOkayRetry;
 			}
 
 
@@ -336,7 +336,7 @@ namespace DSShared
 	public enum InfoboxType
 	{ Info, Warn, Error }
 
-	public enum InfoboxButtons
+	public enum InfoboxButton
 	{ Cancel, CancelOkay, CancelOkayRetry, CancelYesNo }
 	#endregion Enums (public)
 }

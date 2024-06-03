@@ -183,7 +183,7 @@ namespace McdView
 															"Set all sprite phases to #" + id,
 															null,
 															InfoboxType.Warn,
-															InfoboxButtons.CancelOkay))
+															InfoboxButton.CancelOkay))
 									{
 										if (f.ShowDialog(this) == DialogResult.OK)
 										{

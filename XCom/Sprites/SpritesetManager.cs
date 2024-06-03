@@ -199,7 +199,7 @@ namespace XCom
 
 									return spriteset;
 
-								case Spriteset.Fail.qty:
+								case SpritesetFail.qty:
 									head = Infobox.SplitString("The count of sprites in the Pck file does not match the count expected by the Tab file.");
 									copy = pf + GlobalsXC.PckExt + Environment.NewLine
 										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
@@ -207,21 +207,21 @@ namespace XCom
 										 + "offsets = " + spriteset.CountOffsets;
 									break;
 
-								case Spriteset.Fail.ovr:
+								case SpritesetFail.ovr:
 									head = "Pck data (uncompressed) overflowed a sprite's length.";
 									copy = pf + GlobalsXC.PckExt + Environment.NewLine
 										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
 										 + "sprite id " + spriteset.Failid;
 									break;
 
-								case Spriteset.Fail.eos:
+								case SpritesetFail.eos:
 									head = "End_of_Sprite marker [0xFF] before Pck data ended.";
 									copy = pf + GlobalsXC.PckExt + Environment.NewLine
 										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine
 										 + "sprite id " + spriteset.Failid;
 									break;
 
-								case Spriteset.Fail.pck:
+								case SpritesetFail.pck:
 									head = "Pck data does not end with End_of_Sprite marker [0xFF].";
 									copy = pf + GlobalsXC.PckExt + Environment.NewLine
 										 + pf + GlobalsXC.TabExt + Environment.NewLine + Environment.NewLine

@@ -128,7 +128,7 @@ namespace XCom
 					case MarkerEos: // end of sprite
 						if (src != bindata.Length - 1)
 						{
-							_spriteset.Failr = Spriteset.Fail.eos;
+							_spriteset.Failr = SpritesetFail.eos;
 							_spriteset.Failid = Id;
 							return;
 						}
@@ -144,7 +144,7 @@ namespace XCom
 						if (dst >= _bindata.Length)
 						{
 							//Logfile.Log(src + " . . FAIL dst= " + dst);
-							_spriteset.Failr = Spriteset.Fail.ovr;
+							_spriteset.Failr = SpritesetFail.ovr;
 							_spriteset.Failid = Id;
 							return;
 						}

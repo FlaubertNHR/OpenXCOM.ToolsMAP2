@@ -520,7 +520,7 @@ namespace MapView
 
 				if (CuboidSprite.Ufoset != null)
 				{
-					if (CuboidSprite.Ufoset.Failr != Spriteset.Fail.non)
+					if (CuboidSprite.Ufoset.Failr != SpritesetFail.non)
 					{
 						CuboidSprite.Ufoset = null;
 						//Logfile.Log("UFO Cursor failed to load.");
@@ -543,7 +543,7 @@ namespace MapView
 
 				if (CuboidSprite.Tftdset != null)
 				{
-					if (CuboidSprite.Tftdset.Failr != Spriteset.Fail.non)
+					if (CuboidSprite.Tftdset.Failr != SpritesetFail.non)
 					{
 						CuboidSprite.Tftdset = null;
 						//Logfile.Log("TFTD Cursor failed to load.");
@@ -2098,7 +2098,7 @@ namespace MapView
 										head,
 										copyable,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkayRetry))
+										InfoboxButton.CancelOkayRetry))
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -2700,7 +2700,7 @@ namespace MapView
 											head,
 											copyable,
 											InfoboxType.Warn,
-											InfoboxButtons.CancelOkayRetry))
+											InfoboxButton.CancelOkayRetry))
 					{
 						switch (f.ShowDialog(this))
 						{
@@ -2810,7 +2810,7 @@ namespace MapView
 									head,
 									"group - " + labelGroup,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2904,7 +2904,7 @@ namespace MapView
 									head,
 									copyable,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3046,7 +3046,7 @@ namespace MapView
 									head,
 									copyable,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (ib.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3584,7 +3584,7 @@ namespace MapView
 										"Do you want to save changes to the Map?",
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelYesNo)) // cancel/ok/retry
+										InfoboxButton.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3595,7 +3595,7 @@ namespace MapView
 							if (MapFile.SaveMap())
 								goto case DialogResult.Retry;
 
-							return DialogResult.Cancel;
+							return DialogResult.Cancel; // save failed.
 
 						case DialogResult.Retry:	// No. don't save just clear MapChanged flag
 							MapChanged = false;
@@ -3624,7 +3624,7 @@ namespace MapView
 										"Do you want to save changes to the Routes?",
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelYesNo)) // cancel/ok/retry
+										InfoboxButton.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3635,7 +3635,7 @@ namespace MapView
 							if (MapFile.SaveRoutes())
 								goto case DialogResult.Retry;
 
-							return DialogResult.Cancel;
+							return DialogResult.Cancel; // save failed.
 
 						case DialogResult.Retry:	// No. don't save just clear RoutesChanged flag
 							RouteView.RoutesChangedCoordinator = false;
@@ -3667,7 +3667,7 @@ namespace MapView
 										"Do you want to save changes to the Map Tree?",
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelYesNo)) // cancel/ok/retry
+										InfoboxButton.CancelYesNo)) // cancel/ok/retry
 				{
 					switch (f.ShowDialog(this))
 					{
@@ -3676,8 +3676,8 @@ namespace MapView
 
 						case DialogResult.OK:		// Yes. save MapTilesets then check MaptreeChanged flag
 							OnSaveMaptreeClick(null, EventArgs.Empty);
-							if (MaptreeChanged) // ie. failed
-								return DialogResult.Cancel;
+							if (MaptreeChanged)
+								return DialogResult.Cancel; // save failed.
 							break;
 
 						case DialogResult.Retry:	// No. don't save just clear MaptreeChanged flag

@@ -1214,7 +1214,6 @@ namespace MapView.Forms.Observers
 				{
 					RoutesChangedCoordinator = true;
 					NodeSelected.Rank = (byte)co_Rank.SelectedIndex;
-//					NodeSelected.Rank = (byte)((Pterodactyl)co_Rank.SelectedItem).Case; // <- MapView1-type code.
 
 					if (NodeSelected.Spawn != SpawnWeight.None)
 					{
@@ -2885,7 +2884,7 @@ namespace MapView.Forms.Observers
 										"Are you sure you want to clear the selected node's Link data ...",
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
@@ -2923,7 +2922,7 @@ namespace MapView.Forms.Observers
 									"Are you sure you want to change all unittypes to " + any + " ...",
 									null,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -2974,7 +2973,7 @@ namespace MapView.Forms.Observers
 									"Are you sure you want to change all noderanks to " + civscout + " ...",
 									null,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3026,7 +3025,7 @@ namespace MapView.Forms.Observers
 									"Are you sure you want to change all spawnweights to " + none + " ...",
 									null,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3078,7 +3077,7 @@ namespace MapView.Forms.Observers
 									"Are you sure you want to change all patrolpriorities to " + lolo + " ...",
 									null,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{
@@ -3125,7 +3124,7 @@ namespace MapView.Forms.Observers
 									"Are you sure you want to change all baseattacks to " + none + " ...",
 									null,
 									InfoboxType.Warn,
-									InfoboxButtons.CancelOkay))
+									InfoboxButton.CancelOkay))
 			{
 				if (f.ShowDialog(this) == DialogResult.OK)
 				{

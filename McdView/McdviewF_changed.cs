@@ -255,7 +255,7 @@ namespace McdView
 		/// <param name="tb">a <c>TextBox</c> to check the text of</param>
 		/// <returns><c>true</c> if the text is NOT blank AND NOT changed -
 		/// <c>false</c> if the text is blank OR changed</returns>
-		private bool TryParseText(Control tb)
+		private static bool TryParseText(Control tb)
 		{
 			if (tb.Text.Length == 0) // ignore value if user-deleted
 				return false;
@@ -358,7 +358,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -434,7 +434,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -509,7 +509,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -584,7 +584,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -659,7 +659,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -734,7 +734,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -809,7 +809,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -884,7 +884,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -968,7 +968,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1044,7 +1044,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1120,7 +1120,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1196,7 +1196,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1272,7 +1272,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1348,7 +1348,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1424,7 +1424,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1500,7 +1500,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1576,7 +1576,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1652,7 +1652,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1728,7 +1728,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1804,7 +1804,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -1907,7 +1907,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2047,7 +2047,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2117,7 +2117,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2187,7 +2187,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2257,7 +2257,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2327,7 +2327,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2397,7 +2397,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2467,7 +2467,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2537,7 +2537,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2633,7 +2633,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2719,7 +2719,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2800,7 +2800,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2901,7 +2901,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -2986,7 +2986,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3077,7 +3077,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3163,7 +3163,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3244,7 +3244,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3328,7 +3328,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3399,7 +3399,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3470,7 +3470,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3541,7 +3541,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3615,7 +3615,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3686,7 +3686,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3770,7 +3770,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3844,7 +3844,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -3928,7 +3928,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4001,7 +4001,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4087,7 +4087,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4165,7 +4165,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4237,7 +4237,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4309,7 +4309,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4398,7 +4398,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4483,7 +4483,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4565,7 +4565,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4637,7 +4637,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4709,7 +4709,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4780,7 +4780,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4852,7 +4852,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -4955,7 +4955,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -5037,7 +5037,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{
@@ -5108,7 +5108,7 @@ namespace McdView
 										COPYVAL_INFO,
 										null,
 										InfoboxType.Warn,
-										InfoboxButtons.CancelOkay))
+										InfoboxButton.CancelOkay))
 				{
 					if (ib.ShowDialog() == DialogResult.OK)
 					{

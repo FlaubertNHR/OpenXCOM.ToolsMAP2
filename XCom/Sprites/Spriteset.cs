@@ -8,6 +8,45 @@ using DSShared;
 
 namespace XCom
 {
+	#region Enums (public)
+	/// <summary>
+	/// Possible fail-states for
+	/// <c><see cref="Spriteset(string, Palette, byte[], byte[], int, int, int, bool)">Spriteset()</see></c>.
+	/// </summary>
+	public enum SpritesetFail
+	{
+		/// <summary>
+		/// Success.
+		/// </summary>
+		non,
+
+		/// <summary>
+		/// Pck data (uncompressed) overflowed a sprite's length.
+		/// </summary>
+		ovr,
+
+		/// <summary>
+		/// Pck vs Tab count mismatch.
+		/// </summary>
+		qty,
+
+		/// <summary>
+		/// End_of_sprite marker before Pck data's length.
+		/// </summary>
+		/// <remarks>Technically this will never occur.
+		/// <c><see cref="Spriteset.Failr">Spriteset.Failr</see></c> would be
+		/// set to either <c><see cref="qty"/></c> or <c><see cref="pck"/></c>
+		/// before <c>eos</c> happens.</remarks>
+		eos,
+
+		/// <summary>
+		/// Pck data does not end with End_of_Sprite marker.
+		/// </summary>
+		pck
+	}
+	#endregion Enums (public)
+
+
 	/// <summary>
 	/// a <c>Spriteset</c>. A collection of images that is usually created of
 	/// <c>PCK+TAB</c> terrain file data but can also be units or bigobs or a
@@ -21,44 +60,6 @@ namespace XCom
 	/// This object is disposable but eff their <c>IDisposable crap</c>.</remarks>
 	public sealed class Spriteset
 	{
-		#region Enums (public)
-		/// <summary>
-		/// Possible fail-states for
-		/// <c><see cref="Spriteset(string, Palette, byte[], byte[], int, int, int, bool)">Spriteset()</see></c>.
-		/// </summary>
-		public enum Fail
-		{
-			/// <summary>
-			/// Success.
-			/// </summary>
-			non,
-
-			/// <summary>
-			/// Pck data (uncompressed) overflowed a sprite's length.
-			/// </summary>
-			ovr,
-
-			/// <summary>
-			/// Pck vs Tab count mismatch.
-			/// </summary>
-			qty,
-
-			/// <summary>
-			/// End_of_sprite marker before Pck data's length.
-			/// </summary>
-			/// <remarks>Technically this will never occur. Either a
-			/// <c><see cref="qty"/></c> or a <c><see cref="pck"/></c>
-			/// <c><see cref="Failr"/></c> will be encountered beforehand.</remarks>
-			eos,
-
-			/// <summary>
-			/// Pck data does not end with End_of_Sprite marker.
-			/// </summary>
-			pck
-		}
-		#endregion Enums (public)
-
-
 		#region Methods (disposable)
 		/// <summary>
 		/// Disposes all <c><see cref="XCImage">XCImages</see></c> in
@@ -141,15 +142,15 @@ namespace XCom
 
 
 		/// <summary>
-		/// Stores a possible <c><see cref="Fail"/></c> state when loading this
-		/// <c>Spriteset</c>.
+		/// Stores a possible <c><see cref="SpritesetFail"/></c> state when
+		/// loading this <c>Spriteset</c>.
 		/// </summary>
-		/// <c><see cref="Fail.non">Fail.non</see></c> if loading is successful.
-		/// <remarks>The caller shall set this <c>Spriteset</c> to <c>null</c>
-		/// if not <c>Fail.non</c>. Only
-		/// <c><see cref="Fail.pck">Fail.pck</see></c> needs to call
-		/// <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
-		public Fail Failr
+		/// <remarks><c><see cref="SpritesetFail.non">SpritesetFail.non</see></c>
+		/// if loading is successful. The caller shall set this <c>Spriteset</c>
+		/// to <c>null</c> if not <c>SpritesetFail.non</c>. Only
+		/// <c><see cref="SpritesetFail.pck">SpritesetFail.pck</see></c> needs
+		/// to call <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
+		public SpritesetFail Failr
 		{ get; internal set; }
 
 		/// <summary>
@@ -266,43 +267,29 @@ namespace XCom
 		/// sprites for MapView</param>
 		/// <remarks>Check that <paramref name="bytesPck"/> and
 		/// <paramref name="bytesTab"/> are valid before call.
-		/// 
-		/// 
+		/// <br/><br/>
 		/// A <c>Spriteset</c> is loaded by
 		/// <list type="number">
-		/// <item><c>MapView.MainViewF()</c>
-		/// 
+		/// <item><c>MapView.MainViewF()</c><br/>
 		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset()">EmbeddedService.CreateMonotoneSpriteset()</see></c>
 		/// partype icons</item>
-		/// <item><c>MapView.MainViewF()</c>
-		/// 
+		/// <item><c>MapView.MainViewF()</c><br/>
 		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c>
-		/// ufo-cursor
-		/// 
+		/// ufo-cursor<br/>
 		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c>
 		/// tftd-cursor</item>
-		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
-		/// 
-		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
-		/// 
-		/// > <c><see cref="Descriptor.CreateTerrain(int)">Descriptor.CreateTerrain()</see></c>
-		/// 
+		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c><br/>
+		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c><br/>
+		/// > <c><see cref="Descriptor.CreateTerrain(int)">Descriptor.CreateTerrain()</see></c><br/>
 		/// > <c><see cref="SpritesetManager.CreateSpriteset(string, string, int, Palette, bool)">SpritesetManager.CreateSpriteset()</see></c>
 		/// tilepart sprites</item>
-		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c>
-		/// 
-		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c>
-		/// 
-		/// > <c><see cref="MapFile(Descriptor, IList, RouteNodes)">MapFile.MapFile()</see></c>
-		/// 
-		/// > <c>MapFile.LoadMapfile()</c>
-		/// 
-		/// > <c>MapFile.CreateTile()</c>
-		/// 
-		/// > <c><see cref="Tilepart.Cripple(PartType)">Tilepart.Cripple()</see></c>
-		/// 
-		/// > <c>Tilepart.CreateCrippledSprites()</c>
-		/// 
+		/// <item><c>MapView.MainViewF.LoadSelectedDescriptor()</c><br/>
+		/// > <c><see cref="MapFileService.LoadDescriptor(Descriptor, ref bool, bool, bool, RouteNodes)">MapFileService.LoadDescriptor()</see></c><br/>
+		/// > <c><see cref="MapFile(Descriptor, IList, RouteNodes)">MapFile.MapFile()</see></c><br/>
+		/// > <c>MapFile.LoadMapfile()</c><br/>
+		/// > <c>MapFile.CreateTile()</c><br/>
+		/// > <c><see cref="Tilepart.Cripple(PartType)">Tilepart.Cripple()</see></c><br/>
+		/// > <c>Tilepart.CreateCrippledSprites()</c><br/>
 		/// > <c><see cref="EmbeddedService.CreateMonotoneSpriteset()">EmbeddedService.CreateMonotoneSpriteset()</see></c>
 		/// crippled sprites</item>
 		/// <item><c>PckView.PckViewF.LoadSpriteset(string, bool)</c></item>
@@ -431,7 +418,7 @@ namespace XCom
 
 				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
-					Failr = Fail.qty;
+					Failr = SpritesetFail.qty;
 					return;
 				}
 
@@ -449,7 +436,7 @@ namespace XCom
 
 					if (bindata[bindata.Length - 1] != PckSprite.MarkerEos)
 					{
-						Failr = Fail.pck;
+						Failr = SpritesetFail.pck;
 						Failid = i;
 						return;
 					}
@@ -464,7 +451,7 @@ namespace XCom
 											this,
 											createToned);
 
-					if (Failr == Fail.ovr)
+					if (Failr == SpritesetFail.ovr)
 						return;
 
 					Sprites.Add(sprite);
