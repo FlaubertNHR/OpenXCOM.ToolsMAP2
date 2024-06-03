@@ -246,7 +246,7 @@ namespace XCom
 				// floor ->
 				case Blob.Floorlike:
 					PathContent(x,y, path, halfwidth, halfheight);
-					graphics.FillPath(BlobColorTool.BrushLightPrep, path);
+					graphics.FillPath(Brushes.White, path); // prep (underlay color) for 'BrushLight'
 					graphics.FillPath(tool.BrushLight, path);
 					break;
 

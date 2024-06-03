@@ -33,13 +33,6 @@ namespace XCom
 		/// Alpha-transparency for the light pen and brush.
 		/// </summary>
 		public const int Alfalfa = 100;
-
-		/// <summary>
-		/// A brush for drawing the underlay of translucent brush-blobs.
-		/// </summary>
-		/// <seealso cref="BrushLight"><c>BrushLight</c></seealso>
-		/// <remarks>Do not dispose this brush.</remarks>
-		public static Brush BrushLightPrep = Brushes.White;
 		#endregion Fields (static)
 
 
