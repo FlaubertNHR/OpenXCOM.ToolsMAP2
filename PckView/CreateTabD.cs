@@ -236,7 +236,7 @@ namespace PckView
 		/// <c><see cref="OnCreateTabClick()">OnCreateTabClick()</see></c>
 		/// </summary>
 		/// <returns></returns>
-		private string getoffset(uint offset)
+		private static string getoffset(uint offset)
 		{
 			string format;
 			if (offset <= UInt16.MaxValue) format = "X4";
