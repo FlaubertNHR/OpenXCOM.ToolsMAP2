@@ -601,7 +601,6 @@ namespace MapView.Forms.Observers
 							invalidate = true;
 
 							ObserverManager.RouteView.Control.PrintOverInfo(_col, _row);
-
 						}
 					}
 					else if (vert != MapFile.LEVEL_no)
