@@ -279,7 +279,8 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		private void DrawBlobs()
 		{
-			MapTile tile;
+			MapTile tile; Tilepart part;
+
 			for (int
 					r = 0,
 						startX = Origin.X + _scaleOffsetX,
@@ -300,39 +301,44 @@ namespace MapView.Forms.Observers
 				{
 					if (!(tile = _file.GetTile(c,r)).Vacant)
 					{
-						if (tile.Floor != null && tile.Floor.Record.GravLift != 0) // draw GravLift floor as a content-part ->
+						// note that crippled tileparts have an invalid 'LoftList'
+
+						if ((part = tile.Floor) != null && part.Record.GravLift != 0 // draw any GravLift floor as a content-part
+							&& part.Record.LoftList != null)
+						{
 							BlobDrawService.DrawWallOrContent(
 														_graphics,
 														ToolContent,
 														x,y,
-														tile.Floor,
+														part,
 														BlobService._path,
 														HalfWidth, HalfHeight);
+						}
 
-						if (tile.Content != null)
+						if ((part = tile.Content) != null && part.Record.LoftList != null)
 							BlobDrawService.DrawWallOrContent(
 														_graphics,
 														ToolContent,
 														x,y,
-														tile.Content,
+														part,
 														BlobService._path,
 														HalfWidth, HalfHeight);
 
-						if (tile.West != null)
+						if ((part = tile.West) != null && part.Record.LoftList != null)
 							BlobDrawService.DrawWallOrContent(
 														_graphics,
 														ToolWall,
 														x,y,
-														tile.West,
+														part,
 														BlobService._path,
 														HalfWidth, HalfHeight);
 
-						if (tile.North != null)
+						if ((part = tile.North) != null && part.Record.LoftList != null)
 							BlobDrawService.DrawWallOrContent(
 														_graphics,
 														ToolWall,
 														x,y,
-														tile.North,
+														part,
 														BlobService._path,
 														HalfWidth, HalfHeight);
 					}
