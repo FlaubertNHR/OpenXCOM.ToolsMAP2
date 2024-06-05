@@ -158,11 +158,11 @@ namespace MapView.Forms.Observers
 						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32 + 1,
 						StartY);
 			p2 = new Point(
-						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32 + 1,
-						StartY + Spriteset.SpriteHeight40 + 1);
+						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32  + 1,
+						StartY +                            Spriteset.SpriteHeight40 + 1);
 			p3 = new Point(
 						StartX + Quadwidth * QuadrantPart,
-						StartY + Spriteset.SpriteHeight40 + 1);
+						StartY +                            Spriteset.SpriteHeight40 + 1);
 			p4 = new Point(
 						StartX + Quadwidth * QuadrantPart,
 						StartY);
