@@ -90,9 +90,9 @@ namespace XCom
 		{
 			Color colorLight = Color.FromArgb(Alfalfa, pen.Color);
 
-			Pen          = new Pen(pen.Color,   pen.Width);
-			PenLight     = new Pen(colorLight,  pen.Width);
-			PenLightPrep = new Pen(Color.White, pen.Width);
+			Pen          = new Pen(pen.Color,        pen.Width);
+			PenLight     = new Pen(colorLight,       pen.Width);
+			PenLightPrep = new Pen(Color.WhiteSmoke, pen.Width);
 
 //			PenDoor = null;
 
@@ -110,9 +110,9 @@ namespace XCom
 		{
 			Color colorLight = Color.FromArgb(Alfalfa, brush.Color);
 
-			Pen          = new Pen(brush.Color, width);
-			PenLight     = new Pen(colorLight,  width);
-			PenLightPrep = new Pen(Color.White, width);
+			Pen          = new Pen(brush.Color,      width);
+			PenLight     = new Pen(colorLight,       width);
+			PenLightPrep = new Pen(Color.WhiteSmoke, width);
 
 //			PenDoor = null;
 
@@ -129,11 +129,11 @@ namespace XCom
 		{
 			Color light = Color.FromArgb(Alfalfa, color);
 
-			Pen          = new Pen(color,       7.0f);
-			PenLight     = new Pen(light,       7.0f);
-			PenLightPrep = new Pen(Color.White, 7.0f);
+			Pen          = new Pen(color,            7.0f);
+			PenLight     = new Pen(light,            7.0f);
+			PenLightPrep = new Pen(Color.WhiteSmoke, 7.0f);
 
-			PenDoor      = new Pen(color,       2.0f);
+			PenDoor      = new Pen(color,            2.0f);
 
 			Brush        = new SolidBrush(color);
 			BrushLight   = new SolidBrush(light);
