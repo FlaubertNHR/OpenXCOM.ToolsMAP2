@@ -28,10 +28,22 @@ namespace XCom
 
 		private static Spriteset CrippledSprites;
 
-		private const int MonoTONE_WEST    = 1; // cf. QuadrantDrawService.MonoTONE_* ->
-		private const int MonoTONE_NORTH   = 2;
-		private const int MonoTONE_FLOOR   = 3;
-		private const int MonoTONE_CONTENT = 4;
+		/// <summary>
+		/// The ID for the West sprite in the MonotoneSpriteset.
+		/// </summary>
+		public const int Quad_WEST = 1; // cf. QuadrantDrawService.Quad_* ->
+		/// <summary>
+		/// The ID for the North sprite in the MonotoneSpriteset.
+		/// </summary>
+		public const int Quad_NORTH = 2;
+		/// <summary>
+		/// The ID for the Floor sprite in the MonotoneSpriteset.
+		/// </summary>
+		public const int Quad_FLOOR = 3;
+		/// <summary>
+		/// The ID for the Content sprite in the MonotoneSpriteset.
+		/// </summary>
+		public const int Quad_CONTENT = 4;
 
 		/// <summary>
 		/// The ID of a <c>Tilepart</c> across all loaded terrainsets.
@@ -413,10 +425,10 @@ namespace XCom
 			int quadrant;
 			switch (slot)
 			{
-				case PartType.Floor:   quadrant = MonoTONE_FLOOR;   break;
-				case PartType.West:    quadrant = MonoTONE_WEST;    break;
-				case PartType.North:   quadrant = MonoTONE_NORTH;   break;
-				case PartType.Content: quadrant = MonoTONE_CONTENT; break;
+				case PartType.Floor:   quadrant = Quad_FLOOR;   break;
+				case PartType.West:    quadrant = Quad_WEST;    break;
+				case PartType.North:   quadrant = Quad_NORTH;   break;
+				case PartType.Content: quadrant = Quad_CONTENT; break;
 
 				default: return;
 			}

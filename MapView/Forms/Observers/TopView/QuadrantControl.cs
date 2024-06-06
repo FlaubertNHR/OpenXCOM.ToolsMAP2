@@ -126,7 +126,7 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopRouteView.ControlTop.TopControl.Select();
 
 			bool isKeyInput = _keyQuadrant !=  PartType.Invalid
-						   && _keyQuadrant != (PartType)QuadrantDrawService.QuadrantPart;
+						   && _keyQuadrant != (PartType)QuadrantDrawService.Quad_PART;
 
 			if (!isKeyInput)
 			{
@@ -145,7 +145,7 @@ namespace MapView.Forms.Observers
 				case PartType.North:   part = PartType.North;   break;
 				case PartType.Content: part = PartType.Content; break;
 
-				case (PartType)QuadrantDrawService.QuadrantPart:
+				case (PartType)QuadrantDrawService.Quad_PART:
 					isPartSlot = true;
 					if (QuadrantDrawService.SelectedTilepart != null)
 						part = QuadrantDrawService.SelectedTilepart.Record.PartType;

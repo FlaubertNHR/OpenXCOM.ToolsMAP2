@@ -640,7 +640,7 @@ namespace MapView.Forms.Observers
 					{
 						graphics.FillRectangle(Eraser, rectOuter);
 						graphics.DrawImage(
-										MainViewF.MonotoneSprites[QuadrantDrawService.MonoTONE_ERASER].Sprite,
+										MainViewF.MonotoneSprites[QuadrantDrawService.Quad_ERASER].Sprite,
 										L,T);
 					}
 

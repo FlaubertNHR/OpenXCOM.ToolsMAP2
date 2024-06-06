@@ -558,7 +558,7 @@ namespace MapView.Forms.Observers
 				case Keys.Q: // select the proper quadrant of the currently selected Tileview-part
 					button = MouseButtons.Left;
 					clicks = 1;
-					quadrant = (PartType)QuadrantDrawService.QuadrantPart;
+					quadrant = (PartType)QuadrantDrawService.Quad_PART;
 					break;
 
 				case Keys.T: // select the TileView-part of the selected quadrant

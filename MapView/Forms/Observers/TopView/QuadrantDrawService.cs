@@ -74,12 +74,14 @@ namespace MapView.Forms.Observers
 		private static readonly GraphicsPath _pathContent = new GraphicsPath();
 		private static readonly GraphicsPath _pathPart    = new GraphicsPath();
 
-		internal const int MonoTONE_ERASER  = 0; // cf. Tilepart.MonoTONE_* ->
-		private  const int MonoTONE_WEST    = 1;
-		private  const int MonoTONE_NORTH   = 2;
-		private  const int MonoTONE_FLOOR   = 3;
-		private  const int MonoTONE_CONTENT = 4;
-		internal const int QuadrantPart     = 5;
+		/// <summary>
+		/// The ID for the Eraser sprite in the MonotoneSpriteset.
+		/// </summary>
+		internal const int Quad_ERASER = 0; // cf. Tilepart.Quad_* ->
+		/// <summary>
+		/// The ID for the CurrentPart 'slot'.
+		/// </summary>
+		internal const int Quad_PART = 5;
 
 		private static TopView TopViewControl;
 
@@ -111,32 +113,32 @@ namespace MapView.Forms.Observers
 
 		#region Methods (static)
 		/// <summary>
-		/// Sets <c>GraphicsPaths</c> for each quad-slot outline.
+		/// Sets <c>GraphicsPaths</c> for each quadrant-slot outline.
 		/// </summary>
 		internal static void SetQuadrantPaths()
 		{
 			Point p0,p1,p2,p3,p4;
 
 			GraphicsPath path;
-			for (int quad = 0; quad != MapTile.QUADS; ++quad) // cache each quadrant's rectangular bounding path
+			for (int quadrant = 0; quadrant != MapTile.QUADS; ++quadrant) // cache each quadrant's rectangular bounding path
 			{
 				p0 = new Point(
-							StartX + Quadwidth * quad - 1,
+							StartX + Quadwidth * quadrant - 1,
 							StartY);
 				p1 = new Point(
-							StartX + Quadwidth * quad + Spriteset.SpriteWidth32 + 1,
+							StartX + Quadwidth * quadrant + Spriteset.SpriteWidth32 + 1,
 							StartY);
 				p2 = new Point(
-							StartX + Quadwidth * quad + Spriteset.SpriteWidth32 + 1,
+							StartX + Quadwidth * quadrant + Spriteset.SpriteWidth32 + 1,
 							StartY + Spriteset.SpriteHeight40 + 1);
 				p3 = new Point(
-							StartX + Quadwidth * quad,
+							StartX + Quadwidth * quadrant,
 							StartY + Spriteset.SpriteHeight40 + 1);
 				p4 = new Point(
-							StartX + Quadwidth * quad,
+							StartX + Quadwidth * quadrant,
 							StartY);
 
-				switch ((PartType)quad)
+				switch ((PartType)quadrant)
 				{
 					default:               path = _pathFloor;   break; // PartType.Floor
 					case PartType.West:    path = _pathWest;    break;
@@ -150,21 +152,21 @@ namespace MapView.Forms.Observers
 				path.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
 			}
 
-			// skip a space between the Content quad-slot and the Current quad-slot
+			// skip a space between the Content quadrant-slot and the Current quadrant-slot
 			p0 = new Point(
-						StartX + Quadwidth * QuadrantPart - 1,
+						StartX + Quadwidth * Quad_PART - 1,
 						StartY);
 			p1 = new Point(
-						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32 + 1,
+						StartX + Quadwidth * Quad_PART + Spriteset.SpriteWidth32  + 1,
 						StartY);
 			p2 = new Point(
-						StartX + Quadwidth * QuadrantPart + Spriteset.SpriteWidth32  + 1,
-						StartY +                            Spriteset.SpriteHeight40 + 1);
+						StartX + Quadwidth * Quad_PART + Spriteset.SpriteWidth32  + 1,
+						StartY +                         Spriteset.SpriteHeight40 + 1);
 			p3 = new Point(
-						StartX + Quadwidth * QuadrantPart,
-						StartY +                            Spriteset.SpriteHeight40 + 1);
+						StartX + Quadwidth * Quad_PART,
+						StartY +                         Spriteset.SpriteHeight40 + 1);
 			p4 = new Point(
-						StartX + Quadwidth * QuadrantPart,
+						StartX + Quadwidth * Quad_PART,
 						StartY);
 
 			_pathPart.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
@@ -239,7 +241,7 @@ namespace MapView.Forms.Observers
 			//DSShared.Logfile.Log(". tile= " + tile);
 			//DSShared.Logfile.Log(". partType= " + partType);
 
-			// fill the background of the quad-slots
+			// fill the background of the quadrant-slots
 			Brush brush;
 
 			if (TopViewControl.it_Floor.Checked)   brush = QuadrantDisabled;
@@ -277,7 +279,7 @@ namespace MapView.Forms.Observers
 				if (part.IsDoor) DrawDoorString((int)PartType.Floor);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_FLOOR], 0);
+				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_FLOOR], 0);
 
 			// West ->
 			if (tile != null && (part = tile.West) != null)
@@ -287,7 +289,7 @@ namespace MapView.Forms.Observers
 				if (part.IsDoor) DrawDoorString((int)PartType.West);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_WEST], Quadwidth);
+				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_WEST], Quadwidth);
 
 			// North ->
 			if (tile != null && (part = tile.North) != null)
@@ -297,7 +299,7 @@ namespace MapView.Forms.Observers
 				if (part.IsDoor) DrawDoorString((int)PartType.North);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_NORTH], Quadwidth * (int)PartType.North);
+				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_NORTH], Quadwidth * (int)PartType.North);
 
 			// Content ->
 			if (tile != null && (part = tile.Content) != null)
@@ -307,17 +309,17 @@ namespace MapView.Forms.Observers
 				if (part.IsDoor) DrawDoorString((int)PartType.Content);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_CONTENT], Quadwidth * (int)PartType.Content);
+				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_CONTENT], Quadwidth * (int)PartType.Content);
 
 			// Current ->
 			if (SelectedTilepart != null)
 			{
 				//DSShared.Logfile.Log(". . Current");
-				DrawSprite(SelectedTilepart[phase], Quadwidth * QuadrantPart, SelectedTilepart.Record.SpriteOffset);
-				if (SelectedTilepart.IsDoor) DrawDoorString(QuadrantPart);
+				DrawSprite(SelectedTilepart[phase], Quadwidth * Quad_PART, SelectedTilepart.Record.SpriteOffset);
+				if (SelectedTilepart.IsDoor) DrawDoorString(Quad_PART);
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[MonoTONE_ERASER], Quadwidth * QuadrantPart);
+				DrawSprite(MainViewF.MonotoneSprites[Quad_ERASER], Quadwidth * Quad_PART);
 
 
 			// draw each quadrant's bounding rectangle
@@ -327,12 +329,12 @@ namespace MapView.Forms.Observers
 			_graphics.DrawPath(QuadrantBorder, _pathContent);
 			_graphics.DrawPath(QuadrantBorder, _pathPart);
 
-			// draw the quad-type label under each quadrant
+			// draw the quadrant-type label under each quadrant
 			DrawTypeString(Floor,   TextWidth_floor,   (int)PartType.Floor);
 			DrawTypeString(West,    TextWidth_west,    (int)PartType.West);
 			DrawTypeString(North,   TextWidth_north,   (int)PartType.North);
 			DrawTypeString(Content, TextWidth_content, (int)PartType.Content);
-			DrawTypeString(Part,    TextWidth_part,    QuadrantPart);
+			DrawTypeString(Part,    TextWidth_part,    Quad_PART);
 
 			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
 			FillSwatchColor(TopControl.ToolWest .Brush,                                 PartType.West);
@@ -434,14 +436,14 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Draws the "door" string if applicable.
 		/// </summary>
-		/// <param name="quad"></param>
-		private static void DrawDoorString(int quad)
+		/// <param name="quadrant"></param>
+		private static void DrawDoorString(int quadrant)
 		{
 			_graphics.DrawString(
 							Door,
 							QuadrantFont,
 							Brushes.Black,
-							StartX + (Spriteset.SpriteWidth32 - TextWidth_door) / 2 + Quadwidth * quad + 1,
+							StartX + (Spriteset.SpriteWidth32 - TextWidth_door) / 2 + Quadwidth * quadrant + 1,
 							StartY +  Spriteset.SpriteHeight40 - QuadrantFont.Height + PrintOffsetY);
 		}
 
@@ -450,14 +452,14 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="width"></param>
-		/// <param name="quad"></param>
-		private static void DrawTypeString(string type, int width, int quad)
+		/// <param name="quadrant"></param>
+		private static void DrawTypeString(string type, int width, int quadrant)
 		{
 			_graphics.DrawString(
 							type,
 							QuadrantFont,
 							SelectedBrush,
-							StartX + (Spriteset.SpriteWidth32 - width) / 2 + Quadwidth * quad + 1,
+							StartX + (Spriteset.SpriteWidth32 - width) / 2 + Quadwidth * quadrant + 1,
 							StartY +  Spriteset.SpriteHeight40 + MarginVert);
 		}
 
@@ -465,13 +467,13 @@ namespace MapView.Forms.Observers
 		/// Fills the swatch under a given quadrant.
 		/// </summary>
 		/// <param name="brush"></param>
-		/// <param name="quad"></param>
-		private static void FillSwatchColor(Brush brush, PartType quad)
+		/// <param name="quadrant"></param>
+		private static void FillSwatchColor(Brush brush, PartType quadrant)
 		{
 			_graphics.FillRectangle(
 								brush,
 								new RectangleF(
-											StartX + Quadwidth * (int)quad,
+											StartX + Quadwidth * (int)quadrant,
 											StartY + Spriteset.SpriteHeight40 + MarginVert + QuadrantFont.Height + 1,
 											Spriteset.SpriteWidth32,
 											SwatchHeight));
@@ -494,7 +496,7 @@ namespace MapView.Forms.Observers
 												file.Levs);
 
 			int w = TextRenderer.MeasureText(loc, LocationFont).Width;
-			if (StartX + Quadwidth * (QuadrantPart + 1) - MarginHori + w < panelwidth)
+			if (StartX + Quadwidth * (Quad_PART + 1) - MarginHori + w < panelwidth)
 			{
 				_graphics.DrawString(
 								loc,
