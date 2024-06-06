@@ -351,8 +351,8 @@ namespace XCom
 
 			part.Record = Record.Duplicate();
 
-			part.Dead = Dead;	// NOTE: keep these pointers and use their Ids to determine the
-			part.Altr = Altr;	// part's 'DieTile' and 'Alt_MCD' fields after insertion. (aha!)
+			part.Dead = Dead; // NOTE: keep these pointers and use their Ids to determine the
+			part.Altr = Altr; // part's 'DieTile' and 'Alt_MCD' fields after insertion. (aha!)
 
 			part.Id    = Id;
 			part.SetId = SetId;
@@ -361,14 +361,14 @@ namespace XCom
 		}
 
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return "Tilepart _terId= " + _terId + " _setId= " + _setId;
-		}
+//		/// <summary>
+//		/// Merely a utility function for debug.
+//		/// </summary>
+//		/// <returns></returns>
+//		public override string ToString()
+//		{
+//			return "Tilepart _terId= " + _terId + " _setId= " + _setId;
+//		}
 
 
 		/// <summary>
@@ -399,9 +399,6 @@ namespace XCom
 		/// shall go ~poof~ when the Mapfile is saved.</remarks>
 		internal void Cripple(PartType slot)
 		{
-			// TODO: stop the part from being selected in TileView when the slot
-			// in QuadrantControl is double-clicked
-
 			// NOTE: Assigning 'PartType.Invalid' to the record's 'PartType'
 			// shall force it to be listed in TopView's TestPartslots dialog and
 			// disallow it from consideration as a valid highid in the
@@ -413,28 +410,19 @@ namespace XCom
 
 			_sprites = new XCImage[PHASES];
 
+			int quadrant;
 			switch (slot)
 			{
-				case PartType.Floor:
-					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[MonoTONE_FLOOR];
-					break;
+				case PartType.Floor:   quadrant = MonoTONE_FLOOR;   break;
+				case PartType.West:    quadrant = MonoTONE_WEST;    break;
+				case PartType.North:   quadrant = MonoTONE_NORTH;   break;
+				case PartType.Content: quadrant = MonoTONE_CONTENT; break;
 
-				case PartType.West:
-					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[MonoTONE_WEST];
-					break;
-
-				case PartType.North:
-					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[MonoTONE_NORTH];
-					break;
-
-				case PartType.Content:
-					for (int i = 0; i != PHASES; ++i)
-						_sprites[i] = CrippledSprites[MonoTONE_CONTENT];
-					break;
+				default: return;
 			}
+
+			for (int i = 0; i != PHASES; ++i)
+				_sprites[i] = CrippledSprites[quadrant];
 		}
 		#endregion Methods
 
