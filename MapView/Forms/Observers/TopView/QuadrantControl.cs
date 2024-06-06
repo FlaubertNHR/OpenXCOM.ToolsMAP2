@@ -51,18 +51,18 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// For use by keyboard-input.
 		/// </summary>
-		private PartType _keyslot = PartType.Invalid;
+		private PartType _keyQuadrant = PartType.Invalid;
 		#endregion Fields
 
 
 		#region Properties
-		private PartType _slot = PartType.Floor;
+		private PartType _quadrant = PartType.Floor;
 		internal PartType SelectedQuadrant
 		{
-			get { return _slot; }
+			get { return _quadrant; }
 			set
 			{
-				_slot = value; Refresh();
+				_quadrant = value; Refresh();
 			}
 		}
 
@@ -105,19 +105,19 @@ namespace MapView.Forms.Observers
 		/// use by keyboard-input only.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <param name="slot"></param>
-		internal void doMouseDown(MouseEventArgs e, PartType slot)
+		/// <param name="quadrant"></param>
+		internal void doMouseDown(MouseEventArgs e, PartType quadrant)
 		{
-			if (slot != PartType.Invalid)
-				_keyslot = slot;
+			if (quadrant != PartType.Invalid)
+				_keyQuadrant = quadrant;
 			else
-				_keyslot = SelectedQuadrant;
+				_keyQuadrant = SelectedQuadrant;
 
 			OnMouseDown(e);
 		}
 
 		/// <summary>
-		/// Handles mousedown events on this <c>QuadrantControl</c>.
+		/// Handles <c>MouseDown</c> events on this <c>QuadrantControl</c>.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -125,20 +125,20 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopView     .Control   .TopControl.Select();
 			ObserverManager.TopRouteView.ControlTop.TopControl.Select();
 
-			bool isKeyInput = _keyslot !=  PartType.Invalid
-						   && _keyslot != (PartType)QuadrantDrawService.QuadrantPart;
+			bool isKeyInput = _keyQuadrant !=  PartType.Invalid
+						   && _keyQuadrant != (PartType)QuadrantDrawService.QuadrantPart;
 
 			if (!isKeyInput)
 			{
 				int x = (e.X - QuadrantDrawService.StartX);
 				if (x > -1 && x % QuadrantDrawService.Quadwidth < Spriteset.SpriteWidth32) // ignore spaces between sprites
-					_keyslot = (PartType)(x / QuadrantDrawService.Quadwidth);
+					_keyQuadrant = (PartType)(x / QuadrantDrawService.Quadwidth);
 			}
 
 			bool isPartSlot = false;
 
 			PartType part = PartType.Invalid;
-			switch (_keyslot)
+			switch (_keyQuadrant)
 			{
 				case PartType.Floor:   part = PartType.Floor;   break; // TODO: refactor
 				case PartType.West:    part = PartType.West;    break;
@@ -160,7 +160,7 @@ namespace MapView.Forms.Observers
 				if (!isPartSlot)
 					Clicker(e.Button, e.Clicks, isKeyInput);
 			}
-			_keyslot = PartType.Invalid;
+			_keyQuadrant = PartType.Invalid;
 		}
 
 		/// <summary>
@@ -168,7 +168,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
-		/// <param name="isKeyInput">true if invoked by keyboard-input</param>
+		/// <param name="isKeyInput"><c>true</c> if invoked by keyboard-input</param>
 		/// <remarks>TODO: GENERAL - Bypass operations (and the MapChanged flag)
 		/// if user does an operation that results in an identical state.</remarks>
 		internal void Clicker(MouseButtons button, int clicks, bool isKeyInput = false)
