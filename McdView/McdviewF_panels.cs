@@ -768,6 +768,7 @@ namespace McdView
 
 				lbl_Extended.Visible = BlobTypeService.hasExtendedLofts(BlobTypeService._loftlist, loftid);
 
+
 				switch (record.PartType)
 				{
 //					default:
@@ -806,6 +807,8 @@ namespace McdView
 													BlobDrawCoordinator._halfwidth, BlobDrawCoordinator._halfheight);
 						break;
 				}
+
+				BlobTypeService._loftlist.Clear();
 			}
 			else
 				lbl_Extended.Visible = false;

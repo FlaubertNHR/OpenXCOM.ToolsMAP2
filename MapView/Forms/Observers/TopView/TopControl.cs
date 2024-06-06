@@ -387,49 +387,51 @@ namespace MapView.Forms.Observers
 				MapTile tile,
 				int x, int y)
 		{
-			int size = TopView.Optionables.ExtendedLoftIndicators;
-			byte cutoff = _file.Descriptor.GroupType == GroupType.Tftd ? LOFTID_Max_tftd
-																	   : LOFTID_Max_ufo;
+			// 'e' for Extended lofts
 			int elofts = ELOFT_n;
+			int esize = TopView.Optionables.ExtendedLoftIndicators;
+			byte ecutoff = _file.Descriptor.GroupType == GroupType.Tftd ? LOFTID_Max_tftd
+																		: LOFTID_Max_ufo;
+
+			// note that crippled tileparts have an invalid 'LoftList'
 
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
 			{
 				McdRecord record = tile.Floor.Record;
 
 				byte loftid;
-				if (record.LoftList != null) // crippled tileparts have an invalid 'LoftList'
+				if (record.LoftList != null)
 				{
 					loftid = record.LoftList[0];
 
-					if (size != 0 && BlobTypeService.hasExtendedLofts(record.LoftList, cutoff))
+					string key;
+					if (loftid == 0) key = TopViewOptionables.str_FloorColorLight; // blank LoFT, draw light floor color.
+					else             key = TopViewOptionables.str_FloorColor;
+
+					BlobDrawService.DrawFloor(
+										_graphics,
+										TopBrushes[key],
+										x,y,
+										loftid,
+										_blobService._path,
+										_blobService.HalfWidth, _blobService.HalfHeight);
+
+					if (record.GravLift != 0) // overlay GravLift floor as a content-part ->
+						BlobDrawService.DrawWallOrContent(
+													_graphics,
+													ToolContent,
+													x,y,
+													tile.Floor,
+													_blobService._path,
+													_blobService.HalfWidth, _blobService.HalfHeight);
+
+					if (esize != 0 && BlobTypeService.hasExtendedLofts(record.LoftList, ecutoff))
 						elofts |= ELOFT_F;
 				}
-				else
-					loftid = Byte.MaxValue;
-
-				string key;
-				if (loftid == 0) key = TopViewOptionables.str_FloorColorLight; // blank LoFT, draw light floor color.
-				else             key = TopViewOptionables.str_FloorColor;
-
-				BlobDrawService.DrawFloor(
-									_graphics,
-									TopBrushes[key],
-									x,y,
-									loftid,
-									_blobService._path,
-									_blobService.HalfWidth, _blobService.HalfHeight);
-
-				if (record.GravLift != 0) // overlay GravLift floor as a content-part ->
-					BlobDrawService.DrawWallOrContent(
-												_graphics,
-												ToolContent,
-												x,y,
-												tile.Floor,
-												_blobService._path,
-												_blobService.HalfWidth, _blobService.HalfHeight);
 			}
 
-			if (!TopView.it_Content.Checked && tile.Content != null)
+			if (!TopView.it_Content.Checked && tile.Content != null
+				&& tile.Content.Record.LoftList != null)
 			{
 				BlobDrawService.DrawWallOrContent(
 											_graphics,
@@ -438,15 +440,15 @@ namespace MapView.Forms.Observers
 											tile.Content,
 											_blobService._path,
 											_blobService.HalfWidth, _blobService.HalfHeight);
-				if (size != 0
-					&& tile.Content.Record.LoftList != null // crippled tileparts have an invalid 'LoftList'
-					&& BlobTypeService.hasExtendedLofts(tile.Content.Record.LoftList, cutoff))
+				if (esize != 0
+					&& BlobTypeService.hasExtendedLofts(tile.Content.Record.LoftList, ecutoff))
 				{
 					elofts |= ELOFT_C;
 				}
 			}
 
-			if (!TopView.it_West.Checked && tile.West != null)
+			if (!TopView.it_West.Checked && tile.West != null
+				&& tile.West.Record.LoftList != null)
 			{
 				BlobDrawService.DrawWallOrContent(
 											_graphics,
@@ -455,15 +457,15 @@ namespace MapView.Forms.Observers
 											tile.West,
 											_blobService._path,
 											_blobService.HalfWidth, _blobService.HalfHeight);
-				if (size != 0
-					&& tile.West.Record.LoftList != null // crippled tileparts have an invalid 'LoftList'
-					&& BlobTypeService.hasExtendedLofts(tile.West.Record.LoftList, cutoff))
+				if (esize != 0
+					&& BlobTypeService.hasExtendedLofts(tile.West.Record.LoftList, ecutoff))
 				{
 					elofts |= ELOFT_W;
 				}
 			}
 
-			if (!TopView.it_North.Checked && tile.North != null)
+			if (!TopView.it_North.Checked && tile.North != null
+				&& tile.North.Record.LoftList != null)
 			{
 				BlobDrawService.DrawWallOrContent(
 											_graphics,
@@ -472,9 +474,8 @@ namespace MapView.Forms.Observers
 											tile.North,
 											_blobService._path,
 											_blobService.HalfWidth, _blobService.HalfHeight);
-				if (size != 0
-					&& tile.North.Record.LoftList != null // crippled tileparts have an invalid 'LoftList'
-					&& BlobTypeService.hasExtendedLofts(tile.North.Record.LoftList, cutoff))
+				if (esize != 0
+					&& BlobTypeService.hasExtendedLofts(tile.North.Record.LoftList, ecutoff))
 				{
 					elofts |= ELOFT_N;
 				}
@@ -484,31 +485,31 @@ namespace MapView.Forms.Observers
 			{
 				var brush = new SolidBrush(TopView.Optionables.GridLine10Color); // TODO: instantiate this brush on Load
 
-				int pos = size / 2;
+				int pos = esize / 2;
 
 				if ((elofts & ELOFT_F) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
 															x - pos,
 															y + _blobService.HalfHeight * 2 - pos - 4,
-															size,size));
+															esize,esize));
 
 				if ((elofts & ELOFT_C) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
 															x - pos,
 															y + _blobService.HalfHeight - pos,
-															size,size));
+															esize,esize));
 
 				if ((elofts & ELOFT_W) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
 															x - _blobService.HalfWidth  / 2 + pos + 2,
 															y + _blobService.HalfHeight / 2 - pos + 1,
-															size,size));
+															esize,esize));
 
 				if ((elofts & ELOFT_N) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x + _blobService.HalfWidth  / 2 - size - 6,
+															x + _blobService.HalfWidth  / 2 - esize - 6,
 															y + _blobService.HalfHeight / 2 - pos + 1,
-															size,size));
+															esize,esize));
 
 				brush.Dispose();
 			}
@@ -550,32 +551,32 @@ namespace MapView.Forms.Observers
 		{
 			MouseButtons button;
 			int clicks;
-			PartType slot;
+			PartType quadrant;
 
 			switch (e.KeyData)
 			{
 				case Keys.Q: // select the proper quadrant of the currently selected Tileview-part
 					button = MouseButtons.Left;
 					clicks = 1;
-					slot = (PartType)QuadrantDrawService.QuadrantPart;
+					quadrant = (PartType)QuadrantDrawService.QuadrantPart;
 					break;
 
 				case Keys.T: // select the TileView-part of the selected quadrant
 					button = MouseButtons.Left;
 					clicks = 2;
-					slot = PartType.Invalid;
+					quadrant = PartType.Invalid;
 					break;
 
 				case Keys.Enter: // place selected TileView-part in selected quadrant
 					button = MouseButtons.Right;
 					clicks = 1;
-					slot = PartType.Invalid;
+					quadrant = PartType.Invalid;
 					break;
 
 				case Keys.Shift | Keys.Delete: // delete part of selected Quadrant-type from a selected tile
 					button = MouseButtons.Right;
 					clicks = 2;
-					slot = PartType.Invalid;
+					quadrant = PartType.Invalid;
 					break;
 
 				default:
@@ -585,7 +586,7 @@ namespace MapView.Forms.Observers
 
 			TopView.QuadrantControl.doMouseDown(
 											new MouseEventArgs(button, clicks, 0,0, 0),
-											slot);
+											quadrant);
 		}
 
 

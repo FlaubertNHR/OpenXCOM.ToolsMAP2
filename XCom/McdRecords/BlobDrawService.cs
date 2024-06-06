@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -153,7 +153,6 @@ namespace XCom
 //				case 0: return; // blank LoFT, no draw.
 
 				default:
-//				case Byte.MaxValue:
 //				case 6: // fullfloor
 					path.AddLine(
 								x,             y,
@@ -167,7 +166,8 @@ namespace XCom
 					break;
 
 				// sw corner
-				case 79: case 76: case 87: case 104: case 105: case 106:
+				case 79:
+				case 76: case 87: case 92: case 104: case 105: case 106:
 					path.AddLine(
 								x,             y,
 								x,             y + halfheight * 2);
@@ -177,7 +177,8 @@ namespace XCom
 					break;
 
 				// ne corner
-				case 80: case 77: case 88: case 98: case 99: case 100:
+				case 80:
+				case 77: case 88: case 91: case 98: case 99: case 100:
 					path.AddLine(
 								x,             y,
 								x + halfwidth, y + halfheight);
@@ -187,8 +188,9 @@ namespace XCom
 					break;
 
 				// nw corner
-				case  81: case  39: case  40: case 41: case 50: case 51: case 52:
-				case 101: case 102: case 103:
+				case 81:
+				case 39: case  40: case  41: case 50: case 51: case 52:
+				case 90: case 101: case 102: case 103:
 					path.AddLine(
 								x,             y,
 								x + halfwidth, y + halfheight);
@@ -198,7 +200,8 @@ namespace XCom
 					break;
 
 				// se corner
-				case 82: case 86: case 107: case 108: case 109:
+				case 82:
+				case 86: case 89: case 107: case 108: case 109:
 					path.AddLine(
 								x + halfwidth, y + halfheight,
 								x,             y + halfheight * 2);
@@ -213,7 +216,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Draws wall- and content-blobs.
+		/// Draws blobs for wall- and content-parts.
 		/// </summary>
 		/// <param name="graphics"></param>
 		/// <param name="tool"></param>
@@ -233,20 +236,26 @@ namespace XCom
 		{
 			//DSShared.Logfile.Log("BlobDrawService.DrawWallOrContent()");
 
-			Blob blob;
-			if (part.Record.LoftList != null)						// Top and Route
-				blob = BlobTypeService.GetBlobType(part);
-			else													// for McdView (and crippled parts theoretically)
-				blob = BlobTypeService.GetBlobType(BlobTypeService._loftlist);
+//			Blob blob;
+//			if (part.Record.LoftList != null)					// is called by TopControl or RouteControl panel
+//				blob = BlobTypeService.GetBlobType(part);
+//			else //if (BlobTypeService._loftlist.Count != 0)	// is called by McdView blob-preview
+//				blob = BlobTypeService.GetBlobType(BlobTypeService._loftlist);
+//			else return; // blob = Blob.Crippled				// -> crippled parts shall NOT get this far
+
+			IList<byte> loftlist;
+			if (part.Record.LoftList != null)					// is called by TopControl or RouteControl panel
+				loftlist = part.Record.LoftList;
+			else //if (BlobTypeService._loftlist.Count != 0)	// is called by McdView blob-preview
+				loftlist = BlobTypeService._loftlist;			// <- that shall be valid in McdView
 
 			//DSShared.Logfile.Log(". blob= " + blob);
-
-			switch (blob)
+			switch (BlobTypeService.GetBlobType(loftlist))
 			{
 				// floor ->
 				case Blob.Floorlike:
 					PathContent(x,y, path, halfwidth, halfheight);
-					graphics.FillPath(Brushes.White, path); // prep (underlay color) for 'BrushLight'
+					graphics.FillPath(Brushes.WhiteSmoke, path); // prep (underlay color) for 'BrushLight'
 					graphics.FillPath(tool.BrushLight, path);
 					break;
 
@@ -421,8 +430,6 @@ namespace XCom
 					graphics.FillPath(tool.BrushLight, path);
 //					graphics.DrawLine(tool.Pen, Point.Add(pL(x,y), new Size(0, -Offset)), Point.Add(pL(x,y), new Size(0,  Offset)));
 					break;
-
-//				case Blob.Crippled: break;
 			}
 		}
 
@@ -460,18 +467,18 @@ namespace XCom
 		/// <returns></returns>
 		private static Pen GetDoorPen(Tilepart part, BlobColorTool tool)
 		{
-			Pen door;
-			if (part.Record.LoftList != null)	// Top or Route
-				door = tool.Pen;
-			else								// for McdView (and crippled parts theoretically)
-				door = tool.PenDoor;
+			Pen pen;
+			if (part.Record.LoftList != null)	// TopControl or RouteControl panels
+				pen = tool.Pen;
+			else								// for McdView blob-preview
+				pen = tool.PenDoor;
 
-			return door;
+			return pen;
 		}
 
 
 		/// <summary>
-		/// 
+		/// Gets point top.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -480,8 +487,9 @@ namespace XCom
 		{
 			return new Point(x, (y > Int32.MaxValue - Offset) ? Int32.MaxValue : y + Offset);
 		}
+
 		/// <summary>
-		/// 
+		/// Gets point bot.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -491,8 +499,9 @@ namespace XCom
 		{
 			return new Point(x, y + (halfheight * 2) - Offset);
 		}
+
 		/// <summary>
-		/// 
+		/// Gets point left.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -503,8 +512,9 @@ namespace XCom
 		{
 			return new Point(x - halfwidth + (Offset * 2), y + halfheight);
 		}
+
 		/// <summary>
-		/// 
+		/// Gets point right.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>

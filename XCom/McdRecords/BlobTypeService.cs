@@ -11,7 +11,7 @@ namespace XCom
 	/// </summary>
 	public enum Blob
 	{
-		Crippled = -1,			// invalid loftlist in the tilepart's record
+//		Crippled = -1,			// invalid loftlist in the tilepart's record
 
 		Generic,				// a generic square graphic that's centered on the tile
 
@@ -121,46 +121,40 @@ namespace XCom
 
 
 		#region Methods (static)
-		/// <summary>
-		/// Gets the <c><see cref="Blob"/></c> of a specified
-		/// <c><see cref="Tilepart"/></c> for drawing its blob in <c>TopView</c>
-		/// and <c>RouteView</c>.
-		/// </summary>
-		/// <param name="part"></param>
-		/// <returns></returns>
-		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
-		public static Blob GetBlobType(Tilepart part)
-		{
-			//DSShared.Logfile.Log("BlobTypeService.GetBlobType()");
-
-			McdRecord record = part.Record;
-			if (record != null)
-			{
-				//DSShared.Logfile.Log(". record Valid");
-				//DSShared.Logfile.Log(". . LoftList= " + (record.LoftList != null ? "Valid" : "INVALID"));
-				//DSShared.Logfile.Log(". . LoftList.Count = " + record.LoftList.Count);
-
-				if (record.LoftList != null && record.LoftList.Count != 0) // crippled tileparts have an invalid 'LoftList'
-					return GetBlobType(record.LoftList);//, record.PartType
-
-				return Blob.Crippled;
-			}
-			return Blob.Generic;
-		}
+//		/// <summary>
+//		/// Gets the <c><see cref="Blob"/></c> of a specified
+//		/// <c><see cref="Tilepart"/></c> for drawing its blob in <c>TopView</c>
+//		/// and <c>RouteView</c>.
+//		/// </summary>
+//		/// <param name="part"></param>
+//		/// <returns></returns>
+//		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
+//		public static Blob GetBlobType(Tilepart part)
+//		{
+//			McdRecord record = part.Record;
+//			if (record != null) // uhh record should be valid
+//			{
+//				if (record.LoftList != null) // crippled tileparts have an invalid 'LoftList'
+//					return GetBlobType(record.LoftList);
+//
+//				return Blob.Crippled;
+//			}
+//			return Blob.Generic;
+//		}
 
 		/// <summary>
 		/// Gets the <c><see cref="Blob"/></c> of a specified
-		/// <c><see cref="Tilepart"/></c> for drawing its preview-blob.
+		/// <c><see cref="Tilepart"/></c> for drawing in <c>TopControl</c> and
+		/// <c>RouteControl</c> (in MapView) or for blob-preview (in McdView).
 		/// </summary>
 		/// <param name="loftlist"></param>
-//		/// <param name="parttype"></param>
 		/// <returns>a <c>Blob</c> type</returns>
 		/// <remarks>http://www.ufopaedia.org/index.php/LOFTEMPS.DAT</remarks>
-		public static Blob GetBlobType(IList<byte> loftlist) //, PartType parttype)
+		public static Blob GetBlobType(IList<byte> loftlist)
 		{
 			//var sb = new System.Text.StringBuilder();
 			//foreach (byte id in loftlist) sb = sb.Append(id + ",");
-			//DSShared.Logfile.Log("BlobTypeService.GetBlobType() parttype= " + parttype + " loftlist= " + sb);
+			//DSShared.Logfile.Log("BlobTypeService.GetBlobType() loftlist= " + sb);
 
 			// IMPORTANT: The order that follows is critical.
 			//
@@ -168,7 +162,7 @@ namespace XCom
 			// loftset that can be shot through; unlike a 'wall' its voxels are
 			// not entirely solid to LoF.
 
-			// TODO: if (entire id #6 fullblock) ret Blob.Block
+			// TODO: if (entire loftset is loftid #6 fullblock) ret Blob.Block
 
 			bool anyLoftnon = anyare(loftlist, Loftnon);
 
@@ -180,31 +174,31 @@ namespace XCom
 					return Blob.Floorlike;
 
 				// corner fences ->
-				if (allare(loftlist, NorthwestCorner, Loftnon))// && (parttype == PartType.West || parttype == PartType.North))
+				if (allare(loftlist, NorthwestCorner, Loftnon))
 					return Blob.NorthwestCornerFence;
 
-				if (allare(loftlist, NortheastCorner, Loftnon))// && (parttype == PartType.North || parttype == PartType.Content))
+				if (allare(loftlist, NortheastCorner, Loftnon))
 					return Blob.NortheastCornerFence;
 
-				if (allare(loftlist, SoutheastCorner, Loftnon))// && parttype == PartType.Content)
+				if (allare(loftlist, SoutheastCorner, Loftnon))
 					return Blob.SoutheastCornerFence;
 
-				if (allare(loftlist, SouthwestCorner, Loftnon))// && (parttype == PartType.West || parttype == PartType.Content))
+				if (allare(loftlist, SouthwestCorner, Loftnon))
 					return Blob.SouthwestCornerFence;
 			}
 			else
 			{
 				// corners ->
-				if (allare(loftlist, NorthwestCorner))// && (parttype == PartType.West || parttype == PartType.North))
+				if (allare(loftlist, NorthwestCorner))
 					return Blob.NorthwestCorner;
 
-				if (allare(loftlist, NortheastCorner))// && (parttype == PartType.North || parttype == PartType.Content))
+				if (allare(loftlist, NortheastCorner))
 					return Blob.NortheastCorner;
 
-				if (allare(loftlist, SoutheastCorner))// && parttype == PartType.Content)
+				if (allare(loftlist, SoutheastCorner))
 					return Blob.SoutheastCorner;
 
-				if (allare(loftlist, SouthwestCorner))// && (parttype == PartType.West || parttype == PartType.Content))
+				if (allare(loftlist, SouthwestCorner))
 					return Blob.SouthwestCorner;
 
 			}
@@ -249,19 +243,19 @@ namespace XCom
 			if (anyLoftnon)
 			{
 				// diagonal fences ->
-				if (allare(loftlist, NorthwestSoutheast, Loftnon))// && parttype == PartType.Content)
+				if (allare(loftlist, NorthwestSoutheast, Loftnon))
 					return Blob.NorthwestSoutheastFence;
 
-				if (allare(loftlist, NortheastSouthwest, Loftnon))// && parttype == PartType.Content)
+				if (allare(loftlist, NortheastSouthwest, Loftnon))
 					return Blob.NortheastSouthwestFence;
 			}
 			else
 			{
 				// diagonal walls ->
-				if (allare(loftlist, NorthwestSoutheast))// && parttype == PartType.Content)
+				if (allare(loftlist, NorthwestSoutheast))
 					return Blob.NorthwestSoutheast;
 
-				if (allare(loftlist, NortheastSouthwest))// && parttype == PartType.Content)
+				if (allare(loftlist, NortheastSouthwest))
 					return Blob.NortheastSouthwest;
 			}
 
@@ -276,26 +270,12 @@ namespace XCom
 		/// <returns></returns>
 		/// <remarks>This function checks LoFTs only of wall- and content-parts
 		/// for drawing TopView and RouteView and the blob-preview in McdView
-		/// but is NOT actually used for floor-parts.
+		/// but is NOT used for actual floor-parts.
 		/// <br/><br/>
 		/// Loftid #6 on layer #0 is the fullfloor LoFT but is not checked for.</remarks>
 		private static bool floorlike(IList<byte> loftlist)
 		{
 			//DSShared.Logfile.Log("BlobTypeService.floorlike()");
-
-			// NOTE: Use this only if/when CustomLoftBlobs is implemented:
-//			byte loft = loftlist[0];
-//			if (   bypassfloor(loft, Westwall_notsolid)
-//				|| bypassfloor(loft, Northwall_notsolid)
-//				|| bypassfloor(loft, Eastwall_notsolid)
-//				|| bypassfloor(loft, Southwall_notsolid)
-//				|| bypassfloor(loft, NorthwestCorner)
-//				|| bypassfloor(loft, NortheastCorner)
-//				|| bypassfloor(loft, SoutheastCorner)
-//				|| bypassfloor(loft, SouthwestCorner)) // TODO: check the 2 window and 2 diagonal LoFTs
-//			{
-//				return false;
-//			}
 
 			switch (loftlist[0]) // bypass wall and corner LoFTs (to allow wall and corner blobs later)
 			{
@@ -342,20 +322,6 @@ namespace XCom
 
 			return false;
 		}
-
-//		private static bool anyare(IList<byte> loftlist, byte[] loftids)
-//		{
-//			var sb = new System.Text.StringBuilder();
-//			foreach (byte id in loftids) sb = sb.Append(id + ",");
-//			DSShared.Logfile.Log("BlobTypeService.anyare() loftids= " + sb);
-//
-//			foreach (byte loft in loftlist)
-//				foreach (byte id in loftids)
-//					if (id == loft)
-//						return true;
-//
-//			return false;
-//		}
 
 		/// <summary>
 		/// Checks if all entries in <paramref name="loftlist"/> are
@@ -421,6 +387,70 @@ namespace XCom
 			//DSShared.Logfile.Log(". ret TRUE");
 			return true;
 		}
+
+
+		/// <summary>
+		/// Checks if any entry in <paramref name="loftlist"/> exceeds
+		/// <paramref name="loftid"/>.
+		/// </summary>
+		/// <param name="loftlist">a list of LoFTs to check against
+		/// <paramref name="loftid"/></param>
+		/// <param name="loftid"><c>McdviewF.LOFTID_Max_ufo</c>
+		/// or <c>McdviewF.LOFTID_Max_tftd</c></param>
+		/// <returns><c>true</c> if an extended LoFT is detected</returns>
+		public static bool hasExtendedLofts(IList<byte> loftlist, byte loftid)
+		{
+			foreach (byte loft in loftlist)
+				if (loft > loftid)
+					return true;
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// Adds LoFTs to <c><see cref="_loftlist"/></c> for blob-preview in
+		/// McdView.
+		/// </summary>
+		/// <param name="record"></param>
+		/// <remarks><c>UpdateLoftlist()</c> is used only by McdView.
+		/// <c><see cref="McdRecord">McdRecords</see></c> in MapView store their
+		/// own <c><see cref="McdRecord.LoftList">LoftLists</see></c>.
+		/// <br/><br/>
+		/// TODO: Look into instantiating the McdRecords with 'extra' par</remarks>
+		public static void UpdateLoftlist(McdRecord record)
+		{
+			_loftlist.Add(record.Loft1);
+			_loftlist.Add(record.Loft2);
+			_loftlist.Add(record.Loft3);
+			_loftlist.Add(record.Loft4);
+			_loftlist.Add(record.Loft5);
+			_loftlist.Add(record.Loft6);
+			_loftlist.Add(record.Loft7);
+			_loftlist.Add(record.Loft8);
+			_loftlist.Add(record.Loft9);
+			_loftlist.Add(record.Loft10);
+			_loftlist.Add(record.Loft11);
+			_loftlist.Add(record.Loft12);
+		}
+		#endregion Methods (static)
+	}
+}
+
+//		private static bool anyare(IList<byte> loftlist, byte[] loftids)
+//		{
+//			var sb = new System.Text.StringBuilder();
+//			foreach (byte id in loftids) sb = sb.Append(id + ",");
+//			DSShared.Logfile.Log("BlobTypeService.anyare() loftids= " + sb);
+//
+//			foreach (byte loft in loftlist)
+//				foreach (byte id in loftids)
+//					if (id == loft)
+//						return true;
+//
+//			return false;
+//		}
+
 /*		private static bool allare(
 				IList<byte> loftlist,
 				byte[] loftids,
@@ -498,54 +528,3 @@ namespace XCom
 			}
 			return true;
 		} */
-
-
-		/// <summary>
-		/// Checks if any entry in <paramref name="loftlist"/> exceeds
-		/// <paramref name="loftid"/>.
-		/// </summary>
-		/// <param name="loftlist">a list of LoFTs to check against
-		/// <paramref name="loftid"/></param>
-		/// <param name="loftid"><c>McdviewF.LOFTID_Max_ufo</c>
-		/// or <c>McdviewF.LOFTID_Max_tftd</c></param>
-		/// <returns><c>true</c> if an extended LoFT is detected</returns>
-		public static bool hasExtendedLofts(IList<byte> loftlist, byte loftid)
-		{
-			foreach (byte loft in loftlist)
-				if (loft > loftid)
-					return true;
-
-			return false;
-		}
-
-
-		/// <summary>
-		/// Adds LoFTs to <c><see cref="_loftlist"/></c> for blob-preview in
-		/// McdView.
-		/// </summary>
-		/// <param name="record"></param>
-		/// <remarks><c>UpdateLoftlist()</c> is used only by McdView.
-		/// <c><see cref="McdRecord">McdRecords</see></c> in MapView store their
-		/// own <c><see cref="McdRecord.LoftList">LoftLists</see></c>.
-		/// <br/><br/>
-		/// TODO: Look into instantiating the McdRecords with 'extra' par</remarks>
-		public static void UpdateLoftlist(McdRecord record)
-		{
-			_loftlist.Clear();
-
-			_loftlist.Add(record.Loft1);
-			_loftlist.Add(record.Loft2);
-			_loftlist.Add(record.Loft3);
-			_loftlist.Add(record.Loft4);
-			_loftlist.Add(record.Loft5);
-			_loftlist.Add(record.Loft6);
-			_loftlist.Add(record.Loft7);
-			_loftlist.Add(record.Loft8);
-			_loftlist.Add(record.Loft9);
-			_loftlist.Add(record.Loft10);
-			_loftlist.Add(record.Loft11);
-			_loftlist.Add(record.Loft12);
-		}
-		#endregion Methods (static)
-	}
-}
