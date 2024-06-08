@@ -49,20 +49,20 @@ namespace MapView.Forms.Observers
 		private MapFile _file;
 
 		/// <summary>
-		/// For use by keyboard-input.
+		/// This is set to a quadrant-slot by keyboard-input.
 		/// </summary>
-		private PartType _keyQuadrant = PartType.Invalid;
+		private PartType _quadrant = PartType.Invalid;
 		#endregion Fields
 
 
 		#region Properties
-		private PartType _quadrant = PartType.Floor;
+		private PartType _selectedquadrant = PartType.Floor;
 		internal PartType SelectedQuadrant
 		{
-			get { return _quadrant; }
+			get { return _selectedquadrant; }
 			set
 			{
-				_quadrant = value; Refresh();
+				_selectedquadrant = value; Refresh();
 			}
 		}
 
@@ -108,10 +108,10 @@ namespace MapView.Forms.Observers
 		/// <param name="quadrant"></param>
 		internal void doMouseDown(MouseEventArgs e, PartType quadrant)
 		{
-			if (quadrant != PartType.Invalid)
-				_keyQuadrant = quadrant;
-			else
-				_keyQuadrant = SelectedQuadrant;
+			//DSShared.Logfile.Log("QuadrantControl.doMouseDown() quadrant= " + quadrant);
+
+			if (quadrant != PartType.Invalid) _quadrant = quadrant;
+			else                              _quadrant = SelectedQuadrant;
 
 			OnMouseDown(e);
 		}
@@ -122,45 +122,77 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
+			//DSShared.Logfile.Log("QuadrantControl.OnMouseDown()");
+			//DSShared.Logfile.Log(". _quadrant= " + _quadrant);
+
 			ObserverManager.TopView     .Control   .TopControl.Select();
 			ObserverManager.TopRouteView.ControlTop.TopControl.Select();
 
-			bool isKeyInput = _keyQuadrant !=  PartType.Invalid
-						   && _keyQuadrant != (PartType)QuadrantDrawService.Quad_PART;
+//			bool askey = _quadrant !=  PartType.Invalid // ie. is Floor or West or North or Content
+//					  && _quadrant != (PartType)QuadrantDrawService.Quad_PART;
+//			bool askey = _quadrant == PartType.Floor
+//					  || _quadrant == PartType.West
+//					  || _quadrant == PartType.North
+//					  || _quadrant == PartType.Content;
+			bool askey = isQuadrantLegit(true);
+			//DSShared.Logfile.Log(". askey= " + askey);
 
-			if (!isKeyInput)
+			if (!askey)
 			{
-				int x = (e.X - QuadrantDrawService.StartX);
+				int x = e.X - QuadrantDrawService.StartX;
 				if (x > -1 && x % QuadrantDrawService.Quadwidth < Spriteset.SpriteWidth32) // ignore spaces between sprites
-					_keyQuadrant = (PartType)(x / QuadrantDrawService.Quadwidth);
+				{
+					// WARNING: '_quadrant' could be set to a nonstandard 'PartType' here
+					_quadrant = (PartType)(x / QuadrantDrawService.Quadwidth);
+					//DSShared.Logfile.Log(". . _quadrant= " + _quadrant);
+				}
 			}
 
-			bool isPartSlot = false;
-
-			PartType part = PartType.Invalid;
-			switch (_keyQuadrant)
+//			if (   _quadrant == PartType.Floor
+//				|| _quadrant == PartType.West
+//				|| _quadrant == PartType.North
+//				|| _quadrant == PartType.Content
+//				|| _quadrant == (PartType)QuadrantDrawService.Quad_PART)
+			if (isQuadrantLegit())
 			{
-				case PartType.Floor:   part = PartType.Floor;   break; // TODO: refactor
-				case PartType.West:    part = PartType.West;    break;
-				case PartType.North:   part = PartType.North;   break;
-				case PartType.Content: part = PartType.Content; break;
+				PartType quadrant;
 
-				case (PartType)QuadrantDrawService.Quad_PART:
-					isPartSlot = true;
-					if (QuadrantDrawService.SelectedTilepart != null)
-						part = QuadrantDrawService.SelectedTilepart.Record.PartType;
-					break;
+				if (_quadrant != (PartType)QuadrantDrawService.Quad_PART)
+					quadrant = _quadrant;
+				else if (QuadrantDrawService.SelectedTilepart != null)
+					quadrant = QuadrantDrawService.SelectedTilepart.Record.PartType;
+				else
+					quadrant = PartType.Invalid;
+
+				//DSShared.Logfile.Log(". quadrant= " + quadrant);
+				if (quadrant != PartType.Invalid)
+				{
+					ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant =
+					ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = quadrant;
+
+					if (_quadrant != (PartType)QuadrantDrawService.Quad_PART)
+						Clicker(e.Button, e.Clicks, askey);
+				}
 			}
+			_quadrant = PartType.Invalid;
+		}
 
-			if (part != PartType.Invalid)
-			{
-				ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant = part;
-				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = part;
-
-				if (!isPartSlot)
-					Clicker(e.Button, e.Clicks, isKeyInput);
-			}
-			_keyQuadrant = PartType.Invalid;
+		/// <summary>
+		/// Checks if mouse or key op hits a legit quadrant-slot.
+		/// </summary>
+		/// <param name="excludePart"><c>true</c> to exclude the current-part
+		/// pseudo-slot</param>
+		/// <returns><c>true</c> if <c><see cref="_quadrant"/></c> is a legal
+		/// <c><see cref="PartType"/></c></returns>
+		/// <remarks>Helper for
+		/// <c><see cref="OnMouseDown()">OnMouseDown().</see></c></remarks>
+		private bool isQuadrantLegit(bool excludePart = false)
+		{
+			return _quadrant == PartType.Floor
+				|| _quadrant == PartType.West
+				|| _quadrant == PartType.North
+				|| _quadrant == PartType.Content
+				|| (!excludePart && _quadrant == (PartType)QuadrantDrawService.Quad_PART);
 		}
 
 		/// <summary>
@@ -168,11 +200,13 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="button"></param>
 		/// <param name="clicks"></param>
-		/// <param name="isKeyInput"><c>true</c> if invoked by keyboard-input</param>
+		/// <param name="askey"><c>true</c> if invoked by keyboard-input</param>
 		/// <remarks>TODO: GENERAL - Bypass operations (and the MapChanged flag)
 		/// if user does an operation that results in an identical state.</remarks>
-		internal void Clicker(MouseButtons button, int clicks, bool isKeyInput = false)
+		internal void Clicker(MouseButtons button, int clicks, bool askey = false)
 		{
+			//DSShared.Logfile.Log("QuadrantControl.Clicker()");
+
 			if (Tile != null)
 			{
 				switch (button)
@@ -183,9 +217,9 @@ namespace MapView.Forms.Observers
 						break;
 
 					case MouseButtons.Right:
-						if (MainViewOverlay.that.FirstClick) // do not set a part in a quad unless a tile is selected.
+						if (MainViewOverlay.that.FirstClick) // do not set a part in a quadrant unless a tile is selected.
 						{
-							if (isKeyInput || !TopView.Optionables.EnableRightClickWaitTimer)
+							if (askey || !TopView.Optionables.EnableRightClickWaitTimer)
 							{
 								_t1clicks = clicks;
 								OnClicksElapsed(null,null);
