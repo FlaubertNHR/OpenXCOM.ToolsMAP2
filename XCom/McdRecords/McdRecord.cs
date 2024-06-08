@@ -10,17 +10,26 @@ using XCom;
 namespace XCom
 {
 	/// <summary>
-	/// The quadrant-slots that a record can be assigned to in an MCD file.
-	/// <c>Invalid</c> is for TileView's ALL tabpage only but is also used by
-	/// <c>QuadrantControl.OnMouseDown()</c> as None. As well as by crippled
-	/// tileparts.
+	/// The quadrant-slot that a record can be assigned to by an MCD file.
 	/// </summary>
 	/// <remarks>Do not reorder these since they are used by
 	/// <c>MainViewF.Screenshot()</c> in the specific order. They are also used
-	/// to position the Quadrant panels in TopView.</remarks>
+	/// to position stuff in the Quadrant panels for <c>QuadrantDrawService</c>.</remarks>
 	public enum PartType
 	{
+		/// <summary>
+		/// <c>Invalid</c> is for
+		/// <list type="bullet">
+		/// <item><c>TileView</c> - the ALL tabpage</item>
+		/// <item><c>QuadrantControl.OnMouseDown()</c> as None</item>
+		/// <item><c>TopControl.OnKeyDown() as None</c></item>
+		/// <item><c>TopViewForm.OnKeyDown() as None</c></item>
+		/// <item><c>TopRouteViewForm.OnKeyDown() as None</c></item>
+		/// <item><c><see cref="Tilepart.Cripple()">Tilepart.Cripple()</see></c></item>
+		/// </list>
+		/// </summary>
 		Invalid = -1,
+
 		Floor   =  0,
 		West    =  1,
 		North   =  2,
