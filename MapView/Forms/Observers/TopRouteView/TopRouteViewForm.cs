@@ -169,7 +169,7 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="RouteViewForm"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			PartType slot = PartType.Invalid;
+			PartType quadrant = PartType.Invalid;
 
 			switch (e.KeyData)
 			{
@@ -217,10 +217,10 @@ namespace MapView.Forms.Observers
 					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
 					break;
 
-				case Keys.D1: slot = PartType.Floor;   break;
-				case Keys.D2: slot = PartType.West;    break;
-				case Keys.D3: slot = PartType.North;   break;
-				case Keys.D4: slot = PartType.Content; break;
+				case Keys.D1: quadrant = PartType.Floor;   break;
+				case Keys.D2: quadrant = PartType.West;    break;
+				case Keys.D3: quadrant = PartType.North;   break;
+				case Keys.D4: quadrant = PartType.Content; break;
 
 				case Keys.Subtract:
 				case Keys.Add:
@@ -270,11 +270,11 @@ namespace MapView.Forms.Observers
 			switch (tabControl.SelectedIndex)
 			{
 				case TAB_TOP:
-					if (slot != PartType.Invalid)
+					if (quadrant != PartType.Invalid)
 					{
 						e.SuppressKeyPress = true;
 						var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-						ControlTop.QuadrantControl.doMouseDown(args, slot);
+						ControlTop.QuadrantControl.doMouseDown(args, quadrant);
 					}
 					break;
 

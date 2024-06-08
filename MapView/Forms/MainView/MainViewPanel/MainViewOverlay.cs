@@ -702,13 +702,13 @@ namespace MapView.Forms.MainView
 					Point a = GetDragBeg_abs();
 					Point b = GetDragEnd_abs();
 
-					PartType slot = ObserverManager.TopView.Control.QuadrantControl.SelectedQuadrant;
+					PartType quadrant = ObserverManager.TopView.Control.QuadrantControl.SelectedQuadrant;
 
 					MapTile tile;
 					for (int col = a.X; col <= b.X; ++col)
 					for (int row = a.Y; row <= b.Y; ++row)
 					{
-						(tile = _file.GetTile(col, row))[slot] = part;
+						(tile = _file.GetTile(col, row))[quadrant] = part;
 						tile.Vacancy();
 					}
 
@@ -744,14 +744,14 @@ namespace MapView.Forms.MainView
 			Point a = GetDragBeg_abs();
 			Point b = GetDragEnd_abs();
 
-			PartType slot = ObserverManager.TopView .Control.QuadrantControl.SelectedQuadrant;
+			PartType quadrant = ObserverManager.TopView .Control.QuadrantControl.SelectedQuadrant;
 
 			MapTile tile;
 			for (int col = a.X; col <= b.X; ++col)
 			for (int row = a.Y; row <= b.Y; ++row)
 			{
 				tile = _file.GetTile(col, row);
-				tile[slot] = null;
+				tile[quadrant] = null;
 				tile.Vacancy();
 			}
 

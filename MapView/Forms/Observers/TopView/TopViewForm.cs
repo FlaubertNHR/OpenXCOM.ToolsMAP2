@@ -125,7 +125,7 @@ namespace MapView.Forms.Observers
 		/// <c><see cref="MainViewOverlay.Edit()">MainViewOverlay.Edit()</see></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			PartType slot = PartType.Invalid;
+			PartType quadrant = PartType.Invalid;
 
 			switch (e.KeyData)
 			{
@@ -166,21 +166,21 @@ namespace MapView.Forms.Observers
 					}
 					break;
 
-				case Keys.D1: slot = PartType.Floor;   break;
-				case Keys.D2: slot = PartType.West;    break;
-				case Keys.D3: slot = PartType.North;   break;
-				case Keys.D4: slot = PartType.Content; break;
+				case Keys.D1: quadrant = PartType.Floor;   break;
+				case Keys.D2: quadrant = PartType.West;    break;
+				case Keys.D3: quadrant = PartType.North;   break;
+				case Keys.D4: quadrant = PartType.Content; break;
 
 				default:
 					ViewersMenuManager.ViewerKeyDown(e); // NOTE: this can suppress the key
 					break;
 			}
 
-			if (slot != PartType.Invalid)
+			if (quadrant != PartType.Invalid)
 			{
 				e.SuppressKeyPress = true;
 				var args = new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0);
-				Control.QuadrantControl.doMouseDown(args, slot);
+				Control.QuadrantControl.doMouseDown(args, quadrant);
 			}
 		}
 

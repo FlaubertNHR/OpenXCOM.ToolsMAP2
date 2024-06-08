@@ -405,11 +405,11 @@ namespace XCom
 		/// <c><see cref="McdRecord"/></c> contains the MCD-entries in case you
 		/// haven't figured that.
 		/// </summary>
-		/// <param name="slot">the <c><see cref="PartType"/></c> to show
+		/// <param name="quadrant">the <c><see cref="PartType"/></c> to show
 		/// crippled</param>
 		/// <remarks>This is strictly a one-way operation! All crippled parts
 		/// shall go ~poof~ when the Mapfile is saved.</remarks>
-		internal void Cripple(PartType slot)
+		internal void Cripple(PartType quadrant)
 		{
 			// NOTE: Assigning 'PartType.Invalid' to the record's 'PartType'
 			// shall force it to be listed in TopView's TestPartslots dialog and
@@ -422,19 +422,19 @@ namespace XCom
 
 			_sprites = new XCImage[PHASES];
 
-			int quadrant;
-			switch (slot)
+			int spriteid;
+			switch (quadrant)
 			{
-				case PartType.Floor:   quadrant = Quad_FLOOR;   break;
-				case PartType.West:    quadrant = Quad_WEST;    break;
-				case PartType.North:   quadrant = Quad_NORTH;   break;
-				case PartType.Content: quadrant = Quad_CONTENT; break;
+				case PartType.Floor:   spriteid = Quad_FLOOR;   break;
+				case PartType.West:    spriteid = Quad_WEST;    break;
+				case PartType.North:   spriteid = Quad_NORTH;   break;
+				case PartType.Content: spriteid = Quad_CONTENT; break;
 
 				default: return;
 			}
 
 			for (int i = 0; i != PHASES; ++i)
-				_sprites[i] = CrippledSprites[quadrant];
+				_sprites[i] = CrippledSprites[spriteid];
 		}
 		#endregion Methods
 
