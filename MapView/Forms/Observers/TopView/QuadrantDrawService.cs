@@ -20,11 +20,11 @@ namespace MapView.Forms.Observers
 		internal static void DisposeService()
 		{
 			//DSShared.Logfile.Log("QuadrantDrawService.DisposeService() static");
-			_pathFloor      .Dispose();
-			_pathWest       .Dispose();
-			_pathNorth      .Dispose();
-			_pathContent    .Dispose();
-			_pathPart       .Dispose();
+			_border0        .Dispose();
+			_border1        .Dispose();
+			_border2        .Dispose();
+			_border3        .Dispose();
+			_border5        .Dispose();
 
 			QuadrantFont    .Dispose();
 			LocationFont    .Dispose();
@@ -68,11 +68,11 @@ namespace MapView.Forms.Observers
 		private static int TextWidth_content;
 		private static int TextWidth_part;
 
-		private static readonly GraphicsPath _pathFloor   = new GraphicsPath();
-		private static readonly GraphicsPath _pathWest    = new GraphicsPath();
-		private static readonly GraphicsPath _pathNorth   = new GraphicsPath();
-		private static readonly GraphicsPath _pathContent = new GraphicsPath();
-		private static readonly GraphicsPath _pathPart    = new GraphicsPath();
+		private static readonly GraphicsPath _border0 = new GraphicsPath();
+		private static readonly GraphicsPath _border1 = new GraphicsPath();
+		private static readonly GraphicsPath _border2 = new GraphicsPath();
+		private static readonly GraphicsPath _border3 = new GraphicsPath();
+		private static readonly GraphicsPath _border5 = new GraphicsPath();
 
 		/// <summary>
 		/// The ID for the Eraser sprite in the MonotoneSpriteset.
@@ -104,7 +104,8 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// The currently selected tilepart in <c><see cref="TileView"/></c>.
+		/// The currently selected <c><see cref="Tilepart"/></c> in
+		/// <c><see cref="TileView"/></c>.
 		/// </summary>
 		internal static Tilepart SelectedTilepart
 		{ get; set; }
@@ -126,24 +127,24 @@ namespace MapView.Forms.Observers
 							StartX + Quadwidth * quadrant - 1,
 							StartY);
 				p1 = new Point(
-							StartX + Quadwidth * quadrant + Spriteset.SpriteWidth32 + 1,
+							StartX + Quadwidth * quadrant + Spriteset.SpriteWidth32  + 1,
 							StartY);
 				p2 = new Point(
-							StartX + Quadwidth * quadrant + Spriteset.SpriteWidth32 + 1,
-							StartY + Spriteset.SpriteHeight40 + 1);
+							StartX + Quadwidth * quadrant + Spriteset.SpriteWidth32  + 1,
+							StartY +                        Spriteset.SpriteHeight40 + 1);
 				p3 = new Point(
 							StartX + Quadwidth * quadrant,
-							StartY + Spriteset.SpriteHeight40 + 1);
+							StartY +                        Spriteset.SpriteHeight40 + 1);
 				p4 = new Point(
 							StartX + Quadwidth * quadrant,
 							StartY);
 
-				switch ((PartType)quadrant)
+				switch (quadrant)
 				{
-					default:               path = _pathFloor;   break; // PartType.Floor
-					case PartType.West:    path = _pathWest;    break;
-					case PartType.North:   path = _pathNorth;   break;
-					case PartType.Content: path = _pathContent; break;
+					default: path = _border0; break; // PartType.Floor // case 0:
+					case 1:  path = _border1; break; // PartType.West
+					case 2:  path = _border2; break; // PartType.North
+					case 3:  path = _border3; break; // PartType.Content
 				}
 
 				path.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
@@ -153,6 +154,7 @@ namespace MapView.Forms.Observers
 			}
 
 			// skip a space between the Content quadrant-slot and the Current quadrant-slot
+
 			p0 = new Point(
 						StartX + Quadwidth * Quad_PART - 1,
 						StartY);
@@ -169,10 +171,10 @@ namespace MapView.Forms.Observers
 						StartX + Quadwidth * Quad_PART,
 						StartY);
 
-			_pathPart.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
-			_pathPart.AddLine(p1, p2); // does not get drawn.
-			_pathPart.AddLine(p2, p3); // NOTE: try DrawRectangle() it's even worse.
-			_pathPart.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
+			_border5.AddLine(p0, p1); // NOTE: 'p4' appears to be needed since the origin of 'p0'
+			_border5.AddLine(p1, p2); // does not get drawn.
+			_border5.AddLine(p2, p3); // NOTE: try DrawRectangle() it's even worse.
+			_border5.AddLine(p3, p4); // NOTE: It's due to PixelOffsetMode ...
 		}
 
 
@@ -232,10 +234,10 @@ namespace MapView.Forms.Observers
 		/// Draws a <c><see cref="QuadrantControl"/></c> incl/ sprites.
 		/// </summary>
 		/// <param name="tile"></param>
-		/// <param name="partType"></param>
+		/// <param name="quadrant"></param>
 		internal static void Paint(
 				MapTile tile,
-				PartType partType)
+				PartType quadrant)
 		{
 			//DSShared.Logfile.Log("QuadrantDrawService.Paint()");
 			//DSShared.Logfile.Log(". tile= " + tile);
@@ -245,26 +247,26 @@ namespace MapView.Forms.Observers
 			Brush brush;
 
 			if (TopViewControl.it_Floor.Checked)   brush = QuadrantDisabled;
-			else if (partType == PartType.Floor)   brush = QuadrantSelected;
+			else if (quadrant == PartType.Floor)   brush = QuadrantSelected;
 			else                                   brush = QuadrantStandard;
-			_graphics.FillPath(brush, _pathFloor);
+			_graphics.FillPath(brush, _border0);
 
 			if (TopViewControl.it_West.Checked)    brush = QuadrantDisabled;
-			else if (partType == PartType.West)    brush = QuadrantSelected;
+			else if (quadrant == PartType.West)    brush = QuadrantSelected;
 			else                                   brush = QuadrantStandard;
-			_graphics.FillPath(brush, _pathWest);
+			_graphics.FillPath(brush, _border1);
 
 			if (TopViewControl.it_North.Checked)   brush = QuadrantDisabled;
-			else if (partType == PartType.North)   brush = QuadrantSelected;
+			else if (quadrant == PartType.North)   brush = QuadrantSelected;
 			else                                   brush = QuadrantStandard;
-			_graphics.FillPath(brush, _pathNorth);
+			_graphics.FillPath(brush, _border2);
 
 			if (TopViewControl.it_Content.Checked) brush = QuadrantDisabled;
-			else if (partType == PartType.Content) brush = QuadrantSelected;
+			else if (quadrant == PartType.Content) brush = QuadrantSelected;
 			else                                   brush = QuadrantStandard;
-			_graphics.FillPath(brush, _pathContent);
+			_graphics.FillPath(brush, _border3);
 
-			_graphics.FillPath(QuadrantStandard, _pathPart);
+			_graphics.FillPath(QuadrantStandard, _border5);
 
 
 			// draw the sprites
@@ -276,7 +278,7 @@ namespace MapView.Forms.Observers
 			{
 				//DSShared.Logfile.Log(". . Floor");
 				DrawSprite(part[phase], 0, part.Record.SpriteOffset);
-				if (part.IsDoor) DrawDoorString((int)PartType.Floor);
+				if (part.IsDoor) DrawDoorString(0); // (int)PartType.Floor
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_FLOOR], 0);
@@ -286,7 +288,7 @@ namespace MapView.Forms.Observers
 			{
 				//DSShared.Logfile.Log(". . West");
 				DrawSprite(part[phase], Quadwidth, part.Record.SpriteOffset);
-				if (part.IsDoor) DrawDoorString((int)PartType.West);
+				if (part.IsDoor) DrawDoorString(1); // (int)PartType.West
 			}
 			else
 				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_WEST], Quadwidth);
@@ -296,50 +298,62 @@ namespace MapView.Forms.Observers
 			{
 				//DSShared.Logfile.Log(". . North");
 				DrawSprite(part[phase], Quadwidth * (int)PartType.North, part.Record.SpriteOffset);
-				if (part.IsDoor) DrawDoorString((int)PartType.North);
+				if (part.IsDoor) DrawDoorString(2); // (int)PartType.North
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_NORTH], Quadwidth * (int)PartType.North);
+				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_NORTH], Quadwidth * 2);
 
 			// Content ->
 			if (tile != null && (part = tile.Content) != null)
 			{
 				//DSShared.Logfile.Log(". . Content");
 				DrawSprite(part[phase], Quadwidth * (int)PartType.Content, part.Record.SpriteOffset);
-				if (part.IsDoor) DrawDoorString((int)PartType.Content);
+				if (part.IsDoor) DrawDoorString(3); // (int)PartType.Content
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_CONTENT], Quadwidth * (int)PartType.Content);
+				DrawSprite(MainViewF.MonotoneSprites[Tilepart.Quad_CONTENT], Quadwidth * 3);
 
 			// Current ->
 			if (SelectedTilepart != null)
 			{
 				//DSShared.Logfile.Log(". . Current");
 				DrawSprite(SelectedTilepart[phase], Quadwidth * Quad_PART, SelectedTilepart.Record.SpriteOffset);
-				if (SelectedTilepart.IsDoor) DrawDoorString(Quad_PART);
+				if (SelectedTilepart.IsDoor) DrawDoorString(5); // Quad_PART
 			}
 			else
-				DrawSprite(MainViewF.MonotoneSprites[Quad_ERASER], Quadwidth * Quad_PART);
+				DrawSprite(MainViewF.MonotoneSprites[Quad_ERASER], Quadwidth * 5);
 
 
 			// draw each quadrant's bounding rectangle
-			_graphics.DrawPath(QuadrantBorder, _pathFloor);
-			_graphics.DrawPath(QuadrantBorder, _pathWest);
-			_graphics.DrawPath(QuadrantBorder, _pathNorth);
-			_graphics.DrawPath(QuadrantBorder, _pathContent);
-			_graphics.DrawPath(QuadrantBorder, _pathPart);
+			_graphics.DrawPath(QuadrantBorder, _border0);
+			_graphics.DrawPath(QuadrantBorder, _border1);
+			_graphics.DrawPath(QuadrantBorder, _border2);
+			_graphics.DrawPath(QuadrantBorder, _border3);
+			_graphics.DrawPath(QuadrantBorder, _border5);
 
 			// draw the quadrant-type label under each quadrant
-			DrawTypeString(Floor,   TextWidth_floor,   (int)PartType.Floor);
-			DrawTypeString(West,    TextWidth_west,    (int)PartType.West);
-			DrawTypeString(North,   TextWidth_north,   (int)PartType.North);
-			DrawTypeString(Content, TextWidth_content, (int)PartType.Content);
-			DrawTypeString(Part,    TextWidth_part,    Quad_PART);
+			DrawTypeString(Floor,   TextWidth_floor,   0); // (int)PartType.Floor
+			DrawTypeString(West,    TextWidth_west,    1); // (int)PartType.West
+			DrawTypeString(North,   TextWidth_north,   2); // (int)PartType.North
+			DrawTypeString(Content, TextWidth_content, 3); // (int)PartType.Content
+			DrawTypeString(Part,    TextWidth_part,    5); // Quad_PART
 
-			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_FloorColor],   PartType.Floor);
-			FillSwatchColor(TopControl.ToolWest .Brush,                                 PartType.West);
-			FillSwatchColor(TopControl.ToolNorth.Brush,                                 PartType.North);
-			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_ContentColor], PartType.Content);
+			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_FloorColor],   0); // PartType.Floor
+			FillSwatchColor(TopControl.ToolWest .Brush,                                 1); // PartType.West
+			FillSwatchColor(TopControl.ToolNorth.Brush,                                 2); // PartType.North
+			FillSwatchColor(TopControl.TopBrushes[TopViewOptionables.str_ContentColor], 3); // PartType.Content
+
+			if (SelectedTilepart != null)
+			{
+				switch (SelectedTilepart.Record.PartType)
+				{
+					default:               brush = TopControl.TopBrushes[TopViewOptionables.str_FloorColor];   break; // PartType.Floor
+					case PartType.West:    brush = TopControl.ToolWest .Brush;                                 break;
+					case PartType.North:   brush = TopControl.ToolNorth.Brush;                                 break;
+					case PartType.Content: brush = TopControl.TopBrushes[TopViewOptionables.str_ContentColor]; break;
+				}
+				FillSwatchColor(brush, 5);
+			}
 		}
 
 		/// <summary>
@@ -468,12 +482,12 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="brush"></param>
 		/// <param name="quadrant"></param>
-		private static void FillSwatchColor(Brush brush, PartType quadrant)
+		private static void FillSwatchColor(Brush brush, int quadrant)
 		{
 			_graphics.FillRectangle(
 								brush,
 								new RectangleF(
-											StartX + Quadwidth * (int)quadrant,
+											StartX + Quadwidth * quadrant,
 											StartY + Spriteset.SpriteHeight40 + MarginVert + QuadrantFont.Height + 1,
 											Spriteset.SpriteWidth32,
 											SwatchHeight));
