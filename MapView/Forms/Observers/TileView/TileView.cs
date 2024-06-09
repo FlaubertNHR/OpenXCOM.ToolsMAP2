@@ -312,10 +312,7 @@ namespace MapView.Forms.Observers
 				McdInfo.UpdateData();
 
 			if (part != null)
-			{
-				ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant =
-				ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = part.Record.PartType;
-			}
+				QuadrantControl.SelectedQuadrant = part.Record.PartType;
 
 			QuadrantDrawService.SelectedTilepart = part;
 			ObserverManager.InvalidateQuadrantControls();

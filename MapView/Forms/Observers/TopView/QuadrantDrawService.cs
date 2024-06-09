@@ -234,10 +234,7 @@ namespace MapView.Forms.Observers
 		/// Draws a <c><see cref="QuadrantControl"/></c> incl/ sprites.
 		/// </summary>
 		/// <param name="tile"></param>
-		/// <param name="quadrant"></param>
-		internal static void Paint(
-				MapTile tile,
-				PartType quadrant)
+		internal static void Paint(MapTile tile)
 		{
 			//DSShared.Logfile.Log("QuadrantDrawService.Paint()");
 			//DSShared.Logfile.Log(". tile= " + tile);
@@ -246,24 +243,24 @@ namespace MapView.Forms.Observers
 			// fill the background of the quadrant-slots
 			Brush brush;
 
-			if (TopViewControl.it_Floor.Checked)   brush = QuadrantDisabled;
-			else if (quadrant == PartType.Floor)   brush = QuadrantSelected;
-			else                                   brush = QuadrantStandard;
+			if (TopViewControl.it_Floor.Checked)                           brush = QuadrantDisabled;
+			else if (QuadrantControl.SelectedQuadrant == PartType.Floor)   brush = QuadrantSelected;
+			else                                                           brush = QuadrantStandard;
 			_graphics.FillPath(brush, _border0);
 
-			if (TopViewControl.it_West.Checked)    brush = QuadrantDisabled;
-			else if (quadrant == PartType.West)    brush = QuadrantSelected;
-			else                                   brush = QuadrantStandard;
+			if (TopViewControl.it_West.Checked)                            brush = QuadrantDisabled;
+			else if (QuadrantControl.SelectedQuadrant == PartType.West)    brush = QuadrantSelected;
+			else                                                           brush = QuadrantStandard;
 			_graphics.FillPath(brush, _border1);
 
-			if (TopViewControl.it_North.Checked)   brush = QuadrantDisabled;
-			else if (quadrant == PartType.North)   brush = QuadrantSelected;
-			else                                   brush = QuadrantStandard;
+			if (TopViewControl.it_North.Checked)                           brush = QuadrantDisabled;
+			else if (QuadrantControl.SelectedQuadrant == PartType.North)   brush = QuadrantSelected;
+			else                                                           brush = QuadrantStandard;
 			_graphics.FillPath(brush, _border2);
 
-			if (TopViewControl.it_Content.Checked) brush = QuadrantDisabled;
-			else if (quadrant == PartType.Content) brush = QuadrantSelected;
-			else                                   brush = QuadrantStandard;
+			if (TopViewControl.it_Content.Checked)                         brush = QuadrantDisabled;
+			else if (QuadrantControl.SelectedQuadrant == PartType.Content) brush = QuadrantSelected;
+			else                                                           brush = QuadrantStandard;
 			_graphics.FillPath(brush, _border3);
 
 			_graphics.FillPath(QuadrantStandard, _border5);

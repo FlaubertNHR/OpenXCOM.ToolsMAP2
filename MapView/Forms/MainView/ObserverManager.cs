@@ -145,6 +145,17 @@ namespace MapView.Forms.MainView
 			TopView     .Control   .QuadrantControl.Invalidate();
 			TopRouteView.ControlTop.QuadrantControl.Invalidate();
 		}
+
+		/// <summary>
+		/// Refreshes the
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c>
+		/// in <c>TopView</c> and <c>TopRouteView(Top)</c>.
+		/// </summary>
+		internal static void RefreshQuadrantControls()
+		{
+			TopView     .Control   .QuadrantControl.Refresh();
+			TopRouteView.ControlTop.QuadrantControl.Refresh();
+		}
 		#endregion Update UI (static)
 	}
 }

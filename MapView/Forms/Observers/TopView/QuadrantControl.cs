@@ -39,32 +39,37 @@ namespace MapView.Forms.Observers
 
 		private static int  _t1clicks;
 		private static bool _t1subscribed;
-		#endregion Fields (static)
-
-
-		// TODO: Figure out what else can be made static here
-
-
-		#region Fields
-		private MapFile _file;
 
 		/// <summary>
 		/// This is set to a quadrant-slot by keyboard-input.
 		/// </summary>
-		private PartType _quadrant = PartType.Invalid;
+		private static PartType _quadrant = PartType.Invalid;
+		#endregion Fields (static)
+
+
+		#region Fields
+		// TODO: Figure out what else can be made static here
+
+		private MapFile _file;
 		#endregion Fields
 
 
-		#region Properties
-		private PartType _selectedquadrant = PartType.Floor;
-		internal PartType SelectedQuadrant
+		#region Properties (static)
+		private static PartType _selectedquadrant = PartType.Floor;
+		internal static PartType SelectedQuadrant
 		{
 			get { return _selectedquadrant; }
 			set
 			{
-				_selectedquadrant = value; Refresh();
+				_selectedquadrant = value;
+				ObserverManager.RefreshQuadrantControls();
 			}
 		}
+		#endregion Properties (static)
+
+
+		#region Properties
+		// TODO: Figure out what else can be made static here
 
 		internal MapTile Tile
 		{ private get; set; }
@@ -128,12 +133,6 @@ namespace MapView.Forms.Observers
 			ObserverManager.TopView     .Control   .TopControl.Select();
 			ObserverManager.TopRouteView.ControlTop.TopControl.Select();
 
-//			bool askey = _quadrant !=  PartType.Invalid // ie. is Floor or West or North or Content
-//					  && _quadrant != (PartType)QuadrantDrawService.Quad_PART;
-//			bool askey = _quadrant == PartType.Floor
-//					  || _quadrant == PartType.West
-//					  || _quadrant == PartType.North
-//					  || _quadrant == PartType.Content;
 			bool askey = isQuadrantLegit(true);
 			//DSShared.Logfile.Log(". askey= " + askey);
 
@@ -148,11 +147,6 @@ namespace MapView.Forms.Observers
 				}
 			}
 
-//			if (   _quadrant == PartType.Floor
-//				|| _quadrant == PartType.West
-//				|| _quadrant == PartType.North
-//				|| _quadrant == PartType.Content
-//				|| _quadrant == (PartType)QuadrantDrawService.Quad_PART)
 			if (isQuadrantLegit())
 			{
 				PartType quadrant;
@@ -167,32 +161,13 @@ namespace MapView.Forms.Observers
 				//DSShared.Logfile.Log(". quadrant= " + quadrant);
 				if (quadrant != PartType.Invalid)
 				{
-					ObserverManager.TopView     .Control   .QuadrantControl.SelectedQuadrant =
-					ObserverManager.TopRouteView.ControlTop.QuadrantControl.SelectedQuadrant = quadrant;
+					SelectedQuadrant = quadrant;
 
 					if (_quadrant != (PartType)QuadrantDrawService.Quad_PART)
 						Clicker(e.Button, e.Clicks, askey);
 				}
 			}
 			_quadrant = PartType.Invalid;
-		}
-
-		/// <summary>
-		/// Checks if mouse or key op hits a legit quadrant-slot.
-		/// </summary>
-		/// <param name="excludePart"><c>true</c> to exclude the current-part
-		/// pseudo-slot</param>
-		/// <returns><c>true</c> if <c><see cref="_quadrant"/></c> is a legal
-		/// <c><see cref="PartType"/></c></returns>
-		/// <remarks>Helper for
-		/// <c><see cref="OnMouseDown()">OnMouseDown().</see></c></remarks>
-		private bool isQuadrantLegit(bool excludePart = false)
-		{
-			return _quadrant == PartType.Floor
-				|| _quadrant == PartType.West
-				|| _quadrant == PartType.North
-				|| _quadrant == PartType.Content
-				|| (!excludePart && _quadrant == (PartType)QuadrantDrawService.Quad_PART);
 		}
 
 		/// <summary>
@@ -248,7 +223,7 @@ namespace MapView.Forms.Observers
 			if (MainViewF.Dontdrawyougits) return;
 
 			QuadrantDrawService.SetGraphics(e.Graphics);
-			QuadrantDrawService.Paint(Tile, SelectedQuadrant);
+			QuadrantDrawService.Paint(Tile);
 
 			if (SelectedLocation != null)
 				QuadrantDrawService.PrintSelectedLocation(SelectedLocation, Width);
@@ -358,6 +333,24 @@ namespace MapView.Forms.Observers
 		{
 			ObserverManager.TopView     .Control   .QuadrantControl.BackColor =
 			ObserverManager.TopRouteView.ControlTop.QuadrantControl.BackColor = TopView.Optionables.QuadrantBackcolor;
+		}
+
+		/// <summary>
+		/// Checks if mouse or key op hits a legit quadrant-slot.
+		/// </summary>
+		/// <param name="excludePart"><c>true</c> to exclude the current-part
+		/// pseudo-slot</param>
+		/// <returns><c>true</c> if <c><see cref="_quadrant"/></c> is a legal
+		/// <c><see cref="PartType"/></c></returns>
+		/// <remarks>Helper for
+		/// <c><see cref="OnMouseDown()">OnMouseDown().</see></c></remarks>
+		private static bool isQuadrantLegit(bool excludePart = false)
+		{
+			return _quadrant == PartType.Floor
+				|| _quadrant == PartType.West
+				|| _quadrant == PartType.North
+				|| _quadrant == PartType.Content
+				|| (!excludePart && _quadrant == (PartType)QuadrantDrawService.Quad_PART);
 		}
 		#endregion Methods (static)
 	}
