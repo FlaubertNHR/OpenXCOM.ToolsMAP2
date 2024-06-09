@@ -180,10 +180,12 @@ namespace MapView.Forms.Observers
 		/// if user does an operation that results in an identical state.</remarks>
 		internal void Clicker(MouseButtons button, int clicks, bool askey = false)
 		{
-			//DSShared.Logfile.Log("QuadrantControl.Clicker()");
+			//DSShared.Logfile.Log("QuadrantControl.Clicker() button= " + button + " clicks= " + clicks + " askey= " + askey);
 
 			if (Tile != null)
 			{
+				//DSShared.Logfile.Log(". Tile VALID");
+
 				switch (button)
 				{
 					case MouseButtons.Left: // NOTE: clicks=1 is handled by caller.
@@ -208,6 +210,11 @@ namespace MapView.Forms.Observers
 						}
 						break;
 				}
+			}
+			else if (button == MouseButtons.Left && clicks == 2) // no Tile selected - null the CurrentPart
+			{
+				//DSShared.Logfile.Log(". Tile NOT Valid");
+				ObserverManager.TileView.Control.SelectedTilepart = null;
 			}
 		}
 
