@@ -164,7 +164,13 @@ namespace MapView.Forms.Observers
 					SelectedQuadrant = quadrant;
 
 					if (_quadrant != (PartType)QuadrantDrawService.Quad_PART)
+					{
 						Clicker(e.Button, e.Clicks, askey);
+					}
+					else if (e.Button == MouseButtons.Right)
+					{
+						ObserverManager.TileView.Control.SelectedTilepart = null;
+					}
 				}
 			}
 			_quadrant = PartType.Invalid;
