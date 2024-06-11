@@ -193,11 +193,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				if (TopView._fpartslots != null && !TopView._fpartslots.IsDisposed)
-				{
-					TopView._fpartslots.Close();
-					TopView._fpartslots = null;
-				}
+				TopView.CloseTestPartslotsDialog();
 
 				if (MainViewF.Quit)
 				{

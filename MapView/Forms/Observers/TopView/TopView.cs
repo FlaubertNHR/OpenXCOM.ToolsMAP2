@@ -22,7 +22,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>Be careful with this pointer because closing the dialog in
 		/// the dialog itself does *not* null this pointer. So check for both
 		/// !null and !IsDisposed if necessary.</remarks>
-		internal static Infobox _fpartslots;
+		private static Infobox _fpartslots;
 		#endregion Fields (static)
 
 
@@ -296,11 +296,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTestPartslotsClick(object sender, EventArgs e)
 		{
-			if (_fpartslots != null && !_fpartslots.IsDisposed)
-			{
-				_fpartslots.Close(); // TODO: Update the data if/when parts change.
-				_fpartslots = null;
-			}
+			CloseTestPartslotsDialog(); // TODO: Update the data if/when parts change.
 
 			var lines = new List<string>();
 
@@ -318,7 +314,7 @@ namespace MapView.Forms.Observers
 					if ((part = tile.Floor) != null
 						&& (parttype = part.Record.PartType) != PartType.Floor)
 					{
-						lines.Add(GetParttypeErrorString(
+						lines.Add(GetPartslotErrorString(
 													c,r,l,
 													PartType.Floor,
 													parttype,
@@ -328,7 +324,7 @@ namespace MapView.Forms.Observers
 					if ((part = tile.West) != null
 						&& (parttype = part.Record.PartType) != PartType.West)
 					{
-						lines.Add(GetParttypeErrorString(
+						lines.Add(GetPartslotErrorString(
 													c,r,l,
 													PartType.West,
 													parttype,
@@ -338,7 +334,7 @@ namespace MapView.Forms.Observers
 					if ((part = tile.North) != null
 						&& (parttype = part.Record.PartType) != PartType.North)
 					{
-						lines.Add(GetParttypeErrorString(
+						lines.Add(GetPartslotErrorString(
 													c,r,l,
 													PartType.North,
 													parttype,
@@ -348,7 +344,7 @@ namespace MapView.Forms.Observers
 					if ((part = tile.Content) != null
 						&& (parttype = part.Record.PartType) != PartType.Content)
 					{
-						lines.Add(GetParttypeErrorString(
+						lines.Add(GetPartslotErrorString(
 													c,r,l,
 													PartType.Content,
 													parttype,
@@ -433,7 +429,7 @@ namespace MapView.Forms.Observers
 		/// <param name="parttype"></param>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		private string GetParttypeErrorString(
+		private string GetPartslotErrorString(
 				int col,
 				int row,
 				int lev,
@@ -456,6 +452,21 @@ namespace MapView.Forms.Observers
 			return c + " " + r + " " + l + " - " + q + p + id;
 		}
 		#endregion Methods
+
+
+		#region Methods (static)
+		/// <summary>
+		/// Closes the TestPartslots dialog safely.
+		/// </summary>
+		internal static void CloseTestPartslotsDialog()
+		{
+			if (_fpartslots != null && !_fpartslots.IsDisposed)
+			{
+				_fpartslots.Close();
+				_fpartslots = null;
+			}
+		}
+		#endregion Methods (static)
 
 
 		#region Options
