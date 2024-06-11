@@ -306,7 +306,7 @@ namespace MapView.Forms.Observers
 
 			MapTile tile;
 			Tilepart part;
-			McdRecord record;
+			PartType parttype;
 
 			for (int l = 0; l != _file.Levs; ++l)
 			for (int r = 0; r != _file.Rows; ++r)
@@ -316,43 +316,43 @@ namespace MapView.Forms.Observers
 				if (!tile.Vacant)
 				{
 					if ((part = tile.Floor) != null
-						&& (record = part.Record).PartType != PartType.Floor)
+						&& (parttype = part.Record.PartType) != PartType.Floor)
 					{
-						lines.Add(GetParttestString(
-												c,r,l,
-												PartType.Floor,
-												record.PartType,
-												part.SetId));
+						lines.Add(GetParttypeErrorString(
+													c,r,l,
+													PartType.Floor,
+													parttype,
+													part.SetId));
 					}
 
 					if ((part = tile.West) != null
-						&& (record = part.Record).PartType != PartType.West)
+						&& (parttype = part.Record.PartType) != PartType.West)
 					{
-						lines.Add(GetParttestString(
-												c,r,l,
-												PartType.West,
-												record.PartType,
-												part.SetId));
+						lines.Add(GetParttypeErrorString(
+													c,r,l,
+													PartType.West,
+													parttype,
+													part.SetId));
 					}
 
 					if ((part = tile.North) != null
-						&& (record = part.Record).PartType != PartType.North)
+						&& (parttype = part.Record.PartType) != PartType.North)
 					{
-						lines.Add(GetParttestString(
-												c,r,l,
-												PartType.North,
-												record.PartType,
-												part.SetId));
+						lines.Add(GetParttypeErrorString(
+													c,r,l,
+													PartType.North,
+													parttype,
+													part.SetId));
 					}
 
 					if ((part = tile.Content) != null
-						&& (record = part.Record).PartType != PartType.Content)
+						&& (parttype = part.Record.PartType) != PartType.Content)
 					{
-						lines.Add(GetParttestString(
-												c,r,l,
-												PartType.Content,
-												record.PartType,
-												part.SetId));
+						lines.Add(GetParttypeErrorString(
+													c,r,l,
+													PartType.Content,
+													parttype,
+													part.SetId));
 					}
 				}
 			}
@@ -369,7 +369,7 @@ namespace MapView.Forms.Observers
 				_fpartslots = new Infobox( // not Modal.
 									title,
 									Infobox.SplitString("The following tileslots are occupied by incorrect"
-											+ " PartTypes. This could result in broken battlescape behavior."),
+											+ " PartTypes. This could result in aberrant battlescape behavior."),
 									copyable,
 									InfoboxType.Warn);
 				_fpartslots.Show();
@@ -433,7 +433,7 @@ namespace MapView.Forms.Observers
 		/// <param name="parttype"></param>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		private string GetParttestString(
+		private string GetParttypeErrorString(
 				int col,
 				int row,
 				int lev,
