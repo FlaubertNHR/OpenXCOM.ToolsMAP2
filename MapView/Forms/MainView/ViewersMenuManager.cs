@@ -150,14 +150,14 @@ namespace MapView.Forms.MainView
 
 
 		/// <summary>
-		/// Processes keydown events that shall be captured and abused at the
-		/// <c>Form</c> level.
+		/// Processes <c>KeyDown</c> events that shall be captured and abused at
+		/// the <c>Form</c> level. Shows/hides/minimizes/restores viewers on
+		/// F-key events. Handles activity by
 		/// <list type="bullet">
-		/// <item>shows/hides/minimizes/restores viewers on F-key events</item>
-		/// <item>handles activity by <c><see cref="Observers.TileViewForm"/></c>,
-		/// <c><see cref="Observers.TopViewForm"/></c>,
-		/// <c><see cref="Observers.RouteViewForm"/></c>, and
-		/// <c><see cref="Observers.TopRouteViewForm"/></c></item>
+		/// <item><c><see cref="Observers.TileViewForm"/></c></item>
+		/// <item><c><see cref="Observers.TopViewForm"/></c></item>
+		/// <item><c><see cref="Observers.RouteViewForm"/></c></item>
+		/// <item><c><see cref="Observers.TopRouteViewForm"/></c></item>
 		/// </list>
 		/// </summary>
 		/// <param name="e"></param>
