@@ -113,17 +113,17 @@ namespace MapView.Forms.Observers
 					Control.GetSelectedPanel().Focus();
 					break;
 
-				case Keys.Control | Keys.O:
+				case Keys.O | Keys.Control:
 					e.SuppressKeyPress = true;
 					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 					break;
 
-				case Keys.Control | Keys.H:
+				case Keys.H | Keys.Control:
 					e.SuppressKeyPress = true;
 					MainViewF.that.OnColorsClick(null, EventArgs.Empty);
 					break;
 
-				case Keys.Control | Keys.Q:
+				case Keys.Q | Keys.Control:
 					e.SuppressKeyPress = true;
 					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
 					break;
@@ -131,9 +131,9 @@ namespace MapView.Forms.Observers
 				case Keys.PageUp:
 				case Keys.PageDown:
 				case Keys.Home:
+				case Keys.Home | Keys.Control:
 				case Keys.End:
-				case Keys.Control | Keys.Home:
-				case Keys.Control | Keys.End:
+				case Keys.End | Keys.Control:
 				{
 					TilePanel panel = Control.GetSelectedPanel();
 					if (panel.Focused)

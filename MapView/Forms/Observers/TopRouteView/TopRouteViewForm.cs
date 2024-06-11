@@ -199,7 +199,7 @@ namespace MapView.Forms.Observers
 					}
 					break;
 
-				case Keys.Control | Keys.O:
+				case Keys.O | Keys.Control:
 					e.SuppressKeyPress = true;
 					switch (tabControl.SelectedIndex)
 					{
@@ -212,7 +212,7 @@ namespace MapView.Forms.Observers
 					}
 					break;
 
-				case Keys.Control | Keys.Q:
+				case Keys.Q | Keys.Control:
 					e.SuppressKeyPress = true;
 					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
 					break;
@@ -222,16 +222,16 @@ namespace MapView.Forms.Observers
 				case Keys.D3: quadrant = PartType.North;   break;
 				case Keys.D4: quadrant = PartType.Content; break;
 
-				case Keys.Subtract:
 				case Keys.Add:
+				case Keys.Subtract:
 				case Keys.Home:
+				case Keys.Home | Keys.Shift:
 				case Keys.End:
+				case Keys.End | Keys.Shift:
 				case Keys.PageUp:
+				case Keys.PageUp | Keys.Shift:
 				case Keys.PageDown:
-				case Keys.Shift | Keys.Home:
-				case Keys.Shift | Keys.End:
-				case Keys.Shift | Keys.PageUp:
-				case Keys.Shift | Keys.PageDown:
+				case Keys.PageDown | Keys.Shift:
 					switch (tabControl.SelectedIndex)
 					{
 						case TAB_TOP:
@@ -252,9 +252,9 @@ namespace MapView.Forms.Observers
 					}
 					break;
 
-				case Keys.Shift | Keys.Subtract:
-				case Keys.Shift | Keys.Add:
 				case Keys.Enter:
+				case Keys.Add | Keys.Shift:
+				case Keys.Subtract | Keys.Shift:
 					if (tabControl.SelectedIndex == TAB_ROT && ControlRoute.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;

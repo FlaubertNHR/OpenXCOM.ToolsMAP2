@@ -136,27 +136,27 @@ namespace MapView.Forms.Observers
 						Control.RouteControl.Focus();
 					break;
 
-				case Keys.Control | Keys.O:
+				case Keys.O | Keys.Control:
 					e.SuppressKeyPress = true;
 					Control.OnOptionsClick(Control.GetOptionsButton(), EventArgs.Empty);
 					break;
 
-				case Keys.Control | Keys.Q:
+				case Keys.Q | Keys.Control:
 					e.SuppressKeyPress = true;
 					MainViewF.that.OnQuitClick(null, EventArgs.Empty);
 					break;
 
-				case Keys.Subtract:
-				case Keys.Add:
-				case Keys.Home:
-				case Keys.End:
-				case Keys.PageUp:
-				case Keys.PageDown:
-				case Keys.Shift | Keys.Home:
-				case Keys.Shift | Keys.End:
-				case Keys.Shift | Keys.PageUp:
-				case Keys.Shift | Keys.PageDown:
 				case Keys.Enter:
+				case Keys.Add:
+				case Keys.Subtract:
+				case Keys.Home:
+				case Keys.Home | Keys.Shift:
+				case Keys.End:
+				case Keys.End | Keys.Shift:
+				case Keys.PageUp:
+				case Keys.PageUp | Keys.Shift:
+				case Keys.PageDown:
+				case Keys.PageDown | Keys.Shift:
 					if (Control.RouteControl.Focused)
 					{
 						e.SuppressKeyPress = true;
