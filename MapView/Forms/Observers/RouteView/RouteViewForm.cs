@@ -148,7 +148,9 @@ namespace MapView.Forms.Observers
 
 				case Keys.Enter:
 				case Keys.Add:
+				case Keys.Add | Keys.Shift:
 				case Keys.Subtract:
+				case Keys.Subtract | Keys.Shift:
 				case Keys.Home:
 				case Keys.Home | Keys.Shift:
 				case Keys.End:
