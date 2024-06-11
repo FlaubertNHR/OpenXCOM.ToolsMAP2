@@ -75,6 +75,9 @@ namespace MapView.Forms.Observers
 
 		internal ToolStripMenuItem it_Content
 		{ get; private set; }
+
+		internal ToolStripMenuItem it_Enable
+		{ get; set; }
 		#endregion Properties
 
 
@@ -82,8 +85,9 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// cTor. Instantiates the TopView viewer and its components/controls.
 		/// </summary>
-		/// <remarks><see cref="RouteViewForm"/> and <see cref="TopRouteViewForm"/>
-		/// will each invoke and maintain their own instantiations.</remarks>
+		/// <remarks><c><see cref="RouteViewForm"/></c> and
+		/// <c><see cref="TopRouteViewForm"/></c> will each invoke and maintain
+		/// their own instantiations.</remarks>
 		internal TopView()
 		{
 			InitializeComponent();
@@ -107,10 +111,12 @@ namespace MapView.Forms.Observers
 																	pnlMain.Width,
 																	pnlMain.Height);
 
-			it_Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnQuadrantDisabilityClick, Keys.F1);
-			it_West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnQuadrantDisabilityClick, Keys.F2);
-			it_North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnQuadrantDisabilityClick, Keys.F3);
-			it_Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnQuadrantDisabilityClick, Keys.F4);
+			it_Floor   = new ToolStripMenuItem(QuadrantDrawService.Floor,   null, OnDisableClick,   Keys.F1);
+			it_West    = new ToolStripMenuItem(QuadrantDrawService.West,    null, OnDisableClick,   Keys.F2);
+			it_North   = new ToolStripMenuItem(QuadrantDrawService.North,   null, OnDisableClick,   Keys.F3);
+			it_Content = new ToolStripMenuItem(QuadrantDrawService.Content, null, OnDisableClick,   Keys.F4);
+			it_Enable  = new ToolStripMenuItem("Enable all",                null, OnEnableAllClick, Keys.F9);
+			it_Enable.Enabled = false;
 
 			tsddbDisabledQuads.DropDown.Items.AddRange(new []
 			{
@@ -119,6 +125,8 @@ namespace MapView.Forms.Observers
 				it_North,
 				it_Content
 			});
+			tsddbDisabledQuads.DropDown.Items.Add(new ToolStripSeparator()); // not allowed in AddRange() array
+			tsddbDisabledQuads.DropDown.Items.Add(it_Enable);
 
 			ResumeLayout();
 		}
@@ -166,16 +174,20 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles a click on any of the quadrant-visibility menuitems.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		/// <remarks>Mapview2 uses quadrant-visibility in 2 ways.
+		/// <param name="sender">
 		/// <list type="bullet">
-		/// <item>by setting/checking the <c>Checked</c> state of the respective
-		/// it</item>
-		/// <item>by setting/checking a respective <c>bool</c> in
-		/// <c><see cref="MainViewOverlay"/></c></item>
-		/// </list></remarks>
-		internal void OnQuadrantDisabilityClick(object sender, EventArgs e)
+		/// <item><c><see cref="it_Floor"/></c></item>
+		/// <item><c><see cref="it_West"/></c></item>
+		/// <item><c><see cref="it_North"/></c></item>
+		/// <item><c><see cref="it_Content"/></c></item>
+		/// </list></param>
+		/// <param name="e"></param>
+		/// <remarks>Also called by <c><see cref="MainViewF"/>.OnKeyDown()</c>.
+		/// <br/><br/>
+		/// Mapview2 uses quadrant-visibility in 2 ways. (1) by setting/getting
+		/// the <c>Checked</c> state of the respective it (2) by setting/getting
+		/// a respective <c>bool</c> in <c><see cref="MainViewOverlay"/></c>.</remarks>
+		internal void OnDisableClick(object sender, EventArgs e)
 		{
 			var it = sender as ToolStripMenuItem;
 			if (it == it_Floor)
@@ -207,6 +219,68 @@ namespace MapView.Forms.Observers
 
 				MainViewOverlay.that.SetContentDisabled(it.Checked);
 			}
+
+			ObserverManager.TopView     .Control   .it_Enable.Enabled =
+			ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = it_Floor  .Checked
+																	 || it_West   .Checked
+																	 || it_North  .Checked
+																	 || it_Content.Checked;
+
+
+			MainViewOverlay.that.Invalidate();
+
+			ObserverManager.InvalidateTopControls();
+			ObserverManager.InvalidateQuadrantControls();
+		}
+
+		/// <summary>
+		/// Sets all quadrants visible.
+		/// </summary>
+		/// <param name="sender"><c><see cref="it_Enable"/></c></param>
+		/// <param name="e"></param>
+		/// <remarks>Also called by <c><see cref="MainViewF"/>.OnKeyDown()</c>.
+		/// <br/><br/>
+		/// Mapview2 uses quadrant-visibility in 2 ways. (1) by setting/getting
+		/// the <c>Checked</c> state of the respective it (2) by setting/getting
+		/// a respective <c>bool</c> in <c><see cref="MainViewOverlay"/></c>.</remarks>
+		internal void OnEnableAllClick(object sender, EventArgs e)
+		{
+			if (it_Floor.Checked)
+			{
+				ObserverManager.TopView     .Control   .it_Floor.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = false;
+
+				MainViewOverlay.that.SetFloorDisabled(false);
+				_file.CalculateOccultations();
+			}
+
+			if (it_West.Checked)
+			{
+				ObserverManager.TopView     .Control   .it_West.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_West.Checked = false;
+
+				MainViewOverlay.that.SetWestDisabled(false);
+			}
+
+			if (it_North.Checked)
+			{
+				ObserverManager.TopView     .Control   .it_North.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_North.Checked = false;
+
+				MainViewOverlay.that.SetNorthDisabled(false);
+			}
+
+			if (it_Content.Checked)
+			{
+				ObserverManager.TopView     .Control   .it_Content.Checked =
+				ObserverManager.TopRouteView.ControlTop.it_Content.Checked = false;
+
+				MainViewOverlay.that.SetContentDisabled(false);
+			}
+
+			ObserverManager.TopView     .Control   .it_Enable.Enabled =
+			ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = false;
+
 
 			MainViewOverlay.that.Invalidate();
 
@@ -332,6 +406,14 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
+		/// Adds the tool-objects in the toolstrip.
+		/// </summary>
+		internal void AddToolstripControls()
+		{
+			ObserverManager.ToolFactory.AddEditorTools(tsTools, true);
+		}
+
+		/// <summary>
 		/// Dis/enables the <c>ToolStrip</c>.
 		/// </summary>
 		/// <param name="enable"><c>true</c> to enable</param>
@@ -340,13 +422,6 @@ namespace MapView.Forms.Observers
 			tsMain.Enabled = enable;
 		}
 
-		/// <summary>
-		/// Adds the tool-objects in the toolstrip.
-		/// </summary>
-		internal void AddToolstripControls()
-		{
-			ObserverManager.ToolFactory.AddEditorTools(tsTools, true);
-		}
 
 		/// <summary>
 		/// Formats a string of x/y/z + parttype for the TestPartslots dialog.

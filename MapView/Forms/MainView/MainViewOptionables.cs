@@ -474,7 +474,7 @@ namespace MapView.Forms.MainView
 			+ " is only 1 tile selected. Typically this should be left false"
 			+ " but if particularly large sprites hide the selector then this"
 			+ " can help resolve the tile - see also " + str_LayerSelectionBorder
-			+ @" (Ctrl+F9 - On/Off)
+			+ @" (Shift+F9 - On/Off)
 (default False)")]
 		[DefaultValue(def_OneTileDraw)]
 		public bool OneTileDraw
@@ -762,7 +762,7 @@ namespace MapView.Forms.MainView
 
 		private bool _base1_xy = def_Base1_xy;
 		[Category(cat_Global)]
-		[Description("If true the printed position of rows and cols starts at 1"
+		[Description("If true the printed position of cols and rows starts at 1"
 			+ " instead of 0 (default False)")]
 		[DefaultValue(def_Base1_xy)]
 		public bool Base1_xy
