@@ -16,7 +16,7 @@ namespace MapView.Forms.Observers
 		private ToolStripDropDownButton tsddbDisabledQuads;
 		private ToolStripButton tsb_Options;
 		private ToolStripDropDownButton tsddbTest;
-		private ToolStripMenuItem tsddbTestPartslots;
+		private ToolStripMenuItem tsddbPartslotTest;
 
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace MapView.Forms.Observers
 			this.tsMain = new DSShared.Controls.ToolStripOneclick();
 			this.tsddbDisabledQuads = new System.Windows.Forms.ToolStripDropDownButton();
 			this.tsddbTest = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsddbTestPartslots = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsddbPartslotTest = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsb_Options = new System.Windows.Forms.ToolStripButton();
 			this.tscPanel.ContentPanel.SuspendLayout();
 			this.tscPanel.SuspendLayout();
@@ -117,19 +117,19 @@ namespace MapView.Forms.Observers
 			this.tsddbTest.AutoToolTip = false;
 			this.tsddbTest.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddbTest.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsddbTestPartslots});
+			this.tsddbPartslotTest});
 			this.tsddbTest.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsddbTest.Name = "tsddbTest";
 			this.tsddbTest.Size = new System.Drawing.Size(42, 22);
 			this.tsddbTest.Text = "&Test";
 			this.tsddbTest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tsddbTestPartslots
+			// tsddbPartslotTest
 			// 
-			this.tsddbTestPartslots.Name = "tsddbTestPartslots";
-			this.tsddbTestPartslots.Size = new System.Drawing.Size(184, 22);
-			this.tsddbTestPartslots.Text = "test parts in tileslots";
-			this.tsddbTestPartslots.Click += new System.EventHandler(this.OnTestPartslotsClick);
+			this.tsddbPartslotTest.Name = "tsddbPartslotTest";
+			this.tsddbPartslotTest.Size = new System.Drawing.Size(184, 22);
+			this.tsddbPartslotTest.Text = "test parts in tileslots";
+			this.tsddbPartslotTest.Click += new System.EventHandler(this.OnPartslotTestClick);
 			// 
 			// tsb_Options
 			// 

@@ -25,7 +25,14 @@ namespace MapView.Forms.Observers
 			Form
 	{
 		#region Fields (static)
+		/// <summary>
+		/// The index of TopView in <c><see cref="tabControl"/></c>.
+		/// </summary>
 		private const int TAB_TOP = 0;
+
+		/// <summary>
+		/// The index of RouteView in <c><see cref="tabControl"/></c>.
+		/// </summary>
 		private const int TAB_ROT = 1;
 		#endregion Fields (static)
 
@@ -94,7 +101,7 @@ namespace MapView.Forms.Observers
 
 			if (tabControl.SelectedIndex == TAB_TOP)
 			{
-				ControlTop.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+				ControlTop.TopControl.ClearSelectorLozenge(); // when PartslotTest is closed the selector-lozenge can glitch.
 				ControlTop.TopControl.Focus();
 			}
 		}
@@ -285,7 +292,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the <c>FormClosing</c> event. Ensures that the TestPartslots
+		/// Handles the <c>FormClosing</c> event. Ensures that the PartslotTest
 		/// dialog and <c><see cref="SpawnInfo"/></c> get closed.
 		/// </summary>
 		/// <param name="e"></param>
@@ -293,7 +300,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				TopView.CloseTestPartslotsDialog();
+				TopView.ClosePartslotTestDialog();
 
 				if (RouteView.SpawnInfo != null)
 					RouteView.SpawnInfo.Close();

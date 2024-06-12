@@ -60,7 +60,7 @@ namespace MapView.Forms.Observers
 			ShowHideManager._zOrder.Remove(this);
 			ShowHideManager._zOrder.Add(this);
 
-			Control.TopControl.ClearSelectorLozenge(); // when TestPartslots is closed the selector-lozenge can glitch.
+			Control.TopControl.ClearSelectorLozenge(); // when PartslotTest is closed the selector-lozenge can glitch.
 
 			// note that if user clicks on TopControl to activate this
 			// TopViewForm then TopControl.WndProc() will have already focused
@@ -185,7 +185,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the <c>FormClosing</c> event. Ensures that the TestPartslots
+		/// Handles the <c>FormClosing</c> event. Ensures that the PartslotTest
 		/// dialog gets closed.
 		/// </summary>
 		/// <param name="e"></param>
@@ -193,7 +193,7 @@ namespace MapView.Forms.Observers
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				TopView.CloseTestPartslotsDialog();
+				TopView.ClosePartslotTestDialog();
 
 				if (MainViewF.Quit)
 				{

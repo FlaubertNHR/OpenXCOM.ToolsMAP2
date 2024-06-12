@@ -412,7 +412,7 @@ namespace XCom
 		internal void Cripple(PartType quadrant)
 		{
 			// NOTE: Assigning 'PartType.Invalid' to the record's 'PartType'
-			// shall force it to be listed in TopView's TestPartslots dialog and
+			// shall force it to be listed in TopView's PartslotTest dialog and
 			// disallow it from consideration as a valid highid in the
 			// TilepartSubstitution dialog.
 			Record.PartType = PartType.Invalid;

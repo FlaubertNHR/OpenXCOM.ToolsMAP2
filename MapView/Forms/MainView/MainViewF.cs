@@ -1633,7 +1633,7 @@ namespace MapView
 				if (ScanG != null)
 					ScanG.Close();
 
-				TopView.CloseTestPartslotsDialog();
+				TopView.ClosePartslotTestDialog();
 
 //				McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
 //				if (fMcdInfo != null) fMcdInfo.UpdateData();
@@ -1852,7 +1852,7 @@ namespace MapView
 				{
 					if (f.ShowDialog(this) == DialogResult.OK)
 					{
-						TopView.CloseTestPartslotsDialog();
+						TopView.ClosePartslotTestDialog();
 
 						RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
 												MainViewF.Optionables.Base1_xy,
@@ -3269,7 +3269,7 @@ namespace MapView
 			ClearSearched();
 			_bypassSavealert = false;
 
-			TopView.CloseTestPartslotsDialog();
+			TopView.ClosePartslotTestDialog();
 
 			var descriptor = MapTree.SelectedNode.Tag as Descriptor; // Descriptor can be null if !Mapfile.FileValid
 			if (descriptor != null)

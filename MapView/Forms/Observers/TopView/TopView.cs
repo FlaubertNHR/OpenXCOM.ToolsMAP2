@@ -17,7 +17,7 @@ namespace MapView.Forms.Observers
 	{
 		#region Fields (static)
 		/// <summary>
-		/// The TestPartslots dialog - a nonmodal <see cref="Infobox"/>.
+		/// The PartslotTest dialog - a nonmodal <see cref="Infobox"/>.
 		/// </summary>
 		/// <remarks>Be careful with this pointer because closing the dialog in
 		/// the dialog itself does *not* null this pointer. So check for both
@@ -290,13 +290,13 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Handles a click on the TestPartslots menuitem.
+		/// Handles a click on the PartslotTest menuitem.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnTestPartslotsClick(object sender, EventArgs e)
+		private void OnPartslotTestClick(object sender, EventArgs e)
 		{
-			CloseTestPartslotsDialog(); // TODO: Update the data if/when parts change.
+			ClosePartslotTestDialog(); // TODO: Update the data if/when parts change.
 
 			var lines = new List<string>();
 
@@ -420,7 +420,7 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Formats a string of x/y/z + parttype for the TestPartslots dialog.
+		/// Formats a string of x/y/z + parttype for the PartslotTest dialog.
 		/// </summary>
 		/// <param name="col"></param>
 		/// <param name="row"></param>
@@ -456,9 +456,9 @@ namespace MapView.Forms.Observers
 
 		#region Methods (static)
 		/// <summary>
-		/// Closes the TestPartslots dialog safely.
+		/// Closes the PartslotTest dialog safely.
 		/// </summary>
-		internal static void CloseTestPartslotsDialog()
+		internal static void ClosePartslotTestDialog()
 		{
 			if (_fpartslots != null && !_fpartslots.IsDisposed)
 			{
