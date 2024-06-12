@@ -434,11 +434,11 @@ namespace MapView.Forms.Observers
 							id =  _parts.Length - 1;
 						break;
 
-					case (Keys.Home | Keys.Control):
+					case (Keys.Control | Keys.Home):
 						id = 0;
 						break;
 
-					case (Keys.End | Keys.Control):
+					case (Keys.Control | Keys.End):
 						id = _parts.Length - 1;
 						break;
 

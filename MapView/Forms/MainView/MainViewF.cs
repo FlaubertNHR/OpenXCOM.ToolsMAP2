@@ -1222,7 +1222,7 @@ namespace MapView
 					}
 					break;
 
-				case Keys.Enter | Keys.Shift:	// open MapBrowserDialog
+				case Keys.Shift | Keys.Enter:	// open MapBrowserDialog
 					if (MapTree.Focused && MapTree.SelectedNode != null)
 					{
 						e.SuppressKeyPress = true;
@@ -1241,7 +1241,7 @@ namespace MapView
 					val = (Optionables.LayerSelectionBorder + 1) % 3;
 					break;
 
-				case Keys.F9 | Keys.Shift:		// toggle OneTileDraw
+				case Keys.Shift | Keys.F9:		// toggle OneTileDraw
 					key = MainViewOptionables.str_OneTileDraw;
 					val = !Optionables.OneTileDraw;
 					break;
@@ -1251,7 +1251,7 @@ namespace MapView
 					val = Optionables.GetNextTileToner(+1);
 					break;
 
-				case Keys.F10 | Keys.Shift:		// cycle tiletoner option reverse
+				case Keys.Shift | Keys.F10:		// cycle tiletoner option reverse
 					key = MainViewOptionables.str_SelectedTileToner;
 					val = Optionables.GetNextTileToner(-1);
 					break;
@@ -1272,42 +1272,42 @@ namespace MapView
 					break;
 
 				// toggle TopView tilepart visibilities ->
-				case Keys.F1 | Keys.Control:
+				case Keys.Control | Keys.F1:
 					it = ObserverManager.TopView.Control.it_Floor;
 					break;
 
-				case Keys.F2 | Keys.Control:
+				case Keys.Control | Keys.F2:
 					it = ObserverManager.TopView.Control.it_West;
 					break;
 
-				case Keys.F3 | Keys.Control:
+				case Keys.Control | Keys.F3:
 					it = ObserverManager.TopView.Control.it_North;
 					break;
 
-				case Keys.F4 | Keys.Control:
+				case Keys.Control | Keys.F4:
 					it = ObserverManager.TopView.Control.it_Content;
 					break;
 
-				case Keys.F9 | Keys.Control:
+				case Keys.Control | Keys.F9:
 					it = ObserverManager.TopView.Control.it_Enable;
 					break;
 
 				// focus viewer (show/hide shortcuts are handled by menuitems directly) ->
-				case Keys.F5 | Keys.Control: id = ViewersMenuManager.MI_TILE;     break;
-				case Keys.F6 | Keys.Control: id = ViewersMenuManager.MI_TOP;      break;
-				case Keys.F7 | Keys.Control: id = ViewersMenuManager.MI_ROUTE;    break;
-				case Keys.F8 | Keys.Control: id = ViewersMenuManager.MI_TOPROUTE; break;
+				case Keys.Control | Keys.F5: id = ViewersMenuManager.MI_TILE;     break;
+				case Keys.Control | Keys.F6: id = ViewersMenuManager.MI_TOP;      break;
+				case Keys.Control | Keys.F7: id = ViewersMenuManager.MI_ROUTE;    break;
+				case Keys.Control | Keys.F8: id = ViewersMenuManager.MI_TOPROUTE; break;
 
 				case Keys.Add:
 				case Keys.Subtract:
 				case Keys.Home:
-				case Keys.Home | Keys.Shift:
 				case Keys.End:
-				case Keys.End | Keys.Shift:
 				case Keys.PageUp:
-				case Keys.PageUp | Keys.Shift:
 				case Keys.PageDown:
-				case Keys.PageDown | Keys.Shift:
+				case Keys.Shift | Keys.Home:
+				case Keys.Shift | Keys.End:
+				case Keys.Shift | Keys.PageUp:
+				case Keys.Shift | Keys.PageDown:
 					if (_overlay.Focused)
 					{
 						e.SuppressKeyPress = true;

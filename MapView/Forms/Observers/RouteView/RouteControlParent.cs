@@ -439,7 +439,7 @@ namespace MapView.Forms.Observers
 					base.OnKeyDown(e);
 					return;
 
-				case Keys.H | Keys.Control:
+				case Keys.Control | Keys.H:
 					e.SuppressKeyPress = true;
 					ObserverManager.RouteView.Control.OnGhostNodesClick(null, EventArgs.Empty);
 					return;
