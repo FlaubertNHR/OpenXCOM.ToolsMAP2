@@ -558,13 +558,6 @@ namespace MapView.Forms.Observers
 								default: brush = null; break; // should never happen.
 							}
 						}
-//						else if (node.Spawn != SpawnWeight.None)
-//						{
-//							brush = RouteBrushes[RouteViewOptionables.str_NodeSpawnColor];
-//						}
-//						else
-//							brush = RouteBrushes[RouteViewOptionables.str_NodeColor];
-
 						_graphics.FillPath(brush, _nodeFill);
 
 

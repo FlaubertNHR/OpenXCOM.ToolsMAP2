@@ -332,34 +332,6 @@ namespace MapView.Forms.Observers
 		}
 
 
-//		internal const string str_NodeColor = "NodeColor";
-//		private static Color  def_NodeColor = Color.MediumSeaGreen;
-//
-//		private Color _nodeColor = def_NodeColor;
-//		[Category(cat_Nodes)]
-//		[Description("Color of unselected nodes (default MediumSeaGreen)")]
-//		[DefaultValue(typeof(Color), "MediumSeaGreen")]
-//		public Color NodeColor
-//		{
-//			get { return _nodeColor; }
-//			set { _nodeColor = value; }
-//		}
-
-
-//		internal const string str_NodeSpawnColor = "NodeSpawnColor";
-//		private static Color  def_NodeSpawnColor = Color.GreenYellow;
-//
-//		private Color _nodeSpawnColor = def_NodeSpawnColor;
-//		[Category(cat_Nodes)]
-//		[Description("Color of spawn nodes (default GreenYellow)")]
-//		[DefaultValue(typeof(Color), "GreenYellow")]
-//		public Color NodeSpawnColor
-//		{
-//			get { return _nodeSpawnColor; }
-//			set { _nodeSpawnColor = value; }
-//		}
-
-
 		internal const string str_NodeSelectedColor = "NodeSelectedColor";
 		private static Color  def_NodeSelectedColor = Color.RoyalBlue;
 
@@ -881,14 +853,6 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			brush = new SolidBrush(color);
 			RouteControl.RouteBrushes[str_NodeColorInvalid] = brush;
 
-//			color = Color.FromArgb(def_NodeOpacity, def_NodeColor);
-//			brush = new SolidBrush(color);
-//			RouteControl.RouteBrushes[str_NodeColor] = brush;
-
-//			color = Color.FromArgb(def_NodeOpacity, def_NodeSpawnColor);
-//			brush = new SolidBrush(color);
-//			RouteControl.RouteBrushes[str_NodeSpawnColor] = brush;
-
 			color = Color.FromArgb(def_NodeOpacity, def_NodeSelectedColor);
 			brush = new SolidBrush(color);
 			RouteControl.RouteBrushes[str_NodeSelectedColor] = brush;
@@ -937,8 +901,6 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_NodeColor8,               def_NodeColor8,               changer0);
 			options.CreateOptionDefault(str_NodeColorGhosted,         def_NodeColorGhosted,         changer0);
 			options.CreateOptionDefault(str_NodeColorInvalid,         def_NodeColorInvalid,         changer0);
-//			options.CreateOptionDefault(str_NodeColor,                def_NodeColor,                changer0);
-//			options.CreateOptionDefault(str_NodeSpawnColor,           def_NodeSpawnColor,           changer0);
 			options.CreateOptionDefault(str_NodeSelectedColor,        def_NodeSelectedColor,        changer0);
 			options.CreateOptionDefault(str_NodeOpacity,              def_NodeOpacity,              changer0);
 
@@ -1051,8 +1013,6 @@ This is the color of the text on the Save button (if enabled) and the color for 
 				case str_NodeColor8:        NodeColor8        = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeColorGhosted:  NodeColorGhosted  = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeColorInvalid:  NodeColorInvalid  = (Color)val; ChangeBruColor(key, val); break;
-//				case str_NodeColor:         NodeColor         = (Color)val; ChangeBruColor(key, val); break;
-//				case str_NodeSpawnColor:    NodeSpawnColor    = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeSelectedColor: NodeSelectedColor = (Color)val; ChangeBruColor(key, val); break;
 				case str_NodeOpacity:       NodeOpacity       =   (int)val; ChangeBruOpaci(     val); break;
 
@@ -1098,17 +1058,10 @@ This is the color of the text on the Save button (if enabled) and the color for 
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
 					break;
 
-//				default: // is Node color ->
-//				str_NodeColor:
-//				str_NodeSpawnColor:
 				case str_NodeSelectedColor:
 				case str_NodeColorGhosted:
 					color = Color.FromArgb(NodeOpacity, color);
 					RouteControl.RouteBrushes[key].Color = color;
-
-//					if (key == str_NodeSelectedColor)
-//					RouteView.SetSelectedInfoColor();
-
 					break;
 
 				case str_NodeColor0:
@@ -1173,18 +1126,12 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			color = Color.FromArgb((int)val, NodeColorInvalid);
 			RouteControl.RouteBrushes[str_NodeColorInvalid].Color = color;
 
-//			color = Color.FromArgb((int)val, NodeColor);
-//			RouteControl.RouteBrushes[str_NodeColor].Color = color;
-
-//			color = Color.FromArgb((int)val, NodeSpawnColor);
-//			RouteControl.RouteBrushes[str_NodeSpawnColor].Color = color;
-
 			color = Color.FromArgb((int)val, NodeSelectedColor);
 			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = color;
 
-//			ObserverManager.RouteView   .Control     .SetNodeColors();	// doesn't appear to change transparency
-//			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();	// of backcolors in the RouteView groupbox ...
-		}																// ie. backcolors are always solid I guess.
+//			ObserverManager.RouteView   .Control     .SetNodeColors();	// doesn't appear to change transparency of backcolors in the
+//			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();	// RouteView groupbox ... backcolors are always solid I guess.
+		}
 
 
 		/// <summary>
