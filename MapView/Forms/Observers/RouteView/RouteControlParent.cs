@@ -435,24 +435,22 @@ namespace MapView.Forms.Observers
 
 			switch (e.KeyData)
 			{
-				default:
-					base.OnKeyDown(e);
-					return;
-
 				case Keys.Control | Keys.H:
 					e.SuppressKeyPress = true;
 					ObserverManager.RouteView.Control.OnGhostNodesClick(null, EventArgs.Empty);
-					return;
+					break;
 
 				case Keys.D0: case Keys.D1: case Keys.D2: case Keys.D3:
 				case Keys.D4: case Keys.D5: case Keys.D6: case Keys.D7:
 				case Keys.D8:
-					// doNoderankShortcut() ->
+					e.SuppressKeyPress = true;
+					RouteView.doNoderankShortcut(e.KeyData);
+					break;
+
+				default:
+					base.OnKeyDown(e);
 					break;
 			}
-
-			e.SuppressKeyPress = true;
-			RouteView.doNoderankShortcut(e.KeyData);
 		}
 		#endregion Events (override)
 
