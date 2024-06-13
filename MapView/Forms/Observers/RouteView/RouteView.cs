@@ -205,13 +205,13 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-		static bool _ghostnodes;
+		private static bool _ghostnodes;
 		/// <summary>
 		/// <c>true</c> to render nonspawn nodes in a ghosted color.
 		/// </summary>
 		internal static bool GhostNodesCoordinator
 		{
-			get { return _ghostnodes; }
+			get { return _ghostnodes; } // required by C#
 			private set
 			{
 				ObserverManager.RouteView   .Control     .tsmi_GhostNodes.Checked =
@@ -2438,7 +2438,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		internal void OnGhostNodesClick(object sender, EventArgs e)
 		{
-			GhostNodesCoordinator = !tsmi_GhostNodes.Checked;
+			GhostNodesCoordinator = !GhostNodesCoordinator;
 			InvalidatePanels();
 			RouteControl.Select();
 		}
