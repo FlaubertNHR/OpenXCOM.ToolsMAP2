@@ -915,8 +915,8 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			options.CreateOptionDefault(str_DescriptionHeight,        def_DescriptionHeight,        changer1);
 
 
-			ObserverManager.RouteView   .Control     .SetNodeColors();
-			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();
+			ObserverManager.RouteView   .Control     .init_RankHighlights();
+			ObserverManager.TopRouteView.ControlRoute.init_RankHighlights();
 		}
 		#endregion Methods
 
@@ -1081,8 +1081,8 @@ This is the color of the text on the Save button (if enabled) and the color for 
 					break;
 			}
 
-			ObserverManager.RouteView   .Control     .SetNodeColors();
-			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();
+			ObserverManager.RouteView   .Control     .init_RankHighlights();
+			ObserverManager.TopRouteView.ControlRoute.init_RankHighlights();
 		}
 
 		/// <summary>
@@ -1129,8 +1129,8 @@ This is the color of the text on the Save button (if enabled) and the color for 
 			color = Color.FromArgb((int)val, NodeSelectedColor);
 			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = color;
 
-//			ObserverManager.RouteView   .Control     .SetNodeColors();	// doesn't appear to change transparency of backcolors in the
-//			ObserverManager.TopRouteView.ControlRoute.SetNodeColors();	// RouteView groupbox ... backcolors are always solid I guess.
+//			ObserverManager.RouteView   .Control     .init_RankHighlights();	// doesn't appear to change transparency of backcolors in the
+//			ObserverManager.TopRouteView.ControlRoute.init_RankHighlights();	// RouteView groupbox ... backcolors are always solid I guess.
 		}
 
 

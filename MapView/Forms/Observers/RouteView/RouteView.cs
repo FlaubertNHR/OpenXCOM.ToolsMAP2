@@ -205,17 +205,19 @@ namespace MapView.Forms.Observers
 			}
 		}
 
-		private static bool _ghostnodes;
+		private static bool _spawnhighlight;
 		/// <summary>
 		/// <c>true</c> to render nonspawn nodes in a ghosted color.
 		/// </summary>
-		internal static bool GhostNodesCoordinator
+		/// <remarks>Highlights are done by ghosting nodes that are NOT
+		/// highlighted.</remarks>
+		internal static bool SpawnHighlightCoordinator
 		{
-			get { return _ghostnodes; } // required by C#
+			get { return _spawnhighlight; } // required by C#
 			private set
 			{
-				ObserverManager.RouteView   .Control     .tsmi_GhostNodes.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_GhostNodes.Checked = (_ghostnodes = value);
+				ObserverManager.RouteView   .Control     .tsmi_SpawnHighlight.Checked =
+				ObserverManager.TopRouteView.ControlRoute.tsmi_SpawnHighlight.Checked = (_spawnhighlight = value);
 			}
 		}
 		#endregion Properties (static)
@@ -2428,17 +2430,17 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Toggles <c><see cref="GhostNodesCoordinator"/></c>.
+		/// Toggles <c><see cref="SpawnHighlightCoordinator"/></c>.
 		/// </summary>
 		/// <param name="sender">
 		/// <list type="bullet">
-		/// <item><c><see cref="tsmi_GhostNodes"/></c></item>
+		/// <item><c><see cref="tsmi_SpawnHighlight"/></c></item>
 		/// <item><c><see cref="RouteControlParent"/>.OnKeyDown()</c></item>
 		/// </list></param>
 		/// <param name="e"></param>
-		internal void OnGhostNodesClick(object sender, EventArgs e)
+		internal void OnSpawnHighlightClick(object sender, EventArgs e)
 		{
-			GhostNodesCoordinator = !GhostNodesCoordinator;
+			SpawnHighlightCoordinator = !SpawnHighlightCoordinator;
 			InvalidatePanels();
 			RouteControl.Select();
 		}
@@ -2470,7 +2472,7 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <remarks>Called only by <c><see cref="RouteViewOptionables"/></c>
 		/// for init or option-changed. Does not ghost the color-panels.</remarks>
-		internal void SetNodeColors()
+		internal void init_RankHighlights()
 		{
 			if ((NoderankHighlights & NoderankColorbit0) != 0)
 				pa_ColorRank0.BackColor = Optionables.NodeColor0;
@@ -2504,7 +2506,7 @@ namespace MapView.Forms.Observers
 		/// Sorts out the noderank-its and -colorpanels based on the current
 		/// value of <c><see cref="NoderankHighlights"/></c>.
 		/// </summary>
-		private void SetNoderankHighlights()
+		private void SetRankHighlights()
 		{
 			if (NoderankHighlights == NoderankColorbits)
 			{
@@ -2660,7 +2662,7 @@ namespace MapView.Forms.Observers
 		/// <item><c><see cref="tsmi_Noderank8"/></c></item>
 		/// </list></param>
 		/// <param name="e"></param>
-		private void OnNodecolorClick(object sender, MouseEventArgs e)
+		private void OnRankHighlightClick_pa(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
@@ -2752,8 +2754,8 @@ namespace MapView.Forms.Observers
 						NoderankHighlights ^= NoderankColorbit8;
 				}
 
-				ObserverManager.RouteView   .Control.     SetNoderankHighlights();
-				ObserverManager.TopRouteView.ControlRoute.SetNoderankHighlights();
+				ObserverManager.RouteView   .Control.     SetRankHighlights();
+				ObserverManager.TopRouteView.ControlRoute.SetRankHighlights();
 			}
 		}
 
@@ -2773,9 +2775,9 @@ namespace MapView.Forms.Observers
 		/// <item><c><see cref="tsmi_Noderank8"/></c></item>
 		/// </list></param>
 		/// <param name="e"></param>
-		private void OnNoderankClick(object sender, EventArgs e)
+		private void OnRankHighlightClick_it(object sender, EventArgs e)
 		{
-			OnNodecolorClick(sender, new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0));
+			OnRankHighlightClick_pa(sender, new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0));
 		}
 
 		/// <summary>
@@ -2783,7 +2785,7 @@ namespace MapView.Forms.Observers
 		/// has focus.
 		/// </summary>
 		/// <param name="keyData"></param>
-		internal static void doNoderankShortcut(Keys keyData)
+		internal static void doRankHighlightShortcut(Keys keyData)
 		{
 			switch (keyData)
 			{
@@ -2888,8 +2890,8 @@ namespace MapView.Forms.Observers
 					break;
 			}
 
-			ObserverManager.RouteView   .Control.     SetNoderankHighlights();
-			ObserverManager.TopRouteView.ControlRoute.SetNoderankHighlights();
+			ObserverManager.RouteView   .Control.     SetRankHighlights();
+			ObserverManager.TopRouteView.ControlRoute.SetRankHighlights();
 		}
 
 		/// <summary>
@@ -2901,8 +2903,8 @@ namespace MapView.Forms.Observers
 		{
 			NoderankHighlights = NoderankColorbits;
 
-			ObserverManager.RouteView   .Control.     SetNoderankHighlights();
-			ObserverManager.TopRouteView.ControlRoute.SetNoderankHighlights();
+			ObserverManager.RouteView   .Control.     SetRankHighlights();
+			ObserverManager.TopRouteView.ControlRoute.SetRankHighlights();
 		}
 
 

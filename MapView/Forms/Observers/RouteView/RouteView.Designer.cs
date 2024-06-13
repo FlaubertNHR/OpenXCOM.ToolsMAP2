@@ -37,7 +37,7 @@ namespace MapView.Forms.Observers
 		private ToolStripMenuItem tsmi_TestNodeRanks;
 
 		private ToolStripDropDownButton tsddb_Highlights;
-		private ToolStripMenuItem tsmi_GhostNodes;
+		private ToolStripMenuItem tsmi_SpawnHighlight;
 		private ToolStripSeparator tss_5;
 		private ToolStripMenuItem tsmi_Noderank0;
 		private ToolStripMenuItem tsmi_Noderank1;
@@ -193,7 +193,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_TestPositions = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_TestNodeRanks = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsddb_Highlights = new System.Windows.Forms.ToolStripDropDownButton();
-			this.tsmi_GhostNodes = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmi_SpawnHighlight = new System.Windows.Forms.ToolStripMenuItem();
 			this.tss_5 = new System.Windows.Forms.ToolStripSeparator();
 			this.tsmi_Noderank0 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsmi_Noderank1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -494,7 +494,7 @@ namespace MapView.Forms.Observers
 			this.tsddb_Highlights.AutoToolTip = false;
 			this.tsddb_Highlights.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.tsddb_Highlights.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmi_GhostNodes,
+			this.tsmi_SpawnHighlight,
 			this.tss_5,
 			this.tsmi_Noderank0,
 			this.tsmi_Noderank1,
@@ -515,13 +515,13 @@ namespace MapView.Forms.Observers
 			this.tsddb_Highlights.Text = "Highlights";
 			this.tsddb_Highlights.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// tsmi_GhostNodes
+			// tsmi_SpawnHighlight
 			// 
-			this.tsmi_GhostNodes.Name = "tsmi_GhostNodes";
-			this.tsmi_GhostNodes.ShortcutKeyDisplayString = "Ctrl+h";
-			this.tsmi_GhostNodes.Size = new System.Drawing.Size(233, 22);
-			this.tsmi_GhostNodes.Text = "Spawn nodes only";
-			this.tsmi_GhostNodes.Click += new System.EventHandler(this.OnGhostNodesClick);
+			this.tsmi_SpawnHighlight.Name = "tsmi_SpawnHighlight";
+			this.tsmi_SpawnHighlight.ShortcutKeyDisplayString = "Ctrl+h";
+			this.tsmi_SpawnHighlight.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_SpawnHighlight.Text = "Spawn nodes only";
+			this.tsmi_SpawnHighlight.Click += new System.EventHandler(this.OnSpawnHighlightClick);
 			// 
 			// tss_5
 			// 
@@ -534,7 +534,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
 			this.tsmi_Noderank0.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank0.Text = "Rank0";
-			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank1
 			// 
@@ -542,7 +542,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
 			this.tsmi_Noderank1.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank1.Text = "Rank1";
-			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank2
 			// 
@@ -550,7 +550,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
 			this.tsmi_Noderank2.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank2.Text = "Rank2";
-			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank3
 			// 
@@ -558,7 +558,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
 			this.tsmi_Noderank3.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank3.Text = "Rank3";
-			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank4
 			// 
@@ -566,7 +566,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
 			this.tsmi_Noderank4.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank4.Text = "Rank4";
-			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank5
 			// 
@@ -574,7 +574,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
 			this.tsmi_Noderank5.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank5.Text = "Rank5";
-			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank6
 			// 
@@ -582,7 +582,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
 			this.tsmi_Noderank6.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank6.Text = "Rank6";
-			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank7
 			// 
@@ -590,7 +590,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
 			this.tsmi_Noderank7.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank7.Text = "Rank7";
-			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tsmi_Noderank8
 			// 
@@ -598,7 +598,7 @@ namespace MapView.Forms.Observers
 			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
 			this.tsmi_Noderank8.Size = new System.Drawing.Size(233, 22);
 			this.tsmi_Noderank8.Text = "Rank8";
-			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnNoderankClick);
+			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tss_6
 			// 
@@ -1472,7 +1472,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank8.Name = "pa_ColorRank8";
 			this.pa_ColorRank8.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank8.TabIndex = 16;
-			this.pa_ColorRank8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank7
 			// 
@@ -1494,7 +1494,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank7.Name = "pa_ColorRank7";
 			this.pa_ColorRank7.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank7.TabIndex = 14;
-			this.pa_ColorRank7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank6
 			// 
@@ -1516,7 +1516,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank6.Name = "pa_ColorRank6";
 			this.pa_ColorRank6.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank6.TabIndex = 12;
-			this.pa_ColorRank6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank5
 			// 
@@ -1538,7 +1538,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank5.Name = "pa_ColorRank5";
 			this.pa_ColorRank5.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank5.TabIndex = 10;
-			this.pa_ColorRank5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank4
 			// 
@@ -1560,7 +1560,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank4.Name = "pa_ColorRank4";
 			this.pa_ColorRank4.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank4.TabIndex = 8;
-			this.pa_ColorRank4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank3
 			// 
@@ -1582,7 +1582,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank3.Name = "pa_ColorRank3";
 			this.pa_ColorRank3.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank3.TabIndex = 6;
-			this.pa_ColorRank3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank2
 			// 
@@ -1604,7 +1604,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank2.Name = "pa_ColorRank2";
 			this.pa_ColorRank2.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank2.TabIndex = 4;
-			this.pa_ColorRank2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank1
 			// 
@@ -1626,7 +1626,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank1.Name = "pa_ColorRank1";
 			this.pa_ColorRank1.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank1.TabIndex = 2;
-			this.pa_ColorRank1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// la_ColorRank0
 			// 
@@ -1648,7 +1648,7 @@ namespace MapView.Forms.Observers
 			this.pa_ColorRank0.Name = "pa_ColorRank0";
 			this.pa_ColorRank0.Size = new System.Drawing.Size(22, 17);
 			this.pa_ColorRank0.TabIndex = 0;
-			this.pa_ColorRank0.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnNodecolorClick);
+			this.pa_ColorRank0.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRankHighlightClick_pa);
 			// 
 			// toolTip1
 			// 

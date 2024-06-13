@@ -437,7 +437,7 @@ namespace MapView.Forms.Observers
 			{
 				case Keys.Control | Keys.H:
 					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.OnGhostNodesClick(null, EventArgs.Empty);
+					ObserverManager.RouteView.Control.OnSpawnHighlightClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.D0: case Keys.D1: case Keys.D2: case Keys.D3:
@@ -449,7 +449,7 @@ namespace MapView.Forms.Observers
 				case Keys.Control | Keys.D6: case Keys.Control | Keys.D7:
 				case Keys.Control | Keys.D8:
 					e.SuppressKeyPress = true;
-					RouteView.doNoderankShortcut(e.KeyData);
+					RouteView.doRankHighlightShortcut(e.KeyData);
 					break;
 
 				default:
