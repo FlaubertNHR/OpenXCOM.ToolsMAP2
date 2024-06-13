@@ -2849,6 +2849,43 @@ namespace MapView.Forms.Observers
 					else
 						NoderankHighlights = NoderankColorbit8;
 					break;
+
+
+				case Keys.Control | Keys.D0:
+					NoderankHighlights ^= NoderankColorbit0;
+					break;
+
+				case Keys.Control | Keys.D1:
+					NoderankHighlights ^= NoderankColorbit1;
+					break;
+
+				case Keys.Control | Keys.D2:
+					NoderankHighlights ^= NoderankColorbit2;
+					break;
+
+				case Keys.Control | Keys.D3:
+					NoderankHighlights ^= NoderankColorbit3;
+					break;
+
+				case Keys.Control | Keys.D4:
+					NoderankHighlights ^= NoderankColorbit4;
+					break;
+
+				case Keys.Control | Keys.D5:
+					NoderankHighlights ^= NoderankColorbit5;
+					break;
+
+				case Keys.Control | Keys.D6:
+					NoderankHighlights ^= NoderankColorbit6;
+					break;
+
+				case Keys.Control | Keys.D7:
+					NoderankHighlights ^= NoderankColorbit7;
+					break;
+
+				case Keys.Control | Keys.D8:
+					NoderankHighlights ^= NoderankColorbit8;
+					break;
 			}
 
 			ObserverManager.RouteView   .Control.     SetNoderankHighlights();

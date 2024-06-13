@@ -443,6 +443,11 @@ namespace MapView.Forms.Observers
 				case Keys.D0: case Keys.D1: case Keys.D2: case Keys.D3:
 				case Keys.D4: case Keys.D5: case Keys.D6: case Keys.D7:
 				case Keys.D8:
+				case Keys.Control | Keys.D0: case Keys.Control | Keys.D1:
+				case Keys.Control | Keys.D2: case Keys.Control | Keys.D3:
+				case Keys.Control | Keys.D4: case Keys.Control | Keys.D5:
+				case Keys.Control | Keys.D6: case Keys.Control | Keys.D7:
+				case Keys.Control | Keys.D8:
 					e.SuppressKeyPress = true;
 					RouteView.doNoderankShortcut(e.KeyData);
 					break;
