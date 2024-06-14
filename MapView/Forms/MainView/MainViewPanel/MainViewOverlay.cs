@@ -1164,13 +1164,13 @@ namespace MapView.Forms.MainView
 		}
 
 		/// <summary>
-		/// Sets drag-start and drag-end and fires MouseDrag (path selected
-		/// lozenge).
+		/// Sets drag-start and drag-end and fires
+		/// <c><see cref="MouseDrag"/></c> (path selected lozenge).
 		/// </summary>
 		/// <param name="beg"></param>
 		/// <param name="end"></param>
-		/// <remarks>Fires OnMouseDown and OnMouseMove in Main,Top,Route
-		/// viewers.</remarks>
+		/// <remarks>Fires <c>OnMouseDown</c> and <c>OnMouseMove</c> in the
+		/// Main, Top, and Route observers.</remarks>
 		internal void ProcessSelection(Point beg, Point end)
 		{
 			if (DragBeg != beg || DragEnd != end)

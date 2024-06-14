@@ -673,7 +673,7 @@ namespace MapView.Forms.Observers
 		/// RouteView and again by TopRouteView(Route). However only the viewer
 		/// that the mousecursor is currently in should have the
 		/// location-string's color updated; the condition to allow that update
-		/// is (RouteControl._col != -1).
+		/// is <c>(RouteControl._col != -1)</c>.
 		/// <br/><br/>
 		/// The route-node at location will *not* be selected; only the
 		/// tile is selected. To select a node the route-panel needs to be
@@ -1180,7 +1180,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles unit-type changed.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="co_Type"/></c></param>
 		/// <param name="e"></param>
 		private void OnUnitTypeSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1200,7 +1200,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles node-rank changed.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="co_Rank"/></c></param>
 		/// <param name="e"></param>
 		private void OnNodeRankSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1240,7 +1240,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles spawn-weight changed.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="co_Spawn"/></c></param>
 		/// <param name="e"></param>
 		private void OnSpawnWeightSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1266,7 +1266,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles patrol-priority changed.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="co_Patrol"/></c></param>
 		/// <param name="e"></param>
 		private void OnPatrolPrioritySelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1287,7 +1287,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles base-attack changed.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="co_Attack"/></c></param>
 		/// <param name="e"></param>
 		private void OnBaseAttackSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1309,7 +1309,14 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Changes a link's destination.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="co_Link1Dest"/></c></item>
+		/// <item><c><see cref="co_Link2Dest"/></c></item>
+		/// <item><c><see cref="co_Link3Dest"/></c></item>
+		/// <item><c><see cref="co_Link4Dest"/></c></item>
+		/// <item><c><see cref="co_Link5Dest"/></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnLinkDestSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1523,7 +1530,14 @@ namespace MapView.Forms.Observers
 		/// TODO: Since a link's UnitType is not used just give it the value
 		/// of the link's destination UnitType.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="co_Link1UnitType"/></c></item>
+		/// <item><c><see cref="co_Link2UnitType"/></c></item>
+		/// <item><c><see cref="co_Link3UnitType"/></c></item>
+		/// <item><c><see cref="co_Link4UnitType"/></c></item>
+		/// <item><c><see cref="co_Link5UnitType"/></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnLinkUnitTypeSelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -1573,7 +1587,14 @@ namespace MapView.Forms.Observers
 		/// Selects the node at the destination of a link when a Go-button is
 		/// clicked.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="bu_GoLink1"/></c></item>
+		/// <item><c><see cref="bu_GoLink2"/></c></item>
+		/// <item><c><see cref="bu_GoLink3"/></c></item>
+		/// <item><c><see cref="bu_GoLink4"/></c></item>
+		/// <item><c><see cref="bu_GoLink5"/></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnLinkGoClick(object sender, EventArgs e)
 		{
@@ -1646,7 +1667,14 @@ namespace MapView.Forms.Observers
 		/// the mouse-enter event. For this the cursor has to be kept stationary
 		/// and there is also a slight lag.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c>la_Link*</c></item>
+		/// <item><c>la_Link*Dest</c></item>
+		/// <item><c>co_Link*Dest</c></item>
+		/// <item><c>co_Link*UnitType</c></item>
+		/// <item><c>bu_GoLink*</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnLinkMouseEnter(object sender, EventArgs e)
 		{
@@ -1706,20 +1734,26 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Clears the spot position when the cursor leaves a link-control.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c>la_Link*</c></item>
+		/// <item><c>la_Link*Dest</c></item>
+		/// <item><c>co_Link*Dest</c></item>
+		/// <item><c>co_Link*UnitType</c></item>
+		/// <item><c>bu_GoLink*</c></item>
+		/// <item><c>bu_Og</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnLinkMouseLeave(object sender, EventArgs e)
 		{
 			RouteControl.SetSpot(new Point(-1,-1));
-
 			RouteControl.Refresh();
-//			RefreshControls();
 		}
 
 		/// <summary>
 		/// Selects the appropriate route-node when the Og button is clicked.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="bu_Og"/></c></param>
 		/// <param name="e"></param>
 		private void OnOgClick(object sender, EventArgs e)
 		{
@@ -1742,7 +1776,11 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Spots a route-node when the cursor enters the Og button.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="bu_Og"/></c></item>
+		/// <item><c>null</c> - <c><see cref="OnOgClick()">OnOgClick()</see></c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnOgMouseEnter(object sender, EventArgs e)
 		{
@@ -1783,7 +1821,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles keyboard input.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="RouteControl"/></c></param>
 		/// <param name="e"></param>
 		/// <remarks>Navigation keys are handled by <c>KeyPreview</c> at the
 		/// <c>Form</c> level.</remarks>
@@ -1819,7 +1857,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles an edit-cut click.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="bu_Cut"/></c></param>
 		/// <param name="e"></param>
 		private void OnCutClick(object sender, EventArgs e)
 		{
@@ -1830,7 +1868,15 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles an edit-copy click.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="bu_Copy"/></c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnCutClick()">OnCutClick()</see></c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
+		/// <c>[Ctrl+C]</c> <c>[Ctrl+X]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnCopyClick(object sender, EventArgs e)
 		{
@@ -1854,7 +1900,13 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles an edit-paste click.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="bu_Paste"/></c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
+		/// <c>[Ctrl+V]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnPasteClick(object sender, EventArgs e)
 		{
@@ -1912,7 +1964,15 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles an edit-delete click.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="bu_Delete"/></c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnCutClick()">OnCutClick()</see></c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
+		/// <c>[Delete]</c> <c>[Ctrl+X]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnDeleteClick(object sender, EventArgs e)
 		{

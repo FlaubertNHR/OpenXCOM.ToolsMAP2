@@ -49,6 +49,8 @@ namespace XCom
 		/// <c><see cref="GroupType.Ufo">GroupType.Ufo</see></c> or
 		/// <c><see cref="GroupType.Tftd">GroupType.Tftd</see></c>.
 		/// </summary>
+		/// <remarks>Mv2 Policy is to check for TFTD and if not TFTD then
+		/// default to UFO.</remarks>
 		public GroupType GroupType
 		{ get; private set; }
 
@@ -60,6 +62,8 @@ namespace XCom
 		/// <item><c><see cref="Palette.TftdBattle">Palette.TftdBattle</see></c></item>
 		/// </list>
 		/// </summary>
+		/// <remarks>Mv2 Policy is to check for TFTD and if not TFTD then
+		/// default to UFO.</remarks>
 		public Palette Pal
 		{ get; private set; }
 
@@ -83,7 +87,7 @@ namespace XCom
 		/// </summary>
 		/// <param name="label">the label of this tileset</param>
 		/// <param name="basepath">the parent directory of the Map and Routes</param>
-		/// <param name="terrains">a dictionary of terrains</param>
+		/// <param name="terrains">a <c>Dictionary</c> of terrains</param>
 		/// <param name="groupType"><c><see cref="GroupType.Ufo">GroupType.Ufo</see></c>
 		/// or <c><see cref="GroupType.Tftd">GroupType.Tftd</see></c></param>
 		/// <param name="bypassRecordsExceeded"><c>true</c> to not issue a
@@ -183,7 +187,7 @@ namespace XCom
 		/// <c><see cref="Tilepart">Tileparts</see></c>.
 		/// </summary>
 		/// <param name="terid">the id of the terrain in this tileset's
-		/// <c><see cref="Terrains"/></c> dictionary.</param>
+		/// <c><see cref="Terrains"/></c> <c>Dictionary</c>.</param>
 		/// <returns>an array containing the <c>Tileparts</c> for the terrain,
 		/// or <c>null</c> if creating the <c>Spriteset</c> fails</returns>
 		/// <remarks>The TabwordLength of terrains in UFO and TFTD is 2-bytes.</remarks>
