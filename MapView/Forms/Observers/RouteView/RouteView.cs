@@ -1814,8 +1814,12 @@ namespace MapView.Forms.Observers
 
 		#region Events (node edit)
 		/// <summary>
-		/// Prevents two error-dialogs from showing if a key-cut is underway.
+		/// Prevents two error-dialogs from showing if a key-cut is underway but
+		/// <c><see cref="NodeSelected"/></c> is <c>null</c>.
 		/// </summary>
+		/// <remarks>This won't happen when cutting with
+		/// <c><see cref="bu_Cut"/></c> because the <c>Button</c> is disabled
+		/// when <c><see cref="NodeSelected"/></c> is <c>null</c>.</remarks>
 		private bool _bypassCutError;
 
 		/// <summary>
@@ -1839,10 +1843,9 @@ namespace MapView.Forms.Observers
 
 				case Keys.Control | Keys.X:
 					_bypassCutError = true;
-					 OnCopyClick(  null, EventArgs.Empty);
-					 OnDeleteClick(null, EventArgs.Empty);
-					 _bypassCutError = false;
-					 break;
+					OnCutClick(null, EventArgs.Empty);
+					_bypassCutError = false;
+					break;
 
 				case Keys.Control | Keys.C:
 					 OnCopyClick(null, EventArgs.Empty);
@@ -1857,7 +1860,13 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Handles an edit-cut click.
 		/// </summary>
-		/// <param name="sender"><c><see cref="bu_Cut"/></c></param>
+		/// <param name="sender">
+		/// <list type="button">
+		/// <item><c><see cref="bu_Cut"/></c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
+		/// <c>[Ctrl+x]</c></item>
+		/// </list></param>
 		/// <param name="e"></param>
 		private void OnCutClick(object sender, EventArgs e)
 		{
@@ -1872,10 +1881,10 @@ namespace MapView.Forms.Observers
 		/// <list type="button">
 		/// <item><c><see cref="bu_Copy"/></c></item>
 		/// <item><c>null</c> -
-		/// <c><see cref="OnCutClick()">OnCutClick()</see></c></item>
-		/// <item><c>null</c> -
 		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
-		/// <c>[Ctrl+C]</c> <c>[Ctrl+X]</c></item>
+		/// <c>[Ctrl+c]</c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnCutClick()">OnCutClick()</see></c></item>
 		/// </list></param>
 		/// <param name="e"></param>
 		private void OnCopyClick(object sender, EventArgs e)
@@ -1905,7 +1914,7 @@ namespace MapView.Forms.Observers
 		/// <item><c><see cref="bu_Paste"/></c></item>
 		/// <item><c>null</c> -
 		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
-		/// <c>[Ctrl+V]</c></item>
+		/// <c>[Ctrl+v]</c></item>
 		/// </list></param>
 		/// <param name="e"></param>
 		private void OnPasteClick(object sender, EventArgs e)
@@ -1968,10 +1977,10 @@ namespace MapView.Forms.Observers
 		/// <list type="button">
 		/// <item><c><see cref="bu_Delete"/></c></item>
 		/// <item><c>null</c> -
-		/// <c><see cref="OnCutClick()">OnCutClick()</see></c></item>
-		/// <item><c>null</c> -
 		/// <c><see cref="OnRouteControlKeyDown()">OnRouteControlKeyDown()</see></c>
-		/// <c>[Delete]</c> <c>[Ctrl+X]</c></item>
+		/// <c>[Delete]</c></item>
+		/// <item><c>null</c> -
+		/// <c><see cref="OnCutClick()">OnCutClick()</see></c></item>
 		/// </list></param>
 		/// <param name="e"></param>
 		private void OnDeleteClick(object sender, EventArgs e)
@@ -1994,7 +2003,7 @@ namespace MapView.Forms.Observers
 				// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
 
 				RefreshControls();
-			}			
+			}
 			else if (!_bypassCutError)
 				ShowError("A node must be selected.");
 		}
