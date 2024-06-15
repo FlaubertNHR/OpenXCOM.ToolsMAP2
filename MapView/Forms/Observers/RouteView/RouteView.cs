@@ -3585,8 +3585,10 @@ namespace MapView.Forms.Observers
 			gb_TileData      .ForeColor =
 			gb_NodeData      .ForeColor =
 			gb_LinkData      .ForeColor =
-			gb_NodeEditor    .ForeColor =
-			gb_NoderankColors.ForeColor = Optionables.FieldsForecolor;
+			gb_NodeEditor    .ForeColor = Optionables.FieldsForecolor;
+
+			if (!SpawnHighlightCoordinator)
+				gb_NoderankColors.ForeColor = Optionables.FieldsForecolor;
 
 			Button bu;
 			foreach (var control in gb_LinkData.Controls)
@@ -3627,12 +3629,11 @@ namespace MapView.Forms.Observers
 			r .bu_Save.ForeColor =
 			tr.bu_Save.ForeColor = Optionables.FieldsForecolorHighlight;
 
-			Color color;
-			if (SpawnHighlightCoordinator) color = Optionables.FieldsForecolorHighlight;
-			else                           color = Optionables.FieldsForecolor;
-
-			r .gb_NoderankColors.ForeColor =
-			tr.gb_NoderankColors.ForeColor = color;
+			if (SpawnHighlightCoordinator)
+			{
+				r .gb_NoderankColors.ForeColor =
+				tr.gb_NoderankColors.ForeColor = Optionables.FieldsForecolorHighlight;
+			}
 
 			if (NodeSelected != null)
 				UpdateNodeInfo(); // TODO: update 'link out of bounds' textcolor only
