@@ -346,14 +346,14 @@ namespace MapView.Forms.Observers
 			// tsmi_Export
 			// 
 			this.tsmi_Export.Name = "tsmi_Export";
-			this.tsmi_Export.Size = new System.Drawing.Size(152, 22);
+			this.tsmi_Export.Size = new System.Drawing.Size(124, 22);
 			this.tsmi_Export.Text = "&Export ...";
 			this.tsmi_Export.Click += new System.EventHandler(this.OnExportClick);
 			// 
 			// tsmi_Import
 			// 
 			this.tsmi_Import.Name = "tsmi_Import";
-			this.tsmi_Import.Size = new System.Drawing.Size(152, 22);
+			this.tsmi_Import.Size = new System.Drawing.Size(124, 22);
 			this.tsmi_Import.Text = "&Import ...";
 			this.tsmi_Import.Click += new System.EventHandler(this.OnImportClick);
 			// 
@@ -519,20 +519,20 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_SpawnHighlight.Name = "tsmi_SpawnHighlight";
 			this.tsmi_SpawnHighlight.ShortcutKeyDisplayString = "Ctrl+h";
-			this.tsmi_SpawnHighlight.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_SpawnHighlight.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_SpawnHighlight.Text = "Spawn nodes only";
 			this.tsmi_SpawnHighlight.Click += new System.EventHandler(this.OnSpawnHighlightClick);
 			// 
 			// tss_5
 			// 
 			this.tss_5.Name = "tss_5";
-			this.tss_5.Size = new System.Drawing.Size(230, 6);
+			this.tss_5.Size = new System.Drawing.Size(206, 6);
 			// 
 			// tsmi_Noderank0
 			// 
 			this.tsmi_Noderank0.Name = "tsmi_Noderank0";
 			this.tsmi_Noderank0.ShortcutKeyDisplayString = "0";
-			this.tsmi_Noderank0.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank0.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank0.Text = "Rank0";
 			this.tsmi_Noderank0.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -540,7 +540,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank1.Name = "tsmi_Noderank1";
 			this.tsmi_Noderank1.ShortcutKeyDisplayString = "1";
-			this.tsmi_Noderank1.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank1.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank1.Text = "Rank1";
 			this.tsmi_Noderank1.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -548,7 +548,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank2.Name = "tsmi_Noderank2";
 			this.tsmi_Noderank2.ShortcutKeyDisplayString = "2";
-			this.tsmi_Noderank2.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank2.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank2.Text = "Rank2";
 			this.tsmi_Noderank2.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -556,7 +556,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank3.Name = "tsmi_Noderank3";
 			this.tsmi_Noderank3.ShortcutKeyDisplayString = "3";
-			this.tsmi_Noderank3.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank3.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank3.Text = "Rank3";
 			this.tsmi_Noderank3.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -564,7 +564,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank4.Name = "tsmi_Noderank4";
 			this.tsmi_Noderank4.ShortcutKeyDisplayString = "4";
-			this.tsmi_Noderank4.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank4.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank4.Text = "Rank4";
 			this.tsmi_Noderank4.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -572,7 +572,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank5.Name = "tsmi_Noderank5";
 			this.tsmi_Noderank5.ShortcutKeyDisplayString = "5";
-			this.tsmi_Noderank5.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank5.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank5.Text = "Rank5";
 			this.tsmi_Noderank5.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -580,7 +580,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank6.Name = "tsmi_Noderank6";
 			this.tsmi_Noderank6.ShortcutKeyDisplayString = "6";
-			this.tsmi_Noderank6.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank6.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank6.Text = "Rank6";
 			this.tsmi_Noderank6.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -588,7 +588,7 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank7.Name = "tsmi_Noderank7";
 			this.tsmi_Noderank7.ShortcutKeyDisplayString = "7";
-			this.tsmi_Noderank7.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank7.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank7.Text = "Rank7";
 			this.tsmi_Noderank7.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
@@ -596,20 +596,20 @@ namespace MapView.Forms.Observers
 			// 
 			this.tsmi_Noderank8.Name = "tsmi_Noderank8";
 			this.tsmi_Noderank8.ShortcutKeyDisplayString = "8";
-			this.tsmi_Noderank8.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_Noderank8.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_Noderank8.Text = "Rank8";
 			this.tsmi_Noderank8.Click += new System.EventHandler(this.OnRankHighlightClick_it);
 			// 
 			// tss_6
 			// 
 			this.tss_6.Name = "tss_6";
-			this.tss_6.Size = new System.Drawing.Size(230, 6);
+			this.tss_6.Size = new System.Drawing.Size(206, 6);
 			// 
 			// tsmi_NoderankClear
 			// 
 			this.tsmi_NoderankClear.Enabled = false;
 			this.tsmi_NoderankClear.Name = "tsmi_NoderankClear";
-			this.tsmi_NoderankClear.Size = new System.Drawing.Size(233, 22);
+			this.tsmi_NoderankClear.Size = new System.Drawing.Size(209, 22);
 			this.tsmi_NoderankClear.Text = "clear Rank highlights";
 			this.tsmi_NoderankClear.Click += new System.EventHandler(this.OnClearRankHighlightsClick);
 			// 
