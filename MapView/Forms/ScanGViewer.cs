@@ -84,7 +84,7 @@ namespace MapView
 
 		#region Events (override)
 		/// <summary>
-		/// Overrides the Activated eventhandler.
+		/// Overrides the <c>Activated</c> eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -94,7 +94,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the FormClosing eventhandler.
+		/// Overrides the <c>FormClosing</c> eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnFormClosing(FormClosingEventArgs e)
@@ -112,7 +112,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the KeyDown eventhandler.
+		/// Overrides the <c>KeyDown</c> eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -143,7 +143,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Overrides the MouseWheel eventhandler.
+		/// Overrides the <c>MouseWheel</c> eventhandler.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseWheel(MouseEventArgs e)
@@ -165,7 +165,7 @@ namespace MapView
 
 		#region Events (panel)
 		/// <summary>
-		/// MouseClick handler for the panel. RMB cycles among aspects.
+		/// <c>MouseClick</c> handler for the panel. RMB cycles among aspects.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -176,7 +176,7 @@ namespace MapView
 		}
 
 		/// <summary>
-		/// Paint handler for the panel.
+		/// <c>Paint</c> handler for the panel.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
