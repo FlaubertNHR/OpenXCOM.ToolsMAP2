@@ -572,7 +572,7 @@ namespace MapView.Forms.Observers
 		private Color _fieldsForecolor = def_FieldsForecolor;
 		[Category(cat_PanelColors)]
 		[Description(@"Color of the fields font (default System.ControlText)
-This does not affect the color of fields if they are disabled (ie. no node is currently selected)")]
+This does not affect the color of fields if they are disabled (eg. no node is currently selected)")]
 		[DefaultValue(typeof(Color), "ControlText")]
 		public Color FieldsForecolor
 		{
@@ -587,7 +587,9 @@ This does not affect the color of fields if they are disabled (ie. no node is cu
 		private Color _fieldsForecolorHighlight = def_FieldsForecolorHighlight;
 		[Category(cat_PanelColors)]
 		[Description(@"Color of the fields font highlight (default MediumVioletRed)
-This is the color of the text on the Save button (if enabled) and the color for out-of-bounds link destinations")]
+This is the color of text (1) on the Save button if data has changed (2) in Node"
++ " Rank colors if spawn-nodes are currently highlighted (3) in Link data for"
++ " out-of-bounds links")]
 		[DefaultValue(typeof(Color), "MediumVioletRed")]
 		public Color FieldsForecolorHighlight
 		{

@@ -207,17 +207,34 @@ namespace MapView.Forms.Observers
 
 		private static bool _spawnhighlight;
 		/// <summary>
-		/// <c>true</c> to render nonspawn nodes in a ghosted color.
+		/// <c>true</c> to render nonspawn nodes in a ghosted color. Also
+		/// toggles the <c>ForeColor</c> of
+		/// <c><see cref="gb_NoderankColors"/></c> to indicate the state of
+		/// the <c>SpawnHighlightCoordinator</c> to the user.
 		/// </summary>
-		/// <remarks>Highlights are done by ghosting nodes that are NOT
-		/// highlighted.</remarks>
+		/// <remarks>Highlights are done - inversely - by ghosting nodes that
+		/// shall NOT be highlighted.</remarks>
 		internal static bool SpawnHighlightCoordinator
 		{
 			get { return _spawnhighlight; } // required by C#
 			private set
 			{
-				ObserverManager.RouteView   .Control     .tsmi_SpawnHighlight.Checked =
-				ObserverManager.TopRouteView.ControlRoute.tsmi_SpawnHighlight.Checked = (_spawnhighlight = value);
+				RouteView r  = ObserverManager.RouteView   .Control;
+				RouteView tr = ObserverManager.TopRouteView.ControlRoute;
+
+				Color color;
+				if (r .tsmi_SpawnHighlight.Checked =
+					tr.tsmi_SpawnHighlight.Checked = (_spawnhighlight = value))
+				{
+					color = Optionables.FieldsForecolorHighlight;
+				}
+				else
+					color = Optionables.FieldsForecolor;
+
+				r .gb_NoderankColors.ForeColor =
+				tr.gb_NoderankColors.ForeColor = color;
+
+				InvalidatePanels();
 			}
 		}
 		#endregion Properties (static)
@@ -2510,9 +2527,9 @@ namespace MapView.Forms.Observers
 		internal void OnSpawnHighlightClick(object sender, EventArgs e)
 		{
 			SpawnHighlightCoordinator = !SpawnHighlightCoordinator;
-			InvalidatePanels();
 			RouteControl.Select();
 		}
+
 
 		private const uint NoderankColorbit0 = 0x001;
 		private const uint NoderankColorbit1 = 0x002;
@@ -3604,8 +3621,18 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal static void SetFieldsForecolorHighlight()
 		{
-			ObserverManager.RouteView   .Control     .bu_Save.ForeColor =
-			ObserverManager.TopRouteView.ControlRoute.bu_Save.ForeColor = Optionables.FieldsForecolorHighlight;
+			RouteView r  = ObserverManager.RouteView   .Control;
+			RouteView tr = ObserverManager.TopRouteView.ControlRoute;
+
+			r .bu_Save.ForeColor =
+			tr.bu_Save.ForeColor = Optionables.FieldsForecolorHighlight;
+
+			Color color;
+			if (SpawnHighlightCoordinator) color = Optionables.FieldsForecolorHighlight;
+			else                           color = Optionables.FieldsForecolor;
+
+			r .gb_NoderankColors.ForeColor =
+			tr.gb_NoderankColors.ForeColor = color;
 
 			if (NodeSelected != null)
 				UpdateNodeInfo(); // TODO: update 'link out of bounds' textcolor only
