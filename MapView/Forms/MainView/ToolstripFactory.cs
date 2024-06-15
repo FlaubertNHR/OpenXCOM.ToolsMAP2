@@ -95,8 +95,8 @@ namespace MapView.Forms.MainView
 
 		private readonly ToolStripSeparator _tss1           = new ToolStripSeparator();
 
-		private readonly ToolStripButton    _tsbDown        = new ToolStripButton();
 		private readonly ToolStripButton    _tsbUp          = new ToolStripButton();
+		private readonly ToolStripButton    _tsbDown        = new ToolStripButton();
 
 		private readonly ToolStripSeparator _tss2           = new ToolStripSeparator();
 
@@ -282,8 +282,8 @@ namespace MapView.Forms.MainView
 		{
 			ToolStripSeparator tss1;
 
-			ToolStripButton tsbDown;	// NOTE: Down/Up are not really editor-objects ...
-			ToolStripButton tsbUp;		// but they appear in TopView and TopRouteView(Top)
+			ToolStripButton tsbUp;		// NOTE: Down/Up are not really editor-objects ...
+			ToolStripButton tsbDown;	// but they appear in TopView and TopRouteView(Top)
 										// as well as MainView with the editor-objects.
 			ToolStripSeparator tss2;
 
@@ -301,8 +301,8 @@ namespace MapView.Forms.MainView
 			if (observer)
 			{
 				tss1      = new ToolStripSeparator();
-				tsbDown   = new ToolStripButton();
 				tsbUp     = new ToolStripButton();
+				tsbDown   = new ToolStripButton();
 				tss2      = new ToolStripSeparator();
 				tsbCut    = new ToolStripButton();
 				tsbCopy   = new ToolStripButton();
@@ -313,8 +313,8 @@ namespace MapView.Forms.MainView
 				tss4      = new ToolStripSeparator();
 
 				_disposables.Add(tss1);
-				_disposables.Add(tsbDown);
 				_disposables.Add(tsbUp);
+				_disposables.Add(tsbDown);
 				_disposables.Add(tss2);
 				_disposables.Add(tsbCut);
 				_disposables.Add(tsbCopy);
@@ -327,8 +327,8 @@ namespace MapView.Forms.MainView
 			else
 			{
 				tss1      = _tss1;
-				tsbDown   = _tsbDown;
 				tsbUp     = _tsbUp;
+				tsbDown   = _tsbDown;
 				tss2      = _tss2;
 				tsbCut    = _tsbCut;
 				tsbCopy   = _tsbCopy;
@@ -342,8 +342,8 @@ namespace MapView.Forms.MainView
 			var its = new ToolStripItem[]
 			{
 				tss1, // NOTE: c#/.NET cant figure out how to use 1 separator 4 times.
-				tsbDown,
 				tsbUp,
+				tsbDown,
 				tss2,
 				tsbCut,
 				tsbCopy,
@@ -355,16 +355,6 @@ namespace MapView.Forms.MainView
 			};
 			ts.Items.AddRange(its);
 
-			// LevelDown btn
-			tsbDown.Name          = "tsbDown";
-			tsbDown.ToolTipText   = "level down";
-			tsbDown.DisplayStyle  = ToolStripItemDisplayStyle.Image;
-			tsbDown.Image         = Resources.down;
-			tsbDown.Click        += OnDownClick;
-			tsbDown.Enabled       = false;
-
-			_downrs.Add(tsbDown);
-
 			// LevelUp btn
 			tsbUp.Name             = "tsbUp";
 			tsbUp.ToolTipText      = "level up";
@@ -374,6 +364,16 @@ namespace MapView.Forms.MainView
 			tsbUp.Enabled          = false;
 
 			_uppers.Add(tsbUp);
+
+			// LevelDown btn
+			tsbDown.Name          = "tsbDown";
+			tsbDown.ToolTipText   = "level down";
+			tsbDown.DisplayStyle  = ToolStripItemDisplayStyle.Image;
+			tsbDown.Image         = Resources.down;
+			tsbDown.Click        += OnDownClick;
+			tsbDown.Enabled       = false;
+
+			_downrs.Add(tsbDown);
 
 			// Cut btn
 			tsbCut.Name            = "tsbCut";
@@ -476,21 +476,6 @@ namespace MapView.Forms.MainView
 
 		#region Events (level)
 		/// <summary>
-		/// Handles a level-down click.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnDownClick(object sender, EventArgs e)
-		{
-			MapFile file = MainViewF.that.MapFile;
-			if (file != null)
-			{
-				file.ChangeLevel(MapFile.LEVEL_Dn);
-				EnableLevelers(file.Level, file.Levs);
-			}
-		}
-
-		/// <summary>
 		/// Handles a level-up click.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -501,6 +486,21 @@ namespace MapView.Forms.MainView
 			if (file != null)
 			{
 				file.ChangeLevel(MapFile.LEVEL_Up);
+				EnableLevelers(file.Level, file.Levs);
+			}
+		}
+
+		/// <summary>
+		/// Handles a level-down click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnDownClick(object sender, EventArgs e)
+		{
+			MapFile file = MainViewF.that.MapFile;
+			if (file != null)
+			{
+				file.ChangeLevel(MapFile.LEVEL_Dn);
 				EnableLevelers(file.Level, file.Levs);
 			}
 		}
