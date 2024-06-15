@@ -680,12 +680,12 @@ namespace MapView.Forms.Observers
 		/// <param name="infoboxX"></param>
 		/// <param name="infoboxY"></param>
 		/// <param name="value"></param>
-		/// <param name="color"></param>
+		/// <param name="brush"></param>
 		private void DrawNodeMeter(
 				int infoboxX,
 				int infoboxY,
 				int value,
-				Brush color)
+				Brush brush)
 		{
 			var p0 = new Point(
 							infoboxX - 1, // ...
@@ -714,7 +714,7 @@ namespace MapView.Forms.Observers
 
 				if (value > 0)
 					_graphics.FillRectangle(
-										color,
+										brush,
 										infoboxX, infoboxY + NodeValHeight - value - 2,
 										2, value);
 
