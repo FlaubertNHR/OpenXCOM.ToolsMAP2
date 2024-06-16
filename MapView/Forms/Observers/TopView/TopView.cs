@@ -189,48 +189,51 @@ namespace MapView.Forms.Observers
 		/// a respective <c>bool</c> in <c><see cref="MainViewOverlay"/></c>.</remarks>
 		internal void OnDisableClick(object sender, EventArgs e)
 		{
-			var it = sender as ToolStripMenuItem;
-			if (it == it_Floor)
+			if (_file != null)
 			{
-				ObserverManager.TopView     .Control   .it_Floor.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = !it.Checked;
+				var it = sender as ToolStripMenuItem;
+				if (it == it_Floor)
+				{
+					ObserverManager.TopView     .Control   .it_Floor.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = !it.Checked;
 
-				MainViewOverlay.that.SetFloorDisabled(it.Checked);
-				_file.CalculateOccultations(it.Checked);
+					MainViewOverlay.that.SetFloorDisabled(it.Checked);
+					_file.CalculateOccultations(it.Checked);
+				}
+				else if (it == it_West)
+				{
+					ObserverManager.TopView     .Control   .it_West.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_West.Checked = !it.Checked;
+
+					MainViewOverlay.that.SetWestDisabled(it.Checked);
+				}
+				else if (it == it_North)
+				{
+					ObserverManager.TopView     .Control   .it_North.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_North.Checked = !it.Checked;
+
+					MainViewOverlay.that.SetNorthDisabled(it.Checked);
+				}
+				else // it_Content
+				{
+					ObserverManager.TopView     .Control   .it_Content.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_Content.Checked = !it.Checked;
+
+					MainViewOverlay.that.SetContentDisabled(it.Checked);
+				}
+
+				ObserverManager.TopView     .Control   .it_Enable.Enabled =
+				ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = it_Floor  .Checked
+																		 || it_West   .Checked
+																		 || it_North  .Checked
+																		 || it_Content.Checked;
+
+
+				MainViewOverlay.that.Invalidate();
+
+				ObserverManager.InvalidateTopControls();
+				ObserverManager.InvalidateQuadrantControls();
 			}
-			else if (it == it_West)
-			{
-				ObserverManager.TopView     .Control   .it_West.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_West.Checked = !it.Checked;
-
-				MainViewOverlay.that.SetWestDisabled(it.Checked);
-			}
-			else if (it == it_North)
-			{
-				ObserverManager.TopView     .Control   .it_North.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_North.Checked = !it.Checked;
-
-				MainViewOverlay.that.SetNorthDisabled(it.Checked);
-			}
-			else // it_Content
-			{
-				ObserverManager.TopView     .Control   .it_Content.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_Content.Checked = !it.Checked;
-
-				MainViewOverlay.that.SetContentDisabled(it.Checked);
-			}
-
-			ObserverManager.TopView     .Control   .it_Enable.Enabled =
-			ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = it_Floor  .Checked
-																	 || it_West   .Checked
-																	 || it_North  .Checked
-																	 || it_Content.Checked;
-
-
-			MainViewOverlay.that.Invalidate();
-
-			ObserverManager.InvalidateTopControls();
-			ObserverManager.InvalidateQuadrantControls();
 		}
 
 		/// <summary>
@@ -245,47 +248,50 @@ namespace MapView.Forms.Observers
 		/// a respective <c>bool</c> in <c><see cref="MainViewOverlay"/></c>.</remarks>
 		internal void OnEnableAllClick(object sender, EventArgs e)
 		{
-			if (it_Floor.Checked)
+			if (_file != null)
 			{
-				ObserverManager.TopView     .Control   .it_Floor.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = false;
+				if (it_Floor.Checked)
+				{
+					ObserverManager.TopView     .Control   .it_Floor.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = false;
 
-				MainViewOverlay.that.SetFloorDisabled(false);
-				_file.CalculateOccultations();
+					MainViewOverlay.that.SetFloorDisabled(false);
+					_file.CalculateOccultations();
+				}
+
+				if (it_West.Checked)
+				{
+					ObserverManager.TopView     .Control   .it_West.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_West.Checked = false;
+
+					MainViewOverlay.that.SetWestDisabled(false);
+				}
+
+				if (it_North.Checked)
+				{
+					ObserverManager.TopView     .Control   .it_North.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_North.Checked = false;
+
+					MainViewOverlay.that.SetNorthDisabled(false);
+				}
+
+				if (it_Content.Checked)
+				{
+					ObserverManager.TopView     .Control   .it_Content.Checked =
+					ObserverManager.TopRouteView.ControlTop.it_Content.Checked = false;
+
+					MainViewOverlay.that.SetContentDisabled(false);
+				}
+
+				ObserverManager.TopView     .Control   .it_Enable.Enabled =
+				ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = false;
+
+
+				MainViewOverlay.that.Invalidate();
+
+				ObserverManager.InvalidateTopControls();
+				ObserverManager.InvalidateQuadrantControls();
 			}
-
-			if (it_West.Checked)
-			{
-				ObserverManager.TopView     .Control   .it_West.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_West.Checked = false;
-
-				MainViewOverlay.that.SetWestDisabled(false);
-			}
-
-			if (it_North.Checked)
-			{
-				ObserverManager.TopView     .Control   .it_North.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_North.Checked = false;
-
-				MainViewOverlay.that.SetNorthDisabled(false);
-			}
-
-			if (it_Content.Checked)
-			{
-				ObserverManager.TopView     .Control   .it_Content.Checked =
-				ObserverManager.TopRouteView.ControlTop.it_Content.Checked = false;
-
-				MainViewOverlay.that.SetContentDisabled(false);
-			}
-
-			ObserverManager.TopView     .Control   .it_Enable.Enabled =
-			ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = false;
-
-
-			MainViewOverlay.that.Invalidate();
-
-			ObserverManager.InvalidateTopControls();
-			ObserverManager.InvalidateQuadrantControls();
 		}
 
 
