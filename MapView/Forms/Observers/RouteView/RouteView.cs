@@ -401,18 +401,14 @@ namespace MapView.Forms.Observers
 				la_ColorRank8.Width = width;
 
 				UpdateNodeInformation();
+
+				bu_Tallyho.Enabled = true;
+				gb_NoderankColors.Visible = true;
 			}
 			else
 			{
-				la_ColorRank0.Text = "rank 0";
-				la_ColorRank1.Text = "rank 1";
-				la_ColorRank2.Text = "rank 2";
-				la_ColorRank3.Text = "rank 3";
-				la_ColorRank4.Text = "rank 4";
-				la_ColorRank5.Text = "rank 5";
-				la_ColorRank6.Text = "rank 6";
-				la_ColorRank7.Text = "rank 7";
-				la_ColorRank8.Text = "rank 8";
+				bu_Tallyho.Enabled = false;
+				gb_NoderankColors.Visible = false;
 			}
 
 			tsb_x2.Checked = false;
@@ -482,7 +478,7 @@ namespace MapView.Forms.Observers
 				la_Link4Dist.Text =
 				la_Link5Dist.Text = String.Empty;
 			}
-			else // selected node is valid ->
+			else // 'NodeSelected' is valid ->
 			{
 				gb_NodeData  .Enabled =
 				gb_LinkData  .Enabled =
@@ -725,8 +721,8 @@ namespace MapView.Forms.Observers
 
 		#region Methods (print TileData)
 		/// <summary>
-		/// Clears the currently selected tile-info's text in <c>RouteView</c>
-		/// and <c>TopRouteView(Route)</c>.
+		/// Clears the currently selected tile-info's text in RouteView and
+		/// TopRouteView(Route).
 		/// </summary>
 		internal static void ClearSelectedInfo()
 		{
@@ -740,7 +736,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>The displayed level is inverted.</remarks>
 		internal void PrintSelectedInfo()
 		{
-			if (MainViewOverlay.that.FirstClick)
+			if (_file != null && MainViewOverlay.that.FirstClick)
 			{
 				string info;
 				int level;
@@ -2061,9 +2057,8 @@ namespace MapView.Forms.Observers
 		/// Deselects any currently selected node.
 		/// </summary>
 		/// <param name="updatefields"><c>true</c> if a location is selected in
-		/// <c>MainView</c> or <c>TopView</c> (even if it's still the node's
-		/// location) - <c>false</c> if the node is deleted from
-		/// <c>RouteView</c> itself</param>
+		/// MainView or TopView (even if it's still the node's location) -
+		/// <c>false</c> if the node is deleted from RouteView itself</param>
 		/// <seealso cref="DeselectNodeStatic()"><c>DeselectNodeStatic()</c></seealso>
 		private void DeselectNode(bool updatefields = false)
 		{
@@ -2079,14 +2074,12 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Synchs
-		/// <c><see cref="DeselectNode()">DeselectNode()</see></c> in
-		/// <c>TopView</c> and <c>TopRouteView</c>.
+		/// Synchs <c><see cref="DeselectNode()">DeselectNode()</see></c> in
+		/// TopView and TopRouteView(Top).
 		/// </summary>
 		/// <param name="updatefields"><c>true</c> if a location is selected in
-		/// <c>MainView</c> or <c>TopView</c> (even if it's still the node's
-		/// location) - <c>false</c> if the node is deleted from
-		/// <c>RouteView</c> itself</param>
+		/// MainView or TopView (even if it's still the node's location) -
+		/// <c>false</c> if the node is deleted from RouteView itself</param>
 		internal static void DeselectNodeStatic(bool updatefields = false)
 		{
 			ObserverManager.RouteView   .Control     .DeselectNode(updatefields);
@@ -3452,12 +3445,7 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnTallyhoClick(object sender, EventArgs e)
 		{
-			if (SpawnInfo == null)
-			{
-				SpawnInfo = new SpawnInfo(_file);
-				SpawnInfo.Show(this);
-			}
-			else
+			if (SpawnInfo != null)
 			{
 				if (SpawnInfo.WindowState == FormWindowState.Minimized)
 					SpawnInfo.WindowState  = FormWindowState.Normal;
@@ -3468,6 +3456,11 @@ namespace MapView.Forms.Observers
 //				SpawnInfo.BringToFront();
 //				SpawnInfo.TopMost = true;
 //				SpawnInfo.TopMost = false;
+			}
+			else if (_file != null)
+			{
+				SpawnInfo = new SpawnInfo(_file);
+				SpawnInfo.Show(this);
 			}
 		}
 
@@ -3697,40 +3690,66 @@ namespace MapView.Forms.Observers
 
 
 		#region Update UI (static)
+		/// <summary>
+		/// Refreshes <c><see cref="RouteView"/></c> in both RouteView and
+		/// TopRouteView(Route).
+		/// </summary>
 		internal static void RefreshControls()
 		{
 			ObserverManager.RouteView   .Control     .Refresh();
 			ObserverManager.TopRouteView.ControlRoute.Refresh();
 		}
 
+		/// <summary>
+		/// Invalidates <c><see cref="RouteView"/></c> in both RouteView and
+		/// TopRouteView(Route).
+		/// </summary>
 		private static void InvalidateControls()
 		{
 			ObserverManager.RouteView   .Control     .Invalidate();
 			ObserverManager.TopRouteView.ControlRoute.Invalidate();
 		}
 
+		/// <summary>
+		/// Refreshes <c><see cref="RouteControl"/></c> in both RouteView and
+		/// TopRouteView(Route).
+		/// </summary>
 		private static void RefreshPanels()
 		{
 			ObserverManager.RouteView   .Control     .RouteControl.Refresh();
 			ObserverManager.TopRouteView.ControlRoute.RouteControl.Refresh();
 		}
 
+		/// <summary>
+		/// Invalidates <c><see cref="RouteControl"/></c> in both RouteView and
+		/// TopRouteView(Route).
+		/// </summary>
 		internal static void InvalidatePanels()
 		{
 			ObserverManager.RouteView   .Control     .RouteControl.Invalidate();
 			ObserverManager.TopRouteView.ControlRoute.RouteControl.Invalidate();
 		}
 
-		private static void UpdateNodeInfo()
-		{
-			ObserverManager.RouteView   .Control     .UpdateNodeInformation();
-			ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
-		}
-
+		/// <summary>
+		/// Invalidates <c><see cref="RouteControl"/></c> and updates node-info
+		/// in both RouteView and TopRouteView(Route).
+		/// </summary>
 		internal static void Invalidator()
 		{
 			InvalidatePanels();
 			UpdateNodeInfo();
+		}
+
+		/// <summary>
+		/// Updates node-info in both RouteView and TopRouteView(Route).
+		/// </summary>
+		private static void UpdateNodeInfo()
+		{
+			if (ObserverManager.RouteView.Control._file != null) // safety (sort of)
+			{
+				ObserverManager.RouteView   .Control     .UpdateNodeInformation();
+				ObserverManager.TopRouteView.ControlRoute.UpdateNodeInformation();
+			}
 		}
 		#endregion Update UI (static)
 	}
