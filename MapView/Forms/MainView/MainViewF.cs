@@ -1638,7 +1638,7 @@ namespace MapView
 //				McdInfoF fMcdInfo = ObserverManager.TileView.Control.McdInfo; // update MCD Info if open ->
 //				if (fMcdInfo != null) fMcdInfo.UpdateData();
 
-				if (RouteView.SpawnInfo != null) // update SpawnInfo if open ->
+				if (RouteView.SpawnInfo != null)
 					RouteView.SpawnInfo.Close();
 
 				if (_finfo != null)
