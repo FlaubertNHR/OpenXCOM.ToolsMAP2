@@ -101,8 +101,7 @@ namespace MapView.Forms.Observers
 
 		#region Properties
 		/// <summary>
-		/// Gets the current <c>SelectedTilepart</c>.
-		/// 
+		/// Gets the current <c>SelectedTilepart</c>.<br/>
 		/// Sets the <c>SelectedTilepart</c> when a valid
 		/// <c><see cref="QuadrantControl"/></c> quad is selected.
 		/// </summary>
@@ -528,7 +527,7 @@ namespace MapView.Forms.Observers
 					}
 				}
 			}
-			else
+			else if (_file != null)
 				error_SelectTile();
 		}
 
@@ -591,7 +590,7 @@ namespace MapView.Forms.Observers
 					}
 				}
 			}
-			else
+			else if (_file != null)
 				error_SelectTile();
 		}
 
