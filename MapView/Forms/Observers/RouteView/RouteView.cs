@@ -386,6 +386,20 @@ namespace MapView.Forms.Observers
 					la_ColorRank8.Text = RouteNodes.ter2;
 				}
 
+				// Label #4 Commander shall determine width
+				int width = TextRenderer.MeasureText(la_ColorRank4.Text, la_ColorRank4.Font).Width + 5;
+				gb_NoderankColors.Width = la_ColorRank4.Left + width + 3;
+
+				la_ColorRank0.Width =
+				la_ColorRank1.Width =
+				la_ColorRank2.Width =
+				la_ColorRank3.Width =
+				la_ColorRank4.Width =
+				la_ColorRank5.Width =
+				la_ColorRank6.Width =
+				la_ColorRank7.Width =
+				la_ColorRank8.Width = width;
+
 				UpdateNodeInformation();
 			}
 			else
