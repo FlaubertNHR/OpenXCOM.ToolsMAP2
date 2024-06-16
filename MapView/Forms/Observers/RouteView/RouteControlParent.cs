@@ -437,7 +437,8 @@ namespace MapView.Forms.Observers
 			{
 				case Keys.Control | Keys.H:
 					e.SuppressKeyPress = true;
-					ObserverManager.RouteView.Control.OnSpawnHighlightClick(null, EventArgs.Empty);
+					if (_file != null)
+						ObserverManager.RouteView.Control.OnSpawnHighlightClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.D0: case Keys.D1: case Keys.D2: case Keys.D3:
@@ -449,7 +450,8 @@ namespace MapView.Forms.Observers
 				case Keys.Control | Keys.D6: case Keys.Control | Keys.D7:
 				case Keys.Control | Keys.D8:
 					e.SuppressKeyPress = true;
-					RouteView.doRankHighlightShortcut(e.KeyData);
+					if (_file != null)
+						RouteView.doRankHighlightShortcut(e.KeyData);
 					break;
 
 				default:
