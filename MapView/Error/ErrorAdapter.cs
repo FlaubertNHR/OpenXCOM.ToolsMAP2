@@ -4,7 +4,7 @@
 namespace MapView.Error
 {
 	/// <summary>
-	/// nice ... an Adapter
+	/// nice ... an Adapter<br/>
 	/// with an Interface ... jic
 	/// </summary>
 	internal sealed class ErrorAdapter
