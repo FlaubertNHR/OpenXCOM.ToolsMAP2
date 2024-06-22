@@ -43,8 +43,8 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Creates the observers (secondary viewers) and adds
 		/// toolstrip-controls for <c><see cref="MainViewF"/></c> and
-		/// <c><see cref="Observers.TopView"/></c> (<c>TopView</c> and
-		/// <c>TopRouteView</c>). Also loads default options for
+		/// <c><see cref="Observers.TopView"/></c> (TopView and TopRouteView).
+		/// Also loads default options for
 		/// <c><see cref="Observers.TileView"/></c>,
 		/// <c><see cref="Observers.TopView"/></c>, and
 		/// <c><see cref="Observers.RouteView"/></c>.
