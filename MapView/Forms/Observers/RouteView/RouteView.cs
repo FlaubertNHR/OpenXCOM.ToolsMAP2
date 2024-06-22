@@ -736,7 +736,7 @@ namespace MapView.Forms.Observers
 		/// <remarks>The displayed level is inverted.</remarks>
 		internal void PrintSelectedInfo()
 		{
-			if (_file != null && MainViewOverlay.that.FirstClick)
+			if (MainViewOverlay.that.FirstClick)
 			{
 				string info;
 				int level;

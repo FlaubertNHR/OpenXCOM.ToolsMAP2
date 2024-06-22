@@ -115,12 +115,30 @@ namespace MapView.Forms.MainView
 
 		private bool _firstClick;
 		/// <summary>
-		/// A flag that indicates that the user has selected a tile(s).
+		/// A flag that indicates that the user has selected a tile.
 		/// </summary>
 		/// <remarks>The operation of the flag relies on the fact that once a
-		/// tile(s) has been selected on a Map there will always be a tile(s)
-		/// selected until either (a) the Map is resized or (b) user loads a
-		/// different Map or (c) the Map/terrains are reloaded.</remarks>
+		/// tile has been selected on a Map there will always be a tile selected
+		/// until
+		/// <list type="bullet">
+		/// <item>the Map is closed</item>
+		/// <item>the Map is reloaded</item>
+		/// <item>a different Map is loaded</item>
+		/// <item>the Map is resized</item>
+		/// </list>
+		/// <br/><br/>
+		/// Therefore <c>FirstClick</c> shall be set <c>false</c>
+		/// <list type="bullet">
+		/// <item><c><see cref="SetMapFile()">SetMapFile()</see></c>
+		/// <list type="bullet">
+		/// <item><c><see cref="MainViewF.MapFile">MainViewF.MapFile</see></c> [set]
+		/// <list type="bullet">
+		/// <item><c><see cref="MainViewF"></see>.OnCloseClick()</c></item>
+		/// <item><c><see cref="MainViewF"></see>.LoadSelectedDescriptor()</c> -
+		/// called in many places</item></list></item></list></item>
+		/// <item><c><see cref="MainViewF"/>.OnMapResizeClick()</c></item>
+		/// </list>
+		///</remarks>
 		internal bool FirstClick
 		{
 			get { return _firstClick; }
@@ -252,6 +270,8 @@ namespace MapView.Forms.MainView
 
 				_copy.isDescriptor = false;
 			}
+
+			FirstClick = false;
 		}
 		#endregion Methods
 
@@ -325,19 +345,19 @@ namespace MapView.Forms.MainView
 		/// For subscription to toolstrip Editor button. Handles the
 		/// <c>Click</c> event on the Cut button.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="ToolstripFactory"></see>.tsbCut</c></param>
 		/// <param name="e"></param>
 		internal void OnCut(object sender, EventArgs e)
 		{
 			Copy();
-			ClearSelection();
+			ClearSelectedTiles();
 		}
 
 		/// <summary>
 		/// For subscription to toolstrip Editor button. Handles the
 		/// <c>Click</c> event on the Copy button.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="ToolstripFactory"></see>.tsbCopy</c></param>
 		/// <param name="e"></param>
 		internal void OnCopy(object sender, EventArgs e)
 		{
@@ -348,7 +368,7 @@ namespace MapView.Forms.MainView
 		/// For subscription to toolstrip Editor button. Handles the
 		/// <c>Click</c> event on the Paste button.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="ToolstripFactory"></see>.tsbPaste</c></param>
 		/// <param name="e"></param>
 		internal void OnPaste(object sender, EventArgs e)
 		{
@@ -359,22 +379,22 @@ namespace MapView.Forms.MainView
 		/// For subscription to toolstrip Editor button. Handles the
 		/// <c>Click</c> event on the Delete button.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="ToolstripFactory"></see>.tsbDelete</c></param>
 		/// <param name="e"></param>
 		internal void OnDelete(object sender, EventArgs e)
 		{
-			ClearSelection();
+			ClearSelectedTiles();
 		}
 
 		/// <summary>
 		/// For subscription to toolstrip Editor button. Handles the
 		/// <c>Click</c> event on the Fill button.
 		/// </summary>
-		/// <param name="sender"></param>
+		/// <param name="sender"><c><see cref="ToolstripFactory"></see>.tsbFill</c></param>
 		/// <param name="e"></param>
 		internal void OnFill(object sender, EventArgs e)
 		{
-			FillSelectedQuadrants();
+			FillSelectedQuadrant();
 		}
 
 
@@ -415,11 +435,11 @@ namespace MapView.Forms.MainView
 					break;
 
 				case Keys.F:
-					FillSelectedQuadrants();
+					FillSelectedQuadrant();
 					break;
 
 				case Keys.Delete:
-					ClearSelection();
+					ClearSelectedTiles();
 					break;
 
 				case Keys.Control | Keys.S:
@@ -428,7 +448,7 @@ namespace MapView.Forms.MainView
 
 				case Keys.Control | Keys.X:
 					Copy();
-					ClearSelection();
+					ClearSelectedTiles();
 					break;
 
 				case Keys.Control | Keys.C:
@@ -458,11 +478,12 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears all tileparts from any currently selected tiles.
 		/// </summary>
-		/// <remarks><c>ClearSelection()</c> respects quadrant disability unlike
-		/// <c><see cref="ClearSelectedQuadrants()">ClearSelectedQuadrants()</see></c>.</remarks>
-		private void ClearSelection()
+		/// <remarks><c>ClearSelectedTiles()</c> respects quadrant visibility
+		/// unlike
+		/// <c><see cref="ClearSelectedQuadrant()">ClearSelectedQuadrant()</see></c>.</remarks>
+		private void ClearSelectedTiles()
 		{
-			if (_file != null && FirstClick)
+			if (FirstClick)
 			{
 				MainViewF.that.MapChanged = true;
 
@@ -496,7 +517,7 @@ namespace MapView.Forms.MainView
 		/// <remarks>Disrespects quadrant visibility.</remarks>
 		private void Copy()
 		{
-			if (_file != null && FirstClick)
+			if (FirstClick)
 			{
 				ObserverManager.ToolFactory.EnablePasters();
 
@@ -561,13 +582,12 @@ namespace MapView.Forms.MainView
 		/// <remarks>The terrainset of the current tileset needs to be identical
 		/// to the terrainset of the tileset from which parts were copied (or
 		/// nearly so).
-		/// 
-		/// 
-		/// <c>Paste()</c> respects quadrant disability unlike
-		/// <c><see cref="FillSelectedQuadrants()">FillSelectedQuadrants()</see></c>.</remarks>
+		/// <br/><br/>
+		/// <c>Paste()</c> respects quadrant visibility unlike
+		/// <c><see cref="FillSelectedQuadrant()">FillSelectedQuadrant()</see></c>.</remarks>
 		private void Paste()
 		{
-			if (_file != null && FirstClick && _copy.terrains != null)
+			if (FirstClick && _copy.terrains != null)
 			{
 				if (AreTerrainsetsCompatible())
 				{
@@ -687,11 +707,11 @@ namespace MapView.Forms.MainView
 		/// Fills the selected quadrant of the currently selected tile(s) with
 		/// the currently selected tilepart from <c><see cref="TileView"/></c>.
 		/// </summary>
-		/// <remarks><c>FillSelectedQuadrants()</c> ignores quadrant disability
+		/// <remarks><c>FillSelectedQuadrant()</c> ignores quadrant visibility
 		/// unlike <c><see cref="Paste()">Paste()</see></c>.</remarks>
-		internal void FillSelectedQuadrants()
+		internal void FillSelectedQuadrant()
 		{
-			if (_file != null && FirstClick)
+			if (FirstClick)
 			{
 				Tilepart part = ObserverManager.TileView.Control.SelectedTilepart;
 				if (part == null
@@ -735,9 +755,10 @@ namespace MapView.Forms.MainView
 		/// <summary>
 		/// Clears the selected quadrant of the currently selected tile(s).
 		/// </summary>
-		/// <remarks><c>ClearSelectedQuadrants()</c> ignores quadrant disability
-		/// unlike <c><see cref="ClearSelection()">ClearSelection()</see></c>.</remarks>
-		internal void ClearSelectedQuadrants()
+		/// <remarks><c>ClearSelectedQuadrant()</c> ignores quadrant visibility
+		/// unlike
+		/// <c><see cref="ClearSelectedTiles()">ClearSelectedTiles()</see></c>.</remarks>
+		internal void ClearSelectedQuadrant()
 		{
 			MainViewF.that.MapChanged = true;
 

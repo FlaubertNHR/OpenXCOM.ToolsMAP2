@@ -193,7 +193,7 @@ namespace MapView
 		internal MapFile MapFile
 		{
 			get { return _file; }
-			set
+			private set
 			{
 				_file = value;
 
@@ -1487,8 +1487,7 @@ namespace MapView
 		/// <param name="e"></param>
 		internal void OnSaveRoutesClick(object sender, EventArgs e)
 		{
-			if (   MapFile != null
-				&& MapFile.SaveRoutes())
+			if (MapFile != null && MapFile.SaveRoutes())
 			{
 				RouteView.RoutesChangedCoordinator = false;
 			}
@@ -1504,8 +1503,7 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnExportMapRoutesClick(object sender, EventArgs e)
 		{
-			if (   MapFile != null
-				&& MapFile.Descriptor != null)
+			if (MapFile != null && MapFile.Descriptor != null)
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -1649,7 +1647,7 @@ namespace MapView
 
 				RouteView.DeselectNodeStatic(true);
 
-				ObserverManager.AssignMapfile(MapFile = null);
+				ObserverManager.AssignMapfile(MapFile = null); // clear all observers' Mapfile vars and '_overlay.FirstClick'
 
 				ObserverManager.ToolFactory.EnableLevelers(0,1);
 				ObserverManager.ToolFactory.EnableEditors(false);
@@ -3325,8 +3323,6 @@ namespace MapView
 					EnableMenus(true);
 					EnableObservers(true);
 
-					_overlay.FirstClick = false;
-
 					if (descriptor.GroupType == GroupType.Tftd)
 					{
 						ViewersMenuManager.EnableScanG(SpritesetManager.GetScanGtftd() != null);
@@ -3339,7 +3335,7 @@ namespace MapView
 					}
 
 
-					MapFile = file;
+					MapFile = file; // clears '_overlay.FirstClick'
 
 					ObserverManager.ToolFactory.EnableAutoscale(true);
 					ObserverManager.ToolFactory.EnableLevelers(file.Level, file.Levs);
@@ -3352,7 +3348,9 @@ namespace MapView
 					tsslPosition     .Text =
 					tsslSelectionSize.Text = String.Empty;
 
-					if (!file.MapChanged) MapChanged = (file.TerrainsetCountExceeded != 0);
+					if (!file.MapChanged)
+						MapChanged = (file.TerrainsetCountExceeded != 0);
+
 					file.TerrainsetCountExceeded = 0; // TODO: Perhaps do that when the Mapfile is saved.
 
 					RouteView.ClearSelectedInfo();
@@ -3368,7 +3366,7 @@ namespace MapView
 					if (!menuViewers.Enabled) // show the forms that are flagged to show (in MainView's Options).
 						ViewersMenuManager.StartSecondStageBoosters();
 
-					ObserverManager.AssignMapfile(file); // and reset all observers' Mapfile var
+					ObserverManager.AssignMapfile(file); // reset all observers' Mapfile var
 
 					RouteCheckService.SetBase1( // send the base1-count options to 'XCom' ->
 											MainViewF.Optionables.Base1_xy,
