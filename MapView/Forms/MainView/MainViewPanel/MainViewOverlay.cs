@@ -505,7 +505,7 @@ namespace MapView.Forms.MainView
 					tile.Vacancy();
 				}
 
-				_file.CalculateOccultations();
+				_file.CalculateOccultations(!_disFloor);
 
 				InvalidateObservers();
 			}
@@ -638,7 +638,7 @@ namespace MapView.Forms.MainView
 						tile.Vacancy();
 					}
 
-					_file.CalculateOccultations();
+					_file.CalculateOccultations(!_disFloor);
 
 					InvalidateObservers();
 				}
@@ -732,7 +732,7 @@ namespace MapView.Forms.MainView
 						tile.Vacancy();
 					}
 
-					_file.CalculateOccultations();
+					_file.CalculateOccultations(!_disFloor);
 
 					InvalidateObservers();
 				}
@@ -776,7 +776,7 @@ namespace MapView.Forms.MainView
 				tile.Vacancy();
 			}
 
-			_file.CalculateOccultations();
+			_file.CalculateOccultations(!_disFloor);
 
 			InvalidateObservers();
 		}
@@ -879,7 +879,7 @@ namespace MapView.Forms.MainView
 				}
 			}
 
-			_file.CalculateOccultations();
+			_file.CalculateOccultations(!_disFloor);
 
 			InvalidateObservers();
 		}
@@ -1213,7 +1213,7 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Gets the drag-begin point as a lesser value than the drag-end point.
-		/// See 'DragBeg' for bounds.
+		/// See <c><see cref="DragBeg"/></c> for bounds.
 		/// </summary>
 		/// <returns>the lesser of two evils</returns>
 		internal Point GetDragBeg_abs()
@@ -1225,7 +1225,7 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Gets the drag-end point as a greater value than the drag-start point.
-		/// See 'DragEnd' for bounds.
+		/// See <c><see cref="DragEnd"/></c> for bounds.
 		/// </summary>
 		/// <returns>the greater of two evils</returns>
 		internal Point GetDragEnd_abs()
@@ -1876,10 +1876,10 @@ namespace MapView.Forms.MainView
 		}
 #endif
 
-		bool _disFloor;
-		bool _disWest;
-		bool _disNorth;
-		bool _disContent;
+		private bool _disFloor;
+		private bool _disWest;
+		private bool _disNorth;
+		private bool _disContent;
 
 		/// <summary>
 		/// Sets the floor-disabled flag.

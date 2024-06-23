@@ -30,6 +30,8 @@ namespace XCom
 		/// <c><see cref="MapFile.Routes">MapFile.Routes</see></c> intact</param>
 		/// <param name="selected">a <c>TreeNode</c> for MapBrowserDialog info
 		/// only</param>
+		/// <param name="floorsvisible"><c>true</c> to calculate occultations -
+		/// <c>false</c> to clear all occultations</param>
 		/// <returns><c>null</c> if things go south</returns>
 		/// <remarks>Check that <paramref name="descriptor"/> is valid before
 		/// call.</remarks>
@@ -38,7 +40,8 @@ namespace XCom
 				ref bool browseMapfile,
 				bool ignoreRecordsExceeded,
 				RouteNodes routes,
-				TreeNode selected)
+				TreeNode selected,
+				bool floorsvisible)
 		{
 			//Logfile.Log("MapFileService.LoadDescriptor()");
 			//Logfile.Log(". descriptor.Label= " + descriptor.Label);
@@ -199,7 +202,8 @@ namespace XCom
 					var file = new MapFile(
 										descriptor,
 										parts,
-										routes);
+										routes,
+										floorsvisible);
 					if (!file.Fail)
 					{
 						//Logfile.Log(". . . ret MapFile");

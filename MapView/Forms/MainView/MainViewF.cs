@@ -3302,7 +3302,8 @@ namespace MapView
 														ref browseMapfile,
 														Optionables.IgnoreRecordsExceeded,
 														routes,
-														MapTree.SelectedNode);
+														MapTree.SelectedNode,
+														!ObserverManager.TopView.Control.it_Floor.Checked);
 				if (!MaptreeChanged && browseMapfile) MaptreeChanged = true;
 
 				Dontdrawyougits = false;

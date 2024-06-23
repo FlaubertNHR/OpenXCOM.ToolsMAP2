@@ -198,7 +198,7 @@ namespace MapView.Forms.Observers
 					ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = !it.Checked;
 
 					MainViewOverlay.that.SetFloorDisabled(it.Checked);
-					_file.CalculateOccultations(it.Checked);
+					_file.CalculateOccultations(!it.Checked);
 				}
 				else if (it == it_West)
 				{
@@ -256,7 +256,7 @@ namespace MapView.Forms.Observers
 					ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = false;
 
 					MainViewOverlay.that.SetFloorDisabled(false);
-					_file.CalculateOccultations();
+					_file.CalculateOccultations(true);
 				}
 
 				if (it_West.Checked)

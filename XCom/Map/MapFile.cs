@@ -245,12 +245,15 @@ namespace XCom
 		/// <param name="parts">the list of parts in all allocated terrains
 		/// (the terrainset)</param>
 		/// <param name="routes"></param>
+		/// <param name="floorsvisible"><c>true</c> to calculate occultations -
+		/// <c>false</c> to clear all occultations</param>
 		/// <remarks>Instantiated by
 		/// <c><see cref="MapFileService.LoadDescriptor()">MapFileService.LoadDescriptor()</see></c></remarks>
 		internal MapFile(
 				Descriptor descriptor,
 				IList<Tilepart> parts,
-				RouteNodes routes)
+				RouteNodes routes,
+				bool floorsvisible)
 		{
 			string dir = Path.Combine(descriptor.Basepath, GlobalsXC.MapsDir);
 			string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
@@ -265,7 +268,7 @@ namespace XCom
 				Routes     = routes;
 
 				SetupRouteNodes();
-				CalculateOccultations();
+				CalculateOccultations(floorsvisible);
 			}
 			else
 				Fail = true;
@@ -716,15 +719,15 @@ namespace XCom
 
 
 		/// <summary>
-		/// Generates occultation data for all tiles in the Map.
+		/// Generates occultation data for all tiles of the Map.
 		/// </summary>
-		/// <param name="floorsdisabled"><c>true</c> to force visibility for all
-		/// tiles</param>
-		public void CalculateOccultations(bool floorsdisabled = false)
+		/// <param name="floorsvisible"><c>true</c> to calculate occultations -
+		/// <c>false</c> to clear all occultations</param>
+		public void CalculateOccultations(bool floorsvisible)
 		{
 			if (Levs > 1) // NOTE: Maps shall be at least 10x10x1 ...
 			{
-				if (!floorsdisabled)
+				if (floorsvisible)
 				{
 					for (int lev = Levs - 1; lev != 0; --lev)
 					for (int row = 0; row != Rows - 2; ++row)
