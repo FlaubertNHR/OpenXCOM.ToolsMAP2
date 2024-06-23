@@ -191,13 +191,15 @@ namespace MapView.Forms.Observers
 		{
 			if (_file != null)
 			{
+				PartType quadrant;
+
 				var it = sender as ToolStripMenuItem;
 				if (it == it_Floor)
 				{
 					ObserverManager.TopView     .Control   .it_Floor.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = !it.Checked;
 
-					MainViewOverlay.that.SetFloorDisabled(it.Checked);
+					quadrant = PartType.Floor;
 					_file.CalculateOccultations(!it.Checked);
 				}
 				else if (it == it_West)
@@ -205,22 +207,24 @@ namespace MapView.Forms.Observers
 					ObserverManager.TopView     .Control   .it_West.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_West.Checked = !it.Checked;
 
-					MainViewOverlay.that.SetWestDisabled(it.Checked);
+					quadrant = PartType.West;
 				}
 				else if (it == it_North)
 				{
 					ObserverManager.TopView     .Control   .it_North.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_North.Checked = !it.Checked;
 
-					MainViewOverlay.that.SetNorthDisabled(it.Checked);
+					quadrant = PartType.North;
 				}
 				else // it_Content
 				{
 					ObserverManager.TopView     .Control   .it_Content.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_Content.Checked = !it.Checked;
 
-					MainViewOverlay.that.SetContentDisabled(it.Checked);
+					quadrant = PartType.Content;
 				}
+
+				MainViewOverlay.that.SetQuadrantDisabled(quadrant, it.Checked);
 
 				ObserverManager.TopView     .Control   .it_Enable.Enabled =
 				ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = it_Floor  .Checked
@@ -255,7 +259,6 @@ namespace MapView.Forms.Observers
 					ObserverManager.TopView     .Control   .it_Floor.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_Floor.Checked = false;
 
-					MainViewOverlay.that.SetFloorDisabled(false);
 					_file.CalculateOccultations(true);
 				}
 
@@ -263,25 +266,21 @@ namespace MapView.Forms.Observers
 				{
 					ObserverManager.TopView     .Control   .it_West.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_West.Checked = false;
-
-					MainViewOverlay.that.SetWestDisabled(false);
 				}
 
 				if (it_North.Checked)
 				{
 					ObserverManager.TopView     .Control   .it_North.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_North.Checked = false;
-
-					MainViewOverlay.that.SetNorthDisabled(false);
 				}
 
 				if (it_Content.Checked)
 				{
 					ObserverManager.TopView     .Control   .it_Content.Checked =
 					ObserverManager.TopRouteView.ControlTop.it_Content.Checked = false;
-
-					MainViewOverlay.that.SetContentDisabled(false);
 				}
+
+				MainViewOverlay.that.SetQuadrantDisabled(PartType.Invalid);
 
 				ObserverManager.TopView     .Control   .it_Enable.Enabled =
 				ObserverManager.TopRouteView.ControlTop.it_Enable.Enabled = false;

@@ -1882,39 +1882,28 @@ namespace MapView.Forms.MainView
 		private bool _disContent;
 
 		/// <summary>
-		/// Sets the floor-disabled flag.
+		/// Sets a quadrant-disabled flag.
 		/// </summary>
-		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
-		internal void SetFloorDisabled(bool disabled)
+		/// <param name="quadrant">a <c><see cref="PartType"/></c> to dis/enable
+		/// - <c>PartType.Invalid</c> to enable all quadrants</param>
+		/// <param name="disabled"><c>true</c> to disable
+		/// <paramref name="quadrant"/></param>
+		internal void SetQuadrantDisabled(PartType quadrant, bool disabled = false)
 		{
-			_disFloor = disabled;
-		}
+			switch (quadrant)
+			{
+				case PartType.Floor:   _disFloor   = disabled; break;
+				case PartType.West:    _disWest    = disabled; break;
+				case PartType.North:   _disNorth   = disabled; break;
+				case PartType.Content: _disContent = disabled; break;
 
-		/// <summary>
-		/// Sets the westwall-disabled flag.
-		/// </summary>
-		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
-		internal void SetWestDisabled(bool disabled)
-		{
-			_disWest = disabled;
-		}
-
-		/// <summary>
-		/// Sets the northwall-disabled flag.
-		/// </summary>
-		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
-		internal void SetNorthDisabled(bool disabled)
-		{
-			_disNorth = disabled;
-		}
-
-		/// <summary>
-		/// Sets the content-disabled flag.
-		/// </summary>
-		/// <param name="disabled"><c>true</c> if quadrant is disabled</param>
-		internal void SetContentDisabled(bool disabled)
-		{
-			_disContent = disabled;
+				case PartType.Invalid: // enable all
+					_disFloor   =
+					_disWest    =
+					_disNorth   =
+					_disContent = false;
+					break;
+			}
 		}
 
 		/// <summary>

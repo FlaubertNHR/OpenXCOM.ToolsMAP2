@@ -21,10 +21,11 @@ namespace XCom
 		/// <c>Invalid</c> is for
 		/// <list type="bullet">
 		/// <item><c>TileView</c> - the ALL tabpage</item>
-		/// <item><c>QuadrantControl.OnMouseDown()</c> as None</item>
-		/// <item><c>TopControl.OnKeyDown() as None</c></item>
-		/// <item><c>TopViewForm.OnKeyDown() as None</c></item>
-		/// <item><c>TopRouteViewForm.OnKeyDown() as None</c></item>
+		/// <item><c>MainViewOverlay.SetQuadrantDisabled()</c> - enable all quadrants</item>
+		/// <item><c>QuadrantControl.OnMouseDown()</c></item>
+		/// <item><c>TopControl.OnKeyDown()</c></item>
+		/// <item><c>TopViewForm.OnKeyDown()</c></item>
+		/// <item><c>TopRouteViewForm.OnKeyDown()</c></item>
 		/// <item><c><see cref="Tilepart.Cripple()">Tilepart.Cripple()</see></c></item>
 		/// </list>
 		/// </summary>
