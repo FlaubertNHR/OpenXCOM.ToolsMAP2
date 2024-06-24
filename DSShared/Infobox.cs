@@ -220,7 +220,7 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Overrides the paint event.
+		/// Overrides the <c>Paint</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnPaint(PaintEventArgs e)
@@ -264,7 +264,7 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Sets DialogResult to OK and closes this dialog.
+		/// Sets <c>DialogResult</c> to <c>OK</c> and closes this dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -274,7 +274,7 @@ namespace DSShared
 		}
 
 		/// <summary>
-		/// Sets DialogResult to Retry and closes this dialog.
+		/// Sets <c>DialogResult</c> to <c>Retry</c> and closes this dialog.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
