@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
 
 
 namespace DSShared
@@ -10,6 +11,16 @@ namespace DSShared
 	/// </summary>
 	public static class FileService
 	{
+		#region Fields (static)
+		/// <summary>
+		/// A special flag for use by <c>MapView.SpawnInfo</c>. Allows user to
+		/// bypass tabulating SpawnNodes in the Routes' current Category.
+		/// </summary>
+		public static bool isSpawnInfo
+		{ get; set; }
+		#endregion Fields (static)
+
+
 		#region Methods (static)
 		/// <summary>
 		/// Shows an error in an <c><see cref="Infobox"/></c> modally.
@@ -18,13 +29,29 @@ namespace DSShared
 		/// <param name="copyable"></param>
 		private static void ShowFileError(string head, string copyable)
 		{
-			using (var f = new Infobox(
-									"IO Error",
-									head, // + " The operation will not proceed.",
-									copyable,
-									InfoboxType.Error))
+			if (isSpawnInfo)
 			{
-				f.ShowDialog();
+				using (var f = new Infobox(
+										"IO Error",
+										head + Environment.NewLine + "Press OK to bypass Routes in the Category.",
+										copyable,
+										InfoboxType.Error,
+										InfoboxButton.CancelOkay))
+				{
+					if (f.ShowDialog() == DialogResult.OK)
+						isSpawnInfo = false;
+				}
+			}
+			else
+			{
+				using (var f = new Infobox(
+										"IO Error",
+										head, // + " The operation will not proceed.",
+										copyable,
+										InfoboxType.Error))
+				{
+					f.ShowDialog();
+				}
 			}
 		}
 

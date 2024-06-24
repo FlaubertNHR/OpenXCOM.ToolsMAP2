@@ -251,6 +251,8 @@ namespace MapView
 			KeyValuePair<string, Dictionary<string, Descriptor>> category = GetCategory();
 			if (!category.Equals(new KeyValuePair<string, Dictionary<string, Descriptor>>()))
 			{
+				FileService.isSpawnInfo = true;
+
 				Descriptor tileset; RouteNodes routes;
 
 				foreach (var descriptor in category.Value)
@@ -263,6 +265,22 @@ namespace MapView
 					{
 //						routes.Fail = false; -> nobody cares, Marvin.
 						routes.Nodes.Clear();
+
+						if (!FileService.isSpawnInfo)
+						{
+							lbl_tsRanks0_outcat.Text =
+							lbl_tsRanks1_outcat.Text =
+							lbl_tsRanks2_outcat.Text =
+							lbl_tsRanks3_outcat.Text =
+							lbl_tsRanks4_outcat.Text =
+							lbl_tsRanks5_outcat.Text =
+							lbl_tsRanks6_outcat.Text =
+							lbl_tsRanks7_outcat.Text =
+							lbl_tsRanks8_outcat.Text =
+
+							lbl_TotalCategory  .Text = "nul";
+							return;
+						}
 					}
 
 					foreach (RouteNode node in routes)
@@ -287,6 +305,8 @@ namespace MapView
 					}
 				}
 
+				FileService.isSpawnInfo = false;
+
 				lbl_tsRanks0_outcat.Text = _ranks_0_cat.ToString();
 				lbl_tsRanks1_outcat.Text = _ranks_1_cat.ToString();
 				lbl_tsRanks2_outcat.Text = _ranks_2_cat.ToString();
@@ -297,7 +317,7 @@ namespace MapView
 				lbl_tsRanks7_outcat.Text = _ranks_7_cat.ToString();
 				lbl_tsRanks8_outcat.Text = _ranks_8_cat.ToString();
 
-				lbl_TotalCategory.Text = _nodescat.ToString();
+				lbl_TotalCategory  .Text = _nodescat.ToString();
 			}
 		}
 
