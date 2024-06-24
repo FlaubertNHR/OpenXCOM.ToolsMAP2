@@ -1860,27 +1860,32 @@ namespace MapView.Forms.Observers
 		{
 			switch (e.KeyData)
 			{
-				case Keys.Delete:
-					OnDeleteClick(null, null);
-					break;
-
 				case Keys.Control | Keys.S:
+					e.SuppressKeyPress = true;
 					MainViewF.that.OnSaveRoutesClick(null, EventArgs.Empty);
 					break;
 
 				case Keys.Control | Keys.X:
+					e.SuppressKeyPress = true;
 					_bypassCutError = true;
 					OnCutClick(null, EventArgs.Empty);
 					_bypassCutError = false;
 					break;
 
 				case Keys.Control | Keys.C:
+					e.SuppressKeyPress = true;
 					 OnCopyClick(null, EventArgs.Empty);
 					 break;
 
 				 case Keys.Control | Keys.V:
+					e.SuppressKeyPress = true;
 					 OnPasteClick(null, EventArgs.Empty);
 					 break;
+
+				case Keys.Delete:
+					e.SuppressKeyPress = true;
+					OnDeleteClick(null, null);
+					break;
 			}
 		}
 
@@ -1897,8 +1902,11 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnCutClick(object sender, EventArgs e)
 		{
-			OnCopyClick(  null, EventArgs.Empty);
-			OnDeleteClick(null, EventArgs.Empty);
+			if (_file != null)
+			{
+				OnCopyClick(  null, EventArgs.Empty);
+				OnDeleteClick(null, EventArgs.Empty);
+			}
 		}
 
 		/// <summary>
@@ -1916,21 +1924,24 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnCopyClick(object sender, EventArgs e)
 		{
-			RouteControl.Select();
-
-			if (NodeSelected != null)
+			if (_file != null)
 			{
-				ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
-				ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = true;
+				RouteControl.Select();
 
-				_copynodedata.unittype       = co_Type  .SelectedIndex;
-				_copynodedata.noderank       = co_Rank  .SelectedIndex;
-				_copynodedata.spawnweight    = co_Spawn .SelectedIndex;
-				_copynodedata.patrolpriority = co_Patrol.SelectedIndex;
-				_copynodedata.baseattack     = co_Attack.SelectedIndex;
+				if (NodeSelected != null)
+				{
+					ObserverManager.RouteView   .Control     .bu_Paste.Enabled =
+					ObserverManager.TopRouteView.ControlRoute.bu_Paste.Enabled = true;
+
+					_copynodedata.unittype       = co_Type  .SelectedIndex;
+					_copynodedata.noderank       = co_Rank  .SelectedIndex;
+					_copynodedata.spawnweight    = co_Spawn .SelectedIndex;
+					_copynodedata.patrolpriority = co_Patrol.SelectedIndex;
+					_copynodedata.baseattack     = co_Attack.SelectedIndex;
+				}
+				else
+					ShowError("A node must be selected.");
 			}
-			else
-				ShowError("A node must be selected.");
 		}
 
 		/// <summary>
@@ -1946,55 +1957,58 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnPasteClick(object sender, EventArgs e)
 		{
-			RouteControl.Select();
-
-			if (NodeSelected != null) // TODO: auto-create a new node
+			if (_file != null)
 			{
-				if (_copynodedata.unittype != -1)
+				RouteControl.Select();
+
+				if (NodeSelected != null) // TODO: auto-create a new node
 				{
-					bool changed = false;
-
-					if (co_Type.SelectedIndex != _copynodedata.unittype)
+					if (_copynodedata.unittype != -1)
 					{
-						co_Type.SelectedIndex = _copynodedata.unittype;
-						changed = true;
+						bool changed = false;
+
+						if (co_Type.SelectedIndex != _copynodedata.unittype)
+						{
+							co_Type.SelectedIndex = _copynodedata.unittype;
+							changed = true;
+						}
+
+						if (co_Rank.SelectedIndex != _copynodedata.noderank)
+						{
+							co_Rank.SelectedIndex = _copynodedata.noderank;
+							changed = true;
+
+							_selRank = (byte)_copynodedata.noderank;
+						}
+
+						if (co_Spawn.SelectedIndex != _copynodedata.spawnweight)
+						{
+							co_Spawn.SelectedIndex = _copynodedata.spawnweight;
+							changed = true;
+
+							_selWeight = (SpawnWeight)_copynodedata.spawnweight;
+						}
+
+						if (co_Patrol.SelectedIndex != _copynodedata.patrolpriority)
+						{
+							co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
+							changed = true;
+						}
+
+						if (co_Attack.SelectedIndex != _copynodedata.baseattack)
+						{
+							co_Attack.SelectedIndex = _copynodedata.baseattack;
+							changed = true;
+						}
+
+						if (changed) RoutesChangedCoordinator = true;
 					}
-
-					if (co_Rank.SelectedIndex != _copynodedata.noderank)
-					{
-						co_Rank.SelectedIndex = _copynodedata.noderank;
-						changed = true;
-
-						_selRank = (byte)_copynodedata.noderank;
-					}
-
-					if (co_Spawn.SelectedIndex != _copynodedata.spawnweight)
-					{
-						co_Spawn.SelectedIndex = _copynodedata.spawnweight;
-						changed = true;
-
-						_selWeight = (SpawnWeight)_copynodedata.spawnweight;
-					}
-
-					if (co_Patrol.SelectedIndex != _copynodedata.patrolpriority)
-					{
-						co_Patrol.SelectedIndex = _copynodedata.patrolpriority;
-						changed = true;
-					}
-
-					if (co_Attack.SelectedIndex != _copynodedata.baseattack)
-					{
-						co_Attack.SelectedIndex = _copynodedata.baseattack;
-						changed = true;
-					}
-
-					if (changed) RoutesChangedCoordinator = true;
+					else
+						ShowError("There isn't any node data copied."); // <- needed for [Ctrl+v]
 				}
 				else
-					ShowError("There isn't any node data copied."); // <- needed for [Ctrl+v]
+					ShowError("A node must be selected.");
 			}
-			else
-				ShowError("A node must be selected.");
 		}
 
 		/// <summary>
@@ -2012,27 +2026,30 @@ namespace MapView.Forms.Observers
 		/// <param name="e"></param>
 		private void OnDeleteClick(object sender, EventArgs e)
 		{
-			if (NodeSelected != null)
+			if (_file != null)
 			{
-				RoutesChangedCoordinator = true;
+				if (NodeSelected != null)
+				{
+					RoutesChangedCoordinator = true;
 
-				if (SpawnInfo != null)
-					SpawnInfo.DeleteNode(NodeSelected);
+					if (SpawnInfo != null)
+						SpawnInfo.DeleteNode(NodeSelected);
 
-				_file.GetTile(NodeSelected.Col,
-							  NodeSelected.Row,
-							  NodeSelected.Lev).Node = null;
-				_file.Routes.DeleteNode(NodeSelected);
+					_file.GetTile(NodeSelected.Col,
+								  NodeSelected.Row,
+								  NodeSelected.Lev).Node = null;
+					_file.Routes.DeleteNode(NodeSelected);
 
-				DeselectNodeStatic();
-				UpdateNodeInfo();
+					DeselectNodeStatic();
+					UpdateNodeInfo();
 
-				// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
+					// TODO: check if the Og-button should be disabled when a node gets deleted or cut.
 
-				RefreshControls();
+					RefreshControls();
+				}
+				else if (!_bypassCutError)
+					ShowError("A node must be selected.");
 			}
-			else if (!_bypassCutError)
-				ShowError("A node must be selected.");
 		}
 
 		/// <summary>
