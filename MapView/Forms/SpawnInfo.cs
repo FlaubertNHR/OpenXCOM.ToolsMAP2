@@ -278,7 +278,7 @@ namespace MapView
 							lbl_tsRanks7_outcat.Text =
 							lbl_tsRanks8_outcat.Text =
 
-							lbl_TotalCategory  .Text = "nul";
+							lbl_TotalCategory  .Text = "-";
 							return;
 						}
 					}
