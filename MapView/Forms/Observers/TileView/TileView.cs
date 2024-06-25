@@ -738,7 +738,8 @@ namespace MapView.Forms.Observers
 			{
 				title += " - " + GetTerrainLabel()
 					   + "  terId " + part.Id
-					   + "  setId " + part.SetId;
+					   + "  setId " + part.SetId
+					   + "  [" + part.Record.PartType + "]";
 			}
 			ObserverManager.TileView.Text = title;
 		}
@@ -755,7 +756,8 @@ namespace MapView.Forms.Observers
 			{
 				info = _file.GetTerrainLabel(part)
 					 + "  terId " + part.Id
-					 + "  setId " + part.SetId;
+					 + "  setId " + part.SetId
+					 + "  [" + part.Record.PartType + "]";
 			}
 			tsslOver.Text = info;
 			ssStatus.Refresh(); // fast update for if the Options panel is open and focused.
