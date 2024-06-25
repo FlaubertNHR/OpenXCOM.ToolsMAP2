@@ -306,7 +306,7 @@ namespace XCom
 		/// <summary>
 		/// Saves this <c>RouteNodes</c>.
 		/// </summary>
-		/// <returns>true on success</returns>
+		/// <returns><c>true</c> on success</returns>
 		internal bool SaveRoutes()
 		{
 			return WriteNodes(PfeRoutes);
