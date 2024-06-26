@@ -28,6 +28,12 @@ namespace MapView.Forms.Observers
 
 		#region Fields
 		private MapFile _file;
+
+		/// <summary>
+		/// <c>true</c> if this <c>TopView</c> is in
+		/// <c><see cref="TopRouteViewForm"/></c>.
+		/// </summary>
+		internal bool isToproute;
 		#endregion Fields
 
 
@@ -402,8 +408,26 @@ namespace MapView.Forms.Observers
 			if (_file != null)
 				_file.LevelSelected -= OnLevelSelectedObserver;
 
+			string title;
 			if ((_file = file) != null)
+			{
 				_file.LevelSelected += OnLevelSelectedObserver;
+
+				string pfe = file.Descriptor.GetMapfilePath();
+				if (pfe == null) pfe = "error";
+				title = " - " + pfe;
+			}
+			else
+				title = String.Empty;
+
+			if (!isToproute)
+			{
+				ObserverManager.TopView.Text = Globals.TITLE_t + title;
+			}
+			else if (ObserverManager.TopRouteView.GetSelectedTabpage() == TopRouteViewForm.TAB_TOP)
+			{
+				ObserverManager.TopRouteView.Text = Globals.TITLE_tr + title;
+			}
 		}
 
 		/// <summary>

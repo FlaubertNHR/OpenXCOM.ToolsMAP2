@@ -28,12 +28,12 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// The index of TopView in <c><see cref="tabControl"/></c>.
 		/// </summary>
-		private const int TAB_TOP = 0;
+		internal const int TAB_TOP = 0;
 
 		/// <summary>
 		/// The index of RouteView in <c><see cref="tabControl"/></c>.
 		/// </summary>
-		private const int TAB_ROT = 1;
+		internal const int TAB_ROT = 1;
 		#endregion Fields (static)
 
 
@@ -63,16 +63,17 @@ namespace MapView.Forms.Observers
 			tpBorder.TabPageBorder_init();
 
 			ControlTop = new TopView();
-			ControlTop.Name     = "TopViewControl";
-			ControlTop.Dock     = DockStyle.Fill;
-			ControlTop.TabIndex = 0;
+			ControlTop.Name       = "TopViewControl";
+			ControlTop.Dock       = DockStyle.Fill;
+			ControlTop.TabIndex   = 0;
+			ControlTop.isToproute = true;
 			tp_Top.Controls.Add(ControlTop);
 
 			ControlRoute = new RouteView();
 			ControlRoute.Name       = "RouteViewControl";
 			ControlRoute.Dock       = DockStyle.Fill;
 			ControlRoute.TabIndex   = 0;
-			ControlRoute.isToproute = true; // TODO: that all over <-
+			ControlRoute.isToproute = true;
 			tp_Route.Controls.Add(ControlRoute);
 		}
 		#endregion cTor
@@ -326,7 +327,8 @@ namespace MapView.Forms.Observers
 		#region Events
 		/// <summary>
 		/// Tracks the selected page in
-		/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>.
+		/// <c><see cref="MainViewF.Optionables">MainViewF.Optionables</see></c>
+		/// and prints the Mapfile or Routefile path on the titlebar.
 		/// </summary>
 		/// <param name="sender"><c><see cref="tabControl"/></c></param>
 		/// <param name="e"></param>
@@ -339,6 +341,27 @@ namespace MapView.Forms.Observers
 				if (MainViewF._foptions != null)
 					MainViewF._foptions.propertyGrid.Refresh(); // yes refresh the grid even if it's hidden.
 			}
+
+
+			string title;
+			if (MainViewF.that.MapFile != null)
+			{
+				if (tabControl.SelectedIndex == TAB_ROT)
+				{
+					// note: 'MapFile' always has a valid 'Routes' I believe
+					title = " - " + RouteNodes.PfeRoutes;
+				}
+				else // TAB_TOP
+				{
+					string pfe = MainViewF.that.MapFile.Descriptor.GetMapfilePath();
+					if (pfe == null) pfe = "error";
+					title = " - " + pfe;
+				}
+			}
+			else
+				title = String.Empty;
+
+			Text = Globals.TITLE_tr + title;
 		}
 		#endregion Events
 
@@ -353,6 +376,15 @@ namespace MapView.Forms.Observers
 		internal void SelectTabpage(int page)
 		{
 			tabControl.SelectedIndex = page;
+		}
+
+		/// <summary>
+		/// Gets the id of the currently selected tabpage.
+		/// </summary>
+		/// <returns></returns>
+		internal int GetSelectedTabpage()
+		{
+			return tabControl.SelectedIndex;
 		}
 		#endregion Methods
 	}

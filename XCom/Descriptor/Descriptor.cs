@@ -137,15 +137,15 @@ namespace XCom
 		/// Gets the fullpath to the Mapfile for this <c>Descriptor</c>.
 		/// </summary>
 		/// <returns>the path to the Mapfile else <c>null</c></returns>
-		internal string GetMapfilePath()
+		public string GetMapfilePath()
 		{
 			if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
 			{
-				string path = Path.Combine(Basepath,     GlobalsXC.MapsDir);
-					   path = Path.Combine(path, Label + GlobalsXC.MapExt);
+				string pfe = Path.Combine(Basepath, GlobalsXC.MapsDir);
+					   pfe = Path.Combine(pfe, Label + GlobalsXC.MapExt);
 
-				if (File.Exists(path))
-					return path;
+				if (File.Exists(pfe))
+					return pfe;
 			}
 			return null;
 		}

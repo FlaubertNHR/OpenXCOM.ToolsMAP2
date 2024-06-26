@@ -330,6 +330,7 @@ namespace MapView.Forms.Observers
 			_ogIds.Clear();
 			EnableOgButton(false);
 
+			string title;
 			if ((_file = file) != null)
 			{
 				_file.LocationSelected += OnLocationSelectedObserver;
@@ -404,14 +405,27 @@ namespace MapView.Forms.Observers
 
 				bu_Tallyho.Enabled = true;
 				gb_NoderankColors.Visible = true;
+
+				title = " - " + RouteNodes.PfeRoutes;
 			}
 			else
 			{
 				bu_Tallyho.Enabled = false;
 				gb_NoderankColors.Visible = false;
+
+				title = String.Empty;
 			}
 
 			tsb_x2.Checked = false;
+
+			if (!isToproute)
+			{
+				ObserverManager.RouteView.Text = Globals.TITLE_r + title;
+			}
+			else if (ObserverManager.TopRouteView.GetSelectedTabpage() == TopRouteViewForm.TAB_ROT)
+			{
+				ObserverManager.TopRouteView.Text = Globals.TITLE_tr + title;
+			}
 
 			RouteControl.SetMapFile(_file);
 		}

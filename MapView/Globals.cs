@@ -12,6 +12,10 @@ namespace MapView
 	internal static class Globals
 	{
 		#region Fields (static)
+		internal const string TITLE_t  = "TopView";
+		internal const string TITLE_r  = "RouteView";
+		internal const string TITLE_tr = "Top/Route View";
+
 		internal const float ScaleMinimum = 0.250f;
 		internal const float ScaleMaximum = 3.000f;
 		internal const float ScaleDelta   = 0.125f;

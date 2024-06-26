@@ -68,7 +68,7 @@ namespace MapView.Forms.Observers
 			this.Name = "TopRouteViewForm";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "Top/Route Views";
+			this.Text = "Top/Route View";
 			this.tabControl.ResumeLayout(false);
 			this.ResumeLayout(false);
 
