@@ -255,10 +255,8 @@ namespace XCom
 				RouteNodes routes,
 				bool floorsvisible)
 		{
-			string dir = Path.Combine(descriptor.Basepath, GlobalsXC.MapsDir);
-			string pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
-
-			if (LoadMapfile(pfe, parts))
+			string pfe = descriptor.GetMapfilePath();
+			if (pfe != null && LoadMapfile(pfe, parts)) // safety. 'pfe' shall be valid here.
 			{
 				_pfe = pfe;
 
