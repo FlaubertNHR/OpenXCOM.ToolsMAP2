@@ -151,6 +151,8 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// cTor.
 		/// </summary>
+		/// <remarks>There are 2 <c>RouteControls</c> - one in TopView and
+		/// another in TopRouteView(Route).</remarks>
 		internal RouteControl()
 		{
 			Dock = DockStyle.Fill;
