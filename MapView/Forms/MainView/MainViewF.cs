@@ -1137,7 +1137,7 @@ namespace MapView
 						return true;
 				}
 			}
-			else if (_file != null)
+			else if (MapFile != null)
 			{
 				switch (keyData)
 				{
