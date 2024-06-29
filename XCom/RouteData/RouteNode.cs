@@ -200,7 +200,9 @@ namespace XCom
 		/// <c>MainViewOptionables.Base1_z</c> before calling this funct.
 		/// <br/><br/>
 		/// This function inverts the z-level for readability (which is the
-		/// policy in Mapview2).</remarks>
+		/// policy in Mapview2).
+		/// <br/><br/>
+		/// See also: <c>MapView.Globals.GetLocationString()</c></remarks>
 		internal string GetLocationString(int levels)
 		{
 			byte c = Col;				// base0

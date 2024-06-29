@@ -86,11 +86,8 @@ namespace MapView
 			:
 				IComparable<T>
 		{
-			if (val.CompareTo(min) < 0)
-				return min;
-
-			if (val.CompareTo(max) > 0)
-				return max;
+			if (val.CompareTo(min) < 0) return min;
+			if (val.CompareTo(max) > 0) return max;
 
 			return val;
 		}
@@ -105,7 +102,9 @@ namespace MapView
 		/// <param name="levels">total levels of the current Map</param>
 		/// <returns>the given location as a string</returns>
 		/// <remarks>This function inverts the z-level for readability (which is
-		/// the policy in Mapview2).</remarks>
+		/// the policy in Mapview2).
+		/// <br/><br/>
+		/// See also: <c><see cref="RouteNode"/>.GetLocationString()</c></remarks>
 		internal static string GetLocationString(
 				int c, int r, int l,
 				int levels)
@@ -118,7 +117,6 @@ namespace MapView
 			if (MainViewF.Optionables.Base1_z)  { ++l; }
 
 			return "c " + c + "  r " + r + "  L " + l;
-
 		}
 		#endregion Methods (static)
 	}
