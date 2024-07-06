@@ -356,7 +356,7 @@ namespace MapView.Forms.Observers
 		/// <returns><c>true</c> if <c><see cref="_quadrant"/></c> is a legal
 		/// <c><see cref="PartType"/></c></returns>
 		/// <remarks>Helper for
-		/// <c><see cref="OnMouseDown()">OnMouseDown().</see></c></remarks>
+		/// <c><see cref="OnMouseDown()">OnMouseDown()</see></c>.</remarks>
 		private static bool isQuadrantLegit(bool excludePart = false)
 		{
 			return _quadrant == PartType.Floor

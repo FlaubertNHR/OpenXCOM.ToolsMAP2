@@ -127,7 +127,7 @@ namespace MapView.Forms.MainView
 		#region Update UI (static)
 		/// <summary>
 		/// Invalidates the <c><see cref="TopControl">TopControls</see></c> in
-		/// <c>TopView</c> and <c>TopRouteView(Top)</c>.
+		/// TopView and TopRouteView(Top).
 		/// </summary>
 		internal static void InvalidateTopControls()
 		{
@@ -137,8 +137,8 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Invalidates the
-		/// <c><see cref="QuadrantControl">QuadrantControls</see></c>
-		/// in <c>TopView</c> and <c>TopRouteView(Top)</c>.
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c> in TopView
+		/// and TopRouteView(Top).
 		/// </summary>
 		internal static void InvalidateQuadrantControls()
 		{
@@ -148,8 +148,8 @@ namespace MapView.Forms.MainView
 
 		/// <summary>
 		/// Refreshes the
-		/// <c><see cref="QuadrantControl">QuadrantControls</see></c>
-		/// in <c>TopView</c> and <c>TopRouteView(Top)</c>.
+		/// <c><see cref="QuadrantControl">QuadrantControls</see></c> in TopView
+		/// and TopRouteView(Top).
 		/// </summary>
 		internal static void RefreshQuadrantControls()
 		{

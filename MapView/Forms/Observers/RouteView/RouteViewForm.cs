@@ -9,7 +9,7 @@ using MapView.Forms.MainView;
 namespace MapView.Forms.Observers
 {
 	/// <summary>
-	/// This is the form that contains <c><see cref="RouteView"/></c>.
+	/// This is the <c>Form</c> that contains <c><see cref="RouteView"/></c>.
 	/// </summary>
 	/// <remarks>This is instantiated by
 	/// <c><see cref="ObserverManager.CreateObservers">ObserverManager.CreateObservers</see></c>
@@ -49,7 +49,7 @@ namespace MapView.Forms.Observers
 
 		#region Events (override)
 		/// <summary>
-		/// Sets up the link-connector when this form is shown.
+		/// Sets up the link-connector when this <c>Form</c> is shown.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnShown(EventArgs e)
@@ -58,8 +58,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Fires when the form is activated. Maintains the position of this
-		/// form in the z-order List.
+		/// Fires when this <c>Form</c> is activated. Maintains the position of
+		/// this <c>Form</c> in the z-order List.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnActivated(EventArgs e)
@@ -69,8 +69,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles a so-called command-key at this <c>Form</c> level. Stops
-		/// keys that shall be used for navigating the tiles from doing anything
+		/// Handles a so-called command-key at the <c>Form</c> level. Stops keys
+		/// that shall be used for navigating the tiles from doing anything
 		/// stupid instead.
 		/// </summary>
 		/// <param name="msg"></param>
@@ -100,7 +100,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles <c>KeyDown</c> events at this <c>Form</c> level.
+		/// Handles <c>KeyDown</c> events at the <c>Form</c> level.
 		/// <list type="bullet">
 		/// <item><c>[Esc]</c> - focuses the panel</item>
 		/// <item><c>[Ctrl+o]</c> - opens/closes Options</item>

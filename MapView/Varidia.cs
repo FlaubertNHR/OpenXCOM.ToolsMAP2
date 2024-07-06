@@ -82,6 +82,10 @@ namespace MapView
 
 
 		#region Methods (override)
+		/// <summary>
+		/// Overrides <c>Object.ToString()</c>.
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return _key + ":" + _val;
