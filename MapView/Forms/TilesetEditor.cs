@@ -1767,6 +1767,8 @@ namespace MapView
 			Basepath = terrain.Item2;
 		}
 
+
+		#region Methods (override)
 		/// <summary>
 		/// Required for
 		/// <list type="bullet">
@@ -1781,6 +1783,7 @@ namespace MapView
 		{
 			return Terrain;
 		}
+		#endregion Methods (override)
 	}
 
 

@@ -649,6 +649,8 @@ namespace MapView
 			Order     = order;
 		}
 
+
+		#region Methods (override)
 		/// <summary>
 		/// Required for <c>lb_allocated.DisplayMember</c> to work.
 		/// </summary>
@@ -657,5 +659,6 @@ namespace MapView
 		{
 			return Terrain;
 		}
+		#endregion Methods (override)
 	}
 }

@@ -373,16 +373,6 @@ namespace XCom
 		}
 
 
-//		/// <summary>
-//		/// Merely a utility function for debug.
-//		/// </summary>
-//		/// <returns></returns>
-//		public override string ToString()
-//		{
-//			return "Tilepart _terId= " + _terId + " _setId= " + _setId;
-//		}
-
-
 		/// <summary>
 		/// When a <c><see cref="MapFile"/></c> contains
 		/// <c><see cref="MapFile.Parts"/></c> with ids that are beyond the
@@ -470,6 +460,16 @@ namespace XCom
 		#endregion Methods (static)
 
 
+		#region Methods (override)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return "Tilepart _terId= " + _terId + " _setId= " + _setId;
+		}
+
 /*		/// <summary>
 		/// 
 		/// </summary>
@@ -480,9 +480,9 @@ namespace XCom
 			for (int i = 0; i != CrippledSprites.Sprites.Count; ++i)
 				cripples += i + ((CrippledSprites.Sprites[i] != null) ? ":true " : ":false ");
 
-			return "Tilepart terid= " + _terId + " id= " + Id + " setid= " + SetId
+			return "Tilepart _terId= " + _terId + " id= " + Id + " _setId= " + SetId
 				+ Environment.NewLine
-				+ ". quadslot= " + Record.PartType
+				+ ". partslot= " + Record.PartType
 				+ Environment.NewLine
 				+ ". CrippledSprites valid= " + cripples
 				+ Environment.NewLine
@@ -496,5 +496,6 @@ namespace XCom
 					+ (_sprites[6].Sprite != null) + ","
 					+ (_sprites[7].Sprite != null);
 		} */
+		#endregion Methods (override)
 	}
 }
