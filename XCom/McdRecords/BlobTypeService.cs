@@ -69,7 +69,7 @@ namespace XCom
 		/// <summary>
 		/// The length of a LoFT-layers <c>List</c>.
 		/// </summary>
-		public const int LoftlistLength = 12;
+		private const int LoftlistLength = 12;
 
 
 		// These are (arrays of) LoFT entries in the stock UFO/TFTD LOFTEMPS.DAT

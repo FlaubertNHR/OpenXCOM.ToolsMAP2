@@ -189,7 +189,7 @@ namespace XCom
 
 				// nw corner
 				case 81:
-				case 39: case  40: case  41: case 50: case 51: case 52:
+				case 39: case  40: case  41: case  50: case 51: case 52:
 				case 90: case 101: case 102: case 103:
 					path.AddLine(
 								x,             y,
@@ -242,6 +242,7 @@ namespace XCom
 //			else //if (BlobTypeService._loftlist.Count != 0)	// is called by McdView blob-preview
 //				blob = BlobTypeService.GetBlobType(BlobTypeService._loftlist);
 //			else return; // blob = Blob.Crippled				// -> crippled parts shall NOT get this far
+			//DSShared.Logfile.Log(". blob= " + blob);
 
 			IList<byte> loftlist;
 			if (part.Record.LoftList != null)					// is called by TopControl or RouteControl panel
@@ -249,7 +250,6 @@ namespace XCom
 			else //if (BlobTypeService._loftlist.Count != 0)	// is called by McdView blob-preview
 				loftlist = BlobTypeService._loftlist;			// <- that shall be valid in McdView
 
-			//DSShared.Logfile.Log(". blob= " + blob);
 			switch (BlobTypeService.GetBlobType(loftlist))
 			{
 				// floor ->
@@ -460,20 +460,17 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// 
+		/// Gets a <c>Pen</c> with which to draw a door-line.
 		/// </summary>
 		/// <param name="part"></param>
 		/// <param name="tool"></param>
 		/// <returns></returns>
 		private static Pen GetDoorPen(Tilepart part, BlobColorTool tool)
 		{
-			Pen pen;
-			if (part.Record.LoftList != null)	// TopControl or RouteControl panels
-				pen = tool.Pen;
-			else								// for McdView blob-preview
-				pen = tool.PenDoor;
+			if (part.Record.LoftList != null)
+				return tool.Pen; // TopControl or RouteControl panels
 
-			return pen;
+			return tool.PenDoor; // for McdView blob-preview
 		}
 
 
