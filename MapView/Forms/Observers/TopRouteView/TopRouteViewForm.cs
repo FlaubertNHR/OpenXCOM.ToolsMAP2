@@ -301,7 +301,8 @@ namespace MapView.Forms.Observers
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				TopView.ClosePartslotTestDialog();
+				if (!ObserverManager.TopView.Visible)
+					TopView.ClosePartslotTestDialog();
 
 				if (RouteView.SpawnInfo != null)
 					RouteView.SpawnInfo.Close();

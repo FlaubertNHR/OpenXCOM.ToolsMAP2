@@ -193,7 +193,8 @@ namespace MapView.Forms.Observers
 		{
 			if (!RegistryInfo.FastClose(e.CloseReason))
 			{
-				TopView.ClosePartslotTestDialog();
+				if (!ObserverManager.TopRouteView.Visible)
+					TopView.ClosePartslotTestDialog();
 
 				if (MainViewF.Quit)
 				{
