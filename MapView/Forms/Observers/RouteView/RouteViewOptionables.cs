@@ -917,8 +917,8 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 			options.CreateOptionDefault(str_DescriptionHeight,        def_DescriptionHeight,        changer1);
 
 
-			ObserverManager.RouteView   .Control     .init_RankHighlights();
-			ObserverManager.TopRouteView.ControlRoute.init_RankHighlights();
+			ObserverManager.RouteView   .Control     .init_RankHighlightPanels();
+			ObserverManager.TopRouteView.ControlRoute.init_RankHighlightPanels();
 		}
 		#endregion Methods
 
@@ -1025,6 +1025,7 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 
 				case str_ShowOverlay:       ShowOverlay       =  (bool)val; break;
 				case str_ShowPriorityBars:  ShowPriorityBars  =  (bool)val; break;
+
 				case str_ReduceDraws:       ReduceDraws       =  (bool)val; return;
 				case str_StartConnector:    StartConnector    =   (int)val; return;
 			}
@@ -1044,26 +1045,31 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.ChangeBruColor()");
 
-			var color = (Color)val;
+			bool highlights = false;
 
 			switch (key)
 			{
 				case str_ContentColor: // do not apply alpha to ContentColor
-					RouteControl.RouteBrushes[str_ContentColor].Color = color;
+				{
+					SolidBrush brush = RouteControl.RouteBrushes[key];
+					brush.Color = (Color)val;
 	
 					RouteControl.ToolContent.Dispose();
 					RouteControl.ToolContent = new BlobColorTool(
-															RouteControl.RouteBrushes[str_ContentColor],
+															brush,
 															BlobDrawCoordinator.DefaultLinewidthContent);
 
 					if (MainViewF.that._fcolors != null)
 						MainViewF.that._fcolors.UpdateRouteViewBlobColors();
 					break;
+				}
+
+				case str_NodeColorGhosted:
+					highlights = true;
+					goto case str_NodeSelectedColor;
 
 				case str_NodeSelectedColor:
-				case str_NodeColorGhosted:
-					color = Color.FromArgb(NodeOpacity, color);
-					RouteControl.RouteBrushes[key].Color = color;
+					RouteControl.RouteBrushes[key].Color = Color.FromArgb(NodeOpacity, (Color)val);
 					break;
 
 				case str_NodeColor0:
@@ -1075,16 +1081,21 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 				case str_NodeColor6:
 				case str_NodeColor7:
 				case str_NodeColor8:
+					highlights = true;
+					goto case str_NodeColorInvalid;
+
 				case str_NodeColorInvalid:
-					color = Color.FromArgb(NodeOpacity, color);
-					RouteControl.RouteBrushes[key].Color = color;
+					RouteControl.RouteBrushes[key].Color = Color.FromArgb(NodeOpacity, (Color)val);
 
 					RouteView.SetSelectedInfoColor();
 					break;
 			}
 
-			ObserverManager.RouteView   .Control     .init_RankHighlights();
-			ObserverManager.TopRouteView.ControlRoute.init_RankHighlights();
+			if (highlights)
+			{
+				ObserverManager.RouteView   .Control.     update_RankHighlightPanel(key);
+				ObserverManager.TopRouteView.ControlRoute.update_RankHighlightPanel(key);
+			}
 		}
 
 		/// <summary>
@@ -1095,44 +1106,23 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 		{
 			//DSShared.Logfile.Log("RouteViewOptionables.ChangeBruOpaci()");
 
-			Color color = Color.FromArgb((int)val, NodeColor0);
-			RouteControl.RouteBrushes[str_NodeColor0].Color = color;
+			int alpha = (int)val;
 
-			color = Color.FromArgb((int)val, NodeColor1);
-			RouteControl.RouteBrushes[str_NodeColor1].Color = color;
+			RouteControl.RouteBrushes[str_NodeColor0]       .Color = Color.FromArgb(alpha, NodeColor0);
+			RouteControl.RouteBrushes[str_NodeColor1]       .Color = Color.FromArgb(alpha, NodeColor1);
+			RouteControl.RouteBrushes[str_NodeColor2]       .Color = Color.FromArgb(alpha, NodeColor2);
+			RouteControl.RouteBrushes[str_NodeColor3]       .Color = Color.FromArgb(alpha, NodeColor3);
+			RouteControl.RouteBrushes[str_NodeColor4]       .Color = Color.FromArgb(alpha, NodeColor4);
+			RouteControl.RouteBrushes[str_NodeColor5]       .Color = Color.FromArgb(alpha, NodeColor5);
+			RouteControl.RouteBrushes[str_NodeColor6]       .Color = Color.FromArgb(alpha, NodeColor6);
+			RouteControl.RouteBrushes[str_NodeColor7]       .Color = Color.FromArgb(alpha, NodeColor7);
+			RouteControl.RouteBrushes[str_NodeColor8]       .Color = Color.FromArgb(alpha, NodeColor8);
+			RouteControl.RouteBrushes[str_NodeColorGhosted] .Color = Color.FromArgb(alpha, NodeColorGhosted);
+			RouteControl.RouteBrushes[str_NodeColorInvalid] .Color = Color.FromArgb(alpha, NodeColorInvalid);
+			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = Color.FromArgb(alpha, NodeSelectedColor);
 
-			color = Color.FromArgb((int)val, NodeColor2);
-			RouteControl.RouteBrushes[str_NodeColor2].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColor3);
-			RouteControl.RouteBrushes[str_NodeColor3].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColor4);
-			RouteControl.RouteBrushes[str_NodeColor4].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColor5);
-			RouteControl.RouteBrushes[str_NodeColor5].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColor6);
-			RouteControl.RouteBrushes[str_NodeColor6].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColor7);
-			RouteControl.RouteBrushes[str_NodeColor7].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColor8);
-			RouteControl.RouteBrushes[str_NodeColor8].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColorGhosted);
-			RouteControl.RouteBrushes[str_NodeColorGhosted].Color = color;
-
-			color = Color.FromArgb((int)val, NodeColorInvalid);
-			RouteControl.RouteBrushes[str_NodeColorInvalid].Color = color;
-
-			color = Color.FromArgb((int)val, NodeSelectedColor);
-			RouteControl.RouteBrushes[str_NodeSelectedColor].Color = color;
-
-//			ObserverManager.RouteView   .Control     .init_RankHighlights();	// doesn't appear to change transparency of backcolors in the
-//			ObserverManager.TopRouteView.ControlRoute.init_RankHighlights();	// RouteView groupbox ... backcolors are always solid I guess.
+//			ObserverManager.RouteView   .Control     .update_RankHighlightPanel(); // doesn't appear to change transparency of backcolors in the
+//			ObserverManager.TopRouteView.ControlRoute.update_RankHighlightPanel(); // RouteView groupbox ... backcolors are always solid I guess.
 		}
 
 
@@ -1183,7 +1173,7 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 
 			RouteControl.RoutePens[key = WidthToColor(key)].Width = (int)val;
 
-			if (key == str_WallColor) // doh!
+			if (key == str_WallColor)
 			{
 				RouteControl.ToolWall.Dispose();
 				RouteControl.ToolWall = new BlobColorTool(RouteControl.RoutePens[key]);

@@ -2592,172 +2592,131 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets the noderank colors in <c><see cref="gb_NoderankColors"/></c>.
+		/// Sets the noderank colors in <c><see cref="gb_NoderankColors"/></c>
+		/// after default options are set in
+		/// <c><see cref="RouteViewOptionables"/>.LoadDefaults()</c>. Does not
+		/// ghost the color-panels.
 		/// </summary>
-		/// <remarks>Called only by <c><see cref="RouteViewOptionables"/></c>
-		/// for init or option-changed. Does not ghost the color-panels.</remarks>
-		internal void init_RankHighlights()
+		/// <remarks>As with other Option initializations this is required only
+		/// when 'settings/MapOptions.cfg' does not exist.</remarks>
+		internal void init_RankHighlightPanels()
 		{
-			if ((NoderankHighlights & NoderankColorbit0) != 0)
-				pa_ColorRank0.BackColor = Optionables.NodeColor0;
-
-			if ((NoderankHighlights & NoderankColorbit1) != 0)
-				pa_ColorRank1.BackColor = Optionables.NodeColor1;
-
-			if ((NoderankHighlights & NoderankColorbit2) != 0)
-				pa_ColorRank2.BackColor = Optionables.NodeColor2;
-
-			if ((NoderankHighlights & NoderankColorbit3) != 0)
-				pa_ColorRank3.BackColor = Optionables.NodeColor3;
-
-			if ((NoderankHighlights & NoderankColorbit4) != 0)
-				pa_ColorRank4.BackColor = Optionables.NodeColor4;
-
-			if ((NoderankHighlights & NoderankColorbit5) != 0)
-				pa_ColorRank5.BackColor = Optionables.NodeColor5;
-
-			if ((NoderankHighlights & NoderankColorbit6) != 0)
-				pa_ColorRank6.BackColor = Optionables.NodeColor6;
-
-			if ((NoderankHighlights & NoderankColorbit7) != 0)
-				pa_ColorRank7.BackColor = Optionables.NodeColor7;
-
-			if ((NoderankHighlights & NoderankColorbit8) != 0)
-				pa_ColorRank8.BackColor = Optionables.NodeColor8;
+			pa_ColorRank0.BackColor = Optionables.NodeColor0;
+			pa_ColorRank1.BackColor = Optionables.NodeColor1;
+			pa_ColorRank2.BackColor = Optionables.NodeColor2;
+			pa_ColorRank3.BackColor = Optionables.NodeColor3;
+			pa_ColorRank4.BackColor = Optionables.NodeColor4;
+			pa_ColorRank5.BackColor = Optionables.NodeColor5;
+			pa_ColorRank6.BackColor = Optionables.NodeColor6;
+			pa_ColorRank7.BackColor = Optionables.NodeColor7;
+			pa_ColorRank8.BackColor = Optionables.NodeColor8;
 		}
 
 		/// <summary>
-		/// Sorts out the noderank-its and -colorpanels based on the current
-		/// value of <c><see cref="NoderankHighlights"/></c>.
+		/// Updates the noderank colors in
+		/// <c><see cref="gb_NoderankColors"/></c> when a color changes in
+		/// <c><see cref="RouteViewOptionables"/>.ChangeBruColor()</c>.
 		/// </summary>
-		private void SetRankHighlights()
+		/// <param name="key">a NodeRank's color-key</param>
+		internal void update_RankHighlightPanel(string key)
 		{
-			if (NoderankHighlights == NoderankColorbits)
+			switch (key)
 			{
-				tsmi_Noderank0.Checked = tsmi_Noderank1.Checked =
-				tsmi_Noderank2.Checked = tsmi_Noderank3.Checked =
-				tsmi_Noderank4.Checked = tsmi_Noderank5.Checked =
-				tsmi_Noderank6.Checked = tsmi_Noderank7.Checked =
-				tsmi_Noderank8.Checked = false;
+				case RouteViewOptionables.str_NodeColorGhosted:
+					if ((NoderankHighlights & NoderankColorbit0) == 0)
+						pa_ColorRank0.BackColor = Optionables.NodeColorGhosted;
 
-				pa_ColorRank0.BackColor = Optionables.NodeColor0;
-				pa_ColorRank1.BackColor = Optionables.NodeColor1;
-				pa_ColorRank2.BackColor = Optionables.NodeColor2;
-				pa_ColorRank3.BackColor = Optionables.NodeColor3;
-				pa_ColorRank4.BackColor = Optionables.NodeColor4;
-				pa_ColorRank5.BackColor = Optionables.NodeColor5;
-				pa_ColorRank6.BackColor = Optionables.NodeColor6;
-				pa_ColorRank7.BackColor = Optionables.NodeColor7;
-				pa_ColorRank8.BackColor = Optionables.NodeColor8;
+					if ((NoderankHighlights & NoderankColorbit1) == 0)
+						pa_ColorRank1.BackColor = Optionables.NodeColorGhosted;
 
-				tsmi_NoderankClear.Enabled = false;
+					if ((NoderankHighlights & NoderankColorbit2) == 0)
+						pa_ColorRank2.BackColor = Optionables.NodeColorGhosted;
+
+					if ((NoderankHighlights & NoderankColorbit3) == 0)
+						pa_ColorRank3.BackColor = Optionables.NodeColorGhosted;
+
+					if ((NoderankHighlights & NoderankColorbit4) == 0)
+						pa_ColorRank4.BackColor = Optionables.NodeColorGhosted;
+
+					if ((NoderankHighlights & NoderankColorbit5) == 0)
+						pa_ColorRank5.BackColor = Optionables.NodeColorGhosted;
+
+					if ((NoderankHighlights & NoderankColorbit6) == 0)
+						pa_ColorRank6.BackColor = Optionables.NodeColorGhosted;
+
+					if ((NoderankHighlights & NoderankColorbit7) == 0)
+						pa_ColorRank7.BackColor = Optionables.NodeColorGhosted;
+
+					if ((NoderankHighlights & NoderankColorbit8) == 0)
+						pa_ColorRank8.BackColor = Optionables.NodeColorGhosted;
+					break;
+
+				case RouteViewOptionables.str_NodeColor0:
+					if ((NoderankHighlights & NoderankColorbit0) != 0)
+						pa_ColorRank0.BackColor = Optionables.NodeColor0;
+					break;
+
+				case RouteViewOptionables.str_NodeColor1:
+					if ((NoderankHighlights & NoderankColorbit1) != 0)
+						pa_ColorRank1.BackColor = Optionables.NodeColor1;
+					break;
+
+				case RouteViewOptionables.str_NodeColor2:
+					if ((NoderankHighlights & NoderankColorbit2) != 0)
+						pa_ColorRank2.BackColor = Optionables.NodeColor2;
+					break;
+
+				case RouteViewOptionables.str_NodeColor3:
+					if ((NoderankHighlights & NoderankColorbit3) != 0)
+						pa_ColorRank3.BackColor = Optionables.NodeColor3;
+					break;
+
+				case RouteViewOptionables.str_NodeColor4:
+					if ((NoderankHighlights & NoderankColorbit4) != 0)
+						pa_ColorRank4.BackColor = Optionables.NodeColor4;
+					break;
+
+				case RouteViewOptionables.str_NodeColor5:
+					if ((NoderankHighlights & NoderankColorbit5) != 0)
+						pa_ColorRank5.BackColor = Optionables.NodeColor5;
+					break;
+
+				case RouteViewOptionables.str_NodeColor6:
+					if ((NoderankHighlights & NoderankColorbit6) != 0)
+						pa_ColorRank6.BackColor = Optionables.NodeColor6;
+					break;
+
+				case RouteViewOptionables.str_NodeColor7:
+					if ((NoderankHighlights & NoderankColorbit7) != 0)
+						pa_ColorRank7.BackColor = Optionables.NodeColor7;
+					break;
+
+				case RouteViewOptionables.str_NodeColor8:
+					if ((NoderankHighlights & NoderankColorbit8) != 0)
+						pa_ColorRank8.BackColor = Optionables.NodeColor8;
+					break;
 			}
-			else
-			{
-				tsmi_NoderankClear.Enabled = true;
+		}
 
-				if ((NoderankHighlights & NoderankColorbit0) != 0)
-				{
-					tsmi_Noderank0.Checked = true;
-					pa_ColorRank0.BackColor = Optionables.NodeColor0;
-				}
-				else
-				{
-					tsmi_Noderank0.Checked = false;
-					pa_ColorRank0.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit1) != 0)
-				{
-					tsmi_Noderank1.Checked = true;
-					pa_ColorRank1.BackColor = Optionables.NodeColor1;
-				}
-				else
-				{
-					tsmi_Noderank1.Checked = false;
-					pa_ColorRank1.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit2) != 0)
-				{
-					tsmi_Noderank2.Checked = true;
-					pa_ColorRank2.BackColor = Optionables.NodeColor2;
-				}
-				else
-				{
-					tsmi_Noderank2.Checked = false;
-					pa_ColorRank2.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit3) != 0)
-				{
-					tsmi_Noderank3.Checked = true;
-					pa_ColorRank3.BackColor = Optionables.NodeColor3;
-				}
-				else
-				{
-					tsmi_Noderank3.Checked = false;
-					pa_ColorRank3.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit4) != 0)
-				{
-					tsmi_Noderank4.Checked = true;
-					pa_ColorRank4.BackColor = Optionables.NodeColor4;
-				}
-				else
-				{
-					tsmi_Noderank4.Checked = false;
-					pa_ColorRank4.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit5) != 0)
-				{
-					tsmi_Noderank5.Checked = true;
-					pa_ColorRank5.BackColor = Optionables.NodeColor5;
-				}
-				else
-				{
-					tsmi_Noderank5.Checked = false;
-					pa_ColorRank5.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit6) != 0)
-				{
-					tsmi_Noderank6.Checked = true;
-					pa_ColorRank6.BackColor = Optionables.NodeColor6;
-				}
-				else
-				{
-					tsmi_Noderank6.Checked = false;
-					pa_ColorRank6.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit7) != 0)
-				{
-					tsmi_Noderank7.Checked = true;
-					pa_ColorRank7.BackColor = Optionables.NodeColor7;
-				}
-				else
-				{
-					tsmi_Noderank7.Checked = false;
-					pa_ColorRank7.BackColor = Optionables.NodeColorGhosted;
-				}
-
-				if ((NoderankHighlights & NoderankColorbit8) != 0)
-				{
-					tsmi_Noderank8.Checked = true;
-					pa_ColorRank8.BackColor = Optionables.NodeColor8;
-				}
-				else
-				{
-					tsmi_Noderank8.Checked = false;
-					pa_ColorRank8.BackColor = Optionables.NodeColorGhosted;
-				}
-			}
-
-			InvalidatePanels();
-			RouteControl.Select();
+		/// <summary>
+		/// Handles noderank-color its under the Highlights menu.
+		/// </summary>
+		/// <param name="sender">
+		/// <list type="bullet">
+		/// <item><c><see cref="tsmi_Noderank0"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank1"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank2"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank3"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank4"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank5"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank6"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank7"/></c></item>
+		/// <item><c><see cref="tsmi_Noderank8"/></c></item>
+		/// </list></param>
+		/// <param name="e"></param>
+		private void OnRankHighlightClick_it(object sender, EventArgs e)
+		{
+			OnRankHighlightClick_pa(sender, new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0));
 		}
 
 		/// <summary>
@@ -2881,27 +2840,6 @@ namespace MapView.Forms.Observers
 				ObserverManager.RouteView   .Control.     SetRankHighlights();
 				ObserverManager.TopRouteView.ControlRoute.SetRankHighlights();
 			}
-		}
-
-		/// <summary>
-		/// Handles noderank-color its under the Highlights menu.
-		/// </summary>
-		/// <param name="sender">
-		/// <list type="bullet">
-		/// <item><c><see cref="tsmi_Noderank0"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank1"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank2"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank3"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank4"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank5"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank6"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank7"/></c></item>
-		/// <item><c><see cref="tsmi_Noderank8"/></c></item>
-		/// </list></param>
-		/// <param name="e"></param>
-		private void OnRankHighlightClick_it(object sender, EventArgs e)
-		{
-			OnRankHighlightClick_pa(sender, new MouseEventArgs(MouseButtons.Left, 1, 0,0, 0));
 		}
 
 		/// <summary>
@@ -3029,6 +2967,140 @@ namespace MapView.Forms.Observers
 
 			ObserverManager.RouteView   .Control.     SetRankHighlights();
 			ObserverManager.TopRouteView.ControlRoute.SetRankHighlights();
+		}
+
+		/// <summary>
+		/// Sorts out the noderank-its and -colorpanels based on the current
+		/// value of <c><see cref="NoderankHighlights"/></c>.
+		/// </summary>
+		internal void SetRankHighlights()
+		{
+			if (NoderankHighlights == NoderankColorbits)
+			{
+				tsmi_Noderank0.Checked = tsmi_Noderank1.Checked =
+				tsmi_Noderank2.Checked = tsmi_Noderank3.Checked =
+				tsmi_Noderank4.Checked = tsmi_Noderank5.Checked =
+				tsmi_Noderank6.Checked = tsmi_Noderank7.Checked =
+				tsmi_Noderank8.Checked = false;
+
+				pa_ColorRank0.BackColor = Optionables.NodeColor0;
+				pa_ColorRank1.BackColor = Optionables.NodeColor1;
+				pa_ColorRank2.BackColor = Optionables.NodeColor2;
+				pa_ColorRank3.BackColor = Optionables.NodeColor3;
+				pa_ColorRank4.BackColor = Optionables.NodeColor4;
+				pa_ColorRank5.BackColor = Optionables.NodeColor5;
+				pa_ColorRank6.BackColor = Optionables.NodeColor6;
+				pa_ColorRank7.BackColor = Optionables.NodeColor7;
+				pa_ColorRank8.BackColor = Optionables.NodeColor8;
+
+				tsmi_NoderankClear.Enabled = false;
+			}
+			else
+			{
+				tsmi_NoderankClear.Enabled = true;
+
+				if ((NoderankHighlights & NoderankColorbit0) != 0)
+				{
+					tsmi_Noderank0.Checked = true;
+					pa_ColorRank0.BackColor = Optionables.NodeColor0;
+				}
+				else
+				{
+					tsmi_Noderank0.Checked = false;
+					pa_ColorRank0.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit1) != 0)
+				{
+					tsmi_Noderank1.Checked = true;
+					pa_ColorRank1.BackColor = Optionables.NodeColor1;
+				}
+				else
+				{
+					tsmi_Noderank1.Checked = false;
+					pa_ColorRank1.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit2) != 0)
+				{
+					tsmi_Noderank2.Checked = true;
+					pa_ColorRank2.BackColor = Optionables.NodeColor2;
+				}
+				else
+				{
+					tsmi_Noderank2.Checked = false;
+					pa_ColorRank2.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit3) != 0)
+				{
+					tsmi_Noderank3.Checked = true;
+					pa_ColorRank3.BackColor = Optionables.NodeColor3;
+				}
+				else
+				{
+					tsmi_Noderank3.Checked = false;
+					pa_ColorRank3.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit4) != 0)
+				{
+					tsmi_Noderank4.Checked = true;
+					pa_ColorRank4.BackColor = Optionables.NodeColor4;
+				}
+				else
+				{
+					tsmi_Noderank4.Checked = false;
+					pa_ColorRank4.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit5) != 0)
+				{
+					tsmi_Noderank5.Checked = true;
+					pa_ColorRank5.BackColor = Optionables.NodeColor5;
+				}
+				else
+				{
+					tsmi_Noderank5.Checked = false;
+					pa_ColorRank5.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit6) != 0)
+				{
+					tsmi_Noderank6.Checked = true;
+					pa_ColorRank6.BackColor = Optionables.NodeColor6;
+				}
+				else
+				{
+					tsmi_Noderank6.Checked = false;
+					pa_ColorRank6.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit7) != 0)
+				{
+					tsmi_Noderank7.Checked = true;
+					pa_ColorRank7.BackColor = Optionables.NodeColor7;
+				}
+				else
+				{
+					tsmi_Noderank7.Checked = false;
+					pa_ColorRank7.BackColor = Optionables.NodeColorGhosted;
+				}
+
+				if ((NoderankHighlights & NoderankColorbit8) != 0)
+				{
+					tsmi_Noderank8.Checked = true;
+					pa_ColorRank8.BackColor = Optionables.NodeColor8;
+				}
+				else
+				{
+					tsmi_Noderank8.Checked = false;
+					pa_ColorRank8.BackColor = Optionables.NodeColorGhosted;
+				}
+			}
+
+			InvalidatePanels();
+			RouteControl.Select();
 		}
 
 
@@ -3682,7 +3754,6 @@ namespace MapView.Forms.Observers
 		/// changes.
 		/// </summary>
 		/// <param name="updatenodeinfo"><c>true</c> to update node-info</param>
-		/// <remarks>Called by Options only.</remarks>
 		internal static void SetSelectedInfoColor(bool updatenodeinfo = false)
 		{
 			ObserverManager.RouteView   .Control     .la_Selected.ForeColor =
