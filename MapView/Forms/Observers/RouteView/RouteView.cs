@@ -1273,7 +1273,7 @@ namespace MapView.Forms.Observers
 					else
 						ObserverManager.TopRouteView.ControlRoute.co_Rank.SelectedIndex = co_Rank.SelectedIndex;
 
-					SetSelectedInfoColor();
+					SetSelectedForecolor();
 				}
 			}
 		}
@@ -3692,14 +3692,16 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		internal void SetFieldsForecolor()
 		{
-			gb_TileData      .ForeColor =
-			gb_NodeData      .ForeColor =
-			gb_LinkData      .ForeColor =
-			gb_NodeEditor    .ForeColor = Optionables.FieldsForecolor;
+			gb_TileData  .ForeColor =
+			gb_NodeData  .ForeColor =
+			gb_LinkData  .ForeColor =
+			gb_NodeEditor.ForeColor = Optionables.FieldsForecolor;
 
 			if (!SpawnHighlightCoordinator)
 				gb_NoderankColors.ForeColor = Optionables.FieldsForecolor;
 
+			// change the button-texts back to ControlText so that it's readable
+			// on .NET's generic button backcolor
 			Button bu;
 			foreach (var control in gb_LinkData.Controls)
 			{
@@ -3736,31 +3738,45 @@ namespace MapView.Forms.Observers
 			RouteView r  = ObserverManager.RouteView   .Control;
 			RouteView tr = ObserverManager.TopRouteView.ControlRoute;
 
+			// 1 - the Save button text
 			r .bu_Save.ForeColor =
 			tr.bu_Save.ForeColor = Optionables.FieldsForecolorHighlight;
 
+			// 2 - the Node Rank colors text
 			if (SpawnHighlightCoordinator)
 			{
 				r .gb_NoderankColors.ForeColor =
 				tr.gb_NoderankColors.ForeColor = Optionables.FieldsForecolorHighlight;
 			}
 
-			if (NodeSelected != null)
-				UpdateNodeInfo(); // TODO: update 'link out of bounds' textcolor only
+			// 3 - the texts for links out-of-bounds
+			SetLinkLabelColor();
 		}
 
 		/// <summary>
-		/// Sets the currently selected tile-info's textcolor when the Option
-		/// changes.
+		/// Sets the currently selected node-info's textcolor.
 		/// </summary>
-		/// <param name="updatenodeinfo"><c>true</c> to update node-info</param>
-		internal static void SetSelectedInfoColor(bool updatenodeinfo = false)
+		/// <remarks>Called by
+		/// <list type="bullet">
+		/// <item><c><see cref="RouteViewOptionables"/>.OnPanelColorChanged()</c><br/>
+		/// - <c><see cref="RouteViewOptionables.FieldsForecolor"/></c></item>
+		/// <item><c><see cref="RouteViewOptionables"/>.ChangeBruColor()</c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor0"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor1"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor2"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor3"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor4"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor5"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor6"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor7"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColor8"/></c><br/>
+		/// - <c><see cref="RouteViewOptionables.NodeColorInvalid"/></c></item>
+		/// <item><c><see cref="OnNodeRankSelectedIndexChanged()">OnNodeRankSelectedIndexChanged()</see></c></item>
+		/// </list></remarks>
+		internal static void SetSelectedForecolor()
 		{
 			ObserverManager.RouteView   .Control     .la_Selected.ForeColor =
 			ObserverManager.TopRouteView.ControlRoute.la_Selected.ForeColor = GetNodeColor(NodeSelected);
-
-			if (updatenodeinfo && NodeSelected != null)
-				UpdateNodeInfo(); // TODO: update link texts' textcolor only
 		}
 
 		/// <summary>
@@ -3787,6 +3803,87 @@ namespace MapView.Forms.Observers
 				}
 			}
 			return Optionables.FieldsForecolor;
+		}
+
+		/// <summary>
+		/// Checks if a <c><see cref="Link"/></c> links to an out-of-bounds
+		/// <c><see cref="RouteNode"/></c> or not and colors its respective
+		/// <c>Label</c> appropriately.
+		/// </summary>
+		internal static void SetLinkLabelColor()
+		{
+			if (NodeSelected != null)
+			{
+				RouteView r  = ObserverManager.RouteView   .Control;
+				RouteView tr = ObserverManager.TopRouteView.ControlRoute;
+
+				Link link;
+
+				for (int slot = 0; slot != RouteNode.LinkSlots; ++slot)
+				{
+					if ((link = NodeSelected[slot]).IsNodelink()
+						&& RouteCheckService.OutsideBounds(r._file.Routes[link.Destination], r._file))
+					{
+						switch (slot)
+						{
+							case 0:
+								r .la_Link1.ForeColor =
+								tr.la_Link1.ForeColor = Optionables.FieldsForecolorHighlight;
+								break;
+
+							case 1:
+								r .la_Link2.ForeColor =
+								tr.la_Link2.ForeColor = Optionables.FieldsForecolorHighlight;
+								break;
+
+							case 2:
+								r .la_Link3.ForeColor =
+								tr.la_Link3.ForeColor = Optionables.FieldsForecolorHighlight;
+								break;
+
+							case 3:
+								r .la_Link4.ForeColor =
+								tr.la_Link4.ForeColor = Optionables.FieldsForecolorHighlight;
+								break;
+
+							case 4:
+								r .la_Link5.ForeColor =
+								tr.la_Link5.ForeColor = Optionables.FieldsForecolorHighlight;
+								break;
+						}
+					}
+					else
+					{
+						switch (slot)
+						{
+							case 0:
+								r .la_Link1.ForeColor =
+								tr.la_Link1.ForeColor = Optionables.FieldsForecolor;
+								break;
+
+							case 1:
+								r .la_Link2.ForeColor =
+								tr.la_Link2.ForeColor = Optionables.FieldsForecolor;
+								break;
+
+							case 2:
+								r .la_Link3.ForeColor =
+								tr.la_Link3.ForeColor = Optionables.FieldsForecolor;
+								break;
+
+							case 3:
+								r .la_Link4.ForeColor =
+								tr.la_Link4.ForeColor = Optionables.FieldsForecolor;
+								break;
+
+							case 4:
+								r .la_Link5.ForeColor =
+								tr.la_Link5.ForeColor = Optionables.FieldsForecolor;
+								break;
+						}
+					}
+				}
+			}
 		}
 		#endregion Update UI (options)(static)
 

@@ -956,7 +956,8 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 					ObserverManager.RouteView   .Control     .SetFieldsForecolor();
 					ObserverManager.TopRouteView.ControlRoute.SetFieldsForecolor();
 
-					RouteView.SetSelectedInfoColor(true);
+					RouteView.SetSelectedForecolor();
+					RouteView.SetLinkLabelColor();
 					break;
 
 				case str_FieldsForecolorHighlight:
@@ -1087,7 +1088,7 @@ This is the color of text (1) on the Save button if data has changed (2) in Node
 				case str_NodeColorInvalid:
 					RouteControl.RouteBrushes[key].Color = Color.FromArgb(NodeOpacity, (Color)val);
 
-					RouteView.SetSelectedInfoColor();
+					RouteView.SetSelectedForecolor();
 					break;
 			}
 
