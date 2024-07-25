@@ -188,7 +188,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Repaths the selected-lozenge on the Resize event.
+		/// Repaths the selected-lozenge on the <c>Resize</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnResize(EventArgs e)
@@ -240,7 +240,6 @@ namespace MapView.Forms.Observers
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
-		/// <returns></returns>
 		private void PathSelectorLozenge(int x, int y)
 		{
 			int halfWidth  = _blobService.HalfWidth;
@@ -270,7 +269,7 @@ namespace MapView.Forms.Observers
 		/// <summary>
 		/// Synchs
 		/// <c><see cref="ClearSelectorLozenge()">ClearSelectorLozenge()</see></c>
-		/// in <c>TopView</c> and <c>TopRouteView</c>.
+		/// in TopView and TopRouteView(Top).
 		/// </summary>
 		internal static void ClearSelectorLozengeStatic()
 		{
@@ -399,11 +398,9 @@ namespace MapView.Forms.Observers
 			if (!TopView.it_Floor.Checked && tile.Floor != null)
 			{
 				McdRecord record = tile.Floor.Record;
-
-				byte loftid;
 				if (record.LoftList != null)
 				{
-					loftid = record.LoftList[0];
+					byte loftid = record.LoftList[0];
 
 					string key;
 					if (loftid == 0) key = TopViewOptionables.str_FloorColorLight; // blank LoFT, draw light floor color.
@@ -486,30 +483,30 @@ namespace MapView.Forms.Observers
 			{
 				var brush = new SolidBrush(TopView.Optionables.GridLine10Color); // TODO: instantiate this brush on Load
 
-				int pos = esize / 2;
+				int offset = esize / 2;
 
 				if ((elofts & ELOFT_F) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x - pos,
-															y + _blobService.HalfHeight * 2 - pos - 4,
+															x - offset,
+															y + _blobService.HalfHeight * 2 - offset - 4,
 															esize,esize));
 
 				if ((elofts & ELOFT_C) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x - pos,
-															y + _blobService.HalfHeight - pos,
+															x - offset,
+															y + _blobService.HalfHeight - offset,
 															esize,esize));
 
 				if ((elofts & ELOFT_W) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
-															x - _blobService.HalfWidth  / 2 + pos + 2,
-															y + _blobService.HalfHeight / 2 - pos + 1,
+															x - _blobService.HalfWidth  / 2 + offset + 2,
+															y + _blobService.HalfHeight / 2 - offset + 1,
 															esize,esize));
 
 				if ((elofts & ELOFT_N) != ELOFT_n)
 					_graphics.FillRectangle(brush, new Rectangle(
 															x + _blobService.HalfWidth  / 2 - esize - 6,
-															y + _blobService.HalfHeight / 2 - pos + 1,
+															y + _blobService.HalfHeight / 2 - offset + 1,
 															esize,esize));
 
 				brush.Dispose();
@@ -592,7 +589,7 @@ namespace MapView.Forms.Observers
 
 
 		/// <summary>
-		/// Handles the MouseDown event.
+		/// Handles the <c>MouseDown</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -663,7 +660,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the MouseUp event.
+		/// Handles the <c>MouseUp</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseUp(MouseEventArgs e)
@@ -672,7 +669,7 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Handles the MouseMove event.
+		/// Handles the <c>MouseMove</c> event.
 		/// </summary>
 		/// <param name="e"></param>
 		protected override void OnMouseMove(MouseEventArgs e)
