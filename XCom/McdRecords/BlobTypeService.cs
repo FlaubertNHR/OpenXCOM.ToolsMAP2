@@ -5,10 +5,11 @@ using System.Collections.Generic;
 namespace XCom
 {
 	/// <summary>
-	/// The various wall- and content-types that will be used to determine how
-	/// to draw the wall- and content-blobs in <c>TopView</c> and
-	/// <c>RouteView</c>. Also used for blob-preview in McdView.
+	/// The various blob-types used to determine the blobs to draw in
+	/// <c>TopControl</c> and <c>RouteControl</c>. Also used for the
+	/// blob-preview in McdView.
 	/// </summary>
+	/// <remarks>These are used only for wall and content part-types.</remarks>
 	public enum Blob
 	{
 //		Crippled = -1,			// invalid loftlist in the tilepart's record
@@ -73,7 +74,7 @@ namespace XCom
 
 
 		// These are (arrays of) LoFT entries in the stock UFO/TFTD LOFTEMPS.DAT
-		// resource file that are used to deter graphical Blobs in TopView and
+		// resource files that are used to deter graphical Blobs in TopView and
 		// RouteView as well as the blob-preview in McdView.
 		//
 		// Stock UFO has 112 entries; stock TFTD has 114.
@@ -81,36 +82,36 @@ namespace XCom
 		private const           byte   Westwall_window   = 37;
 		private static readonly byte[] Westwall          = {7,9,11,13,15,17,19,22};
 		private static readonly byte[] Westwall_notsolid = {50,51,52,76,111,
-															7,9,11,13,15,17,19,22,				// +Westwall
-															0,									// +Loftnon
-															37,									// +Westwall_window
-															39,40,41, 81,     101,102,103,		// +NorthwestCorner
-															          79, 87, 104,105,106};		// +SouthwestCorner
+															7,9,11,13,15,17,19,22,					// +Westwall
+															0,										// +Loftnon
+															37,										// +Westwall_window
+															39,40,41, 81,     90, 101,102,103,		// +NorthwestCorner
+															          79, 87, 92, 104,105,106};		// +SouthwestCorner
 
 		private const           byte   Northwall_window   = 38;
 		private static readonly byte[] Northwall          = {8,10,12,14,16,18,20,21};
 		private static readonly byte[] Northwall_notsolid = {77,110,
-															 8,10,12,14,16,18,20,21,			// +Northwall
-															 0,									// +Loftnon
-															 38,								// +Northwall_window
-															 39,40,41, 81,    101,102,103,		// +NorthwestCorner
-															           80, 88, 98, 99,100};		// +NortheastCorner
+															 8,10,12,14,16,18,20,21,				// +Northwall
+															 0,										// +Loftnon
+															 38,									// +Northwall_window
+															 39,40,41, 81,     90, 101,102,103,		// +NorthwestCorner
+															           80, 88, 91,  98, 99,100};	// +NortheastCorner
 
 		private static readonly byte[] Eastwall           = {24,26,28,30,32,34, 47};
-		private static readonly byte[] Eastwall_notsolid  = {24,26,28,30,32,34, 47,				// +Eastwall
-															 0,									// +Loftnon
-															 80, 88,  98, 99,100,				// +NortheastCorner
-															 82, 86, 107,108,109};				// +SoutheastCorner
+		private static readonly byte[] Eastwall_notsolid  = {24,26,28,30,32,34, 47,					// +Eastwall
+															 0,										// +Loftnon
+															 80, 88, 91,  98, 99,100,				// +NortheastCorner
+															 82, 86, 89, 107,108,109};				// +SoutheastCorner
 		private static readonly byte[] Southwall          = {23,25,27,29,31,33, 44};
-		private static readonly byte[] Southwall_notsolid = {23,25,27,29,31,33, 44,				// +Southwall
-															 0,									// +Loftnon
-															 82, 86, 107,108,109,				// +SoutheastCorner
-															 79, 87, 104,105,106};				// +SouthwestCorner
+		private static readonly byte[] Southwall_notsolid = {23,25,27,29,31,33, 44,					// +Southwall
+															 0,										// +Loftnon
+															 82, 86, 89, 107,108,109,				// +SoutheastCorner
+															 79, 87, 92, 104,105,106};				// +SouthwestCorner
 
-		private static readonly byte[] NorthwestCorner = {39,40,41, 81,     90, 101,102,103};
-		private static readonly byte[] NortheastCorner = {          80, 88, 91,  98, 99,100};
-		private static readonly byte[] SoutheastCorner = {          82, 86, 89, 107,108,109};
-		private static readonly byte[] SouthwestCorner = {          79, 87, 92, 104,105,106};
+		private static readonly byte[] NorthwestCorner = {39,40,41, 81,     90, 101,102,103}; // 57
+		private static readonly byte[] NortheastCorner = {          80, 88, 91,  98, 99,100}; // 59
+		private static readonly byte[] SoutheastCorner = {          82, 86, 89, 107,108,109}; // 58
+		private static readonly byte[] SouthwestCorner = {          79, 87, 92, 104,105,106}; // 60
 
 		private const byte NorthwestSoutheast = 35;
 		private const byte NortheastSouthwest = 36;
@@ -121,6 +122,46 @@ namespace XCom
 
 
 		#region Methods (static)
+		/// <summary>
+		/// Checks if <paramref name="loftlist"/> has only LoFT id #0 (blank
+		/// LoFT) above the first layer.
+		/// </summary>
+		/// <returns></returns>
+		/// <remarks>This function checks LoFTs only of wall- and content-parts
+		/// for drawing TopView and RouteView and the blob-preview in McdView
+		/// but is NOT used for actual floor-parts.
+		/// <br/><br/>
+		/// Loftid #6 on layer #0 is the fullfloor LoFT but is not checked for.</remarks>
+		private static bool floorlike(IList<byte> loftlist)
+		{
+			//DSShared.Logfile.Log("BlobTypeService.floorlike()");
+
+			switch (loftlist[0]) // bypass wall and corner LoFTs (to allow wall and corner blobs later)
+			{
+				case  7: case   9: case 11: case 13: case  15: case 17: case  19: case  22:				// Westwall
+				case  8: case  10: case 12: case 14: case  16: case 18: case  20: case  21:				// Northwall
+
+				case 37:																				// Westwall_window
+				case 38:																				// Northwall_window
+
+				case 39: case  40: case 41: case 81:           case 90: case 101: case 102: case 103:	// NorthwestCorner
+											case 80: case  88: case 91: case  98: case  99: case 100:	// NortheastCorner
+											case 82: case  86: case 89: case 107: case 108: case 109:	// SoutheastCorner
+											case 79: case  87: case 92: case 104: case 105: case 106:	// SouthwestCorner
+
+				case 50: case  51: case 52: case 76: case 111:											// Westwall_notsolid (-windows, -corners)
+											case 77: case 110:											// Northwall_notsolid (-windows, -corners)
+					return false;
+			}
+
+			for (int layer = 1; layer != BlobTypeService.LoftlistLength; ++layer)
+				if (loftlist[layer] != Loftnon) // that's kind of a stupid check for floor ...
+					return false;
+
+			return true;
+		}
+
+
 //		/// <summary>
 //		/// Gets the <c><see cref="Blob"/></c> of a specified
 //		/// <c><see cref="Tilepart"/></c> for drawing its blob in <c>TopView</c>
@@ -162,16 +203,18 @@ namespace XCom
 			// loftset that can be shot through; unlike a 'wall' its voxels are
 			// not entirely solid to LoF.
 
+			// TODO: if (entire loftset is loftid #0 nullblock) ret Blob.Blank
 			// TODO: if (entire loftset is loftid #6 fullblock) ret Blob.Block
 
 			bool anyLoftnon = anyare(loftlist, Loftnon);
 
-			// corners ->
+			// floors, corners, solid walls, and windows ->
 			if (anyLoftnon)
 			{
-				// not a corner but hey ... this is where it goes ->
+				// floorlike ->
 				if (floorlike(loftlist))
 					return Blob.Floorlike;
+
 
 				// corner fences ->
 				if (allare(loftlist, NorthwestCorner, Loftnon))
@@ -201,11 +244,8 @@ namespace XCom
 				if (allare(loftlist, SouthwestCorner))
 					return Blob.SouthwestCorner;
 
-			}
 
-			// windows and solid walls ->
-			if (!anyLoftnon)
-			{
+				// windows and solid walls ->
 				if (anyare(loftlist, Westwall_window) && allare(loftlist, Westwall, Westwall_window))
 					return Blob.WestwallWindow;
 
@@ -224,6 +264,7 @@ namespace XCom
 				if (allare(loftlist, Southwall))
 					return Blob.Southwall;
 			}
+
 
 			// walls not solid ->
 			if (allare(loftlist, Westwall_notsolid))
@@ -262,47 +303,6 @@ namespace XCom
 			return Blob.Generic;
 		}
 
-
-		/// <summary>
-		/// Checks if <paramref name="loftlist"/> has only LoFT id #0 (blank
-		/// LoFT) above the first layer.
-		/// </summary>
-		/// <returns></returns>
-		/// <remarks>This function checks LoFTs only of wall- and content-parts
-		/// for drawing TopView and RouteView and the blob-preview in McdView
-		/// but is NOT used for actual floor-parts.
-		/// <br/><br/>
-		/// Loftid #6 on layer #0 is the fullfloor LoFT but is not checked for.</remarks>
-		private static bool floorlike(IList<byte> loftlist)
-		{
-			//DSShared.Logfile.Log("BlobTypeService.floorlike()");
-
-			switch (loftlist[0]) // bypass wall and corner LoFTs (to allow wall and corner blobs later)
-			{
-				case   7: case   8: case   9: case  10: case  11: case  12: case  13: case  14:	// west and north walls
-				case  15: case  16: case  17: case  18: case  19: case  20: case  21: case  22:
-
-				case  37: case  38:																// west and north windows
-
-				case  39: case  40: case  41:													// nw corners
-
-				case  76: case  77: case 110: case 111:											// west and north walls not solid
-				case  50: case  51: case  52:													// west walls not solid
-
-				case  79: case  80: case  81: case  82:											// corners ->
-				case  89: case  90: case  91: case  92:											// big rounded corners
-				case  86: case  87: case  88:
-				case  98: case  99: case 100: case 101: case 102: case 103:
-				case 104: case 105: case 106: case 107: case 108: case 109:
-					return false;
-			}
-
-			for (int layer = 1; layer != BlobTypeService.LoftlistLength; ++layer)
-				if (loftlist[layer] != Loftnon) // that's kind of a stupid check for floor ...
-					return false;
-
-			return true;
-		}
 
 		/// <summary>
 		/// Checks if any entry in <paramref name="loftlist"/> is
