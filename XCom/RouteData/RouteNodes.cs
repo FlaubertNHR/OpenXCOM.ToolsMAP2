@@ -18,7 +18,11 @@ namespace XCom
 			IEnumerable<RouteNode>
 	{
 		#region Fields (static)
-		private const int Length_Routenode = 24; // each node has 24 bytes
+		/// <summary>
+		/// Each <c><see cref="RouteNode"/>'s</c> data in an RMP-file has a
+		/// width of 24 bytes.
+		/// </summary>
+		private const int Length_Routenode = 24;
 
 		public const string civscout  = "0 : Civilian/Scout";
 		public const string xcom      = "1 : XCOM";
@@ -35,7 +39,7 @@ namespace XCom
 		public const string ter2      = "8 : Terrorist2";
 
 		/// <summary>
-		/// Workaround for several bugged Routefiles in TftD.
+		/// Workaround for several bugged Routefiles in TFTD.
 		/// </summary>
 		/// <remarks>TODO: Repeat this pattern for the other Routefile vars.</remarks>
 		private const string RankInvalid = "INVALID";
@@ -150,10 +154,10 @@ namespace XCom
 
 		#region Properties (static)
 		/// <summary>
-		/// The fullpath of the .RMP file.
+		/// The fullpath of the RMP-file.
 		/// </summary>
 		/// <remarks>Is static to maintain its value when importing a different
-		/// .RMP file.</remarks>
+		/// RMP-file.</remarks>
 		public static string PfeRoutes
 		{ get; private set; }
 		#endregion Properties (static)
@@ -169,9 +173,8 @@ namespace XCom
 
 
 		private readonly IList<RouteNode> _nodes = new List<RouteNode>();
-
 		/// <summary>
-		/// Gets the <c><see cref="RouteNode">RouteNodes</see></c>.
+		/// Gets the <c><see cref="RouteNode">RouteNode</see>s</c>.
 		/// </summary>
 		public IList<RouteNode> Nodes
 		{

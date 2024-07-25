@@ -3780,9 +3780,10 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// 
+		/// Gets a <c>Color</c> from <c><see cref="Optionables"/></c> based on a
+		/// specified <c><see cref="XCom.RouteNode"/>'s</c> <c>Rank</c>.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>a <c>Color</c> for <paramref name="node"/></returns>
 		private static Color GetNodeColor(RouteNode node)
 		{
 			if (node != null)
