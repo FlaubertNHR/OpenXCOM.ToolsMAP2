@@ -610,9 +610,10 @@ namespace XCom
 		/// <returns>the <c>RouteNode</c></returns>
 		public RouteNode AddRouteNode(MapLocation location)
 		{
-			return Tiles.GetTile(location.Col,
-								 location.Row,
-								 location.Lev).Node = Routes.AddNode(location);
+			return Tiles.GetTile(
+							location.Col,
+							location.Row,
+							location.Lev).Node = Routes.AddNode(location);
 		}
 		#endregion Methods (routenodes)
 
