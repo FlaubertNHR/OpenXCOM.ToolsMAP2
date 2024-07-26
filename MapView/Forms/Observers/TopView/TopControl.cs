@@ -98,7 +98,7 @@ namespace MapView.Forms.Observers
 		private static readonly Dictionary<string, SolidBrush> _brushes =
 							new Dictionary<string, SolidBrush>();
 		/// <summary>
-		/// Brushes for use in TopControl.
+		/// Brushes for use in this <c>TopControl</c>.
 		/// </summary>
 		internal static Dictionary<string, SolidBrush> TopBrushes
 		{
@@ -126,7 +126,8 @@ namespace MapView.Forms.Observers
 
 		#region Resize
 		/// <summary>
-		/// Called by TopView's resize event or by a straight MapFile change.
+		/// Called by TopView's <c>Resize</c> event or by a straight
+		/// <c><see cref="MapFile"/></c> change.
 		/// </summary>
 		/// <param name="width">the width to resize to</param>
 		/// <param name="height">the height to resize to</param>
@@ -201,8 +202,8 @@ namespace MapView.Forms.Observers
 
 		#region Draw
 		/// <summary>
-		/// Sets the graphics-path for a lozenge-border around all tiles that
-		/// are selected or being selected.
+		/// Sets the <c>GraphicsPath</c> for a lozenge-border around all tiles
+		/// that are selected or being selected.
 		/// </summary>
 		private void PathSelectedLozenge()
 		{
@@ -235,8 +236,8 @@ namespace MapView.Forms.Observers
 		}
 
 		/// <summary>
-		/// Sets the graphics-path for a lozenge-border around the tile that
-		/// is currently mouse-overed.
+		/// Sets the <c>GraphicsPath</c> for a lozenge-border around the tile
+		/// that is currently mouse-overed.
 		/// </summary>
 		/// <param name="x"></param>
 		/// <param name="y"></param>
@@ -543,7 +544,7 @@ namespace MapView.Forms.Observers
 		/// perform some Quad-panel operations.
 		/// </summary>
 		/// <param name="e"></param>
-		/// <remarks>Navigation keys etc. are handled by 'KeyPreview' in
+		/// <remarks>Navigation keys etc. are handled by <c>KeyPreview</c> in
 		/// <c><see cref="TopViewForm"/></c>.</remarks>
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
