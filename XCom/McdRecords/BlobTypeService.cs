@@ -72,6 +72,9 @@ namespace XCom
 		/// </summary>
 		private const int LoftlistLength = 12;
 
+		public const byte LOFTID_Max_ufo  = 111;
+		public const byte LOFTID_Max_tftd = 113;
+
 
 		// These are (arrays of) LoFT entries in the stock UFO/TFTD LOFTEMPS.DAT
 		// resource files that are used to deter graphical Blobs in TopView and
@@ -375,8 +378,8 @@ namespace XCom
 		/// </summary>
 		/// <param name="loftlist">a list of LoFTs to check against
 		/// <paramref name="loftid"/></param>
-		/// <param name="loftid"><c>McdviewF.LOFTID_Max_ufo</c>
-		/// or <c>McdviewF.LOFTID_Max_tftd</c></param>
+		/// <param name="loftid"><c><see cref="LOFTID_Max_ufo"/></c> or
+		/// <c><see cref="LOFTID_Max_tftd"/></c></param>
 		/// <returns><c>true</c> if an extended LoFT is detected</returns>
 		public static bool hasExtendedLofts(IList<byte> loftlist, byte loftid)
 		{

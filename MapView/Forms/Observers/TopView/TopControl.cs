@@ -49,9 +49,6 @@ namespace MapView.Forms.Observers
 		internal static BlobColorTool ToolContent;
 
 		internal static readonly SolidBrush PanelFill = new SolidBrush(TopViewOptionables.def_PanelBackcolor);
-
-		private const byte LOFTID_Max_ufo  = 111;
-		private const byte LOFTID_Max_tftd = 113;
 		#endregion Fields (static)
 
 
@@ -391,8 +388,8 @@ namespace MapView.Forms.Observers
 			// 'e' for Extended lofts
 			int elofts = ELOFT_n;
 			int esize = TopView.Optionables.ExtendedLoftIndicators;
-			byte ecutoff = _file.Descriptor.GroupType == GroupType.Tftd ? LOFTID_Max_tftd
-																		: LOFTID_Max_ufo;
+			byte ecutoff = _file.Descriptor.GroupType == GroupType.Tftd ? BlobTypeService.LOFTID_Max_tftd
+																		: BlobTypeService.LOFTID_Max_ufo;
 
 			// note that crippled tileparts have an invalid 'LoftList'
 

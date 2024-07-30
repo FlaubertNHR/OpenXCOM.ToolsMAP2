@@ -738,9 +738,6 @@ namespace McdView
 
 		private static BlobColorTool ToolGray = new BlobColorTool(Color.Gray);
 
-		private const byte LOFTID_Max_ufo  = 111;
-		private const byte LOFTID_Max_tftd = 113;
-
 		/// <summary>
 		/// Paints a blob based on the current loftset.
 		/// </summary>
@@ -763,8 +760,8 @@ namespace McdView
 				BlobTypeService.UpdateLoftlist(record);
 
 				byte loftid;
-				if (miResourcesTftd.Checked) loftid = LOFTID_Max_tftd;
-				else                         loftid = LOFTID_Max_ufo;
+				if (miResourcesTftd.Checked) loftid = BlobTypeService.LOFTID_Max_tftd;
+				else                         loftid = BlobTypeService.LOFTID_Max_ufo;
 
 				lbl_Extended.Visible = BlobTypeService.hasExtendedLofts(BlobTypeService._loftlist, loftid);
 
