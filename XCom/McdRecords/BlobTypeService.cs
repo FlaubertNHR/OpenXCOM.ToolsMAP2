@@ -60,7 +60,7 @@ namespace XCom
 	{
 		#region Fields (static)
 		/// <summary>
-		/// 
+		/// A <c>List</c> of LoFT ids to deter Blob-type.
 		/// </summary>
 		/// <remarks><c>_loftlist</c> is used only by McdView.
 		/// <c><see cref="McdRecord">McdRecords</see></c> in MapView store their
@@ -78,6 +78,9 @@ namespace XCom
 		// RouteView as well as the blob-preview in McdView.
 		//
 		// Stock UFO has 112 entries; stock TFTD has 114.
+
+		private const byte Loftnon     =   0;
+		private const byte LoftInvalid = 255;
 
 		private const           byte   Westwall_window   = 37;
 		private static readonly byte[] Westwall          = {7,9,11,13,15,17,19,22};
@@ -115,9 +118,6 @@ namespace XCom
 
 		private const byte NorthwestSoutheast = 35;
 		private const byte NortheastSouthwest = 36;
-
-		private const byte Loftnon     =   0;
-		private const byte LoftInvalid = 255;
 		#endregion Fields (static)
 
 
@@ -136,7 +136,8 @@ namespace XCom
 		{
 			//DSShared.Logfile.Log("BlobTypeService.floorlike()");
 
-			switch (loftlist[0]) // bypass wall and corner LoFTs (to allow wall and corner blobs later)
+			// bypass all wall and corner LoFTs to allow wall and corner blobs later
+			switch (loftlist[0])
 			{
 				case  7: case   9: case 11: case 13: case  15: case 17: case  19: case  22:				// Westwall
 				case  8: case  10: case 12: case 14: case  16: case 18: case  20: case  21:				// Northwall
@@ -155,8 +156,8 @@ namespace XCom
 			}
 
 			for (int layer = 1; layer != BlobTypeService.LoftlistLength; ++layer)
-				if (loftlist[layer] != Loftnon) // that's kind of a stupid check for floor ...
-					return false;
+			if (loftlist[layer] != Loftnon)
+				return false;
 
 			return true;
 		}
@@ -206,15 +207,12 @@ namespace XCom
 			// TODO: if (entire loftset is loftid #0 nullblock) ret Blob.Blank
 			// TODO: if (entire loftset is loftid #6 fullblock) ret Blob.Block
 
-			bool anyLoftnon = anyare(loftlist, Loftnon);
-
 			// floors, corners, solid walls, and windows ->
-			if (anyLoftnon)
+			if (anyare(loftlist, Loftnon))
 			{
 				// floorlike ->
 				if (floorlike(loftlist))
 					return Blob.Floorlike;
-
 
 				// corner fences ->
 				if (allare(loftlist, NorthwestCorner, Loftnon))
@@ -228,6 +226,13 @@ namespace XCom
 
 				if (allare(loftlist, SouthwestCorner, Loftnon))
 					return Blob.SouthwestCornerFence;
+
+				// diagonal fences ->
+				if (allare(loftlist, NorthwestSoutheast, Loftnon))
+					return Blob.NorthwestSoutheastFence;
+
+				if (allare(loftlist, NortheastSouthwest, Loftnon))
+					return Blob.NortheastSouthwestFence;
 			}
 			else
 			{
@@ -243,7 +248,6 @@ namespace XCom
 
 				if (allare(loftlist, SouthwestCorner))
 					return Blob.SouthwestCorner;
-
 
 				// windows and solid walls ->
 				if (anyare(loftlist, Westwall_window) && allare(loftlist, Westwall, Westwall_window))
@@ -263,8 +267,14 @@ namespace XCom
 
 				if (allare(loftlist, Southwall))
 					return Blob.Southwall;
-			}
 
+				// diagonal walls ->
+				if (allare(loftlist, NorthwestSoutheast))
+					return Blob.NorthwestSoutheast;
+
+				if (allare(loftlist, NortheastSouthwest))
+					return Blob.NortheastSouthwest;
+			}
 
 			// walls not solid ->
 			if (allare(loftlist, Westwall_notsolid))
@@ -278,27 +288,6 @@ namespace XCom
 
 			if (allare(loftlist, Southwall_notsolid))
 				return Blob.SouthFence;
-
-
-			// diagonals ->
-			if (anyLoftnon)
-			{
-				// diagonal fences ->
-				if (allare(loftlist, NorthwestSoutheast, Loftnon))
-					return Blob.NorthwestSoutheastFence;
-
-				if (allare(loftlist, NortheastSouthwest, Loftnon))
-					return Blob.NortheastSouthwestFence;
-			}
-			else
-			{
-				// diagonal walls ->
-				if (allare(loftlist, NorthwestSoutheast))
-					return Blob.NorthwestSoutheast;
-
-				if (allare(loftlist, NortheastSouthwest))
-					return Blob.NortheastSouthwest;
-			}
 
 			return Blob.Generic;
 		}
@@ -317,8 +306,8 @@ namespace XCom
 			//DSShared.Logfile.Log("BlobTypeService.anyare() loftid= " + loftid);
 
 			for (int layer = 0; layer != BlobTypeService.LoftlistLength; ++layer)
-				if (loftlist[layer] == loftid)
-					return true;
+			if (loftlist[layer] == loftid)
+				return true;
 
 			return false;
 		}
@@ -329,8 +318,8 @@ namespace XCom
 		/// </summary>
 		/// <param name="loftlist">a list of LoFTs to check against
 		/// <paramref name="loftid"/></param>
-		/// <param name="loftid">the required loftid</param>
-		/// <param name="ignore"></param>
+		/// <param name="loftid">the required LoFT id</param>
+		/// <param name="ignore">a LoFT id to ignore</param>
 		/// <returns><c>true</c> if all LoFTs are <paramref name="loftid"/></returns>
 		/// <remarks>Layer #0 is NOT considered since it is typically a
 		/// floorlike LoFT.</remarks>
@@ -339,8 +328,8 @@ namespace XCom
 			//DSShared.Logfile.Log("BlobTypeService.allare() loftid= " + loftid);
 
 			for (int layer = 1; layer != BlobTypeService.LoftlistLength; ++layer)
-				if (loftlist[layer] != ignore && loftlist[layer] != loftid)
-					return false;
+			if (loftlist[layer] != ignore && loftlist[layer] != loftid)
+				return false;
 
 			return true;
 		}
@@ -351,14 +340,11 @@ namespace XCom
 		/// </summary>
 		/// <param name="loftlist">a list of LoFTs to check against
 		/// <paramref name="loftids"/></param>
-		/// <param name="loftids">an array of LoFT ids</param>
-		/// <param name="ignore"></param>
-		/// <returns><c>true</c>if all LoFTs are included in
+		/// <param name="loftids">an array of any required LoFT ids</param>
+		/// <param name="ignore">a LoFT id to ignore</param>
+		/// <returns><c>true</c> if all LoFTs are found in
 		/// <paramref name="loftids"/></returns>
-		private static bool allare(
-				IList<byte> loftlist,
-				byte[] loftids,
-				byte ignore = LoftInvalid)
+		private static bool allare(IList<byte> loftlist, byte[] loftids, byte ignore = LoftInvalid)
 		{
 			//var sb = new System.Text.StringBuilder();
 			//foreach (byte id in loftids) sb = sb.Append(id + ",");
@@ -366,25 +352,19 @@ namespace XCom
 
 			bool found;
 			foreach (byte loft in loftlist)
+			if (loft != ignore)
 			{
-				if (loft != ignore)
+				found = false;
+				foreach (byte loftid in loftids)
+				if (loftid == loft)
 				{
-					found = false;
-					foreach (byte loftid in loftids)
-						if (loftid == loft)
-						{
-							found = true;
-							break;
-						}
-	
-					if (!found)
-					{
-						//DSShared.Logfile.Log(". ret FALSE");
-						return false;
-					}
+					found = true;
+					break;
 				}
+
+				if (!found)
+					return false;
 			}
-			//DSShared.Logfile.Log(". ret TRUE");
 			return true;
 		}
 
@@ -401,8 +381,8 @@ namespace XCom
 		public static bool hasExtendedLofts(IList<byte> loftlist, byte loftid)
 		{
 			foreach (byte loft in loftlist)
-				if (loft > loftid)
-					return true;
+			if (loft > loftid)
+				return true;
 
 			return false;
 		}
@@ -444,87 +424,66 @@ namespace XCom
 //			DSShared.Logfile.Log("BlobTypeService.anyare() loftids= " + sb);
 //
 //			foreach (byte loft in loftlist)
-//				foreach (byte id in loftids)
-//					if (id == loft)
-//						return true;
+//			foreach (byte id in loftids)
+//			if (id == loft)
+//				return true;
 //
 //			return false;
 //		}
 
-/*		private static bool allare(
-				IList<byte> loftlist,
-				byte[] loftids,
-				byte[] excluded = null,
-				byte include = LoftInvalid)
-		{
-			var sb = new System.Text.StringBuilder();
-			foreach (byte id in loftids) sb = sb.Append(id + ",");
-			DSShared.Logfile.Log("BlobTypeService.allare() loftids= " + sb);
-			if (excluded != null)
-			{
-				sb = sb.Clear();
-				foreach (byte id in excluded) sb = sb.Append(id + ",");
-				DSShared.Logfile.Log(". excluded= " + sb);
-			}
-			DSShared.Logfile.Log(". include= " + include);
+//		private static bool allare(IList<byte> loftlist, byte[] loftids, byte[] excluded = null, byte include = LoftInvalid)
+//		{
+//			var sb = new System.Text.StringBuilder();
+//			foreach (byte id in loftids) sb = sb.Append(id + ",");
+//			DSShared.Logfile.Log("BlobTypeService.allare() loftids= " + sb);
+//			if (excluded != null)
+//			{
+//				sb = sb.Clear();
+//				foreach (byte id in excluded) sb = sb.Append(id + ",");
+//				DSShared.Logfile.Log(". excluded= " + sb);
+//			}
+//			DSShared.Logfile.Log(". include= " + include);
+//
+//			bool found;
+//			foreach (byte loft in loftlist)
+//			{
+//				if (excluded != null)
+//				foreach (byte exclude in excluded)
+//				if (exclude == loft)
+//					continue;
+//
+//				if (!(found = (loft == include)))
+//				foreach (byte loftid in loftids)
+//				if (loftid == loft)
+//				{
+//					found = true;
+//					break;
+//				}
+//
+//				if (!found)
+//					return false;
+//			}
+//			return true;
+//		}
 
-			bool found;
-			foreach (byte loft in loftlist)
-			{
-				if (excluded != null)
-					foreach (byte exclude in excluded)
-						if (exclude == loft)
-							continue;
-
-				if (!(found = (loft == include)))
-					foreach (byte loftid in loftids)
-						if (loftid == loft)
-						{
-							found = true;
-							break;
-						}
-
-				if (!found)
-					return false;
-			}
-			return true;
-		} */
-/*		private static bool allare(IList<byte> loftlist, byte[] loftids, byte exclude, byte include)
-		{
-			bool found;
-			foreach (byte loft in loftlist)
-				if (loft != exclude)
-				{
-					if (!(found = loft == include))
-					{
-						foreach (byte loftid in loftids)
-							if (loftid == loft)
-							{
-								found = true;
-								break;
-							}
-					}
-
-					if (!found)
-						return false;
-				}
-			return true;
-		} */
-/*		private static bool allare(IList<byte> loftlist, byte[] loftids)
-		{
-			bool found;
-			foreach (byte loft in loftlist)
-			{
-				found = false;
-				foreach (byte loftid in loftids)
-					if (loftid == loft)
-					{
-						found = true;
-						break;
-					}
-
-				if (!found)
-					return false;
-			}
-			return true;
-		} */
+//		private static bool allare(IList<byte> loftlist, byte[] loftids, byte exclude, byte include)
+//		{
+//			bool found;
+//			foreach (byte loft in loftlist)
+//			if (loft != exclude)
+//			{
+//				if (!(found = loft == include))
+//				{
+//					foreach (byte loftid in loftids)
+//					if (loftid == loft)
+//					{
+//						found = true;
+//						break;
+//					}
+//				}
+//
+//				if (!found)
+//					return false;
+//			}
+//			return true;
+//		}
