@@ -11,43 +11,43 @@
 		<p>Left of the viewer panel are buttons for<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level up [mousewheel up]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level down [mousewheel down]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+X] (respects Disability toggles)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- copy a selected area [Ctrl+C]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+V] (respects Disability toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+x] (respects Disability toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- copy a selected area [Ctrl+c]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+v] (respects Disability toggles)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete] (respects Disability toggles)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- fill a selected area with the currently selected tilepart from TileView [F]</p>
+&nbsp;&nbsp;&nbsp;&nbsp;- fill a selected area with the currently selected tilepart from TileView [f]</p>
 
 		<p>Please note that pasting copied parts from one Map to a different Map usually requires that the allocated terrains of both Maps be identical.</p>
 
 		<p>Left-click to select a tile to edit, and a left-click drag motion will select multiple tiles over a rectangular area.</p>
 
-		<p>Double left-click selects the tilepart, in TileView, of the currently selected parttype.</p>
+		<p>Double left-click selects the tilepart, in TileView, of the currently selected quadrant.</p>
 
-		<p>Right-click places the currently selected tilepart from TileView into its proper tilepart type-slot along the bottom of the viewer, respecting both the clicked tile position on the grid and the currently selected parttype shown beneath the grid.</p>
+		<p>Right-click places the tilepart that is currently selected in TileView into a quadrant-slot along the bottom of the viewer, respecting both the currently selected tile position and the currently selected quadrant.</p>
 
-		<p>Double right-click clears the tilepart of the currently selected parttype.</p>
+		<p>Double right-click clears the tilepart of the currently selected quadrant.</p>
 
-		<p>The bottom of the panel displays the four parttype slots into which tileparts may be placed. The currently selected parttype has a light blue background.</p>
+		<p>The bottom of the panel displays the four quadrant-slots into which tileparts may be placed. The currently selected quadrant has a light blue background. A fifth slot displays TileView's currently selected tilepart.</p>
 
-		<p>Left-click selects that parttype's slot as ready to have a tilepart assigned to it.<br>
+		<p>Left-click a quadrant-slot to select that quadrant for an operation.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[1] - Floor<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[2] - Westwall<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[3] - Northwall<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[4] - Content</p>
 
-		<p>Double left-click will select the tilepart that's currently in the slot in TileView [T].</p>
+		<p>Double left-click selects the tilepart that's in the currently selected quadrant in TileView [t].</p>
 
-		<p>Right-click places the currently selected tilepart from TileView into the slot of selected tile(s) [Enter].</p>
+		<p>Right-click places the tilepart that is currently selected in TileView into the quadrant of selected tile(s) [Enter].</p>
 
-		<p>Double right-click clears the parttype slots of selected tile(s) [Shift+Delete].</p>
+		<p>Double right-click clears the quadrant slot of selected tile(s) [Shift+Delete].</p>
 
-		<p>To the right of the four parttype slots is a fifth slot that shows TileView's currently selected tilepart. Click on the sprite or press [Q] to auto-select its proper parttype slot.</p>
+		<p>To the right of the four quadrant-slots is a fifth slot that shows TileView's currently selected tilepart. Click on the sprite or press [q] to auto-select its proper quadrant-slot. Right-click the fifth slot to select the eraser.</p>
 
 		<p>The toolstrip buttons have the same functionality as those in MainView.</p>
 
-		<p>The color-blobs that appear on the Map are simplistic representations of the various parts that have been placed on tiles.</p>
+		<p>The color-blobs that appear on the Map are simplistic representations of the various parts that have been placed onto tiles.</p>
 
-		<p>Note that [Ctrl+S] can be used to save the Map when the center panel has focus.</p>
+		<p>Note that [Ctrl+s] can be used to save the Map when the center panel has focus.</p>
 
 		<p>[F5] toggles TileView.<br>
 		[F6] closes TopView or toggles TopView if TopRouteView is focused.<br>
@@ -62,7 +62,7 @@
 
 		<p>[Esc] focuses the panel. That is, it defocuses any other control. It can also be used to abort a multi-tile selection.</p>
 
-		<p>[Ctrl+Q] quits MapView II</p>
+		<p>[Ctrl+q] quits MapView II</p>
 
 		<br>
 		<h3>Keyboard navigation</h3>
@@ -74,17 +74,19 @@
 		<br>
 		<h3>Disabled menu</h3>
 
-		<p>These four operations toggle the disability of the four possible tilepart types for TopView and MainView. When a parttype is disabled, the background color of its slot changes to dark gray. Tileparts of a disabled type will not be visible and will not be considered for the standard edit operations Cut/Paste/Delete. A Copy operation copies all selected tileparts regardless of disability. It's important to note however that such partslots will still be modified by nonstandard edit operations such as rightclick, double rightclick, and Fill both on the panel and in the parttype slots below the panel and by their keyboard shortcuts.</p>
+		<p>These four operations toggle the visibility of the four possible quadrants for TopView and MainView. When a quadrant is disabled, the background color of its slot changes to dark gray. Tileparts of a disabled type will not be visible and will not be considered for the standard edit operations Cut/Paste/Delete. A Copy operation copies all selected tileparts regardless of disability. It's important to note however that such partslots will still be modified by nonstandard edit operations such as rightclick, double rightclick, and Fill both on the panel and in the quadrant-slots below the panel and by the corresponding keyboard shortcuts.</p>
 
-		<p>The disability settings have no effect when saving a Map file, all parts are saved whether they're currently disabled or not. Note that the disability of tileparts can also be toggled on and off with the function keys F1..F4.</p>
+		<p>The visibility settings have no effect when saving a Map file, all parts are saved whether they're currently disabled or not. Note that the visibility of tileparts can also be toggled on and off with the function keys [F1]..[F4].</p>
+
+		<p>Enable all [F9] enables all quadrants.</p>
 
 		<br>
 		<h3>Test menu</h3>
 
-		<p>test parts in tileslots - checks that the parttype of all parts that are allocated to the current Map are in their proper tileslots: floors in floorslots, westwalls in westwall slots, northwalls in northwall slots, and contents in content slots.</p>
+		<p>test parts in tileslots - checks that the parttype of all parts that are allocated to the current Map are in their proper quadrant-slots: floors in floorslots, westwalls in westwall slots, northwalls in northwall slots, and contents in content slots.</p>
 
 		<br>
-		<p>Options [Ctrl+O] - opens and closes the Options for TopView. Descriptions for the entries appear at the bottom of that window.</p>
+		<p>Options [Ctrl+o] - opens and closes the Options for TopView. Descriptions for the entries appear at the bottom of that window.</p>
 		<br>
 	</body>
 </html>

@@ -26,35 +26,35 @@
 &nbsp;&nbsp;&nbsp;&nbsp;- autozoom<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level up [mousewheel up]<br>
 &nbsp;&nbsp;&nbsp;&nbsp;- level down [mousewheel down]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+X] (respects TopView Disability toggles)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- copy a selected area [Ctrl+C]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+V] (respects TopView Disability toggles)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete] (respects TopView Disability toggles)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;- fill a selected area with the currently selected tilepart from TileView [F]</p>
+&nbsp;&nbsp;&nbsp;&nbsp;- cut a selected area [Ctrl+x] (respects TopView Visibility toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- copy a selected area [Ctrl+c]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- paste area at a selected tile [Ctrl+v] (respects TopView Visibility toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- delete a selected area [Delete] (respects TopView Visibility toggles)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- fill a selected area with the currently selected tilepart from TileView [f]</p>
 
 		<p>Please note that pasting copied parts from one Map to a different Map usually requires that the allocated terrains of both Maps be identical.</p>
 
 		<p>If a Map is zoomed in, it can be panned around with an RMB-drag motion.</p>
 
-		<p>The F1 key opens the CHM Helpfile.</p>
+		<p>[F1] opens the CHM Helpfile.</p>
 
-		<p>The F2 key starts and stops animating any tiles that animate. The F3 key, if the panel has focus, toggles any doors open and closed when animations are not playing, and animates doors if animations are playing. Toggling animations off automatically closes all the doors. These settings are saved in MainView's Options.</p>
+		<p>[F2] starts and stops animating any tiles that animate. [F3], if the panel has focus, toggles any doors open and closed when animations are not playing, and animates doors if animations are playing. Toggling animations off automatically closes all the doors. These settings are saved in MainView's Options.</p>
 <!--	Note that animations can be paused on any of their eight frames, and using the doors toggle will reset their state to normal. -->
 
-		<p>The F4 key toggles the grid on/off. This setting is saved in MainView's Options.</p>
+		<p>[F4] toggles the grid on/off. This setting is saved in MainView's Options.</p>
 
-		<p>The F3 key will search the Maptree for the text in the search-box if the search-box or the Maptree has focus. Enter will also search but only if the search-box has focus. Shift+F3 focuses the search-box.</p>
+		<p>[F3] will search the Maptree for the text in the search-box if the search-box or the Maptree has focus. [Enter] will also search but only if the search-box has focus. [Shift+F3] focuses the search-box.</p>
 
-		<p>[Ctrl+F1] toggles floor disability.</p>
-		<p>[Ctrl+F2] toggles westwall disability.</p>
-		<p>[Ctrl+F3] toggles northwall disability.</p>
-		<p>[Ctrl+F4] toggles content disability.</p>
+		<p>[Ctrl+F1] toggles floor visibility.</p>
+		<p>[Ctrl+F2] toggles westwall visibility.</p>
+		<p>[Ctrl+F3] toggles northwall visibility.</p>
+		<p>[Ctrl+F4] toggles content visibility.</p>
+		<p>[Ctrl+F9] re-enables all disabled quadrants.</p>
 
-		<p>The F9 key cycles through selection border options.</p>
+		<p>[F9] cycles through selection border options.</p>
+		<p>[Shift+F9] toggles whether or not to show a selection border when only 1 tile is selected.</p>
 
-		<p>[Ctrl+F9] toggles whether or not to show a selection border when only 1 tile is selected.</p>
-
-		<p>The F10 key cycles through colortones that are available for currently selected tile(s). The tileparts of a selection can be drawn in a monochrome color to help them stand out. The available colors are: grayscale, redscale, greenscale, bluescale, and standard for the usual XCOM palette. [Shift+F10] reverses direction.</p>
+		<p>[F10] cycles through colortones that are available for currently selected tile(s). The tileparts of a selection can be drawn in a monochrome color to help them stand out. The available colors are: grayscale, redscale, greenscale, bluescale, and standard for the usual XCOM palette. [Shift+F10] reverses direction.</p>
 
 		<p>The statusbar below the viewer panel shows<br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;- the current scale factor of the tileset graphics<br>
@@ -71,7 +71,7 @@
 
 		<p>Be aware that north is the upper right corner of the panel.</p>
 
-		<p>Note that [Ctrl+S] can be used to save the Map when the center panel has focus. An asterisk will appear after the Map's label on the statusbar if the Mapfile is changed but has not been saved. Also note that an asterisk will appear after the Map's basepath on the titlebar if the Maptree has changed but has not been saved.</p>
+		<p>Note that [Ctrl+s] can be used to save the Map when the center panel has focus. An asterisk will appear after the Map's label on the statusbar if the Mapfile is changed but has not been saved. Also note that an asterisk will appear after the Map's basepath on the titlebar if the Maptree has changed but has not been saved.</p>
 
 		<br>
 		<h3>Keyboard navigation</h3>
@@ -85,33 +85,33 @@
 		<br>
 		<h3>File menu</h3>
 
-		<p>Save All [Ctrl+A] - forces a save of the current Map, Route, and Maptree files.</p>
+		<p>Save All [Ctrl+a] - forces a save of the current Map, Route, and Maptree files.</p>
 
-		<p>Save Map [Ctrl+M] - forces a save of the current Map file.</p>
-		<p>Save Routes [Ctrl+R] - forces a save of the current Route file.</p>
-		<p>Save As ... [Ctrl+E] - saves/exports the current Map and Route files to a user-specified path and label. The path cannot be the root directory of a drive. The reason for this is that when you save the Map, the routine finds the parent folder of the chosen folder, then ensures that the Map gets saved in a subfolder called \MAPS and the Routes gets saved in a subfolder called \ROUTES. This allows the saved Map to be added to MainView's Maptree while maintaining consistency of code-design.</p>
+		<p>Save Map [Ctrl+m] - forces a save of the current Map file.</p>
+		<p>Save Routes [Ctrl+r] - forces a save of the current Route file.</p>
+		<p>Save As ... [Ctrl+e] - saves/exports the current Map and Route files to a user-specified path and label. The path cannot be the root directory of a drive. The reason for this is that when you save the Map, the routine finds the parent folder of the chosen folder, then ensures that the Map gets saved in a subfolder called \MAPS and the Routes gets saved in a subfolder called \ROUTES. This allows the saved Map to be added to MainView's Maptree while maintaining consistency of code-design.</p>
 
-		<p>Save Maptree [Ctrl+T] - forces a save of the Maptree.</p>
+		<p>Save Maptree [Ctrl+t] - forces a save of the Maptree.</p>
 
-		<p>Reload [Ctrl+L] - reloads the Mapfile, Routefile, and any terrain MCDs/PCKs/TABs of the current tileset from disk. Someday this might reload <b>only</b> terrains but for now it's the whole shebang. It prompts to save Map and Routes if they've changed.</p>
+		<p>Reload [Ctrl+l] - reloads the Mapfile, Routefile, and any terrain MCDs/PCKs/TABs of the current tileset from disk. Someday this might reload <b>only</b> terrains but for now it's the whole shebang. It prompts to save Map and Routes if they've changed.</p>
 		<p>Close - closes a currently open Mapfile, Routefile, and its terrains.</p>
 
-		<p>Screenshot ... [Ctrl+N] - saves a PNG of the tileset that's currently displayed in the viewer panel to a specified path. Note that MainView|Edit|Options|Screenshot has a few settings for screenshots, including save as GIF and background color.</p>
+		<p>Screenshot ... [Ctrl+n] - saves a PNG of the tileset that's currently displayed in the viewer panel to a specified path. Note that MainView|Edit|Options|Screenshot has a few settings for screenshots, including save as GIF and background color.</p>
 
-		<p>Quit [Ctrl+Q] - quits MapView II</p>
+		<p>Quit [Ctrl+q] - quits MapView II</p>
 
 		<br>
 		<h3>Edit menu</h3>
 
-		<p>modify mapsize [Ctrl+Z] - opens a dialog box for modifying the dimensions of the currently loaded Map.</p>
-		<p>substitute tileparts [Ctrl+U] - opens a dialog box for replacing tileparts of a given setId with tileparts of a different setId across the currently loaded Map. Tileparts of a given setId can optionally be cleared from a Map.</p>
-		<p>swap terrains [Ctrl+W] - opens a dialog box for rearranging the order of terrains in the current Map's terrainset without the tileset going all wtf.</p>
+		<p>modify mapsize [Ctrl+z] - opens a dialog box for modifying the dimensions of the currently loaded Map.</p>
+		<p>substitute tileparts [Ctrl+u] - opens a dialog box for replacing tileparts of a given setId with tileparts of a different setId across the currently loaded Map. Tileparts of a given setId can optionally be cleared from a Map.</p>
+		<p>swap terrains [Ctrl+w] - opens a dialog box for rearranging the order of terrains in the current Map's terrainset without the tileset going all wtf.</p>
 
 		<p>clear all BypassRecordsExceeded flags - clears all BypassRecordsExceeded flags over all tilesets. The checkbox for these flags is toggled near the bottom of the TilesetEditor. Its setting is specific to each tileset. Note that there is also a MainView Option IgnoreRecordsExceeded, which is a setting that globally overrules the BypassRecordsExceeded flags.</p>
 
 		<p>Configurator - opens the Configuration Editor. This is where to specify or modify the paths to your XCOM installation folder(s) for UFO and/or TFTD - or to your working folders if that's how you want to roll. It can also replace your Maptree file with a fresh one that comes hardcoded. WARNING: doing that would obliterate all customizations that have been done to the Maptree! Alternately, the Configurator can generate a file of the hardcoded, or default tileset-metadata to a template file. The template would be useful if MapView II had been configured for UFO (or TFTD), but you've deleted treenodes, and subsequently require the metadata for TFTD (or UFO) tilesets. The default metadata could then be copied directly from the template file into your <b>MapTilesets.yml</b> file.</p>
 		<p>Note that the tileset-data for both games will exist in your MapTilesets configuration unless/until the data that you don't want is deleted from the MapTree and the MapTree is saved.</p>
-		<p>Options [Ctrl+O] - opens and closes the Options for MainView. Descriptions for the entries appear at the bottom of that window.</p>
+		<p>Options [Ctrl+o] - opens and closes the Options for MainView. Descriptions for the entries appear at the bottom of that window.</p>
 
 		<br>
 		<h3>Viewers menu</h3>
@@ -121,14 +121,14 @@
 		<p>RouteView [F7] - opens and closes the window that shows an editable, 2-dimensional view of the currently loaded Routes.</p>
 		<p>TopRouteView [F8] - opens and closes a window that conflates TopView and RouteView as separate tab-pages in a single viewer.</p>
 
-		<p>F5 through F8 will open or close the respective viewers regardless of which viewer is currently active. Note that if a viewer is minimized and its F-key is pressed the viewer returns to its restored state instead of closing.</p>
+		<p>[F5] through [F8] will open or close the respective viewers regardless of which viewer is currently active. Note that if a viewer is minimized and its F-key is pressed the viewer returns to its restored state instead of closing.</p>
 
-		<p>Ctrl+F5 through Ctrl+F8 focuses the respective viewer, while any of Shift+F5 through Shift+F8 returns focus to MainView if one of the other viewers is focused.</p>
+		<p>[Ctrl+F5] through [Ctrl+F8] focuses the respective viewer, while any of [Shift+F5] through [Shift+F8] returns focus to MainView if one of the other viewers is focused.</p>
 
 		<p>minimize all [F11] - minimizes all viewers.</p>
 		<p>restore all [F12] - restores all viewers.</p>
 
-		<p>ScanG view [Ctrl+G] - displays an overhead view of the currently loaded Map. Note that the graphics for this rely on ScanG.Dat in the GEODATA folder of the Configurator's basepath. The displayed level is synchronized with the other viewers and can be changed with the mousewheel or the [Add] and [Subtract] keys on the numeric keypad. RMB or the [L] key cycles the display among (1) default levels as seen in x-com, (2) only the current level of the Map, and (3) all levels locked visible. The [Enter] key reloads ScanG.Dat from disk.</p>
+		<p>ScanG view [Ctrl+g] - displays an overhead view of the currently loaded Map. Note that the graphics for this rely on ScanG.Dat in the GEODATA folder of the Configurator's basepath. The displayed level is synchronized with the other viewers and can be changed with the mousewheel or [+/-] on the numeric keypad. RMB or the [l] key cycles the display among (1) default levels as seen in x-com, (2) only the current level of the Map, and (3) all levels locked visible. The [Enter] key reloads ScanG.Dat from disk.</p>
 
 		<br>
 		<h3>Toner menu</h3>
@@ -143,10 +143,10 @@
 		<h3>Help menu</h3>
 
 		<p>Help [F1] - shows this CHM helpfile.</p>
-		<p>Colorhelp [Ctrl+H] - shows the colors that have been set in Options for TopView, RouteView, and TileView. Of particular interest is that, on the tab labelled TileView, background colors for all tileparts' special properties are tabled. Special properties are an XCOM mechanic, and are generally used to ferry stuff between the battlefield and an XCOM base or vice versa. They are beyond the purview of this document.</p>
-		<p>About [Ctrl+B] - shows the version, the build date, you know the drill.</p>
+		<p>Colorhelp [Ctrl+h] - shows the colors that have been set in Options for TopView, RouteView, and TileView. Of particular interest is that, on the tab labelled TileView, background colors for all tileparts' special properties are tabled. Special properties are an XCOM mechanic, and are generally used to ferry stuff between the battlefield and an XCOM base or vice versa. They are beyond the purview of this document.</p>
+		<p>About [Ctrl+b] - shows the version, the build date, you know the drill.</p>
 
-		<p>Map Info [Ctrl+I] - displays a bit of information about the currently loaded Map. The Detail button displays a list of terrains used by the Map: each terrain's MCD record is then preceeded by a plus sign if it is currently used in the Map and a minus sign if it is not used in the Map.</p>
+		<p>Map Info [Ctrl+i] - displays a bit of information about the currently loaded Map. The Detail button displays a list of terrains used by the Map: each terrain's MCD record is then preceeded by a plus sign if it is currently used in the Map and a minus sign if it is not used in the Map.</p>
 		<br>
 	</body>
 </html>
