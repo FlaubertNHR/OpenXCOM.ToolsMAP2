@@ -120,7 +120,7 @@ namespace XCom
 		/// <returns>a <c>Spriteset</c> containing all the sprites, or
 		/// <c>null</c> if
 		/// <c><see cref="Spriteset.Failr">Spriteset.Failr</see></c> gets set to
-		/// one of the <c><see cref="Spriteset.Fail">Spriteset.Fail</see></c>
+		/// one of the <c><see cref="SpritesetFail">SpritesetFail</see></c>
 		/// values</returns>
 		/// <remarks>
 		/// <list type="bullet">
@@ -193,7 +193,7 @@ namespace XCom
 
 							switch (spriteset.Failr)
 							{
-								default: // case Spriteset.Fail.non
+								default: // case SpritesetFail.non
 									if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
 										Spritesets.Add(spriteset);
 
