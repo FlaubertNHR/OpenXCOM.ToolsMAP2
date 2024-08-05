@@ -323,6 +323,7 @@ namespace XCom
 
 
 			CountOffsets = bytesTab.Length / TabwordLength;
+			//Logfile.Log(". CountOffsets= " + CountOffsets);
 			var offsets = new uint[CountOffsets + 1];	// NOTE: the last entry will be set to the total length of
 														// the input-bindata to deter the length of the final sprite.
 			var buffer = new byte[TabwordLength];
@@ -381,6 +382,7 @@ namespace XCom
 						++CountSprites; // qty of bytes in 'bytesPck' w/ value 0xFF (ie. qty of sprites)
 					}
 				}
+				//Logfile.Log(". CountSprites= " + CountSprites);
 
 				// test ->
 /*				if (true) // rewrite the Tabfile ->
@@ -418,6 +420,7 @@ namespace XCom
 
 				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
+					//Logfile.Log("SpritesetFail.qty");
 					Failr = SpritesetFail.qty;
 					return;
 				}
@@ -436,6 +439,7 @@ namespace XCom
 
 					if (bindata[bindata.Length - 1] != PckSprite.MarkerEos)
 					{
+						//Logfile.Log("#" + i + ". SpritesetFail.pck val= " + bindata[bindata.Length - 1]);
 						Failr = SpritesetFail.pck;
 						Failid = i;
 						return;
@@ -451,8 +455,12 @@ namespace XCom
 											this,
 											createToned);
 
-					if (Failr == SpritesetFail.ovr)
+					if (   Failr == SpritesetFail.ovr
+						|| Failr == SpritesetFail.eos)
+					{
+						//Logfile.Log("error: SpritesetFail." + Failr);
 						return;
+					}
 
 					Sprites.Add(sprite);
 				}

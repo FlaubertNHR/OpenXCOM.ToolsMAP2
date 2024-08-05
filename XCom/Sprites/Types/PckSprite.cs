@@ -114,6 +114,9 @@ namespace XCom
 
 			//Logfile.Log("PckSprite spriteset= " + spriteset.Label + " Pal= " + Pal + " Id= " + Id + " Ordinal= " + Ordinal);
 			//Logfile.Log(". bindata.Length= " + bindata.Length);
+			//string data = String.Empty;
+			//foreach (var b in bindata) data += (b + ",");
+			//Logfile.Log(". bindata= " + data);
 
 			_width   = width;
 			_height  = height;
@@ -128,11 +131,12 @@ namespace XCom
 					case MarkerEos: // end of sprite
 						if (src != bindata.Length - 1)
 						{
+							//Logfile.Log(src + " . FAIL dst= " + dst + " val= " + bindata[src] + " SpritesetFail.eos");
 							_spriteset.Failr = SpritesetFail.eos;
 							_spriteset.Failid = Id;
 							return;
 						}
-						//Logfile.Log(src + " . EoS");
+						//Logfile.Log(src + " . EoS" + " val= " + bindata[src]);
 						break;
 
 					case MarkerRle: // skip quantity of pixels
@@ -143,13 +147,13 @@ namespace XCom
 					default:
 						if (dst >= _bindata.Length)
 						{
-							//Logfile.Log(src + " . . FAIL dst= " + dst);
+							//Logfile.Log(src + " . . FAIL dst= " + dst + " val= " + bindata[src] + " SpritesetFail.ovr");
 							_spriteset.Failr = SpritesetFail.ovr;
 							_spriteset.Failid = Id;
 							return;
 						}
 
-						//Logfile.Log(src + " . dst= " + dst);
+						//Logfile.Log(src + " . dst= " + dst + " val= " + bindata[src]);
 						_bindata[dst++] = bindata[src];
 						break;
 				}
