@@ -132,7 +132,7 @@ namespace XCom
 						if (src != bindata.Length - 1)
 						{
 							//Logfile.Log(src + " . FAIL dst= " + dst + " val= " + bindata[src] + " SpritesetFail.eos");
-							_spriteset.Failr = SpritesetFail.eos;
+							_spriteset.Failreason = SpritesetFail.eos;
 							_spriteset.Failid = Id;
 							return;
 						}
@@ -148,7 +148,7 @@ namespace XCom
 						if (dst >= _bindata.Length)
 						{
 							//Logfile.Log(src + " . . FAIL dst= " + dst + " val= " + bindata[src] + " SpritesetFail.ovr");
-							_spriteset.Failr = SpritesetFail.ovr;
+							_spriteset.Failreason = SpritesetFail.ovr;
 							_spriteset.Failid = Id;
 							return;
 						}

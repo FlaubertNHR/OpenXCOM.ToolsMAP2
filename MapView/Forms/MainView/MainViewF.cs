@@ -520,7 +520,7 @@ namespace MapView
 
 				if (CuboidSprite.Ufoset != null)
 				{
-					if (CuboidSprite.Ufoset.Failr != SpritesetFail.non)
+					if (CuboidSprite.Ufoset.Failreason != SpritesetFail.non)
 					{
 						CuboidSprite.Ufoset = null;
 						//Logfile.Log("UFO Cursor failed to load.");
@@ -543,7 +543,7 @@ namespace MapView
 
 				if (CuboidSprite.Tftdset != null)
 				{
-					if (CuboidSprite.Tftdset.Failr != SpritesetFail.non)
+					if (CuboidSprite.Tftdset.Failreason != SpritesetFail.non)
 					{
 						CuboidSprite.Tftdset = null;
 						//Logfile.Log("TFTD Cursor failed to load.");

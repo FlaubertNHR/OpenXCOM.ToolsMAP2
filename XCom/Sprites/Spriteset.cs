@@ -34,9 +34,9 @@ namespace XCom
 		/// End_of_sprite marker before Pck data's length.
 		/// </summary>
 		/// <remarks>Technically this will never occur.
-		/// <c><see cref="Spriteset.Failr">Spriteset.Failr</see></c> would be
-		/// set to either <c><see cref="qty"/></c> or <c><see cref="pck"/></c>
-		/// before <c>eos</c> happens.</remarks>
+		/// <c><see cref="Spriteset.Failreason">Spriteset.Failreason</see></c>
+		/// would be set to either <c><see cref="qty"/></c> or
+		/// <c><see cref="pck"/></c> before <c>eos</c> happens.</remarks>
 		eos,
 
 		/// <summary>
@@ -150,7 +150,7 @@ namespace XCom
 		/// to <c>null</c> if not <c>SpritesetFail.non</c>. Only
 		/// <c><see cref="SpritesetFail.pck">SpritesetFail.pck</see></c> needs
 		/// to call <c><see cref="Dispose()">Dispose()</see></c>.</remarks>
-		public SpritesetFail Failr
+		public SpritesetFail Failreason
 		{ get; internal set; }
 
 		/// <summary>
@@ -421,7 +421,7 @@ namespace XCom
 				if (CountSprites != CountOffsets) // avoid throwing 1 or 15000 exceptions ...
 				{
 					//Logfile.Log("SpritesetFail.qty");
-					Failr = SpritesetFail.qty;
+					Failreason = SpritesetFail.qty;
 					return;
 				}
 
@@ -440,7 +440,7 @@ namespace XCom
 					if (bindata[bindata.Length - 1] != PckSprite.MarkerEos)
 					{
 						//Logfile.Log("#" + i + ". SpritesetFail.pck val= " + bindata[bindata.Length - 1]);
-						Failr = SpritesetFail.pck;
+						Failreason = SpritesetFail.pck;
 						Failid = i;
 						return;
 					}
@@ -455,10 +455,10 @@ namespace XCom
 											this,
 											createToned);
 
-					if (   Failr == SpritesetFail.ovr
-						|| Failr == SpritesetFail.eos)
+					if (   Failreason == SpritesetFail.ovr
+						|| Failreason == SpritesetFail.eos)
 					{
-						//Logfile.Log("error: SpritesetFail." + Failr);
+						//Logfile.Log("error: SpritesetFail." + Failreason);
 						return;
 					}
 
@@ -490,7 +490,7 @@ namespace XCom
 		/// <param name="label">typically the file w/out path or extension</param>
 		/// <param name="fs">a <c>Stream</c> of the <c>SCANG.DAT</c> or
 		/// <c>LOFTEMPS.DAT</c> file</param>
-		/// <param name="setType"><c><see cref="SpritesetType.LoFT"></see></c>
+		/// <param name="setType"><c><see cref="SpritesetType.LoFT">SpritesetType.LoFT</see></c>
 		/// if LoFT data,
 		/// <c><see cref="SpritesetType.ScanG">SpritesetType.ScanG</see></c>
 		/// if ScanG</param>

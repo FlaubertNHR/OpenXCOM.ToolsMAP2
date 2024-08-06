@@ -119,9 +119,9 @@ namespace XCom
 		/// <param name="spriteheight"></param>
 		/// <returns>a <c>Spriteset</c> containing all the sprites, or
 		/// <c>null</c> if
-		/// <c><see cref="Spriteset.Failr">Spriteset.Failr</see></c> gets set to
-		/// one of the <c><see cref="SpritesetFail">SpritesetFail</see></c>
-		/// values</returns>
+		/// <c><see cref="Spriteset.Failreason">Spriteset.Failreason</see></c>
+		/// gets set to one of the
+		/// <c><see cref="SpritesetFail">SpritesetFail</see></c> values</returns>
 		/// <remarks>
 		/// <list type="bullet">
 		/// <item>both UFO and TFTD use 2-byte TabwordLengths for 32x40
@@ -191,7 +191,7 @@ namespace XCom
 														tabwordLength,
 														createToned);
 
-							switch (spriteset.Failr)
+							switch (spriteset.Failreason)
 							{
 								default: // case SpritesetFail.non
 									if (createToned) // the Spriteset is added to 'Spritesets' for MapView terrain only.
