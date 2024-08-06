@@ -8,45 +8,6 @@ using DSShared;
 
 namespace XCom
 {
-	#region Enums (public)
-	/// <summary>
-	/// Possible fail-states for
-	/// <c><see cref="Spriteset(string, Palette, byte[], byte[], int, int, int, bool)">Spriteset()</see></c>.
-	/// </summary>
-	public enum SpritesetFail
-	{
-		/// <summary>
-		/// Success.
-		/// </summary>
-		non,
-
-		/// <summary>
-		/// Pck data (uncompressed) overflowed a sprite's length.
-		/// </summary>
-		ovr,
-
-		/// <summary>
-		/// Pck vs Tab count mismatch.
-		/// </summary>
-		qty,
-
-		/// <summary>
-		/// End_of_sprite marker before Pck data's length.
-		/// </summary>
-		/// <remarks>Technically this will never occur.
-		/// <c><see cref="Spriteset.Failreason">Spriteset.Failreason</see></c>
-		/// would be set to either <c><see cref="qty"/></c> or
-		/// <c><see cref="pck"/></c> before <c>eos</c> happens.</remarks>
-		eos,
-
-		/// <summary>
-		/// Pck data does not end with End_of_Sprite marker.
-		/// </summary>
-		pck
-	}
-	#endregion Enums (public)
-
-
 	/// <summary>
 	/// a <c>Spriteset</c>. A collection of images that is usually created of
 	/// <c>PCK+TAB</c> terrain file data but can also be units or bigobs or a
