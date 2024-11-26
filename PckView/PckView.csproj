@@ -24,7 +24,7 @@
     <SignAssembly>True</SignAssembly>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <PublishUrl>http://localhost/PckView/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -110,7 +110,9 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="CreateTabD.cs" />
+    <Compile Include="CreateTabD.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CreateTabD.Designer.cs">
       <DependentUpon>CreateTabD.cs</DependentUpon>
     </Compile>
@@ -118,11 +120,15 @@
     <Compile Include="PaletteF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PaletteLabelBar.cs" />
+    <Compile Include="PaletteLabelBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PalettePanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PckViewPanel.cs" />
+    <Compile Include="PckViewPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

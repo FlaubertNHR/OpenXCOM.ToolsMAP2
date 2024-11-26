@@ -223,3 +223,12 @@ YamlDotNet/Properties/AssemblyInfo.Generated.cs
 
 # batchfile helper
 copyout.bat
+/.vs
+/ConfigConverter/.vs
+/DSShared/.vs
+/MapView/.vs
+/McdView/.vs
+/PckView/.vs
+/RulesetConverter/.vs
+/XCom/.vs
+/YamlDotNet/.vs

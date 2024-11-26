@@ -87,7 +87,7 @@ namespace XCom
 
 		#region Fields
 		private string _pfe;
-		#endregion Fields
+        #endregion Fields
 
 
 		#region Properties
@@ -259,7 +259,7 @@ namespace XCom
 			if (pfe != null && LoadMapfile(pfe, parts)) // safety. 'pfe' shall be valid here.
 			{
 				_pfe = pfe;
-
+ 
 				Descriptor = descriptor;
 				Terrains   = descriptor.Terrains;
 				Parts      = parts;
@@ -465,7 +465,7 @@ namespace XCom
 		}
 
 		/// <summary>
-		/// Exports this <c>MapFile</c> to a different file.
+		/// Exports this <c>MapFile</c> to a different file with MAP extension.
 		/// </summary>
 		/// <param name="pf">path-file w/out extension</param>
 		public void ExportMap(string pf)
@@ -473,12 +473,21 @@ namespace XCom
 			WriteMapfile(pf + GlobalsXC.MapExt);
 		}
 
-		/// <summary>
-		/// Writes this <c>MapFile</c> to a given path.
-		/// </summary>
-		/// <param name="pfe">path-file-extension</param>
-		/// <returns><c>true</c> on success</returns>
-		private bool WriteMapfile(string pfe)
+        /// <summary>
+        /// Exports this <c>MapFile</c> to a different file with MAP2 extension.
+        /// </summary>
+        /// <param name="pf">path-file w/out extension</param>
+        public void ExportMap2(string pf)
+        {
+            WriteMap2file(pf + GlobalsXC.MapExt2);
+        }
+
+        /// <summary>
+        /// Writes this <c>MapFile</c> to a given path.
+        /// </summary>
+        /// <param name="pfe">path-file-extension</param>
+        /// <returns><c>true</c> on success</returns>
+        private bool WriteMapfile(string pfe)
 		{
 			string pfeT;
 			if (File.Exists(pfe))
@@ -508,10 +517,10 @@ namespace XCom
 				{
 					tile = Tiles.GetTile(col, row, lev);
 
-					WritePartId(fs, tile.Floor);
-					WritePartId(fs, tile.West);
-					WritePartId(fs, tile.North);
-					WritePartId(fs, tile.Content);
+					WritePartId(fs, tile.Floor, true);
+					WritePartId(fs, tile.West, true);
+					WritePartId(fs, tile.North, true);
+					WritePartId(fs, tile.Content, true);
 				}
 			}
 
@@ -521,38 +530,105 @@ namespace XCom
 			return !fail;
 		}
 
-		/// <summary>
-		/// Writes the id of a specified <c><see cref="Tilepart"/></c> to a
-		/// specified <c>FileStream</c>.
-		/// </summary>
-		/// <param name="fs"></param>
-		/// <param name="part"></param>
-		private void WritePartId(Stream fs, Tilepart part)
-		{
-			int id;
+        /// <summary>
+        /// Writes this <c>MapFile</c> in MAP2 format to a given path.
+        /// </summary>
+        /// <param name="pfe">path-file-extension</param>
+        /// <returns><c>true</c> on success</returns>
+        private bool WriteMap2file(string pfe)
+        {
+            string pfeT;
+            if (File.Exists(pfe))
+                pfeT = pfe + GlobalsXC.TEMPExt;
+            else
+                pfeT = pfe;
 
-			if (part == null)
-			{
-				fs.WriteByte((byte)0);
-			}
-			else if ((id = part.SetId) >= Parts.Count) // wipe crippled part
-			{
-				fs.WriteByte((byte)0);
-				ForceReload = true;
-			}
-			else if ((id += BlanksReservedCount) > (int)Byte.MaxValue) // NOTE: shall be disallowed by the edit-functs
-			{
-				fs.WriteByte((byte)0);
-			}
-			else
-				fs.WriteByte((byte)id);
-		}
+            bool fail = true;
+            using (var fs = FileService.CreateFile(pfeT))
+                if (fs != null)
+                {
+                    fail = false;
+                    fs.Write(BitConverter.GetBytes(Rows), 0, 2); // MAP2
+                    fs.Write(BitConverter.GetBytes(Cols), 0, 2); // - says this header is "height, width and depth (in that order)"
+                    fs.Write(BitConverter.GetBytes(Levs), 0, 2); //   ie. y/x/z
 
-		/// <summary>
-		/// Saves <c><see cref="Routes"/></c> to the current Routefile.
-		/// </summary>
-		/// <returns><c>true</c> on success</returns>
-		public bool SaveRoutes()
+                    // NOTE: User is disallowed from placing any tilepart with an id
+                    // greater than MapFile.MaxTerrainId.
+
+                    // TODO: Ask user before NOT writing crippled partids.
+
+                    MapTile tile;
+                    for (int lev = 0; lev != Levs; ++lev) // z-axis (top to bot)
+                        for (int row = 0; row != Rows; ++row) // y-axis
+                            for (int col = 0; col != Cols; ++col) // x-axis
+                            {
+                                tile = Tiles.GetTile(col, row, lev);
+
+                                WritePartId(fs, tile.Floor, false);
+                                WritePartId(fs, tile.West, false);
+                                WritePartId(fs, tile.North, false);
+                                WritePartId(fs, tile.Content, false);
+                            }
+                }
+
+            if (!fail && pfeT != pfe)
+                return FileService.ReplaceFile(pfe);
+
+            return !fail;
+        }
+
+        /// <summary>
+        /// Writes the id of a specified <c><see cref="Tilepart"/></c> to a
+        /// specified <c>FileStream</c>.
+        /// </summary>
+        /// <param name="fs"></param>
+        /// <param name="part"></param>
+        /// <summary>
+        /// Writes the id of a specified <c><see cref="Tilepart"/></c> to a
+        /// specified <c>FileStream</c>.
+        /// </summary>
+        /// <param name="fs"></param>
+        /// <param name="part"></param>
+        private void WritePartId(Stream fs, Tilepart part, bool isMAP)
+        {
+            int id;
+
+            if (part == null)
+            {
+                if (isMAP)
+                    fs.WriteByte((byte)0);
+                else
+                    fs.Write(BitConverter.GetBytes(0), 0, 2); // MAP2
+            }
+            else if ((id = part.SetId) >= Parts.Count) // wipe crippled part
+            {
+                if (isMAP)
+                    fs.WriteByte((byte)0);
+                else
+                    fs.Write(BitConverter.GetBytes(0), 0, 2); // MAP2
+                ForceReload = true;
+            }
+            else if ((id += BlanksReservedCount) > (int)Byte.MaxValue) // NOTE: shall be disallowed by the edit-functs
+            {
+                if (isMAP)
+                    fs.WriteByte((byte)0);
+                else
+                    fs.Write(BitConverter.GetBytes(0), 0, 2); // MAP2
+            }
+            else
+            {
+                if (isMAP)
+                    fs.WriteByte((byte)id);
+                else
+                    fs.Write(BitConverter.GetBytes(id), 0, 2); // MAP2
+            }
+        }
+
+        /// <summary>
+        /// Saves <c><see cref="Routes"/></c> to the current Routefile.
+        /// </summary>
+        /// <returns><c>true</c> on success</returns>
+        public bool SaveRoutes()
 		{
 			return Routes.SaveRoutes();
 		}

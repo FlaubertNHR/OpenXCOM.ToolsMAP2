@@ -38,7 +38,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <NoWin32Manifest>False</NoWin32Manifest>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <NoStdLib>False</NoStdLib>
@@ -116,14 +116,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\About.cs" />
+    <Compile Include="Forms\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ColorHelp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConfigurationForm.cs" />
+    <Compile Include="Forms\ConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
@@ -138,15 +142,21 @@
     <Compile Include="Forms\MainView\MainViewF.Designer.cs">
       <DependentUpon>MainViewF.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MapInfoDetailDialog.cs" />
+    <Compile Include="Forms\MapInfoDetailDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\MapInfoDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MapResizeInputBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MapTreeInputBox.cs" />
-    <Compile Include="Forms\McdInfoF.cs" />
+    <Compile Include="Forms\MapTreeInputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\McdInfoF.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\McdInfoF.Designer.cs">
       <DependentUpon>McdInfoF.cs</DependentUpon>
     </Compile>
@@ -201,20 +211,32 @@
     <Compile Include="Forms\OptionsF.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SpawnInfo.cs" />
+    <Compile Include="Forms\SpawnInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\SpawnInfo.Designer.cs">
       <DependentUpon>SpawnInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ScanGViewer.cs" />
-    <Compile Include="Forms\TerrainSwapDialog.cs" />
-    <Compile Include="Forms\TilesetEditor.cs" />
+    <Compile Include="Forms\ScanGViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TerrainSwapDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TilesetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\TilesetEditor.Designer.cs">
       <DependentUpon>TilesetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\TilepartSubstitution.cs" />
+    <Compile Include="Forms\TilepartSubstitution.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Option.cs" />
     <Compile Include="OptionsManager.cs" />
-    <Compile Include="OptionsPropertyGrid.cs" />
+    <Compile Include="OptionsPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -270,7 +292,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Varidia.cs" />
-    <Compile Include="Volutar\ExternalProcessF.cs" />
+    <Compile Include="Volutar\ExternalProcessF.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Volutar\ExternalProcessService.cs" />
     <EmbeddedResource Include="Error\ErrorF.resx">
       <DependentUpon>ErrorF.cs</DependentUpon>
@@ -391,10 +415,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Forms\MainView" />
-    <Folder Include="Forms\Observers" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <StartAction>Project</StartAction>

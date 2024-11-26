@@ -23,7 +23,7 @@
     </UpgradeBackupLocation>
     <SignAssembly>True</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <NoStdLib>False</NoStdLib>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <NoWin32Manifest>False</NoWin32Manifest>
@@ -76,14 +76,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CompositedTreeView.cs" />
+    <Compile Include="Controls\CompositedTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CustomToolStripRenderer.cs" />
-    <Compile Include="Controls\ProgressBarF.cs" />
-    <Compile Include="Controls\ToolStripOneclick.cs" />
+    <Compile Include="Controls\ProgressBarF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ToolStripOneclick.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DateTimeExtension.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="GlobalsXC.cs" />
-    <Compile Include="Infobox.cs" />
+    <Compile Include="Infobox.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Infobox.Designer.cs">
       <DependentUpon>Infobox.cs</DependentUpon>
     </Compile>
@@ -107,14 +115,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SharedSpace.cs" />
-    <Compile Include="Controls\CompositedPanel.cs" />
+    <Compile Include="Controls\CompositedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CollapsibleSplitter.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\DoubleBufferedControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\CompositedTabControl.cs" />
+    <Compile Include="Controls\CompositedTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="keyFile.snk" />

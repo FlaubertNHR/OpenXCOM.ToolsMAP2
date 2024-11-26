@@ -150,13 +150,28 @@ namespace XCom
 			return null;
 		}
 
-		/// <summary>
-		/// Gets the appropriate TERRAIN directory for this tileset.
-		/// </summary>
-		/// <param name="path">value2 of the Tuple in the
-		/// <c><see cref="Terrains"/></c> property</param>
-		/// <returns>the actual TERRAIN directory for this tileset</returns>
-		public string GetTerrainDirectory(string path)
+        /// <summary>
+        /// Gets the fullpath to the Mapfile for this <c>Descriptor</c>, without extension.
+        /// </summary>
+        /// <returns>the path to the Mapfile else <c>null</c></returns>
+        public string GetMapfilePathwoExtension()
+        {
+            if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
+            {
+                string pf = Path.Combine(Basepath, GlobalsXC.MapsDir);
+                pf = Path.Combine(pf, Label);
+                return pf;
+            }
+			return null;
+        }
+
+        /// <summary>
+        /// Gets the appropriate TERRAIN directory for this tileset.
+        /// </summary>
+        /// <param name="path">value2 of the Tuple in the
+        /// <c><see cref="Terrains"/></c> property</param>
+        /// <returns>the actual TERRAIN directory for this tileset</returns>
+        public string GetTerrainDirectory(string path)
 		{
 			if (String.IsNullOrEmpty(path))								// use Configurator's basepath
 				return _dirTerr;

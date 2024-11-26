@@ -8,7 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <RootNamespace>ConfigConverter</RootNamespace>
     <AssemblyName>ConfigConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>
     <SignAssembly>False</SignAssembly>
@@ -47,7 +47,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigConverter.cs" />
+    <Compile Include="ConfigConverter.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ConfigConverter.Designer.cs">
       <DependentUpon>ConfigConverter.cs</DependentUpon>
     </Compile>

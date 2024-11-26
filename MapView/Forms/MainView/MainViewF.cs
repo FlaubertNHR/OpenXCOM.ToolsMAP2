@@ -1560,6 +1560,69 @@ namespace MapView
 		}
 
 		/// <summary>
+		/// Handles an export-Map2Routes click.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnExportMap2RoutesClick(object sender, EventArgs e)
+		{
+			if (MapFile != null && MapFile.Descriptor != null)
+			{
+				using (var sfd = new SaveFileDialog())
+				{
+					sfd.Title      = "Export Map2 (and Routes) ...";
+					sfd.Filter     = "Map files (*.MAP2)|*.MAP2|All files (*.*)|*.*";
+					sfd.DefaultExt = GlobalsXC.MapExt2;
+					sfd.FileName   = MapFile.Descriptor.Label;
+
+					if (!Directory.Exists(_lastExportDirectory))
+					{
+						string path = Path.Combine(MapFile.Descriptor.Basepath, GlobalsXC.MapsDir);
+						if (Directory.Exists(path))
+							sfd.InitialDirectory = path;
+					}
+					else
+						sfd.InitialDirectory = _lastExportDirectory;
+
+
+					if (sfd.ShowDialog() == DialogResult.OK)
+					{
+						string pfe = sfd.FileName;
+						_lastExportDirectory = Path.GetDirectoryName(pfe);
+
+						// NOTE: GetDirectoryName() will return a string ending with a
+						// path-separator if it's the root dir, and without one if it's
+						// not. But Path.Combine() doesn't figure out the difference.
+						// woohoo ...
+
+						if (_lastExportDirectory.EndsWith(GlobalsXC.MapsDir, StringComparison.OrdinalIgnoreCase))
+						{
+							string dir       = _lastExportDirectory.Substring(0, _lastExportDirectory.Length - GlobalsXC.MapsDir.Length - 1);
+							string dirMaps   = Path.Combine(dir, GlobalsXC.MapsDir);
+							string dirRoutes = Path.Combine(dir, GlobalsXC.RoutesDir);
+							string label     = Path.GetFileNameWithoutExtension(pfe);
+
+							MapFile.ExportMap2(   Path.Combine(dirMaps,   label));
+							MapFile.ExportRoutes(Path.Combine(dirRoutes, label));
+						}
+						else
+						{
+							using (var f = new Infobox(
+													"Error",
+													Infobox.SplitString("Maps must be saved to a directory MAPS."
+															+ " Routes can then be saved to its sibling directory ROUTES."),
+													null,
+													InfoboxType.Error))
+							{
+								f.ShowDialog(this);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// Saves the <c><see cref="MapTree"/></c> to "settings/MapTilesets.yml".
 		/// </summary>
 		/// <param name="sender"></param>
@@ -3425,6 +3488,7 @@ namespace MapView
 			miSaveMap             .Enabled =
 			miSaveRoutes          .Enabled =
 			miExport              .Enabled =
+			miExport2              .Enabled =
 			miReload              .Enabled =
 			miClose               .Enabled =
 			miScreenshot          .Enabled =

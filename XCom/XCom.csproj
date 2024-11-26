@@ -23,7 +23,7 @@
     </UpgradeBackupLocation>
     <SignAssembly>True</SignAssembly>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <NoWin32Manifest>False</NoWin32Manifest>
     <NoStdLib>False</NoStdLib>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
@@ -95,7 +95,9 @@
     <Compile Include="McdRecords\McdRecord.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="McdRecords\McdRecordsExceeded.cs" />
+    <Compile Include="McdRecords\McdRecordsExceeded.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="McdRecords\SpecialType.cs" />
     <Compile Include="Sprites\SpriteLoader.cs" />
     <Compile Include="Sprites\SpriteService.cs">
@@ -120,7 +122,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RouteData\Link.cs" />
-    <Compile Include="RouteData\RouteCheckInfobox.cs" />
+    <Compile Include="RouteData\RouteCheckInfobox.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="RouteData\RouteNode.cs" />
     <Compile Include="RouteData\RouteCheckService.cs" />
     <Compile Include="Map\MapFileService.cs" />
@@ -194,11 +198,7 @@
     <EmbeddedResource Include="_Embedded\MONOTONE.PCK" />
     <EmbeddedResource Include="_Embedded\MONOTONE.TAB" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sprites" />
-    <Folder Include="Sprites\Types" />
-    <Folder Include="McdRecords" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugType>Full</DebugType>

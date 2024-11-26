@@ -26,6 +26,7 @@ namespace MapView
 		private MenuItem miSaveMap;
 		private MenuItem miSaveRoutes;
 		private MenuItem miExport;
+		private MenuItem miExport2;
 		private MenuItem miSeparator2;
 		private MenuItem miSaveMaptree;
 		private MenuItem miSeparator3;
@@ -103,6 +104,7 @@ namespace MapView
 			this.miSaveMap = new System.Windows.Forms.MenuItem();
 			this.miSaveRoutes = new System.Windows.Forms.MenuItem();
 			this.miExport = new System.Windows.Forms.MenuItem();
+			this.miExport2 = new System.Windows.Forms.MenuItem();
 			this.miSeparator2 = new System.Windows.Forms.MenuItem();
 			this.miSaveMaptree = new System.Windows.Forms.MenuItem();
 			this.miSeparator3 = new System.Windows.Forms.MenuItem();
@@ -166,6 +168,7 @@ namespace MapView
 			this.miSaveMap,
 			this.miSaveRoutes,
 			this.miExport,
+			this.miExport2,
 			this.miSeparator2,
 			this.miSaveMaptree,
 			this.miSeparator3,
@@ -214,27 +217,35 @@ namespace MapView
 			this.miExport.Text = "&Export Map and Routes ...";
 			this.miExport.Click += new System.EventHandler(this.OnExportMapRoutesClick);
 			// 
+			// miExport2
+			// 
+			this.miExport2.Enabled = false;
+			this.miExport2.Index = 5;
+			this.miExport2.Shortcut = System.Windows.Forms.Shortcut.Ctrl2;
+			this.miExport2.Text = "Export Map&2 and Routes ...";
+			this.miExport2.Click += new System.EventHandler(this.OnExportMap2RoutesClick);
+			// 
 			// miSeparator2
 			// 
-			this.miSeparator2.Index = 5;
+			this.miSeparator2.Index = 6;
 			this.miSeparator2.Text = "-";
 			// 
 			// miSaveMaptree
 			// 
-			this.miSaveMaptree.Index = 6;
+			this.miSaveMaptree.Index = 7;
 			this.miSaveMaptree.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
 			this.miSaveMaptree.Text = "Save Map&tree";
 			this.miSaveMaptree.Click += new System.EventHandler(this.OnSaveMaptreeClick);
 			// 
 			// miSeparator3
 			// 
-			this.miSeparator3.Index = 7;
+			this.miSeparator3.Index = 8;
 			this.miSeparator3.Text = "-";
 			// 
 			// miReload
 			// 
 			this.miReload.Enabled = false;
-			this.miReload.Index = 8;
+			this.miReload.Index = 9;
 			this.miReload.Shortcut = System.Windows.Forms.Shortcut.CtrlL;
 			this.miReload.Text = "Re&load";
 			this.miReload.Click += new System.EventHandler(this.OnReloadClick);
@@ -242,31 +253,31 @@ namespace MapView
 			// miClose
 			// 
 			this.miClose.Enabled = false;
-			this.miClose.Index = 9;
+			this.miClose.Index = 10;
 			this.miClose.Text = "Clo&se";
 			this.miClose.Click += new System.EventHandler(this.OnCloseClick);
 			// 
 			// miSeparator4
 			// 
-			this.miSeparator4.Index = 10;
+			this.miSeparator4.Index = 11;
 			this.miSeparator4.Text = "-";
 			// 
 			// miScreenshot
 			// 
 			this.miScreenshot.Enabled = false;
-			this.miScreenshot.Index = 11;
+			this.miScreenshot.Index = 12;
 			this.miScreenshot.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
 			this.miScreenshot.Text = "Scree&nshot ...";
 			this.miScreenshot.Click += new System.EventHandler(this.OnScreenshotClick);
 			// 
 			// miSeparator5
 			// 
-			this.miSeparator5.Index = 12;
+			this.miSeparator5.Index = 13;
 			this.miSeparator5.Text = "-";
 			// 
 			// miQuit
 			// 
-			this.miQuit.Index = 13;
+			this.miQuit.Index = 14;
 			this.miQuit.Shortcut = System.Windows.Forms.Shortcut.CtrlQ;
 			this.miQuit.Text = "&Quit";
 			this.miQuit.Click += new System.EventHandler(this.OnQuitClick);

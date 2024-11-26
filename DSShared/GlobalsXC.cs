@@ -9,6 +9,7 @@ namespace DSShared
 		#region Fields (static)
 		public const string MapsDir     = "MAPS";
 		public const string MapExt      = ".MAP";
+        public const string MapExt2     = ".MAP2";
 
 		public const string RoutesDir   = "ROUTES";
 		public const string RouteExt    = ".RMP";
