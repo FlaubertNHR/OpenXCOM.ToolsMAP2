@@ -1,9 +1,19 @@
-# MapView II
+# MapView II Extended (WIP)
 
-based on the original MapView by Ben Ratzlaff, but reworked from top to bottom (almost)
+based on Mapview2 by kevL (which was based on the original MapView by Ben Ratzlaff)
 
-Compiled .exe(s) and .dll(s) and a CHM helpfile are in the Distribution folder. I have only a Windows7 64-bit machine, but those builds should run as 64-bit on 64-bit machines or 32-bit on 32-bit machines.
+.NET 4.8 is required.
 
-.NET 4.5.1 is required.
+Added support for new MAP2 format, which stores tileset info using 16bits instead of 8bits.
+This way there is no virtual limit (well, 65534!) for tiles used on maps (MAP format has a limit of 253)
 
-ps. I've made efforts toward Mono-compatibility (sic) but that's not under warranty.
+- Allows loading MAP/MAP2 files -if there are 2 MAP/MAP2 with the same name, MAP one will be loaded-
+- MAP2 files are shown in blue in browser tree.
+- Saves map in the same format it was loaded (either MAP/MAP2)
+- Exports maps in the desired format, either MAP or MAP2.
+- No "more-than-253-tileset" warning if editing a MAP2 file.
+- No banning of using tiles with ID > 253 if editing a MAP2 file.
+- Avoid/warn exporting to MAP file if a tile with ID > 253 is used in a the map file
+
+
+

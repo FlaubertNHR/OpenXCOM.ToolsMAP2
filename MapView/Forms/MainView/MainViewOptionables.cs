@@ -914,7 +914,20 @@ namespace MapView.Forms.MainView
 			set { _treeForecolor = value; }
 		}
 
-		private const string str_TreeForecolorInvalidFile = "TreeForecolorInvalidFile";
+        private const string str_TreeForecolorMAP2 = "TreeForecolorMAP2";
+        private static Color def_TreeForecolorMAP2 = Color.Blue;
+
+        private Color _treeForecolorMAP2 = def_TreeForecolorMAP2;
+        [Category(cat_PanelColors)]
+        [Description("Color of the Maptree font for MAP files (default Blue)")]
+        [DefaultValue(typeof(Color), "Blue")]
+        public Color TreeForecolorMAP2
+        {
+            get { return _treeForecolorMAP2; }
+            set { _treeForecolorMAP2 = value; }
+        }
+
+        private const string str_TreeForecolorInvalidFile = "TreeForecolorInvalidFile";
 		private static Color def_TreeForecolorInvalidFile = Color.Crimson;
 
 		private Color _treeForecolorInvalid = def_TreeForecolorInvalidFile;
@@ -926,6 +939,7 @@ namespace MapView.Forms.MainView
 			get { return _treeForecolorInvalid; }
 			set { _treeForecolorInvalid = value; }
 		}
+
 
 
 		private  const string str_TreenodeSelectedBordercolor = "TreenodeSelectedBordercolor";

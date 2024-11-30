@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 using DSShared;
@@ -32,14 +33,14 @@ namespace XCom
 		/// that a Mapfile can cope with.
 		/// </summary>
 		/// <seealso cref="MaxTerrainId"><c>MaxTerrainId</c></seealso>
-		public const int MaxMcdRecords = 254;
+		public const int MaxMcdRecordsMAP = 254;
 
 		/// <summary>
 		/// The highest id of an <c><see cref="McdRecord"/></c> that a Mapfile
 		/// can cope with.
 		/// </summary>
 		/// <seealso cref="MaxMcdRecords"><c>MaxMcdRecords</c></seealso>
-		public const int MaxTerrainId = 253;
+		public const int MaxTerrainIdMAP = 253;
 
 
 		// bitwise changes for MapResize()
@@ -90,35 +91,42 @@ namespace XCom
         #endregion Fields
 
 
-		#region Properties
-		/// <summary>
-		/// The <c><see cref="XCom.Descriptor"/></c> holds all of the metadata
-		/// about this <c>MapFile</c>.
-		/// </summary>
-		public Descriptor Descriptor
+        #region Properties
+
+        /// <summary>
+        /// The <c><see cref="XCom.Descriptor"/></c> holds all of the metadata
+        /// about this <c>MapFile</c>.
+        /// </summary>
+        public Descriptor Descriptor
 		{ get; private set; }
 
-		/// <summary>
-		/// A <c><see cref="MapTileArray"/></c> of all
-		/// <c><see cref="MapTile">MapTiles</see></c> in this <c>MapFile</c>.
-		/// </summary>
-		/// <remarks>A <c>MapTile</c> contains pointers to any
-		/// <c><see cref="RouteNode"/></c> as well as to any
-		/// <c><see cref="Tilepart">Tileparts</see></c>
-		/// <list type="bullet">
-		/// <item><c><see cref="MapTile.Floor"/></c></item>
-		/// <item><c><see cref="MapTile.West"/></c></item>
-		/// <item><c><see cref="MapTile.North"/></c></item>
-		/// <item><c><see cref="MapTile.Content"/></c></item>
-		/// </list></remarks>
-		public MapTileArray Tiles
-		{ get; private set; }
+        /// <summary>
+        /// Defines if Mapfile is either MAP or MAP2 format
+        /// </summary>
+       public bool IsMAP
+        { get; private set; }
 
-		/// <summary>
-		/// A <c>List</c> of all <c><see cref="Tilepart">Tileparts</see></c>
-		/// that are available to build this <c>MapFile</c> with.
-		/// </summary>
-		public IList<Tilepart> Parts
+        /// <summary>
+        /// A <c><see cref="MapTileArray"/></c> of all
+        /// <c><see cref="MapTile">MapTiles</see></c> in this <c>MapFile</c>.
+        /// </summary>
+        /// <remarks>A <c>MapTile</c> contains pointers to any
+        /// <c><see cref="RouteNode"/></c> as well as to any
+        /// <c><see cref="Tilepart">Tileparts</see></c>
+        /// <list type="bullet">
+        /// <item><c><see cref="MapTile.Floor"/></c></item>
+        /// <item><c><see cref="MapTile.West"/></c></item>
+        /// <item><c><see cref="MapTile.North"/></c></item>
+        /// <item><c><see cref="MapTile.Content"/></c></item>
+        /// </list></remarks>
+        public MapTileArray Tiles
+		{ get; private set; } 
+
+        /// <summary>
+        /// A <c>List</c> of all <c><see cref="Tilepart">Tileparts</see></c>
+        /// that are available to build this <c>MapFile</c> with.
+        /// </summary>
+        public IList<Tilepart> Parts
 		{ get; private set; }
 
 		/// <summary>
@@ -256,7 +264,8 @@ namespace XCom
 				bool floorsvisible)
 		{
 			string pfe = descriptor.GetMapfilePath();
-			if (pfe != null && LoadMapfile(pfe, parts)) // safety. 'pfe' shall be valid here.
+            string pfe2 = descriptor.GetMap2filePath();
+            if (pfe != null && LoadMapfile(pfe, parts)) // safety. 'pfe' shall be valid here.
 			{
 				_pfe = pfe;
  
@@ -264,9 +273,23 @@ namespace XCom
 				Terrains   = descriptor.Terrains;
 				Parts      = parts;
 				Routes     = routes;
+				IsMAP     = true;
 
-				SetupRouteNodes();
+                SetupRouteNodes();
 				CalculateOccultations(floorsvisible);
+			}
+			else if (pfe2 != null && LoadMap2file(pfe2, parts)) // safety. 'pfe' shall be valid here.
+            {
+                _pfe = pfe2;
+
+                Descriptor = descriptor;
+                Terrains = descriptor.Terrains;
+                Parts = parts;
+                Routes = routes;
+                IsMAP = false;
+
+                SetupRouteNodes();
+                CalculateOccultations(floorsvisible);
 			}
 			else
 				Fail = true;
@@ -278,7 +301,7 @@ namespace XCom
 		/// <summary>
 		/// Reads a .MAP Mapfile.
 		/// </summary>
-		/// <param name="pfe">path-file-extension of a Mapfile</param>
+		/// <param name="pfe">path-file-extension of a MAP Mapfile</param>
 		/// <param name="parts">a list of
 		/// <c><see cref="Tilepart">Tileparts</see></c></param>
 		/// <returns><c>true</c> if read okay</returns>
@@ -324,19 +347,98 @@ namespace XCom
 			return false;
 		}
 
+        /// <summary>
+        /// Reads a .MAP2 Mapfile.
+        /// </summary>
+        /// <param name="pfe">path-file-extension of a MAP2 Mapfile</param>
+        /// <param name="parts">a list of
+        /// <c><see cref="Tilepart">Tileparts</see></c></param>
+        /// <returns><c>true</c> if read okay</returns>
+        private bool LoadMap2file(string pfe, IList<Tilepart> parts)
+        {
+            using (var fs = FileService.OpenFile(pfe))
+                if (fs != null)
+                {
+					BinaryReader r = new BinaryReader(fs);
+					Rows = r.ReadInt16(); // http://www.ufopaedia.org/index.php/MAPS
+                    Cols = r.ReadInt16(); // - says this header is "height, width and depth (in that order)"
+                    Levs = r.ReadInt16(); //   ie. y/x/z
+
+                    Tiles = new MapTileArray(Cols, Rows, Levs);
+					int floor, westwall, northwall, content;
+                    for (int lev = 0; lev != Levs; ++lev) // z-axis (top to bot)
+                        for (int row = 0; row != Rows; ++row) // y-axis
+                            for (int col = 0; col != Cols; ++col) // x-axis
+                            {
+								floor = r.ReadInt16();
+								westwall = r.ReadInt16();
+								northwall = r.ReadInt16();
+								content = r.ReadInt16();
+                                Tiles.SetTile(col, row, lev, CreateTile(
+                                                                    parts,
+                                                                    floor,      // floor setid
+                                                                    westwall,      // westwall setid
+                                                                    northwall,      // northwall setid
+                                                                    content));    // content setid
+                            }
+
+                    if (TerrainsetCountExceeded != 0)
+                    {
+                        string head = Infobox.SplitString("Partids detected in the Mapfile that exceed"
+                                                        + " the bounds of the allocated terrainset.", 80);
+
+                        using (var f = new Infobox(
+                                                "Warning",
+                                                head,
+                                                GetCopyableWarning(),
+                                                InfoboxType.Warn))
+                        {
+                            f.ShowDialog();
+                        }
+                    }
+                    return true;
+                }
+            return false;
+        }
+
+
 		/// <summary>
-		/// Creates a <c><see cref="MapTile"/></c> with its four parts.
+		/// Check a Mapfile for tileIDs <= 253
 		/// </summary>
-		/// <param name="parts">a <c><see cref="Tilepart"/></c> list that can be used</param>
-		/// <param name="id_floor">the floor setid</param>
-		/// <param name="id_west">the westwall setid</param>
-		/// <param name="id_north">the northwall setid</param>
-		/// <param name="id_content">the content setid</param>
-		/// <returns>the <c>MapTile</c> created</returns>
-		/// <remarks>If an id in the Mapfile exceeds the maxid of the file's
-		/// terrainset a crippled tilepart will be created for it and displayed
-		/// in MainView.</remarks>
-		private MapTile CreateTile(
+		/// <returns><c>true</c> if all tile IDs < 253 </returns>
+		public bool mapHasOnlyByteTileIDs()
+		{
+			MapTile tile;
+			for (int lev = 0; lev != Levs; ++lev) // z-axis (top to bot)
+				for (int row = 0; row != Rows; ++row) // y-axis
+					for (int col = 0; col != Cols; ++col) // x-axis
+					{
+						tile = Tiles.GetTile(col, row, lev);
+						if (tile.Floor != null && tile.Floor.SetId > MapFile.MaxTerrainIdMAP)
+							return false;
+						if (tile.West != null  && tile.West.SetId > MapFile.MaxTerrainIdMAP)
+                            return false;
+						if (tile.North != null && tile.North.SetId > MapFile.MaxTerrainIdMAP)
+							return false;
+                        if (tile.Content != null && tile.Content.SetId > MapFile.MaxTerrainIdMAP)
+                            return false;
+					}
+			return true;
+		}
+
+        /// <summary>
+        /// Creates a <c><see cref="MapTile"/></c> with its four parts.
+        /// </summary>
+        /// <param name="parts">a <c><see cref="Tilepart"/></c> list that can be used</param>
+        /// <param name="id_floor">the floor setid</param>
+        /// <param name="id_west">the westwall setid</param>
+        /// <param name="id_north">the northwall setid</param>
+        /// <param name="id_content">the content setid</param>
+        /// <returns>the <c>MapTile</c> created</returns>
+        /// <remarks>If an id in the Mapfile exceeds the maxid of the file's
+        /// terrainset a crippled tilepart will be created for it and displayed
+        /// in MainView.</remarks>
+        private MapTile CreateTile(
 				IList<Tilepart> parts,
 				int id_floor,
 				int id_west,
@@ -461,8 +563,12 @@ namespace XCom
 		/// <returns><c>true</c> on success</returns>
 		public bool SaveMap()
 		{
-			return WriteMapfile(_pfe);
-		}
+			string extension = Path.GetExtension(_pfe);
+			if (extension.Equals(GlobalsXC.MapExt))
+				return WriteMapfile(_pfe);
+			else
+                return WriteMap2file(_pfe);
+        }
 
 		/// <summary>
 		/// Exports this <c>MapFile</c> to a different file with MAP extension.
@@ -613,7 +719,7 @@ namespace XCom
                 if (isMAP)
                     fs.WriteByte((byte)0);
                 else
-                    fs.Write(BitConverter.GetBytes(0), 0, 2); // MAP2
+                    fs.Write(BitConverter.GetBytes(id), 0, 2); // MAP2
             }
             else
             {

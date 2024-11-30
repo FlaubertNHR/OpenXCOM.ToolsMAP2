@@ -691,7 +691,7 @@ namespace MapView.Forms.Observers
 
 				tsslTotal.Text = "Total " + parts.Count;
 
-				if (parts.Count > MapFile.MaxTerrainId)
+				if (parts.Count > MapFile.MaxTerrainIdMAP)
 					tsslTotal.ForeColor = Color.MediumVioletRed;
 				else
 					tsslTotal.ForeColor = SystemColors.ControlText;

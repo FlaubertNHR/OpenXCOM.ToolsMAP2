@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+
 #if LOCKBITS
 using System.Drawing.Imaging;
 #endif
@@ -715,7 +717,8 @@ namespace MapView.Forms.MainView
 			{
 				Tilepart part = ObserverManager.TileView.Control.SelectedTilepart;
 				if (part == null
-					|| part.SetId <= MapFile.MaxTerrainId)
+					|| (part.SetId <= MapFile.MaxTerrainIdMAP) 
+					|| (!_file.IsMAP))
 				{
 					MainViewF.that.MapChanged = true;
 
@@ -738,15 +741,16 @@ namespace MapView.Forms.MainView
 				}
 				else
 				{
-					using (var f = new Infobox(
+                    //string extension = Path.GetExtension(_file._pfe);
+                    using (var f = new Infobox(
 											"Error",
-											Infobox.SplitString("Cannot place a tilepart that has setId greater than "
-													+ MapFile.MaxTerrainId + ". The value cannot be written to"
-													+ " a Mapfile due to the 1-byte restriction on Tilepart ids."),
+											Infobox.SplitString("MAP files cannot place a tilepart that has setId greater than "
+													+ MapFile.MaxTerrainIdMAP + ". The value cannot be written to"
+													+ " a MAP Mapfile due to the 1-byte restriction on Tilepart ids."),
 											null,
 											InfoboxType.Error))
 					{
-						f.ShowDialog(this);
+                        f.ShowDialog(this);
 					}
 				}
 			}
@@ -802,9 +806,12 @@ namespace MapView.Forms.MainView
 			Tilepart part;
 			int id;
 
-			int records = Math.Min(_file.Parts.Count, MapFile.MaxMcdRecords);	// NOTE: Also checked in the TilepartSubstitution
-																				// dialog else the Accept button does not enable.
-			for (int lev = 0; lev != _file.Levs; ++lev)
+			int records;
+			if (_file.IsMAP)
+				records = Math.Min(_file.Parts.Count, MapFile.MaxMcdRecordsMAP);    // NOTE: Also checked in the TilepartSubstitution
+			else                                                                     // dialog else the Accept button does not enable.
+				records = _file.Parts.Count;
+            for (int lev = 0; lev != _file.Levs; ++lev)
 			for (int row = 0; row != _file.Rows; ++row)
 			for (int col = 0; col != _file.Cols; ++col)
 			{
@@ -815,8 +822,9 @@ namespace MapView.Forms.MainView
 				{
 					if (dst != Int32.MaxValue)
 					{
-						if (dst < records) // safety. i hope
+						if (dst < records)  // safety. i hope
 							tile.Floor = _file.Parts[dst];
+						
 					}
 					else if (shift != Int32.MaxValue)
 					{

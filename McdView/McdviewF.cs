@@ -1078,12 +1078,12 @@ namespace McdView
 		/// <returns><c>true</c> if legit or user doesn't care</returns>
 		private bool CheckRecordCount()
 		{
-			bool proceed = (Parts.Length <= MapFile.MaxMcdRecords);
+			bool proceed = (Parts.Length <= MapFile.MaxMcdRecordsMAP);
 			if (!proceed)
 			{
 				using (var f = new Infobox(
 										"Warning",
-										"Total MCD records exceeds " + MapFile.MaxMcdRecords + ".",
+										"Total MCD records exceeds " + MapFile.MaxMcdRecordsMAP + ".",
 										null,
 										InfoboxType.Warn,
 										InfoboxButton.CancelOkay))

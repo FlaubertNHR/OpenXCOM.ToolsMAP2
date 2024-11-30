@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Runtime.CompilerServices;
 using DSShared;
 
 
@@ -76,7 +76,15 @@ namespace XCom
 		public bool FileValid
 		{ get; set; }
 
-		public bool BypassRecordsExceeded
+        /// <summary>
+        /// <c>true</c> if a MAP Mapfile for this <c>Descriptor</c> exists on the
+        /// hardrive.
+        /// </summary>
+        /// <remarks>Used to color text on the Maptree nodes.</remarks>
+        public bool IsMAP
+        { get; set; }
+
+        public bool BypassRecordsExceeded
 		{ get; set; }
 		#endregion Properties
 
@@ -124,20 +132,20 @@ namespace XCom
 			}
 			else // the Share can return null if the resource-type is notconfigured
 				_dirTerr = String.Empty;
+            FileValid = (GetMapfilePath() != null) || (GetMap2filePath() != null);
+			IsMAP = (GetMapfilePath() != null);
 
-			FileValid = GetMapfilePath() != null;
-
-			BypassRecordsExceeded = bypassRecordsExceeded;
+            BypassRecordsExceeded = bypassRecordsExceeded;
 		}
-		#endregion cTor
+        #endregion cTor
 
 
-		#region Methods
-		/// <summary>
-		/// Gets the fullpath to the Mapfile for this <c>Descriptor</c>.
-		/// </summary>
-		/// <returns>the path to the Mapfile else <c>null</c></returns>
-		public string GetMapfilePath()
+        #region Methods
+        /// <summary>
+        /// Gets the fullpath to the Mapfile with MAP extension for this <c>Descriptor</c>.
+        /// </summary>
+        /// <returns>the path to the Mapfile MAP else <c>null</c></returns>
+        public string GetMapfilePath()
 		{
 			if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
 			{
@@ -151,18 +159,20 @@ namespace XCom
 		}
 
         /// <summary>
-        /// Gets the fullpath to the Mapfile for this <c>Descriptor</c>, without extension.
+        /// Gets the fullpath to the Mapfile with MAP2 extension for this <c>Descriptor</c>.
         /// </summary>
-        /// <returns>the path to the Mapfile else <c>null</c></returns>
-        public string GetMapfilePathwoExtension()
+        /// <returns>the path to the Mapfile MAP2 else <c>null</c></returns>
+        public string GetMap2filePath()
         {
             if (!String.IsNullOrEmpty(Basepath)) // the BasePath can be null if resource-type is notconfigured.
             {
-                string pf = Path.Combine(Basepath, GlobalsXC.MapsDir);
-                pf = Path.Combine(pf, Label);
-                return pf;
+                string pfe = Path.Combine(Basepath, GlobalsXC.MapsDir);
+                pfe = Path.Combine(pfe, Label + GlobalsXC.MapExt2);
+
+                if (File.Exists(pfe))
+                    return pfe;
             }
-			return null;
+            return null;
         }
 
         /// <summary>

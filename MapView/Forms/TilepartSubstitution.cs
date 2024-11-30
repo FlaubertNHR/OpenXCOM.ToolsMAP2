@@ -56,10 +56,12 @@ namespace MapView
 		internal TilepartSubstitution(MapFile file)
 		{
 			InitializeComponent();
+			if (file.IsMAP)
+				_highid = Math.Min(file.Parts.Count - 1, MapFile.MaxTerrainIdMAP);
+			else
+				_highid = file.Parts.Count - 1;
 
-			_highid = Math.Min(file.Parts.Count - 1, MapFile.MaxTerrainId);
-
-			int valid   = Int32.MinValue;
+            int valid   = Int32.MinValue;
 			int invalid = Int32.MinValue;
 			DeterHighIds(file, ref valid, ref invalid);
 

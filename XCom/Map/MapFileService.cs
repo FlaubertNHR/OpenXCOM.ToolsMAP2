@@ -49,9 +49,10 @@ namespace XCom
 			//Logfile.Log(". ignoreRecordsExceeded= " + ignoreRecordsExceeded);
 
 			string pfe = descriptor.GetMapfilePath();
+            string pfe2 = descriptor.GetMap2filePath();
 
-			if (pfe == null
-				&& (browseMapfile || (Control.ModifierKeys & Keys.Shift) != 0))
+            if (pfe == null && pfe2 == null
+                && (browseMapfile || (Control.ModifierKeys & Keys.Shift) != 0))
 			{
 				browseMapfile = false;
 
@@ -62,7 +63,7 @@ namespace XCom
 
 				using (var f = new Infobox(
 										"Files not found",
-										"Browse to a basepath for the MAP and RMP files ...",
+										"Browse to a basepath for the MAP/MAP2 and RMP files ...",
 										copyable,
 										InfoboxType.Warn,
 										InfoboxButton.CancelOkay))
@@ -84,12 +85,17 @@ namespace XCom
 							{
 								string dir = Path.Combine(fbd.SelectedPath, GlobalsXC.MapsDir);
 									   pfe = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt);
+									   pfe2 = Path.Combine(dir, descriptor.Label + GlobalsXC.MapExt2);
 
-								if (File.Exists(pfe))
+                                if (File.Exists(pfe) || File.Exists(pfe2))
 								{
 									descriptor.Basepath = fbd.SelectedPath;
 									descriptor.FileValid = true;
-									browseMapfile = true;
+									if (File.Exists(pfe))
+										descriptor.IsMAP = true;
+									else
+                                        descriptor.IsMAP = false;
+                                    browseMapfile = true;
 
 									//Logfile.Log(". . treechanged= " + treechanged);
 								}
@@ -114,7 +120,7 @@ namespace XCom
 
 			//Logfile.Log("");
 
-			if (File.Exists(pfe))
+			if (File.Exists(pfe) || File.Exists(pfe2))
 			{
 				SpritesetManager.Dispose();
 
@@ -153,7 +159,7 @@ namespace XCom
 				if (parts.Count != 0)
 				{
 					if (!ignoreRecordsExceeded && !descriptor.BypassRecordsExceeded // issue warning ->
-						&& parts.Count > MapFile.MaxMcdRecords)
+						&& parts.Count > MapFile.MaxMcdRecordsMAP && File.Exists(pfe)) // only in MAP type files
 					{
 						string text = String.Empty;
 

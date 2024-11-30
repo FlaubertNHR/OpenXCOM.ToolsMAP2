@@ -1403,8 +1403,12 @@ namespace MapView
 					colorfill = TreenodeFill_def;
 				}
 
-				if (node.Level != TREELEVEL_TILESET || (node.Tag as Descriptor).FileValid)
+                if (node.Level != TREELEVEL_TILESET || (node.Tag as Descriptor).FileValid)
+				{
 					colortext = Optionables.TreeForecolor;
+                    if ((node.Level == TREELEVEL_TILESET) && !(node.Tag as Descriptor).IsMAP)
+                        colortext = Optionables.TreeForecolorMAP2;
+                }
 				else
 					colortext = Optionables.TreeForecolorInvalidFile;
 
@@ -1503,7 +1507,8 @@ namespace MapView
 		/// <param name="e"></param>
 		private void OnExportMapRoutesClick(object sender, EventArgs e)
 		{
-			if (MapFile != null && MapFile.Descriptor != null)
+			bool TileIDsOnlyByte = MapFile.mapHasOnlyByteTileIDs();
+            if (MapFile != null && MapFile.Descriptor != null && TileIDsOnlyByte)
 			{
 				using (var sfd = new SaveFileDialog())
 				{
@@ -1557,6 +1562,20 @@ namespace MapView
 					}
 				}
 			}
+			else
+			{
+				if (!TileIDsOnlyByte)
+				{ 
+                    using (var f = new Infobox(
+							"Error",
+							"Cannot save map in MAP format. It has tiles with ID > 254",
+							null,
+							InfoboxType.Error))
+					{
+						f.ShowDialog();
+					}
+				}
+            }
 		}
 
 		/// <summary>
