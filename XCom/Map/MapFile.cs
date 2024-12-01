@@ -265,7 +265,7 @@ namespace XCom
 		{
 			string pfe = descriptor.GetMapfilePath();
             string pfe2 = descriptor.GetMap2filePath();
-            if (pfe != null && LoadMapfile(pfe, parts)) // safety. 'pfe' shall be valid here.
+            if (descriptor.IsMAP && (pfe != null) && LoadMapfile(pfe, parts)) // safety. 'pfe' shall be valid here.
 			{
 				_pfe = pfe;
  
@@ -278,7 +278,7 @@ namespace XCom
                 SetupRouteNodes();
 				CalculateOccultations(floorsvisible);
 			}
-			else if (pfe2 != null && LoadMap2file(pfe2, parts)) // safety. 'pfe' shall be valid here.
+			else if ((pfe2 != null) && LoadMap2file(pfe2, parts)) // safety. 'pfe' shall be valid here.
             {
                 _pfe = pfe2;
 
@@ -520,15 +520,15 @@ namespace XCom
 
 		#region Methods (static)
 		/// <summary>
-		/// Writes default Map and blank Route files.
+		/// Writes default MAP Map and blank Route files.
 		/// </summary>
-		/// <param name="pfeMap">path-file-extension of the Mapfile to create</param>
+		/// <param name="pfeMap">path-file-extension of the MAP Mapfile to create</param>
 		/// <param name="pfeRoutes">path-file-extension of the Routefile to
 		/// create</param>
 		/// <returns><c>true</c> on success</returns>
 		/// <remarks>Call this funct only if the Mapfile does *not* exist. This
 		/// funct does *not* create backup files!</remarks>
-		public static bool CreateDefault(string pfeMap, string pfeRoutes)
+		public static bool CreateDefaultMAP(string pfeMap, string pfeRoutes)
 		{
 			using (var fs = FileService.CreateFile(pfeMap)) // create a default Mapfile and release its handle
 			if (fs != null)
@@ -548,20 +548,55 @@ namespace XCom
 
 				using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Routefile and release its handle
 				{}
-
+				
 				return true; // don't worry too much about successful creation of the Routefile.
 			}
 			return false;
 		}
-		#endregion Methods (static)
+
+        /// <summary>
+        /// Writes default MAP2 Map and blank Route files.
+        /// </summary>
+        /// <param name="pfeMap">path-file-extension of the MAP2 Mapfile to create</param>
+        /// <param name="pfeRoutes">path-file-extension of the Routefile to
+        /// create</param>
+        /// <returns><c>true</c> on success</returns>
+        /// <remarks>Call this funct only if the Mapfile does *not* exist. This
+        /// funct does *not* create backup files!</remarks>
+        public static bool CreateDefaultMAP2(string pfeMap, string pfeRoutes)
+        {
+            using (var fs = FileService.CreateFile(pfeMap)) // create a default Mapfile and release its handle
+                if (fs != null)
+                {
+                    fs.Write(BitConverter.GetBytes(10), 0, 2); // rows // default new Map size ->
+                    fs.Write(BitConverter.GetBytes(10), 0, 2); // cols
+                    fs.Write(BitConverter.GetBytes(1), 0, 2); // levs
+
+                    for (int r = 0; r != 10; ++r)
+                        for (int c = 0; c != 10; ++c)
+                        {
+                            fs.Write(BitConverter.GetBytes(0), 0, 2);
+                            fs.Write(BitConverter.GetBytes(0), 0, 2);
+                            fs.Write(BitConverter.GetBytes(0), 0, 2);
+                            fs.Write(BitConverter.GetBytes(0), 0, 2);
+                        }
+
+                    using (var fsRoutes = FileService.CreateFile(pfeRoutes)) // create a blank Routefile and release its handle
+                    { }
+
+                    return true; // don't worry too much about successful creation of the Routefile.
+                }
+            return false;
+        }
+        #endregion Methods (static)
 
 
-		#region Methods (save/write)
-		/// <summary>
-		/// Saves this <c>MapFile</c>.
-		/// </summary>
-		/// <returns><c>true</c> on success</returns>
-		public bool SaveMap()
+        #region Methods (save/write)
+        /// <summary>
+        /// Saves this <c>MapFile</c>.
+        /// </summary>
+        /// <returns><c>true</c> on success</returns>
+        public bool SaveMap()
 		{
 			string extension = Path.GetExtension(_pfe);
 			if (extension.Equals(GlobalsXC.MapExt))

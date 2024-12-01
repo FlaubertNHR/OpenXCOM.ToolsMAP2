@@ -217,6 +217,7 @@ namespace MapView
 
 			Basepath = SharedSpace.GetShareString(key);
 			rb_ConfigBasepath.Checked = true;
+			rb_MAP.Checked = true;
 
 
 			switch (EditMode = bt)
@@ -385,9 +386,9 @@ namespace MapView
 			using (var ofd = new OpenFileDialog())
 			{
 				ofd.Title  = "Select a Map file";
-				ofd.Filter = "Map Files (*.MAP)|*.MAP|All Files (*.*)|*.*";
+				ofd.Filter = "Map Files (*.MAP)|*.MAP|Map2 Files (*.MAP2)|*.MAP2|All Files (*.*)|*.*";  // Now can load MAP2 files
 
-				if (_lastTilesetFolder.Length != 0
+                if (_lastTilesetFolder.Length != 0
 					&& Directory.Exists(_lastTilesetFolder))
 				{
 					ofd.InitialDirectory = _lastTilesetFolder;
@@ -417,10 +418,15 @@ namespace MapView
 					{
 						TilesetBasepath = Path.GetDirectoryName(dir);
 						TilesetLabel    = Path.GetFileNameWithoutExtension(pfe);
-
-						// NOTE: This will fire OnTilesetTextboxChanged() twice usually but
-						// has to be here in case the basepath changed but the label didn't.
-						OnTilesetTextboxChanged(null, EventArgs.Empty);
+						if (Path.GetExtension(pfe).Equals(".MAP")) // Forces extension of chosen file
+							rb_MAP.Checked = true;
+						else
+                            rb_MAP2.Checked = true;
+						rb_MAP.Enabled = false;
+                        rb_MAP2.Enabled = false;
+                        // NOTE: This will fire OnTilesetTextboxChanged() twice usually but
+                        // has to be here in case the basepath changed but the label didn't.
+                        OnTilesetTextboxChanged(null, EventArgs.Empty);
 					}
 					else
 						ShowError("Maps must be in a directory MAPS.");
@@ -756,22 +762,43 @@ namespace MapView
 
 						if (!_fileExists)
 						{
-							string pfeMap   = GetFullpathMapfile(TilesetLabel);
-							string pfeRoute = GetFullpathRoutefile(TilesetLabel);
-
-							// NOTE: This has to happen now because once the Maptree node
-							// is selected it will try to read/load the .MAP file etc.
-							if (MapFile.CreateDefault(pfeMap, pfeRoute))
+                            string pfeRoute = GetFullpathRoutefile(TilesetLabel);
+                            string pfeMap; // Must decide if new map is MAP or MAP2
+							if (rb_MAP.Checked)
 							{
-								// NOTE: The descriptor has already been created with the
-								// Create descriptor button.
-								_descriptor.FileValid = true;
+								pfeMap = GetFullpathMapfile(TilesetLabel);
+								// NOTE: This has to happen now because once the Maptree node
+								// is selected it will try to read/load the .MAP file etc.
+								if (MapFile.CreateDefaultMAP(pfeMap, pfeRoute))
+								{
+									// NOTE: The descriptor has already been created with the
+									// Create descriptor button.
+									_descriptor.FileValid = true;
+                                    _descriptor.IsMAP = true;
+                                }
 							}
+							else
+							{
+								pfeMap = GetFullpathMap2file(TilesetLabel);
+                                // NOTE: This has to happen now because once the Maptree node
+                                // is selected it will try to read/load the .MAP file etc.
+                                if (MapFile.CreateDefaultMAP2(pfeMap, pfeRoute))
+                                {
+                                    // NOTE: The descriptor has already been created with the
+                                    // Create descriptor button.
+                                    _descriptor.FileValid = true;
+									_descriptor.IsMAP = false;
+                                }
+                            }
 						}
 
 						if (_descriptor.FileValid)
 						{
-							TileGroup.AddTileset(_descriptor, CategoryLabel);
+							if(rb_MAP.Checked == true) // Must add to the descriptor the file formats
+                                _descriptor.IsMAP = true;
+							else
+                                _descriptor.IsMAP = false;
+                            TileGroup.AddTileset(_descriptor, CategoryLabel);
 							DialogResult = DialogResult.OK; // load the tileset in MainView.
 						}
 						break;
@@ -1150,13 +1177,35 @@ namespace MapView
 								&& _descriptor != null;
 		}
 
+        /// <summary>
+        /// Handles changes to the MAP/MAP2 radio-buttons.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnRadioFormatSelected(object sender, EventArgs e)
+        {
+            _bypassTerrainPathChanged = true;
 
-		/// <summary>
-		/// Handles changes to the Terrains-basepath radio-buttons.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnRadioTerrainChanged(object sender, EventArgs e)
+            int sel = lb_TerrainsAllocated.SelectedIndex;
+
+            string basepath;
+            if (sender == rb_MAP)
+            {
+
+            }
+            else
+            {
+
+            }
+
+        }
+
+        /// <summary>
+        /// Handles changes to the Terrains-basepath radio-buttons.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnRadioTerrainChanged(object sender, EventArgs e)
 		{
 			_bypassTerrainPathChanged = true;
 
@@ -1461,13 +1510,24 @@ namespace MapView
 			return Path.Combine(dir, label + GlobalsXC.MapExt);
 		}
 
-		/// <summary>
-		/// Gets the fullpath for a Routefile.
-		/// </summary>
-		/// <param name="label">the label w/out extension of a Routefile to
-		/// check for</param>
-		/// <returns></returns>
-		private string GetFullpathRoutefile(string label)
+        /// Gets the fullpath for a Map2file.
+        /// </summary>
+        /// <param name="label">the label w/out extension of a Mapfile to check
+        /// for</param>
+        /// <returns></returns>
+		private string GetFullpathMap2file(string label)
+        {
+            string dir = Path.Combine(TilesetBasepath, GlobalsXC.MapsDir);
+            return Path.Combine(dir, label + GlobalsXC.MapExt2);
+        }
+
+        /// <summary>
+        /// Gets the fullpath for a Routefile.
+        /// </summary>
+        /// <param name="label">the label w/out extension of a Routefile to
+        /// check for</param>
+        /// <returns></returns>
+        private string GetFullpathRoutefile(string label)
 		{
 			string dir = Path.Combine(TilesetBasepath, GlobalsXC.RoutesDir);
 			return Path.Combine(dir, label + GlobalsXC.RouteExt);
@@ -1668,92 +1728,102 @@ namespace MapView
 			return invalids.ToArray();
 			// TODO: should disallow filenames like 'CON' and 'PRN' etc. also
 		}
-		#endregion Methods (static)
-	}
+        #endregion Methods (static)
+
+        private void lbl_TerrainChanges_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gb_Tileset_Enter(object sender, EventArgs e)
+        {
+
+        }
+    }
 
 
-//		/// <summary>
-//		/// Calls OnCreateTilesetClick() if Enter is key-upped in the
-//		/// tileset-label textbox.
-//		/// NOTE: KeyDown event doesn't work for an Enter key. Be careful 'cause
-//		/// the keydown gets intercepted by the form itself.
-//		/// TODO: Bypass triggering OnAcceptClick() ... was raised by tbTileset.KeyUp event.
-//		/// </summary>
-//		/// <param name="sender"></param>
-//		/// <param name="e"></param>
-//		private void OnTilesetKeyUp(object sender, KeyEventArgs e)
-//		{
-//			//Logfile.Log("");
-//			//Logfile.Log("OnTilesetLabelKeyUp");
-//
-//			if (EditMode == TilesetEdit.CreateDescriptor	// NOTE: have to remove this. If a user enters an invalid char in the label
-//				&& btnCreateMap.Enabled						// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
-//				&& e.KeyCode == Keys.Enter)					// error but then the KeyUp will instantiate a descriptor ....
-//			{												// Am sick of fighting with WinForms in an already complicated class like this.
-//				OnCreateDescriptorClick(null, EventArgs.Empty);
-//			}
-//		}
+    //		/// <summary>
+    //		/// Calls OnCreateTilesetClick() if Enter is key-upped in the
+    //		/// tileset-label textbox.
+    //		/// NOTE: KeyDown event doesn't work for an Enter key. Be careful 'cause
+    //		/// the keydown gets intercepted by the form itself.
+    //		/// TODO: Bypass triggering OnAcceptClick() ... was raised by tbTileset.KeyUp event.
+    //		/// </summary>
+    //		/// <param name="sender"></param>
+    //		/// <param name="e"></param>
+    //		private void OnTilesetKeyUp(object sender, KeyEventArgs e)
+    //		{
+    //			//Logfile.Log("");
+    //			//Logfile.Log("OnTilesetLabelKeyUp");
+    //
+    //			if (EditMode == TilesetEdit.CreateDescriptor	// NOTE: have to remove this. If a user enters an invalid char in the label
+    //				&& btnCreateMap.Enabled						// then uses Enter to get rid of the error-popup, the KeyDown dismisses the
+    //				&& e.KeyCode == Keys.Enter)					// error but then the KeyUp will instantiate a descriptor ....
+    //			{												// Am sick of fighting with WinForms in an already complicated class like this.
+    //				OnCreateDescriptorClick(null, EventArgs.Empty);
+    //			}
+    //		}
 
-// was OnCreateDescriptorClick() checks ->>
-//			if (String.IsNullOrEmpty(Tileset)) // TODO: this should be checked before getting here.
-//			{
-//				Logfile.Log(". The Map label cannot be blank.");
-//				ShowError("The Map label cannot be blank.");
-//
-//				tbTileset.Select();
-//			}
-//			else if (!ValidateCharacters(Tileset)) // TODO: this should be checked before getting here.
-//			{
-//				Logfile.Log(". The Map label contains illegal characters.");
-//				ShowError("The Map label contains illegal characters.");
-//
-//				tbTileset.Select();
-//				tbTileset.SelectionStart = tbTileset.TextLength;
-//			}
-//			else if (MapFileExists(Tileset))	// TODO: check to ensure that this Create function (and KeyUp-Enter events)
-//			{									// cannot be called if a descriptor and/or a Map-file already exist.
-//				Logfile.Log(". The Map file already exists."); // NOTE: Don't worry about it yet; this does not create a Map-file.
-//				ShowError("The Map file already exists.");
-//			}
-//			else if (TileGroup.Categories[Category].ContainsKey(Tileset))	// safety -> TODO: the create map and tileset keyup events should
-//			{																// be disabled if a Descriptor w/ tileset-label already exists
-//				Logfile.Log(". The Tileset label already exists.");
-//				ShowError("The Tileset label already exists.");
-//			}
-//			else
-//			{}
+    // was OnCreateDescriptorClick() checks ->>
+    //			if (String.IsNullOrEmpty(Tileset)) // TODO: this should be checked before getting here.
+    //			{
+    //				Logfile.Log(". The Map label cannot be blank.");
+    //				ShowError("The Map label cannot be blank.");
+    //
+    //				tbTileset.Select();
+    //			}
+    //			else if (!ValidateCharacters(Tileset)) // TODO: this should be checked before getting here.
+    //			{
+    //				Logfile.Log(". The Map label contains illegal characters.");
+    //				ShowError("The Map label contains illegal characters.");
+    //
+    //				tbTileset.Select();
+    //				tbTileset.SelectionStart = tbTileset.TextLength;
+    //			}
+    //			else if (MapFileExists(Tileset))	// TODO: check to ensure that this Create function (and KeyUp-Enter events)
+    //			{									// cannot be called if a descriptor and/or a Map-file already exist.
+    //				Logfile.Log(". The Map file already exists."); // NOTE: Don't worry about it yet; this does not create a Map-file.
+    //				ShowError("The Map file already exists.");
+    //			}
+    //			else if (TileGroup.Categories[Category].ContainsKey(Tileset))	// safety -> TODO: the create map and tileset keyup events should
+    //			{																// be disabled if a Descriptor w/ tileset-label already exists
+    //				Logfile.Log(". The Tileset label already exists.");
+    //				ShowError("The Tileset label already exists.");
+    //			}
+    //			else
+    //			{}
 
-//		// https://stackoverflow.com/questions/62771/how-do-i-check-if-a-given-string-is-a-legal-valid-file-name-under-windows#answer-62888
-//		You may use any character in the current code page (Unicode/ANSI above 127), except:
-//
-//		< > : " / \ | ? *
-//		Characters whose integer representations are 0-31 (less than ASCII space)
-//		Any other character that the target file system does not allow (say, trailing periods or spaces)
-//		Any of the DOS names: CON, PRN, AUX, NUL, COM1, COM2, COM3, COM4,
-//		COM5, COM6, COM7, COM8, COM9, LPT1, LPT2, LPT3, LPT4, LPT5, LPT6,
-//		LPT7, LPT8, LPT9 (and avoid AUX.txt, etc) and CLOCK$
-//		The file name is all periods
-//
-//		Some optional things to check:
-//
-//		File paths (including the file name) may not have more than 260 characters (that don't use the \?\ prefix)
-//		Unicode file paths (including the file name) with more than 32,000 characters when using \?\
-//		(note that prefix may expand directory components and cause it to overflow the 32,000 limit)
-//
-//		also: https://stackoverflow.com/questions/309485/c-sharp-sanitize-file-name
-//
-//		also: https://stackoverflow.com/questions/422090/in-c-sharp-check-that-filename-is-possibly-valid-not-that-it-exists
-//
-//		Naming Files, Paths, and Namespaces
-//		https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
+    //		// https://stackoverflow.com/questions/62771/how-do-i-check-if-a-given-string-is-a-legal-valid-file-name-under-windows#answer-62888
+    //		You may use any character in the current code page (Unicode/ANSI above 127), except:
+    //
+    //		< > : " / \ | ? *
+    //		Characters whose integer representations are 0-31 (less than ASCII space)
+    //		Any other character that the target file system does not allow (say, trailing periods or spaces)
+    //		Any of the DOS names: CON, PRN, AUX, NUL, COM1, COM2, COM3, COM4,
+    //		COM5, COM6, COM7, COM8, COM9, LPT1, LPT2, LPT3, LPT4, LPT5, LPT6,
+    //		LPT7, LPT8, LPT9 (and avoid AUX.txt, etc) and CLOCK$
+    //		The file name is all periods
+    //
+    //		Some optional things to check:
+    //
+    //		File paths (including the file name) may not have more than 260 characters (that don't use the \?\ prefix)
+    //		Unicode file paths (including the file name) with more than 32,000 characters when using \?\
+    //		(note that prefix may expand directory components and cause it to overflow the 32,000 limit)
+    //
+    //		also: https://stackoverflow.com/questions/309485/c-sharp-sanitize-file-name
+    //
+    //		also: https://stackoverflow.com/questions/422090/in-c-sharp-check-that-filename-is-possibly-valid-not-that-it-exists
+    //
+    //		Naming Files, Paths, and Namespaces
+    //		https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx
 
 
 
-	/// <summary>
-	/// An object for parsing out a terrain-label to show in the terrain-
-	/// listboxes while retaining a reference to its terrain-tuple.
-	/// </summary>
-	internal sealed class tle // TerrainListEntry
+    /// <summary>
+    /// An object for parsing out a terrain-label to show in the terrain-
+    /// listboxes while retaining a reference to its terrain-tuple.
+    /// </summary>
+    internal sealed class tle // TerrainListEntry
 	{
 		internal string Terrain
 		{ get; private set; }
